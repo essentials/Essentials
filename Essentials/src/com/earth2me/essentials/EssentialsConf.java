@@ -9,12 +9,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.config.Configuration;
+import org.yaml.snakeyaml.error.YAMLException;
+import org.yaml.snakeyaml.reader.ReaderException;
 
 
 public class EssentialsConf extends Configuration
@@ -68,7 +71,18 @@ public class EssentialsConf extends Configuration
 				}
 			}
 		}
+		try {
 		super.load();
+		}
+		catch (ReaderException e) {
+			logger.log(Level.SEVERE, "You have an encoding error in your Essentials settings.yml file.  Resave the file as UTF-8.\nError: " + e.toString());
+			logger.log(Level.SEVERE, "The essentials settings file could not be loaded! Running on defaults!");
+		}
+		catch (YAMLException e) {
+			logger.log(Level.SEVERE, "You have an YAML error in your Essentials settings.yml file.\nTry running your file through http://ess.khhq.net/yaml/\nError:" + e.toString());
+			logger.log(Level.SEVERE, "The essentials settings file could not be loaded! Running on defaults!");
+
+		}
 		if (this.root == null)
 		{
 			this.root = new HashMap<String, Object>();

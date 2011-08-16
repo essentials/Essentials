@@ -74,8 +74,8 @@ public class Commandkit extends EssentialsCommand
 					double delay = els.containsKey("delay") ? ((Number)els.get("delay")).doubleValue() : 0L;
 					Calendar c = new GregorianCalendar();
 					c.add(Calendar.SECOND, (int)delay);
-					c.add(Calendar.MILLISECOND, (int)((delay*1000.0)%1000.0));
-			
+					c.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
+
 					long time = c.getTimeInMillis();
 					Calendar now = new GregorianCalendar();
 
@@ -127,7 +127,7 @@ public class Commandkit extends EssentialsCommand
 					int id = Integer.parseInt(parts[0]);
 					int amount = parts.length > 1 ? Integer.parseInt(parts[parts.length > 2 ? 2 : 1]) : 1;
 					short data = parts.length > 2 ? Short.parseShort(parts[1]) : 0;
-					HashMap<Integer,ItemStack> overfilled = user.getInventory().addItem(new ItemStack(id, amount, data));
+					HashMap<Integer, ItemStack> overfilled = user.getInventory().addItem(new ItemStack(id, amount, data));
 					for (ItemStack itemStack : overfilled.values())
 					{
 						user.getWorld().dropItemNaturally(user.getLocation(), itemStack);

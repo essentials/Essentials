@@ -11,7 +11,7 @@ public class Commandmotd extends EssentialsCommand
 	{
 		super("motd");
 	}
-	
+
 	@Override
 	public void run(Server server, CommandSender sender, String commandLabel, String[] args) throws Exception
 	{

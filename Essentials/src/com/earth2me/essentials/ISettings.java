@@ -8,8 +8,11 @@ import org.bukkit.ChatColor;
 
 public interface ISettings extends IConf
 {
-
 	boolean areSignsDisabled();
+
+	Object getProperty(String name);
+	
+	public String getString(String node, String def);
 
 	String format(String format, IUser user);
 
@@ -118,11 +121,11 @@ public interface ISettings extends IConf
 	boolean warnOnBuildDisallow();
 
 	boolean warnOnSmite();
-	
+
 	double getMaxMoney();
 
 	boolean isEcoLogEnabled();
-	
+
 	boolean removeGodOnDisconnect();
 
 	boolean changeDisplayName();
