@@ -20,9 +20,21 @@ public class Settings implements ISettings
 	public Settings(IEssentials ess)
 	{
 		this.ess = ess;
-		config = new EssentialsConf(new File(ess.getDataFolder(), "config.yml"));
-		config.setTemplateName("/config.yml");
+		config = new EssentialsConf(new File(ess.getDataFolder(), "settings.yml"));
+		config.setTemplateName("/settings.yml");
 		reloadConfig();
+	}
+
+	@Override
+	public Object getProperty(String name)
+	{
+		return config.getProperty(name);
+	}
+
+	@Override
+	public String getString(String node, String def)
+	{
+		return config.getString(node, def);
 	}
 
 	@Override
@@ -54,7 +66,7 @@ public class Settings implements ISettings
 	{
 		return config.getInt("default-stack-size", 64);
 	}
-	
+
 	@Override
 	public int getStartingBalance()
 	{
@@ -78,7 +90,10 @@ public class Settings implements ISettings
 	{
 		for (String c : config.getStringList("disabled-commands", new ArrayList<String>(0)))
 		{
-			if (!c.equalsIgnoreCase(label)) continue;
+			if (!c.equalsIgnoreCase(label))
+			{
+				continue;
+			}
 			return true;
 		}
 		return config.getBoolean("disable-" + label.toLowerCase(), false);
@@ -95,18 +110,24 @@ public class Settings implements ISettings
 	{
 		for (String c : config.getStringList("restricted-commands", new ArrayList<String>(0)))
 		{
-			if (!c.equalsIgnoreCase(label)) continue;
+			if (!c.equalsIgnoreCase(label))
+			{
+				continue;
+			}
 			return true;
 		}
 		return config.getBoolean("restrict-" + label.toLowerCase(), false);
 	}
-	
+
 	@Override
 	public boolean isPlayerCommand(String label)
 	{
 		for (String c : config.getStringList("player-commands", new ArrayList<String>(0)))
 		{
-			if (!c.equalsIgnoreCase(label)) continue;
+			if (!c.equalsIgnoreCase(label))
+			{
+				continue;
+			}
 			return true;
 		}
 		return false;
@@ -120,7 +141,9 @@ public class Settings implements ISettings
 		for (String c : config.getStringList("overridden-commands", defaultList))
 		{
 			if (!c.equalsIgnoreCase(name))
+			{
 				continue;
+			}
 			return true;
 		}
 		return config.getBoolean("override-" + name.toLowerCase(), false);
@@ -137,7 +160,9 @@ public class Settings implements ISettings
 	{
 		double cost = config.getDouble("command-costs." + label, 0.0);
 		if (cost == 0.0)
+		{
 			cost = config.getDouble("cost-" + label, 0.0);
+		}
 		return cost;
 	}
 
@@ -165,13 +190,14 @@ public class Settings implements ISettings
 		Map<String, Object> kits = (Map<String, Object>)config.getProperty("kits");
 		for (Map.Entry<String, Object> entry : kits.entrySet())
 		{
-			if (entry.getKey().equalsIgnoreCase(name.replace('.', '_').replace('/', '_'))) {
+			if (entry.getKey().equalsIgnoreCase(name.replace('.', '_').replace('/', '_')))
+			{
 				return entry.getValue();
 			}
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Map<String, Object> getKits()
 	{
@@ -184,9 +210,13 @@ public class Settings implements ISettings
 		String colorName = config.getString("ops-name-color", null);
 
 		if (colorName == null)
+		{
 			return ChatColor.RED;
-		if("none".equalsIgnoreCase(colorName) || colorName.isEmpty())
+		}
+		if ("none".equalsIgnoreCase(colorName) || colorName.isEmpty())
+		{
 			throw new Exception();
+		}
 
 		try
 		{
@@ -222,18 +252,18 @@ public class Settings implements ISettings
 	{
 		return config.getInt("spawnmob-limit", 10);
 	}
-        
+
 	@Override
 	public boolean showNonEssCommandsInHelp()
 	{
 		return config.getBoolean("non-ess-in-help", true);
 	}
-        
+
 	@Override
-        public boolean hidePermissionlessHelp()
+	public boolean hidePermissionlessHelp()
 	{
 		return config.getBoolean("hide-permissionless-help", true);
-	}          
+	}
 
 	@Override
 	public int getProtectCreeperMaxHeight()
@@ -295,12 +325,13 @@ public class Settings implements ISettings
 	{
 		return config.getString("newbies.spawnpoint", "default");
 	}
+
 	@Override
-        public boolean getPerWarpPermission()
+	public boolean getPerWarpPermission()
 	{
 		return config.getBoolean("per-warp-permission", false);
 	}
-	
+
 	@Override
 	public boolean getSortListByGroups()
 	{
@@ -308,7 +339,8 @@ public class Settings implements ISettings
 	}
 
 	@Override
-	public void reloadConfig() {
+	public void reloadConfig()
+	{
 		config.load();
 	}
 
@@ -316,16 +348,21 @@ public class Settings implements ISettings
 	public List<Integer> itemSpawnBlacklist()
 	{
 		final List<Integer> epItemSpwn = new ArrayList<Integer>();
-		for (String itemName : config.getString("item-spawn-blacklist", "").split(",")) {
+		for (String itemName : config.getString("item-spawn-blacklist", "").split(","))
+		{
 			itemName = itemName.trim();
-			if (itemName.isEmpty()) {
+			if (itemName.isEmpty())
+			{
 				continue;
 			}
 			ItemStack is;
-			try {
+			try
+			{
 				is = ess.getItemDb().get(itemName);
 				epItemSpwn.add(is.getTypeId());
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				logger.log(Level.SEVERE, Util.format("unknownItemInList", itemName, "item-spawn-blacklist"));
 			}
 		}
@@ -349,16 +386,17 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("nether.use-1to1-ratio", false);
 	}
-	
+
 	@Override
 	public double getNetherRatio()
 	{
-		if (config.getBoolean("nether.use-1to1-ratio", false)) {
+		if (config.getBoolean("nether.use-1to1-ratio", false))
+		{
 			return 1.0;
 		}
 		return config.getDouble("nether.ratio", 16.0);
 	}
-	
+
 	@Override
 	public boolean isDebug()
 	{
@@ -368,9 +406,9 @@ public class Settings implements ISettings
 	@Override
 	public boolean warnOnSmite()
 	{
-		return config.getBoolean("warn-on-smite" ,true);
+		return config.getBoolean("warn-on-smite", true);
 	}
-	
+
 	@Override
 	public boolean permissionBasedItemSpawn()
 	{
@@ -404,23 +442,28 @@ public class Settings implements ISettings
 	@Override
 	public boolean getProtectPreventSpawn(final String creatureName)
 	{
-		return config.getBoolean("protect.prevent.spawn."+creatureName, false);
+		return config.getBoolean("protect.prevent.spawn." + creatureName, false);
 	}
 
 	@Override
 	public List<Integer> getProtectList(final String configName)
 	{
 		final List<Integer> list = new ArrayList<Integer>();
-		for (String itemName : config.getString(configName, "").split(",")) {
+		for (String itemName : config.getString(configName, "").split(","))
+		{
 			itemName = itemName.trim();
-			if (itemName.isEmpty()) {
+			if (itemName.isEmpty())
+			{
 				continue;
 			}
 			ItemStack itemStack;
-			try {
+			try
+			{
 				itemStack = ess.getItemDb().get(itemName);
 				list.add(itemStack.getTypeId());
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				logger.log(Level.SEVERE, Util.format("unknownItemInList", itemName, configName));
 			}
 		}
@@ -438,12 +481,13 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean(configName, def);
 	}
-
 	private final static double MAXMONEY = 10000000000000.0;
+
 	public double getMaxMoney()
 	{
 		double max = config.getDouble("max-money", MAXMONEY);
-		if (Math.abs(max) > MAXMONEY) {
+		if (Math.abs(max) > MAXMONEY)
+		{
 			max = max < 0 ? -MAXMONEY : MAXMONEY;
 		}
 		return max;
@@ -453,7 +497,7 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("economy-log-enabled", false);
 	}
-	
+
 	public boolean removeGodOnDisconnect()
 	{
 		return config.getBoolean("remove-god-on-disconnect", false);

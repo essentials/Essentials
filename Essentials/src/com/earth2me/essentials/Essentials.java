@@ -241,9 +241,6 @@ public class Essentials extends JavaPlugin implements IEssentials
 		{
 			user.reloadConfig();
 		}
-
-		// for motd
-		getConfiguration().load();
 	}
 
 	@Override
@@ -253,9 +250,15 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
+	public String[] getRules(final CommandSender sender, final String def)
+	{
+		return getLines(sender, "rules", def);
+	}
+
+	@Override
 	public String[] getLines(final CommandSender sender, final String node, final String def)
 	{
-		List<String> lines = (List<String>)getConfiguration().getProperty(node);
+		List<String> lines = (List<String>)settings.getProperty(node);
 		if (lines == null)
 		{
 			return new String[0];
@@ -268,9 +271,9 @@ public class Essentials extends JavaPlugin implements IEssentials
 			{
 				lines = new ArrayList<String>();
 				// "[]" in YaML indicates empty array, so respect that
-				if (!getConfiguration().getString(node, def).equals("[]"))
+				if (!settings.getString(node, def).equals("[]"))
 				{
-					lines.add(getConfiguration().getString(node, def));
+					lines.add(settings.getString(node, def));
 					retval = new String[lines.size()];
 				}
 			}

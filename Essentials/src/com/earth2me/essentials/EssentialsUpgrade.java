@@ -39,7 +39,7 @@ public class EssentialsUpgrade
 		}
 		try
 		{
-			final File configFile = new File(ess.getDataFolder(), "config.yml");
+			final File configFile = new File(ess.getDataFolder(), "settings.yml");
 			if (!configFile.exists())
 			{
 				return;

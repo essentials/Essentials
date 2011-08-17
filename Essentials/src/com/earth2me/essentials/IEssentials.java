@@ -30,6 +30,8 @@ public interface IEssentials extends Plugin
 
 	String[] getMotd(CommandSender sender, String def);
 
+	String[] getRules(CommandSender sender, String def);
+
 	String[] getLines(CommandSender sender, String node, String def);
 
 	Jail getJail();
