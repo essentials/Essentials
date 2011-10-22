@@ -1,12 +1,15 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.perm.PermissionsHandler;
-import com.earth2me.essentials.register.payment.Methods;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import com.nijikokun.register.Register;
+import com.nijikokun.register.payment.Method;
+import com.nijikokun.register.payment.Methods;
 
 
 public interface IEssentials extends Plugin
@@ -43,7 +46,7 @@ public interface IEssentials extends Plugin
 
 	Spawn getSpawn();
 
-	Methods getPaymentMethod();
+	Method getPaymentMethod();
 
 	int scheduleAsyncDelayedTask(Runnable run);
 

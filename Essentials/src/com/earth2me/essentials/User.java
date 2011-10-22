@@ -1,7 +1,7 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.commands.IEssentialsCommand;
-import com.earth2me.essentials.register.payment.Method;
+import com.nijikokun.register.payment.Method;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.bukkit.ChatColor;
@@ -317,21 +317,18 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	@Override
 	public double getMoney()
 	{
-		if (ess.getPaymentMethod().hasMethod())
+		try
 		{
-			try
+			final Method method = ess.getPaymentMethod();
+			if (!method.hasAccount(this.getName()))
 			{
-				final Method method = ess.getPaymentMethod().getMethod();
-				if (!method.hasAccount(this.getName()))
-				{
-					throw new Exception();
-				}
-				final Method.MethodAccount account = ess.getPaymentMethod().getMethod().getAccount(this.getName());
-				return account.balance();
+				throw new Exception();
 			}
-			catch (Throwable ex)
-			{
-			}
+			final Method.MethodAccount account = ess.getPaymentMethod().getAccount(this.getName());
+			return account.balance();
+		}
+		catch (Throwable ex)
+		{
 		}
 		return super.getMoney();
 	}
@@ -339,21 +336,18 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	@Override
 	public void setMoney(final double value)
 	{
-		if (ess.getPaymentMethod().hasMethod())
+		try
 		{
-			try
+			final Method method = ess.getPaymentMethod();
+			if (!method.hasAccount(this.getName()))
 			{
-				final Method method = ess.getPaymentMethod().getMethod();
-				if (!method.hasAccount(this.getName()))
-				{
-					throw new Exception();
-				}
-				final Method.MethodAccount account = ess.getPaymentMethod().getMethod().getAccount(this.getName());
-				account.set(value);
+				throw new Exception();
 			}
-			catch (Throwable ex)
-			{
-			}
+			final Method.MethodAccount account = ess.getPaymentMethod().getAccount(this.getName());
+			account.set(value);
+		}
+		catch (Throwable ex)
+		{
 		}
 		super.setMoney(value);
 	}

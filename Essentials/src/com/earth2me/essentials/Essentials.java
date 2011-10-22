@@ -29,7 +29,6 @@ import com.earth2me.essentials.commands.IEssentialsCommand;
 import com.earth2me.essentials.commands.NoChargeException;
 import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.perm.PermissionsHandler;
-import com.earth2me.essentials.register.payment.Methods;
 import com.earth2me.essentials.signs.SignBlockListener;
 import com.earth2me.essentials.signs.SignEntityListener;
 import com.earth2me.essentials.signs.SignPlayerListener;
@@ -44,6 +43,9 @@ import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.*;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import com.nijikokun.register.Register;
+import com.nijikokun.register.payment.Method;
+import com.nijikokun.register.payment.Methods;
 
 public class Essentials extends JavaPlugin implements IEssentials
 {
@@ -59,7 +61,6 @@ public class Essentials extends JavaPlugin implements IEssentials
 	private transient Backup backup;
 	private transient ItemDb itemDb;
 	private transient EssentialsUpdateTimer updateTimer;
-	private transient final Methods paymentMethod = new Methods();
 	private transient final static boolean enableErrorLogging = false;
 	private transient final EssentialsErrorHandler errorHandler = new EssentialsErrorHandler();
 	private transient PermissionsHandler permissionsHandler;
@@ -600,9 +601,9 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public Methods getPaymentMethod()
+	public Method getPaymentMethod()
 	{
-		return paymentMethod;
+		return Methods.getMethod();
 	}
 
 	@Override

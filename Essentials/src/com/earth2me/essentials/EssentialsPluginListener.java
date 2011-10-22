@@ -21,22 +21,12 @@ public class EssentialsPluginListener extends ServerListener implements IConf
 	public void onPluginEnable(final PluginEnableEvent event)
 	{
 		ess.getPermissionsHandler().checkPermissions();
-		if (!ess.getPaymentMethod().hasMethod() && ess.getPaymentMethod().setMethod(ess.getServer().getPluginManager()))
-		{
-			LOGGER.log(Level.INFO, "[Essentials] Payment method found (" + ess.getPaymentMethod().getMethod().getName() + " version: " + ess.getPaymentMethod().getMethod().getVersion() + ")");
-		}
 	}
 
 	@Override
 	public void onPluginDisable(final PluginDisableEvent event)
 	{
 		ess.getPermissionsHandler().checkPermissions();
-		// Check to see if the plugin thats being disabled is the one we are using
-		if (ess.getPaymentMethod() != null && ess.getPaymentMethod().hasMethod() && ess.getPaymentMethod().checkDisabled(event.getPlugin()))
-		{
-			ess.getPaymentMethod().reset();
-			LOGGER.log(Level.INFO, "[Essentials] Payment method was disabled. No longer accepting payments.");
-		}
 	}
 
 	@Override
