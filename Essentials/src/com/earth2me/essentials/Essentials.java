@@ -19,9 +19,12 @@ package com.earth2me.essentials;
 
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.commands.EssentialsCommand;
+import com.earth2me.essentials.NetworkUtils;
+
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
+
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -29,11 +32,11 @@ import com.earth2me.essentials.commands.IEssentialsCommand;
 import com.earth2me.essentials.commands.NoChargeException;
 import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.perm.PermissionsHandler;
-import com.earth2me.essentials.register.payment.Methods;
 import com.earth2me.essentials.signs.SignBlockListener;
 import com.earth2me.essentials.signs.SignEntityListener;
 import com.earth2me.essentials.signs.SignPlayerListener;
 import java.math.BigInteger;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.bukkit.command.PluginCommand;
@@ -44,6 +47,9 @@ import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.*;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import com.nijikokun.register.Register;
+import com.nijikokun.register.payment.Method;
+import com.nijikokun.register.payment.Methods;
 
 public class Essentials extends JavaPlugin implements IEssentials
 {
@@ -59,7 +65,6 @@ public class Essentials extends JavaPlugin implements IEssentials
 	private transient Backup backup;
 	private transient ItemDb itemDb;
 	private transient EssentialsUpdateTimer updateTimer;
-	private transient final Methods paymentMethod = new Methods();
 	private transient final static boolean enableErrorLogging = false;
 	private transient final EssentialsErrorHandler errorHandler = new EssentialsErrorHandler();
 	private transient PermissionsHandler permissionsHandler;
@@ -89,6 +94,20 @@ public class Essentials extends JavaPlugin implements IEssentials
 		userMap = new UserMap(this);
 		permissionsHandler = new PermissionsHandler(this, false);
 		Economy.setEss(this);
+	}
+	
+	protected void checkRegister() {
+		Plugin pl = Bukkit.getPluginManager().getPlugin("Register");
+		if (pl == null || !(pl instanceof Register)) {
+			try {
+				NetworkUtils.download(LOGGER, new URL("http://ci.getspout.org/view/Economy/job/Register/lastSuccessfulBuild/artifact/register-1.5.jar"), new File("plugins", "Register.jar"));
+				LOGGER.log(Level.INFO, "Now the server will shutdown to reload all the plugins. Please re-open it.");
+				Bukkit.shutdown();
+			} catch (Exception e) {
+				LOGGER.log(Level.WARNING, "Couldn't download and/or install register");
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -145,6 +164,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 		{
 			LOGGER.log(Level.INFO, Util.i18n("bukkitFormatChanged"));
 		}
+		checkRegister();
 
 		permissionsHandler = new PermissionsHandler(this, settings.useBukkitPermissions());
 		final EssentialsPluginListener serverListener = new EssentialsPluginListener(this);
@@ -601,9 +621,9 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public Methods getPaymentMethod()
+	public Method getPaymentMethod()
 	{
-		return paymentMethod;
+		return Methods.getMethod();
 	}
 
 	@Override
