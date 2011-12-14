@@ -1,3 +1,5 @@
+#available variables: {PLAYER} {IP} {BALANCE} {MAILS} {WORLD} {ONLINE} {UNIQUE} {WORLDS} {PLAYERLIST} {TIME} {DATE} 
+#{WORLDTIME12} {WORLDTIME24} {WORLDDATE} {PLUGINS} {VERSION}
 &cWelcome, {PLAYER}&c!
 &fType &c/help&f for a list of commands.
 Currently online: {PLAYERLIST}
