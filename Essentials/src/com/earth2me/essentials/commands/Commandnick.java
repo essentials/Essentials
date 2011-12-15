@@ -32,11 +32,11 @@ public class Commandnick extends EssentialsCommand
 			{
 				throw new Exception(_("nickOthersPermission"));
 			}
-			setNickname(server, getPlayer(server, args, 0), formatNickname(user, args[1]));
+			setNickname(server, getPlayer(server, args, 0), formatNickname(user, gatherNickname(args, 1)));
 			user.sendMessage(_("nickChanged"));
 			return;
 		}
-		setNickname(server, user, formatNickname(user, args[0]));
+		setNickname(server, user, formatNickname(user, gatherNickname(args, 0)));
 	}
 
 	@Override
@@ -56,9 +56,19 @@ public class Commandnick extends EssentialsCommand
 		}
 		else
 		{
-			setNickname(server, getPlayer(server, args, 0), formatNickname(null, args[1]));
+			setNickname(server, getPlayer(server, args, 0), formatNickname(null, gatherNickname(args, 1)));
 		}
 		sender.sendMessage(_("nickChanged"));
+	}
+		
+	private String gatherNickname(final String[] args, final int index)
+	{
+		String nick = "";
+		for(int i = index; i < args.length; i++) 
+		{
+			nick += args[i] + " ";
+		}
+		return nick.substring(0, nick.length()-1);
 	}
 
 	private String formatNickname(final User user, final String nick)
