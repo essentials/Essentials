@@ -352,9 +352,15 @@ public class EssentialsPlayerListener extends PlayerListener
 	@Override
 	public void onPlayerChangedWorld(final PlayerChangedWorldEvent event)
 	{
+		User user = ess.getUser(event.getPlayer());
+		if(user.isGodModeEnabled() && ess.getSettings().getTurnOffGodGroups().contains(user.getGroup()))
+		{
+			user.toggleGodModeEnabled();
+			user.sendMessage(_("godMode", _("disabled")));
+		}
+
 		if (ess.getSettings().getNoGodWorlds().contains(event.getPlayer().getLocation().getWorld().getName()))
 		{
-			User user = ess.getUser(event.getPlayer());
 			if (user.isGodModeEnabledRaw())
 			{
 				user.sendMessage(_("noGodWorldWarning"));
@@ -394,4 +400,3 @@ public class EssentialsPlayerListener extends PlayerListener
 		}
 	}
 }
-

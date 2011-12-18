@@ -33,7 +33,7 @@ public interface ISettings extends IConf
 	String getCurrencySymbol();
 
 	int getOversizedStackSize();
-	
+
 	int getDefaultStackSize();
 
 	double getHealCooldown();
@@ -139,19 +139,20 @@ public interface ISettings extends IConf
 	public void setDebug(boolean debug);
 
 	Set<String> getNoGodWorlds();
-	
+
+	Set<String> getTurnOffGodGroups();
+
 	boolean getUpdateBedAtDaytime();
-	
+
 	boolean getRepairEnchanted();
-	
+
 	boolean getIsWorldTeleportPermissions();
-	
+
 	boolean registerBackInListener();
 
 	public boolean getDisableItemPickupWhileAfk();
 
 	public Priority getRespawnPriority();
-	
+
 	long getTpaAcceptCancellation();
 }
-
