@@ -154,3 +154,4 @@ public interface ISettings extends IConf
 	
 	long getTpaAcceptCancellation();
 }
+

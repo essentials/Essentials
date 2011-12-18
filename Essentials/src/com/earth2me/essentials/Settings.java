@@ -613,3 +613,4 @@ public class Settings implements ISettings
 		return config.getLong("tpa-accept-cancellation", 0);		
 	}
 }
+
