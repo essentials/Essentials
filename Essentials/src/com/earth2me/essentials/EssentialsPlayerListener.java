@@ -394,3 +394,4 @@ public class EssentialsPlayerListener extends PlayerListener
 		}
 	}
 }
+
