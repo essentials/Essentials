@@ -1,7 +1,7 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.craftbukkit.SetBed;
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.craftbukkit.SetBed;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.TextInput;
@@ -20,6 +20,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -230,7 +232,14 @@ public class EssentialsPlayerListener extends PlayerListener
 		{
 			return;
 		}
+
 		final User user = ess.getUser(event.getPlayer());
+		//There is TeleportCause.COMMMAND but plugins have to actively pass the cause in on their teleports.
+		if ((event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND) && ess.getSettings().registerBackInListener())
+		{
+			user.setLastLocation();
+		}
+
 		if (ess.getSettings().changeDisplayName())
 		{
 			user.setDisplayNick();
@@ -304,10 +313,7 @@ public class EssentialsPlayerListener extends PlayerListener
 			}
 			else if (command.startsWith("c:"))
 			{
-				for (Player p : server.getOnlinePlayers())
-				{
-					p.sendMessage(user.getDisplayName() + ":" + command.substring(2));
-				}
+				user.chat(command.substring(2));
 			}
 			else
 			{
@@ -371,6 +377,20 @@ public class EssentialsPlayerListener extends PlayerListener
 		if (ess.getSettings().getUpdateBedAtDaytime() && event.getClickedBlock().getType() == Material.BED_BLOCK)
 		{
 			SetBed.setBed(event.getPlayer(), event.getClickedBlock());
+		}
+	}
+
+	@Override
+	public void onPlayerPickupItem(PlayerPickupItemEvent event)
+	{
+		if (event.isCancelled() || !ess.getSettings().getDisableItemPickupWhileAfk())
+		{
+			return;
+		}
+		final User user = ess.getUser(event.getPlayer());
+		if (user.isAfk())
+		{
+			event.setCancelled(true);
 		}
 	}
 }

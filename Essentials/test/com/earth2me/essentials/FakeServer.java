@@ -1,5 +1,6 @@
 package com.earth2me.essentials;
 
+import com.earth2me.essentials.craftbukkit.FakeWorld;
 import com.avaje.ebean.config.ServerConfig;
 import java.io.File;
 import java.util.*;
@@ -530,6 +531,24 @@ public class FakeServer implements Server
 			{
 				throw new UnsupportedOperationException("Not supported yet.");
 			}
+
+			@Override
+			public long getFirstPlayed()
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public long getLastPlayed()
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public boolean hasPlayedBefore()
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
 		};
 	}
 
@@ -589,6 +608,18 @@ public class FakeServer implements Server
 
 	@Override
 	public File getWorldContainer()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public OfflinePlayer[] getOfflinePlayers()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean getAllowEnd()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

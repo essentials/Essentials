@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Commandwarp extends EssentialsCommand
@@ -69,6 +70,7 @@ public class Commandwarp extends EssentialsCommand
 
 	}
 
+	//TODO: Use one of the new text classes, like /help ?
 	private void warpList(final CommandSender sender, final String[] args) throws Exception
 	{
 		final Warps warps = ess.getWarps();
@@ -118,11 +120,11 @@ public class Commandwarp extends EssentialsCommand
 		{
 			if (user.isAuthorized("essentials.warp." + name))
 			{
-				user.getTeleport().warp(name, charge);
+				user.getTeleport().warp(name, charge, TeleportCause.COMMAND);
 				return;
 			}
 			throw new Exception(_("warpUsePermission"));
 		}
-		user.getTeleport().warp(name, charge);
+		user.getTeleport().warp(name, charge, TeleportCause.COMMAND);
 	}
 }

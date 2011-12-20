@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.WorldDataHolder;
+import org.anjocaido.groupmanager.events.GMUserEvent.Action;
+import org.anjocaido.groupmanager.events.GroupManagerEventHandler;
+
 import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,7 +19,7 @@ import org.bukkit.entity.Player;
 
 /**
  * 
- * @author gabrielcouto
+ * @author gabrielcouto/ElgarL
  */
 public class User extends DataUnit implements Cloneable {
 
@@ -76,7 +79,7 @@ public class User extends DataUnit implements Cloneable {
 		for (String perm : this.getPermissionList()) {
 			clone.addPermission(perm);
 		}
-		// clone.variables = this.variables.clone();
+		clone.variables = this.variables.clone(this);
 		clone.flagAsChanged();
 		return clone;
 	}
@@ -139,6 +142,8 @@ public class User extends DataUnit implements Cloneable {
 
 			if (notify)
 				GroupManager.notify(this.getName(), String.format(" moved to the group %s.", group.getName()));
+			
+			GroupManagerEventHandler.callEvent(this, Action.USER_GROUP_CHANGED);
 		}
 	}
 
@@ -153,9 +158,11 @@ public class User extends DataUnit implements Cloneable {
 		removeSubGroup(subGroup);
 		subGroups.add(subGroup.getName());
 		flagAsChanged();
-		if (GroupManager.isLoaded())
+		if (GroupManager.isLoaded()) {
 			if (GroupManager.BukkitPermissions.player_join = false)
 				GroupManager.BukkitPermissions.updateAllPlayers();
+			GroupManagerEventHandler.callEvent(this, Action.USER_SUBGROUP_CHANGED);
+		}
 	}
 
 	public int subGroupsSize() {
@@ -177,6 +184,7 @@ public class User extends DataUnit implements Cloneable {
 				if (GroupManager.isLoaded())
 					if (GroupManager.BukkitPermissions.player_join = false)
 						GroupManager.BukkitPermissions.updateAllPlayers();
+				GroupManagerEventHandler.callEvent(this, Action.USER_SUBGROUP_CHANGED);
 				return true;
 			}
 		} catch (Exception e) {
@@ -213,15 +221,18 @@ public class User extends DataUnit implements Cloneable {
 	 * @param varList
 	 */
 	public void setVariables(Map<String, Object> varList) {
-		UserVariables temp = new UserVariables(this, varList);
+		//UserVariables temp = new UserVariables(this, varList);
 		variables.clearVars();
-		for (String key : temp.getVarKeyList()) {
-			variables.addVar(key, temp.getVarObject(key));
+		for (String key : varList.keySet()) {
+			System.out.print("Adding variable - " + key);
+			variables.addVar(key, varList.get(key));
 		}
 		flagAsChanged();
-		if (GroupManager.isLoaded())
+		if (GroupManager.isLoaded()) {
 			if (GroupManager.BukkitPermissions.player_join = false)
 				GroupManager.BukkitPermissions.updateAllPlayers();
+			GroupManagerEventHandler.callEvent(this, Action.USER_INFO_CHANGED);
+		}
 	}
 
 	public User updatePlayer(Player player) {
@@ -237,5 +248,4 @@ public class User extends DataUnit implements Cloneable {
 		}
 		return bukkitPlayer;
 	}
-
 }

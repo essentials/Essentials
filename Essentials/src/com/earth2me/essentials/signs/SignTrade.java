@@ -6,7 +6,8 @@ import org.bukkit.inventory.ItemStack;
 
 //TODO: Sell Enchantment on Trade signs?
 public class SignTrade extends EssentialsSign
-{
+{	
+
 	public SignTrade()
 	{
 		super("Trade");
@@ -160,8 +161,13 @@ public class SignTrade extends EssentialsSign
 		if (split.length == 2 && !amountNeeded)
 		{
 			final int amount = getIntegerPositive(split[0]);
-			final ItemStack item = getItemStack(split[1], amount, ess);
-			if (amount < 1 || item.getTypeId() == 0)
+
+			if (amount < 1)
+			{
+				throw new SignException(_("moreThanZero"));
+			}
+			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp"))
+				&& getItemStack(split[1], amount, ess).getTypeId() == 0)
 			{
 				throw new SignException(_("moreThanZero"));
 			}
@@ -177,10 +183,14 @@ public class SignTrade extends EssentialsSign
 		if (split.length == 3 && amountNeeded)
 		{
 			final int stackamount = getIntegerPositive(split[0]);
-			final ItemStack item = getItemStack(split[1], stackamount, ess);
 			int amount = getIntegerPositive(split[2]);
 			amount -= amount % stackamount;
-			if (amount < 1 || stackamount < 1 || item.getTypeId() == 0)
+			if (amount < 1 || stackamount < 1)
+			{
+				throw new SignException(_("moreThanZero"));
+			}
+			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp"))
+				&& getItemStack(split[1], stackamount, ess).getTypeId() == 0)
 			{
 				throw new SignException(_("moreThanZero"));
 			}
@@ -218,16 +228,30 @@ public class SignTrade extends EssentialsSign
 
 		if (split.length == 3)
 		{
-			final int stackamount = getIntegerPositive(split[0]);
-			final ItemStack item = getItemStack(split[1], stackamount, ess);
-			int amount = getInteger(split[2]);
-			amount -= amount % stackamount;
-			if (notEmpty && (amount < 1 || stackamount < 1 || item.getTypeId() == 0))
+			if (split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp"))
 			{
-				throw new SignException(_("tradeSignEmpty"));
+				final int stackamount = getIntegerPositive(split[0]);
+				int amount = getInteger(split[2]);
+				amount -= amount % stackamount;
+				if (notEmpty && (amount < 1 || stackamount < 1))
+				{
+					throw new SignException(_("tradeSignEmpty"));
+				}
+				return new Trade(fullAmount ? amount : stackamount, ess);
 			}
-			item.setAmount(fullAmount ? amount : stackamount);
-			return new Trade(item, ess);
+			else
+			{
+				final int stackamount = getIntegerPositive(split[0]);
+				final ItemStack item = getItemStack(split[1], stackamount, ess);
+				int amount = getInteger(split[2]);
+				amount -= amount % stackamount;
+				if (notEmpty && (amount < 1 || stackamount < 1 || item.getTypeId() == 0))
+				{
+					throw new SignException(_("tradeSignEmpty"));
+				}
+				item.setAmount(fullAmount ? amount : stackamount);
+				return new Trade(item, ess);
+			}
 		}
 		throw new SignException(_("invalidSignLine", index + 1));
 	}
@@ -244,6 +268,11 @@ public class SignTrade extends EssentialsSign
 		{
 			changeAmount(sign, index, -item.getAmount(), ess);
 		}
+		final Integer exp = trade.getExperience();
+		if (exp != null)
+		{
+			changeAmount(sign, index, -exp.intValue(), ess);
+		}
 	}
 
 	protected final void addAmount(final ISign sign, final int index, final Trade trade, final IEssentials ess) throws SignException
@@ -258,10 +287,16 @@ public class SignTrade extends EssentialsSign
 		{
 			changeAmount(sign, index, item.getAmount(), ess);
 		}
+		final Integer exp = trade.getExperience();
+		if (exp != null)
+		{
+			changeAmount(sign, index, exp.intValue(), ess);
+		}
 	}
 
 	private void changeAmount(final ISign sign, final int index, final double value, final IEssentials ess) throws SignException
 	{
+
 		final String line = sign.getLine(index).trim();
 		if (line.isEmpty())
 		{
@@ -287,17 +322,32 @@ public class SignTrade extends EssentialsSign
 
 		if (split.length == 3)
 		{
-			final int stackamount = getIntegerPositive(split[0]);
-			//TODO: Unused local variable
-			final ItemStack item = getItemStack(split[1], stackamount, ess);
-			final int amount = getInteger(split[2]);
-			final String newline = stackamount + " " + split[1] + ":" + (amount + Math.round(value));
-			if (newline.length() > 15)
+			if (split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp"))
 			{
-				throw new SignException("Line too long!");
+				final int stackamount = getIntegerPositive(split[0]);
+				final int amount = getInteger(split[2]);
+				final String newline = stackamount + " " + split[1] + ":" + (amount + Math.round(value));
+				if (newline.length() > 15)
+				{
+					throw new SignException("Line too long!");
+				}
+				sign.setLine(index, newline);
+				return;
 			}
-			sign.setLine(index, newline);
-			return;
+			else
+			{
+				final int stackamount = getIntegerPositive(split[0]);
+				//TODO: Unused local variable
+				final ItemStack item = getItemStack(split[1], stackamount, ess);
+				final int amount = getInteger(split[2]);
+				final String newline = stackamount + " " + split[1] + ":" + (amount + Math.round(value));
+				if (newline.length() > 15)
+				{
+					throw new SignException("Line too long!");
+				}
+				sign.setLine(index, newline);
+				return;
+			}
 		}
 		throw new SignException(_("invalidSignLine", index + 1));
 	}
