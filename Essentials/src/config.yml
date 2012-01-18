@@ -224,6 +224,10 @@ death-messages: true
 no-god-in-worlds:
 #  - world_nether
 
+# For these groups will be godmode turned off on world change
+turn-off-god-groups:
+#  - default
+
 # Set to true to enable per-world permissions for teleporting with /world
 # Give someone permission to teleport to a world with essentials.world.<worldname>
 world-teleport-permissions: false

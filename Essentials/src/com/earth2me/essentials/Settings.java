@@ -340,6 +340,7 @@ public class Settings implements ISettings
 	{
 		config.load();
 		noGodWorlds = new HashSet<String>(config.getStringList("no-god-in-worlds", Collections.<String>emptyList()));
+		turnOffGodGroups = new HashSet<String>(config.getStringList("turn-off-god-groups", Collections.<String>emptyList()));
 	}
 
 	@Override
@@ -549,6 +550,13 @@ public class Settings implements ISettings
 	{
 		return noGodWorlds;
 	}
+	Set<String> turnOffGodGroups = new HashSet<String>();
+
+	@Override
+	public Set<String> getTurnOffGodGroups()
+	{
+		return turnOffGodGroups;
+	}
 
 	@Override
 	public void setDebug(final boolean debug)
@@ -606,10 +614,10 @@ public class Settings implements ISettings
 		}
 		return Priority.Normal;
 	}
-	
+
 	@Override
 	public long getTpaAcceptCancellation()
 	{
-		return config.getLong("tpa-accept-cancellation", 0);		
+		return config.getLong("tpa-accept-cancellation", 0);
 	}
 }
