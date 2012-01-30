@@ -26,8 +26,8 @@ public class GMWorldListener implements Listener {
     	plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 	
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onWorldInit(WorldInitEvent event) {
+	@EventHandler(priority = EventPriority.LOWEST, event = WorldInitEvent.class)
+	public void onWorldInit(final WorldInitEvent event) {
 		String worldName =  event.getWorld().getName();
 		
 		if (GroupManager.isLoaded() && !plugin.getWorldsHolder().isInList(worldName)) {	
