@@ -1,15 +1,13 @@
 package com.earth2me.essentials.components.users;
 
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
-import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ITeleport;
-import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.components.users.CooldownException;
 import com.earth2me.essentials.components.users.UserData.TimestampType;
+import com.earth2me.essentials.perm.Permissions;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
@@ -135,6 +133,7 @@ public class Teleport implements Runnable, ITeleport
 		this.ess = ess;
 	}
 
+	@Override
 	public void respawn(final Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		final Player player = user.getBase();
@@ -144,6 +143,7 @@ public class Teleport implements Runnable, ITeleport
 		teleport(new Target(pre.getRespawnLocation()), chargeFor, cause);
 	}
 
+	@Override
 	public void warp(String warp, Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		final Location loc = ess.getWarps().getWarp(warp);
@@ -194,11 +194,13 @@ public class Teleport implements Runnable, ITeleport
 		teleport(new Target(loc), chargeFor, TeleportCause.PLUGIN);
 	}
 
+	@Override
 	public void teleport(Location loc, Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		teleport(new Target(loc), chargeFor, cause);
 	}
 
+	@Override
 	public void teleport(Entity entity, Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		teleport(new Target(entity), chargeFor, cause);
@@ -206,14 +208,14 @@ public class Teleport implements Runnable, ITeleport
 
 	private void teleport(Target target, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		double delay = ess.getGroups().getTeleportDelay(user);
+		double teleportDelay = ess.getGroups().getTeleportDelay(user);
 
 		if (chargeFor != null)
 		{
 			chargeFor.isAffordableFor(user);
 		}
 		cooldown(true);
-		if (delay <= 0 || Permissions.TELEPORT_TIMER_BYPASS.isAuthorized(user))
+		if (teleportDelay <= 0 || Permissions.TELEPORT_TIMER_BYPASS.isAuthorized(user))
 		{
 			cooldown(false);
 			now(target, cause);
@@ -226,12 +228,12 @@ public class Teleport implements Runnable, ITeleport
 
 		cancel();
 		Calendar c = new GregorianCalendar();
-		c.add(Calendar.SECOND, (int)delay);
-		c.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
+		c.add(Calendar.SECOND, (int)teleportDelay);
+		c.add(Calendar.MILLISECOND, (int)((teleportDelay * 1000.0) % 1000.0));
 		user.sendMessage(_("dontMoveMessage", Util.formatDateDiff(c.getTimeInMillis())));
-		initTimer((long)(delay * 1000.0), target, chargeFor, cause);
+		initTimer((long)(teleportDelay * 1000.0), target, chargeFor, cause);
 
-		teleTimer = ess.scheduleSyncRepeatingTask(this, 10, 10);
+		teleTimer = ess.getScheduler().scheduleSyncRepeatingTask(this, 10, 10);
 	}
 
 	private void now(Target target, TeleportCause cause) throws Exception
@@ -241,6 +243,7 @@ public class Teleport implements Runnable, ITeleport
 		user.getBase().teleport(Util.getSafeDestination(target.getLocation()), cause);
 	}
 
+	@Override
 	public void now(Location loc, boolean cooldown, TeleportCause cause) throws Exception
 	{
 		if (cooldown)
@@ -257,6 +260,7 @@ public class Teleport implements Runnable, ITeleport
 		now(new Target(loc), cause);
 	}
 
+	@Override
 	public void now(Entity entity, boolean cooldown, TeleportCause cause) throws Exception
 	{
 		if (cooldown)
@@ -266,6 +270,7 @@ public class Teleport implements Runnable, ITeleport
 		now(new Target(entity), cause);
 	}
 
+	@Override
 	public void back(Trade chargeFor) throws Exception
 	{
 		user.acquireReadLock();
@@ -279,6 +284,7 @@ public class Teleport implements Runnable, ITeleport
 		}
 	}
 
+	@Override
 	public void back() throws Exception
 	{
 		user.acquireReadLock();
@@ -292,6 +298,7 @@ public class Teleport implements Runnable, ITeleport
 		}
 	}
 
+	@Override
 	public void home(IUser user, String home, Trade chargeFor) throws Exception
 	{
 		final Location loc = user.getHome(home);
