@@ -26,11 +26,28 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 	}
 
 	@Override
+	public String getTypeId()
+	{
+		return "GroupsComponent";
+	}
+
+	@Override
+	public void initialize()
+	{
+	}
+
+	@Override
+	public void onEnable()
+	{
+		reload();
+	}
+
+	@Override
 	public File getStorageFile()
 	{
 		return new File(context.getDataFolder(), "groups.yml");
 	}
-	
+
 	public Collection<Entry<String, GroupOptions>> getGroups(final IUser player)
 	{
 		acquireReadLock();
@@ -41,7 +58,7 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 			{
 				return Collections.emptyList();
 			}
-			final ArrayList<Entry<String, GroupOptions>> list = new ArrayList();
+			final ArrayList<Entry<String, GroupOptions>> list = new ArrayList<Entry<String, GroupOptions>>();
 			for (Entry<String, GroupOptions> entry : groups.entrySet())
 			{
 				if (GroupsPermissions.getPermission(entry.getKey()).isAuthorized(player))
@@ -85,7 +102,7 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public double getTeleportDelay(final IUser player)
 	{
@@ -137,7 +154,7 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 		}
 		return 0;
 	}
-	
+
 	//TODO: Reimplement caching
 	@Override
 	public MessageFormat getChatFormat(final IUser player)
@@ -151,9 +168,9 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 			format = format.replace("{SHORTWORLDNAME}", "{2}");
 			format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
 			MessageFormat mFormat = new MessageFormat(format);
-			return mFormat;		
+			return mFormat;
 	}
-	
+
 	private String getRawChatFormat(final IUser player)
 	{
 		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
@@ -191,5 +208,5 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 		}
 		return "default";
 	}
-	
+
 }
