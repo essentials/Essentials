@@ -30,7 +30,7 @@ public class EssentialsConnect
 		protect = (IProtect)essProtect;
 		protect.setSettings(new ProtectHolder(ess));
 		ProtectReloader pr = new ProtectReloader();
-		pr.onReload();
+		pr.reload();
 		ess.addReloadListener(pr);
 	}
 
@@ -64,7 +64,7 @@ public class EssentialsConnect
 	private class ProtectReloader implements IReloadable
 	{
 		@Override
-		public void onReload()
+		public void reload()
 		{
 			if (protect.getStorage() != null)
 			{

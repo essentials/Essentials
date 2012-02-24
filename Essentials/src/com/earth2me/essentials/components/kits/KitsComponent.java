@@ -17,7 +17,7 @@ public class KitsComponent extends AsyncStorageObjectHolder<Kits> implements IKi
 	public KitsComponent(final IContext ess)
 	{
 		super(ess, com.earth2me.essentials.settings.Kits.class);
-		onReload();
+		reload();
 	}
 
 	@Override

@@ -1,8 +1,6 @@
 package com.earth2me.essentials.components;
 
 import com.earth2me.essentials.api.IContext;
-import lombok.AccessLevel;
-import lombok.Getter;
 
 
 /**
@@ -45,7 +43,7 @@ public class Component implements IComponent
 	 * Reload the component.
 	 */
 	@Override
-	public void onReload()
+	public void reload()
 	{
 	}
 	

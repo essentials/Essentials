@@ -21,7 +21,7 @@ import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.components.ComponentPlugin;
 import com.earth2me.essentials.components.commands.CommandsComponent;
-import com.earth2me.essentials.components.economy.Economy;
+import com.earth2me.essentials.components.economy.EconomyComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.economy.IWorthsComponent;
 import com.earth2me.essentials.components.economy.WorthsComponent;
@@ -30,12 +30,12 @@ import com.earth2me.essentials.components.jails.IJailsComponent;
 import com.earth2me.essentials.components.jails.JailsComponent;
 import com.earth2me.essentials.components.kits.IKitsComponent;
 import com.earth2me.essentials.components.kits.KitsComponent;
-import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.components.users.UsersComponent;
 import com.earth2me.essentials.components.warps.IWarpsComponent;
 import com.earth2me.essentials.components.warps.WarpsComponent;
 import com.earth2me.essentials.listener.*;
+import com.earth2me.essentials.register.payment.PaymentMethods;
 import com.earth2me.essentials.settings.GroupsComponent;
 import com.earth2me.essentials.settings.SettingsComponent;
 import java.io.File;
@@ -68,6 +68,8 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	public Essentials()
 	{
 		context = new Context();
+		context.setPaymentMethods(new PaymentMethods());
+		
 		tntListener = new TntExplodeListener(context);
 	}
 
@@ -143,9 +145,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 		try
 		{
 			registerComponents(1);
-
-			context.getI18n().updateLocale(context.getSettings().getLocale());
-
+			context.getI18n().reload();
 			registerComponents(2);
 
 			reload();
@@ -250,7 +250,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", "essentials.", context);
 			add(commands);
 
-			final IEconomyComponent economy = new Economy(context);
+			final IEconomyComponent economy = new EconomyComponent(context);
 			add(economy);
 			break;
 			
@@ -282,7 +282,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	@Override
 	public void onDisable()
 	{
-		context.getI18n().onDisable();
+		clear();
 		Trade.closeLog();
 	}
 
@@ -290,45 +290,22 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	public void reload()
 	{
 		Trade.closeLog();
-
+		reloadComponents();
+	}
+	
+	private void reloadComponents()
+	{
 		for (IReloadable reloadable : this)
 		{
-			reloadable.onReload();
+			reloadable.reload();
 			execTimer.mark("Reload(" + reloadable.getClass().getSimpleName() + ")");
 		}
-
-		context.getI18n().updateLocale(context.getSettings().getLocale());
 	}
 
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
 	{
 		return context.getCommands().handleCommand(sender, command, commandLabel, args);
-	}
-
-	@Override
-	public int broadcastMessage(final IUser sender, final String message)
-	{
-		if (sender == null)
-		{
-			return getServer().broadcastMessage(message);
-		}
-		if (sender.isHidden())
-		{
-			return 0;
-		}
-		final Player[] players = getServer().getOnlinePlayers();
-
-		for (Player player : players)
-		{
-			final IUser user = context.getUser(player);
-			if (!user.isIgnoringPlayer(sender.getName()))
-			{
-				player.sendMessage(message);
-			}
-		}
-
-		return players.length;
 	}
 
 	@Override

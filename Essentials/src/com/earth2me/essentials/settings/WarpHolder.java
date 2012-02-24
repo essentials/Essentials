@@ -16,7 +16,7 @@ public class WarpHolder extends AsyncStorageObjectHolder<Warp> implements IWarp
 	{
 		super(ess, Warp.class);
 		this.name = name;
-		onReload();
+		reload();
 	}
 
 	@Override

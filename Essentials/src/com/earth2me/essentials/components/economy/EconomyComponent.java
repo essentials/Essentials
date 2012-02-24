@@ -13,14 +13,14 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class Economy extends Component implements IEconomyComponent
+public class EconomyComponent extends Component implements IEconomyComponent
 {
 	private final MoneyHolder npcs;
 
-	public Economy(IContext ess)
+	public EconomyComponent(IContext context)
 	{
-		super(ess);
-		this.npcs = new MoneyHolder(ess);
+		super(context);
+		this.npcs = new MoneyHolder(context);
 	}
 
 	private double getNPCBalance(String name) throws UserDoesNotExistException
@@ -72,7 +72,7 @@ public class Economy extends Component implements IEconomyComponent
 	private double getStartingBalance()
 	{
 		double startingBalance = 0;
-		ISettingsComponent settings = getParent().getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -86,15 +86,15 @@ public class Economy extends Component implements IEconomyComponent
 	}
 
 	@Override
-	public void onReload()
+	public void reload()
 	{
-		this.npcs.onReload(false);
+		this.npcs.reload(false);
 	}
 
 	@Override
 	public double getMoney(String name) throws UserDoesNotExistException
 	{
-		IUser user = getParent().getUser(name);
+		IUser user = getContext().getUser(name);
 		if (user == null)
 		{
 			return getNPCBalance(name);
@@ -105,7 +105,7 @@ public class Economy extends Component implements IEconomyComponent
 	@Override
 	public void setMoney(String name, double balance) throws NoLoanPermittedException, UserDoesNotExistException
 	{
-		IUser user = getParent().getUser(name);
+		IUser user = getContext().getUser(name);
 		if (user == null)
 		{
 			setNPCBalance(name, balance, true);
@@ -127,7 +127,7 @@ public class Economy extends Component implements IEconomyComponent
 	@Override
 	public String format(double amount)
 	{
-		return Util.formatCurrency(amount, getParent());
+		return Util.formatCurrency(amount, getContext());
 	}
 
 	@Override
@@ -147,7 +147,7 @@ public class Economy extends Component implements IEconomyComponent
 	@Override
 	public boolean isNpc(String name) throws UserDoesNotExistException
 	{
-		boolean result = getParent().getUser(name) == null;
+		boolean result = getContext().getUser(name) == null;
 		if (result)
 		{
 			getNPCBalance(name);

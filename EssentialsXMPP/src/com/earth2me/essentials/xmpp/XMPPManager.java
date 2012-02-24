@@ -38,7 +38,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 		this.parent = parent;
 		config = new EssentialsConf(new File(parent.getDataFolder(), "config.yml"));
 		config.setTemplateName("/config.yml", EssentialsXMPP.class);
-		onReload();
+		reload();
 	}
 
 	public boolean sendMessage(final String address, final String message)
@@ -165,7 +165,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 	}
 
 	@Override
-	public final void onReload()
+	public final void reload()
 	{
 		LOGGER.removeHandler(this);
 		config.load();

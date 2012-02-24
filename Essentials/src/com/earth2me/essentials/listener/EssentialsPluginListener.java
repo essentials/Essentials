@@ -57,7 +57,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 	}
 
 	@Override
-	public void onReload()
+	public void reload()
 	{
 		//ess.getPermissionsHandler().setUseSuperperms(ess.getSettings().useBukkitPermissions());
 	}

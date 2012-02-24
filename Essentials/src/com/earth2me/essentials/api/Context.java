@@ -1,6 +1,5 @@
 package com.earth2me.essentials.api;
 
-import com.earth2me.essentials.I18nComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.economy.IWorthsComponent;
 import com.earth2me.essentials.components.jails.IJailsComponent;
@@ -9,6 +8,8 @@ import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.components.warps.IWarpsComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
+import java.io.File;
+import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -27,24 +28,46 @@ public final class Context implements IContext
 	private transient ISettingsComponent settings;
 	private transient IWarpsComponent warps;
 	private transient IWorthsComponent worths;
-	private transient PaymentMethods paymentMethods; // TODO = new PaymentMethods();
+	private transient PaymentMethods paymentMethods;
 	private transient IUsersComponent users;
 	private transient II18nComponent i18n;
 	private transient ICommandsComponent commands;
 	private transient IEconomyComponent economy;
 	private transient Server server;
-	
+	public transient File dataFolder;
+	@SuppressWarnings("NonConstantLogger")
+	public transient Logger logger;
+	public transient IScheduler scheduler;
+	public transient IMessagerComponent messager;
+
 	@Override
 	public World getWorld(final String name)
 	{
-		if (name.matches("[0-9]+"))
+		// Catch invalid parameters.
+		if (name == null || name.length() < 1)
 		{
-			final int worldId = Integer.parseInt(name);
-			if (worldId < getServer().getWorlds().size())
+			return null;
+		}
+		
+		// Check to see if the name is numeric.
+		char[] chars = name.toCharArray();
+		for (int i = 0; i < chars.length; i++)
+		{
+			if (chars[i] < '0' || chars[i] > '1')
 			{
-				return getServer().getWorlds().get(worldId);
+				// If not, get the world normally.
+				return getServer().getWorld(name);
 			}
 		}
+
+		final int worldId = Integer.parseInt(name);
+		if (worldId < getServer().getWorlds().size())
+		{
+			// Valid number; get world by number.
+			return getServer().getWorlds().get(worldId);
+		}
+		
+		// Otherwise, return by name.
 		return getServer().getWorld(name);
 	}
 
@@ -58,6 +81,24 @@ public final class Context implements IContext
 	public IUser getUser(final String playerName)
 	{
 		return getUsers().getUser(playerName);
+	}
+
+	@Override
+	public File getDataFolder()
+	{
+		return dataFolder;
+	}
+
+	@Override
+	public Logger getLogger()
+	{
+		return logger;
+	}
+
+	@Override
+	public IScheduler getScheduler()
+	{
+		return scheduler;
 	}
 
 	@Override
@@ -77,7 +118,6 @@ public final class Context implements IContext
 	{
 		return groups;
 	}
-
 
 	@Override
 	public IJailsComponent getJails()
@@ -143,6 +183,12 @@ public final class Context implements IContext
 	public Server getServer()
 	{
 		return server;
+	}
+
+	@Override
+	public IMessagerComponent getMessager()
+	{
+		return messager;
 	}
 
 	public void setBackup(IBackupComponent backup)
@@ -213,5 +259,25 @@ public final class Context implements IContext
 	public void setServer(Server server)
 	{
 		this.server = server;
+	}
+
+	public void setDataFolder(File dataFolder)
+	{
+		this.dataFolder = dataFolder;
+	}
+
+	public void setLogger(Logger logger)
+	{
+		this.logger = logger;
+	}
+
+	public void setScheduler(IScheduler scheduler)
+	{
+		this.scheduler = scheduler;
+	}
+
+	public void setMessager(IMessagerComponent messager)
+	{
+		this.messager = messager;
 	}
 }

@@ -56,7 +56,7 @@ public class Commandlightning extends EssentialsCommand
 				LightningStrike strike = matchPlayer.getWorld().strikeLightning(matchPlayer.getLocation());
 				matchPlayer.damage(power - 1, strike);
 			}
-			if (!ess.getUser(matchPlayer).isGodModeEnabled())
+			if (!getContext().getUser(matchPlayer).isGodModeEnabled())
 			{
 				matchPlayer.setHealth(matchPlayer.getHealth() < 5 ? 0 : matchPlayer.getHealth() - 5);
 			}

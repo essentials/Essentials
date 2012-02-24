@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 
 /**
@@ -20,6 +21,10 @@ import org.bukkit.entity.Player;
  */
 public interface IContext
 {
+	IEssentials getEssentials();
+	
+	IMessagerComponent getMessager();
+	
 	Logger getLogger();
 	
 	IScheduler getScheduler();

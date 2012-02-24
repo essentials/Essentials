@@ -90,12 +90,12 @@ public abstract class AsyncStorageObjectHolder<T extends IStorageObject> impleme
 	}
 
 	@Override
-	public void onReload()
+	public void reload()
 	{
-		onReload(true);
+		reload(true);
 	}
 
-	public void onReload(final boolean instant)
+	public void reload(final boolean instant)
 	{
 		reader.schedule(instant);
 	}

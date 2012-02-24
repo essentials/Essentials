@@ -75,10 +75,10 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 	@Override
 	public void setWarp(final String name, final Location loc) throws Exception
 	{
-		setWarp(name, new com.earth2me.essentials.storage.Location(loc));
+		setWarp(name, new com.earth2me.essentials.storage.LocationData(loc));
 	}
-	
-	public void setWarp(final String name, final com.earth2me.essentials.storage.Location loc) throws Exception
+
+	public void setWarp(final String name, final com.earth2me.essentials.storage.LocationData loc) throws Exception
 	{
 		IWarp warp = getObject(name);
 		if (warp == null)
@@ -112,7 +112,7 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 	public IWarp load(String name) throws Exception
 	{
 		final IWarp warp = new WarpHolder(name, ess);
-		warp.onReload();
+		warp.reload();
 		return warp;
 	}
 

@@ -131,7 +131,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	}
 
 	@Override
-	public void onReload()
+	public void reload()
 	{
 		loadAllObjectsAsync();
 	}

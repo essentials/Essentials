@@ -6,7 +6,7 @@ import com.earth2me.essentials.storage.ManagedFile;
 import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.settings.Spawns;
-import com.earth2me.essentials.storage.Location;
+import com.earth2me.essentials.storage.LocationData;
 import com.earth2me.essentials.storage.YamlStorageWriter;
 import java.io.*;
 import java.math.BigInteger;
@@ -216,7 +216,7 @@ public class EssentialsUpgrade
 					World world = ess.getServer().getWorlds().get(0);
 					if (world != null)
 					{
-						final Location loc = new Location(
+						final LocationData loc = new LocationData(
 								(String)vals.get(5),
 								((Number)vals.get(0)).doubleValue(),
 								((Number)vals.get(1)).doubleValue(),
@@ -326,14 +326,14 @@ public class EssentialsUpgrade
 				{
 					@SuppressWarnings("unchecked")
 					final String defworld = (String)config.getProperty("home.default");
-					final Location defloc = getFakeLocation(config, "home.worlds." + defworld);
+					final LocationData defloc = getFakeLocation(config, "home.worlds." + defworld);
 					if (defloc != null)
 					{
 						config.setProperty("homes.home", defloc);
 					}
 
 					Set<String> worlds = config.getConfigurationSection("home.worlds").getKeys(false);
-					Location loc;
+					LocationData loc;
 					String worldName;
 
 					if (worlds == null)
@@ -382,7 +382,7 @@ public class EssentialsUpgrade
 	 * { user.setMails(mails); } if (!user.hasHome()) { @SuppressWarnings("unchecked") final List<Object> vals =
 	 * (List<Object>)usersConfig.getProperty(username + ".home"); if (vals != null) { World world =
 	 * ess.getServer().getWorlds().get(0); if (vals.size() > 5) { world = getFakeWorld((String)vals.get(5)); } if (world
-	 * != null) { user.setHome("home", new Location(world, ((Number)vals.get(0)).doubleValue(),
+	 * != null) { user.setHome("home", new LocationData(world, ((Number)vals.get(0)).doubleValue(),
 	 * ((Number)vals.get(1)).doubleValue(), ((Number)vals.get(2)).doubleValue(), ((Number)vals.get(3)).floatValue(),
 	 * ((Number)vals.get(4)).floatValue())); } } } } usersFile.renameTo(new File(usersFile.getAbsolutePath() + ".old"));
 	 * }
@@ -444,7 +444,7 @@ public class EssentialsUpgrade
 						}
 						if (worldName != null)
 						{
-							final Location loc = new Location(worldName, x, y, z, yaw, pitch);
+							final LocationData loc = new LocationData(worldName, x, y, z, yaw, pitch);
 							((WarpsComponent)ess.getWarps()).setWarp(filename.substring(0, filename.length() - 4), loc);
 							if (!listOfFiles[i].renameTo(new File(warpsFolder, filename + ".old")))
 							{
@@ -494,7 +494,7 @@ public class EssentialsUpgrade
 								break;
 							}
 						}
-						final Location loc = new Location(name, x, y, z, yaw, pitch);
+						final LocationData loc = new LocationData(name, x, y, z, yaw, pitch);
 						ess.getWarps().setWarp(name, loc);
 						if (!warpFile.renameTo(new File(ess.getDataFolder(), "warps.txt.old")))
 						{
@@ -535,14 +535,14 @@ public class EssentialsUpgrade
 	 * World.Environment.NORMAL); } return null;
 	}
 	 */
-	public Location getFakeLocation(EssentialsConf config, String path)
+	public LocationData getFakeLocation(EssentialsConf config, String path)
 	{
 		String worldName = config.getString((path != null ? path + "." : "") + "world");
 		if (worldName == null || worldName.isEmpty())
 		{
 			return null;
 		}
-		return new Location(worldName,
+		return new LocationData(worldName,
 							config.getDouble((path != null ? path + "." : "") + "x", 0),
 							config.getDouble((path != null ? path + "." : "") + "y", 0),
 							config.getDouble((path != null ? path + "." : "") + "z", 0),
@@ -617,7 +617,7 @@ public class EssentialsUpgrade
 					Set<String> keys = config.getKeys(false);
 					for (String group : keys)
 					{
-						Location loc = getFakeLocation(config, group);
+						LocationData loc = getFakeLocation(config, group);
 						spawns.getSpawns().put(group.toLowerCase(Locale.ENGLISH), loc);
 					}
 					if (!configFile.renameTo(new File(ess.getDataFolder(), "spawn.yml.old")))
@@ -664,7 +664,7 @@ public class EssentialsUpgrade
 					Set<String> keys = config.getKeys(false);
 					for (String jailName : keys)
 					{
-						Location loc = getFakeLocation(config, jailName);
+						LocationData loc = getFakeLocation(config, jailName);
 						jails.getJails().put(jailName.toLowerCase(Locale.ENGLISH), loc);
 					}
 					if (!configFile.renameTo(new File(ess.getDataFolder(), "jail.yml.old")))

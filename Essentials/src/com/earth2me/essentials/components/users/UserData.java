@@ -17,14 +17,14 @@ public class UserData implements IStorageObject
 	}
 	private String nickname;
 	private Double money;
-	@MapValueType(Location.class)
-	private Map<String, Location> homes = new HashMap<String, Location>();
+	@MapValueType(LocationData.class)
+	private Map<String, LocationData> homes = new HashMap<String, LocationData>();
 	@ListType(Material.class)
 	private Set<Material> unlimited = new HashSet<Material>();
 	@MapValueType(List.class)
 	@MapKeyType(Material.class)
 	private Map<Material, List<String>> powerTools = new HashMap<Material, List<String>>();
-	private Location lastLocation;
+	private LocationData lastLocation;
 	@MapKeyType(TimestampType.class)
 	@MapValueType(Long.class)
 	private Map<TimestampType, Long> timestamps = new HashMap<TimestampType, Long>();
@@ -60,7 +60,7 @@ public class UserData implements IStorageObject
 	{
 		return unlimited != null && unlimited.contains(mat);
 	}
-	
+
 	public void setUnlimited(Material mat, boolean state)
 	{
 		if (unlimited.contains(mat))
@@ -77,8 +77,8 @@ public class UserData implements IStorageObject
 	{
 		return powerTools == null ? Collections.<String>emptyList() : powerTools.get(mat);
 	}
-	
-	
+
+
 	public boolean hasPowerTools()
 	{
 		return powerTools != null && !powerTools.isEmpty();

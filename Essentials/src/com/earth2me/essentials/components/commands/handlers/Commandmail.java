@@ -68,7 +68,7 @@ public class Commandmail extends EssentialsCommand
 			{
 				throw new Exception(_("noPerm", "essentials.mail.sendall"));
 			}
-			getContext().scheduleAsyncDelayedTask(new SendAll(user.getName() + ": " + Util.stripColor(getFinalArg(args, 1))));
+			getContext().getScheduler().scheduleAsyncDelayedTask(new SendAll(user.getName() + ": " + Util.stripColor(getFinalArg(args, 1))));
 			user.sendMessage(_("mailSent"));
 			return;
 		}
@@ -115,7 +115,7 @@ public class Commandmail extends EssentialsCommand
 		}
 		else if (args.length >= 1 && "sendall".equalsIgnoreCase(args[0]))
 		{
-			getContext().scheduleAsyncDelayedTask(new SendAll("Server: " + getFinalArg(args, 2)));
+			getContext().getScheduler().scheduleAsyncDelayedTask(new SendAll("Server: " + getFinalArg(args, 2)));
 		}
 		else if (args.length >= 2)
 		{

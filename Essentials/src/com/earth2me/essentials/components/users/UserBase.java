@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
-import com.earth2me.essentials.storage.Location.WorldNotLoadedException;
+import com.earth2me.essentials.storage.LocationData.WorldNotLoadedException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -43,14 +43,14 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	{
 		super(ess, UserData.class);
 		this.base = base;
-		onReload();
+		reload();
 	}
 
 	public UserBase(final OfflinePlayer offlinePlayer, final IContext ess)
 	{
 		super(ess, UserData.class);
 		this.offlinePlayer = offlinePlayer;
-		onReload();
+		reload();
 	}
 
 	public final Player getBase()
@@ -250,13 +250,13 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		acquireWriteLock();
 		try
 		{
-			Map<String, com.earth2me.essentials.storage.Location> homes = getData().getHomes();
+			Map<String, com.earth2me.essentials.storage.LocationData> homes = getData().getHomes();
 			if (homes == null)
 			{
-				homes = new HashMap<String, com.earth2me.essentials.storage.Location>();
+				homes = new HashMap<String, com.earth2me.essentials.storage.LocationData>();
 				getData().setHomes(homes);
 			}
-			homes.put(Util.sanitizeKey(name), new com.earth2me.essentials.storage.Location(loc));
+			homes.put(Util.sanitizeKey(name), new com.earth2me.essentials.storage.LocationData(loc));
 		}
 		finally
 		{
@@ -424,7 +424,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 				return null;
 			}
 			ArrayList<Location> worldHomes = new ArrayList<Location>();
-			for (com.earth2me.essentials.storage.Location location : getData().getHomes().values())
+			for (com.earth2me.essentials.storage.LocationData location : getData().getHomes().values())
 			{
 				if (location.getWorldName().equals(loc.getWorld().getName()))
 				{

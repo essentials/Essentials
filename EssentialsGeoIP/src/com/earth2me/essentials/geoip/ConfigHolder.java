@@ -15,7 +15,7 @@ public class ConfigHolder extends AsyncStorageObjectHolder<GeoIP>
 	{
 		super(ess, GeoIP.class);
 		this.geoip = geoip;
-		onReload();
+		reload();
 	}
 
 	@Override

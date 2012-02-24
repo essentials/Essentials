@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.commands.handlers;
 
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.I18nComponent._;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +33,7 @@ public class Commandnuke extends EssentialsCommand
 		{
 			targets = Arrays.asList(getServer().getOnlinePlayers());
 		}
-		getContext().getTntListener().enable();
+		getContext().getEssentials().getTntListener().enable();
 		for (Player player : targets)
 		{
 			if (player == null)

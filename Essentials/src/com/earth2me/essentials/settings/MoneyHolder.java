@@ -11,7 +11,7 @@ public class MoneyHolder extends AsyncStorageObjectHolder<Money>
 	public MoneyHolder(IContext ess)
 	{
 		super(ess, Money.class);
-		onReload();
+		reload();
 	}
 
 	@Override

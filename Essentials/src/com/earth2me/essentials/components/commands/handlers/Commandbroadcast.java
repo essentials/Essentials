@@ -16,6 +16,6 @@ public class Commandbroadcast extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		getContext().broadcastMessage(null, _("broadcast", getFinalArg(args, 0)));
+		getContext().getMessager().broadcastMessage(null, _("broadcast", getFinalArg(args, 0)));
 	}
 }

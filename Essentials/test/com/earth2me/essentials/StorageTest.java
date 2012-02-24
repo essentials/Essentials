@@ -98,7 +98,7 @@ public class StorageTest extends TestCase
 
 			for (int j = 0; j < 10000; j++)
 			{
-				userdata.getHomes().put("home", new com.earth2me.essentials.storage.Location(new Location(world, j, j, j)));
+				userdata.getHomes().put("home", new com.earth2me.essentials.storage.LocationData(new Location(world, j, j, j)));
 			}
 			ext.mark("change home 10000 times");
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -145,7 +145,7 @@ public class StorageTest extends TestCase
 		ext.mark("load empty user");
 		for (int j = 0; j < 1; j++)
 		{
-			user.setHome("home", new Location(world, j, j, j));
+			user.setHome("home", new LocationData(world, j, j, j));
 		}
 		ext.mark("change home 1 times");
 		user.save();

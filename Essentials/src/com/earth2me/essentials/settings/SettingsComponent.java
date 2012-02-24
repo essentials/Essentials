@@ -13,13 +13,13 @@ public class SettingsComponent extends AsyncStorageObjectHolder<Settings> implem
 	public SettingsComponent(final IContext ess)
 	{
 		super(ess, Settings.class);
-		onReload();
+		reload();
 	}
 
 	@Override
-	public final void onReload()
+	public final void reload()
 	{
-		super.onReload();
+		super.reload();
 		acquireReadLock();
 		try {
 			debug.set(getData().getGeneral().isDebug());

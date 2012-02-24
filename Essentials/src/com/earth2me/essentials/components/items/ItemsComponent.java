@@ -4,6 +4,7 @@ import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IItemsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
+import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.storage.ManagedFile;
@@ -17,21 +18,20 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 
-public class ItemsComponent implements IItemsComponent
+public class ItemsComponent extends Component implements IItemsComponent
 {
-	private final transient IContext ess;
-
-	public ItemsComponent(final IContext ess)
+	public ItemsComponent(final IContext context)
 	{
-		this.ess = ess;
-		file = new ManagedFile("items.csv", ess);
+		super(context);
+		
+		file = new ManagedFile("items.csv", context);
 	}
 	private final transient Map<String, Long> items = new HashMap<String, Long>();
 	private final transient ManagedFile file;
 	private static final Pattern SPLIT = Pattern.compile("[^a-zA-Z0-9]");
 
 	@Override
-	public void onReload()
+	public void reload()
 	{
 		final List<String> lines = file.getLines();
 
@@ -69,7 +69,7 @@ public class ItemsComponent implements IItemsComponent
 		final ItemStack stack = get(id.toLowerCase(Locale.ENGLISH));
 
 		@Cleanup
-		final ISettingsComponent settings = ess.getSettings();
+		final ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 
 		final int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();

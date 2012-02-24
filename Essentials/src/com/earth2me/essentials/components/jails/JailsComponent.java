@@ -5,12 +5,11 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.settings.Jails;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.LocationData;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Cleanup;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,22 +27,35 @@ import org.bukkit.plugin.PluginManager;
 
 public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements IJailsComponent
 {
-	private static final transient Logger LOGGER = Bukkit.getLogger();
-
 	public JailsComponent(final IContext ess)
 	{
-		super(ess, com.earth2me.essentials.settings.Jails.class);
-		onReload();
+		super(ess, Jails.class);
+	}
+
+	@Override
+	public String getTypeId()
+	{
+		return "WorthsComponent";
+	}
+
+	@Override
+	public void initialize()
+	{
+	}
+
+	@Override
+	public void onEnable()
+	{
+		reload();
 		registerListeners();
 	}
 
 	private void registerListeners()
 	{
 		final PluginManager pluginManager = context.getServer().getPluginManager();
-		final JailBlockListener blockListener = new JailBlockListener();
-		final JailPlayerListener playerListener = new JailPlayerListener();
-		pluginManager.registerEvents(blockListener, context);
-		pluginManager.registerEvents(playerListener, context);
+
+		pluginManager.registerEvents(new JailBlockListener(), context.getEssentials());
+		pluginManager.registerEvents(new JailPlayerListener(), context.getEssentials());
 	}
 
 	@Override
@@ -58,16 +70,19 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		acquireReadLock();
 		try
 		{
-			if (getData().getJails() == null || jailName == null
+			if (getData().getJails() == null
+				|| jailName == null
 				|| !getData().getJails().containsKey(jailName.toLowerCase(Locale.ENGLISH)))
 			{
 				throw new Exception(_("jailNotExist"));
 			}
+
 			Location loc = getData().getJails().get(jailName.toLowerCase(Locale.ENGLISH)).getBukkitLocation();
 			if (loc == null || loc.getWorld() == null)
 			{
 				throw new Exception(_("jailNotExist"));
 			}
+
 			return loc;
 		}
 		finally
@@ -82,6 +97,7 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		acquireReadLock();
 		try
 		{
+			final Map<String, LocationData> jails = getData().getJails();
 			if (getData().getJails() == null)
 			{
 				return Collections.emptyList();
@@ -120,9 +136,10 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		{
 			if (!(user.isOnline()))
 			{
-				Location loc = getJail(jail);
+				final Location loc = getJail(jail);
 				user.getTeleport().now(loc, false, TeleportCause.COMMAND);
 			}
+
 			user.acquireWriteLock();
 			try
 			{
@@ -147,9 +164,9 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		{
 			if (getData().getJails() == null)
 			{
-				getData().setJails(new HashMap<String, com.earth2me.essentials.storage.Location>());
+				getData().setJails(new HashMap<String, LocationData>());
 			}
-			getData().getJails().put(jailName.toLowerCase(Locale.ENGLISH), new com.earth2me.essentials.storage.Location(loc));
+			getData().getJails().put(jailName.toLowerCase(Locale.ENGLISH), new LocationData(loc));
 		}
 		finally
 		{
@@ -231,11 +248,11 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 			{
 				if (context.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 		}
@@ -259,11 +276,11 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 			{
 				if (context.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 			user.sendMessage(_("jailMessage"));
@@ -288,11 +305,11 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 			{
 				if (context.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 			user.sendMessage(_("jailMessage"));

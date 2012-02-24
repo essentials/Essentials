@@ -22,7 +22,7 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 	public GroupsComponent(final IContext context)
 	{
 		super(context, Groups.class);
-		onReload();
+		reload();
 	}
 
 	@Override

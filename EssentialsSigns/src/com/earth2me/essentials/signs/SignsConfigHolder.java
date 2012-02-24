@@ -17,7 +17,7 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 	{
 		super(ess, SignsConfig.class);
 		this.plugin = plugin;
-		onReload();
+		reload();
 		acquireReadLock();
 		try
 		{

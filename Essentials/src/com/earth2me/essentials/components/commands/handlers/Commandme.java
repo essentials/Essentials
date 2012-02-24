@@ -33,6 +33,6 @@ public class Commandme extends EssentialsCommand
 		}
 		
 
-		getContext().broadcastMessage(user, _("action", user.getDisplayName(), message));
+		getContext().getMessager().broadcastMessage(user, _("action", user.getDisplayName(), message));
 	}
 }

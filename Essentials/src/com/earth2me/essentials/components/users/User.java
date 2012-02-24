@@ -189,7 +189,7 @@ public class User extends UserBase implements IUser
 		acquireWriteLock();
 		try
 		{
-			getData().setLastLocation(new com.earth2me.essentials.storage.Location(getLocation()));
+			getData().setLastLocation(new com.earth2me.essentials.storage.LocationData(getLocation()));
 		}
 		finally
 		{
@@ -461,7 +461,7 @@ public class User extends UserBase implements IUser
 		settings.acquireReadLock();
 		final long autoafkkick = settings.getData().getCommands().getAfk().getAutoAFKKick();
 		if (autoafkkick > 0 && lastActivity > 0 && (lastActivity + (autoafkkick * 1000)) < System.currentTimeMillis()
-			&& !hidden 
+			&& !hidden
 			&& !Permissions.KICK_EXEMPT.isAuthorized(this)
 			&& !Permissions.AFK_KICKEXEMPT.isAuthorized(this))
 		{
@@ -631,12 +631,12 @@ public class User extends UserBase implements IUser
 	private boolean giveItemStack(ItemStack itemStack, Boolean canSpew) throws ChargeException
 	{
 		boolean spew = false;
-		
+
 		if (itemStack == null || itemStack.getType() == Material.AIR)
 		{
 			return spew;
 		}
-		
+
 		final Map<Integer, ItemStack> overfilled;
 		if (Permissions.OVERSIZEDSTACKS.isAuthorized(this))
 		{

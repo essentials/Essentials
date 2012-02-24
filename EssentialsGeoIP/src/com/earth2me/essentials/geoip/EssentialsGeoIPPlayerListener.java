@@ -39,7 +39,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReloadable
 		this.ess = ess;
 		this.geoip = geoip;
 		this.config = new ConfigHolder(ess, geoip);
-		onReload();
+		reload();
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -108,9 +108,9 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReloadable
 	}
 
 	@Override
-	public final void onReload()
+	public final void reload()
 	{
-		config.onReload();
+		config.reload();
 		config.acquireReadLock();
 		try
 		{

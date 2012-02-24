@@ -9,8 +9,6 @@ import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUser;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,26 +23,25 @@ public class CommandsComponent extends Component implements ICommandsComponent
 	private final transient ClassLoader classLoader;
 	private final transient String commandPath;
 	private final transient String permissionPrefix;
-	private final transient IEssentialsModule module;
-	private static final transient Logger LOGGER = Bukkit.getLogger();
-	private final transient Map<String, List<PluginCommand>> altcommands = new HashMap<String, List<PluginCommand>>();
+	private final transient IEssentialsModule module;	private final transient Map<String, List<PluginCommand>> altcommands = new HashMap<String, List<PluginCommand>>();
 	private final transient Map<String, String> disabledList = new HashMap<String, String>();
 	private final transient Map<String, IEssentialsCommand> commands = new HashMap<String, IEssentialsCommand>();
-	private final transient IContext ess;
 
 	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IContext ess)
 	{
 		this(classLoader, commandPath, permissionPrefix, null, ess);
 	}
 
-	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IEssentialsModule module, IContext ess)
+	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IEssentialsModule module, IContext context)
 	{
+		super(context);
+		
 		this.classLoader = classLoader;
 		this.commandPath = commandPath;
 		this.permissionPrefix = permissionPrefix;
 		this.module = module;
-		this.ess = ess;
-		for (Plugin plugin : ess.getServer().getPluginManager().getPlugins())
+		
+		for (Plugin plugin : context.getServer().getPluginManager().getPlugins())
 		{
 			if (plugin.isEnabled())
 			{
@@ -59,7 +56,7 @@ public class CommandsComponent extends Component implements ICommandsComponent
 	{
 		boolean disabled = false;
 		boolean overridden = false;
-		ISettingsComponent settings = ess.getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -109,8 +106,8 @@ public class CommandsComponent extends Component implements ICommandsComponent
 			IUser user = null;
 			if (sender instanceof Player)
 			{
-				user = ess.getUser((Player)sender);
-				LOGGER.log(Level.INFO, String.format("[PLAYER_COMMAND] %s: /%s %s ", ((Player)sender).getName(), commandLabel, EssentialsCommand.getFinalArg(args, 0)));
+				user = getContext().getUser((Player)sender);
+				getContext().getLogger().log(Level.INFO, String.format("[PLAYER_COMMAND] %s: /%s %s ", ((Player)sender).getName(), commandLabel, EssentialsCommand.getFinalArg(args, 0)));
 			}
 
 			// Check for disabled commands
@@ -126,14 +123,14 @@ public class CommandsComponent extends Component implements ICommandsComponent
 				try
 				{
 					cmd = (IEssentialsCommand)classLoader.loadClass(commandPath + commandName).newInstance();
-					cmd.init(ess, commandName);
+					cmd.init(getContext(), commandName);
 					cmd.setEssentialsModule(module);
 					commands.put(commandName, cmd);
 				}
 				catch (Exception ex)
 				{
 					sender.sendMessage(_("commandNotLoaded", commandName));
-					LOGGER.log(Level.SEVERE, _("commandNotLoaded", commandName), ex);
+					getContext().getLogger().log(Level.SEVERE, _("commandNotLoaded", commandName), ex);
 					return true;
 				}
 			}
@@ -141,7 +138,7 @@ public class CommandsComponent extends Component implements ICommandsComponent
 			// Check authorization
 			if (sender != null && cmd.isAuthorized(sender))
 			{
-				LOGGER.log(Level.WARNING, _("deniedAccessCommand", user.getName()));
+				getContext().getLogger().log(Level.WARNING, _("deniedAccessCommand", user.getName()));
 				user.sendMessage(_("noAccessCommand"));
 				return true;
 			}
@@ -189,7 +186,7 @@ public class CommandsComponent extends Component implements ICommandsComponent
 		}
 		catch (Throwable ex)
 		{
-			LOGGER.log(Level.SEVERE, _("commandFailed", commandLabel), ex);
+			getContext().getLogger().log(Level.SEVERE, _("commandFailed", commandLabel), ex);
 			return true;
 		}
 	}
@@ -198,14 +195,14 @@ public class CommandsComponent extends Component implements ICommandsComponent
 	public void showCommandError(final CommandSender sender, final String commandLabel, final Throwable exception)
 	{
 		sender.sendMessage(_("errorWithMessage", exception.getMessage()));
-		if (ess.getSettings().isDebug())
+		if (getContext().getSettings().isDebug())
 		{
-			LOGGER.log(Level.WARNING, _("errorCallingCommand", commandLabel), exception);
+			getContext().getLogger().log(Level.WARNING, _("errorCallingCommand", commandLabel), exception);
 		}
 	}
 
 	@Override
-	public void onReload()
+	public void reload()
 	{
 	}
 
@@ -225,10 +222,10 @@ public class CommandsComponent extends Component implements ICommandsComponent
 			final List<String> labels = new ArrayList<String>(pc.getAliases());
 			labels.add(pc.getName());
 
-			PluginCommand reg = ess.getServer().getPluginCommand(pluginName + ":" + pc.getName().toLowerCase(Locale.ENGLISH));
+			PluginCommand reg = getContext().getServer().getPluginCommand(pluginName + ":" + pc.getName().toLowerCase(Locale.ENGLISH));
 			if (reg == null)
 			{
-				reg = ess.getServer().getPluginCommand(pc.getName().toLowerCase(Locale.ENGLISH));
+				reg = getContext().getServer().getPluginCommand(pc.getName().toLowerCase(Locale.ENGLISH));
 			}
 			if (reg == null || !reg.getPlugin().equals(plugin))
 			{
@@ -306,9 +303,9 @@ public class CommandsComponent extends Component implements ICommandsComponent
 
 	public void executed(final String label, final String otherLabel)
 	{
-		if (ess.getSettings().isDebug())
+		if (getContext().getSettings().isDebug())
 		{
-			LOGGER.log(Level.INFO, "Essentials: Alternative command {0} found, using {1}", new Object[]
+			getContext().getLogger().log(Level.INFO, "Essentials: Alternative command {0} found, using {1}", new Object[]
 					{
 						label, otherLabel
 					});

@@ -15,10 +15,26 @@ import org.bukkit.material.MaterialData;
 
 public class WorthsComponent extends AsyncStorageObjectHolder<Worth> implements IWorthsComponent
 {
-	public WorthsComponent(final IContext ess)
+	public WorthsComponent(final IContext context)
 	{
-		super(ess, Worth.class);
-		onReload(false);
+		super(context, Worth.class);
+	}
+
+	@Override
+	public String getTypeId()
+	{
+		return "WorthsComponent";
+	}
+
+	@Override
+	public void initialize()
+	{
+	}
+
+	@Override
+	public void onEnable()
+	{
+		reload(false);
 	}
 
 	@Override

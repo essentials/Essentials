@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 
-public class Location
+public class LocationData
 {
 	private WeakReference<org.bukkit.Location> location;
 	private final String worldname;
@@ -17,7 +17,7 @@ public class Location
 	private final float yaw;
 	private final float pitch;
 
-	public Location(org.bukkit.Location loc)
+	public LocationData(org.bukkit.Location loc)
 	{
 		location = new WeakReference<org.bukkit.Location>(loc);
 		worldname = loc.getWorld().getName();
@@ -29,7 +29,7 @@ public class Location
 		pitch = loc.getPitch();
 	}
 
-	public Location(String worldname, double x, double y, double z, float yaw, float pitch)
+	public LocationData(String worldname, double x, double y, double z, float yaw, float pitch)
 	{
 		this.worldname = worldname;
 		this.x = x;
@@ -39,7 +39,7 @@ public class Location
 		this.pitch = pitch;
 	}
 
-	public Location(String worldname, double x, double y, double z)
+	public LocationData(String worldname, double x, double y, double z)
 	{
 		this.worldname = worldname;
 		this.x = x;

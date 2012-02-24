@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import com.earth2me.essentials.components.commands.EssentialsCommand;
 import static com.earth2me.essentials.I18nComponent._;
+import com.earth2me.essentials.components.commands.EssentialsCommand;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
@@ -39,7 +39,7 @@ public class Commandessentials extends EssentialsCommand
 
 	private void run_disabled(final CommandSender sender, final String[] args) throws Exception
 	{
-		sender.sendMessage("Essentials " + getContext().getDescription().getVersion());
+		sender.sendMessage("Essentials " + getContext().getEssentials().getDescription().getVersion());
 		sender.sendMessage("/<command> <reload/debug>");
 		sender.sendMessage(_("blockList"));
 		final StringBuilder disabledCommands = new StringBuilder();
@@ -57,13 +57,13 @@ public class Commandessentials extends EssentialsCommand
 	private void run_debug(final CommandSender sender, final String[] args) throws Exception
 	{
 		getContext().getSettings().setDebug(!getContext().getSettings().isDebug());
-		sender.sendMessage("Essentials " + getContext().getDescription().getVersion() + " debug mode " + (getContext().getSettings().isDebug() ? "enabled" : "disabled"));
+		sender.sendMessage("Essentials " + getContext().getEssentials().getDescription().getVersion() + " debug mode " + (getContext().getSettings().isDebug() ? "enabled" : "disabled"));
 	}
 
 	private void run_reload(final CommandSender sender, final String[] args) throws Exception
 	{
-		getContext().reload();
-		sender.sendMessage(_("essentialsReload", getContext().getDescription().getVersion()));
+		getContext().getEssentials().reload();
+		sender.sendMessage(_("essentialsReload", getContext().getEssentials().getDescription().getVersion()));
 	}
 
 	private void run_nya(final CommandSender sender, final String[] args) throws Exception
@@ -113,7 +113,7 @@ public class Commandessentials extends EssentialsCommand
 				loc.getBlock().setType(Material.NOTE_BLOCK);
 			}
 		}
-		taskid = getContext().scheduleSyncRepeatingTask(new Runnable()
+		taskid = getContext().getScheduler().scheduleSyncRepeatingTask(new Runnable()
 		{
 			int i = 0;
 

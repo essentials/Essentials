@@ -16,7 +16,7 @@ public class UserManager implements IReloadable
 	public UserManager(final File folder)
 	{
 		users = new EssentialsConf(new File(folder, "users.yml"));
-		onReload();
+		reload();
 	}
 
 	public final boolean isSpy(final String username)
@@ -65,11 +65,11 @@ public class UserManager implements IReloadable
 		userdata.put(SPY, spy);
 		users.setProperty(username, userdata);
 		users.save();
-		onReload();
+		reload();
 	}
 
 	@Override
-	public final void onReload()
+	public final void reload()
 	{
 		users.load();
 		spyusers.clear();

@@ -46,6 +46,12 @@ public class I18nComponent extends Component implements II18nComponent
 	{
 		instance = null;
 	}
+	
+	@Override
+	public void reload()
+	{
+		updateLocale(getContext().getSettings().getLocale());
+	}
 
 	@Override
 	public Locale getCurrentLocale()
