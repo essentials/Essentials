@@ -1,16 +1,29 @@
 package com.earth2me.essentials.components;
 
+import com.earth2me.essentials.api.IReloadable;
 import java.util.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-public abstract class ComponentPlugin extends JavaPlugin implements List<IComponent>
+public abstract class ComponentPlugin extends JavaPlugin implements List<IComponent>, IReloadable
 {
 	private transient final List<IComponent> components = new ArrayList<IComponent>();
 	private transient volatile boolean initialized;
-	
+
 	/**
-	 * Call to initialize all components.
+	 * Reload all components.
+	 */
+	@Override
+	public void reload()
+	{
+		for (IReloadable reloadable : this)
+		{
+			reloadable.reload();
+		}
+	}
+
+	/**
+	 *Initialize all components.
 	 */
 	public void initialize() throws IllegalStateException
 	{
@@ -19,7 +32,7 @@ public abstract class ComponentPlugin extends JavaPlugin implements List<ICompon
 			throw new IllegalStateException("The components have already been initialized.");
 		}
 		initialized = true;
-		
+
 		for (IComponent component : components)
 		{
 			component.initialize();
@@ -85,7 +98,7 @@ public abstract class ComponentPlugin extends JavaPlugin implements List<ICompon
 	{
 		return components.remove(o);
 	}
-	
+
 	public boolean remove(final IComponent component)
 	{
 		if (remove(component))
@@ -144,9 +157,9 @@ public abstract class ComponentPlugin extends JavaPlugin implements List<ICompon
 				ex = iterationEx;
 			}
 		}
-		
+
 		components.clear();
-		
+
 		if (ex != null)
 		{
 			throw new Error(ex);

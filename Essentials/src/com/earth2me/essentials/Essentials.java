@@ -17,11 +17,6 @@
  */
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.listeners.EssentialsPlayerListener;
-import com.earth2me.essentials.listeners.TntExplodeListener;
-import com.earth2me.essentials.listeners.EssentialsBlockListener;
-import com.earth2me.essentials.listeners.EssentialsPluginListener;
-import com.earth2me.essentials.listeners.EssentialsEntityListener;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.components.ComponentPlugin;
 import com.earth2me.essentials.components.backup.BackupComponent;
@@ -43,6 +38,7 @@ import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.components.users.UsersComponent;
 import com.earth2me.essentials.components.warps.IWarpsComponent;
 import com.earth2me.essentials.components.warps.WarpsComponent;
+import com.earth2me.essentials.listeners.*;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.io.File;
 import java.io.FileReader;
@@ -293,14 +289,11 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	}
 
 	@Override
+	// Override it so we can mark with execTimer.
 	public void reload()
 	{
 		Trade.closeLog();
-		reloadComponents();
-	}
 
-	private void reloadComponents()
-	{
 		for (IReloadable reloadable : this)
 		{
 			reloadable.reload();
