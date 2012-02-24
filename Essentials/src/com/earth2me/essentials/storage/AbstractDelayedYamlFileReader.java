@@ -18,10 +18,10 @@ public abstract class AbstractDelayedYamlFileReader<T extends IStorageObject> im
 	private final transient Plugin plugin;
 	private final transient ReentrantLock lock = new ReentrantLock();
 
-	public AbstractDelayedYamlFileReader(final IContext ess, final Class<T> clazz)
+	public AbstractDelayedYamlFileReader(final IContext context, final Class<T> clazz)
 	{
 		this.clazz = clazz;
-		this.plugin = ess;
+		this.plugin = context.getEssentials();
 	}
 
 	public void schedule(boolean instant)

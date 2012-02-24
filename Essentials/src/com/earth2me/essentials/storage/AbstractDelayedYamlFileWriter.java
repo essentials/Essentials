@@ -17,9 +17,9 @@ public abstract class AbstractDelayedYamlFileWriter implements Runnable
 	private final transient Plugin plugin;
 	private final transient ReentrantLock lock = new ReentrantLock();
 
-	public AbstractDelayedYamlFileWriter(final IContext ess)
+	public AbstractDelayedYamlFileWriter(final IContext context)
 	{
-		this.plugin = ess;
+		this.plugin = context.getEssentials();
 	}
 
 	public void schedule()
