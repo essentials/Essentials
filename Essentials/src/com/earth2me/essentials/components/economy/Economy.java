@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.economy;
 
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.users.UserDoesNotExistException;
@@ -72,7 +72,7 @@ public class Economy extends Component implements IEconomyComponent
 	private double getStartingBalance()
 	{
 		double startingBalance = 0;
-		ISettings settings = getParent().getSettings();
+		ISettingsComponent settings = getParent().getSettings();
 		settings.acquireReadLock();
 		try
 		{

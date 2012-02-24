@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.ISettings;
+import static com.earth2me.essentials.I18nComponent._;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.users.IUser;
@@ -23,7 +23,7 @@ public class Commandmore extends EssentialsCommand
 		}
 		int defaultStackSize = 0;
 		int oversizedStackSize = 0;
-		ISettings settings = getContext().getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		try
 		{

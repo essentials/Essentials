@@ -10,25 +10,11 @@ import org.bukkit.plugin.Plugin;
  */
 public interface IEssentials extends Plugin
 {
-	void addReloadListener(IReloadable listener);
-
 	int broadcastMessage(IUser sender, String message);
-
-	int scheduleAsyncDelayedTask(Runnable run);
-
-	int scheduleSyncDelayedTask(Runnable run);
-
-	int scheduleSyncDelayedTask(Runnable run, long delay);
-
-	int scheduleSyncRepeatingTask(Runnable run, long delay, long period);
 
 	void reload();
 
 	TntExplodeListener getTntListener();
-
-	void setGroups(IGroupsComponent groups);
-
-	void removeReloadListener(IReloadable groups);
 	
 	IContext getContext();
 }

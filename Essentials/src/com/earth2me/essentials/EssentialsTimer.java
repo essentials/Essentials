@@ -1,11 +1,11 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.components.users.UserData.TimestampType;
+import com.earth2me.essentials.perm.Permissions;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -16,30 +16,30 @@ import org.bukkit.entity.Player;
 
 public class EssentialsTimer implements Runnable
 {
-	private final transient IContext ess;
+	private final transient IContext context;
 	private final transient Set<IUser> onlineUsers = new HashSet<IUser>();
 
-	EssentialsTimer(final IContext ess)
+	EssentialsTimer(final IContext context)
 	{
-		this.ess = ess;
+		this.context = context;
 	}
 
 	@Override
 	public void run()
 	{
 		final long currentTime = System.currentTimeMillis();
-		for (Player player : ess.getServer().getOnlinePlayers())
+		for (Player player : context.getServer().getOnlinePlayers())
 		{
 
 			try
 			{
-				final IUser user = ess.getUser(player);
+				final IUser user = context.getUser(player);
 				onlineUsers.add(user);
 				user.setLastOnlineActivity(currentTime);
 				user.checkActivity();
 
 				boolean mailDisabled = false;
-				ISettings settings = ess.getSettings();
+				ISettingsComponent settings = context.getSettings();
 				settings.acquireReadLock();
 				try
 				{
@@ -61,7 +61,7 @@ public class EssentialsTimer implements Runnable
 			}
 			catch (Exception e)
 			{
-				ess.getLogger().log(Level.WARNING, "EssentialsTimer Error:", e);
+				context.getLogger().log(Level.WARNING, "EssentialsTimer Error:", e);
 			}
 		}
 

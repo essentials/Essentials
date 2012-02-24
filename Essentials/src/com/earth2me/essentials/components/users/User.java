@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.users;
 
 import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Console;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
@@ -211,7 +211,7 @@ public class User extends UserBase implements IUser
 		{
 			final String nick = getData().getNickname();
 			@Cleanup
-			final ISettings settings = context.getSettings();
+			final ISettingsComponent settings = context.getSettings();
 			settings.acquireReadLock();
 			final IGroupsComponent groups = context.getGroups();
 			// default: {PREFIX}{NICKNAMEPREFIX}{NAME}{SUFFIX}
@@ -279,7 +279,7 @@ public class User extends UserBase implements IUser
 	public void updateDisplayName()
 	{
 		@Cleanup
-		final ISettings settings = context.getSettings();
+		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
 		if (isOnlineUser() && settings.getData().getChat().getChangeDisplayname())
 		{
@@ -457,7 +457,7 @@ public class User extends UserBase implements IUser
 	public void checkActivity()
 	{
 		@Cleanup
-		final ISettings settings = context.getSettings();
+		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
 		final long autoafkkick = settings.getData().getCommands().getAfk().getAutoAFKKick();
 		if (autoafkkick > 0 && lastActivity > 0 && (lastActivity + (autoafkkick * 1000)) < System.currentTimeMillis()
@@ -518,7 +518,7 @@ public class User extends UserBase implements IUser
 		try
 		{
 			@Cleanup
-			final ISettings settings = context.getSettings();
+			final ISettingsComponent settings = context.getSettings();
 			settings.acquireReadLock();
 			return (getData().isGodmode()
 					&& !settings.getData().getWorldOptions(getLocation().getWorld().getName()).isGodmode())
@@ -641,7 +641,7 @@ public class User extends UserBase implements IUser
 		if (Permissions.OVERSIZEDSTACKS.isAuthorized(this))
 		{
 			@Cleanup
-			final ISettings settings = context.getSettings();
+			final ISettingsComponent settings = context.getSettings();
 			settings.acquireReadLock();
 			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
 

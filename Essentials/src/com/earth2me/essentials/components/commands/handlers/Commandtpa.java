@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.ISettings;
+import static com.earth2me.essentials.I18nComponent._;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.components.users.IUser;
@@ -32,7 +32,7 @@ public class Commandtpa extends EssentialsCommand
 			player.sendMessage(_("typeTpaccept"));
 			player.sendMessage(_("typeTpdeny"));
 			int tpaAcceptCancellation = 0;
-			ISettings settings = getContext().getSettings();
+			ISettingsComponent settings = getContext().getSettings();
 			settings.acquireReadLock();
 			try {
 				tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();

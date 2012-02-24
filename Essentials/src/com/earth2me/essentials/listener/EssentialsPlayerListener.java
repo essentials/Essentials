@@ -1,9 +1,9 @@
 package com.earth2me.essentials.listener;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.users.UserData.TimestampType;
 import com.earth2me.essentials.perm.Permissions;
@@ -90,7 +90,7 @@ public class EssentialsPlayerListener implements Listener
 		final IUser user = ess.getUser(event.getPlayer());
 		user.acquireReadLock();
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 
 		if (user.getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers())
@@ -125,7 +125,7 @@ public class EssentialsPlayerListener implements Listener
 		final IUser user = ess.getUser(event.getPlayer());
 		user.acquireReadLock();
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		if (settings.getData().getCommands().getGod().isRemoveOnDisconnect() && user.isGodModeEnabled())
 		{
@@ -157,7 +157,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 
 		if (!settings.getData().getCommands().isDisabled("motd") && Permissions.MOTD.isAuthorized(user))
@@ -240,7 +240,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		final IUser user = ess.getUser(event.getPlayer());
 		//There is TeleportCause.COMMMAND but plugins have to actively pass the cause in on their teleports.
@@ -378,7 +378,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerChangedWorld(final PlayerChangedWorldEvent event)
 	{
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		@Cleanup
 		final IUser user = ess.getUser(event.getPlayer());
@@ -413,7 +413,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		if (settings.getData().getCommands().getHome().isUpdateBedAtDaytime() && event.getClickedBlock().getType() == Material.BED_BLOCK)
 		{
@@ -429,7 +429,7 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		if (!settings.getData().getCommands().getAfk().isDisableItemPickupWhileAfk())
 		{

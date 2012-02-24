@@ -3,7 +3,7 @@ package com.earth2me.essentials;
 import com.earth2me.essentials.components.warps.WarpsComponent;
 import com.earth2me.essentials.components.economy.WorthsComponent;
 import com.earth2me.essentials.storage.ManagedFile;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.settings.Spawns;
 import com.earth2me.essentials.storage.Location;

@@ -1,8 +1,8 @@
 package com.earth2me.essentials.spawn;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
@@ -36,7 +36,7 @@ public class EssentialsSpawnPlayerListener implements Listener
 		final IUser user = ess.getUser(event.getPlayer());
 
 		boolean respawnAtHome = false;
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		try
 		{

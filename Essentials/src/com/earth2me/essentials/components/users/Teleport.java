@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.users;
 
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ITeleport;
 import com.earth2me.essentials.components.users.IUser;

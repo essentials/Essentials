@@ -1,8 +1,8 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.external.gnu.inet.encoding.Punycode;
 import com.earth2me.essentials.external.gnu.inet.encoding.PunycodeException;
@@ -484,7 +484,7 @@ public final class Util
 	public static String formatCurrency(final double value, final IContext ess)
 	{
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		String str = settings.getData().getEconomy().getCurrencySymbol() + df.format(value);
 		if (str.endsWith(".00"))

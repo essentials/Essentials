@@ -2,7 +2,7 @@ package com.earth2me.essentials.listener;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IReloadable;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.perm.GmGroups;
 import com.earth2me.essentials.perm.VaultGroups;
 import com.earth2me.essentials.register.payment.PaymentMethods;
@@ -64,7 +64,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 
 	private void checkGroups()
 	{
-		ISettings settings = ess.getSettings();
+		ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		General.GroupStorage storage = General.GroupStorage.FILE;
 		try

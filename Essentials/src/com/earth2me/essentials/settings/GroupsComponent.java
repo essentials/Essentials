@@ -3,7 +3,7 @@ package com.earth2me.essentials.settings;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.GroupsPermissions;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
@@ -164,7 +164,7 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 			}
 		}
 		@Cleanup
-		ISettings settings = context.getSettings();
+		ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
 		return settings.getData().getChat().getDefaultFormat();
 	}

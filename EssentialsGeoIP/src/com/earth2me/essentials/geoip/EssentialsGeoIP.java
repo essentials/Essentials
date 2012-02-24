@@ -1,6 +1,6 @@
 package com.earth2me.essentials.geoip;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import java.util.logging.Level;
 import org.bukkit.plugin.PluginManager;

@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.components.users.IUser;
@@ -22,7 +22,7 @@ public class Commandrealname extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		@Cleanup 
-		final ISettings settings = getContext().getSettings();
+		final ISettingsComponent settings = getContext().getSettings();
 		final String whois = args[0].toLowerCase(Locale.ENGLISH);
 		for (Player onlinePlayer : getServer().getOnlinePlayers())
 		{

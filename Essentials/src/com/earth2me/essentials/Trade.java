@@ -1,9 +1,9 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.craftbukkit.SetExpFix;
@@ -79,7 +79,7 @@ public class Trade
 		}
 
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 
 		if (command != null && !command.isEmpty()
@@ -173,7 +173,7 @@ public class Trade
 			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user))
 		{
 			@Cleanup
-			final ISettings settings = ess.getSettings();
+			final ISettingsComponent settings = ess.getSettings();
 			settings.acquireReadLock();
 			final double mon = user.getMoney();
 			final double cost = settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
@@ -213,7 +213,7 @@ public class Trade
 	public static void log(String type, String subtype, String event, String sender, Trade charge, String receiver, Trade pay, Location loc, IContext ess)
 	{
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		if (!settings.getData().getEconomy().isLogEnabled())
 		{

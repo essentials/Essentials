@@ -1,6 +1,6 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.components.users.IUser;
@@ -48,7 +48,7 @@ public class Commandeco extends EssentialsCommand
 
 				case RESET:
 					@Cleanup 
-					ISettings settings = getContext().getSettings();
+					ISettingsComponent settings = getContext().getSettings();
 					settings.acquireReadLock();
 					player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
 					break;
@@ -69,7 +69,7 @@ public class Commandeco extends EssentialsCommand
 				break;
 
 			case RESET:
-				@Cleanup ISettings settings = getContext().getSettings();
+				@Cleanup ISettingsComponent settings = getContext().getSettings();
 				settings.acquireReadLock();
 				player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
 				break;

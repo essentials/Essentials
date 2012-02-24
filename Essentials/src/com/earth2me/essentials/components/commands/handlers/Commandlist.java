@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.ISettings;
+import static com.earth2me.essentials.I18nComponent._;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
@@ -41,7 +41,7 @@ public class Commandlist extends EssentialsCommand
 		sender.sendMessage(online);
 
 		boolean sortListByGroups = false;
-		ISettings settings = getContext().getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		try
 		{

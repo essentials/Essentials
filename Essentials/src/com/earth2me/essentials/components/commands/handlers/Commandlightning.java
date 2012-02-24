@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.ISettings;
+import static com.earth2me.essentials.I18nComponent._;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.users.IUser;
 import lombok.Cleanup;
@@ -61,7 +61,7 @@ public class Commandlightning extends EssentialsCommand
 				matchPlayer.setHealth(matchPlayer.getHealth() < 5 ? 0 : matchPlayer.getHealth() - 5);
 			}
 			@Cleanup
-			final ISettings settings = getContext().getSettings();
+			final ISettingsComponent settings = getContext().getSettings();
 			settings.acquireReadLock();
 			if (settings.getData().getCommands().getLightning().isWarnPlayer())
 			{

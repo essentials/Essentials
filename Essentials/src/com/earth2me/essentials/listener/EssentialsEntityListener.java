@@ -1,8 +1,8 @@
 package com.earth2me.essentials.listener;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.List;
@@ -99,7 +99,7 @@ public class EssentialsEntityListener implements Listener
 			final PlayerDeathEvent pdevent = (PlayerDeathEvent)event;
 			final IUser user = ess.getUser((Player)pdevent.getEntity());
 			@Cleanup
-			final ISettings settings = ess.getSettings();
+			final ISettingsComponent settings = ess.getSettings();
 			settings.acquireReadLock();
 			if (Permissions.BACK_ONDEATH.isAuthorized(user) && !settings.getData().getCommands().isDisabled("back"))
 			{
@@ -129,7 +129,7 @@ public class EssentialsEntityListener implements Listener
 		if (event.getRegainReason() == RegainReason.SATIATED && event.getEntity() instanceof Player)
 		{
 			@Cleanup
-			final ISettings settings = ess.getSettings();
+			final ISettingsComponent settings = ess.getSettings();
 			settings.acquireReadLock();
 			@Cleanup
 			final IUser user = ess.getUser((Player)event.getEntity());

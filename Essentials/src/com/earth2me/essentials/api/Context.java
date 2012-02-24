@@ -1,6 +1,6 @@
 package com.earth2me.essentials.api;
 
-import com.earth2me.essentials.I18n;
+import com.earth2me.essentials.I18nComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.economy.IWorthsComponent;
 import com.earth2me.essentials.components.jails.IJailsComponent;
@@ -19,17 +19,17 @@ import org.bukkit.entity.Player;
  */
 public final class Context implements IContext
 {
-	private transient IBackup backup;
+	private transient IBackupComponent backup;
 	private transient IItemsComponent items;
 	private transient IGroupsComponent groups;
 	private transient IJailsComponent jails;
 	private transient IKitsComponent kits;
-	private transient ISettings settings;
+	private transient ISettingsComponent settings;
 	private transient IWarpsComponent warps;
 	private transient IWorthsComponent worths;
 	private transient PaymentMethods paymentMethods; // TODO = new PaymentMethods();
 	private transient IUsersComponent users;
-	private transient I18n i18n;
+	private transient II18nComponent i18n;
 	private transient ICommandsComponent commands;
 	private transient IEconomyComponent economy;
 	private transient Server server;
@@ -61,7 +61,7 @@ public final class Context implements IContext
 	}
 
 	@Override
-	public IBackup getBackup()
+	public IBackupComponent getBackup()
 	{
 		return backup;
 	}
@@ -92,7 +92,7 @@ public final class Context implements IContext
 	}
 
 	@Override
-	public ISettings getSettings()
+	public ISettingsComponent getSettings()
 	{
 		return settings;
 	}
@@ -122,7 +122,7 @@ public final class Context implements IContext
 	}
 
 	@Override
-	public I18n getI18n()
+	public II18nComponent getI18n()
 	{
 		return i18n;
 	}
@@ -145,7 +145,7 @@ public final class Context implements IContext
 		return server;
 	}
 
-	public void setBackup(IBackup backup)
+	public void setBackup(IBackupComponent backup)
 	{
 		this.backup = backup;
 	}
@@ -170,7 +170,7 @@ public final class Context implements IContext
 		this.kits = kits;
 	}
 
-	public void setSettings(ISettings settings)
+	public void setSettings(ISettingsComponent settings)
 	{
 		this.settings = settings;
 	}
@@ -195,7 +195,7 @@ public final class Context implements IContext
 		this.users = users;
 	}
 
-	public void setI18n(I18n i18n)
+	public void setI18n(II18nComponent i18n)
 	{
 		this.i18n = i18n;
 	}

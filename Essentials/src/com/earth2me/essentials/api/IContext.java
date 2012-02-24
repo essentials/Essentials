@@ -8,6 +8,8 @@ import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.components.warps.IWarpsComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
+import java.io.File;
+import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -18,6 +20,10 @@ import org.bukkit.entity.Player;
  */
 public interface IContext
 {
+	Logger getLogger();
+	
+	IScheduler getScheduler();
+	
 	File getDataFolder();
 	
 	IUser getUser(Player player);
@@ -26,7 +32,7 @@ public interface IContext
 
 	II18nComponent getI18n();
 
-	ISettings getSettings();
+	ISettingsComponent getSettings();
 
 	IGroupsComponent getGroups();
 
@@ -42,7 +48,7 @@ public interface IContext
 
 	IUsersComponent getUsers();
 
-	IBackup getBackup();
+	IBackupComponent getBackup();
 
 	ICommandsComponent getCommands();
 

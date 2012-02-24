@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.items;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IItemsComponent;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.storage.ManagedFile;
@@ -69,7 +69,7 @@ public class ItemsComponent implements IItemsComponent
 		final ItemStack stack = get(id.toLowerCase(Locale.ENGLISH));
 
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 
 		final int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();

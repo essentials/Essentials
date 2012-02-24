@@ -3,7 +3,7 @@ package com.earth2me.essentials.perm;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import java.text.MessageFormat;
 import lombok.Cleanup;
@@ -94,7 +94,7 @@ public class VaultGroups implements IGroupsComponent
 		}
 
 		@Cleanup
-		ISettings settings = ess.getSettings();
+		ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		return settings.getData().getChat().getDefaultFormat();
 	}

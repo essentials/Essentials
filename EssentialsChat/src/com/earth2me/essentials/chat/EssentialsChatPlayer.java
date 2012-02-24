@@ -1,12 +1,12 @@
 package com.earth2me.essentials.chat;
 
 import com.earth2me.essentials.api.ChargeException;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Locale;
@@ -112,7 +112,7 @@ public abstract class EssentialsChatPlayer implements Listener
 	protected void handleLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
 		long radius = 0;
-		ISettings settings = ess.getSettings();
+		ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		try
 		{

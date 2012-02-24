@@ -1,5 +1,6 @@
 package com.earth2me.essentials.api;
 
+import com.earth2me.essentials.components.IComponent;
 import java.util.Map;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

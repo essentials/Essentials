@@ -1,10 +1,11 @@
 package com.earth2me.essentials.api;
 
+import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.users.IUser;
 import java.text.MessageFormat;
 
 
-public interface IGroupsComponent
+public interface IGroupsComponent extends IComponent
 {
 	String getMainGroup(IUser player);
 

@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.components.users.IUser;
@@ -36,7 +36,7 @@ public class Commandwhois extends EssentialsCommand
 		}
 		final String whois = args[0].toLowerCase(Locale.ENGLISH);
 		@Cleanup
-		ISettings settings = getContext().getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		final int prefixLength = Util.stripColor(settings.getData().getChat().getNicknamePrefix()).length();
 		for (Player onlinePlayer : getServer().getOnlinePlayers())

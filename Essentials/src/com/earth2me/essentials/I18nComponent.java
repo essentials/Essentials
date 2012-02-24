@@ -2,6 +2,7 @@ package com.earth2me.essentials;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.II18nComponent;
+import com.earth2me.essentials.components.Component;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,9 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class I18n implements II18nComponent
+public class I18nComponent extends Component implements II18nComponent
 {
-	private static I18n instance;
+	private static I18nComponent instance;
 	private static final String MESSAGES = "messages";
 	private final transient Locale defaultLocale = Locale.getDefault();
 	private transient Locale currentLocale = defaultLocale;
@@ -24,21 +25,23 @@ public class I18n implements II18nComponent
 	private transient ResourceBundle localeBundle;
 	private final transient ResourceBundle defaultBundle;
 	private final transient Map<String, MessageFormat> messageFormatCache = new HashMap<String, MessageFormat>();
-	private final transient IContext ess;
-
-	public I18n(final IContext ess)
+	
+	public I18nComponent(final IContext context)
 	{
-		this.ess = ess;
-		customBundle = ResourceBundle.getBundle(MESSAGES, defaultLocale, new FileResClassLoader(I18n.class.getClassLoader(), ess));
+		super(context);
+		
+		customBundle = ResourceBundle.getBundle(MESSAGES, defaultLocale, new FileResClassLoader(I18nComponent.class.getClassLoader(), context));
 		localeBundle = ResourceBundle.getBundle(MESSAGES, defaultLocale);
 		defaultBundle = ResourceBundle.getBundle(MESSAGES, Locale.ENGLISH);
 	}
 
+	@Override
 	public void onEnable()
 	{
 		instance = this;
 	}
 
+	@Override
 	public void onDisable()
 	{
 		instance = null;
@@ -97,6 +100,7 @@ public class I18n implements II18nComponent
 		return messageFormat.format(objects);
 	}
 
+	@Override
 	public void updateLocale(final String loc)
 	{
 		if (loc == null || loc.isEmpty())
@@ -117,7 +121,7 @@ public class I18n implements II18nComponent
 			currentLocale = new Locale(parts[0], parts[1], parts[2]);
 		}
 		Logger.getLogger("Minecraft").log(Level.INFO, String.format("Using locale %s", currentLocale.toString()));
-		customBundle = ResourceBundle.getBundle(MESSAGES, currentLocale, new FileResClassLoader(I18n.class.getClassLoader(), ess));
+		customBundle = ResourceBundle.getBundle(MESSAGES, currentLocale, new FileResClassLoader(I18nComponent.class.getClassLoader(), getContext()));
 		localeBundle = ResourceBundle.getBundle(MESSAGES, currentLocale);
 	}
 

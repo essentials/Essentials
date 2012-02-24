@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.users;
 
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import com.earth2me.essentials.storage.Location.WorldNotLoadedException;
@@ -203,7 +203,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		try
 		{
 			@Cleanup
-			final ISettings settings = context.getSettings();
+			final ISettingsComponent settings = context.getSettings();
 			settings.acquireReadLock();
 			if (Math.abs(value) > settings.getData().getEconomy().getMaxMoney())
 			{
@@ -227,7 +227,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		{
 			Double money = getData().getMoney();
 			@Cleanup
-			final ISettings settings = context.getSettings();
+			final ISettingsComponent settings = context.getSettings();
 			settings.acquireReadLock();
 			if (money == null)
 			{

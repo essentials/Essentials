@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.commands;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.ICommandsComponent;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentialsModule;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUser;
 import java.util.*;
@@ -59,7 +59,7 @@ public class CommandsComponent extends Component implements ICommandsComponent
 	{
 		boolean disabled = false;
 		boolean overridden = false;
-		ISettings settings = ess.getSettings();
+		ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		try
 		{
