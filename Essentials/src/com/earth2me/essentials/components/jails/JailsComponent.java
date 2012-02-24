@@ -35,7 +35,7 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 	@Override
 	public String getTypeId()
 	{
-		return "WorthsComponent";
+		return "JailsComponent";
 	}
 
 	@Override

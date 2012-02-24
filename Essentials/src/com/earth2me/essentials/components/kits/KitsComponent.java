@@ -17,6 +17,22 @@ public class KitsComponent extends AsyncStorageObjectHolder<Kits> implements IKi
 	public KitsComponent(final IContext ess)
 	{
 		super(ess, com.earth2me.essentials.settings.Kits.class);
+	}
+
+	@Override
+	public String getTypeId()
+	{
+		return "KitsComponent";
+	}
+
+	@Override
+	public void initialize()
+	{
+	}
+
+	@Override
+	public void onEnable()
+	{
 		reload();
 	}
 
@@ -60,8 +76,8 @@ public class KitsComponent extends AsyncStorageObjectHolder<Kits> implements IKi
 	@Override
 	public void sendKit(IUser user, Kit kit) throws Exception
 	{
-		final List<ItemStack> itemList = kit.getItems();		
-		user.giveItems(itemList, true);					
+		final List<ItemStack> itemList = kit.getItems();
+		user.giveItems(itemList, true);
 	}
 
 	@Override
