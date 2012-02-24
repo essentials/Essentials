@@ -1,6 +1,6 @@
 package com.earth2me.essentials.spawn;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.commands.EssentialsCommand;

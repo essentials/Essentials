@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.ItemPermissions;
 import java.util.Locale;
@@ -32,7 +32,7 @@ public class Commanditem extends EssentialsCommand
 		{
 			stack.setAmount(Integer.parseInt(args[1]));
 		}
-		
+
 		if (args.length > 2)
 		{
 			for (int i = 2; i < args.length; i++)
@@ -62,8 +62,8 @@ public class Commanditem extends EssentialsCommand
 		}
 
 		user.giveItems(stack, false);
-		
+
 		final String displayName = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');
-		user.sendMessage(_("itemSpawn", stack.getAmount(), displayName));	
+		user.sendMessage(_("itemSpawn", stack.getAmount(), displayName));
 	}
 }

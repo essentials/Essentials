@@ -1,6 +1,6 @@
 package com.earth2me.essentials.components.items;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IItemsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
@@ -23,7 +23,7 @@ public class ItemsComponent extends Component implements IItemsComponent
 	public ItemsComponent(final IContext context)
 	{
 		super(context);
-		
+
 		file = new ManagedFile("items.csv", context);
 	}
 	private final transient Map<String, Long> items = new HashMap<String, Long>();

@@ -17,14 +17,16 @@
  */
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.components.ComponentPlugin;
+import com.earth2me.essentials.components.backup.BackupComponent;
 import com.earth2me.essentials.components.commands.CommandsComponent;
 import com.earth2me.essentials.components.economy.EconomyComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.economy.IWorthsComponent;
 import com.earth2me.essentials.components.economy.WorthsComponent;
+import com.earth2me.essentials.components.i18n.I18nComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.items.ItemsComponent;
 import com.earth2me.essentials.components.jails.IJailsComponent;
 import com.earth2me.essentials.components.jails.JailsComponent;

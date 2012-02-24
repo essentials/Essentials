@@ -1,6 +1,6 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
@@ -21,14 +21,14 @@ public class Commandtpaccept extends EssentialsCommand
 		}
 
 		final IUser target = user.getTeleportRequester();
-		if (target == null 
+		if (target == null
 			|| target.getBase() instanceof OfflinePlayer
 			|| (user.isTeleportRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
 			|| (!user.isTeleportRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}
-		
+
 		if (args.length > 0 && !target.getName().contains(args[0]))
 		{
 			throw new Exception(_("noPendingRequest"));

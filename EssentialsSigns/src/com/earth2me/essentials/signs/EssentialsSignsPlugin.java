@@ -1,6 +1,6 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,9 +38,9 @@ public class EssentialsSignsPlugin extends JavaPlugin implements ISignsPlugin
 
 		final SignEntityListener signEntityListener = new SignEntityListener(ess, this);
 		pluginManager.registerEvents(signEntityListener, this);
-		
+
 		config = new SignsConfigHolder(ess, this);
-		
+
 		LOGGER.info(_("loadinfo", this.getDescription().getName(), this.getDescription().getVersion(), "essentials team"));
 	}
 

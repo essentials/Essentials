@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -13,10 +13,10 @@ import org.bukkit.plugin.PluginManager;
 public final class Versioning
 {
 	public static final int BUKKIT_VERSION = 1952;
-	
+
 	private static final Logger logger = Logger.getLogger("Minecraft");
 	private static final Pattern bukkitVersionPattern = Pattern.compile("git-Bukkit-([0-9]+).([0-9]+).([0-9]+)-R[0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*");
-	
+
 	public boolean checkServerVersion(Server server, String pluginVersion)
 	{
 		final PluginManager pluginManager = server.getPluginManager();
@@ -28,7 +28,7 @@ public final class Versioning
 				logger.log(Level.WARNING, _("versionMismatch", plugin.getDescription().getName()));
 			}
 		}
-		
+
 		final Matcher versionMatch = bukkitVersionPattern.matcher(server.getVersion());
 		if (versionMatch.matches())
 		{
@@ -46,7 +46,7 @@ public final class Versioning
 			logger.log(Level.INFO, server.getVersion());
 			logger.log(Level.INFO, server.getBukkitVersion());
 		}
-		
+
 		return true;
 	}
 }

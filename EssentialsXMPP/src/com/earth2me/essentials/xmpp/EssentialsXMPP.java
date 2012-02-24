@@ -1,7 +1,7 @@
 package com.earth2me.essentials.xmpp;
 
 import com.earth2me.essentials.components.commands.CommandsComponent;
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ICommandsComponent;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUser;
@@ -55,7 +55,7 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 
 		ess.addReloadListener(users);
 		ess.addReloadListener(xmpp);
-		
+
 		commandHandler = new CommandsComponent(EssentialsXMPP.class.getClassLoader(), "com.earth2me.essentials.xmpp.Command", "essentials.", ess);
 	}
 

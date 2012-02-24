@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.earth2me.essentials;
+package com.earth2me.essentials.components.messager;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IMessagerComponent;

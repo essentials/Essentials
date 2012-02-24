@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Locale;
@@ -302,7 +302,7 @@ public class EssentialsConf extends YamlConfiguration
 			return def;
 		}
 	}
-	
+
 	public void save() {
 		try
 		{
@@ -313,15 +313,15 @@ public class EssentialsConf extends YamlConfiguration
 			LOGGER.log(Level.SEVERE, null, ex);
 		}
 	}
-	
+
 	public Object getProperty(String path) {
 		return get(path);
 	}
-	
+
 	public void setProperty(String path, Object object) {
 		set(path, object);
 	}
-	
+
 	public void removeProperty(String path) {
 		set(path, null);
 	}

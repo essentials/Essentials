@@ -1,6 +1,6 @@
-package com.earth2me.essentials;
+package com.earth2me.essentials.components.backup;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IBackupComponent;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
@@ -23,7 +23,7 @@ public class BackupComponent extends Component implements IBackupComponent
 	public BackupComponent(final IContext context)
 	{
 		super(context);
-		
+
 		if (getContext().getServer().getOnlinePlayers().length > 0)
 		{
 			startTask();

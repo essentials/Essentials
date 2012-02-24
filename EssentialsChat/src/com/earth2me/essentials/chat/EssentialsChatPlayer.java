@@ -1,7 +1,7 @@
 package com.earth2me.essentials.chat;
 
 import com.earth2me.essentials.api.ChargeException;
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
@@ -103,7 +103,7 @@ public abstract class EssentialsChatPlayer implements Listener
 		//case '?':
 		//return "question";
 		//case '@':
-		//	return "admin";			
+		//	return "admin";
 		default:
 			return "";
 		}

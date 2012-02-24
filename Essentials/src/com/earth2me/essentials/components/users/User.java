@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.users;
 
 import com.earth2me.essentials.Console;
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;

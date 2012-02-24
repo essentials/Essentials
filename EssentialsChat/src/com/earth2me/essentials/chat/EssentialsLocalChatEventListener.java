@@ -1,6 +1,6 @@
 package com.earth2me.essentials.chat;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
@@ -37,7 +37,7 @@ public class EssentialsLocalChatEventListener implements Listener
 		{
 			String type = _("chatTypeLocal");
 			final IUser user = ess.getUser(onlinePlayer);
-			//TODO: remove reference to op 
+			//TODO: remove reference to op
 			if (user.isIgnoringPlayer(sender.getName()) && !sender.isOp())
 			{
 				continue;

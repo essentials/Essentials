@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.api.InvalidNameException;
@@ -268,7 +268,7 @@ public final class Util
 		}
 		return c.getTimeInMillis();
 	}
-	// The player can stand inside these materials 
+	// The player can stand inside these materials
 	private static final Set<Integer> AIR_MATERIALS = new HashSet<Integer>();
 	private static final HashSet<Byte> AIR_MATERIALS_TARGET = new HashSet<Byte>();
 

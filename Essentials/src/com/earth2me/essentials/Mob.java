@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -39,7 +39,7 @@ public enum Mob
 	MUSHROOMCOW("MushroomCow", Enemies.FRIENDLY, CreatureType.MUSHROOM_COW),
 	MAGMACUBE("MagmaCube", Enemies.ENEMY, CreatureType.MAGMA_CUBE),
 	SNOWMAN("Snowman", Enemies.FRIENDLY, "", CreatureType.SNOWMAN);
-	
+
 	public static final Logger logger = Logger.getLogger("Minecraft");
 
 	private Mob(String n, Enemies en, String s, CreatureType type)
@@ -69,7 +69,7 @@ public enum Mob
 			hashMap.put(mob.name.toLowerCase(Locale.ENGLISH), mob);
 		}
 	}
-	
+
 	public static Set<String> getMobList() {
 		return hashMap.keySet();
 	}

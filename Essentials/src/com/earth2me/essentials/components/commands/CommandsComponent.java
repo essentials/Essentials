@@ -1,6 +1,6 @@
 package com.earth2me.essentials.components.commands;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ICommandsComponent;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentialsModule;
@@ -35,12 +35,12 @@ public class CommandsComponent extends Component implements ICommandsComponent
 	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IEssentialsModule module, IContext context)
 	{
 		super(context);
-		
+
 		this.classLoader = classLoader;
 		this.commandPath = commandPath;
 		this.permissionPrefix = permissionPrefix;
 		this.module = module;
-		
+
 		for (Plugin plugin : context.getServer().getPluginManager().getPlugins())
 		{
 			if (plugin.isEnabled())

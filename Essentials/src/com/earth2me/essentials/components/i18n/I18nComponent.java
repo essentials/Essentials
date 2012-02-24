@@ -1,4 +1,4 @@
-package com.earth2me.essentials;
+package com.earth2me.essentials.components.i18n;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.II18nComponent;
@@ -25,11 +25,11 @@ public class I18nComponent extends Component implements II18nComponent
 	private transient ResourceBundle localeBundle;
 	private final transient ResourceBundle defaultBundle;
 	private final transient Map<String, MessageFormat> messageFormatCache = new HashMap<String, MessageFormat>();
-	
+
 	public I18nComponent(final IContext context)
 	{
 		super(context);
-		
+
 		customBundle = ResourceBundle.getBundle(MESSAGES, defaultLocale, new FileResClassLoader(I18nComponent.class.getClassLoader(), context));
 		localeBundle = ResourceBundle.getBundle(MESSAGES, defaultLocale);
 		defaultBundle = ResourceBundle.getBundle(MESSAGES, Locale.ENGLISH);
@@ -46,7 +46,7 @@ public class I18nComponent extends Component implements II18nComponent
 	{
 		instance = null;
 	}
-	
+
 	@Override
 	public void reload()
 	{

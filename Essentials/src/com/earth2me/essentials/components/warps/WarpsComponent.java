@@ -1,6 +1,6 @@
 package com.earth2me.essentials.components.warps;
 
-import static com.earth2me.essentials.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.components.commands.WarpNotFoundException;
