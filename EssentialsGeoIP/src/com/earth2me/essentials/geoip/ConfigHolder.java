@@ -1,7 +1,7 @@
 package com.earth2me.essentials.geoip;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.settings.geoip.GeoIP;
+import com.earth2me.essentials.components.settings.geoip.GeoIP;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import java.io.File;
 import java.io.IOException;
