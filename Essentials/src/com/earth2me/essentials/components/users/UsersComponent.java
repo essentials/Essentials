@@ -12,9 +12,9 @@ import org.bukkit.entity.Player;
 
 public class UsersComponent extends StorageObjectMap<IUser> implements IUsersComponent
 {
-	public UsersComponent(final IContext ess)
+	public UsersComponent(final IContext context)
 	{
-		super(ess, "users");
+		super(context, "users");
 	}
 
 	@Override
@@ -26,13 +26,12 @@ public class UsersComponent extends StorageObjectMap<IUser> implements IUsersCom
 	@Override
 	public void initialize()
 	{
-		// Intentionally blank.
 	}
 
 	@Override
-	public void close()
+	public void onEnable()
 	{
-		// Intentionally blank.
+		reload();
 	}
 
 	@Override
@@ -50,19 +49,19 @@ public class UsersComponent extends StorageObjectMap<IUser> implements IUsersCom
 	@Override
 	public IUser load(final String name) throws Exception
 	{
-		for (Player player : ess.getServer().getOnlinePlayers())
+		for (Player player : context.getServer().getOnlinePlayers())
 		{
 			if (player.getName().equalsIgnoreCase(name))
 			{
 				keys.add(name.toLowerCase(Locale.ENGLISH));
-				return new User(player, ess);
+				return new User(player, context);
 			}
 		}
 		final File userFile = getUserFile(name);
 		if (userFile.exists())
 		{
 			keys.add(name.toLowerCase(Locale.ENGLISH));
-			return new User(Bukkit.getOfflinePlayer(name), ess);
+			return new User(Bukkit.getOfflinePlayer(name), context);
 		}
 		throw new Exception("User not found!");
 	}
@@ -102,12 +101,18 @@ public class UsersComponent extends StorageObjectMap<IUser> implements IUsersCom
 
 		if (user == null)
 		{
-			user = new User(player, ess);
+			user = new User(player, context);
 		}
 		else
 		{
 			((User)user).update(player);
 		}
 		return user;
+	}
+
+	@Override
+	public void close()
+	{
+		cache.cleanUp();
 	}
 }

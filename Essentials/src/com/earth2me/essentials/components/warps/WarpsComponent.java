@@ -83,7 +83,7 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 		IWarp warp = getObject(name);
 		if (warp == null)
 		{
-			warp = new WarpHolder(name, ess);
+			warp = new WarpHolder(name, context);
 		}
 		warp.acquireWriteLock();
 		try
@@ -111,7 +111,7 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 	@Override
 	public IWarp load(String name) throws Exception
 	{
-		final IWarp warp = new WarpHolder(name, ess);
+		final IWarp warp = new WarpHolder(name, context);
 		warp.reload();
 		return warp;
 	}

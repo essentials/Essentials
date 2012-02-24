@@ -20,7 +20,7 @@ import org.bukkit.Bukkit;
 
 public abstract class StorageObjectMap<I> extends CacheLoader<String, I> implements IStorageObjectMap<I>
 {
-	protected final transient IContext ess;
+	protected final transient IContext context;
 	private final transient File folder;
 	protected final transient Cache<String, I> cache = CacheBuilder.newBuilder().softValues().build(this);
 	protected final transient ConcurrentSkipListSet<String> keys = new ConcurrentSkipListSet<String>();
@@ -28,7 +28,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	public StorageObjectMap(final IContext ess, final String folderName)
 	{
 		super();
-		this.ess = ess;
+		this.context = ess;
 		this.folder = new File(ess.getDataFolder(), folderName);
 		if (!folder.exists())
 		{
@@ -39,7 +39,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 
 	private void loadAllObjectsAsync()
 	{
-		ess.scheduleAsyncDelayedTask(new Runnable()
+		context.getScheduler().scheduleAsyncDelayedTask(new Runnable()
 		{
 			@Override
 			public void run()
@@ -81,7 +81,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	{
 		try
 		{
-			return (I)cache.get(name.toLowerCase(Locale.ENGLISH));
+			return cache.get(name.toLowerCase(Locale.ENGLISH));
 		}
 		catch (ExecutionException ex)
 		{

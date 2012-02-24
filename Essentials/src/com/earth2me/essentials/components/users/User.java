@@ -1,6 +1,5 @@
 package com.earth2me.essentials.components.users;
 
-import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.Util;
@@ -8,11 +7,13 @@ import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.register.payment.Method;
+import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Cleanup;
 import lombok.Getter;
@@ -265,7 +266,7 @@ public class User extends UserBase implements IUser
 		}
 		catch (IllegalArgumentException e)
 		{
-			logger.info("Playerlist for " + name + " was not updated. Use a shorter displayname prefix.");
+			logger.log(Level.INFO, "Playerlist for {0} was not updated. Use a shorter displayname prefix.", name);
 		}
 	}
 
@@ -290,16 +291,16 @@ public class User extends UserBase implements IUser
 	@Override
 	public double getMoney()
 	{
-		if (context.getPaymentMethods().hasMethod())
+		if (PaymentMethods.hasMethod())
 		{
 			try
 			{
-				final Method method = context.getPaymentMethods().getMethod();
+				final Method method = PaymentMethods.getMethod();
 				if (!method.hasAccount(this.getName()))
 				{
 					throw new Exception();
 				}
-				final Method.MethodAccount account = context.getPaymentMethods().getMethod().getAccount(this.getName());
+				final Method.MethodAccount account = PaymentMethods.getMethod().getAccount(this.getName());
 				return account.balance();
 			}
 			catch (Throwable ex)
@@ -312,16 +313,16 @@ public class User extends UserBase implements IUser
 	@Override
 	public void setMoney(final double value)
 	{
-		if (context.getPaymentMethods().hasMethod())
+		if (PaymentMethods.hasMethod())
 		{
 			try
 			{
-				final Method method = context.getPaymentMethods().getMethod();
+				final Method method = PaymentMethods.getMethod();
 				if (!method.hasAccount(this.getName()))
 				{
 					throw new Exception();
 				}
-				final Method.MethodAccount account = context.getPaymentMethods().getMethod().getAccount(this.getName());
+				final Method.MethodAccount account = PaymentMethods.getMethod().getAccount(this.getName());
 				account.set(value);
 			}
 			catch (Throwable ex)
@@ -358,6 +359,7 @@ public class User extends UserBase implements IUser
 	}
 
 	//Returns true if status expired during this check
+	@Override
 	public boolean checkJailTimeout(final long currentTime)
 	{
 		acquireReadLock();
@@ -390,6 +392,7 @@ public class User extends UserBase implements IUser
 	}
 
 	//Returns true if status expired during this check
+	@Override
 	public boolean checkMuteTimeout(final long currentTime)
 	{
 		acquireReadLock();
@@ -412,6 +415,7 @@ public class User extends UserBase implements IUser
 	}
 
 	//Returns true if status expired during this check
+	@Override
 	public boolean checkBanTimeout(final long currentTime)
 	{
 		acquireReadLock();
@@ -432,6 +436,7 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public void updateActivity(final boolean broadcast)
 	{
 		acquireReadLock();
@@ -443,7 +448,7 @@ public class User extends UserBase implements IUser
 				getData().setAfk(false);
 				if (broadcast && !hidden)
 				{
-					context.broadcastMessage(this, _("userIsNotAway", getDisplayName()));
+					context.getMessager().broadcastMessage(this, _("userIsNotAway", getDisplayName()));
 				}
 			}
 			lastActivity = System.currentTimeMillis();
@@ -454,9 +459,10 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public void checkActivity()
 	{
-		@Cleanup
+		// Do NOT @Cleanup this.
 		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
 		final long autoafkkick = settings.getData().getCommands().getAfk().getAutoAFKKick();
@@ -488,7 +494,7 @@ public class User extends UserBase implements IUser
 				setAfk(true);
 				if (!hidden)
 				{
-					context.broadcastMessage(this, _("userIsAway", getDisplayName()));
+					context.getMessager().broadcastMessage(this, _("userIsAway", getDisplayName()));
 				}
 			}
 		}
@@ -498,11 +504,13 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public Location getAfkPosition()
 	{
 		return afkPosition;
 	}
 
+	@Override
 	public boolean toggleGodModeEnabled()
 	{
 		if (!isGodModeEnabled())
@@ -512,6 +520,7 @@ public class User extends UserBase implements IUser
 		return super.toggleGodmode();
 	}
 
+	@Override
 	public boolean isGodModeEnabled()
 	{
 		acquireReadLock();
@@ -665,5 +674,49 @@ public class User extends UserBase implements IUser
 			}
 		}
 		return spew;
+	}
+
+	// TODO Figure out why these methods weren't implemented.
+
+	@Override
+	public boolean isHidden()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public ITeleport getTeleport()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setLastOnlineActivity(long currentTime)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public long getLastOnlineActivity()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean isTeleportRequestHere()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public IUser getTeleportRequester()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public long getTeleportRequestTime()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }
