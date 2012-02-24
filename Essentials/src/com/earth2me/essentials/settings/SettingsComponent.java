@@ -10,9 +10,26 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class SettingsComponent extends AsyncStorageObjectHolder<Settings> implements ISettingsComponent
 {
 	private final transient AtomicBoolean debug = new AtomicBoolean(false);
-	public SettingsComponent(final IContext ess)
+
+	public SettingsComponent(final IContext context)
 	{
-		super(ess, Settings.class);
+		super(context, Settings.class);
+	}
+
+	@Override
+	public String getTypeId()
+	{
+		return "SettingsComponent";
+	}
+
+	@Override
+	public void initialize()
+	{
+	}
+
+	@Override
+	public void onEnable()
+	{
 		reload();
 	}
 
@@ -21,9 +38,12 @@ public class SettingsComponent extends AsyncStorageObjectHolder<Settings> implem
 	{
 		super.reload();
 		acquireReadLock();
-		try {
+		try
+		{
 			debug.set(getData().getGeneral().isDebug());
-		} finally {
+		}
+		finally
+		{
 			unlock();
 		}
 	}
@@ -38,9 +58,12 @@ public class SettingsComponent extends AsyncStorageObjectHolder<Settings> implem
 	public String getLocale()
 	{
 		acquireReadLock();
-		try {
+		try
+		{
 			return getData().getGeneral().getLocale();
-		} finally {
+		}
+		finally
+		{
 			unlock();
 		}
 	}
@@ -50,14 +73,18 @@ public class SettingsComponent extends AsyncStorageObjectHolder<Settings> implem
 	{
 		return debug.get();
 	}
-	
+
+	@Override
 	public void setDebug(final boolean set)
 	{
 		debug.set(set);
 		acquireWriteLock();
-		try {
+		try
+		{
 			getData().getGeneral().setDebug(set);
-		} finally {
+		}
+		finally
+		{
 			unlock();
 		}
 	}
