@@ -1,8 +1,8 @@
 package com.earth2me.essentials.listener;
 
 import com.earth2me.essentials.api.*;
-import com.earth2me.essentials.perm.GmGroups;
-import com.earth2me.essentials.perm.VaultGroups;
+import com.earth2me.essentials.perm.GmGroupsComponent;
+import com.earth2me.essentials.perm.VaultGroupsComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import com.earth2me.essentials.settings.General;
 import com.earth2me.essentials.settings.GroupsComponent;
@@ -76,7 +76,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 		if (storage == General.GroupStorage.GROUPMANAGER)
 		{
 			Plugin groupManager = context.getServer().getPluginManager().getPlugin("GroupManager");
-			if (groupManager != null && groupManager.isEnabled() && !(context.getGroups() instanceof GmGroups))
+			if (groupManager != null && groupManager.isEnabled() && !(context.getGroups() instanceof GmGroupsComponent))
 			{
 				if (context.getGroups() instanceof IGroupsComponent)
 				{
@@ -84,21 +84,21 @@ public class EssentialsPluginListener implements Listener, IReloadable
 				}
 
 				// TODO Come up with a better way of doing this that doesn't involve casting to Context.
-				((Context)context).setGroups(new GmGroups(context, groupManager));
+				((Context)context).setGroups(new GmGroupsComponent(context, groupManager));
 				return;
 			}
 		}
 		if (storage == General.GroupStorage.VAULT)
 		{
 			Plugin vault = context.getServer().getPluginManager().getPlugin("Vault");
-			if (vault != null && vault.isEnabled() && !(context.getGroups() instanceof VaultGroups))
+			if (vault != null && vault.isEnabled() && !(context.getGroups() instanceof VaultGroupsComponent))
 			{
 				if (context.getGroups() instanceof IGroupsComponent)
 				{
 					context.getEssentials().remove(context.getGroups());
 				}
 				// TODO Find a better way to do this.
-				((Context)context).setGroups(new VaultGroups(context));
+				((Context)context).setGroups(new VaultGroupsComponent(context));
 				return;
 			}
 		}

@@ -4,6 +4,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
+import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUser;
 import java.text.MessageFormat;
 import lombok.Cleanup;
@@ -12,14 +13,14 @@ import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.plugin.Plugin;
 
 
-public class GmGroups implements IGroupsComponent
+public final class GmGroupsComponent extends Component implements IGroupsComponent
 {
-	private final transient IContext ess;
 	private final transient GroupManager groupManager;
 
-	public GmGroups(final IContext ess, final Plugin groupManager)
+	public GmGroupsComponent(final IContext context, final Plugin groupManager)
 	{
-		this.ess = ess;
+		super(context);
+
 		this.groupManager = (GroupManager)groupManager;
 	}
 
@@ -117,7 +118,7 @@ public class GmGroups implements IGroupsComponent
 		}
 
 		@Cleanup
-		ISettingsComponent settings = ess.getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		return settings.getData().getChat().getDefaultFormat();
 	}

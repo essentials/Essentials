@@ -4,6 +4,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
+import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUser;
 import java.text.MessageFormat;
 import lombok.Cleanup;
@@ -11,27 +12,25 @@ import net.milkbowl.vault.chat.Chat;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 
-public class VaultGroups implements IGroupsComponent
+public final class VaultGroupsComponent extends Component implements IGroupsComponent
 {
-	private final IContext ess;
-
-	public VaultGroups(final IContext ess)
+	public VaultGroupsComponent(final IContext context)
 	{
-		this.ess = ess;
+		super(context);
 	}
 
 	@Override
 	public double getHealCooldown(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		final RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
+		final Chat chat = rsp.getProvider();
 		return chat.getPlayerInfoDouble(player.getBase(), "healcooldown", 0);
 	}
 
 	@Override
 	public double getTeleportCooldown(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
+		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
 		return chat.getPlayerInfoDouble(player.getBase(), "teleportcooldown", 0);
 	}
@@ -39,7 +38,7 @@ public class VaultGroups implements IGroupsComponent
 	@Override
 	public double getTeleportDelay(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
+		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
 		return chat.getPlayerInfoDouble(player.getBase(), "teleportdelay", 0);
 	}
@@ -47,7 +46,7 @@ public class VaultGroups implements IGroupsComponent
 	@Override
 	public String getPrefix(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
+		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
 		return chat.getPlayerPrefix(player.getBase());
 	}
@@ -55,7 +54,7 @@ public class VaultGroups implements IGroupsComponent
 	@Override
 	public String getSuffix(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
+		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
 		return chat.getPlayerSuffix(player.getBase());
 	}
@@ -63,7 +62,7 @@ public class VaultGroups implements IGroupsComponent
 	@Override
 	public int getHomeLimit(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
+		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
 		return chat.getPlayerInfoInteger(player.getBase(), "homes", 0);
 	}
@@ -85,7 +84,7 @@ public class VaultGroups implements IGroupsComponent
 
 	private String getRawChatFormat(final IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
+		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
 		String chatformat = chat.getPlayerInfoString(player.getBase(), "chatformat", "");
 		if (chatformat != null && !chatformat.isEmpty())
@@ -94,7 +93,7 @@ public class VaultGroups implements IGroupsComponent
 		}
 
 		@Cleanup
-		ISettingsComponent settings = ess.getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		return settings.getData().getChat().getDefaultFormat();
 	}
@@ -102,7 +101,7 @@ public class VaultGroups implements IGroupsComponent
 	@Override
 	public String getMainGroup(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
+		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
 		return chat.getPrimaryGroup(player.getBase());
 	}
@@ -110,7 +109,7 @@ public class VaultGroups implements IGroupsComponent
 	@Override
 	public boolean isInGroup(IUser player, String groupname)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
+		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
 		for (String group : chat.getPlayerGroups(player.getBase()))
 		{
