@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.kits;
 
 import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.settings.Kit;
+import com.earth2me.essentials.components.settings.Kit;
 import java.util.Collection;
 
 

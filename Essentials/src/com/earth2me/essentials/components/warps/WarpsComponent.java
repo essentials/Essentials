@@ -4,7 +4,7 @@ import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.components.commands.WarpNotFoundException;
-import com.earth2me.essentials.settings.WarpHolder;
+import com.earth2me.essentials.components.settings.WarpHolder;
 import com.earth2me.essentials.storage.StorageObjectMap;
 import java.io.File;
 import java.util.*;

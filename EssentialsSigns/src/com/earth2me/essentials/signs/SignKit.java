@@ -5,7 +5,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.KitPermissions;
-import com.earth2me.essentials.settings.Kit;
+import com.earth2me.essentials.components.settings.Kit;
 import java.util.Locale;
 
 
@@ -20,7 +20,7 @@ public class SignKit extends EssentialsSign
 	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException
 	{
 		validateTrade(sign, 3, ess);
-		
+
 		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
 
 		if (kitName.isEmpty())
@@ -32,7 +32,7 @@ public class SignKit extends EssentialsSign
 		{
 			try
 			{
-				ess.getKits().getKit(kitName);				
+				ess.getKits().getKit(kitName);
 			}
 			catch (Exception ex)
 			{
@@ -59,9 +59,9 @@ public class SignKit extends EssentialsSign
 			charge.isAffordableFor(player);
 			try
 			{
-				final Kit kit = ess.getKits().getKit(kitName);				
+				final Kit kit = ess.getKits().getKit(kitName);
 				ess.getKits().sendKit(player, kit);
-								
+
 				charge.charge(player);
 			}
 			catch (Exception ex)

@@ -3,8 +3,8 @@ package com.earth2me.essentials.components.kits;
 import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.settings.Kit;
-import com.earth2me.essentials.settings.Kits;
+import com.earth2me.essentials.components.settings.Kit;
+import com.earth2me.essentials.components.settings.Kits;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class KitsComponent extends AsyncStorageObjectHolder<Kits> implements IKi
 {
 	public KitsComponent(final IContext ess)
 	{
-		super(ess, com.earth2me.essentials.settings.Kits.class);
+		super(ess, com.earth2me.essentials.components.settings.Kits.class);
 	}
 
 	@Override

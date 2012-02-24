@@ -5,7 +5,7 @@ import com.earth2me.essentials.components.economy.WorthsComponent;
 import com.earth2me.essentials.storage.ManagedFile;
 import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.settings.Spawns;
+import com.earth2me.essentials.components.settings.Spawns;
 import com.earth2me.essentials.storage.LocationData;
 import com.earth2me.essentials.storage.YamlStorageWriter;
 import java.io.*;
@@ -660,7 +660,7 @@ public class EssentialsUpgrade
 				config.load();
 				if (!config.hasProperty("jails"))
 				{
-					final com.earth2me.essentials.settings.Jails jails = new com.earth2me.essentials.settings.Jails();
+					final com.earth2me.essentials.components.settings.Jails jails = new com.earth2me.essentials.components.settings.Jails();
 					Set<String> keys = config.getKeys(false);
 					for (String jailName : keys)
 					{

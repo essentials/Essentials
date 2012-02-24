@@ -36,8 +36,8 @@ import com.earth2me.essentials.components.warps.IWarpsComponent;
 import com.earth2me.essentials.components.warps.WarpsComponent;
 import com.earth2me.essentials.listener.*;
 import com.earth2me.essentials.register.payment.PaymentMethods;
-import com.earth2me.essentials.settings.GroupsComponent;
-import com.earth2me.essentials.settings.SettingsComponent;
+import com.earth2me.essentials.components.settings.GroupsComponent;
+import com.earth2me.essentials.components.settings.SettingsComponent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -69,7 +69,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	{
 		context = new Context();
 		context.setPaymentMethods(new PaymentMethods());
-		
+
 		tntListener = new TntExplodeListener(context);
 	}
 
@@ -155,7 +155,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			onLoadException(exception);
 			return;
 		}
-		
+
 		registerComponents(3);
 
 		final PluginManager pluginManager = getServer().getPluginManager();
@@ -253,7 +253,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			final IEconomyComponent economy = new EconomyComponent(context);
 			add(economy);
 			break;
-			
+
 		case 3:
 			context.setBackup(new BackupComponent(context));
 			break;
@@ -292,7 +292,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 		Trade.closeLog();
 		reloadComponents();
 	}
-	
+
 	private void reloadComponents()
 	{
 		for (IReloadable reloadable : this)

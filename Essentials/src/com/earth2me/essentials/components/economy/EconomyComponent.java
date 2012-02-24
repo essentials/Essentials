@@ -7,7 +7,7 @@ import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.users.UserDoesNotExistException;
 import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.settings.MoneyHolder;
+import com.earth2me.essentials.components.settings.MoneyHolder;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

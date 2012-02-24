@@ -1,4 +1,4 @@
-package com.earth2me.essentials.settings;
+package com.earth2me.essentials.components.settings;
 
 import com.earth2me.essentials.storage.MapValueType;
 import com.earth2me.essentials.storage.IStorageObject;
@@ -24,5 +24,5 @@ public class Kits implements IStorageObject
 		kits.put("tools", kit);
 	}
 	@MapValueType(Kit.class)
-	private Map<String, Kit> kits = new HashMap<String, Kit>();	
+	private Map<String, Kit> kits = new HashMap<String, Kit>();
 }

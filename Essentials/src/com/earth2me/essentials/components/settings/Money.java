@@ -1,4 +1,4 @@
-package com.earth2me.essentials.settings;
+package com.earth2me.essentials.components.settings;
 
 import com.earth2me.essentials.storage.MapValueType;
 import com.earth2me.essentials.storage.IStorageObject;

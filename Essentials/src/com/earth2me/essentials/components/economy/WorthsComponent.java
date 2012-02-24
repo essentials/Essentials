@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.economy;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.settings.Worth;
+import com.earth2me.essentials.components.settings.Worth;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import com.earth2me.essentials.storage.EnchantmentLevel;
 import java.io.File;

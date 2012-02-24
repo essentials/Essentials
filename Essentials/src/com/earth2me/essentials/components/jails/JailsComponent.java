@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.jails;
 import static com.earth2me.essentials.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.settings.Jails;
+import com.earth2me.essentials.components.settings.Jails;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import com.earth2me.essentials.storage.LocationData;
 import java.io.File;

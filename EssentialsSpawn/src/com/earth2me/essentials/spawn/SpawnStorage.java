@@ -3,7 +3,7 @@ package com.earth2me.essentials.spawn;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentialsModule;
 import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.settings.Spawns;
+import com.earth2me.essentials.components.settings.Spawns;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import com.earth2me.essentials.storage.LocationData.WorldNotLoadedException;
 import java.io.File;

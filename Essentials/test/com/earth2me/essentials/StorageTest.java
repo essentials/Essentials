@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.settings.Settings;
+import com.earth2me.essentials.components.settings.Settings;
 import com.earth2me.essentials.storage.ObjectLoadException;
 import com.earth2me.essentials.storage.IStorageObject;
 import com.earth2me.essentials.storage.YamlStorageReader;
