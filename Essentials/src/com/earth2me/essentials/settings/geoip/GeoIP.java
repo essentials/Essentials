@@ -1,13 +1,13 @@
 package com.earth2me.essentials.settings.geoip;
 
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class GeoIP implements StorageObject
+public class GeoIP implements IStorageObject
 {
 	private Database database = new Database();
 	boolean showOnWhois = true;

@@ -1,14 +1,14 @@
 package com.earth2me.essentials.settings;
 
 import com.earth2me.essentials.storage.Comment;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Backup implements StorageObject
+public class Backup implements IStorageObject
 {
 	@Comment("Interval in minutes")
 	private long interval = 60;

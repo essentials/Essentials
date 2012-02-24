@@ -1,7 +1,7 @@
 package com.earth2me.essentials;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.external.gnu.inet.encoding.Punycode;
@@ -481,7 +481,7 @@ public final class Util
 	}
 	private static DecimalFormat df = new DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale.US));
 
-	public static String formatCurrency(final double value, final IEssentials ess)
+	public static String formatCurrency(final double value, final IContext ess)
 	{
 		@Cleanup
 		final ISettings settings = ess.getSettings();
@@ -546,7 +546,7 @@ public final class Util
 		return buf.toString();
 	}
 
-	public static void registerPermissions(String path, Collection<String> nodes, boolean hasDefault, IEssentials ess)
+	public static void registerPermissions(String path, Collection<String> nodes, boolean hasDefault, IContext ess)
 	{
 		if (nodes == null || nodes.isEmpty())
 		{

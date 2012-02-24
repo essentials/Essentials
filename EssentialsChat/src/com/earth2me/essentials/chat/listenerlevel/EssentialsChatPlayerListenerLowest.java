@@ -1,7 +1,7 @@
 package com.earth2me.essentials.chat.listenerlevel;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.chat.ChatStore;
 import com.earth2me.essentials.chat.EssentialsChatPlayer;
 import java.util.Map;
@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 public class EssentialsChatPlayerListenerLowest extends EssentialsChatPlayer
 {
 	public EssentialsChatPlayerListenerLowest(final Server server,
-											  final IEssentials ess,
+											  final IContext ess,
 											  final Map<PlayerChatEvent, ChatStore> chatStorage)
 	{
 		super(server, ess, chatStorage);

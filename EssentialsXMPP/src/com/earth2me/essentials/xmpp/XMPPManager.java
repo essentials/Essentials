@@ -1,8 +1,8 @@
 package com.earth2me.essentials.xmpp;
 
 import com.earth2me.essentials.EssentialsConf;
-import com.earth2me.essentials.api.IReload;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IReloadable;
+import com.earth2me.essentials.components.users.IUser;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Handler;
@@ -17,7 +17,7 @@ import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.util.StringUtils;
 
 
-public class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IReload
+public class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IReloadable
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private final transient EssentialsConf config;

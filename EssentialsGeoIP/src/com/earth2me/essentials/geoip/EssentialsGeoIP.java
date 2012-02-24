@@ -1,7 +1,7 @@
 package com.earth2me.essentials.geoip;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import java.util.logging.Level;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,7 +22,7 @@ public class EssentialsGeoIP extends JavaPlugin
 	public void onEnable()
 	{
 		final PluginManager pm = getServer().getPluginManager();
-		final IEssentials ess = (IEssentials)pm.getPlugin("Essentials3");
+		final IContext ess = (IContext)pm.getPlugin("Essentials3");
 		if (!this.getDescription().getVersion().equals(ess.getDescription().getVersion()))
 		{
 			getLogger().log(Level.WARNING, _("versionMismatchAll"));

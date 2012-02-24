@@ -2,8 +2,8 @@ package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.WarpPermissions;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -16,7 +16,7 @@ public class SignWarp extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
+	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException
 	{
 		validateTrade(sign, 3, ess);
 		final String warpName = sign.getLine(1);
@@ -46,12 +46,12 @@ public class SignWarp extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
+	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		final String warpName = sign.getLine(1);
 		final String group = sign.getLine(2);
 
-		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getGroups().inGroup(player, group)))
+		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getGroups().isInGroup(player, group)))
 			|| (group.isEmpty() && WarpPermissions.getPermission(warpName).isAuthorized(player)))
 		{
 			final Trade charge = getTrade(sign, 3, ess);

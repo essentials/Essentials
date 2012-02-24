@@ -1,8 +1,8 @@
 package com.earth2me.essentials.chat;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.logging.Logger;
 import org.bukkit.Location;
@@ -16,11 +16,11 @@ import org.bukkit.event.Listener;
 
 public class EssentialsLocalChatEventListener implements Listener
 {
-	protected transient IEssentials ess;
+	protected transient IContext ess;
 	protected final transient Server server;
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 
-	public EssentialsLocalChatEventListener(final Server server, final IEssentials ess)
+	public EssentialsLocalChatEventListener(final Server server, final IContext ess)
 	{
 		this.ess = ess;
 		this.server = server;

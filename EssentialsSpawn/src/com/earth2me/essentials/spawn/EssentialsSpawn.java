@@ -1,9 +1,9 @@
 package com.earth2me.essentials.spawn;
 
-import com.earth2me.essentials.EssentialsCommandHandler;
+import com.earth2me.essentials.components.commands.CommandsComponent;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.ICommandHandler;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.ICommandsComponent;
+import com.earth2me.essentials.api.IContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
@@ -22,14 +22,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class EssentialsSpawn extends JavaPlugin
 {
 	private static final Logger LOGGER = Bukkit.getLogger();
-	private transient IEssentials ess;
+	private transient IContext ess;
 	private transient SpawnStorage spawns;
-	private transient ICommandHandler commandHandler;
+	private transient ICommandsComponent commandHandler;
 
 	public void onEnable()
 	{
 		final PluginManager pluginManager = getServer().getPluginManager();
-		ess = (IEssentials)pluginManager.getPlugin("Essentials3");
+		ess = (IContext)pluginManager.getPlugin("Essentials3");
 		if (!this.getDescription().getVersion().equals(ess.getDescription().getVersion()))
 		{
 			LOGGER.log(Level.WARNING, _("versionMismatchAll"));
@@ -43,7 +43,7 @@ public class EssentialsSpawn extends JavaPlugin
 		spawns = new SpawnStorage(ess);
 		ess.addReloadListener(spawns);
 
-		commandHandler = new EssentialsCommandHandler(EssentialsSpawn.class.getClassLoader(), "com.earth2me.essentials.spawn.Command", "essentials.", spawns, ess);
+		commandHandler = new CommandsComponent(EssentialsSpawn.class.getClassLoader(), "com.earth2me.essentials.spawn.Command", "essentials.", spawns, ess);
 
 		final EssentialsSpawnPlayerListener playerListener = new EssentialsSpawnPlayerListener(ess, spawns);
 		pluginManager.registerEvent(PlayerRespawnEvent.class, playerListener, spawns.getRespawnPriority(), new EventExecutor()

@@ -1,21 +1,21 @@
 package com.earth2me.essentials.perm;
 
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IGroups;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.components.users.IUser;
 import java.text.MessageFormat;
 import lombok.Cleanup;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 
-public class VaultGroups implements IGroups
+public class VaultGroups implements IGroupsComponent
 {
-	private final IEssentials ess;
+	private final IContext ess;
 
-	public VaultGroups(final IEssentials ess)
+	public VaultGroups(final IContext ess)
 	{
 		this.ess = ess;
 	}
@@ -108,7 +108,7 @@ public class VaultGroups implements IGroups
 	}
 
 	@Override
-	public boolean inGroup(IUser player, String groupname)
+	public boolean isInGroup(IUser player, String groupname)
 	{
 		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();

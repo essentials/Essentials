@@ -4,8 +4,8 @@ import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Enchantments;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUser;
 import java.util.Locale;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +19,7 @@ public class SignEnchant extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
+	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		final ItemStack stack = sign.getLine(1).equals("*") || sign.getLine(1).equalsIgnoreCase("any") ? null : getItemStack(sign.getLine(1), 1, ess);
 		final String[] enchantLevel = sign.getLine(2).split(":");
@@ -62,7 +62,7 @@ public class SignEnchant extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignInteract(ISign sign, IUser player, String username, IEssentials ess) throws SignException, ChargeException
+	protected boolean onSignInteract(ISign sign, IUser player, String username, IContext ess) throws SignException, ChargeException
 	{
 		final ItemStack search = sign.getLine(1).equals("*") || sign.getLine(1).equalsIgnoreCase("any") ? null : getItemStack(sign.getLine(1), 1, ess);
 		int slot = -1;

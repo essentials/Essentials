@@ -1,12 +1,12 @@
 package com.earth2me.essentials.storage;
 
-import com.earth2me.essentials.api.IReload;
+import com.earth2me.essentials.api.IReloadable;
 import com.earth2me.essentials.api.InvalidNameException;
 import java.io.File;
 import java.util.Set;
 
 
-interface IStorageObjectMap<I> extends IReload
+interface IStorageObjectMap<I> extends IReloadable
 {
 	boolean objectExists(final String name);
 

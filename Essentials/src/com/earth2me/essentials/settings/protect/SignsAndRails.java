@@ -1,14 +1,14 @@
 package com.earth2me.essentials.settings.protect;
 
 import com.earth2me.essentials.storage.Comment;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SignsAndRails implements StorageObject
+public class SignsAndRails implements IStorageObject
 {
 	@Comment("Protect all signs")
 	private boolean protectSigns = true;

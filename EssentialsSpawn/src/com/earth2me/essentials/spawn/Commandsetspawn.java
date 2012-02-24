@@ -1,8 +1,8 @@
 package com.earth2me.essentials.spawn;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.commands.EssentialsCommand;
+import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.commands.EssentialsCommand;
 
 
 public class Commandsetspawn extends EssentialsCommand
@@ -11,7 +11,7 @@ public class Commandsetspawn extends EssentialsCommand
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		final String group = args.length > 0 ? getFinalArg(args, 0) : "default";
-		((SpawnStorage)module).setSpawn(user.getLocation(), group);
+		((SpawnStorage)getModule()).setSpawn(user.getLocation(), group);
 		user.sendMessage(_("spawnSet", group));
 	}
 }

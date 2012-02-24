@@ -3,7 +3,7 @@ package com.earth2me.essentials.settings;
 import com.earth2me.essentials.settings.commands.*;
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.ListType;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Commands implements StorageObject
+public class Commands implements IStorageObject
 {
 	private Afk afk = new Afk();
 	private Back back = new Back();

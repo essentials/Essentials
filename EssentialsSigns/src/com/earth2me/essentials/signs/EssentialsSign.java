@@ -4,8 +4,8 @@ import com.earth2me.essentials.api.ChargeException;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUser;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -28,7 +28,7 @@ public class EssentialsSign
 		this.signName = signName;
 	}
 
-	public final boolean onSignCreate(final SignChangeEvent event, final IEssentials ess)
+	public final boolean onSignCreate(final SignChangeEvent event, final IContext ess)
 	{
 		final ISign sign = new EventSign(event);
 		final IUser user = ess.getUser(event.getPlayer());
@@ -50,11 +50,11 @@ public class EssentialsSign
 		}
 		catch (ChargeException ex)
 		{
-			ess.getCommandHandler().showCommandError(user, signName, ex);
+			ess.getCommands().showCommandError(user, signName, ex);
 		}
 		catch (SignException ex)
 		{
-			ess.getCommandHandler().showCommandError(user, signName, ex);
+			ess.getCommands().showCommandError(user, signName, ex);
 		}
 		// Return true, so the player sees the wrong sign.
 		return true;
@@ -75,7 +75,7 @@ public class EssentialsSign
 		return user.getName().substring(0, user.getName().length() > 13 ? 13 : user.getName().length());
 	}
 
-	public final boolean onSignInteract(final Block block, final Player player, final IEssentials ess)
+	public final boolean onSignInteract(final Block block, final Player player, final IContext ess)
 	{
 		final ISign sign = new BlockSign(block);
 		final IUser user = ess.getUser(player);
@@ -86,17 +86,17 @@ public class EssentialsSign
 		}
 		catch (ChargeException ex)
 		{
-			ess.getCommandHandler().showCommandError(user,signName, ex);
+			ess.getCommands().showCommandError(user,signName, ex);
 			return false;
 		}
 		catch (SignException ex)
 		{
-			ess.getCommandHandler().showCommandError(user, signName, ex);
+			ess.getCommands().showCommandError(user, signName, ex);
 			return false;
 		}
 	}
 
-	public final boolean onSignBreak(final Block block, final Player player, final IEssentials ess)
+	public final boolean onSignBreak(final Block block, final Player player, final IContext ess)
 	{
 		final ISign sign = new BlockSign(block);
 		final IUser user = ess.getUser(player);
@@ -107,27 +107,27 @@ public class EssentialsSign
 		}
 		catch (SignException ex)
 		{
-			ess.getCommandHandler().showCommandError(user, signName, ex);
+			ess.getCommands().showCommandError(user, signName, ex);
 			return false;
 		}
 	}
 
-	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
+	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		return true;
 	}
 
-	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
+	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		return true;
 	}
 
-	protected boolean onSignBreak(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
+	protected boolean onSignBreak(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException
 	{
 		return true;
 	}
 
-	public final boolean onBlockPlace(final Block block, final Player player, final IEssentials ess)
+	public final boolean onBlockPlace(final Block block, final Player player, final IContext ess)
 	{
 		IUser user = ess.getUser(player);
 		try
@@ -136,16 +136,16 @@ public class EssentialsSign
 		}
 		catch (ChargeException ex)
 		{
-			ess.getCommandHandler().showCommandError(user, signName, ex);
+			ess.getCommands().showCommandError(user, signName, ex);
 		}
 		catch (SignException ex)
 		{
-			ess.getCommandHandler().showCommandError(user, signName, ex);
+			ess.getCommands().showCommandError(user, signName, ex);
 		}
 		return false;
 	}
 
-	public final boolean onBlockInteract(final Block block, final Player player, final IEssentials ess)
+	public final boolean onBlockInteract(final Block block, final Player player, final IContext ess)
 	{
 		IUser user = ess.getUser(player);
 		try
@@ -154,16 +154,16 @@ public class EssentialsSign
 		}
 		catch (ChargeException ex)
 		{
-			ess.getCommandHandler().showCommandError(user, signName, ex);
+			ess.getCommands().showCommandError(user, signName, ex);
 		}
 		catch (SignException ex)
 		{
-			ess.getCommandHandler().showCommandError(user, signName, ex);
+			ess.getCommands().showCommandError(user, signName, ex);
 		}
 		return false;
 	}
 
-	public final boolean onBlockBreak(final Block block, final Player player, final IEssentials ess)
+	public final boolean onBlockBreak(final Block block, final Player player, final IContext ess)
 	{
 		IUser user = ess.getUser(player);
 		try
@@ -172,32 +172,32 @@ public class EssentialsSign
 		}
 		catch (SignException ex)
 		{
-			ess.getCommandHandler().showCommandError(user, signName, ex);
+			ess.getCommands().showCommandError(user, signName, ex);
 		}
 		return false;
 	}
 
-	public boolean onBlockBreak(final Block block, final IEssentials ess)
+	public boolean onBlockBreak(final Block block, final IContext ess)
 	{
 		return true;
 	}
 
-	public boolean onBlockExplode(final Block block, final IEssentials ess)
+	public boolean onBlockExplode(final Block block, final IContext ess)
 	{
 		return true;
 	}
 
-	public boolean onBlockBurn(final Block block, final IEssentials ess)
+	public boolean onBlockBurn(final Block block, final IContext ess)
 	{
 		return true;
 	}
 
-	public boolean onBlockIgnite(final Block block, final IEssentials ess)
+	public boolean onBlockIgnite(final Block block, final IContext ess)
 	{
 		return true;
 	}
 
-	public boolean onBlockPush(final Block block, final IEssentials ess)
+	public boolean onBlockPush(final Block block, final IContext ess)
 	{
 		return true;
 	}
@@ -236,17 +236,17 @@ public class EssentialsSign
 		return sign.getLine(0).matches("§1\\[.*\\]");
 	}
 
-	protected boolean onBlockPlace(final Block block, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
+	protected boolean onBlockPlace(final Block block, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		return true;
 	}
 
-	protected boolean onBlockInteract(final Block block, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
+	protected boolean onBlockInteract(final Block block, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		return true;
 	}
 
-	protected boolean onBlockBreak(final Block block, final IUser player, final String username, final IEssentials ess) throws SignException
+	protected boolean onBlockBreak(final Block block, final IUser player, final String username, final IContext ess) throws SignException
 	{
 		return true;
 	}
@@ -256,7 +256,7 @@ public class EssentialsSign
 		return EMPTY_SET;
 	}
 
-	protected final void validateTrade(final ISign sign, final int index, final IEssentials ess) throws SignException
+	protected final void validateTrade(final ISign sign, final int index, final IContext ess) throws SignException
 	{
 		final String line = sign.getLine(index).trim();
 		if (line.isEmpty())
@@ -272,7 +272,7 @@ public class EssentialsSign
 	}
 
 	protected final void validateTrade(final ISign sign, final int amountIndex, final int itemIndex,
-									   final IUser player, final IEssentials ess) throws SignException
+									   final IUser player, final IContext ess) throws SignException
 	{
 		if (sign.getLine(itemIndex).equalsIgnoreCase("exp") || sign.getLine(itemIndex).equalsIgnoreCase("xp"))
 		{
@@ -288,7 +288,7 @@ public class EssentialsSign
 	}
 
 	protected final Trade getTrade(final ISign sign, final int amountIndex, final int itemIndex,
-								   final IUser player, final IEssentials ess) throws SignException
+								   final IUser player, final IContext ess) throws SignException
 	{
 		if (sign.getLine(itemIndex).equalsIgnoreCase("exp") || sign.getLine(itemIndex).equalsIgnoreCase("xp"))
 		{
@@ -340,11 +340,11 @@ public class EssentialsSign
 		}
 	}
 
-	protected final ItemStack getItemStack(final String itemName, final int quantity, final IEssentials ess) throws SignException
+	protected final ItemStack getItemStack(final String itemName, final int quantity, final IContext ess) throws SignException
 	{
 		try
 		{
-			final ItemStack item = ess.getItemDb().get(itemName);
+			final ItemStack item = ess.getItems().get(itemName);
 			item.setAmount(quantity);
 			return item;
 		}
@@ -382,12 +382,12 @@ public class EssentialsSign
 		}
 	}
 
-	protected final Trade getTrade(final ISign sign, final int index, final IEssentials ess) throws SignException
+	protected final Trade getTrade(final ISign sign, final int index, final IContext ess) throws SignException
 	{
 		return getTrade(sign, index, 1, ess);
 	}
 
-	protected final Trade getTrade(final ISign sign, final int index, final int decrement, final IEssentials ess) throws SignException
+	protected final Trade getTrade(final ISign sign, final int index, final int decrement, final IContext ess) throws SignException
 	{
 		final String line = sign.getLine(index).trim();
 		if (line.isEmpty())

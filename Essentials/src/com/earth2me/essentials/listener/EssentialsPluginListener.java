@@ -1,13 +1,13 @@
 package com.earth2me.essentials.listener;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IReload;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IReloadable;
 import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.perm.GMGroups;
+import com.earth2me.essentials.perm.GmGroups;
 import com.earth2me.essentials.perm.VaultGroups;
-import com.earth2me.essentials.register.payment.Methods;
+import com.earth2me.essentials.register.payment.PaymentMethods;
 import com.earth2me.essentials.settings.General;
-import com.earth2me.essentials.settings.GroupsHolder;
+import com.earth2me.essentials.settings.GroupsComponent;
 import java.util.logging.Level;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,11 +17,11 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
 
-public class EssentialsPluginListener implements Listener, IReload
+public class EssentialsPluginListener implements Listener, IReloadable
 {
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 
-	public EssentialsPluginListener(final IEssentials ess)
+	public EssentialsPluginListener(final IContext ess)
 	{
 		super();
 		this.ess = ess;
@@ -32,12 +32,12 @@ public class EssentialsPluginListener implements Listener, IReload
 	{
 		checkGroups();
 		//ess.getPermissionsHandler().checkPermissions();
-		ess.getCommandHandler().addPlugin(event.getPlugin());
-		if (!Methods.hasMethod() && Methods.setMethod(ess.getServer().getPluginManager()))
+		ess.getCommands().addPlugin(event.getPlugin());
+		if (!PaymentMethods.hasMethod() && PaymentMethods.setMethod(ess.getServer().getPluginManager()))
 		{
 			ess.getLogger().log(Level.INFO, "Payment method found ({0} version: {1})", new Object[]
 					{
-						Methods.getMethod().getName(), Methods.getMethod().getVersion()
+						PaymentMethods.getMethod().getName(), PaymentMethods.getMethod().getVersion()
 					});
 		}
 	}
@@ -47,11 +47,11 @@ public class EssentialsPluginListener implements Listener, IReload
 	{
 		checkGroups();
 		//ess.getPermissionsHandler().checkPermissions();
-		ess.getCommandHandler().removePlugin(event.getPlugin());
+		ess.getCommands().removePlugin(event.getPlugin());
 		// Check to see if the plugin thats being disabled is the one we are using
-		if (Methods.hasMethod() && Methods.checkDisabled(event.getPlugin()))
+		if (PaymentMethods.hasMethod() && PaymentMethods.checkDisabled(event.getPlugin()))
 		{
-			Methods.reset();
+			PaymentMethods.reset();
 			ess.getLogger().log(Level.INFO, "Payment method was disabled. No longer accepting payments.");
 		}
 	}
@@ -78,13 +78,13 @@ public class EssentialsPluginListener implements Listener, IReload
 		if (storage == General.GroupStorage.GROUPMANAGER)
 		{
 			Plugin groupManager = ess.getServer().getPluginManager().getPlugin("GroupManager");
-			if (groupManager != null && groupManager.isEnabled() && !(ess.getGroups() instanceof GMGroups))
+			if (groupManager != null && groupManager.isEnabled() && !(ess.getGroups() instanceof GmGroups))
 			{
-				if (ess.getGroups() instanceof GroupsHolder)
+				if (ess.getGroups() instanceof GroupsComponent)
 				{
-					ess.removeReloadListener((GroupsHolder)ess.getGroups());
+					ess.removeReloadListener((GroupsComponent)ess.getGroups());
 				}
-				ess.setGroups(new GMGroups(ess, groupManager));
+				ess.setGroups(new GmGroups(ess, groupManager));
 				return;
 			}
 		}
@@ -93,18 +93,18 @@ public class EssentialsPluginListener implements Listener, IReload
 			Plugin vault = ess.getServer().getPluginManager().getPlugin("Vault");
 			if (vault != null && vault.isEnabled() && !(ess.getGroups() instanceof VaultGroups))
 			{
-				if (ess.getGroups() instanceof GroupsHolder)
+				if (ess.getGroups() instanceof GroupsComponent)
 				{
-					ess.removeReloadListener((GroupsHolder)ess.getGroups());
+					ess.removeReloadListener((GroupsComponent)ess.getGroups());
 				}
 				ess.setGroups(new VaultGroups(ess));
 				return;
 			}
 		}
-		if (!(ess.getGroups() instanceof GroupsHolder))
+		if (!(ess.getGroups() instanceof GroupsComponent))
 		{
-			ess.setGroups(new GroupsHolder(ess));
-			ess.addReloadListener((GroupsHolder)ess.getGroups());
+			ess.setGroups(new GroupsComponent(ess));
+			ess.addReloadListener((GroupsComponent)ess.getGroups());
 		}
 	}
 }

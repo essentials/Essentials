@@ -1,6 +1,6 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -13,10 +13,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class SignPlayerListener implements Listener
 {
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 	private final transient ISignsPlugin plugin;
 
-	public SignPlayerListener(final IEssentials ess, final ISignsPlugin plugin)
+	public SignPlayerListener(final IContext ess, final ISignsPlugin plugin)
 	{
 		this.ess = ess;
 		this.plugin = plugin;

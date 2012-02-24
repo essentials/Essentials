@@ -1,6 +1,6 @@
 package com.earth2me.essentials.geoip;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.settings.geoip.GeoIP;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import java.io.File;
@@ -11,7 +11,7 @@ public class ConfigHolder extends AsyncStorageObjectHolder<GeoIP>
 {
 	private final transient Plugin geoip;
 
-	public ConfigHolder(final IEssentials ess, final Plugin geoip)
+	public ConfigHolder(final IContext ess, final Plugin geoip)
 	{
 		super(ess, GeoIP.class);
 		this.geoip = geoip;

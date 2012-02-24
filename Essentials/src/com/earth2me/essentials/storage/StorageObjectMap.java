@@ -1,7 +1,7 @@
 package com.earth2me.essentials.storage;
 
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -20,12 +20,12 @@ import org.bukkit.Bukkit;
 
 public abstract class StorageObjectMap<I> extends CacheLoader<String, I> implements IStorageObjectMap<I>
 {
-	protected final transient IEssentials ess;
+	protected final transient IContext ess;
 	private final transient File folder;
 	protected final transient Cache<String, I> cache = CacheBuilder.newBuilder().softValues().build(this);
 	protected final transient ConcurrentSkipListSet<String> keys = new ConcurrentSkipListSet<String>();
 
-	public StorageObjectMap(final IEssentials ess, final String folderName)
+	public StorageObjectMap(final IContext ess, final String folderName)
 	{
 		super();
 		this.ess = ess;

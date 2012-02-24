@@ -1,14 +1,14 @@
 package com.earth2me.essentials.settings;
 
 import com.earth2me.essentials.storage.Comment;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class General implements StorageObject
+public class General implements IStorageObject
 {
 	@Comment("Backup runs a command while saving is disabled")
 	private Backup backup = new Backup();

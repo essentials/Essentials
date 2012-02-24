@@ -1,7 +1,7 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUser;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -12,9 +12,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 class EssentialsXMPPPlayerListener implements Listener
 {
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 
-	EssentialsXMPPPlayerListener(final IEssentials ess)
+	EssentialsXMPPPlayerListener(final IContext ess)
 	{
 		super();
 		this.ess = ess;

@@ -1,7 +1,7 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.II18n;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.II18nComponent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class I18n implements II18n
+public class I18n implements II18nComponent
 {
 	private static I18n instance;
 	private static final String MESSAGES = "messages";
@@ -24,9 +24,9 @@ public class I18n implements II18n
 	private transient ResourceBundle localeBundle;
 	private final transient ResourceBundle defaultBundle;
 	private final transient Map<String, MessageFormat> messageFormatCache = new HashMap<String, MessageFormat>();
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 
-	public I18n(final IEssentials ess)
+	public I18n(final IContext ess)
 	{
 		this.ess = ess;
 		customBundle = ResourceBundle.getBundle(MESSAGES, defaultLocale, new FileResClassLoader(I18n.class.getClassLoader(), ess));
@@ -134,7 +134,7 @@ public class I18n implements II18n
 	{
 		private final transient File dataFolder;
 
-		public FileResClassLoader(final ClassLoader classLoader, final IEssentials ess)
+		public FileResClassLoader(final ClassLoader classLoader, final IContext ess)
 		{
 			super(classLoader);
 			this.dataFolder = ess.getDataFolder();

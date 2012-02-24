@@ -12,7 +12,7 @@ public final class Economy
 	private Economy()
 	{
 	}
-	private static IEssentials ess;
+	private static IContext ess;
 	private static final String noCallBeforeLoad = "Essentials API is called before Essentials is loaded.";
 
 	/**
@@ -198,7 +198,7 @@ public final class Economy
 		{
 			throw new RuntimeException(noCallBeforeLoad);
 		}
-		return ess.getEconomy().isNPC(name);
+		return ess.getEconomy().isNpc(name);
 	}
 
 	/**
@@ -212,7 +212,7 @@ public final class Economy
 		{
 			throw new RuntimeException(noCallBeforeLoad);
 		}
-		return ess.getEconomy().createNPC(name);
+		return ess.getEconomy().createNpc(name);
 	}
 
 	/**
@@ -226,6 +226,6 @@ public final class Economy
 		{
 			throw new RuntimeException(noCallBeforeLoad);
 		}
-		ess.getEconomy().removeNPC(name);
+		ess.getEconomy().removeNpc(name);
 	}
 }

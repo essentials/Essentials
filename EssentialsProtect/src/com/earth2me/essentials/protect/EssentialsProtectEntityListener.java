@@ -1,6 +1,6 @@
 package com.earth2me.essentials.protect;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.craftbukkit.FakeExplosion;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,7 +17,7 @@ import org.bukkit.event.entity.*;
 public class EssentialsProtectEntityListener implements Listener
 {
 	private final transient IProtect prot;
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 
 	public EssentialsProtectEntityListener(final IProtect prot)
 	{

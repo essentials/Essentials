@@ -2,7 +2,7 @@ package com.earth2me.essentials.settings;
 
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.MapValueType;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import java.util.LinkedHashMap;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Groups implements StorageObject
+public class Groups implements IStorageObject
 {
 	public Groups()
 	{

@@ -1,8 +1,8 @@
 package com.earth2me.essentials.chat;
 
 import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUser;
 
 
 public class ChatStore
@@ -11,7 +11,7 @@ public class ChatStore
 	private final transient String type;
 	private final transient Trade charge;
 
-	public ChatStore(final IEssentials ess, final IUser user, final String type)
+	public ChatStore(final IContext ess, final IUser user, final String type)
 	{
 		this.user = user;
 		this.type = type;

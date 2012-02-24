@@ -1,8 +1,10 @@
 package com.earth2me.essentials;
 
+import com.earth2me.essentials.components.warps.WarpsComponent;
+import com.earth2me.essentials.components.economy.WorthsComponent;
 import com.earth2me.essentials.storage.ManagedFile;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.settings.Spawns;
 import com.earth2me.essentials.storage.Location;
 import com.earth2me.essentials.storage.YamlStorageWriter;
@@ -23,10 +25,10 @@ import org.bukkit.inventory.ItemStack;
 public class EssentialsUpgrade
 {
 	private final static Logger LOGGER = Logger.getLogger("Minecraft");
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 	private final transient EssentialsConf doneFile;
 
-	EssentialsUpgrade(final IEssentials essentials)
+	EssentialsUpgrade(final IContext essentials)
 	{
 		ess = essentials;
 		if (!ess.getDataFolder().exists())
@@ -52,7 +54,7 @@ public class EssentialsUpgrade
 			}
 			final EssentialsConf conf = new EssentialsConf(configFile);
 			conf.load();
-			final Worth worth = new Worth(ess);
+			final WorthsComponent worth = new WorthsComponent(ess);
 			boolean found = false;
 			for (Material mat : Material.values())
 			{
@@ -443,7 +445,7 @@ public class EssentialsUpgrade
 						if (worldName != null)
 						{
 							final Location loc = new Location(worldName, x, y, z, yaw, pitch);
-							((Warps)ess.getWarps()).setWarp(filename.substring(0, filename.length() - 4), loc);
+							((WarpsComponent)ess.getWarps()).setWarp(filename.substring(0, filename.length() - 4), loc);
 							if (!listOfFiles[i].renameTo(new File(warpsFolder, filename + ".old")))
 							{
 								throw new Exception(_("fileRenameError", filename));

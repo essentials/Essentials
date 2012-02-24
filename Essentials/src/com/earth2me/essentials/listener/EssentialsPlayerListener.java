@@ -2,15 +2,15 @@ package com.earth2me.essentials.listener;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.users.UserData.TimestampType;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.TextInput;
 import com.earth2me.essentials.textreader.TextPager;
-import com.earth2me.essentials.user.UserData.TimestampType;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -37,9 +37,9 @@ public class EssentialsPlayerListener implements Listener
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private final transient Server server;
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 
-	public EssentialsPlayerListener(final IEssentials parent)
+	public EssentialsPlayerListener(final IContext parent)
 	{
 		super();
 		this.ess = parent;

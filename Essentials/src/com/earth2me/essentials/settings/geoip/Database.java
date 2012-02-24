@@ -1,13 +1,13 @@
 package com.earth2me.essentials.settings.geoip;
 
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Database implements StorageObject
+public class Database implements IStorageObject
 {
 	boolean showCities = false;
 	boolean downloadIfMissing = true;

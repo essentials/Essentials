@@ -1,11 +1,11 @@
 package com.earth2me.essentials;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.user.UserData.TimestampType;
+import com.earth2me.essentials.components.users.UserData.TimestampType;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -16,10 +16,10 @@ import org.bukkit.entity.Player;
 
 public class EssentialsTimer implements Runnable
 {
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 	private final transient Set<IUser> onlineUsers = new HashSet<IUser>();
 
-	EssentialsTimer(final IEssentials ess)
+	EssentialsTimer(final IContext ess)
 	{
 		this.ess = ess;
 	}

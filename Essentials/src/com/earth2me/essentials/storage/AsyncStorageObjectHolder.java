@@ -1,6 +1,6 @@
 package com.earth2me.essentials.storage;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,19 +10,19 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 
 
-public abstract class AsyncStorageObjectHolder<T extends StorageObject> implements IStorageObjectHolder<T>
+public abstract class AsyncStorageObjectHolder<T extends IStorageObject> implements IStorageObjectHolder<T>
 {
 	private transient T data;
 	private final transient ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
 	private final transient Class<T> clazz;
-	protected final transient IEssentials ess;
+	protected final transient IContext context;
 	private final transient StorageObjectDataWriter writer;
 	private final transient StorageObjectDataReader reader;
 	private final transient AtomicBoolean loaded = new AtomicBoolean(false);
 
-	public AsyncStorageObjectHolder(final IEssentials ess, final Class<T> clazz)
+	public AsyncStorageObjectHolder(final IContext ess, final Class<T> clazz)
 	{
-		this.ess = ess;
+		this.context = ess;
 		this.clazz = clazz;
 		writer = new StorageObjectDataWriter();
 		reader = new StorageObjectDataReader();
@@ -107,7 +107,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 	{
 		public StorageObjectDataWriter()
 		{
-			super(ess);
+			super(context);
 		}
 
 		@Override
@@ -117,7 +117,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		}
 
 		@Override
-		public StorageObject getObject()
+		public IStorageObject getObject()
 		{
 			acquireReadLock();
 			return getData();
@@ -135,7 +135,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 	{
 		public StorageObjectDataReader()
 		{
-			super(ess, clazz);
+			super(context, clazz);
 		}
 
 		@Override

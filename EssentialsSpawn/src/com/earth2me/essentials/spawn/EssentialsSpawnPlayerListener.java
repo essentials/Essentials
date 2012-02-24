@@ -1,9 +1,9 @@
 package com.earth2me.essentials.spawn;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.SimpleTextInput;
@@ -21,10 +21,10 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class EssentialsSpawnPlayerListener implements Listener
 {
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 	private final transient SpawnStorage spawns;
 
-	public EssentialsSpawnPlayerListener(final IEssentials ess, final SpawnStorage spawns)
+	public EssentialsSpawnPlayerListener(final IContext ess, final SpawnStorage spawns)
 	{
 		super();
 		this.ess = ess;

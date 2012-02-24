@@ -1,7 +1,7 @@
 package com.earth2me.essentials.protect;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public class EssentialsProtectPlayerListener implements Listener
 {
 	private final transient IProtect prot;
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 
 	public EssentialsProtectPlayerListener(final IProtect prot)
 	{

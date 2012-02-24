@@ -3,8 +3,8 @@ package com.earth2me.essentials.signs;
 import com.earth2me.essentials.api.ChargeException;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUser;
 
 
 public class SignTime extends EssentialsSign
@@ -15,7 +15,7 @@ public class SignTime extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
+	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException
 	{
 		validateTrade(sign, 2, ess);
 		final String timeString = sign.getLine(1);
@@ -33,7 +33,7 @@ public class SignTime extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
+	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		final Trade charge = getTrade(sign, 2, ess);
 		charge.isAffordableFor(player);

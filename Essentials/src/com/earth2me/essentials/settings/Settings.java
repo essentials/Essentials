@@ -2,7 +2,7 @@ package com.earth2me.essentials.settings;
 
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.MapValueType;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Settings implements StorageObject
+public class Settings implements IStorageObject
 {
 	@Comment(
 	{

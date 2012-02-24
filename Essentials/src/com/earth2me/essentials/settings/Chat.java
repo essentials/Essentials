@@ -1,14 +1,14 @@
 package com.earth2me.essentials.settings;
 
 import com.earth2me.essentials.storage.Comment;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Chat implements StorageObject
+public class Chat implements IStorageObject
 {
 	@Comment("The character(s) to prefix all nicknames, so that you know they are not true usernames.")
 	private String nicknamePrefix = "~";

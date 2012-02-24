@@ -19,11 +19,25 @@ package com.earth2me.essentials;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.*;
+import com.earth2me.essentials.components.ComponentPlugin;
+import com.earth2me.essentials.components.commands.CommandsComponent;
+import com.earth2me.essentials.components.economy.Economy;
+import com.earth2me.essentials.components.economy.IEconomyComponent;
+import com.earth2me.essentials.components.economy.IWorthsComponent;
+import com.earth2me.essentials.components.economy.WorthsComponent;
+import com.earth2me.essentials.components.items.ItemsComponent;
+import com.earth2me.essentials.components.jails.IJailsComponent;
+import com.earth2me.essentials.components.jails.JailsComponent;
+import com.earth2me.essentials.components.kits.IKitsComponent;
+import com.earth2me.essentials.components.kits.KitsComponent;
+import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.users.IUsersComponent;
+import com.earth2me.essentials.components.users.UsersComponent;
+import com.earth2me.essentials.components.warps.IWarpsComponent;
+import com.earth2me.essentials.components.warps.WarpsComponent;
 import com.earth2me.essentials.listener.*;
-import com.earth2me.essentials.register.payment.Methods;
-import com.earth2me.essentials.settings.GroupsHolder;
+import com.earth2me.essentials.settings.GroupsComponent;
 import com.earth2me.essentials.settings.SettingsHolder;
-import com.earth2me.essentials.user.UserMap;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -31,10 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -43,40 +54,31 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.InvalidDescriptionException;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.error.YAMLException;
 
 
-public class Essentials extends JavaPlugin implements IEssentials
+public class Essentials extends ComponentPlugin implements IEssentials
 {
-	public static final int BUKKIT_VERSION = 1952;
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private transient ISettings settings;
-	private final transient TntExplodeListener tntListener = new TntExplodeListener(this);
-	private transient IJails jails;
-	private transient IKits kits;
-	private transient IWarps warps;
-	private transient IWorth worth;
-	private transient List<IReload> reloadList;
-	private transient IBackup backup;
-	private transient IItemDb itemDb;
-	private transient IGroups groups;
-	private transient final Methods paymentMethod = new Methods();
-	//private transient PermissionsHandler permissionsHandler;
-	private transient IUserMap userMap;
-	private transient ExecuteTimer execTimer;
-	private transient I18n i18n;
-	private transient ICommandHandler commandHandler;
-	private transient Economy economy;
+	private static final Logger logger = Logger.getLogger("Minecraft");
+	
 	public transient boolean testing;
+	
+	private transient final TntExplodeListener tntListener;
+	private transient ExecuteTimer execTimer;
+	private transient final Context context;
+
+	public Essentials()
+	{
+		context = new Context();
+		tntListener = new TntExplodeListener(context);
+	}
 
 	@Override
-	public ISettings getSettings()
+	public Context getContext()
 	{
-		return settings;
+		return context;
 	}
 
 	public void setupForTesting(final Server server) throws IOException, InvalidDescriptionException
@@ -93,14 +95,34 @@ public class Essentials extends JavaPlugin implements IEssentials
 		}
 		i18n = new I18n(this);
 		i18n.onEnable();
-		LOGGER.log(Level.INFO, _("usingTempFolderForTesting"));
-		LOGGER.log(Level.INFO, dataFolder.toString());
+		logger.log(Level.INFO, _("usingTempFolderForTesting"));
+		logger.log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 		settings = new SettingsHolder(this);
 		i18n.updateLocale("en");
-		userMap = new UserMap(this);
+		users = new UsersComponent(this);
 		//permissionsHandler = new PermissionsHandler(this);
 		economy = new Economy(this);
+	}
+
+	private boolean checkVersion()
+	{
+		try
+		{
+			if (!new Versioning().checkServerVersion(getServer(), getDescription().getVersion()))
+			{
+				setEnabled(false);
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		finally
+		{
+			execTimer.mark("BukkitCheck");
+		}
 	}
 
 	@Override
@@ -108,82 +130,36 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		execTimer = new ExecuteTimer();
 		execTimer.start();
-		i18n = new I18n(this);
-		i18n.onEnable();
-		execTimer.mark("I18n1");
-		final PluginManager pm = getServer().getPluginManager();
-		for (Plugin plugin : pm.getPlugins())
+
+		registerComponents(0);
+
+		if (!checkVersion())
 		{
-			if (plugin.getDescription().getName().startsWith("Essentials")
-				&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion()))
-			{
-				LOGGER.log(Level.WARNING, _("versionMismatch", plugin.getDescription().getName()));
-			}
+			return;
 		}
-		final Matcher versionMatch = Pattern.compile("git-Bukkit-([0-9]+).([0-9]+).([0-9]+)-R[0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
-		if (versionMatch.matches())
-		{
-			final int versionNumber = Integer.parseInt(versionMatch.group(4));
-			if (versionNumber < BUKKIT_VERSION)
-			{
-				LOGGER.log(Level.SEVERE, _("notRecommendedBukkit"));
-				LOGGER.log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
-				this.setEnabled(false);
-				return;
-			}
-		}
-		else
-		{
-			LOGGER.log(Level.INFO, _("bukkitFormatChanged"));
-			LOGGER.log(Level.INFO, getServer().getVersion());
-			LOGGER.log(Level.INFO, getServer().getBukkitVersion());
-		}
-		execTimer.mark("BukkitCheck");
+
 		try
 		{
-			//final EssentialsUpgrade upgrade = new EssentialsUpgrade(this);
-			//upgrade.beforeSettings();
-			//execTimer.mark("Upgrade");
-			reloadList = new ArrayList<IReload>();
-			settings = new SettingsHolder(this);
-			reloadList.add(settings);
-			execTimer.mark("Settings");
-			//upgrade.afterSettings();
-			//execTimer.mark("Upgrade2");
+			registerComponents(1);
+			
 			i18n.updateLocale(settings.getLocale());
-			userMap = new UserMap(this);
-			reloadList.add(userMap);
-			execTimer.mark("Init(Usermap)");
-			groups = new GroupsHolder(this);
-			reloadList.add((GroupsHolder)groups);
-			warps = new Warps(this);
-			reloadList.add(warps);
-			execTimer.mark("Init(Spawn/Warp)");
-			worth = new Worth(this);
-			reloadList.add(worth);
-			itemDb = new ItemDb(this);
-			reloadList.add(itemDb);
-			execTimer.mark("Init(Worth/ItemDB)");
-			kits = new Kits(this);
-			reloadList.add(kits);
-			commandHandler = new EssentialsCommandHandler(Essentials.class.getClassLoader(), "com.earth2me.essentials.commands.Command", "essentials.", this);
-			reloadList.add(commandHandler);
-			economy = new Economy(this);
-			reloadList.add(economy);
+			
+			registerComponents(2);
+			
 			reload();
 		}
 		catch (YAMLException exception)
 		{
-			if (pm.getPlugin("EssentialsUpdate") != null)
+			if (pluginManager.getPlugin("EssentialsUpdate") != null)
 			{
-				LOGGER.log(Level.SEVERE, _("essentialsHelp2"));
+				logger.log(Level.SEVERE, _("essentialsHelp2"));
 			}
 			else
 			{
-				LOGGER.log(Level.SEVERE, _("essentialsHelp1"));
+				logger.log(Level.SEVERE, _("essentialsHelp1"));
 			}
-			LOGGER.log(Level.SEVERE, exception.toString());
-			pm.registerEvents(new Listener()
+			logger.log(Level.SEVERE, exception.toString());
+			pluginManager.registerEvents(new Listener()
 			{
 				@EventHandler(priority = EventPriority.LOW)
 				public void onPlayerJoin(final PlayerJoinEvent event)
@@ -199,24 +175,13 @@ public class Essentials extends JavaPlugin implements IEssentials
 			return;
 		}
 		backup = new Backup(this);
-		//permissionsHandler = new PermissionsHandler(this);
-		final EssentialsPluginListener serverListener = new EssentialsPluginListener(this);
-		pm.registerEvents(serverListener, this);
-		reloadList.add(serverListener);
+		
+		final PluginManager pluginManager = getServer().getPluginManager();
+		registerNormalListeners(pluginManager);
+		
+		registerComponents(LAST);
 
-		final EssentialsPlayerListener playerListener = new EssentialsPlayerListener(this);
-		pm.registerEvents(playerListener, this);
-
-		final EssentialsBlockListener blockListener = new EssentialsBlockListener(this);
-		pm.registerEvents(blockListener, this);
-
-		final EssentialsEntityListener entityListener = new EssentialsEntityListener(this);
-		pm.registerEvents(entityListener, this);
-
-		jails = new Jails(this);
-		reloadList.add(jails);
-
-		pm.registerEvents(tntListener, this);
+		registerLateListeners(pluginManager);
 
 
 		final EssentialsTimer timer = new EssentialsTimer(this);
@@ -225,8 +190,74 @@ public class Essentials extends JavaPlugin implements IEssentials
 		final String timeroutput = execTimer.end();
 		if (getSettings().isDebug())
 		{
-			LOGGER.log(Level.INFO, "Essentials load {0}", timeroutput);
+			logger.log(Level.INFO, "Essentials load {0}", timeroutput);
 		}
+	}
+	
+	private void registerComponents(int stage)
+	{
+		switch (stage)
+		{
+		case 0:
+			context.setI18n(new I18n(context));
+			add(context.getI18n());
+			execTimer.mark("I18n1");
+			break;
+			
+		case 1:
+			settings = new SettingsHolder(this);
+			reloadList.add(settings);
+			execTimer.mark("Settings");
+			break;
+			
+		case 2:
+			final IUsersComponent users = new UsersComponent(context);
+			add(users);
+			execTimer.mark("Init(Usermap)");
+			
+			final GroupsComponent groups = new GroupsComponent(context);
+			add((GroupsComponent)groups);
+			
+			final IWarpsComponent warps = new WarpsComponent(context);
+			add(warps);
+			execTimer.mark("Init(Spawn/Warp)");
+			
+			final IWorthsComponent worths = new WorthsComponent(context);
+			add(worths);
+			
+			final IItemsComponent items = new ItemsComponent(context);
+			add(items);
+			execTimer.mark("Init(Worth/ItemDB)");
+			
+			final IKitsComponent kits = new KitsComponent(context);
+			add(kits);
+			
+			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", "essentials.", context);
+			add(commands);
+			
+			final IEconomyComponent economy = new Economy(context);
+			add(economy);
+			break;
+			
+		default:
+			final IJailsComponent jails = new JailsComponent(context);
+			context.setJails(jails);
+			add(jails);
+			break;
+		}
+	}
+	
+	private void registerNormalListeners(PluginManager pluginManager)
+	{
+		pluginManager.registerEvents(new EssentialsPluginListener(context), this);
+		pluginManager.registerEvents(new EssentialsPlayerListener(context), this);
+		pluginManager.registerEvents(new EssentialsBlockListener(context), this);
+		pluginManager.registerEvents(new EssentialsEntityListener(context), this);
+	}
+	
+	private void registerLateListeners(PluginManager pluginManager)
+	{
+		pluginManager.registerEvents(tntListener, this);
 	}
 
 	@Override
@@ -241,7 +272,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		Trade.closeLog();
 
-		for (IReload iReload : reloadList)
+		for (IReloadable iReload : reloadList)
 		{
 			iReload.onReload();
 			execTimer.mark("Reload(" + iReload.getClass().getSimpleName() + ")");
@@ -258,71 +289,9 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public IJails getJails()
-	{
-		return jails;
-	}
-
-	@Override
-	public IKits getKits()
-	{
-		return kits;
-	}
-
-	@Override
-	public IWarps getWarps()
-	{
-		return warps;
-	}
-
-	@Override
-	public IWorth getWorth()
-	{
-		return worth;
-	}
-
-	@Override
-	public IBackup getBackup()
-	{
-		return backup;
-	}
-
-	@Override
-	public IUser getUser(final Player player)
-	{
-		return userMap.getUser(player);
-	}
-
-	@Override
-	public IUser getUser(final String playerName)
-	{
-		return userMap.getUser(playerName);
-	}
-
-	@Override
-	public World getWorld(final String name)
-	{
-		if (name.matches("[0-9]+"))
-		{
-			final int worldId = Integer.parseInt(name);
-			if (worldId < getServer().getWorlds().size())
-			{
-				return getServer().getWorlds().get(worldId);
-			}
-		}
-		return getServer().getWorld(name);
-	}
-
-	@Override
-	public void addReloadListener(final IReload listener)
+	public void addReloadListener(final IReloadable listener)
 	{
 		reloadList.add(listener);
-	}
-
-	@Override
-	public Methods getPaymentMethod()
-	{
-		return paymentMethod;
 	}
 
 	@Override
@@ -375,62 +344,24 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public TntExplodeListener getTNTListener()
+	public TntExplodeListener getTntListener()
 	{
 		return tntListener;
 	}
 
-	/*@Override
-	public PermissionsHandler getPermissionsHandler()
-	{
-		return permissionsHandler;
-	}*/
-
-	@Override
-	public IItemDb getItemDb()
-	{
-		return itemDb;
+	/*
+	 * @Override public PermissionsHandler getPermissionsHandler() { return permissionsHandler;
 	}
-
+	 */
 	@Override
-	public IUserMap getUserMap()
-	{
-		return userMap;
-	}
-
-	@Override
-	public I18n getI18n()
-	{
-		return i18n;
-	}
-
-	@Override
-	public IGroups getGroups()
-	{
-		return groups;
-	}
-
-	@Override
-	public ICommandHandler getCommandHandler()
-	{
-		return commandHandler;
-	}
-
-	@Override
-	public void setGroups(final IGroups groups)
+	public void setGroups(final IGroupsComponent groups)
 	{
 		this.groups = groups;
 	}
 
 	@Override
-	public void removeReloadListener(IReload groups)
+	public void removeReloadListener(IReloadable groups)
 	{
 		this.reloadList.remove(groups);
-	}
-
-	@Override
-	public IEconomy getEconomy()
-	{
-		return economy;
 	}
 }

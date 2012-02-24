@@ -1,6 +1,7 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.Trade;
+import com.earth2me.essentials.components.users.IUser;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;

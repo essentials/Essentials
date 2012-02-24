@@ -1,6 +1,6 @@
 package com.earth2me.essentials.settings;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import java.io.File;
@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implements ISettings
 {
 	private final transient AtomicBoolean debug = new AtomicBoolean(false);
-	public SettingsHolder(final IEssentials ess)
+	public SettingsHolder(final IContext ess)
 	{
 		super(ess, Settings.class);
 		onReload();
@@ -31,7 +31,7 @@ public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implement
 	@Override
 	public File getStorageFile()
 	{
-		return new File(ess.getDataFolder(), "settings.yml");
+		return new File(context.getDataFolder(), "settings.yml");
 	}
 
 	@Override

@@ -1,9 +1,9 @@
 package com.earth2me.essentials.geoip;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IReload;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IReloadable;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
@@ -24,16 +24,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 
-public class EssentialsGeoIPPlayerListener implements Listener, IReload
+public class EssentialsGeoIPPlayerListener implements Listener, IReloadable
 {
 	private transient LookupService ls = null;
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient File databaseFile;
 	private final transient ConfigHolder config;
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 	private final transient Plugin geoip;
 
-	public EssentialsGeoIPPlayerListener(final Plugin geoip, final IEssentials ess)
+	public EssentialsGeoIPPlayerListener(final Plugin geoip, final IContext ess)
 	{
 		super();
 		this.ess = ess;

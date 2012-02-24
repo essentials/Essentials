@@ -2,7 +2,7 @@ package com.earth2me.essentials.settings.protect;
 
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.ListType;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
@@ -12,7 +12,7 @@ import org.bukkit.Material;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Protect implements StorageObject
+public class Protect implements IStorageObject
 {
 	@Comment("Either mysql or sqlite")
 	private String dbtype = "sqlite";

@@ -1,7 +1,7 @@
 package com.earth2me.essentials.protect;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.protect.data.IProtectedBlock;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.bukkit.event.block.*;
 public class EssentialsProtectBlockListener implements Listener
 {
 	final private transient IProtect prot;
-	final private transient IEssentials ess;
+	final private transient IContext ess;
 
 	public EssentialsProtectBlockListener(final IProtect parent)
 	{

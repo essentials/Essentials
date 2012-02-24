@@ -1,12 +1,12 @@
 package com.earth2me.essentials.xmpp;
 
 import com.earth2me.essentials.EssentialsConf;
-import com.earth2me.essentials.api.IReload;
+import com.earth2me.essentials.api.IReloadable;
 import java.io.File;
 import java.util.*;
 
 
-public class UserManager implements IReload
+public class UserManager implements IReloadable
 {
 	private final transient EssentialsConf users;
 	private final transient List<String> spyusers = new ArrayList<String>();

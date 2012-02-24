@@ -1,7 +1,7 @@
 package com.earth2me.essentials.storage;
 
 import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,13 +12,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 
-public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> implements Runnable
+public abstract class AbstractDelayedYamlFileReader<T extends IStorageObject> implements Runnable
 {
 	private final transient Class<T> clazz;
 	private final transient Plugin plugin;
 	private final transient ReentrantLock lock = new ReentrantLock();
 
-	public AbstractDelayedYamlFileReader(final IEssentials ess, final Class<T> clazz)
+	public AbstractDelayedYamlFileReader(final IContext ess, final Class<T> clazz)
 	{
 		this.clazz = clazz;
 		this.plugin = ess;

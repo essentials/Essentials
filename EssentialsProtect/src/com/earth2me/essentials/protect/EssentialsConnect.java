@@ -1,9 +1,9 @@
 package com.earth2me.essentials.protect;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IReload;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IReloadable;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.protect.data.ProtectedBlockMySQL;
 import com.earth2me.essentials.protect.data.ProtectedBlockSQLite;
 import java.beans.PropertyVetoException;
@@ -17,7 +17,7 @@ import org.bukkit.plugin.Plugin;
 public class EssentialsConnect
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 	private final transient IProtect protect;
 
 	public EssentialsConnect(Plugin essPlugin, Plugin essProtect)
@@ -26,7 +26,7 @@ public class EssentialsConnect
 		{
 			LOGGER.log(Level.WARNING, _("versionMismatchAll"));
 		}
-		ess = (IEssentials)essPlugin;
+		ess = (IContext)essPlugin;
 		protect = (IProtect)essProtect;
 		protect.setSettings(new ProtectHolder(ess));
 		ProtectReloader pr = new ProtectReloader();
@@ -38,7 +38,7 @@ public class EssentialsConnect
 	{
 	}
 
-	public IEssentials getEssentials()
+	public IContext getEssentials()
 	{
 		return ess;
 	}
@@ -61,7 +61,7 @@ public class EssentialsConnect
 	}
 
 
-	private class ProtectReloader implements IReload
+	private class ProtectReloader implements IReloadable
 	{
 		@Override
 		public void onReload()

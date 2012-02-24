@@ -2,9 +2,9 @@ package com.earth2me.essentials;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.ChargeException;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.craftbukkit.SetExpFix;
 import com.earth2me.essentials.perm.NoCommandCostPermissions;
@@ -30,29 +30,29 @@ public class Trade
 	private final transient Double money;
 	private final transient ItemStack itemStack;
 	private final transient Integer exp;
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 
-	public Trade(final String command, final IEssentials ess)
+	public Trade(final String command, final IContext ess)
 	{
 		this(command, null, null, null, ess);
 	}
 
-	public Trade(final double money, final IEssentials ess)
+	public Trade(final double money, final IContext ess)
 	{
 		this(null, money, null, null, ess);
 	}
 
-	public Trade(final ItemStack items, final IEssentials ess)
+	public Trade(final ItemStack items, final IContext ess)
 	{
 		this(null, null, items, null, ess);
 	}
 
-	public Trade(final int exp, final IEssentials ess)
+	public Trade(final int exp, final IContext ess)
 	{
 		this(null, null, null, exp, ess);
 	}
 
-	private Trade(final String command, final Double money, final ItemStack item, final Integer exp, final IEssentials ess)
+	private Trade(final String command, final Double money, final ItemStack item, final Integer exp, final IContext ess)
 	{
 		this.command = command;
 		this.money = money;
@@ -210,7 +210,7 @@ public class Trade
 	}
 	private static FileWriter fw = null;
 
-	public static void log(String type, String subtype, String event, String sender, Trade charge, String receiver, Trade pay, Location loc, IEssentials ess)
+	public static void log(String type, String subtype, String event, String sender, Trade charge, String receiver, Trade pay, Location loc, IContext ess)
 	{
 		@Cleanup
 		final ISettings settings = ess.getSettings();

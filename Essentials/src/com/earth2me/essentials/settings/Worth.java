@@ -3,7 +3,7 @@ package com.earth2me.essentials.settings;
 import com.earth2me.essentials.storage.EnchantmentLevel;
 import com.earth2me.essentials.storage.MapKeyType;
 import com.earth2me.essentials.storage.MapValueType;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
@@ -14,7 +14,7 @@ import org.bukkit.material.MaterialData;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Worth implements StorageObject
+public class Worth implements IStorageObject
 {
 	@MapKeyType(MaterialData.class)
 	@MapValueType(Double.class)

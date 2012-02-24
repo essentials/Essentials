@@ -1,14 +1,14 @@
 package com.earth2me.essentials.settings.commands;
 
 import com.earth2me.essentials.storage.Comment;
-import com.earth2me.essentials.storage.StorageObject;
+import com.earth2me.essentials.storage.IStorageObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Help implements StorageObject
+public class Help implements IStorageObject
 {
 	@Comment("Show other plugins commands in help")
 	private boolean showNonEssCommandsInHelp = true;

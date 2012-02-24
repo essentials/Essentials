@@ -24,7 +24,7 @@ public class YamlStorageReader implements IStorageReader
 	}
 
 	@Override
-	public <T extends StorageObject> T load(final Class<? extends T> clazz) throws ObjectLoadException
+	public <T extends IStorageObject> T load(final Class<? extends T> clazz) throws ObjectLoadException
 	{
 		Yaml yaml = PREPARED_YAMLS.get(clazz);
 		if (yaml == null)
@@ -78,7 +78,7 @@ public class YamlStorageReader implements IStorageReader
 		{
 			prepareList(field, description, classes, constructor);
 			prepareMap(field, description, classes, constructor);
-			if (StorageObject.class.isAssignableFrom(field.getType())
+			if (IStorageObject.class.isAssignableFrom(field.getType())
 				&& !classes.contains(field.getType()))
 			{
 				prepareConstructor(constructor, classes, field.getType());
@@ -93,7 +93,7 @@ public class YamlStorageReader implements IStorageReader
 		if (listType != null)
 		{
 			description.putListPropertyType(field.getName(), listType.value());
-			if (StorageObject.class.isAssignableFrom(listType.value())
+			if (IStorageObject.class.isAssignableFrom(listType.value())
 				&& !classes.contains(listType.value()))
 			{
 				prepareConstructor(constructor, classes, listType.value());
@@ -110,7 +110,7 @@ public class YamlStorageReader implements IStorageReader
 			description.putMapPropertyType(field.getName(),
 										   mapKeyType == null ? String.class : mapKeyType.value(),
 										   mapType.value());
-			if (StorageObject.class.isAssignableFrom(mapType.value())
+			if (IStorageObject.class.isAssignableFrom(mapType.value())
 				&& !classes.contains(mapType.value()))
 			{
 				prepareConstructor(constructor, classes, mapType.value());

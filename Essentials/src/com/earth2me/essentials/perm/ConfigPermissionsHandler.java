@@ -1,6 +1,6 @@
 package com.earth2me.essentials.perm;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -8,11 +8,11 @@ import org.bukkit.plugin.Plugin;
 
 /*public class ConfigPermissionsHandler extends AbstractPermissionsHandler
 {
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 
 	public ConfigPermissionsHandler(final Plugin ess)
 	{
-		this.ess = (IEssentials)ess;
+		this.ess = (IContext)ess;
 	}
 
 	@Override

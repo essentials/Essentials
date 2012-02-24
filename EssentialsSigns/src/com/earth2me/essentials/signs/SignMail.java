@@ -1,8 +1,8 @@
 package com.earth2me.essentials.signs;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUser;
 import java.util.List;
 
 
@@ -14,7 +14,7 @@ public class SignMail extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
+	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException
 	{
 		final List<String> mail;
 		player.acquireReadLock();

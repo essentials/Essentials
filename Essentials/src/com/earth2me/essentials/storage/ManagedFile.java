@@ -1,7 +1,7 @@
 package com.earth2me.essentials.storage;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.DigestInputStream;
@@ -20,7 +20,7 @@ public class ManagedFile
 	private final static int BUFFERSIZE = 1024 * 8;
 	private final transient File file;
 
-	public ManagedFile(final String filename, final IEssentials ess)
+	public ManagedFile(final String filename, final IContext ess)
 	{
 		file = new File(ess.getDataFolder(), filename);
 

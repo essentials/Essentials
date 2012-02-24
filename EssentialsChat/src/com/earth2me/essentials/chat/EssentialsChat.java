@@ -1,7 +1,7 @@
 package com.earth2me.essentials.chat;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.chat.listenerlevel.EssentialsChatPlayerListenerHighest;
 import com.earth2me.essentials.chat.listenerlevel.EssentialsChatPlayerListenerLowest;
 import com.earth2me.essentials.chat.listenerlevel.EssentialsChatPlayerListenerNormal;
@@ -22,7 +22,7 @@ public class EssentialsChat extends JavaPlugin
 	public void onEnable()
 	{
 		final PluginManager pluginManager = getServer().getPluginManager();
-		final IEssentials ess = (IEssentials)pluginManager.getPlugin("Essentials3");
+		final IContext ess = (IContext)pluginManager.getPlugin("Essentials3");
 		if (!this.getDescription().getVersion().equals(ess.getDescription().getVersion()))
 		{
 			LOGGER.log(Level.WARNING, _("versionMismatchAll"));

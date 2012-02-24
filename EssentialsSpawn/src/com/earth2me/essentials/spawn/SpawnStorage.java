@@ -1,8 +1,8 @@
 package com.earth2me.essentials.spawn;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentialsModule;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.settings.Spawns;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import com.earth2me.essentials.storage.Location.WorldNotLoadedException;
@@ -17,7 +17,7 @@ import org.bukkit.event.EventPriority;
 
 public class SpawnStorage extends AsyncStorageObjectHolder<Spawns> implements IEssentialsModule
 {
-	public SpawnStorage(final IEssentials ess)
+	public SpawnStorage(final IContext ess)
 	{
 		super(ess, Spawns.class);
 		onReload();
@@ -26,7 +26,7 @@ public class SpawnStorage extends AsyncStorageObjectHolder<Spawns> implements IE
 	@Override
 	public File getStorageFile()
 	{
-		return new File(ess.getDataFolder(), "spawn.yml");
+		return new File(context.getDataFolder(), "spawn.yml");
 	}
 
 	public void setSpawn(final Location loc, final String group)
@@ -87,7 +87,7 @@ public class SpawnStorage extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	private Location getWorldSpawn()
 	{
-		for (World world : ess.getServer().getWorlds())
+		for (World world : context.getServer().getWorlds())
 		{
 			if (world.getEnvironment() != World.Environment.NORMAL)
 			{
@@ -95,7 +95,7 @@ public class SpawnStorage extends AsyncStorageObjectHolder<Spawns> implements IE
 			}
 			return world.getSpawnLocation();
 		}
-		return ess.getServer().getWorlds().get(0).getSpawnLocation();
+		return context.getServer().getWorlds().get(0).getSpawnLocation();
 	}
 
 	public EventPriority getRespawnPriority()
@@ -154,7 +154,7 @@ public class SpawnStorage extends AsyncStorageObjectHolder<Spawns> implements IE
 		acquireReadLock();
 		try
 		{
-			return getData().getNewPlayerAnnouncement().replace('&', '§').replace("§§", "&").replace("{PLAYER}", user.getDisplayName()).replace("{DISPLAYNAME}", user.getDisplayName()).replace("{GROUP}", ess.getGroups().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getAddress().toString());
+			return getData().getNewPlayerAnnouncement().replace('&', '§').replace("§§", "&").replace("{PLAYER}", user.getDisplayName()).replace("{DISPLAYNAME}", user.getDisplayName()).replace("{GROUP}", context.getGroups().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getAddress().toString());
 		}
 		finally
 		{

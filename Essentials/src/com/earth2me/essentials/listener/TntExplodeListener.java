@@ -1,6 +1,6 @@
 package com.earth2me.essentials.listener;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.craftbukkit.FakeExplosion;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.bukkit.entity.LivingEntity;
@@ -12,11 +12,11 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 
 public class TntExplodeListener implements Listener, Runnable
 {
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 	private transient AtomicBoolean enabled = new AtomicBoolean(false);
 	private transient int timer = -1;
 
-	public TntExplodeListener(final IEssentials ess)
+	public TntExplodeListener(final IContext ess)
 	{
 		super();
 		this.ess = ess;

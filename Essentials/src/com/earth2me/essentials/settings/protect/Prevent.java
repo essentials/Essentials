@@ -13,7 +13,7 @@ import org.bukkit.entity.CreatureType;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Prevent implements StorageObject
+public class Prevent implements IStorageObject
 {
 	@Comment("Which blocks should a piston not be able to push?")
 	@ListType(Material.class)

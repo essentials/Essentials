@@ -1,6 +1,6 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +13,7 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 	private final Plugin plugin;
 	private Set<EssentialsSign> enabledSigns = new HashSet<EssentialsSign>();
 
-	public SignsConfigHolder(final IEssentials ess, final Plugin plugin)
+	public SignsConfigHolder(final IContext ess, final Plugin plugin)
 	{
 		super(ess, SignsConfig.class);
 		this.plugin = plugin;

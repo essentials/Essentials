@@ -30,7 +30,7 @@ public class YamlStorageWriter implements IStorageWriter
 	}
 
 	@Override
-	public void save(final StorageObject object)
+	public void save(final IStorageObject object)
 	{
 		try
 		{
@@ -60,7 +60,7 @@ public class YamlStorageWriter implements IStorageWriter
 				{
 					continue;
 				}
-				if (data instanceof StorageObject)
+				if (data instanceof IStorageObject)
 				{
 					writer.println();
 					writeToFile(data, depth + 1, data.getClass());
@@ -145,7 +145,7 @@ public class YamlStorageWriter implements IStorageWriter
 			{
 				writeIndention(depth);
 				writer.print("- ");
-				if (entry instanceof StorageObject)
+				if (entry instanceof IStorageObject)
 				{
 					writer.println();
 					writeToFile(entry, depth + 1, entry.getClass());
@@ -178,7 +178,7 @@ public class YamlStorageWriter implements IStorageWriter
 				writeIndention(depth);
 				writeKey(entry.getKey());
 				writer.print(": ");
-				if (value instanceof StorageObject)
+				if (value instanceof IStorageObject)
 				{
 					writer.println();
 					writeToFile(value, depth + 1, value.getClass());
