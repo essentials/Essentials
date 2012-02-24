@@ -1,4 +1,4 @@
-package com.earth2me.essentials.settings.protect;
+package com.earth2me.essentials.components.settings.protect;
 
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.ListType;
