@@ -26,7 +26,7 @@ public abstract class AbstractDelayedYamlFileReader<T extends IStorageObject> im
 
 	public void schedule(boolean instant)
 	{
-		if (instant || ((Essentials)plugin).testing)
+		if (instant || ((Essentials)plugin).isTesting())
 		{
 			run();
 		}

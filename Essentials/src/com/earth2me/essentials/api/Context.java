@@ -34,11 +34,24 @@ public final class Context implements IContext
 	private transient ICommandsComponent commands;
 	private transient IEconomyComponent economy;
 	private transient Server server;
-	public transient File dataFolder;
+	private transient File dataFolder;
 	@SuppressWarnings("NonConstantLogger")
-	public transient Logger logger;
-	public transient IScheduler scheduler;
-	public transient IMessagerComponent messager;
+	private transient Logger logger;
+	private transient IScheduler scheduler;
+	private transient IMessagerComponent messager;
+	private transient final IEssentials essentials;
+
+	public Context(final IEssentials essentials)
+	{
+		this.essentials = essentials;
+	}
+
+	@Override
+	@SuppressWarnings("ReturnOfCollectionOrArrayField") // Purposely modifiable collection.
+	public IEssentials getEssentials()
+	{
+		return essentials;
+	}
 
 	@Override
 	public World getWorld(final String name)
@@ -48,7 +61,7 @@ public final class Context implements IContext
 		{
 			return null;
 		}
-		
+
 		// Check to see if the name is numeric.
 		char[] chars = name.toCharArray();
 		for (int i = 0; i < chars.length; i++)
@@ -66,7 +79,7 @@ public final class Context implements IContext
 			// Valid number; get world by number.
 			return getServer().getWorlds().get(worldId);
 		}
-		
+
 		// Otherwise, return by name.
 		return getServer().getWorld(name);
 	}

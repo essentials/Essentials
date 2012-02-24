@@ -24,7 +24,7 @@ public abstract class AbstractDelayedYamlFileWriter implements Runnable
 
 	public void schedule()
 	{
-		if (((Essentials)plugin).testing)
+		if (((Essentials)plugin).isTesting())
 		{
 			run();
 		}

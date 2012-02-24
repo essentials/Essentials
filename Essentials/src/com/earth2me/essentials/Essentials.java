@@ -30,14 +30,14 @@ import com.earth2me.essentials.components.jails.IJailsComponent;
 import com.earth2me.essentials.components.jails.JailsComponent;
 import com.earth2me.essentials.components.kits.IKitsComponent;
 import com.earth2me.essentials.components.kits.KitsComponent;
+import com.earth2me.essentials.components.settings.GroupsComponent;
+import com.earth2me.essentials.components.settings.SettingsComponent;
 import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.components.users.UsersComponent;
 import com.earth2me.essentials.components.warps.IWarpsComponent;
 import com.earth2me.essentials.components.warps.WarpsComponent;
 import com.earth2me.essentials.listener.*;
 import com.earth2me.essentials.register.payment.PaymentMethods;
-import com.earth2me.essentials.components.settings.GroupsComponent;
-import com.earth2me.essentials.components.settings.SettingsComponent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -60,14 +60,14 @@ import org.yaml.snakeyaml.error.YAMLException;
 public class Essentials extends ComponentPlugin implements IEssentials
 {
 	private static final Logger logger = Logger.getLogger("Minecraft");
-	public transient boolean testing;
+	private transient boolean testing;
 	private transient final TntExplodeListener tntListener;
 	private transient ExecuteTimer execTimer;
 	private transient final Context context;
 
 	public Essentials()
 	{
-		context = new Context();
+		context = new Context(this);
 		context.setPaymentMethods(new PaymentMethods());
 
 		tntListener = new TntExplodeListener(context);
@@ -81,7 +81,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 
 	public void setupForTesting(final Server server) throws IOException, InvalidDescriptionException
 	{
-		testing = true;
+		setTesting(true);
 
 		execTimer = new ExecuteTimer();
 		execTimer.start();
@@ -312,5 +312,15 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	public TntExplodeListener getTntListener()
 	{
 		return tntListener;
+	}
+
+	public boolean isTesting()
+	{
+		return testing;
+	}
+
+	public void setTesting(boolean testing)
+	{
+		this.testing = testing;
 	}
 }

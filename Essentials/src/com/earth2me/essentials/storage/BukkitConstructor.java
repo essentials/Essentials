@@ -419,7 +419,7 @@ public class BukkitConstructor extends Constructor
 	{
 		Class<?> clazz;
 		final String name = node.getTag().getClassName();
-		if (plugin == null || (plugin instanceof Essentials && ((Essentials)plugin).testing))
+		if (plugin == null || (plugin instanceof Essentials && ((Essentials)plugin).isTesting()))
 		{
 			clazz = super.getClassForNode(node);
 		}
