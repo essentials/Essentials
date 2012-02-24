@@ -8,18 +8,37 @@ import com.earth2me.essentials.settings.WarpHolder;
 import com.earth2me.essentials.storage.StorageObjectMap;
 import java.io.File;
 import java.util.*;
-import java.util.logging.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 
 public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsComponent
 {
-	private static final Logger logger = Bukkit.getLogger();
-
-	public WarpsComponent(IContext ess)
+	public WarpsComponent(IContext context)
 	{
-		super(ess, "warps");
+		super(context, "warps");
+	}
+
+	@Override
+	public String getTypeId()
+	{
+		return "WarpsComponent";
+	}
+
+	@Override
+	public void initialize()
+	{
+	}
+
+	@Override
+	public void onEnable()
+	{
+		reload();
+	}
+
+	@Override
+	public void close()
+	{
+		cache.cleanUp();
 	}
 
 	@Override
