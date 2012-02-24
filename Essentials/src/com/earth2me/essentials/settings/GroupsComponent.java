@@ -42,23 +42,6 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 	}
 
 	@Override
-	public String getTypeId()
-	{
-		return "GroupsComponent";
-	}
-
-	@Override
-	public void initialize()
-	{
-	}
-
-	@Override
-	public void onEnable()
-	{
-		reload();
-	}
-
-	@Override
 	public File getStorageFile()
 	{
 		return new File(context.getDataFolder(), "groups.yml");
