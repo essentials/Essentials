@@ -1,6 +1,8 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.Util;
+import com.earth2me.essentials.components.economy.NoLoanPermittedException;
+import com.earth2me.essentials.components.users.UserDoesNotExistException;
 
 
 /**
@@ -19,7 +21,7 @@ public final class Economy
 	 * Returns the balance of a user
 	 * @param name Name of the user
 	 * @return balance
-	 * @throws UserDoesNotExistException 
+	 * @throws UserDoesNotExistException
 	 */
 	public static double getMoney(String name) throws UserDoesNotExistException
 	{
@@ -190,7 +192,7 @@ public final class Economy
 	 * Test if a player is a npc
 	 * @param name Name of the player
 	 * @return true, if it's a npc
-	 * @throws UserDoesNotExistException 
+	 * @throws UserDoesNotExistException
 	 */
 	public static boolean isNPC(String name) throws UserDoesNotExistException
 	{
@@ -216,9 +218,9 @@ public final class Economy
 	}
 
 	/**
-	 * Deletes a user, if it is marked as npc. 
+	 * Deletes a user, if it is marked as npc.
 	 * @param name Name of the player
-	 * @throws UserDoesNotExistException 
+	 * @throws UserDoesNotExistException
 	 */
 	public static void removeNPC(String name) throws UserDoesNotExistException
 	{
