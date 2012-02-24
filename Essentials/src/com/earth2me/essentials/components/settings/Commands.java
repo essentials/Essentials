@@ -1,6 +1,13 @@
 package com.earth2me.essentials.components.settings;
 
-import com.earth2me.essentials.settings.commands.*;
+import com.earth2me.essentials.components.settings.commands.Back;
+import com.earth2me.essentials.components.settings.commands.Afk;
+import com.earth2me.essentials.components.settings.commands.God;
+import com.earth2me.essentials.components.settings.commands.Lightning;
+import com.earth2me.essentials.components.settings.commands.Tpa;
+import com.earth2me.essentials.components.settings.commands.Spawnmob;
+import com.earth2me.essentials.components.settings.commands.Help;
+import com.earth2me.essentials.components.settings.commands.Home;
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.ListType;
 import com.earth2me.essentials.storage.IStorageObject;
@@ -20,7 +27,7 @@ public class Commands implements IStorageObject
 	private Help help = new Help();
 	private Home home = new Home();
 	private Lightning lightning = new Lightning();
-	private com.earth2me.essentials.settings.commands.List list = new com.earth2me.essentials.settings.commands.List();
+	private com.earth2me.essentials.components.settings.commands.List list = new com.earth2me.essentials.components.settings.commands.List();
 	private Spawnmob spawnmob = new Spawnmob();
 	private Tpa tpa = new Tpa();
 	@ListType

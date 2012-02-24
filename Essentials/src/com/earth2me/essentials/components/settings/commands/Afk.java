@@ -1,4 +1,4 @@
-package com.earth2me.essentials.settings.commands;
+package com.earth2me.essentials.components.settings.commands;
 
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.IStorageObject;
@@ -33,6 +33,6 @@ public class Afk implements IStorageObject
 		"since the player will not get a message, if he tries to move."
 	})
 	private boolean freezeAFKPlayers = false;
-	
+
 	private boolean disableItemPickupWhileAfk = true;
 }

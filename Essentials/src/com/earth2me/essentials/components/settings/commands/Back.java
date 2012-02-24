@@ -1,4 +1,4 @@
-package com.earth2me.essentials.settings.commands;
+package com.earth2me.essentials.components.settings.commands;
 
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.IStorageObject;

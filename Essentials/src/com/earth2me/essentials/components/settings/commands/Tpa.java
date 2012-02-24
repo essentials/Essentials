@@ -1,4 +1,4 @@
-package com.earth2me.essentials.settings.commands;
+package com.earth2me.essentials.components.settings.commands;
 
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.IStorageObject;
@@ -16,6 +16,6 @@ public class Tpa implements IStorageObject
 		"Set to 0 for no timeout."
 	})
 	private int timeout = 0;
-	@Comment({"Cancels a request made by tpa / tphere on world change to prevent cross world tp"})	
+	@Comment({"Cancels a request made by tpa / tphere on world change to prevent cross world tp"})
     private boolean cancelTpRequestsOnWorldChange = false;
 }
