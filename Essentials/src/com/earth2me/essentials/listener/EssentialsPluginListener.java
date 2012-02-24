@@ -1,8 +1,6 @@
 package com.earth2me.essentials.listener;
 
-import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.IReloadable;
-import com.earth2me.essentials.api.ISettingsComponent;
+import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.perm.GmGroups;
 import com.earth2me.essentials.perm.VaultGroups;
 import com.earth2me.essentials.register.payment.PaymentMethods;
@@ -19,12 +17,12 @@ import org.bukkit.plugin.Plugin;
 
 public class EssentialsPluginListener implements Listener, IReloadable
 {
-	private final transient IContext ess;
+	private final transient IContext context;
 
 	public EssentialsPluginListener(final IContext ess)
 	{
 		super();
-		this.ess = ess;
+		this.context = ess;
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -32,10 +30,10 @@ public class EssentialsPluginListener implements Listener, IReloadable
 	{
 		checkGroups();
 		//ess.getPermissionsHandler().checkPermissions();
-		ess.getCommands().addPlugin(event.getPlugin());
-		if (!PaymentMethods.hasMethod() && PaymentMethods.setMethod(ess.getServer().getPluginManager()))
+		context.getCommands().addPlugin(event.getPlugin());
+		if (!PaymentMethods.hasMethod() && PaymentMethods.setMethod(context.getServer().getPluginManager()))
 		{
-			ess.getLogger().log(Level.INFO, "Payment method found ({0} version: {1})", new Object[]
+			context.getLogger().log(Level.INFO, "Payment method found ({0} version: {1})", new Object[]
 					{
 						PaymentMethods.getMethod().getName(), PaymentMethods.getMethod().getVersion()
 					});
@@ -47,12 +45,12 @@ public class EssentialsPluginListener implements Listener, IReloadable
 	{
 		checkGroups();
 		//ess.getPermissionsHandler().checkPermissions();
-		ess.getCommands().removePlugin(event.getPlugin());
+		context.getCommands().removePlugin(event.getPlugin());
 		// Check to see if the plugin thats being disabled is the one we are using
 		if (PaymentMethods.hasMethod() && PaymentMethods.checkDisabled(event.getPlugin()))
 		{
 			PaymentMethods.reset();
-			ess.getLogger().log(Level.INFO, "Payment method was disabled. No longer accepting payments.");
+			context.getLogger().log(Level.INFO, "Payment method was disabled. No longer accepting payments.");
 		}
 	}
 
@@ -64,7 +62,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 
 	private void checkGroups()
 	{
-		ISettingsComponent settings = ess.getSettings();
+		ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
 		General.GroupStorage storage = General.GroupStorage.FILE;
 		try
@@ -77,34 +75,38 @@ public class EssentialsPluginListener implements Listener, IReloadable
 		}
 		if (storage == General.GroupStorage.GROUPMANAGER)
 		{
-			Plugin groupManager = ess.getServer().getPluginManager().getPlugin("GroupManager");
-			if (groupManager != null && groupManager.isEnabled() && !(ess.getGroups() instanceof GmGroups))
+			Plugin groupManager = context.getServer().getPluginManager().getPlugin("GroupManager");
+			if (groupManager != null && groupManager.isEnabled() && !(context.getGroups() instanceof GmGroups))
 			{
-				if (ess.getGroups() instanceof GroupsComponent)
+				if (context.getGroups() instanceof IGroupsComponent)
 				{
-					ess.removeReloadListener((GroupsComponent)ess.getGroups());
+					context.getEssentials().remove(context.getGroups());
 				}
-				ess.setGroups(new GmGroups(ess, groupManager));
+
+				// TODO Come up with a better way of doing this that doesn't involve casting to Context.
+				((Context)context).setGroups(new GmGroups(context, groupManager));
 				return;
 			}
 		}
 		if (storage == General.GroupStorage.VAULT)
 		{
-			Plugin vault = ess.getServer().getPluginManager().getPlugin("Vault");
-			if (vault != null && vault.isEnabled() && !(ess.getGroups() instanceof VaultGroups))
+			Plugin vault = context.getServer().getPluginManager().getPlugin("Vault");
+			if (vault != null && vault.isEnabled() && !(context.getGroups() instanceof VaultGroups))
 			{
-				if (ess.getGroups() instanceof GroupsComponent)
+				if (context.getGroups() instanceof IGroupsComponent)
 				{
-					ess.removeReloadListener((GroupsComponent)ess.getGroups());
+					context.getEssentials().remove(context.getGroups());
 				}
-				ess.setGroups(new VaultGroups(ess));
+				// TODO Find a better way to do this.
+				((Context)context).setGroups(new VaultGroups(context));
 				return;
 			}
 		}
-		if (!(ess.getGroups() instanceof GroupsComponent))
+		if (!(context.getGroups() instanceof IGroupsComponent))
 		{
-			ess.setGroups(new GroupsComponent(ess));
-			ess.addReloadListener((GroupsComponent)ess.getGroups());
+			// TODO Find a better way to do this.
+			((Context)context).setGroups(new GroupsComponent(context));
+			context.getEssentials().add(context.getGroups());
 		}
 	}
 }
