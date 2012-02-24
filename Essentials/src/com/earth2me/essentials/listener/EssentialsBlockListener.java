@@ -13,12 +13,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsBlockListener implements Listener
 {
-	private final transient IContext ess;
+	private final transient IContext context;
 
 	public EssentialsBlockListener(final IContext ess)
 	{
 		super();
-		this.ess = ess;
+		this.context = ess;
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -35,14 +35,15 @@ public class EssentialsBlockListener implements Listener
 		{
 			return;
 		}
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = context.getUser(event.getPlayer());
 		final boolean unlimitedForUser = user.getData().hasUnlimited(itemstack.getType());
 		if (unlimitedForUser && user.getGameMode() == GameMode.SURVIVAL)
 		{
-			ess.scheduleSyncDelayedTask(
+			context.getScheduler().scheduleSyncDelayedTask(
 					new Runnable()
 					{
 						@Override
+						@SuppressWarnings("deprecation")
 						public void run()
 						{
 							user.getInventory().addItem(itemstack);
