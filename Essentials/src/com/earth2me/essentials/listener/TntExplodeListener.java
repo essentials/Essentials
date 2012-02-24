@@ -12,27 +12,27 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 
 public class TntExplodeListener implements Listener, Runnable
 {
-	private final transient IContext ess;
+	private final transient IContext context;
 	private transient AtomicBoolean enabled = new AtomicBoolean(false);
 	private transient int timer = -1;
 
 	public TntExplodeListener(final IContext ess)
 	{
 		super();
-		this.ess = ess;
+		this.context = ess;
 	}
 
 	public void enable()
 	{
 		if (enabled.compareAndSet(false, true))
 		{
-			timer = ess.scheduleSyncDelayedTask(this, 1000);
+			timer = context.getScheduler().scheduleSyncDelayedTask(this, 1000);
 			return;
 		}
 		if (timer != -1)
 		{
-			ess.getServer().getScheduler().cancelTask(timer);
-			timer = ess.scheduleSyncDelayedTask(this, 1000);
+			context.getServer().getScheduler().cancelTask(timer);
+			timer = context.getScheduler().scheduleSyncDelayedTask(this, 1000);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class TntExplodeListener implements Listener, Runnable
 		{
 			return;
 		}
-		FakeExplosion.createExplosion(event, ess.getServer(), ess.getServer().getOnlinePlayers());
+		FakeExplosion.createExplosion(event, context.getServer(), context.getServer().getOnlinePlayers());
 		event.setCancelled(true);
 	}
 
