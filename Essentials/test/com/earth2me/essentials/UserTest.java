@@ -1,8 +1,8 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.craftbukkit.DummyOfflinePlayer;
 import com.earth2me.essentials.components.users.User;
+import com.earth2me.essentials.craftbukkit.DummyOfflinePlayer;
 import java.io.IOException;
 import junit.framework.TestCase;
 import org.bukkit.World.Environment;
@@ -12,18 +12,18 @@ import org.bukkit.plugin.InvalidDescriptionException;
 public class UserTest extends TestCase
 {
 	private final IUser base1;
-	private final Essentials ess;
+	private final Essentials essentials;
 	private final FakeServer server;
 
 	public UserTest(String testName)
 	{
 		super(testName);
-		ess = new Essentials();
+		essentials = new Essentials();
 		server = new FakeServer();
 		server.createWorld("testWorld", Environment.NORMAL);
 		try
 		{
-			ess.setupForTesting(server);
+			essentials.setupForTesting(server);
 		}
 		catch (InvalidDescriptionException ex)
 		{
@@ -33,9 +33,9 @@ public class UserTest extends TestCase
 		{
 			fail("IOException");
 		}
-		base1 = new User(new DummyOfflinePlayer("testPlayer1"), ess);
+		base1 = new User(new DummyOfflinePlayer("testPlayer1"), essentials.getContext());
 		server.addPlayer(base1);
-		ess.getUser(base1);
+		essentials.getContext().getUser(base1);
 	}
 
 	private void should(String what)
@@ -86,7 +86,7 @@ public class UserTest extends TestCase
 		IUser user = ess.getUser(base1);
 		//assertEquals(user.getGroup(), "default");
 	}*/
-	
+
 	public void testNoop()
 	{
 		assertTrue(true);
