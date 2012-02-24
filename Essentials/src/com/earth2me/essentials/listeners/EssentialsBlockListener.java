@@ -1,4 +1,4 @@
-package com.earth2me.essentials.listener;
+package com.earth2me.essentials.listeners;
 
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;

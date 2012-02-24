@@ -1,7 +1,7 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.components.IComponent;
-import com.earth2me.essentials.listener.TntExplodeListener;
+import com.earth2me.essentials.listeners.TntExplodeListener;
 import java.util.List;
 import org.bukkit.plugin.Plugin;
 
