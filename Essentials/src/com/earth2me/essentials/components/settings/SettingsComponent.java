@@ -1,42 +1,27 @@
 package com.earth2me.essentials.components.settings;
 
 import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.storage.StorageComponent;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-public class SettingsComponent extends StorageComponent<Settings> implements ISettingsComponent
+public class SettingsComponent extends StorageComponent<Settings, IEssentials> implements ISettingsComponent
 {
 	private final transient AtomicBoolean debug = new AtomicBoolean(false);
 
-	public SettingsComponent(final IContext context)
+	public SettingsComponent(final IContext context, final IEssentials plugin)
 	{
-		super(context, Settings.class);
-	}
-
-	@Override
-	public String getTypeId()
-	{
-		return "SettingsComponent";
-	}
-
-	@Override
-	public void initialize()
-	{
-	}
-
-	@Override
-	public void onEnable()
-	{
-		reload();
+		super(context, Settings.class, plugin);
 	}
 
 	@Override
 	public final void reload()
 	{
 		super.reload();
+
 		acquireReadLock();
 		try
 		{
@@ -51,7 +36,7 @@ public class SettingsComponent extends StorageComponent<Settings> implements ISe
 	@Override
 	public File getStorageFile()
 	{
-		return new File(getContext().getDataFolder(), "settings.yml");
+		return new File(getPlugin().getDataFolder(), "settings.yml");
 	}
 
 	@Override
@@ -77,11 +62,11 @@ public class SettingsComponent extends StorageComponent<Settings> implements ISe
 	@Override
 	public void setDebug(final boolean set)
 	{
-		debug.set(set);
 		acquireWriteLock();
 		try
 		{
 			getData().getGeneral().setDebug(set);
+			debug.set(set);
 		}
 		finally
 		{

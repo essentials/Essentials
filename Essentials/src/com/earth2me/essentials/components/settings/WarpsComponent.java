@@ -1,6 +1,7 @@
 package com.earth2me.essentials.components.settings;
 
 import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.components.warps.IWarp;
 import com.earth2me.essentials.storage.StorageComponent;
@@ -8,15 +9,16 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class WarpHolder extends StorageComponent<Warp> implements IWarp
+public class WarpsComponent extends StorageComponent<Warp, IEssentials> implements IWarp
 {
+	// TODO Should this be worldName?  I'm unsure if it's the world.
 	private final String name;
 
-	public WarpHolder(String name, IContext ess)
+	public WarpsComponent(String name, IContext context, IEssentials plugin)
 	{
-		super(ess, Warp.class);
+		super(context, Warp.class, plugin);
+
 		this.name = name;
-		reload();
 	}
 
 	@Override

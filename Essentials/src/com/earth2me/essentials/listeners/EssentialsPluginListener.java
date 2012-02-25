@@ -5,7 +5,7 @@ import com.earth2me.essentials.perm.GmGroupsComponent;
 import com.earth2me.essentials.perm.VaultGroupsComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import com.earth2me.essentials.components.settings.General;
-import com.earth2me.essentials.components.settings.GroupsComponent;
+import com.earth2me.essentials.components.settings.groups.GroupsComponent;
 import java.util.logging.Level;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

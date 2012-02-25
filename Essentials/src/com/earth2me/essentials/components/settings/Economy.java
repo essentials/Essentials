@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.settings;
 
 import com.earth2me.essentials.storage.Comment;
-import com.earth2me.essentials.storage.MapValueType;
 import com.earth2me.essentials.storage.IStorageObject;
+import com.earth2me.essentials.storage.MapValueType;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
@@ -25,6 +25,7 @@ public class Economy implements IStorageObject
 	{
 		return currencySymbol == null || currencySymbol.isEmpty() ? "$" : currencySymbol.substring(0, 1);
 	}
+	
 	private final transient static double MAXMONEY = 10000000000000.0;
 	@Comment(
 	{

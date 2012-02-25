@@ -32,7 +32,7 @@ import com.earth2me.essentials.components.jails.IJailsComponent;
 import com.earth2me.essentials.components.jails.JailsComponent;
 import com.earth2me.essentials.components.kits.IKitsComponent;
 import com.earth2me.essentials.components.kits.KitsComponent;
-import com.earth2me.essentials.components.settings.GroupsComponent;
+import com.earth2me.essentials.components.settings.groups.GroupsComponent;
 import com.earth2me.essentials.components.settings.SettingsComponent;
 import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.components.users.UsersComponent;

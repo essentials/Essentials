@@ -1,7 +1,8 @@
-package com.earth2me.essentials.components.settings;
+package com.earth2me.essentials.components.settings.groups;
 
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
@@ -17,34 +18,11 @@ import java.util.Map.Entry;
 import lombok.Cleanup;
 
 
-public class GroupsComponent extends StorageComponent<Groups> implements IGroupsComponent
+public class GroupsComponent extends StorageComponent<Groups, IEssentials> implements IGroupsComponent
 {
-	public GroupsComponent(final IContext context)
+	public GroupsComponent(final IContext context, final IEssentials plugin)
 	{
-		super(context, Groups.class);
-	}
-
-	@Override
-	public String getTypeId()
-	{
-		return "GroupsComponent";
-	}
-
-	@Override
-	public void initialize()
-	{
-	}
-
-	@Override
-	public void onEnable()
-	{
-		reload();
-	}
-
-	@Override
-	public File getStorageFile()
-	{
-		return new File(getContext().getDataFolder(), "groups.yml");
+		super(context, Groups.class, plugin);
 	}
 
 	public Collection<Entry<String, GroupOptions>> getGroups(final IUser player)

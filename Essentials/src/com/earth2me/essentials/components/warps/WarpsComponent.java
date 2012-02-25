@@ -4,7 +4,6 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.components.commands.WarpNotFoundException;
-import com.earth2me.essentials.components.settings.WarpHolder;
 import com.earth2me.essentials.storage.StorageObjectMap;
 import java.io.File;
 import java.util.*;
@@ -102,7 +101,7 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 		IWarp warp = getObject(name);
 		if (warp == null)
 		{
-			warp = new WarpHolder(name, context);
+			warp = new com.earth2me.essentials.components.settings.WarpsComponent(name, context);
 		}
 		warp.acquireWriteLock();
 		try
@@ -130,7 +129,7 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 	@Override
 	public IWarp load(String name) throws Exception
 	{
-		final IWarp warp = new WarpHolder(name, context);
+		final IWarp warp = new com.earth2me.essentials.components.settings.WarpsComponent(name, context);
 		warp.reload();
 		return warp;
 	}
