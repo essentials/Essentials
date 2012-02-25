@@ -1,4 +1,4 @@
-package com.earth2me.essentials.components.settings;
+package com.earth2me.essentials.components.settings.economy;
 
 import com.earth2me.essentials.storage.IStorageObject;
 import com.earth2me.essentials.storage.MapValueType;

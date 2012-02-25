@@ -1,11 +1,9 @@
-package com.earth2me.essentials.components.economy;
+package com.earth2me.essentials.components.settings.economy;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.settings.Worth;
-import com.earth2me.essentials.storage.StorageComponent;
+import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.storage.EnchantmentLevel;
-import java.io.File;
-import java.io.IOException;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.enchantments.Enchantment;
@@ -13,28 +11,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 
-public class WorthsComponent extends StorageComponent<Worth> implements IWorthsComponent
+public class WorthsComponent extends StorageComponent<Worth, IEssentials> implements IWorthsComponent
 {
-	public WorthsComponent(final IContext context)
+	public WorthsComponent(final IContext context, final IEssentials plugin)
 	{
-		super(context, Worth.class);
+		super(context, Worth.class, plugin);
 	}
 
 	@Override
-	public String getTypeId()
+	public String getContainerId()
 	{
-		return "WorthsComponent";
-	}
-
-	@Override
-	public void initialize()
-	{
-	}
-
-	@Override
-	public void onEnable()
-	{
-		reload(false);
+		return "economy.worths";
 	}
 
 	@Override
@@ -92,11 +79,5 @@ public class WorthsComponent extends StorageComponent<Worth> implements IWorthsC
 		} finally {
 			unlock();
 		}
-	}
-
-	@Override
-	public File getStorageFile() throws IOException
-	{
-		return new File(getContext().getDataFolder(), "worth.yml");
 	}
 }

@@ -1,7 +1,7 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.components.economy.IEconomyComponent;
-import com.earth2me.essentials.components.economy.IWorthsComponent;
+import com.earth2me.essentials.components.settings.economy.IWorthsComponent;
 import com.earth2me.essentials.components.jails.IJailsComponent;
 import com.earth2me.essentials.components.kits.IKitsComponent;
 import com.earth2me.essentials.components.users.IUser;
@@ -22,15 +22,15 @@ import org.bukkit.plugin.Plugin;
 public interface IContext
 {
 	IEssentials getEssentials();
-	
+
 	IMessagerComponent getMessager();
-	
+
 	Logger getLogger();
-	
+
 	IScheduler getScheduler();
-	
+
 	File getDataFolder();
-	
+
 	IUser getUser(Player player);
 
 	IUser getUser(String playerName);
@@ -62,6 +62,6 @@ public interface IContext
 	PaymentMethods getPaymentMethods();
 
 	IEconomyComponent getEconomy();
-	
+
 	Server getServer();
 }

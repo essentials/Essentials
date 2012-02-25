@@ -1,5 +1,6 @@
 package com.earth2me.essentials.components.settings;
 
+import com.earth2me.essentials.components.settings.groups.GroupStorage;
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.IStorageObject;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package com.earth2me.essentials.components.economy;
 
+import com.earth2me.essentials.components.settings.economy.MoneyComponent;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;

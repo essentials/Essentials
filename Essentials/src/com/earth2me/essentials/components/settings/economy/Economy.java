@@ -1,4 +1,4 @@
-package com.earth2me.essentials.components.settings;
+package com.earth2me.essentials.components.settings.economy;
 
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.IStorageObject;
@@ -25,7 +25,7 @@ public class Economy implements IStorageObject
 	{
 		return currencySymbol == null || currencySymbol.isEmpty() ? "$" : currencySymbol.substring(0, 1);
 	}
-	
+
 	private final transient static double MAXMONEY = 10000000000000.0;
 	@Comment(
 	{

@@ -1,4 +1,4 @@
-package com.earth2me.essentials.components.economy;
+package com.earth2me.essentials.components.settings.economy;
 
 import com.earth2me.essentials.components.IComponent;
 import org.bukkit.inventory.ItemStack;
