@@ -101,7 +101,7 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 		IWarp warp = getObject(name);
 		if (warp == null)
 		{
-			warp = new com.earth2me.essentials.components.settings.WarpsComponent(name, context);
+			warp = new com.earth2me.essentials.components.settings.warps.WarpsComponent(name, context);
 		}
 		warp.acquireWriteLock();
 		try
@@ -129,7 +129,7 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 	@Override
 	public IWarp load(String name) throws Exception
 	{
-		final IWarp warp = new com.earth2me.essentials.components.settings.WarpsComponent(name, context);
+		final IWarp warp = new com.earth2me.essentials.components.settings.warps.WarpsComponent(name, context);
 		warp.reload();
 		return warp;
 	}

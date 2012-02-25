@@ -8,5 +8,4 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class Worlds implements IStorageObject
 {
-
 }

@@ -1,4 +1,4 @@
-package com.earth2me.essentials.components.settings;
+package com.earth2me.essentials.components.settings.warps;
 
 import com.earth2me.essentials.storage.LocationData;
 import com.earth2me.essentials.storage.IStorageObject;

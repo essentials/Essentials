@@ -5,6 +5,7 @@ import com.earth2me.essentials.perm.GmGroupsComponent;
 import com.earth2me.essentials.perm.VaultGroupsComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import com.earth2me.essentials.components.settings.General;
+import com.earth2me.essentials.components.settings.GroupStorage;
 import com.earth2me.essentials.components.settings.groups.GroupsComponent;
 import java.util.logging.Level;
 import org.bukkit.event.EventHandler;
@@ -64,7 +65,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 	{
 		ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
-		General.GroupStorage storage = General.GroupStorage.FILE;
+		GroupStorage storage = GroupStorage.FILE;
 		try
 		{
 			storage = settings.getData().getGeneral().getGroupStorage();
@@ -73,7 +74,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 		{
 			settings.unlock();
 		}
-		if (storage == General.GroupStorage.GROUPMANAGER)
+		if (storage == GroupStorage.GROUPMANAGER)
 		{
 			Plugin groupManager = context.getServer().getPluginManager().getPlugin("GroupManager");
 			if (groupManager != null && groupManager.isEnabled() && !(context.getGroups() instanceof GmGroupsComponent))
@@ -88,7 +89,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 				return;
 			}
 		}
-		if (storage == General.GroupStorage.VAULT)
+		if (storage == GroupStorage.VAULT)
 		{
 			Plugin vault = context.getServer().getPluginManager().getPlugin("Vault");
 			if (vault != null && vault.isEnabled() && !(context.getGroups() instanceof VaultGroupsComponent))

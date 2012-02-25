@@ -37,12 +37,6 @@ public class General implements IStorageObject
 		"How many items should be in a oversized stack?"
 	})
 	private int oversizedStacksize = 64;
-
-
-	public enum GroupStorage
-	{
-		FILE, GROUPMANAGER, VAULT
-	}
 	@Comment(
 	{
 		"Sets the place where group options should be stored:",

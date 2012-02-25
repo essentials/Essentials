@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.settings;
 
 import com.earth2me.essentials.storage.Comment;
+import com.earth2me.essentials.storage.IStorageObject;
 import com.earth2me.essentials.storage.LocationData;
 import com.earth2me.essentials.storage.MapValueType;
-import com.earth2me.essentials.storage.IStorageObject;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
@@ -29,7 +29,8 @@ public class Spawns implements IStorageObject
 		"Set this to highest, if you want to force EssentialsSpawn to handle the respawning"
 	})
 	private String respawnPriority = "normal";
-	@Comment({
+	@Comment(
+	{
 		"When we spawn for the first time, which spawnpoint do we use?",
 		"Set to none if you want to use the spawn point of the world."
 	})
