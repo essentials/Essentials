@@ -15,7 +15,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 
-public class EssentialsHelp implements Listener
+public class EssentialsHelpListener implements Listener
 {
 	private transient Player chatUser;
 	private final transient Server server;
@@ -23,7 +23,7 @@ public class EssentialsHelp implements Listener
 	private transient IrcBot ircBot;
 	private final transient Map<String, Command> commands = new HashMap<String, Command>();
 
-	public EssentialsHelp(final Plugin plugin)
+	public EssentialsHelpListener(final Plugin plugin)
 	{
 		super();
 		this.plugin = plugin;
