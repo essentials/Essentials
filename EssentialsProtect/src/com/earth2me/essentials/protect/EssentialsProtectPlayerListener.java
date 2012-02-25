@@ -14,9 +14,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsProtectPlayerListener implements Listener
 {
-	private final transient IEssentialsProtect parent;
+	private final transient IEssentialsProtectPlugin parent;
 
-	public EssentialsProtectPlayerListener(final IEssentialsProtect parent)
+	public EssentialsProtectPlayerListener(final IEssentialsProtectPlugin parent)
 	{
 		this.parent = parent;
 	}
@@ -27,7 +27,7 @@ public class EssentialsProtectPlayerListener implements Listener
 		// Do not return if cancelled, because the interact event has 2 cancelled states.
 		final Player user = event.getPlayer();
 
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{

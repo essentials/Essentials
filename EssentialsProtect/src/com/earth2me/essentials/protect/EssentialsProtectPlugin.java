@@ -10,11 +10,11 @@ import java.util.logging.LogRecord;
 import org.bukkit.plugin.PluginManager;
 
 
-public class EssentialsProtect extends EssentialsPlugin implements IEssentialsProtect
+public class EssentialsProtectPlugin extends EssentialsPlugin implements IEssentialsProtectPlugin
 {
 	private static MLogger C3P0logger;
 	private transient IProtectedBlock storage = null;
-	private transient ProtectHolder settings = null;
+	private transient ProtectSettingsComponent settings = null;
 
 	@Override
 	public void onLoad()
@@ -75,13 +75,13 @@ public class EssentialsProtect extends EssentialsPlugin implements IEssentialsPr
 	}
 
 	@Override
-	public ProtectHolder getSettings()
+	public ProtectSettingsComponent getSettings()
 	{
 		return settings;
 	}
 
 	@Override
-	public void setSettings(final ProtectHolder settings)
+	public void setSettings(final ProtectSettingsComponent settings)
 	{
 		this.settings = settings;
 	}

@@ -16,9 +16,9 @@ import org.bukkit.event.block.*;
 
 public class EssentialsProtectBlockListener implements Listener
 {
-	final private transient IEssentialsProtect parent;
+	final private transient IEssentialsProtectPlugin parent;
 
-	public EssentialsProtectBlockListener(final IEssentialsProtect parent)
+	public EssentialsProtectBlockListener(final IEssentialsProtectPlugin parent)
 	{
 		this.parent = parent;
 	}
@@ -32,7 +32,7 @@ public class EssentialsProtectBlockListener implements Listener
 		}
 
 		final Player user = event.getPlayer();
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -109,7 +109,7 @@ public class EssentialsProtectBlockListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -168,7 +168,7 @@ public class EssentialsProtectBlockListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -216,7 +216,7 @@ public class EssentialsProtectBlockListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -276,7 +276,7 @@ public class EssentialsProtectBlockListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -367,7 +367,7 @@ public class EssentialsProtectBlockListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -429,7 +429,7 @@ public class EssentialsProtectBlockListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -483,7 +483,7 @@ public class EssentialsProtectBlockListener implements Listener
 		}
 	}
 
-	private boolean isProtected(final Block block, final Player user, final ProtectHolder settings)
+	private boolean isProtected(final Block block, final Player user, final ProtectSettingsComponent settings)
 	{
 		final Material type = block.getType();
 		if (settings.getData().getSignsAndRails().isProtectSigns())

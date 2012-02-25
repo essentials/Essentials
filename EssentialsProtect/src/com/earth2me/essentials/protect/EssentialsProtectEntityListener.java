@@ -15,9 +15,9 @@ import org.bukkit.event.entity.*;
 
 public class EssentialsProtectEntityListener implements Listener
 {
-	private final transient IEssentialsProtect parent;
+	private final transient IEssentialsProtectPlugin parent;
 
-	public EssentialsProtectEntityListener(final IEssentialsProtect parent)
+	public EssentialsProtectEntityListener(final IEssentialsProtectPlugin parent)
 	{
 		super();
 		this.parent = parent;
@@ -30,7 +30,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -175,7 +175,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -261,7 +261,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -300,7 +300,7 @@ public class EssentialsProtectEntityListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onExplosionPrime(final ExplosionPrimeEvent event)
 	{
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -323,7 +323,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = parent.getSettings();
+		final ProtectSettingsComponent settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{

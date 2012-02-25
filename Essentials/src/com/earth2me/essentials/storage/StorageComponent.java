@@ -20,8 +20,10 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 	private final transient StorageObjectDataWriter writer;
 	private final transient StorageObjectDataReader reader;
 	private final transient AtomicBoolean loaded = new AtomicBoolean(false);
-	private final transient File config;
+	private transient File storageFile;
 	private final transient U plugin;
+
+	public abstract String getContainerId();
 
 	public StorageComponent(final IContext context, final Class<T> clazz, U plugin)
 	{
@@ -29,7 +31,6 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 
 		this.clazz = clazz;
 		this.plugin = plugin;
-		this.config = getConfig(plugin);
 
 		writer = new StorageObjectDataWriter();
 		reader = new StorageObjectDataReader();
@@ -47,11 +48,6 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 	public final U getPlugin()
 	{
 		return plugin;
-	}
-
-	public static File getConfig(Plugin plugin)
-	{
-		return new File(plugin.getDataFolder(), "config.yml");
 	}
 
 	@Override
@@ -131,7 +127,11 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 
 	public final File getStorageFile()
 	{
-		return config;
+		if (storageFile == null)
+		{
+			storageFile = new File(getContext().getEssentials().getDataFolder(), getContainerId() + ".yml");
+		}
+		return storageFile;
 	}
 
 

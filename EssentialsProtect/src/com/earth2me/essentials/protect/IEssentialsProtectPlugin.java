@@ -4,7 +4,7 @@ import com.earth2me.essentials.api.IEssentialsPlugin;
 import com.earth2me.essentials.protect.data.IProtectedBlock;
 
 
-public interface IEssentialsProtect extends IEssentialsPlugin
+public interface IEssentialsProtectPlugin extends IEssentialsPlugin
 {
 //	boolean checkProtectionItems(final ProtectConfig list, final int id);
 //	boolean getSettingBool(final ProtectConfig protectConfig);
@@ -16,7 +16,7 @@ public interface IEssentialsProtect extends IEssentialsPlugin
 //	Map<ProtectConfig, Boolean> getSettingsBoolean();
 //	Map<ProtectConfig, String> getSettingsString();
 //	Map<ProtectConfig, List<Integer>> getSettingsList();
-	ProtectHolder getSettings();
+	ProtectSettingsComponent getSettings();
 
-	void setSettings(ProtectHolder settings);
+	void setSettings(ProtectSettingsComponent settings);
 }

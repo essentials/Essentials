@@ -10,9 +10,9 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 
 public class EssentialsProtectWeatherListener implements Listener
 {
-	private final transient IEssentialsProtect prot;
+	private final transient IEssentialsProtectPlugin prot;
 
-	public EssentialsProtectWeatherListener(final IEssentialsProtect prot)
+	public EssentialsProtectWeatherListener(final IEssentialsProtectPlugin prot)
 	{
 		this.prot = prot;
 	}
@@ -20,7 +20,7 @@ public class EssentialsProtectWeatherListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onWeatherChange(final WeatherChangeEvent event)
 	{
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectSettingsComponent settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -40,7 +40,7 @@ public class EssentialsProtectWeatherListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onLightningStrike(final LightningStrikeEvent event)
 	{
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectSettingsComponent settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -59,7 +59,7 @@ public class EssentialsProtectWeatherListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onThunderChange(final ThunderChangeEvent event)
 	{
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectSettingsComponent settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
 		{
