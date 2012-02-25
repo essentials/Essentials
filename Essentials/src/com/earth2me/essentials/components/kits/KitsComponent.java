@@ -1,49 +1,31 @@
 package com.earth2me.essentials.components.kits;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.api.IEssentials;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.settings.Kit;
 import com.earth2me.essentials.components.settings.Kits;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.storage.StorageComponent;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import org.bukkit.inventory.ItemStack;
 
 
-public class KitsComponent extends StorageComponent<Kits> implements IKitsComponent
+public class KitsComponent extends StorageComponent<Kits, IEssentials> implements IKitsComponent
 {
-	public KitsComponent(final IContext ess)
+	public KitsComponent(final IContext context, final IEssentials plugin)
 	{
-		super(ess, com.earth2me.essentials.components.settings.Kits.class);
+		super(context, Kits.class, plugin);
 	}
 
 	@Override
-	public String getTypeId()
+	public String getContainerId()
 	{
-		return "KitsComponent";
+		return "kits";
 	}
 
 	@Override
-	public void initialize()
-	{
-	}
-
-	@Override
-	public void onEnable()
-	{
-		reload();
-	}
-
-	@Override
-	public File getStorageFile() throws IOException
-	{
-		return new File(getContext().getDataFolder(), "kits.yml");
-	}
-
-	@Override
-	public Kit getKit(String kitName) throws Exception
+	public Kit getKit(String kitName) throws IllegalStateException
 	{
 		acquireReadLock();
 		try
@@ -51,12 +33,12 @@ public class KitsComponent extends StorageComponent<Kits> implements IKitsCompon
 			if (getData().getKits() == null || kitName == null
 				|| !getData().getKits().containsKey(kitName.toLowerCase(Locale.ENGLISH)))
 			{
-				throw new Exception(_("kitError2"));
+				throw new IllegalStateException(_("kitError2"));
 			}
 			final Kit kit = getData().getKits().get(kitName.toLowerCase(Locale.ENGLISH));
 			if (kit == null)
 			{
-				throw new Exception(_("kitError2"));
+				throw new IllegalStateException(_("kitError2"));
 			}
 			return kit;
 		}
