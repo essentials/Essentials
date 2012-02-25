@@ -50,7 +50,7 @@ public class I18nComponent extends Component implements II18nComponent
 	@Override
 	public void reload()
 	{
-		updateLocale(getContext().getSettings().getLocale());
+		updateLocale(getContext().getSettings().getLocaleSafe());
 	}
 
 	@Override

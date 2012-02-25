@@ -7,7 +7,7 @@ import com.earth2me.essentials.storage.IStorageObjectHolder;
 
 public interface ISettingsComponent extends IComponent, IStorageObjectHolder<Settings>
 {
-	public String getLocale();
+	public String getLocaleSafe();
 
 	public boolean isDebug();
 
