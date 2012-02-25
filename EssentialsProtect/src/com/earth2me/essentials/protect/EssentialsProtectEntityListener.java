@@ -1,6 +1,5 @@
 package com.earth2me.essentials.protect;
 
-import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.craftbukkit.FakeExplosion;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -16,14 +15,12 @@ import org.bukkit.event.entity.*;
 
 public class EssentialsProtectEntityListener implements Listener
 {
-	private final transient IProtect prot;
-	private final transient IContext ess;
+	private final transient IEssentialsProtect parent;
 
-	public EssentialsProtectEntityListener(final IProtect prot)
+	public EssentialsProtectEntityListener(final IEssentialsProtect parent)
 	{
 		super();
-		this.prot = prot;
-		this.ess = prot.getEssentialsConnect().getEssentials();
+		this.parent = parent;
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -33,7 +30,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectHolder settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -162,7 +159,6 @@ public class EssentialsProtectEntityListener implements Listener
 						&& !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
 				{
 					event.setCancelled(true);
-					return;
 				}
 			}
 		}
@@ -179,7 +175,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectHolder settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -197,7 +193,7 @@ public class EssentialsProtectEntityListener implements Listener
 						 || (maxHeight >= 0 && event.getLocation().getBlockY() > maxHeight)))
 			{
 				//Nicccccccccce plaaacccccccccce..
-				FakeExplosion.createExplosion(event, ess.getServer(), ess.getServer().getOnlinePlayers());
+				FakeExplosion.createExplosion(event, parent.getContext().getServer(), parent.getContext().getServer().getOnlinePlayers());
 				event.setCancelled(true);
 				return;
 			}
@@ -265,7 +261,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectHolder settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -298,14 +294,13 @@ public class EssentialsProtectEntityListener implements Listener
 			&& Permissions.ENTITYTARGET.isAuthorized(user))
 		{
 			event.setCancelled(true);
-			return;
 		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onExplosionPrime(final ExplosionPrimeEvent event)
 	{
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectHolder settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -328,7 +323,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectHolder settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{

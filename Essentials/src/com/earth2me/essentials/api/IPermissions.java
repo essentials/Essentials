@@ -5,7 +5,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
 
-public interface IPermission
+public interface IPermissions
 {
 	String getPermission();
 

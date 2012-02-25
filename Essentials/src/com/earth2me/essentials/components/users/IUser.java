@@ -41,7 +41,7 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReloadab
 
 	ITeleport getTeleport();
 
-	void checkCooldown(UserData.TimestampType cooldownType, double cooldown, boolean set, IPermission bypassPermission) throws CooldownException;
+	void checkCooldown(UserData.TimestampType cooldownType, double cooldown, boolean set, IPermissions bypassPermission) throws CooldownException;
 
 	boolean toggleAfk();
 

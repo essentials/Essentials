@@ -5,7 +5,7 @@ import java.util.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-public abstract class ComponentPlugin extends JavaPlugin implements List<IComponent>, IReloadable
+public abstract class ComponentPlugin extends JavaPlugin implements IComponentPlugin
 {
 	private transient final List<IComponent> components = new ArrayList<IComponent>();
 	private transient volatile boolean initialized;
@@ -25,6 +25,7 @@ public abstract class ComponentPlugin extends JavaPlugin implements List<ICompon
 	/**
 	 *Initialize all components.
 	 */
+	@Override
 	public void initialize() throws IllegalStateException
 	{
 		if (initialized == true)
@@ -99,6 +100,7 @@ public abstract class ComponentPlugin extends JavaPlugin implements List<ICompon
 		return components.remove(o);
 	}
 
+	@Override
 	public boolean remove(final IComponent component)
 	{
 		if (remove(component))

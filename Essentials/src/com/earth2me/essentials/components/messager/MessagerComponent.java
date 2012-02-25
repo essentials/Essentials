@@ -6,8 +6,12 @@ package com.earth2me.essentials.components.messager;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IMessagerComponent;
+import com.earth2me.essentials.api.IPermissions;
 import com.earth2me.essentials.components.Component;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUser;
+import java.util.logging.Level;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 
@@ -53,5 +57,23 @@ public class MessagerComponent extends Component implements IMessagerComponent
 		}
 
 		return players.length;
+	}
+
+	@Override
+	public void alert(final Player user, final String item, final String type, IPermissions permission)
+	{
+		final Location loc = user.getLocation();
+		final String warnMessage = _("alertFormat", user.getName(), type, item,
+									 loc.getWorld().getName() + "," + loc.getBlockX() + ","
+									 + loc.getBlockY() + "," + loc.getBlockZ());
+		getContext().getLogger().log(Level.WARNING, warnMessage);
+		for (Player p : getContext().getServer().getOnlinePlayers())
+		{
+			final IUser alertUser = getContext().getUser(p);
+			if (permission.isAuthorized(alertUser))
+			{
+				alertUser.sendMessage(warnMessage);
+			}
+		}
 	}
 }

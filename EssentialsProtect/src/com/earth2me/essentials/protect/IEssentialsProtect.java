@@ -1,10 +1,10 @@
 package com.earth2me.essentials.protect;
 
+import com.earth2me.essentials.api.IEssentialsPlugin;
 import com.earth2me.essentials.protect.data.IProtectedBlock;
-import org.bukkit.plugin.Plugin;
 
 
-public interface IProtect extends Plugin
+public interface IEssentialsProtect extends IEssentialsPlugin
 {
 //	boolean checkProtectionItems(final ProtectConfig list, final int id);
 //	boolean getSettingBool(final ProtectConfig protectConfig);
@@ -12,8 +12,6 @@ public interface IProtect extends Plugin
 	IProtectedBlock getStorage();
 
 	void setStorage(IProtectedBlock pb);
-
-	EssentialsConnect getEssentialsConnect();
 
 //	Map<ProtectConfig, Boolean> getSettingsBoolean();
 //	Map<ProtectConfig, String> getSettingsString();

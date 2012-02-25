@@ -1,17 +1,17 @@
 package com.earth2me.essentials.chat;
 
-import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.IPermissions;
 import com.earth2me.essentials.perm.BasePermission;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class ChatPermissions {
-	private static Map<String, IPermission> permissions = new HashMap<String, IPermission>();
+	private static Map<String, IPermissions> permissions = new HashMap<String, IPermissions>();
 
-	public static IPermission getPermission(final String groupName)
+	public static IPermissions getPermission(final String groupName)
 	{
-		IPermission perm = permissions.get(groupName);
+		IPermissions perm = permissions.get(groupName);
 		if (perm == null)
 		{
 			perm = new BasePermission("essentials.chat.",groupName.toLowerCase(Locale.ENGLISH));

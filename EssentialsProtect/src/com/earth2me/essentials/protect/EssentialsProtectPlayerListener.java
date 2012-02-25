@@ -1,7 +1,6 @@
 package com.earth2me.essentials.protect;
 
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.api.IContext;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -15,13 +14,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsProtectPlayerListener implements Listener
 {
-	private final transient IProtect prot;
-	private final transient IContext ess;
+	private final transient IEssentialsProtect parent;
 
-	public EssentialsProtectPlayerListener(final IProtect prot)
+	public EssentialsProtectPlayerListener(final IEssentialsProtect parent)
 	{
-		this.prot = prot;
-		this.ess = prot.getEssentialsConnect().getEssentials();
+		this.parent = parent;
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
@@ -30,7 +27,7 @@ public class EssentialsProtectPlayerListener implements Listener
 		// Do not return if cancelled, because the interact event has 2 cancelled states.
 		final Player user = event.getPlayer();
 
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectHolder settings = parent.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -70,7 +67,7 @@ public class EssentialsProtectPlayerListener implements Listener
 				final StringBuilder stringBuilder = new StringBuilder();
 				boolean first = true;
 				final Block blockClicked = event.getClickedBlock();
-				for (String owner : prot.getStorage().getOwners(blockClicked))
+				for (String owner : parent.getStorage().getOwners(blockClicked))
 				{
 					if (!first)
 					{
@@ -89,7 +86,7 @@ public class EssentialsProtectPlayerListener implements Listener
 				&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user)
 				&& settings.getData().getAlertOnUse().contains(item.getType()))
 			{
-				prot.getEssentialsConnect().alert(user, item.getType().toString(), _("alertUsed"));
+				parent.getContext().getMessager().alert(user, item.getType().toString(), _("alertUsed"), Permissions.ALERTS);
 			}
 		}
 		finally

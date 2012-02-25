@@ -10,9 +10,9 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 
 public class EssentialsProtectWeatherListener implements Listener
 {
-	private final transient IProtect prot;
+	private final transient IEssentialsProtect prot;
 
-	public EssentialsProtectWeatherListener(final IProtect prot)
+	public EssentialsProtectWeatherListener(final IEssentialsProtect prot)
 	{
 		this.prot = prot;
 	}

@@ -9,7 +9,7 @@ import org.bukkit.plugin.PluginManager;
 /**
  * Defines a base type for sub-plugins for Essentials.
  */
-public abstract class EssentialsPlugin extends ComponentPlugin
+public abstract class EssentialsPlugin extends ComponentPlugin implements IEssentialsPlugin
 {
 	private transient IContext context;
 
@@ -33,6 +33,7 @@ public abstract class EssentialsPlugin extends ComponentPlugin
 		super.onEnable();
 	}
 
+	@Override
 	public IContext getContext()
 	{
 		return context;
