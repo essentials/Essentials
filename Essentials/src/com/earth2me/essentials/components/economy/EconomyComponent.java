@@ -7,7 +7,6 @@ import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.users.UserDoesNotExistException;
 import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.components.settings.MoneyHolder;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -15,25 +14,42 @@ import java.util.Map;
 
 public class EconomyComponent extends Component implements IEconomyComponent
 {
-	private final MoneyHolder npcs;
+	private final MoneyComponent npcsMoney;
 
 	public EconomyComponent(IContext context)
 	{
 		super(context);
-		this.npcs = new MoneyHolder(context);
+
+		this.npcsMoney = new MoneyComponent(context, context.getEssentials());
 	}
 
-	private double getNPCBalance(String name) throws UserDoesNotExistException
+	@Override
+	public void onEnable()
 	{
-		npcs.acquireReadLock();
+		super.onEnable();
+
+		getContext().getEssentials().add(npcsMoney);
+	}
+
+	@Override
+	public void close()
+	{
+		getContext().getEssentials().remove(npcsMoney);
+
+		super.close();
+	}
+
+	private double getNpcBalance(String name) throws UserDoesNotExistException
+	{
+		npcsMoney.acquireReadLock();
 		try
 		{
-			Map<String, Double> balances = npcs.getData().getBalances();
+			Map<String, Double> balances = npcsMoney.getData().getBalances();
 			if (balances == null)
 			{
 				throw new UserDoesNotExistException(name);
 			}
-			Double balance = npcs.getData().getBalances().get(name.toLowerCase(Locale.ENGLISH));
+			Double balance = npcsMoney.getData().getBalances().get(name.toLowerCase(Locale.ENGLISH));
 			if (balance == null)
 			{
 				throw new UserDoesNotExistException(name);
@@ -42,20 +58,20 @@ public class EconomyComponent extends Component implements IEconomyComponent
 		}
 		finally
 		{
-			npcs.unlock();
+			npcsMoney.unlock();
 		}
 	}
 
-	private void setNPCBalance(String name, double balance, boolean checkExistance) throws UserDoesNotExistException
+	private void setNpcBalance(String name, double balance, boolean checkExistance) throws UserDoesNotExistException
 	{
-		npcs.acquireWriteLock();
+		npcsMoney.acquireWriteLock();
 		try
 		{
-			Map<String, Double> balances = npcs.getData().getBalances();
+			Map<String, Double> balances = npcsMoney.getData().getBalances();
 			if (balances == null)
 			{
 				balances = new HashMap<String, Double>();
-				npcs.getData().setBalances(balances);
+				npcsMoney.getData().setBalances(balances);
 			}
 			if (checkExistance && !balances.containsKey(name.toLowerCase(Locale.ENGLISH)))
 			{
@@ -65,7 +81,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 		}
 		finally
 		{
-			npcs.unlock();
+			npcsMoney.unlock();
 		}
 	}
 
@@ -88,7 +104,9 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	@Override
 	public void reload()
 	{
-		this.npcs.reload(false);
+		npcsMoney.reload(false);
+
+		super.reload();
 	}
 
 	@Override
@@ -97,7 +115,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 		IUser user = getContext().getUser(name);
 		if (user == null)
 		{
-			return getNPCBalance(name);
+			return getNpcBalance(name);
 		}
 		return user.getMoney();
 	}
@@ -108,7 +126,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 		IUser user = getContext().getUser(name);
 		if (user == null)
 		{
-			setNPCBalance(name, balance, true);
+			setNpcBalance(name, balance, true);
 			return;
 		}
 		if (balance < 0.0 && !Permissions.ECO_LOAN.isAuthorized(user))
@@ -150,7 +168,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 		boolean result = getContext().getUser(name) == null;
 		if (result)
 		{
-			getNPCBalance(name);
+			getNpcBalance(name);
 		}
 		return result;
 	}
@@ -163,7 +181,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 			if (isNpc(name))
 			{
 
-				setNPCBalance(name, getStartingBalance(), false);
+				setNpcBalance(name, getStartingBalance(), false);
 				return true;
 			}
 		}
@@ -171,7 +189,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 		{
 			try
 			{
-				setNPCBalance(name, getStartingBalance(), false);
+				setNpcBalance(name, getStartingBalance(), false);
 				return true;
 			}
 			catch (UserDoesNotExistException ex1)
@@ -185,14 +203,14 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	@Override
 	public void removeNpc(String name) throws UserDoesNotExistException
 	{
-		npcs.acquireWriteLock();
+		npcsMoney.acquireWriteLock();
 		try
 		{
-			Map<String, Double> balances = npcs.getData().getBalances();
+			Map<String, Double> balances = npcsMoney.getData().getBalances();
 			if (balances == null)
 			{
 				balances = new HashMap<String, Double>();
-				npcs.getData().setBalances(balances);
+				npcsMoney.getData().setBalances(balances);
 			}
 			if (balances.containsKey(name.toLowerCase(Locale.ENGLISH)))
 			{
@@ -205,7 +223,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 		}
 		finally
 		{
-			npcs.unlock();
+			npcsMoney.unlock();
 		}
 	}
 }
