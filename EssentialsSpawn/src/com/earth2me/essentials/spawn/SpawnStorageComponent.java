@@ -4,7 +4,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.settings.Spawns;
 import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import com.earth2me.essentials.storage.LocationData.WorldNotLoadedException;
 import java.io.File;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import org.bukkit.World;
 import org.bukkit.event.EventPriority;
 
 
-public final class SpawnStorageComponent extends AsyncStorageObjectHolder<Spawns> implements IComponent
+public final class SpawnStorageComponent extends StorageComponent<Spawns> implements IComponent
 {
 	public SpawnStorageComponent(final IContext context)
 	{

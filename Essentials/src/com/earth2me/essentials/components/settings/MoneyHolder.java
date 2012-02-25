@@ -1,12 +1,12 @@
 package com.earth2me.essentials.components.settings;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.io.File;
 import java.io.IOException;
 
 
-public class MoneyHolder extends AsyncStorageObjectHolder<Money>
+public class MoneyHolder extends StorageComponent<Money>
 {
 	public MoneyHolder(IContext ess)
 	{

@@ -6,15 +6,17 @@ package com.earth2me.essentials.components;
 
 import com.earth2me.essentials.api.IReloadable;
 import java.util.List;
+import org.bukkit.plugin.Plugin;
 
 
 /**
  *
  * @author paul
  */
-public interface IComponentPlugin extends IReloadable, List<IComponent>
+public interface IComponentPlugin extends IReloadable, List<IComponent>, Plugin
 {
 
+	@Override
 	boolean add(final IComponent e);
 
 	/**

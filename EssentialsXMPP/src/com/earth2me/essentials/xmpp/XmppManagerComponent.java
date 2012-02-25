@@ -1,11 +1,9 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.EssentialsConf;
-import com.earth2me.essentials.api.IReloadable;
+import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUser;
 import java.io.File;
 import java.util.*;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -17,28 +15,33 @@ import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.util.StringUtils;
 
 
-public class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IReloadable
+public class XmppManagerComponent extends Component implements MessageListener, ChatManagerListener
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private final transient EssentialsConf config;
+	private final transient XmppSettingsComponent settings;
 	private transient XMPPConnection connection;
 	private transient ChatManager chatManager;
 	private final transient Map<String, Chat> chats = Collections.synchronizedMap(new HashMap<String, Chat>());
 	private final transient Set<LogRecord> logrecords = Collections.synchronizedSet(new HashSet<LogRecord>());
-	private final transient IEssentialsXMPP parent;
+	private final transient IEssentialsXmpp parent;
 	private transient List<String> logUsers;
 	private transient Level logLevel;
 	private transient boolean ignoreLagMessages = true;
 	private transient Thread loggerThread;
 	private transient boolean threadrunning = true;
 
-	public XMPPManager(final IEssentialsXMPP parent)
+	public XmppManagerComponent(final IEssentialsXmpp parent)
 	{
-		super();
+		super(parent.getContext());
+
 		this.parent = parent;
-		config = new EssentialsConf(new File(parent.getDataFolder(), "config.yml"));
-		config.setTemplateName("/config.yml", EssentialsXMPP.class);
-		reload();
+		this.settings = new XmppSettingsComponent(getContext(), parent);
+	}
+
+	@Override
+	public void onEnable()
+	{
+		parent.add(settings);
 	}
 
 	public boolean sendMessage(final String address, final String message)
@@ -97,22 +100,22 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 
 	private boolean connect()
 	{
-		final String server = config.getString("xmpp.server");
+		final String server = settings.getString("xmpp.server");
 		if (server == null || server.equals("example.com"))
 		{
 			LOGGER.log(Level.WARNING, "config broken for xmpp");
 			return false;
 		}
-		final int port = config.getInt("xmpp.port", 5222);
-		final String serviceName = config.getString("xmpp.servicename", server);
-		final String xmppuser = config.getString("xmpp.user");
-		final String password = config.getString("xmpp.password");
+		final int port = settings.getInt("xmpp.port", 5222);
+		final String serviceName = settings.getString("xmpp.servicename", server);
+		final String xmppuser = settings.getString("xmpp.user");
+		final String password = settings.getString("xmpp.password");
 		final ConnectionConfiguration connConf = new ConnectionConfiguration(server, port, serviceName);
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Connecting to xmpp server ").append(server).append(":").append(port);
 		stringBuilder.append(" as user ").append(xmppuser).append(".");
 		LOGGER.log(Level.INFO, stringBuilder.toString());
-		connConf.setSASLAuthenticationEnabled(config.getBoolean("xmpp.sasl-enabled", false));
+		connConf.setSASLAuthenticationEnabled(settings.getBoolean("xmpp.sasl-enabled", false));
 		connConf.setSendPresence(true);
 		connConf.setReconnectionAllowed(true);
 		connection = new XMPPConnection(connConf);
@@ -168,7 +171,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 	public final void reload()
 	{
 		LOGGER.removeHandler(this);
-		config.load();
+		settings.load();
 		synchronized (chats)
 		{
 			disconnect();
@@ -179,11 +182,11 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 			}
 			startLoggerThread();
 		}
-		if (config.getBoolean("log-enabled", false))
+		if (settings.getBoolean("log-enabled", false))
 		{
 			LOGGER.addHandler(this);
-			logUsers = config.getStringList("log-users");
-			final String level = config.getString("log-level", "info");
+			logUsers = settings.getStringList("log-users");
+			final String level = settings.getString("log-level", "info");
 			try
 			{
 				logLevel = Level.parse(level.toUpperCase(Locale.ENGLISH));
@@ -192,7 +195,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 			{
 				logLevel = Level.INFO;
 			}
-			ignoreLagMessages = config.getBoolean("ignore-lag-messages", true);
+			ignoreLagMessages = settings.getBoolean("ignore-lag-messages", true);
 		}
 	}
 
@@ -257,11 +260,11 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 						{
 							try
 							{
-								XMPPManager.this.startChat(user);
+								XmppManagerComponent.this.startChat(user);
 								for (LogRecord logRecord : copy)
 								{
 									final String message = String.format("[" + logRecord.getLevel().getLocalizedName() + "] " + logRecord.getMessage(), logRecord.getParameters());
-									if (!XMPPManager.this.sendMessage(user, message))
+									if (!XmppManagerComponent.this.sendMessage(user, message))
 									{
 										failedUsers.add(user);
 										break;
@@ -272,14 +275,14 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 							catch (XMPPException ex)
 							{
 								failedUsers.add(user);
-								LOGGER.removeHandler(XMPPManager.this);
+								LOGGER.removeHandler(XmppManagerComponent.this);
 								LOGGER.log(Level.SEVERE, "Failed to deliver log message! Disabling logging to XMPP.", ex);
 							}
 						}
 						logUsers.removeAll(failedUsers);
 						if (logUsers.isEmpty())
 						{
-							LOGGER.removeHandler(XMPPManager.this);
+							LOGGER.removeHandler(XmppManagerComponent.this);
 							threadrunning = false;
 						}
 						copy.clear();
@@ -293,7 +296,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 						threadrunning = false;
 					}
 				}
-				LOGGER.removeHandler(XMPPManager.this);
+				LOGGER.removeHandler(XmppManagerComponent.this);
 			}
 		});
 		loggerThread.start();
@@ -350,7 +353,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 
 	private void sendCommand(final Chat chat, final String message)
 	{
-		if (config.getStringList("op-users").contains(StringUtils.parseBareAddress(chat.getParticipant())))
+		if (settings.getStringList("op-users").contains(StringUtils.parseBareAddress(chat.getParticipant())))
 		{
 			try
 			{

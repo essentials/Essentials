@@ -4,7 +4,7 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.settings.Jails;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import com.earth2me.essentials.storage.LocationData;
 import java.io.File;
 import java.util.*;
@@ -25,7 +25,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.plugin.PluginManager;
 
 
-public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements IJailsComponent
+public class JailsComponent extends StorageComponent<Jails> implements IJailsComponent
 {
 	public JailsComponent(final IContext ess)
 	{

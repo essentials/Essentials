@@ -1,12 +1,12 @@
 package com.earth2me.essentials.xmpp;
 
+import com.earth2me.essentials.api.IEssentialsPlugin;
 import com.earth2me.essentials.components.users.IUser;
 import java.util.List;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 
-public interface IEssentialsXMPP extends Plugin
+public interface IEssentialsXmpp extends IEssentialsPlugin
 {
 	String getAddress(final Player user);
 

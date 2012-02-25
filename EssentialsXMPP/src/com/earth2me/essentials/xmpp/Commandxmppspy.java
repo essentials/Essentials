@@ -28,7 +28,7 @@ public class Commandxmppspy extends EssentialsCommand
 		{
 			try
 			{
-				final boolean toggle = EssentialsXMPP.getInstance().toggleSpy(p);
+				final boolean toggle = EssentialsXmpp.getInstance().toggleSpy(p);
 				sender.sendMessage("XMPP Spy " + (toggle ? "enabled" : "disabled") + " for " + p.getDisplayName());
 			}
 			catch (Exception ex)

@@ -4,7 +4,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.api.InvalidNameException;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import com.earth2me.essentials.storage.LocationData.WorldNotLoadedException;
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.ServerOperator;
 
 
-public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implements Player, IOfflineUser
+public abstract class UserBase extends StorageComponent<UserData> implements Player, IOfflineUser
 {
 	@Delegate(types =
 	{

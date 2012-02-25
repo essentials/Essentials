@@ -2,12 +2,12 @@ package com.earth2me.essentials.geoip;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.settings.geoip.GeoIP;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.io.File;
 import java.io.IOException;
 import org.bukkit.plugin.Plugin;
 
-public class ConfigHolder extends AsyncStorageObjectHolder<GeoIP>
+public class ConfigHolder extends StorageComponent<GeoIP>
 {
 	private final transient Plugin geoip;
 

@@ -1,9 +1,10 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.components.commands.CommandsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.api.EssentialsPlugin;
 import com.earth2me.essentials.api.ICommandsComponent;
 import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.commands.CommandsComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUser;
 import java.util.List;
 import java.util.Locale;
@@ -13,19 +14,17 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 
-public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
+public class EssentialsXmpp extends EssentialsPlugin implements IEssentialsXmpp
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private static EssentialsXMPP instance = null;
-	private transient UserManager users;
-	private transient XMPPManager xmpp;
-	private transient IContext ess;
-	private transient ICommandsComponent commandHandler;
+	private static EssentialsXmpp instance = null;
+	private transient UserManagerComponent users;
+	private transient XmppManagerComponent xmpp;
+	private transient ICommandsComponent commands;
 
-	public static IEssentialsXMPP getInstance()
+	@SuppressWarnings("ReturnOfCollectionOrArrayField")
+	public static IEssentialsXmpp getInstance()
 	{
 		return instance;
 	}
@@ -33,46 +32,43 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	@Override
 	public void onEnable()
 	{
+		// Call FIRST.
+		super.onEnable();
+
 		instance = this;
 
 		final PluginManager pluginManager = getServer().getPluginManager();
-		ess = (IContext)pluginManager.getPlugin("Essentials3");
-		if (!this.getDescription().getVersion().equals(ess.getDescription().getVersion()))
-		{
-			LOGGER.log(Level.WARNING, _("versionMismatchAll"));
-		}
-		if (!ess.isEnabled())
-		{
-			this.setEnabled(false);
-			return;
-		}
+		pluginManager.registerEvents(new EssentialsXmppPlayerListener(getContext()), this);
 
-		final EssentialsXMPPPlayerListener playerListener = new EssentialsXMPPPlayerListener(ess);
-		pluginManager.registerEvents(playerListener, this);
+		commands = new CommandsComponent(EssentialsXmpp.class.getClassLoader(), "com.earth2me.essentials.xmpp.Command", "essentials.", getContext());
 
-		users = new UserManager(this.getDataFolder());
-		xmpp = new XMPPManager(this);
+		add(users = new UserManagerComponent(this.getDataFolder()));
+		add(xmpp = new XmppManagerComponent(this));
 
-		ess.addReloadListener(users);
-		ess.addReloadListener(xmpp);
-
-		commandHandler = new CommandsComponent(EssentialsXMPP.class.getClassLoader(), "com.earth2me.essentials.xmpp.Command", "essentials.", ess);
+		initialize();
 	}
 
 	@Override
 	public void onDisable()
 	{
-		if (xmpp != null)
+		try
 		{
-			xmpp.disconnect();
+			if (xmpp != null)
+			{
+				xmpp.disconnect();
+			}
 		}
-		instance = null;
+		finally
+		{
+			instance = null;
+			super.onDisable();
+		}
 	}
 
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
 	{
-		return commandHandler.handleCommand(sender, command, commandLabel, args);
+		return getContext().getCommands().handleCommand(sender, command, commandLabel, args);
 	}
 
 	@Override
@@ -92,7 +88,7 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	public IUser getUserByAddress(final String address)
 	{
 		String username = instance.users.getUserByAddress(address);
-		return username == null ? null : ess.getUser(username);
+		return username == null ? null : getContext().getUser(username);
 	}
 
 	@Override
@@ -131,7 +127,7 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	@Override
 	public void broadcastMessage(final IUser sender, final String message, final String xmppAddress)
 	{
-		ess.broadcastMessage(sender, message);
+		getContext().broadcastMessage(sender, message);
 		try
 		{
 			for (String address : getSpyUsers())

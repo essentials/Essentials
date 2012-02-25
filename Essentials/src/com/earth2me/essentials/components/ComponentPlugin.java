@@ -41,6 +41,12 @@ public abstract class ComponentPlugin extends JavaPlugin implements IComponentPl
 	}
 
 	@Override
+	public void onDisable()
+	{
+		clear();
+	}
+
+	@Override
 	public final int size()
 	{
 		return components.size();

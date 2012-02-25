@@ -2,12 +2,12 @@ package com.earth2me.essentials.components.settings;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-public class SettingsComponent extends AsyncStorageObjectHolder<Settings> implements ISettingsComponent
+public class SettingsComponent extends StorageComponent<Settings> implements ISettingsComponent
 {
 	private final transient AtomicBoolean debug = new AtomicBoolean(false);
 

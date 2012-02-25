@@ -1,23 +1,28 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import org.bukkit.plugin.Plugin;
 
 
-public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
+public class SignsConfigHolder extends StorageComponent<SignsConfig, EssentialsSignsPlugin>
 {
-	private final Plugin plugin;
 	private Set<EssentialsSign> enabledSigns = new HashSet<EssentialsSign>();
 
-	public SignsConfigHolder(final IContext ess, final Plugin plugin)
+	public SignsConfigHolder(final IContext ess, final EssentialsSignsPlugin plugin)
 	{
-		super(ess, SignsConfig.class);
-		this.plugin = plugin;
-		reload();
+		super(ess, SignsConfig.class, plugin);
+	}
+
+	@Override
+	public void onEnable()
+	{
+		// Call this FIRST.
+		super.onEnable();
+
 		acquireReadLock();
 		try
 		{
@@ -35,6 +40,7 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 		{
 			unlock();
 		}
+
 		acquireWriteLock();
 		try
 		{
@@ -51,14 +57,8 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 		}
 	}
 
-	@Override
-	public File getStorageFile() throws IOException
-	{
-		return new File(plugin.getDataFolder(), "config.yml");
-	}
-
 	public Set<EssentialsSign> getEnabledSigns()
 	{
-		return enabledSigns;
+		return Collections.unmodifiableSet(enabledSigns);
 	}
 }

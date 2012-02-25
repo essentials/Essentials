@@ -17,7 +17,7 @@ public class Commandxmpp extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final String address = EssentialsXMPP.getInstance().getAddress(args[0]);
+		final String address = EssentialsXmpp.getInstance().getAddress(args[0]);
 		if (address == null)
 		{
 			sender.sendMessage("§cThere are no players matching that name.");
@@ -27,7 +27,7 @@ public class Commandxmpp extends EssentialsCommand
 			final String message = getFinalArg(args, 1);
 			final String senderName = sender instanceof Player ? getContext().getUser((Player)sender).getDisplayName() : Console.NAME;
 			sender.sendMessage("[" + senderName + ">" + address + "] " + message);
-			if (!EssentialsXMPP.getInstance().sendMessage(address, "[" + senderName + "] " + message))
+			if (!EssentialsXmpp.getInstance().sendMessage(address, "[" + senderName + "] " + message))
 			{
 				sender.sendMessage("§cError sending message.");
 			}

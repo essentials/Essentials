@@ -6,14 +6,14 @@ import java.io.File;
 import java.util.*;
 
 
-public class UserManager implements IReloadable
+public class UserManagerComponent implements IReloadable
 {
 	private final transient EssentialsConf users;
 	private final transient List<String> spyusers = new ArrayList<String>();
 	private final static String ADDRESS = "address";
 	private final static String SPY = "spy";
 
-	public UserManager(final File folder)
+	public UserManagerComponent(final File folder)
 	{
 		users = new EssentialsConf(new File(folder, "users.yml"));
 		reload();

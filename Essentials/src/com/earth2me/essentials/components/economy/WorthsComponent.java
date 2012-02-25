@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.economy;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.settings.Worth;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import com.earth2me.essentials.storage.EnchantmentLevel;
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 
-public class WorthsComponent extends AsyncStorageObjectHolder<Worth> implements IWorthsComponent
+public class WorthsComponent extends StorageComponent<Worth> implements IWorthsComponent
 {
 	public WorthsComponent(final IContext context)
 	{

@@ -5,14 +5,14 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.settings.Kit;
 import com.earth2me.essentials.components.settings.Kits;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import org.bukkit.inventory.ItemStack;
 
 
-public class KitsComponent extends AsyncStorageObjectHolder<Kits> implements IKitsComponent
+public class KitsComponent extends StorageComponent<Kits> implements IKitsComponent
 {
 	public KitsComponent(final IContext ess)
 	{

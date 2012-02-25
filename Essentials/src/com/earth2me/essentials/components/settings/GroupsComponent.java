@@ -6,7 +6,7 @@ import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.GroupsPermissions;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Map.Entry;
 import lombok.Cleanup;
 
 
-public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements IGroupsComponent
+public class GroupsComponent extends StorageComponent<Groups> implements IGroupsComponent
 {
 	public GroupsComponent(final IContext context)
 	{

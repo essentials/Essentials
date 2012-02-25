@@ -10,11 +10,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 
-class EssentialsXMPPPlayerListener implements Listener
+class EssentialsXmppPlayerListener implements Listener
 {
 	private final transient IContext ess;
 
-	EssentialsXMPPPlayerListener(final IContext ess)
+	EssentialsXmppPlayerListener(final IContext ess)
 	{
 		super();
 		this.ess = ess;
@@ -45,9 +45,9 @@ class EssentialsXMPPPlayerListener implements Listener
 	{
 		try
 		{
-			for (String address : EssentialsXMPP.getInstance().getSpyUsers())
+			for (String address : EssentialsXmpp.getInstance().getSpyUsers())
 			{
-				EssentialsXMPP.getInstance().sendMessage(address, message);
+				EssentialsXmpp.getInstance().sendMessage(address, message);
 			}
 		}
 		catch (Exception ex)

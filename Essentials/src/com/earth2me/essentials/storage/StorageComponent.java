@@ -1,6 +1,7 @@
 package com.earth2me.essentials.storage;
 
 import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,32 +9,55 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 
-public abstract class AsyncStorageObjectHolder<T extends IStorageObject> implements IStorageObjectHolder<T>
+public abstract class StorageComponent<T extends IStorageObject, U extends Plugin> extends Component implements IStorageObjectHolder<T>
 {
 	private transient T data;
 	private final transient ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
 	private final transient Class<T> clazz;
-	private final transient IContext context;
 	private final transient StorageObjectDataWriter writer;
 	private final transient StorageObjectDataReader reader;
 	private final transient AtomicBoolean loaded = new AtomicBoolean(false);
+	private final transient File config;
+	private final transient U plugin;
 
-	public AsyncStorageObjectHolder(final IContext ess, final Class<T> clazz)
+	public StorageComponent(final IContext context, final Class<T> clazz, U plugin)
 	{
-		this.context = ess;
+		super(context);
+
 		this.clazz = clazz;
+		this.plugin = plugin;
+		this.config = getConfig(plugin);
+
 		writer = new StorageObjectDataWriter();
 		reader = new StorageObjectDataReader();
+
 		try
 		{
-			this.data = clazz.newInstance();
+			data = clazz.newInstance();
 		}
-		catch (Exception ex)
+		catch (Throwable ex)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 		}
+	}
+
+	public final U getPlugin()
+	{
+		return plugin;
+	}
+
+	public static File getConfig(Plugin plugin)
+	{
+		return new File(plugin.getDataFolder(), "config.yml");
+	}
+
+	@Override
+	public void onEnable()
+	{
+		reload();
 	}
 
 	/**
@@ -43,7 +67,7 @@ public abstract class AsyncStorageObjectHolder<T extends IStorageObject> impleme
 	 * @return Object storing all the data
 	 */
 	@Override
-	public T getData()
+	public final T getData()
 	{
 		if (!loaded.get())
 		{
@@ -53,13 +77,13 @@ public abstract class AsyncStorageObjectHolder<T extends IStorageObject> impleme
 	}
 
 	@Override
-	public void acquireReadLock()
+	public final void acquireReadLock()
 	{
 		rwl.readLock().lock();
 	}
 
 	@Override
-	public void acquireWriteLock()
+	public final void acquireWriteLock()
 	{
 		while (rwl.getReadHoldCount() > 0)
 		{
@@ -73,10 +97,12 @@ public abstract class AsyncStorageObjectHolder<T extends IStorageObject> impleme
 	public void close()
 	{
 		unlock();
+
+		super.close();
 	}
 
 	@Override
-	public void unlock()
+	public final void unlock()
 	{
 		if (rwl.isWriteLockedByCurrentThread())
 		{
@@ -93,18 +119,19 @@ public abstract class AsyncStorageObjectHolder<T extends IStorageObject> impleme
 	public void reload()
 	{
 		reload(true);
+		// Call super.reload in reload(boolean).
 	}
 
 	public void reload(final boolean instant)
 	{
 		reader.schedule(instant);
+
+		super.reload();
 	}
 
-	public abstract File getStorageFile() throws IOException;
-
-	protected IContext getContext()
+	public final File getStorageFile()
 	{
-		return context;
+		return config;
 	}
 
 
