@@ -5,7 +5,7 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import org.bukkit.plugin.PluginManager;
 
 
-public class EssentialsSignsPlugin extends EssentialsPlugin implements ISignsPlugin
+public final class EssentialsSignsPlugin extends EssentialsPlugin implements ISignsPlugin
 {
 	private transient SignsConfigHolder config;
 
