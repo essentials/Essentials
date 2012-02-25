@@ -1,8 +1,8 @@
 package com.earth2me.essentials.geoip;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IReloadable;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.Permissions;
 import com.maxmind.geoip.Location;
@@ -21,41 +21,41 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.Plugin;
 
 
-public class EssentialsGeoIPPlayerListener implements Listener, IReloadable
+public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 {
 	private transient LookupService ls = null;
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient File databaseFile;
-	private final transient ConfigHolder config;
-	private final transient IContext ess;
-	private final transient Plugin geoip;
+	private final transient GeoIpSettingsComponent settings;
+	private final transient IContext context;
+	private final transient EssentialsGeoIpPlugin plugin;
 
-	public EssentialsGeoIPPlayerListener(final Plugin geoip, final IContext ess)
+	public EssentialsGeoIpPlayerListener(final EssentialsGeoIpPlugin plugin, final IContext context)
 	{
 		super();
-		this.ess = ess;
-		this.geoip = geoip;
-		this.config = new ConfigHolder(ess, geoip);
+		this.context = context;
+		this.plugin = plugin;
+		this.settings = new GeoIpSettingsComponent(context, plugin);
 		reload();
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final IUser u = ess.getUser(event.getPlayer());
+		final IUser u = context.getUser(event.getPlayer());
 		if (Permissions.GEOIP_HIDE.isAuthorized(u))
 		{
 			return;
 		}
-		config.acquireReadLock();
+
+		settings.acquireReadLock();
 		try
 		{
 			final InetAddress address = event.getPlayer().getAddress().getAddress();
 			final StringBuilder builder = new StringBuilder();
-			if (config.getData().getDatabase().isShowCities())
+			if (settings.getData().getDatabase().isShowCities())
 			{
 				final Location loc = ls.getLocation(address);
 				if (loc == null)
@@ -77,7 +77,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReloadable
 			{
 				builder.append(ls.getCountry(address).getName());
 			}
-			if (config.getData().isShowOnWhois())
+			if (settings.getData().isShowOnWhois())
 			{
 				u.acquireWriteLock();
 				try
@@ -89,11 +89,11 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReloadable
 					u.unlock();
 				}
 			}
-			if (config.getData().isShowOnLogin() && !u.isHidden())
+			if (settings.getData().isShowOnLogin() && !u.isHidden())
 			{
 				for (Player player : event.getPlayer().getServer().getOnlinePlayers())
 				{
-					final IUser user = ess.getUser(player);
+					final IUser user = context.getUser(player);
 					if (Permissions.GEOIP_SHOW.isAuthorized(user))
 					{
 						user.sendMessage(_("geoipJoinFormat", user.getDisplayName(), builder.toString()));
@@ -103,36 +103,36 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReloadable
 		}
 		finally
 		{
-			config.unlock();
+			settings.unlock();
 		}
 	}
 
 	@Override
 	public final void reload()
 	{
-		config.reload();
-		config.acquireReadLock();
+		settings.reload();
+		settings.acquireReadLock();
 		try
 		{
-			if (config.getData().getDatabase().isShowCities())
+			if (settings.getData().getDatabase().isShowCities())
 			{
-				databaseFile = new File(geoip.getDataFolder(), "GeoIPCity.dat");
+				databaseFile = new File(plugin.getDataFolder(), "GeoIPCity.dat");
 			}
 			else
 			{
-				databaseFile = new File(geoip.getDataFolder(), "GeoIP.dat");
+				databaseFile = new File(plugin.getDataFolder(), "GeoIP.dat");
 			}
 			if (!databaseFile.exists())
 			{
-				if (config.getData().getDatabase().isDownloadIfMissing())
+				if (settings.getData().getDatabase().isDownloadIfMissing())
 				{
-					if (config.getData().getDatabase().isShowCities())
+					if (settings.getData().getDatabase().isShowCities())
 					{
-						downloadDatabase(config.getData().getDatabase().getDownloadUrlCity());
+						downloadDatabase(settings.getData().getDatabase().getDownloadUrlCity());
 					}
 					else
 					{
-						downloadDatabase(config.getData().getDatabase().getDownloadUrl());
+						downloadDatabase(settings.getData().getDatabase().getDownloadUrl());
 					}
 				}
 				else
@@ -152,7 +152,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReloadable
 		}
 		finally
 		{
-			config.unlock();
+			settings.unlock();
 		}
 	}
 
@@ -215,7 +215,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReloadable
 				{
 					input.close();
 				}
-				catch (IOException ex)
+				catch (Throwable ex)
 				{
 					LOGGER.log(Level.SEVERE, _("connectionFailed"), ex);
 				}

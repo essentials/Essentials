@@ -7,9 +7,9 @@ import java.util.logging.Level;
 import org.bukkit.plugin.PluginManager;
 
 
-public class EssentialsGeoIP extends EssentialsPlugin
+public class EssentialsGeoIpPlugin extends EssentialsPlugin
 {
-	public EssentialsGeoIP()
+	public EssentialsGeoIpPlugin()
 	{
 	}
 
@@ -22,7 +22,7 @@ public class EssentialsGeoIP extends EssentialsPlugin
 	public void onEnable()
 	{
 		final PluginManager pluginManager = getServer().getPluginManager();
-		final EssentialsGeoIPPlayerListener playerListener = new EssentialsGeoIPPlayerListener(this, getContext());
+		final EssentialsGeoIpPlayerListener playerListener = new EssentialsGeoIpPlayerListener(this, getContext());
 		pluginManager.registerEvents(playerListener, this);
 		// TODO Add playerListener to reload list.
 
