@@ -43,7 +43,7 @@ public class SignPlayerListener implements Listener
 				return;
 			}
 			final Sign csign = (Sign)block.getState();
-			for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
+			for (EssentialsSign sign : plugin.getSignsConfig().getEnabledSigns())
 			{
 				if (csign.getLine(0).equalsIgnoreCase(sign.getSuccessName()))
 				{
@@ -55,7 +55,7 @@ public class SignPlayerListener implements Listener
 		}
 		else
 		{
-			for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
+			for (EssentialsSign sign : plugin.getSignsConfig().getEnabledSigns())
 			{
 				if (sign.getBlocks().contains(block.getType())
 					&& !sign.onBlockInteract(block, event.getPlayer(), ess))

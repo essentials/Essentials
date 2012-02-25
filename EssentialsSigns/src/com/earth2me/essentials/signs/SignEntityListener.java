@@ -34,7 +34,7 @@ public class SignEntityListener implements Listener
 				event.setCancelled(true);
 				return;
 			}
-			for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
+			for (EssentialsSign sign : plugin.getSignsConfig().getEnabledSigns())
 			{
 				if (sign.getBlocks().contains(block.getType()))
 				{
@@ -62,7 +62,7 @@ public class SignEntityListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
-		for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
+		for (EssentialsSign sign : plugin.getSignsConfig().getEnabledSigns())
 		{
 			if (sign.getBlocks().contains(block.getType())
 				&& !sign.onBlockBreak(block, ess))
