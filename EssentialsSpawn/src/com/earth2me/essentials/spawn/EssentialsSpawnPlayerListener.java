@@ -1,8 +1,8 @@
 package com.earth2me.essentials.spawn;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
@@ -21,26 +21,26 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class EssentialsSpawnPlayerListener implements Listener
 {
-	private final transient IContext ess;
+	private final transient IContext context;
 	private final transient SpawnStorageComponent spawns;
 
 	public EssentialsSpawnPlayerListener(final IContext ess, final SpawnStorageComponent spawns)
 	{
 		super();
-		this.ess = ess;
+		this.context = ess;
 		this.spawns = spawns;
 	}
 
 	public void onPlayerRespawn(final PlayerRespawnEvent event)
 	{
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = context.getUser(event.getPlayer());
 
 		boolean respawnAtHome = false;
-		final ISettingsComponent settings = ess.getSettings();
+		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
 		try
 		{
-			respawnAtHome = ess.getSettings().getData().getCommands().getHome().isRespawnAtHome();
+			respawnAtHome = context.getSettings().getData().getCommands().getHome().isRespawnAtHome();
 		}
 		finally
 		{
@@ -64,7 +64,7 @@ public class EssentialsSpawnPlayerListener implements Listener
 				return;
 			}
 		}
-		final Location spawn = spawns.getSpawn(ess.getGroups().getMainGroup(user));
+		final Location spawn = spawns.getSpawn(context.getGroups().getMainGroup(user));
 		if (spawn != null)
 		{
 			event.setRespawnLocation(spawn);
@@ -73,7 +73,7 @@ public class EssentialsSpawnPlayerListener implements Listener
 
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = context.getUser(event.getPlayer());
 
 		if (user.hasPlayedBefore())
 		{
@@ -82,14 +82,14 @@ public class EssentialsSpawnPlayerListener implements Listener
 
 		if (spawns.getNewbieSpawn() != null)
 		{
-			ess.scheduleSyncDelayedTask(new NewPlayerTeleport(user), 1L);
+			context.getScheduler().scheduleSyncDelayedTask(new NewPlayerTeleport(user), 1L);
 		}
 
 		if (spawns.getAnnounceNewPlayers())
 		{
-			final IText output = new KeywordReplacer(new SimpleTextInput(spawns.getAnnounceNewPlayerFormat(user)), user, ess);
+			final IText output = new KeywordReplacer(new SimpleTextInput(spawns.getAnnounceNewPlayerFormat(user)), user, context);
 			final SimpleTextPager pager = new SimpleTextPager(output);
-			ess.broadcastMessage(user, pager.getString(0));
+			context.getMessager().broadcastMessage(user, pager.getString(0));
 		}
 	}
 
