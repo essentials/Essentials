@@ -1,9 +1,9 @@
 package com.earth2me.essentials.spawn;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.IEssentialsModule;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.settings.Spawns;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import com.earth2me.essentials.storage.LocationData.WorldNotLoadedException;
 import java.io.File;
@@ -15,18 +15,34 @@ import org.bukkit.World;
 import org.bukkit.event.EventPriority;
 
 
-public class SpawnStorage extends AsyncStorageObjectHolder<Spawns> implements IEssentialsModule
+public final class SpawnStorageComponent extends AsyncStorageObjectHolder<Spawns> implements IComponent
 {
-	public SpawnStorage(final IContext ess)
+	public SpawnStorageComponent(final IContext context)
 	{
-		super(ess, Spawns.class);
+		super(context, Spawns.class);
+	}
+
+	@Override
+	public String getTypeId()
+	{
+		return "SpawnStorageComponent";
+	}
+
+	@Override
+	public void initialize()
+	{
 		reload();
+	}
+
+	@Override
+	public void onEnable()
+	{
 	}
 
 	@Override
 	public File getStorageFile()
 	{
-		return new File(context.getDataFolder(), "spawn.yml");
+		return new File(getContext().getDataFolder(), "spawn.yml");
 	}
 
 	public void setSpawn(final Location loc, final String group)
@@ -87,7 +103,7 @@ public class SpawnStorage extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	private Location getWorldSpawn()
 	{
-		for (World world : context.getServer().getWorlds())
+		for (World world : getContext().getServer().getWorlds())
 		{
 			if (world.getEnvironment() != World.Environment.NORMAL)
 			{
@@ -95,7 +111,7 @@ public class SpawnStorage extends AsyncStorageObjectHolder<Spawns> implements IE
 			}
 			return world.getSpawnLocation();
 		}
-		return context.getServer().getWorlds().get(0).getSpawnLocation();
+		return getContext().getServer().getWorlds().get(0).getSpawnLocation();
 	}
 
 	public EventPriority getRespawnPriority()
@@ -154,7 +170,7 @@ public class SpawnStorage extends AsyncStorageObjectHolder<Spawns> implements IE
 		acquireReadLock();
 		try
 		{
-			return getData().getNewPlayerAnnouncement().replace('&', '§').replace("§§", "&").replace("{PLAYER}", user.getDisplayName()).replace("{DISPLAYNAME}", user.getDisplayName()).replace("{GROUP}", context.getGroups().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getAddress().toString());
+			return getData().getNewPlayerAnnouncement().replace('&', '§').replace("§§", "&").replace("{PLAYER}", user.getDisplayName()).replace("{DISPLAYNAME}", user.getDisplayName()).replace("{GROUP}", getContext().getGroups().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getAddress().toString());
 		}
 		finally
 		{

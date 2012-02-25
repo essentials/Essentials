@@ -22,9 +22,9 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class EssentialsSpawnPlayerListener implements Listener
 {
 	private final transient IContext ess;
-	private final transient SpawnStorage spawns;
+	private final transient SpawnStorageComponent spawns;
 
-	public EssentialsSpawnPlayerListener(final IContext ess, final SpawnStorage spawns)
+	public EssentialsSpawnPlayerListener(final IContext ess, final SpawnStorageComponent spawns)
 	{
 		super();
 		this.ess = ess;

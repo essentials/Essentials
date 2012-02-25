@@ -39,7 +39,7 @@ public class KitsComponent extends AsyncStorageObjectHolder<Kits> implements IKi
 	@Override
 	public File getStorageFile() throws IOException
 	{
-		return new File(context.getDataFolder(), "kits.yml");
+		return new File(getContext().getDataFolder(), "kits.yml");
 	}
 
 	@Override

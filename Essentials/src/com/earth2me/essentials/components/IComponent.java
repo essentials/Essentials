@@ -11,16 +11,16 @@ public interface IComponent extends IReloadable, IClosable
 {
 	/**
 	 * Gets the name of the component.
-	 * 
+	 *
 	 * @return A descriptive name identifying the component.
 	 */
 	String getTypeId();
-	
+
 	/**
 	 * Initialize the component after all components have been instantiated.
 	 */
 	void initialize();
-	
+
 	/**
 	 * Enable the component, usually right after instantiating it.
 	 */

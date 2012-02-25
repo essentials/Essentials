@@ -115,10 +115,10 @@ public class User extends UserBase implements IUser
 		try
 		{
 			setMoney(getMoney() + value);
-			sendMessage(_("addedToAccount", Util.formatCurrency(value, context)));
+			sendMessage(_("addedToAccount", Util.formatCurrency(value, getContext())));
 			if (initiator != null)
 			{
-				initiator.sendMessage(_("addedToOthersAccount", Util.formatCurrency(value, context), this.getDisplayName()));
+				initiator.sendMessage(_("addedToOthersAccount", Util.formatCurrency(value, getContext()), this.getDisplayName()));
 			}
 		}
 		finally
@@ -138,8 +138,8 @@ public class User extends UserBase implements IUser
 		{
 			setMoney(getMoney() - value);
 			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("moneySentTo", Util.formatCurrency(value, context), reciever.getDisplayName()));
-			reciever.sendMessage(_("moneyRecievedFrom", Util.formatCurrency(value, context), getDisplayName()));
+			sendMessage(_("moneySentTo", Util.formatCurrency(value, getContext()), reciever.getDisplayName()));
+			reciever.sendMessage(_("moneyRecievedFrom", Util.formatCurrency(value, getContext()), getDisplayName()));
 		}
 		else
 		{
@@ -161,10 +161,10 @@ public class User extends UserBase implements IUser
 			return;
 		}
 		setMoney(getMoney() - value);
-		sendMessage(_("takenFromAccount", Util.formatCurrency(value, context)));
+		sendMessage(_("takenFromAccount", Util.formatCurrency(value, getContext())));
 		if (initiator != null)
 		{
-			initiator.sendMessage(_("takenFromOthersAccount", Util.formatCurrency(value, context), this.getDisplayName()));
+			initiator.sendMessage(_("takenFromOthersAccount", Util.formatCurrency(value, getContext()), this.getDisplayName()));
 		}
 	}
 
@@ -212,9 +212,9 @@ public class User extends UserBase implements IUser
 		{
 			final String nick = getData().getNickname();
 			@Cleanup
-			final ISettingsComponent settings = context.getSettings();
+			final ISettingsComponent settings = getContext().getSettings();
 			settings.acquireReadLock();
-			final IGroupsComponent groups = context.getGroups();
+			final IGroupsComponent groups = getContext().getGroups();
 			// default: {PREFIX}{NICKNAMEPREFIX}{NAME}{SUFFIX}
 			String displayname = settings.getData().getChat().getDisplaynameFormat();
 			if (settings.getData().getCommands().isDisabled("nick") || nick == null || nick.isEmpty() || nick.equals(getName()))
@@ -280,7 +280,7 @@ public class User extends UserBase implements IUser
 	public void updateDisplayName()
 	{
 		@Cleanup
-		final ISettingsComponent settings = context.getSettings();
+		final ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		if (isOnlineUser() && settings.getData().getChat().getChangeDisplayname())
 		{
@@ -448,7 +448,7 @@ public class User extends UserBase implements IUser
 				getData().setAfk(false);
 				if (broadcast && !hidden)
 				{
-					context.getMessager().broadcastMessage(this, _("userIsNotAway", getDisplayName()));
+					getContext().getMessager().broadcastMessage(this, _("userIsNotAway", getDisplayName()));
 				}
 			}
 			lastActivity = System.currentTimeMillis();
@@ -463,7 +463,7 @@ public class User extends UserBase implements IUser
 	public void checkActivity()
 	{
 		// Do NOT @Cleanup this.
-		final ISettingsComponent settings = context.getSettings();
+		final ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		final long autoafkkick = settings.getData().getCommands().getAfk().getAutoAFKKick();
 		if (autoafkkick > 0 && lastActivity > 0 && (lastActivity + (autoafkkick * 1000)) < System.currentTimeMillis()
@@ -476,9 +476,9 @@ public class User extends UserBase implements IUser
 			kickPlayer(kickReason);
 
 
-			for (Player player : context.getServer().getOnlinePlayers())
+			for (Player player : getContext().getServer().getOnlinePlayers())
 			{
-				final IUser user = context.getUser(player);
+				final IUser user = getContext().getUser(player);
 				if (Permissions.KICK_NOTIFY.isAuthorized(user))
 				{
 					player.sendMessage(_("playerKicked", Console.NAME, getName(), kickReason));
@@ -494,7 +494,7 @@ public class User extends UserBase implements IUser
 				setAfk(true);
 				if (!hidden)
 				{
-					context.getMessager().broadcastMessage(this, _("userIsAway", getDisplayName()));
+					getContext().getMessager().broadcastMessage(this, _("userIsAway", getDisplayName()));
 				}
 			}
 		}
@@ -527,7 +527,7 @@ public class User extends UserBase implements IUser
 		try
 		{
 			@Cleanup
-			final ISettingsComponent settings = context.getSettings();
+			final ISettingsComponent settings = getContext().getSettings();
 			settings.acquireReadLock();
 			return (getData().isGodmode()
 					&& !settings.getData().getWorldOptions(getLocation().getWorld().getName()).isGodmode())
@@ -650,7 +650,7 @@ public class User extends UserBase implements IUser
 		if (Permissions.OVERSIZEDSTACKS.isAuthorized(this))
 		{
 			@Cleanup
-			final ISettingsComponent settings = context.getSettings();
+			final ISettingsComponent settings = getContext().getSettings();
 			settings.acquireReadLock();
 			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
 

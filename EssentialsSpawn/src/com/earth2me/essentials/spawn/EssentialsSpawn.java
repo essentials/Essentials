@@ -1,5 +1,6 @@
 package com.earth2me.essentials.spawn;
 
+import com.earth2me.essentials.api.EssentialsPlugin;
 import com.earth2me.essentials.components.commands.CommandsComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ICommandsComponent;
@@ -19,29 +20,19 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-public class EssentialsSpawn extends JavaPlugin
+public class EssentialsSpawn extends EssentialsPlugin
 {
 	private static final Logger LOGGER = Bukkit.getLogger();
 	private transient IContext ess;
-	private transient SpawnStorage spawns;
+	private transient SpawnStorageComponent spawns;
 	private transient ICommandsComponent commandHandler;
 
 	public void onEnable()
 	{
 		final PluginManager pluginManager = getServer().getPluginManager();
-		ess = (IContext)pluginManager.getPlugin("Essentials3");
-		if (!this.getDescription().getVersion().equals(ess.getDescription().getVersion()))
-		{
-			LOGGER.log(Level.WARNING, _("versionMismatchAll"));
-		}
-		if (!ess.isEnabled())
-		{
-			this.setEnabled(false);
-			return;
-		}
 
-		spawns = new SpawnStorage(ess);
-		ess.addReloadListener(spawns);
+		spawns = new SpawnStorageComponent(ess);
+		ess.getEssentials().add(spawns);
 
 		commandHandler = new CommandsComponent(EssentialsSpawn.class.getClassLoader(), "com.earth2me.essentials.spawn.Command", "essentials.", spawns, ess);
 

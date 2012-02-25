@@ -44,7 +44,7 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 	@Override
 	public File getStorageFile()
 	{
-		return new File(context.getDataFolder(), "groups.yml");
+		return new File(getContext().getDataFolder(), "groups.yml");
 	}
 
 	public Collection<Entry<String, GroupOptions>> getGroups(final IUser player)
@@ -180,7 +180,7 @@ public class GroupsComponent extends AsyncStorageObjectHolder<Groups> implements
 			}
 		}
 		@Cleanup
-		ISettingsComponent settings = context.getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		return settings.getData().getChat().getDefaultFormat();
 	}

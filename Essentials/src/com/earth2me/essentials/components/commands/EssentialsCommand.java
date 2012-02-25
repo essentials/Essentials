@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.commands;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.IEssentialsModule;
+import com.earth2me.essentials.components.IComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.AbstractSuperpermsPermission;
 import java.util.List;
@@ -18,7 +18,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 {
 	private transient String commandName;
 	private transient IContext context;
-	private transient IEssentialsModule module;
+	private transient IComponent component;
 	private transient Server server;
 	@SuppressWarnings("NonConstantLogger")
 	private transient Logger logger;
@@ -57,19 +57,20 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	}
 
 	/**
-	 * @return the module
+	 * @return the component
 	 */
-	protected IEssentialsModule getModule()
+	protected IComponent getComponent()
 	{
-		return module;
+		return component;
 	}
 
 	/**
-	 * @param module the module to set
+	 * @param component the component to set
 	 */
-	protected void setModule(IEssentialsModule module)
+	@Override
+	public void setComponent(IComponent component)
 	{
-		this.module = module;
+		this.component = component;
 	}
 
 	/**
@@ -112,12 +113,6 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		this.setServer(getContext().getServer());
 		this.setCommandName(commandName);
 		this.permission = "essentials." + commandName;
-	}
-
-	@Override
-	public void setEssentialsModule(final IEssentialsModule module)
-	{
-		this.setModule(module);
 	}
 
 	protected IUser getPlayer(final String[] args, final int pos) throws NoSuchFieldException, NotEnoughArgumentsException

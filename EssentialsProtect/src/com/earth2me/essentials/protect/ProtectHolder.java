@@ -17,6 +17,6 @@ public class ProtectHolder extends AsyncStorageObjectHolder<Protect>
 	@Override
 	public File getStorageFile() throws IOException
 	{
-		return new File(context.getDataFolder(), "protect.yml");
+		return new File(getContext().getDataFolder(), "protect.yml");
 	}
 }

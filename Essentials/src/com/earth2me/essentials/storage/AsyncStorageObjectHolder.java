@@ -15,7 +15,7 @@ public abstract class AsyncStorageObjectHolder<T extends IStorageObject> impleme
 	private transient T data;
 	private final transient ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
 	private final transient Class<T> clazz;
-	protected final transient IContext context;
+	private final transient IContext context;
 	private final transient StorageObjectDataWriter writer;
 	private final transient StorageObjectDataReader reader;
 	private final transient AtomicBoolean loaded = new AtomicBoolean(false);
@@ -102,12 +102,17 @@ public abstract class AsyncStorageObjectHolder<T extends IStorageObject> impleme
 
 	public abstract File getStorageFile() throws IOException;
 
+	protected IContext getContext()
+	{
+		return context;
+	}
+
 
 	private class StorageObjectDataWriter extends AbstractDelayedYamlFileWriter
 	{
 		public StorageObjectDataWriter()
 		{
-			super(context);
+			super(getContext());
 		}
 
 		@Override
@@ -135,7 +140,7 @@ public abstract class AsyncStorageObjectHolder<T extends IStorageObject> impleme
 	{
 		public StorageObjectDataReader()
 		{
-			super(context, clazz);
+			super(getContext(), clazz);
 		}
 
 		@Override

@@ -154,7 +154,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	{
 		try
 		{
-			return context.getUsers().getUserFile(getName());
+			return getContext().getUsers().getUserFile(getName());
 		}
 		catch (InvalidNameException ex)
 		{
@@ -203,7 +203,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		try
 		{
 			@Cleanup
-			final ISettingsComponent settings = context.getSettings();
+			final ISettingsComponent settings = getContext().getSettings();
 			settings.acquireReadLock();
 			if (Math.abs(value) > settings.getData().getEconomy().getMaxMoney())
 			{
@@ -227,7 +227,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		{
 			Double money = getData().getMoney();
 			@Cleanup
-			final ISettingsComponent settings = context.getSettings();
+			final ISettingsComponent settings = getContext().getSettings();
 			settings.acquireReadLock();
 			if (money == null)
 			{

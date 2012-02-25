@@ -97,6 +97,6 @@ public class WorthsComponent extends AsyncStorageObjectHolder<Worth> implements 
 	@Override
 	public File getStorageFile() throws IOException
 	{
-		return new File(context.getDataFolder(), "worth.yml");
+		return new File(getContext().getDataFolder(), "worth.yml");
 	}
 }

@@ -24,7 +24,7 @@ public class WarpHolder extends AsyncStorageObjectHolder<Warp> implements IWarp
 	{
 		try
 		{
-			return context.getWarps().getWarpFile(name);
+			return getContext().getWarps().getWarpFile(name);
 		}
 		catch (InvalidNameException ex)
 		{

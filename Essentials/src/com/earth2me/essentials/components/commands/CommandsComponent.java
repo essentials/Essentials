@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.commands;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ICommandsComponent;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.IEssentialsModule;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
+import com.earth2me.essentials.components.IComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUser;
 import java.util.*;
 import java.util.logging.Level;
@@ -23,23 +23,24 @@ public class CommandsComponent extends Component implements ICommandsComponent
 	private final transient ClassLoader classLoader;
 	private final transient String commandPath;
 	private final transient String permissionPrefix;
-	private final transient IEssentialsModule module;	private final transient Map<String, List<PluginCommand>> altcommands = new HashMap<String, List<PluginCommand>>();
+	private final transient IComponent component;
+	private final transient Map<String, List<PluginCommand>> altcommands = new HashMap<String, List<PluginCommand>>();
 	private final transient Map<String, String> disabledList = new HashMap<String, String>();
 	private final transient Map<String, IEssentialsCommand> commands = new HashMap<String, IEssentialsCommand>();
 
-	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IContext ess)
+	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IContext context)
 	{
-		this(classLoader, commandPath, permissionPrefix, null, ess);
+		this(classLoader, commandPath, permissionPrefix, context.getCommands(), context);
 	}
 
-	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IEssentialsModule module, IContext context)
+	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IComponent component, IContext context)
 	{
 		super(context);
 
 		this.classLoader = classLoader;
 		this.commandPath = commandPath;
 		this.permissionPrefix = permissionPrefix;
-		this.module = module;
+		this.component = component;
 
 		for (Plugin plugin : context.getServer().getPluginManager().getPlugins())
 		{
@@ -124,7 +125,7 @@ public class CommandsComponent extends Component implements ICommandsComponent
 				{
 					cmd = (IEssentialsCommand)classLoader.loadClass(commandPath + commandName).newInstance();
 					cmd.init(getContext(), commandName);
-					cmd.setEssentialsModule(module);
+					cmd.setComponent(component);
 					commands.put(commandName, cmd);
 				}
 				catch (Exception ex)
@@ -316,6 +317,6 @@ public class CommandsComponent extends Component implements ICommandsComponent
 	@Override
 	public Map<String, String> disabledCommands()
 	{
-		return disabledList;
+		return Collections.unmodifiableMap(disabledList);
 	}
 }

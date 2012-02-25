@@ -52,16 +52,16 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 
 	private void registerListeners()
 	{
-		final PluginManager pluginManager = context.getServer().getPluginManager();
+		final PluginManager pluginManager = getContext().getServer().getPluginManager();
 
-		pluginManager.registerEvents(new JailBlockListener(), context.getEssentials());
-		pluginManager.registerEvents(new JailPlayerListener(), context.getEssentials());
+		pluginManager.registerEvents(new JailBlockListener(), getContext().getEssentials());
+		pluginManager.registerEvents(new JailPlayerListener(), getContext().getEssentials());
 	}
 
 	@Override
 	public File getStorageFile()
 	{
-		return new File(context.getDataFolder(), "jail.yml");
+		return new File(getContext().getDataFolder(), "jail.yml");
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		public void onBlockBreak(final BlockBreakEvent event)
 		{
 			@Cleanup
-			final IUser user = context.getUser(event.getPlayer());
+			final IUser user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -193,7 +193,7 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		public void onBlockPlace(final BlockPlaceEvent event)
 		{
 			@Cleanup
-			final IUser user = context.getUser(event.getPlayer());
+			final IUser user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -205,7 +205,7 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		public void onBlockDamage(final BlockDamageEvent event)
 		{
 			@Cleanup
-			final IUser user = context.getUser(event.getPlayer());
+			final IUser user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -221,7 +221,7 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		public void onPlayerInteract(final PlayerInteractEvent event)
 		{
 			@Cleanup
-			final IUser user = context.getUser(event.getPlayer());
+			final IUser user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -233,7 +233,7 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		public void onPlayerRespawn(final PlayerRespawnEvent event)
 		{
 			@Cleanup
-			final IUser user = context.getUser(event.getPlayer());
+			final IUser user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
@@ -246,13 +246,13 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 			}
 			catch (Exception ex)
 			{
-				if (context.getSettings().isDebug())
+				if (getContext().getSettings().isDebug())
 				{
-					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 		}
@@ -261,7 +261,7 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		public void onPlayerTeleport(final PlayerTeleportEvent event)
 		{
 			@Cleanup
-			final IUser user = context.getUser(event.getPlayer());
+			final IUser user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
@@ -274,13 +274,13 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 			}
 			catch (Exception ex)
 			{
-				if (context.getSettings().isDebug())
+				if (getContext().getSettings().isDebug())
 				{
-					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 			user.sendMessage(_("jailMessage"));
@@ -290,7 +290,7 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 		public void onPlayerJoin(final PlayerJoinEvent event)
 		{
 			@Cleanup
-			final IUser user = context.getUser(event.getPlayer());
+			final IUser user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
@@ -303,13 +303,13 @@ public class JailsComponent extends AsyncStorageObjectHolder<Jails> implements I
 			}
 			catch (Exception ex)
 			{
-				if (context.getSettings().isDebug())
+				if (getContext().getSettings().isDebug())
 				{
-					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					context.getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 			user.sendMessage(_("jailMessage"));

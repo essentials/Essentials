@@ -51,7 +51,7 @@ public class SettingsComponent extends AsyncStorageObjectHolder<Settings> implem
 	@Override
 	public File getStorageFile()
 	{
-		return new File(context.getDataFolder(), "settings.yml");
+		return new File(getContext().getDataFolder(), "settings.yml");
 	}
 
 	@Override

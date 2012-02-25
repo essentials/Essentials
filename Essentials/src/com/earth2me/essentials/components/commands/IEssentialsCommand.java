@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.commands;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.IEssentialsModule;
 import com.earth2me.essentials.api.IPermissions;
+import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.users.IUser;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,5 +18,5 @@ public interface IEssentialsCommand extends IPermissions
 
 	void init(IContext ess, String commandLabel);
 
-	void setEssentialsModule(IEssentialsModule module);
+	void setComponent(IComponent component);
 }
