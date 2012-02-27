@@ -8,7 +8,6 @@ import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.perm.GroupsPermissions;
 import com.earth2me.essentials.storage.StorageComponent;
-import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +22,12 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	public GroupsComponent(final IContext context, final IEssentials plugin)
 	{
 		super(context, Groups.class, plugin);
+	}
+
+	@Override
+	public String getContainerId()
+	{
+		return "settings.groups";
 	}
 
 	public Collection<Entry<String, GroupOptions>> getGroups(final IUser player)
@@ -40,9 +45,9 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 			{
 				if (GroupsPermissions.getPermission(entry.getKey()).isAuthorized(player))
 				{
-					if(entry.getValue() != null)
+					if (entry.getValue() != null)
 					{
-					list.add(entry);
+						list.add(entry);
 					}
 				}
 			}
@@ -136,16 +141,16 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public MessageFormat getChatFormat(final IUser player)
 	{
-			String format = getRawChatFormat(player);
-			format = Util.replaceColor(format);
-			format = format.replace("{DISPLAYNAME}", "%1$s");
-			format = format.replace("{GROUP}", "{0}");
-			format = format.replace("{MESSAGE}", "%2$s");
-			format = format.replace("{WORLDNAME}", "{1}");
-			format = format.replace("{SHORTWORLDNAME}", "{2}");
-			format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
-			MessageFormat mFormat = new MessageFormat(format);
-			return mFormat;
+		String format = getRawChatFormat(player);
+		format = Util.replaceColor(format);
+		format = format.replace("{DISPLAYNAME}", "%1$s");
+		format = format.replace("{GROUP}", "{0}");
+		format = format.replace("{MESSAGE}", "%2$s");
+		format = format.replace("{WORLDNAME}", "{1}");
+		format = format.replace("{SHORTWORLDNAME}", "{2}");
+		format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
+		MessageFormat mFormat = new MessageFormat(format);
+		return mFormat;
 	}
 
 	private String getRawChatFormat(final IUser player)
@@ -185,5 +190,4 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 		}
 		return "default";
 	}
-
 }
