@@ -270,7 +270,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			break;
 
 		case 4:
-			final IJailsComponent jails = new JailsComponent(context);
+			final IJailsComponent jails = new JailsComponent(context, this);
 			context.setJails(jails);
 			add(jails);
 			break;

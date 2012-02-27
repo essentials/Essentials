@@ -2,6 +2,7 @@ package com.earth2me.essentials.components.jails;
 
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.settings.Jails;
 import com.earth2me.essentials.storage.StorageComponent;
@@ -25,28 +26,24 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.plugin.PluginManager;
 
 
-public class JailsComponent extends StorageComponent<Jails> implements IJailsComponent
+public final class JailsComponent extends StorageComponent<Jails, IEssentials> implements IJailsComponent
 {
-	public JailsComponent(final IContext ess)
+	public JailsComponent(final IContext context, final IEssentials plugin)
 	{
-		super(ess, Jails.class);
+		super(context, Jails.class, plugin);
 	}
 
 	@Override
-	public String getTypeId()
+	public String getContainerId()
 	{
-		return "JailsComponent";
-	}
-
-	@Override
-	public void initialize()
-	{
+		return "jails";
 	}
 
 	@Override
 	public void onEnable()
 	{
-		reload();
+		super.onEnable();
+
 		registerListeners();
 	}
 
@@ -56,12 +53,6 @@ public class JailsComponent extends StorageComponent<Jails> implements IJailsCom
 
 		pluginManager.registerEvents(new JailBlockListener(), getContext().getEssentials());
 		pluginManager.registerEvents(new JailPlayerListener(), getContext().getEssentials());
-	}
-
-	@Override
-	public File getStorageFile()
-	{
-		return new File(getContext().getDataFolder(), "jail.yml");
 	}
 
 	@Override
