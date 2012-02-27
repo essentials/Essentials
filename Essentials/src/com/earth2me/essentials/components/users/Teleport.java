@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.users;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ITeleport;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.UserData.TimestampType;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Calendar;
@@ -146,7 +146,7 @@ public class Teleport implements Runnable, ITeleport
 	@Override
 	public void warp(String warp, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		final Location loc = ess.getWarps().getWarp(warp);
+		final Location loc = ess.getWarps().getWarp(warp).getLocation().getBukkitLocation();
 		teleport(new Target(loc), chargeFor, cause);
 		user.sendMessage(_("warpingTo", warp));
 	}
