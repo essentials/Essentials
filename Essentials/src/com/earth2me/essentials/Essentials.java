@@ -23,8 +23,6 @@ import com.earth2me.essentials.components.backup.BackupComponent;
 import com.earth2me.essentials.components.commands.CommandsComponent;
 import com.earth2me.essentials.components.economy.EconomyComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
-import com.earth2me.essentials.components.settings.economy.IWorthsComponent;
-import com.earth2me.essentials.components.settings.economy.WorthsComponent;
 import com.earth2me.essentials.components.i18n.I18nComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.items.ItemsComponent;
@@ -32,8 +30,10 @@ import com.earth2me.essentials.components.jails.IJailsComponent;
 import com.earth2me.essentials.components.jails.JailsComponent;
 import com.earth2me.essentials.components.kits.IKitsComponent;
 import com.earth2me.essentials.components.kits.KitsComponent;
-import com.earth2me.essentials.components.settings.groups.GroupsComponent;
 import com.earth2me.essentials.components.settings.SettingsComponent;
+import com.earth2me.essentials.components.settings.economy.IWorthsComponent;
+import com.earth2me.essentials.components.settings.economy.WorthsComponent;
+import com.earth2me.essentials.components.settings.groups.GroupsComponent;
 import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.components.users.UsersComponent;
 import com.earth2me.essentials.components.warps.IWarpsComponent;
@@ -221,7 +221,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			break;
 
 		case 1:
-			final ISettingsComponent settings = new SettingsComponent(context);
+			final ISettingsComponent settings = new SettingsComponent(context, this);
 			context.setSettings(settings);
 			add(settings);
 			execTimer.mark("Settings");
@@ -229,35 +229,44 @@ public class Essentials extends ComponentPlugin implements IEssentials
 
 		case 2:
 			final IUsersComponent users = new UsersComponent(context);
+			context.setUsers(users);
 			add(users);
 			execTimer.mark("Init(Usermap)");
 
-			final IGroupsComponent groups = new GroupsComponent(context);
+			final IGroupsComponent groups = new GroupsComponent(context, this);
+			context.setGroups(groups);
 			add(groups);
 
 			final IWarpsComponent warps = new WarpsComponent(context);
 			add(warps);
 			execTimer.mark("Init(Spawn/Warp)");
 
-			final IWorthsComponent worths = new WorthsComponent(context);
+			final IWorthsComponent worths = new WorthsComponent(context, this);
+			context.setWorths(worths);
 			add(worths);
 
 			final IItemsComponent items = new ItemsComponent(context);
+			context.setItems(items);
 			add(items);
 			execTimer.mark("Init(Worth/ItemDB)");
 
-			final IKitsComponent kits = new KitsComponent(context);
+			final IKitsComponent kits = new KitsComponent(context, this);
+			context.setKits(kits);
 			add(kits);
 
 			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", "essentials.", context);
+			context.setCommands(commands);
 			add(commands);
 
 			final IEconomyComponent economy = new EconomyComponent(context);
+			context.setEconomy(economy);
 			add(economy);
 			break;
 
 		case 3:
-			context.setBackup(new BackupComponent(context));
+			final IBackupComponent backup = new BackupComponent(context);
+			context.setBackup(backup);
+			add(backup);
 			break;
 
 		case 4:
