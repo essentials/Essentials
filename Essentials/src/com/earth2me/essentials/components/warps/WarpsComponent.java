@@ -1,16 +1,19 @@
 package com.earth2me.essentials.components.warps;
 
+import com.earth2me.essentials.components.settings.warps.IWarpComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.components.commands.WarpNotFoundException;
+import com.earth2me.essentials.components.settings.warps.WarpComponent;
+import com.earth2me.essentials.storage.LocationData;
 import com.earth2me.essentials.storage.StorageObjectMap;
 import java.io.File;
 import java.util.*;
 import org.bukkit.Location;
 
 
-public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsComponent
+public class WarpsComponent extends StorageObjectMap<IWarpComponent> implements IWarpComponent
 {
 	public WarpsComponent(IContext context)
 	{
@@ -52,7 +55,7 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 		final List<String> names = new ArrayList<String>();
 		for (String key : getAllKeys())
 		{
-			IWarp warp = getObject(key);
+			IWarpComponent warp = getObject(key);
 			if (warp == null)
 			{
 				continue;
@@ -74,7 +77,7 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 	@Override
 	public Location getWarp(final String name) throws Exception
 	{
-		IWarp warp = getObject(name);
+		IWarpComponent warp = getObject(name);
 		if (warp == null)
 		{
 			throw new WarpNotFoundException(_("warpNotExist"));
@@ -93,15 +96,15 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 	@Override
 	public void setWarp(final String name, final Location loc) throws Exception
 	{
-		setWarp(name, new com.earth2me.essentials.storage.LocationData(loc));
+		setWarp(name, new LocationData(loc));
 	}
 
-	public void setWarp(final String name, final com.earth2me.essentials.storage.LocationData loc) throws Exception
+	public void setWarp(final String name, final LocationData loc) throws Exception
 	{
-		IWarp warp = getObject(name);
+		IWarpComponent warp = getObject(name);
 		if (warp == null)
 		{
-			warp = new com.earth2me.essentials.components.settings.warps.WarpsComponent(name, context);
+			warp = new WarpComponent(name, context, context.getEssentials());
 		}
 		warp.acquireWriteLock();
 		try
@@ -127,9 +130,9 @@ public class WarpsComponent extends StorageObjectMap<IWarp> implements IWarpsCom
 	}
 
 	@Override
-	public IWarp load(String name) throws Exception
+	public IWarpComponent load(String name) throws Exception
 	{
-		final IWarp warp = new com.earth2me.essentials.components.settings.warps.WarpsComponent(name, context);
+		final IWarpComponent warp = new WarpComponent(name, context, context.getEssentials());
 		warp.reload();
 		return warp;
 	}
