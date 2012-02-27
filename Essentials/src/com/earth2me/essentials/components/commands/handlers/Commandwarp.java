@@ -6,7 +6,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.components.warps.IWarpsComponent;
+import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.perm.WarpPermissions;
 import java.util.ArrayList;

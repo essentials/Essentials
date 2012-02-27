@@ -5,20 +5,16 @@ import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.storage.StorageComponent;
 
 
-public class WarpComponent extends StorageComponent<Warp, IEssentials> implements IWarpComponent
+public class WarpsComponent extends StorageComponent<Warp, IEssentials> implements IWarpsComponent
 {
-	private final String name;
-
-	public WarpComponent(String name, IContext context, IEssentials plugin)
+	public WarpsComponent(IContext context, IEssentials plugin)
 	{
 		super(context, Warp.class, plugin);
-
-		this.name = name;
 	}
 
 	@Override
 	public String getContainerId()
 	{
-		return "warps/" + name;
+		return "settings.warps";
 	}
 }

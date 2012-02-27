@@ -25,11 +25,11 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	protected final transient Cache<String, I> cache = CacheBuilder.newBuilder().softValues().build(this);
 	protected final transient ConcurrentSkipListSet<String> keys = new ConcurrentSkipListSet<String>();
 
-	public StorageObjectMap(final IContext ess, final String folderName)
+	public StorageObjectMap(final IContext context, final String folderName)
 	{
 		super();
-		this.context = ess;
-		this.folder = new File(ess.getDataFolder(), folderName);
+		this.context = context;
+		this.folder = new File(context.getDataFolder(), folderName);
 		if (!folder.exists())
 		{
 			folder.mkdirs();

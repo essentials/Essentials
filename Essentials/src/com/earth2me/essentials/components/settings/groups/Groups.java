@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.settings.groups;
 
 import com.earth2me.essentials.storage.Comment;
-import com.earth2me.essentials.storage.MapValueType;
 import com.earth2me.essentials.storage.IStorageObject;
+import com.earth2me.essentials.storage.MapValueType;
 import java.util.LinkedHashMap;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

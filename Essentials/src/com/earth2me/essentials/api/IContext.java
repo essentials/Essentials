@@ -6,7 +6,7 @@ import com.earth2me.essentials.components.jails.IJailsComponent;
 import com.earth2me.essentials.components.kits.IKitsComponent;
 import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.components.users.IUsersComponent;
-import com.earth2me.essentials.components.warps.IWarpsComponent;
+import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.io.File;
 import java.util.logging.Logger;

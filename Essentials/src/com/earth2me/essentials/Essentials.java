@@ -34,10 +34,10 @@ import com.earth2me.essentials.components.settings.SettingsComponent;
 import com.earth2me.essentials.components.settings.economy.IWorthsComponent;
 import com.earth2me.essentials.components.settings.economy.WorthsComponent;
 import com.earth2me.essentials.components.settings.groups.GroupsComponent;
+import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
+import com.earth2me.essentials.components.settings.warps.WarpsComponent;
 import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.components.users.UsersComponent;
-import com.earth2me.essentials.components.warps.IWarpsComponent;
-import com.earth2me.essentials.components.warps.WarpsComponent;
 import com.earth2me.essentials.listeners.*;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.io.File;
@@ -237,7 +237,8 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			context.setGroups(groups);
 			add(groups);
 
-			final IWarpsComponent warps = new WarpsComponent(context);
+			final IWarpsComponent warps = new WarpsComponent(context, this);
+			context.setWarps(warps);
 			add(warps);
 			execTimer.mark("Init(Spawn/Warp)");
 

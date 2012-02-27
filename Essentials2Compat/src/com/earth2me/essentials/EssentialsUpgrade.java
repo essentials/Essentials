@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.components.warps.WarpsComponent;
+import com.earth2me.essentials.components.settings.warps.WarpsComponent;
 import com.earth2me.essentials.components.settings.economy.WorthsComponent;
 import com.earth2me.essentials.storage.ManagedFile;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;

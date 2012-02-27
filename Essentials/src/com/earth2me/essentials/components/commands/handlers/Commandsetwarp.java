@@ -5,7 +5,7 @@ import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.components.commands.WarpNotFoundException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.components.warps.IWarpsComponent;
+import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
 import org.bukkit.Location;
 
 
