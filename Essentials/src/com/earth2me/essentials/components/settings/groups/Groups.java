@@ -14,7 +14,7 @@ public class Groups implements IStorageObject
 {
 	public Groups()
 	{
-		GroupOptions defaultOptions = new GroupOptions();
+		Group defaultOptions = new Group();
 		groups.put("default", defaultOptions);
 	}
 	@Comment(
@@ -23,6 +23,6 @@ public class Groups implements IStorageObject
 		"All group names have to be lower case.",
 		"The groups can be connected to users using the permission essentials.groups.groupname"
 	})
-	@MapValueType(GroupOptions.class)
-	private LinkedHashMap<String, GroupOptions> groups = new LinkedHashMap<String, GroupOptions>();
+	@MapValueType(Group.class)
+	private LinkedHashMap<String, Group> groups = new LinkedHashMap<String, Group>();
 }

@@ -29,18 +29,18 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 		return "settings.groups";
 	}
 
-	public Collection<Entry<String, GroupOptions>> getGroups(final IUser player)
+	public Collection<Entry<String, Group>> getGroups(final IUser player)
 	{
 		acquireReadLock();
 		try
 		{
-			final Map<String, GroupOptions> groups = getData().getGroups();
+			final Map<String, Group> groups = getData().getGroups();
 			if (groups == null || groups.isEmpty())
 			{
 				return Collections.emptyList();
 			}
-			final ArrayList<Entry<String, GroupOptions>> list = new ArrayList<Entry<String, GroupOptions>>();
-			for (Entry<String, GroupOptions> entry : groups.entrySet())
+			final ArrayList<Entry<String, Group>> list = new ArrayList<Entry<String, Group>>();
+			for (Entry<String, Group> entry : groups.entrySet())
 			{
 				if (GroupsPermissions.getPermission(entry.getKey()).isAuthorized(player))
 				{
@@ -61,7 +61,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public double getHealCooldown(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getHealCooldown() != null)
 			{
@@ -74,7 +74,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public double getTeleportCooldown(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getTeleportCooldown() != null)
 			{
@@ -87,7 +87,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public double getTeleportDelay(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getTeleportDelay() != null)
 			{
@@ -100,7 +100,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public String getPrefix(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getPrefix() != null)
 			{
@@ -113,7 +113,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public String getSuffix(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getSuffix() != null)
 			{
@@ -126,7 +126,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public int getHomeLimit(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getHomes() != null)
 			{
@@ -154,7 +154,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 
 	private String getRawChatFormat(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getMessageFormat() != null)
 			{
@@ -177,7 +177,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public boolean isInGroup(IUser player, String groupname)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getKey().equalsIgnoreCase(groupname))
 			{
@@ -190,7 +190,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public String getMainGroup(IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
 			return groupOptions.getKey();
 		}
