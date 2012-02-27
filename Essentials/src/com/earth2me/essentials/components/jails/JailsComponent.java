@@ -1,13 +1,12 @@
 package com.earth2me.essentials.components.jails;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.components.users.IUser;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.settings.Jails;
-import com.earth2me.essentials.storage.StorageComponent;
+import com.earth2me.essentials.components.users.IUser;
 import com.earth2me.essentials.storage.LocationData;
-import java.io.File;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.util.*;
 import java.util.logging.Level;
 import lombok.Cleanup;
