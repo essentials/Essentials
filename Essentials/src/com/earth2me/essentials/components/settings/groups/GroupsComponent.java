@@ -162,10 +162,17 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 				return groupOptions.getValue().getMessageFormat();
 			}
 		}
-		@Cleanup
+
 		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
-		return settings.getData().getChat().getDefaultFormat();
+		try
+		{
+			return settings.getData().getChat().getDefaultFormat();
+		}
+		finally
+		{
+			settings.unlock();
+		}
 	}
 
 	@Override
