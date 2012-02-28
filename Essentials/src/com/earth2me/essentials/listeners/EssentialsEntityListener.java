@@ -3,7 +3,7 @@ package com.earth2me.essentials.listeners;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.List;
 import lombok.Cleanup;
@@ -39,7 +39,7 @@ public class EssentialsEntityListener implements Listener
 			if (eDefend instanceof Player && eAttack instanceof Player)
 			{
 				@Cleanup
-				final IUser attacker = ess.getUser((Player)eAttack);
+				final IUserComponent attacker = ess.getUser((Player)eAttack);
 				attacker.acquireReadLock();
 				attacker.updateActivity(true);
 				final ItemStack itemstack = attacker.getItemInHand();
@@ -61,7 +61,7 @@ public class EssentialsEntityListener implements Listener
 			}
 			if (eDefend instanceof Animals && eAttack instanceof Player)
 			{
-				final IUser player = ess.getUser((Player)eAttack);
+				final IUserComponent player = ess.getUser((Player)eAttack);
 				final ItemStack hand = player.getItemInHand();
 				if (hand != null && hand.getType() == Material.MILK_BUCKET)
 				{
@@ -97,7 +97,7 @@ public class EssentialsEntityListener implements Listener
 		if (event instanceof PlayerDeathEvent)
 		{
 			final PlayerDeathEvent pdevent = (PlayerDeathEvent)event;
-			final IUser user = ess.getUser((Player)pdevent.getEntity());
+			final IUserComponent user = ess.getUser((Player)pdevent.getEntity());
 			@Cleanup
 			final ISettingsComponent settings = ess.getSettings();
 			settings.acquireReadLock();

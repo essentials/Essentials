@@ -4,7 +4,7 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.craftbukkit.SetExpFix;
 import com.earth2me.essentials.perm.NoCommandCostPermissions;
@@ -61,7 +61,7 @@ public class Trade
 		this.ess = ess;
 	}
 
-	public void isAffordableFor(final IUser user) throws ChargeException
+	public void isAffordableFor(final IUserComponent user) throws ChargeException
 	{
 		final double mon = user.getMoney();
 		if (getMoney() != null
@@ -98,12 +98,12 @@ public class Trade
 		}
 	}
 
-	public void pay(final IUser user)
+	public void pay(final IUserComponent user)
 	{
 		pay(user, true);
 	}
 
-	public boolean pay(final IUser user, final boolean dropItems)
+	public boolean pay(final IUserComponent user, final boolean dropItems)
 	{
 		boolean success = true;
 		if (getMoney() != null && getMoney() > 0)
@@ -149,7 +149,7 @@ public class Trade
 		return success;
 	}
 
-	public void charge(final IUser user) throws ChargeException
+	public void charge(final IUserComponent user) throws ChargeException
 	{
 		if (getMoney() != null)
 		{

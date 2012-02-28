@@ -4,8 +4,8 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.components.users.UserData.TimestampType;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.settings.users.TimestampType;
 import org.bukkit.command.CommandSender;
 
 
@@ -20,12 +20,12 @@ public class Commandseen extends EssentialsCommand
 		}
 		try
 		{
-			IUser u = getPlayer(args, 0);
+			IUserComponent u = getPlayer(args, 0);
 			sender.sendMessage(_("seenOnline", u.getDisplayName(), Util.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
 		}
 		catch (NoSuchFieldException e)
 		{
-			IUser u = getContext().getUser(args[0]);
+			IUserComponent u = getContext().getUser(args[0]);
 			if (u == null)
 			{
 				throw new Exception(_("playerNotFound"));

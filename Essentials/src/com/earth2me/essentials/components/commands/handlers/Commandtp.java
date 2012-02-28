@@ -6,7 +6,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class Commandtp extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		switch (args.length)
 		{
@@ -25,7 +25,7 @@ public class Commandtp extends EssentialsCommand
 
 		case 1:
 			@Cleanup
-			final IUser player = getPlayer(args, 0);
+			final IUserComponent player = getPlayer(args, 0);
 			player.acquireReadLock();
 			if (!player.getData().isTeleportEnabled())
 			{
@@ -44,8 +44,8 @@ public class Commandtp extends EssentialsCommand
 				throw new Exception("You need access to /tpohere to teleport other players.");
 			}
 			user.sendMessage(_("teleporting"));
-			final IUser target = getPlayer(args, 0);
-			final IUser toPlayer = getPlayer(args, 1);
+			final IUserComponent target = getPlayer(args, 0);
+			final IUserComponent toPlayer = getPlayer(args, 1);
 			target.getTeleport().now(toPlayer, false, TeleportCause.COMMAND);
 			target.sendMessage(_("teleportAtoB", user.getDisplayName(), toPlayer.getDisplayName()));
 			break;
@@ -61,8 +61,8 @@ public class Commandtp extends EssentialsCommand
 		}
 
 		sender.sendMessage(_("teleporting"));
-		final IUser target = getPlayer(args, 0);
-		final IUser toPlayer = getPlayer(args, 1);
+		final IUserComponent target = getPlayer(args, 0);
+		final IUserComponent toPlayer = getPlayer(args, 1);
 		target.getTeleport().now(toPlayer, false, TeleportCause.COMMAND);
 		target.sendMessage(_("teleportAtoB", Console.NAME, toPlayer.getDisplayName()));
 	}

@@ -7,7 +7,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.SpawnmobPermissions;
 import java.util.Locale;
 import java.util.Random;
@@ -21,7 +21,7 @@ import org.bukkit.entity.*;
 public class Commandspawnmob extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -83,7 +83,7 @@ public class Commandspawnmob extends EssentialsCommand
 		{
 			throw new Exception(_("unableToSpawnMob"));
 		}
-		IUser otherUser = null;
+		IUserComponent otherUser = null;
 		if (args.length >= 3)
 		{
 			otherUser = getPlayer(args, 2);
@@ -197,7 +197,7 @@ public class Commandspawnmob extends EssentialsCommand
 		}
 	}
 
-	private void changeMobData(final CreatureType type, final Entity spawned, final String data, final IUser user) throws Exception
+	private void changeMobData(final CreatureType type, final Entity spawned, final String data, final IUserComponent user) throws Exception
 	{
 		if (type == CreatureType.SLIME || type == CreatureType.MAGMA_CUBE)
 		{

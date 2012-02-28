@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.textreader.ArrayListInput;
 import com.earth2me.essentials.textreader.TextPager;
 import java.text.DateFormat;
@@ -105,7 +105,7 @@ public class Commandbalancetop extends EssentialsCommand
 					final Map<String, Double> balances = new HashMap<String, Double>();
 					for (String u : getContext().getUsers().getAllUniqueUsers())
 					{
-						final IUser user = getContext().getUsers().getUser(u);
+						final IUserComponent user = getContext().getUsers().getUser(u);
 						if (user != null)
 						{
 							balances.put(user.getDisplayName(), user.getMoney());

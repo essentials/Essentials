@@ -1,37 +1,52 @@
-package com.earth2me.essentials.components.users;
+package com.earth2me.essentials.components.settings.users;
 
 import com.earth2me.essentials.Console;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.*;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IGroupsComponent;
+import com.earth2me.essentials.api.IPermissions;
+import com.earth2me.essentials.api.ISettingsComponent;
+import com.earth2me.essentials.components.Component;
+import com.earth2me.essentials.components.economy.ChargeException;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.register.payment.Method;
 import com.earth2me.essentials.register.payment.PaymentMethods;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Map;
+import com.earth2me.essentials.storage.LocationData;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Cleanup;
+import lombok.Delegate;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.ServerOperator;
 
 
-public class User extends UserBase implements IUser
+@SuppressWarnings("deprecation")
+public class UserComponent extends Component implements IUserComponent
 {
-	private CommandSender replyTo = null;
+	@Delegate(types =
+	{
+		IStatelessPlayer.class, Player.class, LivingEntity.class, CommandSender.class, ServerOperator.class, ConfigurationSerializable.class
+	})
 	@Getter
-	private transient IUser teleportRequester;
+	@Setter
+	private transient IStatelessPlayer base;
+	@Getter
+	@Setter
+	private transient CommandSender replyTo = null;
+	@Getter
+	private transient IUserComponent teleportRequester;
 	@Getter
 	private transient boolean teleportRequestHere;
 	@Getter
@@ -44,40 +59,393 @@ public class User extends UserBase implements IUser
 	private transient long lastActivity = System.currentTimeMillis();
 	@Getter
 	@Setter
-	private boolean hidden = false;
+	private transient boolean hidden;
+	private transient String lowerName;
+	@Getter
 	private transient Location afkPosition;
-	private static final Logger logger = Bukkit.getLogger();
-	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
+	private transient AtomicBoolean gotMailInfo = new AtomicBoolean(false);
 
-	public User(final Player base, final IContext ess)
+	public UserComponent(final OfflinePlayer base, final IContext context)
 	{
-		super(base, ess);
-		teleport = new Teleport(this, ess);
+		this(new StatelessPlayer(base), context);
 	}
 
-	public User(final OfflinePlayer offlinePlayer, final IContext ess)
+	public UserComponent(final IStatelessPlayer base, final IContext context)
 	{
-		super(offlinePlayer, ess);
-		teleport = new Teleport(this, ess);
+		super(context);
+		getName();
+
+		this.base = base;
+		this.teleport = new Teleport(this, context);
 	}
 
-	public void example()
+	protected final void acquireReadLock()
 	{
-		// Cleanup will call close at the end of the function
-		@Cleanup
-		final User user = this;
+		getContext().getUsers().acquireReadLock();
+	}
 
-		// read lock allows to read data from the user
-		user.acquireReadLock();
-		final double money = user.getData().getMoney();
+	protected final void acquireWriteLock()
+	{
+		getContext().getUsers().acquireWriteLock();
+	}
 
-		// write lock allows only one thread to modify the data
-		user.acquireWriteLock();
-		user.getData().setMoney(10 + money);
+	private String getLowerName()
+	{
+		if (lowerName == null)
+		{
+			lowerName = getName().toLowerCase(Locale.ENGLISH).intern();
+		}
+		return lowerName;
+	}
+
+	protected final UserSurrogate getData()
+	{
+		return getContext().getUsers().getData().getUsers().get(getLowerName());
+	}
+
+	protected final void unlock()
+	{
+		getContext().getUsers().unlock();
 	}
 
 	@Override
-	public void checkCooldown(final UserData.TimestampType cooldownType, final double cooldown, final boolean set, final IPermissions bypassPermission) throws CooldownException
+	public LocationData getLastLocation()
+	{
+		acquireReadLock();
+		try
+		{
+			return getData().getLastLocation();
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public void setLastLocation(final LocationData lastLocation)
+	{
+		acquireWriteLock();
+		try
+		{
+			getData().setLastLocation(lastLocation);
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public long getTimestamp(final TimestampType name)
+	{
+		acquireReadLock();
+		try
+		{
+			if (getData().getTimestamps() == null)
+			{
+				return 0;
+			}
+			Long ts = getData().getTimestamps().get(name);
+			return ts == null ? 0 : ts;
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@SuppressWarnings("MapReplaceableByEnumMap")
+	@Override
+	public void setTimestamp(final TimestampType name, final long value)
+	{
+		acquireWriteLock();
+		try
+		{
+			if (getData().getTimestamps() == null)
+			{
+				// TODO Replace this with an EnumSet.
+				getData().setTimestamps(new HashMap<TimestampType, Long>());
+			}
+			getData().getTimestamps().put(name, value);
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public void setMoney(final double value)
+	{
+		if (PaymentMethods.hasMethod())
+		{
+			final Method method = PaymentMethods.getMethod();
+			if (method.hasAccount(this.getName()))
+			{
+				final Method.MethodAccount account = PaymentMethods.getMethod().getAccount(this.getName());
+				account.set(value);
+			}
+		}
+
+		acquireWriteLock();
+		try
+		{
+			final ISettingsComponent settings = getContext().getSettings();
+			settings.acquireReadLock();
+			if (Math.abs(value) > settings.getData().getEconomy().getMaxMoney())
+			{
+				getData().setMoney(value < 0 ? -settings.getData().getEconomy().getMaxMoney() : settings.getData().getEconomy().getMaxMoney());
+			}
+			else
+			{
+				getData().setMoney(value);
+			}
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public void setHome(String name, Location loc)
+	{
+		acquireWriteLock();
+		try
+		{
+			Map<String, com.earth2me.essentials.storage.LocationData> homes = getData().getHomes();
+			if (homes == null)
+			{
+				homes = new HashMap<String, com.earth2me.essentials.storage.LocationData>();
+				getData().setHomes(homes);
+			}
+			homes.put(Util.sanitizeKey(name), new com.earth2me.essentials.storage.LocationData(loc));
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public boolean toggleAfk()
+	{
+		boolean ret;
+		acquireWriteLock();
+		try
+		{
+			getData().setAfk(ret = !getData().isAfk());
+		}
+		finally
+		{
+			unlock();
+		}
+
+
+		setSleepingIgnored(Permissions.SLEEPINGIGNORED.isAuthorized(this) ? true : ret);
+		return ret;
+	}
+
+	@Override
+	public boolean toggleGodMode()
+	{
+		acquireWriteLock();
+		try
+		{
+			boolean ret = !getData().isGodmode();
+			getData().setGodmode(ret);
+			return ret;
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public boolean toggleMuted()
+	{
+		acquireWriteLock();
+		try
+		{
+			boolean ret = !getData().isMuted();
+			getData().setMuted(ret);
+			return ret;
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public boolean toggleSocialSpy()
+	{
+		acquireWriteLock();
+		try
+		{
+			boolean ret = !getData().isSocialspy();
+			getData().setSocialspy(ret);
+			return ret;
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public boolean toggleTeleportEnabled()
+	{
+		acquireWriteLock();
+		try
+		{
+			boolean ret = !getData().isTeleportEnabled();
+			getData().setTeleportEnabled(ret);
+			return ret;
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public boolean isIgnoringPlayer(final String name)
+	{
+		acquireReadLock();
+		try
+		{
+			return getData().getIgnore() == null ? false : getData().getIgnore().contains(name.toLowerCase(Locale.ENGLISH));
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public void setIgnoredPlayer(final String name, final boolean set)
+	{
+		acquireWriteLock();
+		try
+		{
+			if (getData().getIgnore() == null)
+			{
+				getData().setIgnore(new HashSet<String>());
+			}
+			if (set)
+			{
+				getData().getIgnore().add(name.toLowerCase(Locale.ENGLISH));
+			}
+			else
+			{
+				getData().getIgnore().remove(name.toLowerCase(Locale.ENGLISH));
+			}
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public void addMail(String string)
+	{
+		acquireWriteLock();
+		try
+		{
+			if (getData().getMails() == null)
+			{
+				getData().setMails(new ArrayList<String>());
+			}
+			getData().getMails().add(string);
+		}
+		finally
+		{
+			unlock();
+		}
+
+		gotMailInfo.set(false);
+	}
+
+	@Override
+	public List<String> getMails()
+	{
+		acquireReadLock();
+		try
+		{
+			if (getData().getMails() == null)
+			{
+				return Collections.emptyList();
+			}
+			else
+			{
+				return new ArrayList<String>(getData().getMails());
+			}
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public Location getHome(Location loc)
+	{
+
+		acquireReadLock();
+		try
+		{
+			if (getData().getHomes() == null)
+			{
+				return null;
+			}
+			ArrayList<Location> worldHomes = new ArrayList<Location>();
+			for (LocationData location : getData().getHomes().values())
+			{
+				if (location.getWorldName().equals(loc.getWorld().getName()))
+				{
+					try
+					{
+						worldHomes.add(location.getBukkitLocation());
+					}
+					catch (LocationData.WorldNotLoadedException ex)
+					{
+						continue;
+					}
+				}
+			}
+			if (worldHomes.isEmpty())
+			{
+				return null;
+			}
+			if (worldHomes.size() == 1)
+			{
+				return worldHomes.get(0);
+			}
+			double distance = Double.MAX_VALUE;
+			Location target = null;
+			for (Location location : worldHomes)
+			{
+				final double d = loc.distanceSquared(location);
+				if (d < distance)
+				{
+					target = location;
+					distance = d;
+				}
+			}
+			return target;
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	@Override
+	public void checkCooldown(final TimestampType cooldownType, final double cooldown, final boolean set, final IPermissions bypassPermission) throws CooldownException
 	{
 		final Calendar now = new GregorianCalendar();
 		if (getTimestamp(cooldownType) > 0)
@@ -128,7 +496,7 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void payUser(final IUser reciever, final double value) throws Exception
+	public void payUser(final IUserComponent receiver, final double value) throws Exception
 	{
 		if (value == 0)
 		{
@@ -137,9 +505,9 @@ public class User extends UserBase implements IUser
 		if (canAfford(value))
 		{
 			setMoney(getMoney() - value);
-			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("moneySentTo", Util.formatCurrency(value, getContext()), reciever.getDisplayName()));
-			reciever.sendMessage(_("moneyRecievedFrom", Util.formatCurrency(value, getContext()), getDisplayName()));
+			receiver.setMoney(receiver.getMoney() + value);
+			sendMessage(_("moneySentTo", Util.formatCurrency(value, getContext()), receiver.getDisplayName()));
+			receiver.sendMessage(_("moneyRecievedFrom", Util.formatCurrency(value, getContext()), getDisplayName()));
 		}
 		else
 		{
@@ -168,17 +536,20 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public boolean canAfford(final double cost)
 	{
 		final double mon = getMoney();
 		return mon >= cost || Permissions.ECO_LOAN.isAuthorized(this);
 	}
 
+	@Override
 	public void setHome()
 	{
 		setHome("home", getLocation());
 	}
 
+	@Override
 	public void setHome(final String name)
 	{
 		setHome(name, getLocation());
@@ -198,13 +569,15 @@ public class User extends UserBase implements IUser
 		}
 	}
 
-	public void requestTeleport(final User player, final boolean here)
+	@Override
+	public void requestTeleport(final UserComponent player, final boolean here)
 	{
 		teleportRequestTime = System.currentTimeMillis();
 		teleportRequester = player;
 		teleportRequestHere = here;
 	}
 
+	@Override
 	public String getNick(boolean addprefixsuffix)
 	{
 		acquireReadLock();
@@ -248,6 +621,7 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public void setDisplayNick()
 	{
 		String name = getNick(true);
@@ -266,14 +640,8 @@ public class User extends UserBase implements IUser
 		}
 		catch (IllegalArgumentException e)
 		{
-			logger.log(Level.INFO, "Playerlist for {0} was not updated. Use a shorter displayname prefix.", name);
+			getContext().getLogger().log(Level.INFO, "Playerlist for {0} was not updated. Use a shorter displayname prefix.", name);
 		}
-	}
-
-	@Override
-	public String getDisplayName()
-	{
-		return super.getDisplayName() == null ? super.getName() : super.getDisplayName();
 	}
 
 	@Override
@@ -282,7 +650,7 @@ public class User extends UserBase implements IUser
 		@Cleanup
 		final ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
-		if (isOnlineUser() && settings.getData().getChat().getChangeDisplayname())
+		if (isOnline() && settings.getData().getChat().getChangeDisplayname())
 		{
 			setDisplayNick();
 		}
@@ -307,31 +675,30 @@ public class User extends UserBase implements IUser
 			{
 			}
 		}
-		return super.getMoney();
+
+		acquireReadLock();
+		try
+		{
+			Double money = getData().getMoney();
+			final ISettingsComponent settings = getContext().getSettings();
+			settings.acquireReadLock();
+			if (money == null)
+			{
+				money = settings.getData().getEconomy().getStartingBalance();
+			}
+			if (Math.abs(money) > settings.getData().getEconomy().getMaxMoney())
+			{
+				money = money < 0 ? -settings.getData().getEconomy().getMaxMoney() : settings.getData().getEconomy().getMaxMoney();
+			}
+			return money;
+		}
+		finally
+		{
+			unlock();
+		}
 	}
 
 	@Override
-	public void setMoney(final double value)
-	{
-		if (PaymentMethods.hasMethod())
-		{
-			try
-			{
-				final Method method = PaymentMethods.getMethod();
-				if (!method.hasAccount(this.getName()))
-				{
-					throw new Exception();
-				}
-				final Method.MethodAccount account = PaymentMethods.getMethod().getAccount(this.getName());
-				account.set(value);
-			}
-			catch (Throwable ex)
-			{
-			}
-		}
-		super.setMoney(value);
-	}
-
 	public void setAfk(final boolean set)
 	{
 		acquireWriteLock();
@@ -350,14 +717,6 @@ public class User extends UserBase implements IUser
 		}
 	}
 
-	@Override
-	public boolean toggleAfk()
-	{
-		final boolean now = super.toggleAfk();
-		this.setSleepingIgnored(Permissions.SLEEPINGIGNORED.isAuthorized(this) ? true : now);
-		return now;
-	}
-
 	//Returns true if status expired during this check
 	@Override
 	public boolean checkJailTimeout(final long currentTime)
@@ -365,11 +724,11 @@ public class User extends UserBase implements IUser
 		acquireReadLock();
 		try
 		{
-			if (getTimestamp(UserData.TimestampType.JAIL) > 0 && getTimestamp(UserData.TimestampType.JAIL) < currentTime && getData().isJailed())
+			if (getTimestamp(TimestampType.JAIL) > 0 && getTimestamp(TimestampType.JAIL) < currentTime && getData().isJailed())
 			{
 				acquireWriteLock();
 
-				setTimestamp(UserData.TimestampType.JAIL, 0);
+				setTimestamp(TimestampType.JAIL, 0);
 				getData().setJailed(false);
 				sendMessage(_("haveBeenReleased"));
 				getData().setJail(null);
@@ -398,10 +757,10 @@ public class User extends UserBase implements IUser
 		acquireReadLock();
 		try
 		{
-			if (getTimestamp(UserData.TimestampType.MUTE) > 0 && getTimestamp(UserData.TimestampType.MUTE) < currentTime && getData().isMuted())
+			if (getTimestamp(TimestampType.MUTE) > 0 && getTimestamp(TimestampType.MUTE) < currentTime && getData().isMuted())
 			{
 				acquireWriteLock();
-				setTimestamp(UserData.TimestampType.MUTE, 0);
+				setTimestamp(TimestampType.MUTE, 0);
 				sendMessage(_("canTalkAgain"));
 				getData().setMuted(false);
 				return true;
@@ -478,7 +837,7 @@ public class User extends UserBase implements IUser
 
 			for (Player player : getContext().getServer().getOnlinePlayers())
 			{
-				final IUser user = getContext().getUser(player);
+				final IUserComponent user = getContext().getUser(player);
 				if (Permissions.KICK_NOTIFY.isAuthorized(user))
 				{
 					player.sendMessage(_("playerKicked", Console.NAME, getName(), kickReason));
@@ -505,19 +864,13 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public Location getAfkPosition()
-	{
-		return afkPosition;
-	}
-
-	@Override
 	public boolean toggleGodModeEnabled()
 	{
 		if (!isGodModeEnabled())
 		{
 			setFoodLevel(20);
 		}
-		return super.toggleGodmode();
+		return toggleGodMode();
 	}
 
 	@Override
@@ -567,49 +920,6 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public List<String> getHomes()
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public int compareTo(final IUser t)
-	{
-		return Util.stripColor(this.getDisplayName()).compareTo(Util.stripColor(t.getDisplayName()));
-	}
-
-	@Override
-	public void requestTeleport(IUser user, boolean b)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void setReplyTo(CommandSender user)
-	{
-		replyTo = user;
-	}
-
-	@Override
-	public CommandSender getReplyTo()
-	{
-		return replyTo;
-	}
-
-	@Override
-	public boolean gotMailInfo()
-	{
-		return gotMailInfo.getAndSet(true);
-	}
-
-	@Override
-	public void addMail(String mail)
-	{
-		super.addMail(mail);
-		gotMailInfo.set(false);
-	}
-
-	@Override
 	public void giveItems(ItemStack itemStack, Boolean canSpew) throws ChargeException
 	{
 		if (giveItemStack(itemStack, canSpew))
@@ -637,6 +947,34 @@ public class User extends UserBase implements IUser
 		updateInventory();
 	}
 
+	@Override
+	public List<String> getHomes()
+	{
+		// TODO !Implement this.
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean gotMailInfo()
+	{
+		// TODO !Implement this.
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void close()
+	{
+		base = null;
+
+		super.close();
+	}
+
+	@Override
+	public int compareTo(final IUserComponent t)
+	{
+		return Util.stripColor(this.getDisplayName()).compareTo(Util.stripColor(t.getDisplayName()));
+	}
+
 	private boolean giveItemStack(ItemStack itemStack, Boolean canSpew) throws ChargeException
 	{
 		boolean spew = false;
@@ -649,11 +987,17 @@ public class User extends UserBase implements IUser
 		final Map<Integer, ItemStack> overfilled;
 		if (Permissions.OVERSIZEDSTACKS.isAuthorized(this))
 		{
-			@Cleanup
 			final ISettingsComponent settings = getContext().getSettings();
+			int oversizedStackSize;
 			settings.acquireReadLock();
-			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
-
+			try
+			{
+				oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
+			}
+			finally
+			{
+				settings.unlock();
+			}
 			overfilled = InventoryWorkaround.addItem(getInventory(), true, oversizedStackSize, itemStack);
 		}
 		else
@@ -668,55 +1012,13 @@ public class User extends UserBase implements IUser
 				spew = true;
 			}
 		}
-		else {
-			if (!overfilled.isEmpty()) {
+		else
+		{
+			if (!overfilled.isEmpty())
+			{
 				throw new ChargeException("Inventory full");
 			}
 		}
 		return spew;
-	}
-
-	// TODO Figure out why these methods weren't implemented.
-
-	@Override
-	public boolean isHidden()
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public ITeleport getTeleport()
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void setLastOnlineActivity(long currentTime)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public long getLastOnlineActivity()
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public boolean isTeleportRequestHere()
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public IUser getTeleportRequester()
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public long getTeleportRequestTime()
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

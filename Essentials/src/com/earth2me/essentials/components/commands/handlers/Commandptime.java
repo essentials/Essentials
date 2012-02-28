@@ -4,7 +4,7 @@ import com.earth2me.essentials.DescParseTickFormat;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.*;
 import org.bukkit.World;
@@ -33,7 +33,7 @@ public class Commandptime extends EssentialsCommand
 		{
 			userSelector = args[1];
 		}
-		Set<IUser> users = getUsers(sender, userSelector);
+		Set<IUserComponent> users = getUsers(sender, userSelector);
 
 		// If no arguments we are reading the time
 		if (args.length == 0)
@@ -42,7 +42,7 @@ public class Commandptime extends EssentialsCommand
 			return;
 		}
 
-		IUser user = sender instanceof Player ? getContext().getUser((Player)sender) : null;
+		IUserComponent user = sender instanceof Player ? getContext().getUser((Player)sender) : null;
 		if ((!users.contains(user) || users.size() > 1) && user != null && !Permissions.PTIME_OTHERS.isAuthorized(user))
 		{
 			user.sendMessage(_("pTimeOthersPermission"));
@@ -86,14 +86,14 @@ public class Commandptime extends EssentialsCommand
 	/**
 	 * Used to get the time and inform
 	 */
-	private void getUsersTime(final CommandSender sender, final Collection<IUser> users)
+	private void getUsersTime(final CommandSender sender, final Collection<IUserComponent> users)
 	{
 		if (users.size() > 1)
 		{
 			sender.sendMessage(_("pTimePlayers"));
 		}
 
-		for (IUser user : users)
+		for (IUserComponent user : users)
 		{
 			if (user.getPlayerTimeOffset() == 0)
 			{
@@ -117,13 +117,13 @@ public class Commandptime extends EssentialsCommand
 	/**
 	 * Used to set the time and inform of the change
 	 */
-	private void setUsersTime(final CommandSender sender, final Collection<IUser> users, final Long ticks, Boolean relative)
+	private void setUsersTime(final CommandSender sender, final Collection<IUserComponent> users, final Long ticks, Boolean relative)
 	{
 		// Update the time
 		if (ticks == null)
 		{
 			// Reset
-			for (IUser user : users)
+			for (IUserComponent user : users)
 			{
 				user.resetPlayerTime();
 			}
@@ -131,7 +131,7 @@ public class Commandptime extends EssentialsCommand
 		else
 		{
 			// Set
-			for (IUser user : users)
+			for (IUserComponent user : users)
 			{
 				final World world = user.getWorld();
 				long time = user.getPlayerTime();
@@ -146,7 +146,7 @@ public class Commandptime extends EssentialsCommand
 		}
 
 		final StringBuilder msg = new StringBuilder();
-		for (IUser user : users)
+		for (IUserComponent user : users)
 		{
 			if (msg.length() > 0)
 			{
@@ -178,13 +178,13 @@ public class Commandptime extends EssentialsCommand
 	/**
 	 * Used to parse an argument of the type "users(s) selector"
 	 */
-	private Set<IUser> getUsers(final CommandSender sender, final String selector) throws Exception
+	private Set<IUserComponent> getUsers(final CommandSender sender, final String selector) throws Exception
 	{
-		final Set<IUser> users = new TreeSet<IUser>();
+		final Set<IUserComponent> users = new TreeSet<IUserComponent>();
 		// If there is no selector we want the sender itself. Or all users if sender isn't a user.
 		if (selector == null)
 		{
-			final IUser user = sender instanceof Player ? getContext().getUser((Player)sender) : null;
+			final IUserComponent user = sender instanceof Player ? getContext().getUser((Player)sender) : null;
 			if (user == null)
 			{
 				for (Player player : getServer().getOnlinePlayers())
@@ -200,7 +200,7 @@ public class Commandptime extends EssentialsCommand
 		}
 
 		// Try to find the user with name = selector
-		IUser user = null;
+		IUserComponent user = null;
 		final List<Player> matchedPlayers = getServer().matchPlayer(selector);
 		if (!matchedPlayers.isEmpty())
 		{

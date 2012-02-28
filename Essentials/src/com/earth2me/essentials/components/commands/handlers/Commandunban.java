@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 
@@ -21,7 +21,7 @@ public class Commandunban extends EssentialsCommand
 		try
 		{
 			@Cleanup
-			final IUser player = getPlayer(args, 0, true);
+			final IUserComponent player = getPlayer(args, 0, true);
 			player.acquireWriteLock();
 			player.getData().setBan(null);
 			player.setBanned(false);

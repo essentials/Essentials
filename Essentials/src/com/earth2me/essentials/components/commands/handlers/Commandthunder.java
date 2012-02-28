@@ -3,14 +3,14 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import org.bukkit.World;
 
 
 public class Commandthunder extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{

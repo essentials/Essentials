@@ -4,7 +4,7 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import lombok.Cleanup;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -12,10 +12,10 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class Commandtphere extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		@Cleanup
-		final IUser player = getPlayer(args, 0);
+		final IUserComponent player = getPlayer(args, 0);
 		player.acquireReadLock();
 		if (!player.getData().isTeleportEnabled())
 		{

@@ -3,7 +3,7 @@ package com.earth2me.essentials.textreader;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.InvalidNameException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.io.*;
 import java.lang.ref.SoftReference;
 import java.util.*;
@@ -29,7 +29,7 @@ public class TextInput implements IText
 		{
 			try
 			{
-				final IUser user = context.getUser((Player)sender);
+				final IUserComponent user = context.getUser((Player)sender);
 				file = new File(context.getDataFolder(), filename + "_" + Util.sanitizeFileName(user.getName()) + ".txt");
 				if (!file.exists())
 				{

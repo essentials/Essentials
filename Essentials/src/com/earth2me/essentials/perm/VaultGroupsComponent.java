@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.text.MessageFormat;
 import lombok.Cleanup;
 import net.milkbowl.vault.chat.Chat;
@@ -20,7 +20,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 	}
 
 	@Override
-	public double getHealCooldown(IUser player)
+	public double getHealCooldown(IUserComponent player)
 	{
 		final RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		final Chat chat = rsp.getProvider();
@@ -28,7 +28,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 	}
 
 	@Override
-	public double getTeleportCooldown(IUser player)
+	public double getTeleportCooldown(IUserComponent player)
 	{
 		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
@@ -36,7 +36,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 	}
 
 	@Override
-	public double getTeleportDelay(IUser player)
+	public double getTeleportDelay(IUserComponent player)
 	{
 		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
@@ -44,7 +44,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 	}
 
 	@Override
-	public String getPrefix(IUser player)
+	public String getPrefix(IUserComponent player)
 	{
 		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
@@ -52,7 +52,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 	}
 
 	@Override
-	public String getSuffix(IUser player)
+	public String getSuffix(IUserComponent player)
 	{
 		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
@@ -60,7 +60,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 	}
 
 	@Override
-	public int getHomeLimit(IUser player)
+	public int getHomeLimit(IUserComponent player)
 	{
 		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
@@ -68,7 +68,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 	}
 
 	@Override
-	public MessageFormat getChatFormat(final IUser player)
+	public MessageFormat getChatFormat(final IUserComponent player)
 	{
 		String format = getRawChatFormat(player);
 		format = Util.replaceColor(format);
@@ -82,7 +82,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 		return mFormat;
 	}
 
-	private String getRawChatFormat(final IUser player)
+	private String getRawChatFormat(final IUserComponent player)
 	{
 		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
@@ -99,7 +99,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 	}
 
 	@Override
-	public String getMainGroup(IUser player)
+	public String getMainGroup(IUserComponent player)
 	{
 		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();
@@ -107,7 +107,7 @@ public final class VaultGroupsComponent extends Component implements IGroupsComp
 	}
 
 	@Override
-	public boolean isInGroup(IUser player, String groupname)
+	public boolean isInGroup(IUserComponent player, String groupname)
 	{
 		RegisteredServiceProvider<Chat> rsp = getContext().getServer().getServicesManager().getRegistration(Chat.class);
 		Chat chat = rsp.getProvider();

@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.text.MessageFormat;
 import lombok.Cleanup;
 import org.anjocaido.groupmanager.GroupManager;
@@ -25,7 +25,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 	}
 
 	@Override
-	public double getHealCooldown(IUser player)
+	public double getHealCooldown(IUserComponent player)
 	{
 		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
 		if (handler == null)
@@ -36,7 +36,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 	}
 
 	@Override
-	public double getTeleportCooldown(IUser player)
+	public double getTeleportCooldown(IUserComponent player)
 	{
 		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
 		if (handler == null)
@@ -47,7 +47,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 	}
 
 	@Override
-	public double getTeleportDelay(IUser player)
+	public double getTeleportDelay(IUserComponent player)
 	{
 		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
 		if (handler == null)
@@ -58,7 +58,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 	}
 
 	@Override
-	public String getPrefix(IUser player)
+	public String getPrefix(IUserComponent player)
 	{
 		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
 		if (handler == null)
@@ -69,7 +69,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 	}
 
 	@Override
-	public String getSuffix(IUser player)
+	public String getSuffix(IUserComponent player)
 	{
 		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
 		if (handler == null)
@@ -80,7 +80,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 	}
 
 	@Override
-	public int getHomeLimit(IUser player)
+	public int getHomeLimit(IUserComponent player)
 	{
 		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
 		if (handler == null)
@@ -91,7 +91,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 	}
 
 	@Override
-	public MessageFormat getChatFormat(final IUser player)
+	public MessageFormat getChatFormat(final IUserComponent player)
 	{
 		String format = getRawChatFormat(player);
 		format = Util.replaceColor(format);
@@ -105,7 +105,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 		return mFormat;
 	}
 
-	private String getRawChatFormat(final IUser player)
+	private String getRawChatFormat(final IUserComponent player)
 	{
 		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
 		if (handler != null)
@@ -124,7 +124,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 	}
 
 	@Override
-	public String getMainGroup(IUser player)
+	public String getMainGroup(IUserComponent player)
 	{
 		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
 		if (handler == null)
@@ -135,7 +135,7 @@ public final class GmGroupsComponent extends Component implements IGroupsCompone
 	}
 
 	@Override
-	public boolean isInGroup(IUser player, String groupname)
+	public boolean isInGroup(IUserComponent player, String groupname)
 	{
 		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
 		if (handler == null)

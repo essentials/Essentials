@@ -5,9 +5,9 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.components.users.Ban;
+import com.earth2me.essentials.components.settings.users.Ban;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class Commandtempban extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final IUser user = getPlayer(args, 0, true);
+		final IUserComponent user = getPlayer(args, 0, true);
 		if (user.getBase() instanceof OfflinePlayer)
 		{
 			if (Permissions.TEMPBAN_OFFLINE.isAuthorized(sender))
@@ -53,7 +53,7 @@ public class Commandtempban extends EssentialsCommand
 
 		for (Player onlinePlayer : getServer().getOnlinePlayers())
 		{
-			final IUser player = getContext().getUser(onlinePlayer);
+			final IUserComponent player = getContext().getUser(onlinePlayer);
 			if (Permissions.BAN_NOTIFY.isAuthorized(player))
 			{
 				onlinePlayer.sendMessage(_("playerBanned", senderName, user.getName(), banReason));

@@ -5,7 +5,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import org.bukkit.Location;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class Commandtppos extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 3)
 		{

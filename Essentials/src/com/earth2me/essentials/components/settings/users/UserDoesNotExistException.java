@@ -1,4 +1,4 @@
-package com.earth2me.essentials.components.users;
+package com.earth2me.essentials.components.settings.users;
 
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 

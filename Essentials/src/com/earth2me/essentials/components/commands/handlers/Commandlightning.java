@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LightningStrike;
@@ -16,7 +16,7 @@ public class Commandlightning extends EssentialsCommand
 	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 
-		IUser user = null;
+		IUserComponent user = null;
 		if (sender instanceof Player)
 		{
 			user = getContext().getUser(((Player)sender));

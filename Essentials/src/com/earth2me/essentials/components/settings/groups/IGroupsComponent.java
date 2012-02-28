@@ -2,28 +2,28 @@ package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.settings.groups.Groups;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.storage.IStorageObjectHolder;
 import java.text.MessageFormat;
 
 
 public interface IGroupsComponent extends IComponent, IStorageObjectHolder<Groups>
 {
-	String getMainGroup(IUser player);
+	String getMainGroup(IUserComponent player);
 
-	boolean isInGroup(IUser player, String groupname);
+	boolean isInGroup(IUserComponent player, String groupname);
 
-	double getHealCooldown(IUser player);
+	double getHealCooldown(IUserComponent player);
 
-	double getTeleportCooldown(IUser player);
+	double getTeleportCooldown(IUserComponent player);
 
-	double getTeleportDelay(IUser player);
+	double getTeleportDelay(IUserComponent player);
 
-	String getPrefix(IUser player);
+	String getPrefix(IUserComponent player);
 
-	String getSuffix(IUser player);
+	String getSuffix(IUserComponent player);
 
-	int getHomeLimit(IUser player);
+	int getHomeLimit(IUserComponent player);
 
-	MessageFormat getChatFormat(IUser player);
+	MessageFormat getChatFormat(IUserComponent player);
 }

@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.*;
 import org.bukkit.command.CommandSender;
@@ -54,19 +54,19 @@ public class Commandlist extends EssentialsCommand
 
 		if (sortListByGroups)
 		{
-			Map<String, List<IUser>> sort = new HashMap<String, List<IUser>>();
+			Map<String, List<IUserComponent>> sort = new HashMap<String, List<IUserComponent>>();
 			for (Player OnlinePlayer : getServer().getOnlinePlayers())
 			{
-				final IUser player = getContext().getUser(OnlinePlayer);
+				final IUserComponent player = getContext().getUser(OnlinePlayer);
 				if (player.isHidden() && !showhidden)
 				{
 					continue;
 				}
 				final String group = getContext().getGroups().getMainGroup(player);
-				List<IUser> list = sort.get(group);
+				List<IUserComponent> list = sort.get(group);
 				if (list == null)
 				{
-					list = new ArrayList<IUser>();
+					list = new ArrayList<IUserComponent>();
 					sort.put(group, list);
 				}
 				list.add(player);
@@ -77,10 +77,10 @@ public class Commandlist extends EssentialsCommand
 			{
 				final StringBuilder groupString = new StringBuilder();
 				groupString.append(group).append(": ");
-				final List<IUser> users = sort.get(group);
+				final List<IUserComponent> users = sort.get(group);
 				Collections.sort(users);
 				boolean first = true;
-				for (IUser user : users)
+				for (IUserComponent user : users)
 				{
 					if (!first)
 					{
@@ -114,10 +114,10 @@ public class Commandlist extends EssentialsCommand
 		}
 		else
 		{
-			final List<IUser> users = new ArrayList<IUser>();
+			final List<IUserComponent> users = new ArrayList<IUserComponent>();
 			for (Player OnlinePlayer : getServer().getOnlinePlayers())
 			{
-				final IUser player = getContext().getUser(OnlinePlayer);
+				final IUserComponent player = getContext().getUser(OnlinePlayer);
 				if (player.isHidden() && !showhidden)
 				{
 					continue;
@@ -129,7 +129,7 @@ public class Commandlist extends EssentialsCommand
 			final StringBuilder onlineUsers = new StringBuilder();
 			onlineUsers.append(_("connectedPlayers"));
 			boolean first = true;
-			for (IUser user : users)
+			for (IUserComponent user : users)
 			{
 				if (!first)
 				{

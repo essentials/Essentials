@@ -3,7 +3,7 @@ package com.earth2me.essentials.signs;
 import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.KitPermissions;
 import com.earth2me.essentials.components.settings.Kit;
 import java.util.Locale;
@@ -17,7 +17,7 @@ public class SignKit extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException
+	protected boolean onSignCreate(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException
 	{
 		validateTrade(sign, 3, ess);
 
@@ -48,7 +48,7 @@ public class SignKit extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
+	protected boolean onSignInteract(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
 		final String group = sign.getLine(2);

@@ -4,7 +4,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.IComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.AbstractSuperpermsPermission;
 import java.util.List;
 import java.util.logging.Logger;
@@ -115,12 +115,12 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		this.permission = "essentials." + commandName;
 	}
 
-	protected IUser getPlayer(final String[] args, final int pos) throws NoSuchFieldException, NotEnoughArgumentsException
+	protected IUserComponent getPlayer(final String[] args, final int pos) throws NoSuchFieldException, NotEnoughArgumentsException
 	{
 		return getPlayer(args, pos, false);
 	}
 
-	protected IUser getPlayer(final String[] args, final int pos, final boolean getOffline) throws NoSuchFieldException, NotEnoughArgumentsException
+	protected IUserComponent getPlayer(final String[] args, final int pos, final boolean getOffline) throws NoSuchFieldException, NotEnoughArgumentsException
 	{
 		if (args.length <= pos)
 		{
@@ -130,7 +130,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		{
 			throw new NoSuchFieldException(_("playerNotFound"));
 		}
-		final IUser user = getContext().getUser(args[pos]);
+		final IUserComponent user = getContext().getUser(args[pos]);
 		if (user != null)
 		{
 			if (!getOffline && (!user.isOnline() || user.isHidden()))
@@ -145,13 +145,13 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		{
 			for (Player player : matches)
 			{
-				final IUser userMatch = getContext().getUser(player);
+				final IUserComponent userMatch = getContext().getUser(player);
 				if (userMatch.getDisplayName().startsWith(args[pos]) && (getOffline || !userMatch.isHidden()))
 				{
 					return userMatch;
 				}
 			}
-			final IUser userMatch = getContext().getUser(matches.get(0));
+			final IUserComponent userMatch = getContext().getUser(matches.get(0));
 			if (getOffline || !userMatch.isHidden())
 			{
 				return userMatch;
@@ -161,7 +161,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	}
 
 	@Override
-	public final void run(final IUser user, final Command cmd, final String commandLabel, final String[] args) throws Exception
+	public final void run(final IUserComponent user, final Command cmd, final String commandLabel, final String[] args) throws Exception
 	{
 		final Trade charge = new Trade(getCommandName(), getContext());
 		charge.isAffordableFor(user);
@@ -169,7 +169,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		charge.charge(user);
 	}
 
-	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		run((CommandSender)user.getBase(), commandLabel, args);
 	}

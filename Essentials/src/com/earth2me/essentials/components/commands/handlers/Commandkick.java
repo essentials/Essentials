@@ -4,7 +4,7 @@ import com.earth2me.essentials.Console;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ public class Commandkick extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final IUser user = getPlayer(args, 0);
+		final IUserComponent user = getPlayer(args, 0);
 		if (Permissions.KICK_EXEMPT.isAuthorized(user))
 		{
 			throw new Exception(_("kickExempt"));
@@ -31,7 +31,7 @@ public class Commandkick extends EssentialsCommand
 
 		for (Player onlinePlayer : getServer().getOnlinePlayers())
 		{
-			final IUser player = getContext().getUser(onlinePlayer);
+			final IUserComponent player = getContext().getUser(onlinePlayer);
 			if (Permissions.KICK_NOTIFY.isAuthorized(player))
 			{
 				onlinePlayer.sendMessage(_("playerKicked", senderName, user.getName(), kickReason));

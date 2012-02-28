@@ -6,7 +6,7 @@ import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.IComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.util.*;
 import java.util.logging.Level;
 import org.bukkit.ChatColor;
@@ -104,7 +104,7 @@ public class CommandsComponent extends Component implements ICommandsComponent
 
 		try
 		{
-			IUser user = null;
+			IUserComponent user = null;
 			if (sender instanceof Player)
 			{
 				user = getContext().getUser((Player)sender);

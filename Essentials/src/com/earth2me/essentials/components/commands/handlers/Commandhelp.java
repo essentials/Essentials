@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.textreader.*;
 import org.bukkit.command.CommandSender;
 
@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 public class Commandhelp extends EssentialsCommand
 {
 	@Override
-	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		IText output;
 		String pageStr = args.length > 0 ? args[0] : null;

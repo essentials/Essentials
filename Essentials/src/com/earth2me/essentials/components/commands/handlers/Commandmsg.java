@@ -6,7 +6,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IReplyTo;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.List;
 import lombok.Cleanup;
@@ -28,7 +28,7 @@ public class Commandmsg extends EssentialsCommand
 		if (sender instanceof Player)
 		{
 			@Cleanup
-			IUser user = getContext().getUser((Player)sender);
+			IUserComponent user = getContext().getUser((Player)sender);
 			user.acquireReadLock();
 			if (user.getData().isMuted())
 			{
@@ -73,7 +73,7 @@ public class Commandmsg extends EssentialsCommand
 		int i = 0;
 		for (Player matchedPlayer : matchedPlayers)
 		{
-			final IUser u = getContext().getUser(matchedPlayer);
+			final IUserComponent u = getContext().getUser(matchedPlayer);
 			if (u.isHidden())
 			{
 				i++;
@@ -87,7 +87,7 @@ public class Commandmsg extends EssentialsCommand
 		for (Player matchedPlayer : matchedPlayers)
 		{
 			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getDisplayName(), message));
-			final IUser matchedUser = getContext().getUser(matchedPlayer);
+			final IUserComponent matchedUser = getContext().getUser(matchedPlayer);
 			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(((Player)sender).getName()) || matchedUser.isHidden()))
 			{
 				continue;

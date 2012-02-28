@@ -2,7 +2,7 @@ package com.earth2me.essentials.chat;
 
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.logging.Logger;
 import org.bukkit.Location;
@@ -36,7 +36,7 @@ public class EssentialsLocalChatEventListener implements Listener
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			String type = _("chatTypeLocal");
-			final IUser user = ess.getUser(onlinePlayer);
+			final IUserComponent user = ess.getUser(onlinePlayer);
 			//TODO: remove reference to op
 			if (user.isIgnoringPlayer(sender.getName()) && !sender.isOp())
 			{

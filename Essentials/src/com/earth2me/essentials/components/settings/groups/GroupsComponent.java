@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.GroupsPermissions;
 import com.earth2me.essentials.storage.StorageComponent;
 import java.text.MessageFormat;
@@ -29,7 +29,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 		return "settings.groups";
 	}
 
-	public Collection<Entry<String, Group>> getGroups(final IUser player)
+	public Collection<Entry<String, Group>> getGroups(final IUserComponent player)
 	{
 		acquireReadLock();
 		try
@@ -59,7 +59,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	}
 
 	@Override
-	public double getHealCooldown(final IUser player)
+	public double getHealCooldown(final IUserComponent player)
 	{
 		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
@@ -72,7 +72,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	}
 
 	@Override
-	public double getTeleportCooldown(final IUser player)
+	public double getTeleportCooldown(final IUserComponent player)
 	{
 		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
@@ -85,7 +85,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	}
 
 	@Override
-	public double getTeleportDelay(final IUser player)
+	public double getTeleportDelay(final IUserComponent player)
 	{
 		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
@@ -98,7 +98,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	}
 
 	@Override
-	public String getPrefix(final IUser player)
+	public String getPrefix(final IUserComponent player)
 	{
 		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
@@ -111,7 +111,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	}
 
 	@Override
-	public String getSuffix(final IUser player)
+	public String getSuffix(final IUserComponent player)
 	{
 		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
@@ -124,7 +124,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	}
 
 	@Override
-	public int getHomeLimit(final IUser player)
+	public int getHomeLimit(final IUserComponent player)
 	{
 		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
@@ -138,7 +138,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 
 	//TODO: Reimplement caching
 	@Override
-	public MessageFormat getChatFormat(final IUser player)
+	public MessageFormat getChatFormat(final IUserComponent player)
 	{
 		String format = getRawChatFormat(player);
 		format = Util.replaceColor(format);
@@ -152,7 +152,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 		return mFormat;
 	}
 
-	private String getRawChatFormat(final IUser player)
+	private String getRawChatFormat(final IUserComponent player)
 	{
 		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
@@ -175,7 +175,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	}
 
 	@Override
-	public boolean isInGroup(IUser player, String groupname)
+	public boolean isInGroup(IUserComponent player, String groupname)
 	{
 		for (Entry<String, Group> groupOptions : getGroups(player))
 		{
@@ -188,7 +188,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	}
 
 	@Override
-	public String getMainGroup(IUser player)
+	public String getMainGroup(IUserComponent player)
 	{
 		for (Entry<String, Group> groupOptions : getGroups(player))
 		{

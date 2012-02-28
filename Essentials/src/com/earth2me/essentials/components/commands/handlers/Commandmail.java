@@ -5,7 +5,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.List;
 import org.bukkit.command.CommandSender;
@@ -16,7 +16,7 @@ public class Commandmail extends EssentialsCommand
 {
 	//TODO: Tidy this up
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length >= 1 && "read".equalsIgnoreCase(args[0]))
 		{
@@ -41,7 +41,7 @@ public class Commandmail extends EssentialsCommand
 			}
 
 			Player player = getServer().getPlayer(args[1]);
-			IUser u;
+			IUserComponent u;
 			if (player != null)
 			{
 				u = getContext().getUser(player);
@@ -96,7 +96,7 @@ public class Commandmail extends EssentialsCommand
 		else if (args.length >= 3 && "send".equalsIgnoreCase(args[0]))
 		{
 			Player player = getServer().getPlayer(args[1]);
-			IUser u;
+			IUserComponent u;
 			if (player != null)
 			{
 				u = getContext().getUser(player);
@@ -121,7 +121,7 @@ public class Commandmail extends EssentialsCommand
 		{
 			//allow sending from console without "send" argument, since it's the only thing the console can do
 			Player player = getServer().getPlayer(args[0]);
-			IUser u;
+			IUserComponent u;
 			if (player != null)
 			{
 				u = getContext().getUser(player);
@@ -156,7 +156,7 @@ public class Commandmail extends EssentialsCommand
 		{
 			for (String username : getContext().getUsers().getAllUniqueUsers())
 			{
-				IUser user = getContext().getUsers().getUser(username);
+				IUserComponent user = getContext().getUsers().getUser(username);
 				if (user != null)
 				{
 					user.addMail(message);

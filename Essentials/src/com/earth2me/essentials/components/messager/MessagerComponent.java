@@ -9,7 +9,7 @@ import com.earth2me.essentials.api.IMessagerComponent;
 import com.earth2me.essentials.api.IPermissions;
 import com.earth2me.essentials.components.Component;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.util.logging.Level;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -33,7 +33,7 @@ public class MessagerComponent extends Component implements IMessagerComponent
 	 * @return The number of users who received the message.
 	 */
 	@Override
-	public int broadcastMessage(IUser sender, String message)
+	public int broadcastMessage(IUserComponent sender, String message)
 	{
 		if (sender == null)
 		{
@@ -49,7 +49,7 @@ public class MessagerComponent extends Component implements IMessagerComponent
 
 		for (Player player : players)
 		{
-			final IUser user = getContext().getUser(player);
+			final IUserComponent user = getContext().getUser(player);
 			if (!user.isIgnoringPlayer(sender.getName()))
 			{
 				player.sendMessage(message);
@@ -69,7 +69,7 @@ public class MessagerComponent extends Component implements IMessagerComponent
 		getContext().getLogger().log(Level.WARNING, warnMessage);
 		for (Player p : getContext().getServer().getOnlinePlayers())
 		{
-			final IUser alertUser = getContext().getUser(p);
+			final IUserComponent alertUser = getContext().getUser(p);
 			if (permission.isAuthorized(alertUser))
 			{
 				alertUser.sendMessage(warnMessage);

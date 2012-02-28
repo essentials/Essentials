@@ -4,14 +4,14 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import lombok.Cleanup;
 
 
 public class Commandtpa extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -19,7 +19,7 @@ public class Commandtpa extends EssentialsCommand
 		}
 
 		@Cleanup
-		IUser player = getPlayer(args, 0);
+		IUserComponent player = getPlayer(args, 0);
 		player.acquireReadLock();
 		if (!player.getData().isTeleportEnabled())
 		{

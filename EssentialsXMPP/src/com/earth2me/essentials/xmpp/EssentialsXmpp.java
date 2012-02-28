@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.ICommandsComponent;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.commands.CommandsComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -85,7 +85,7 @@ public class EssentialsXmpp extends EssentialsPlugin implements IEssentialsXmpp
 	}
 
 	@Override
-	public IUser getUserByAddress(final String address)
+	public IUserComponent getUserByAddress(final String address)
 	{
 		String username = instance.users.getUserByAddress(address);
 		return username == null ? null : getContext().getUser(username);
@@ -125,7 +125,7 @@ public class EssentialsXmpp extends EssentialsPlugin implements IEssentialsXmpp
 	}
 
 	@Override
-	public void broadcastMessage(final IUser sender, final String message, final String xmppAddress)
+	public void broadcastMessage(final IUserComponent sender, final String message, final String xmppAddress)
 	{
 		getContext().broadcastMessage(sender, message);
 		try

@@ -3,7 +3,7 @@ package com.earth2me.essentials.spawn;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.SimpleTextInput;
@@ -33,7 +33,7 @@ public class EssentialsSpawnPlayerListener implements Listener
 
 	public void onPlayerRespawn(final PlayerRespawnEvent event)
 	{
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 
 		boolean respawnAtHome = false;
 		final ISettingsComponent settings = context.getSettings();
@@ -73,7 +73,7 @@ public class EssentialsSpawnPlayerListener implements Listener
 
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 
 		if (user.hasPlayedBefore())
 		{
@@ -96,9 +96,9 @@ public class EssentialsSpawnPlayerListener implements Listener
 
 	private class NewPlayerTeleport implements Runnable
 	{
-		private final transient IUser user;
+		private final transient IUserComponent user;
 
-		public NewPlayerTeleport(final IUser user)
+		public NewPlayerTeleport(final IUserComponent user)
 		{
 			this.user = user;
 		}

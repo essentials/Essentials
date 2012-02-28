@@ -1,7 +1,7 @@
 package com.earth2me.essentials.xmpp;
 
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
@@ -92,7 +92,7 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 				sendCommand(chat, message);
 				break;
 			default:
-				final IUser sender = parent.getUserByAddress(StringUtils.parseBareAddress(chat.getParticipant()));
+				final IUserComponent sender = parent.getUserByAddress(StringUtils.parseBareAddress(chat.getParticipant()));
 				parent.broadcastMessage(sender, "=" + sender.getDisplayName() + ": " + message, StringUtils.parseBareAddress(chat.getParticipant()));
 			}
 		}

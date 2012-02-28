@@ -1,4 +1,4 @@
-package com.earth2me.essentials.components.users;
+package com.earth2me.essentials.components.settings.users;
 
 import com.earth2me.essentials.storage.*;
 import java.util.*;
@@ -9,29 +9,31 @@ import org.bukkit.Material;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserData implements IStorageObject
+public class UserSurrogate implements IStorageObject
 {
-	public enum TimestampType
-	{
-		JAIL, MUTE, LASTHEAL, LASTTELEPORT, LOGIN, LOGOUT
-	}
 	private String nickname;
 	private Double money;
 	@MapValueType(LocationData.class)
 	private Map<String, LocationData> homes = new HashMap<String, LocationData>();
 	@ListType(Material.class)
+	// TODO Replace with EnumSet.
+	@SuppressWarnings("SetReplaceableByEnumSet")
 	private Set<Material> unlimited = new HashSet<Material>();
 	@MapValueType(List.class)
 	@MapKeyType(Material.class)
+	// TODO Replace with EnumMap.
+	@SuppressWarnings("MapReplaceableByEnumMap")
 	private Map<Material, List<String>> powerTools = new HashMap<Material, List<String>>();
 	private LocationData lastLocation;
 	@MapKeyType(TimestampType.class)
 	@MapValueType(Long.class)
+	// TODO Replace with EnumMap.
+	@SuppressWarnings("MapReplaceableByEnumMap")
 	private Map<TimestampType, Long> timestamps = new HashMap<TimestampType, Long>();
 	private String jail;
 	@ListType
 	private List<String> mails;
-	private Inventory inventory;
+	private Inventory lastInventory;
 	private boolean teleportEnabled;
 	@ListType
 	private Set<String> ignore;
@@ -47,7 +49,7 @@ public class UserData implements IStorageObject
 	private boolean npc;
 	private boolean powerToolsEnabled;
 
-	public UserData()
+	public UserSurrogate()
 	{
 		unlimited.add(Material.AIR);
 		unlimited.add(Material.ARROW);
@@ -84,10 +86,12 @@ public class UserData implements IStorageObject
 		return powerTools != null && !powerTools.isEmpty();
 	}
 
+	@SuppressWarnings("MapReplaceableByEnumMap")
 	public void setPowertool(Material mat, List<String> commands)
 	{
 		if (powerTools == null)
 		{
+			// TODO Replace with EnumMap
 			powerTools = new HashMap<Material, List<String>>();
 		}
 		powerTools.put(mat, commands);

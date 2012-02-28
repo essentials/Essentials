@@ -36,8 +36,8 @@ import com.earth2me.essentials.components.settings.economy.WorthsComponent;
 import com.earth2me.essentials.components.settings.groups.GroupsComponent;
 import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
 import com.earth2me.essentials.components.settings.warps.WarpsComponent;
-import com.earth2me.essentials.components.users.IUsersComponent;
-import com.earth2me.essentials.components.users.UsersComponent;
+import com.earth2me.essentials.components.settings.users.IUsersComponent;
+import com.earth2me.essentials.components.settings.users.UsersComponent;
 import com.earth2me.essentials.listeners.*;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.io.File;
@@ -228,7 +228,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			break;
 
 		case 2:
-			final IUsersComponent users = new UsersComponent(context);
+			final IUsersComponent users = new UsersComponent(context, this);
 			context.setUsers(users);
 			add(users);
 			execTimer.mark("Init(Usermap)");

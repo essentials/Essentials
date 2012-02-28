@@ -5,8 +5,8 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.components.users.UserDoesNotExistException;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.settings.users.UserDoesNotExistException;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.HashMap;
 import java.util.Locale;
@@ -113,7 +113,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	@Override
 	public double getMoney(String name) throws UserDoesNotExistException
 	{
-		IUser user = getContext().getUser(name);
+		IUserComponent user = getContext().getUser(name);
 		if (user == null)
 		{
 			return getNpcBalance(name);
@@ -124,7 +124,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	@Override
 	public void setMoney(String name, double balance) throws NoLoanPermittedException, UserDoesNotExistException
 	{
-		IUser user = getContext().getUser(name);
+		IUserComponent user = getContext().getUser(name);
 		if (user == null)
 		{
 			setNpcBalance(name, balance, true);

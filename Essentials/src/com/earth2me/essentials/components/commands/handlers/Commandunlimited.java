@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.perm.UnlimitedItemPermissions;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 public class Commandunlimited extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -25,7 +25,7 @@ public class Commandunlimited extends EssentialsCommand
 		}
 
 		@Cleanup
-		IUser target = user;
+		IUserComponent target = user;
 
 		if (args.length > 1 && Permissions.UNLIMITED_OTHERS.isAuthorized(user))
 		{
@@ -54,7 +54,7 @@ public class Commandunlimited extends EssentialsCommand
 		}
 	}
 
-	private String getList(final IUser target)
+	private String getList(final IUserComponent target)
 	{
 		final StringBuilder output = new StringBuilder();
 		output.append(_("unlimitedItems")).append(" ");
@@ -78,7 +78,7 @@ public class Commandunlimited extends EssentialsCommand
 		return output.toString();
 	}
 
-	private Boolean toggleUnlimited(final IUser user, final IUser target, final String item) throws Exception
+	private Boolean toggleUnlimited(final IUserComponent user, final IUserComponent target, final String item) throws Exception
 	{
 		final ItemStack stack = getContext().getItems().get(item, 1);
 		stack.setAmount(Math.min(stack.getType().getMaxStackSize(), 2));

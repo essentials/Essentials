@@ -4,9 +4,9 @@ import com.earth2me.essentials.Console;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.components.users.Ban;
+import com.earth2me.essentials.components.settings.users.Ban;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class Commandban extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		@Cleanup
-		final IUser user = getPlayer(args, 0, true);
+		final IUserComponent user = getPlayer(args, 0, true);
 		if (user.isOnline())
 		{
 			if (Permissions.BAN_EXEMPT.isAuthorized(user))

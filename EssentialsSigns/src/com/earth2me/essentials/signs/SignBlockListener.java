@@ -1,7 +1,7 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Material;
@@ -84,7 +84,7 @@ public class SignBlockListener implements Listener
 		{
 			return;
 		}
-		IUser user = ess.getUser(event.getPlayer());
+		IUserComponent user = ess.getUser(event.getPlayer());
 		if (SignsPermissions.COLOR.isAuthorized(user))
 		{
 			for (int i = 0; i < 4; i++)

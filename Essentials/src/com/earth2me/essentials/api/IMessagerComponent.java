@@ -1,7 +1,7 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.components.IComponent;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import org.bukkit.entity.Player;
 
 
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
  */
 public interface IMessagerComponent extends IComponent
 {
-	int broadcastMessage(IUser sender, String message);
+	int broadcastMessage(IUserComponent sender, String message);
 
 	void alert(final Player user, final String item, final String type, IPermissions permission);
 }

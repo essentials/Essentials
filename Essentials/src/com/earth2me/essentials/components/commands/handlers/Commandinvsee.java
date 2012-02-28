@@ -4,8 +4,8 @@ import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.components.users.Inventory;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.settings.users.Inventory;
 import java.util.Arrays;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,14 +13,14 @@ import org.bukkit.inventory.ItemStack;
 public class Commandinvsee extends EssentialsCommand
 {
 	@Override
-	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 
 		if (args.length < 1 && user.getData().getInventory() == null)
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		IUser invUser = user;
+		IUserComponent invUser = user;
 		if (args.length == 1)
 		{
 			invUser = getPlayer(args, 0);

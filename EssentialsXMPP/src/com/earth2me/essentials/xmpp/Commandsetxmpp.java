@@ -1,6 +1,6 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 
@@ -8,7 +8,7 @@ import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 public class Commandsetxmpp extends EssentialsCommand
 {
 	@Override
-	protected void run(final IUser user, final String commandLabel, final String[] args) throws NotEnoughArgumentsException
+	protected void run(final IUserComponent user, final String commandLabel, final String[] args) throws NotEnoughArgumentsException
 	{
 		if (args.length < 1)
 		{

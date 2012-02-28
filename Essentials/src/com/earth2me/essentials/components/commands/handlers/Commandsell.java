@@ -5,7 +5,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public class Commandsell extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -70,7 +70,7 @@ public class Commandsell extends EssentialsCommand
 		sellItem(user, is, args, false);
 	}
 
-	private void sellItem(IUser user, ItemStack is, String[] args, boolean isBulkSell) throws Exception
+	private void sellItem(IUserComponent user, ItemStack is, String[] args, boolean isBulkSell) throws Exception
 	{
 		if (is == null || is.getType() == Material.AIR)
 		{

@@ -2,7 +2,7 @@ package com.earth2me.essentials.textreader;
 
 import com.earth2me.essentials.DescParseTickFormat;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +20,7 @@ public class KeywordReplacer implements IText
 	private final transient IText input;
 	private final transient List<String> replaced;
 	private final transient IContext ess;
-	
+
 	public KeywordReplacer(final IText input, final CommandSender sender, final IContext ess)
 	{
 		this.input = input;
@@ -28,7 +28,7 @@ public class KeywordReplacer implements IText
 		this.ess = ess;
 		replaceKeywords(sender);
 	}
-	
+
 	private void replaceKeywords(final CommandSender sender)
 	{
 		String displayName, ipAddress, balance, mails, world;
@@ -38,7 +38,7 @@ public class KeywordReplacer implements IText
 		if (sender instanceof Player)
 		{
 			@Cleanup
-			final IUser user = ess.getUser((Player)sender);
+			final IUserComponent user = ess.getUser((Player)sender);
 			user.acquireReadLock();
 			displayName = user.getDisplayName();
 			userName = user.getName();

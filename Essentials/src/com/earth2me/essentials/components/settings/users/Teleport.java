@@ -1,12 +1,10 @@
-package com.earth2me.essentials.components.users;
+package com.earth2me.essentials.components.settings.users;
 
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.ITeleport;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.UserData.TimestampType;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -21,35 +19,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class Teleport implements Runnable, ITeleport
 {
 	private static final double MOVE_CONSTANT = 0.3;
-
-
-	private static class Target
-	{
-		private final Location location;
-		private final Entity entity;
-
-		public Target(Location location)
-		{
-			this.location = location;
-			this.entity = null;
-		}
-
-		public Target(Entity entity)
-		{
-			this.entity = entity;
-			this.location = null;
-		}
-
-		public Location getLocation()
-		{
-			if (this.entity != null)
-			{
-				return this.entity.getLocation();
-			}
-			return location;
-		}
-	}
-	private IUser user;
+	private IUserComponent user;
 	private int teleTimer = -1;
 	private long started;	// time this task was initiated
 	private long delay;		// how long to delay the teleport
@@ -62,7 +32,7 @@ public class Teleport implements Runnable, ITeleport
 	private long initZ;
 	private Target teleportTarget;
 	private Trade chargeFor;
-	private final IContext ess;
+	private final IContext context;
 	private static final Logger logger = Logger.getLogger("Minecraft");
 	private TeleportCause cause;
 
@@ -117,7 +87,7 @@ public class Teleport implements Runnable, ITeleport
 				}
 				catch (Throwable ex)
 				{
-					ess.getCommands().showCommandError(user.getBase(), "teleport", ex);
+					context.getCommands().showCommandError(user.getBase(), "teleport", ex);
 				}
 			}
 			catch (Exception ex)
@@ -127,26 +97,25 @@ public class Teleport implements Runnable, ITeleport
 		}
 	}
 
-	public Teleport(IUser user, IContext ess)
+	public Teleport(IUserComponent user, IContext ess)
 	{
 		this.user = user;
-		this.ess = ess;
+		this.context = ess;
 	}
 
 	@Override
 	public void respawn(final Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		final Player player = user.getBase();
-		final Location bed = player.getBedSpawnLocation();
-		final PlayerRespawnEvent pre = new PlayerRespawnEvent(player, bed == null ? player.getWorld().getSpawnLocation() : bed, bed != null);
-		ess.getServer().getPluginManager().callEvent(pre);
+		final Location bed = user.getBedSpawnLocation();
+		final PlayerRespawnEvent pre = new PlayerRespawnEvent(user.getOnlinePlayer(), bed == null ? user.getWorld().getSpawnLocation() : bed, bed != null);
+		context.getServer().getPluginManager().callEvent(pre);
 		teleport(new Target(pre.getRespawnLocation()), chargeFor, cause);
 	}
 
 	@Override
 	public void warp(String warp, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		final Location loc = ess.getWarps().getWarp(warp).getLocation().getBukkitLocation();
+		final Location loc = context.getWarps().getWarp(warp).getLocation().getBukkitLocation();
 		teleport(new Target(loc), chargeFor, cause);
 		user.sendMessage(_("warpingTo", warp));
 	}
@@ -155,7 +124,7 @@ public class Teleport implements Runnable, ITeleport
 	{
 		try
 		{
-			user.checkCooldown(TimestampType.LASTTELEPORT, ess.getGroups().getTeleportCooldown(user), !check, Permissions.TELEPORT_COOLDOWN_BYPASS);
+			user.checkCooldown(TimestampType.LASTTELEPORT, context.getGroups().getTeleportCooldown(user), !check, Permissions.TELEPORT_COOLDOWN_BYPASS);
 		}
 		catch (CooldownException ex)
 		{
@@ -172,7 +141,7 @@ public class Teleport implements Runnable, ITeleport
 		}
 		try
 		{
-			ess.getServer().getScheduler().cancelTask(teleTimer);
+			context.getServer().getScheduler().cancelTask(teleTimer);
 			if (notifyUser)
 			{
 				user.sendMessage(_("pendingTeleportCancelled"));
@@ -208,7 +177,7 @@ public class Teleport implements Runnable, ITeleport
 
 	private void teleport(Target target, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		double teleportDelay = ess.getGroups().getTeleportDelay(user);
+		double teleportDelay = context.getGroups().getTeleportDelay(user);
 
 		if (chargeFor != null)
 		{
@@ -233,14 +202,14 @@ public class Teleport implements Runnable, ITeleport
 		user.sendMessage(_("dontMoveMessage", Util.formatDateDiff(c.getTimeInMillis())));
 		initTimer((long)(teleportDelay * 1000.0), target, chargeFor, cause);
 
-		teleTimer = ess.getScheduler().scheduleSyncRepeatingTask(this, 10, 10);
+		teleTimer = context.getScheduler().scheduleSyncRepeatingTask(this, 10, 10);
 	}
 
 	private void now(Target target, TeleportCause cause) throws Exception
 	{
 		cancel();
 		user.setLastLocation();
-		user.getBase().teleport(Util.getSafeDestination(target.getLocation()), cause);
+		user.teleport(Util.getSafeDestination(target.getLocation()), cause);
 	}
 
 	@Override
@@ -273,33 +242,17 @@ public class Teleport implements Runnable, ITeleport
 	@Override
 	public void back(Trade chargeFor) throws Exception
 	{
-		user.acquireReadLock();
-		try
-		{
-			teleport(new Target(user.getData().getLastLocation().getBukkitLocation()), chargeFor, TeleportCause.COMMAND);
-		}
-		finally
-		{
-			user.unlock();
-		}
+		teleport(new Target(user.getLastLocation().getBukkitLocation()), chargeFor, TeleportCause.COMMAND);
 	}
 
 	@Override
 	public void back() throws Exception
 	{
-		user.acquireReadLock();
-		try
-		{
-			now(new Target(user.getData().getLastLocation().getBukkitLocation()), TeleportCause.COMMAND);
-		}
-		finally
-		{
-			user.unlock();
-		}
+		now(new Target(user.getLastLocation().getBukkitLocation()), TeleportCause.COMMAND);
 	}
 
 	@Override
-	public void home(IUser user, String home, Trade chargeFor) throws Exception
+	public void home(IUserComponent user, String home, Trade chargeFor) throws Exception
 	{
 		final Location loc = user.getHome(home);
 		if (loc == null)
@@ -307,5 +260,33 @@ public class Teleport implements Runnable, ITeleport
 			throw new NotEnoughArgumentsException();
 		}
 		teleport(new Target(loc), chargeFor, TeleportCause.COMMAND);
+	}
+
+
+	private static class Target
+	{
+		private final Location location;
+		private final Entity entity;
+
+		public Target(Location location)
+		{
+			this.location = location;
+			this.entity = null;
+		}
+
+		public Target(Entity entity)
+		{
+			this.entity = entity;
+			this.location = null;
+		}
+
+		public Location getLocation()
+		{
+			if (this.entity != null)
+			{
+				return this.entity.getLocation();
+			}
+			return location;
+		}
 	}
 }

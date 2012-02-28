@@ -7,7 +7,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Locale;
 import java.util.Map;
@@ -77,7 +77,7 @@ public abstract class EssentialsChatPlayer implements Listener
 
 	protected void formatChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
-		final IUser user = chatStore.getUser();
+		final IUserComponent user = chatStore.getUser();
 		if (Permissions.CHAT_COLOR.isAuthorized(user))
 		{
 			event.setMessage(Util.stripColor(event.getMessage()));
@@ -130,7 +130,7 @@ public abstract class EssentialsChatPlayer implements Listener
 
 		radius *= radius;
 
-		final IUser user = chatStore.getUser();
+		final IUserComponent user = chatStore.getUser();
 
 		if (event.getMessage().length() > 1 && chatStore.getType().length() > 0)
 		{

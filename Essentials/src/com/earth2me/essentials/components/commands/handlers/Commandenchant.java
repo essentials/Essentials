@@ -5,7 +5,7 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.EnchantPermissions;
 import java.util.Locale;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class Commandenchant extends EssentialsCommand
 {
 	//TODO: Implement charge costs: final Trade charge = new Trade("enchant-" + enchantmentName, ess);
 	@Override
-	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		final ItemStack stack = user.getItemInHand();
 		if (stack == null)
@@ -78,7 +78,7 @@ public class Commandenchant extends EssentialsCommand
 		}
 	}
 
-	public static Enchantment getEnchantment(final String name, final IUser user) throws Exception
+	public static Enchantment getEnchantment(final String name, final IUserComponent user) throws Exception
 	{
 
 		final Enchantment enchantment = Enchantments.getByName(name);

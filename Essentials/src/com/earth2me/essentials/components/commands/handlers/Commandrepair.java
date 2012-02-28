@@ -6,7 +6,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 public class Commandrepair extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -92,7 +92,7 @@ public class Commandrepair extends EssentialsCommand
 		item.setDurability((short)0);
 	}
 
-	private void repairItems(final ItemStack[] items, final IUser user, final List<String> repaired)
+	private void repairItems(final ItemStack[] items, final IUserComponent user, final List<String> repaired)
 	{
 		for (ItemStack item : items)
 		{

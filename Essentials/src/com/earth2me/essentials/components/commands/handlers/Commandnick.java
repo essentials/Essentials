@@ -5,7 +5,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Locale;
 import lombok.Cleanup;
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 public class Commandnick extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -68,7 +68,7 @@ public class Commandnick extends EssentialsCommand
 		sender.sendMessage(_("nickChanged"));
 	}
 
-	private String formatNickname(final IUser user, final String nick)
+	private String formatNickname(final IUserComponent user, final String nick)
 	{
 		if (user == null || Permissions.NICK_COLOR.isAuthorized(user))
 		{
@@ -92,7 +92,7 @@ public class Commandnick extends EssentialsCommand
 		}
 	}
 
-	private void setNickname(final IUser target, final String nick) throws Exception
+	private void setNickname(final IUserComponent target, final String nick) throws Exception
 	{
 		if (!nick.matches("^[a-zA-Z_0-9\u00a7]+$"))
 		{

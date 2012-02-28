@@ -4,8 +4,8 @@ import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.settings.economy.IWorthsComponent;
 import com.earth2me.essentials.components.jails.IJailsComponent;
 import com.earth2me.essentials.components.kits.IKitsComponent;
-import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.components.users.IUsersComponent;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.settings.users.IUsersComponent;
 import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.io.File;
@@ -31,9 +31,9 @@ public interface IContext
 
 	File getDataFolder();
 
-	IUser getUser(Player player);
+	IUserComponent getUser(Player player);
 
-	IUser getUser(String playerName);
+	IUserComponent getUser(String playerName);
 
 	II18nComponent getI18n();
 

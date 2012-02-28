@@ -4,7 +4,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentials;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.settings.Jails;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.storage.LocationData;
 import com.earth2me.essentials.storage.StorageComponent;
 import java.util.*;
@@ -119,7 +119,7 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 	}
 
 	@Override
-	public void sendToJail(final IUser user, final String jail) throws Exception
+	public void sendToJail(final IUserComponent user, final String jail) throws Exception
 	{
 		acquireReadLock();
 		try
@@ -171,7 +171,7 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 		public void onBlockBreak(final BlockBreakEvent event)
 		{
 			@Cleanup
-			final IUser user = getContext().getUser(event.getPlayer());
+			final IUserComponent user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -183,7 +183,7 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 		public void onBlockPlace(final BlockPlaceEvent event)
 		{
 			@Cleanup
-			final IUser user = getContext().getUser(event.getPlayer());
+			final IUserComponent user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -195,7 +195,7 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 		public void onBlockDamage(final BlockDamageEvent event)
 		{
 			@Cleanup
-			final IUser user = getContext().getUser(event.getPlayer());
+			final IUserComponent user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -211,7 +211,7 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 		public void onPlayerInteract(final PlayerInteractEvent event)
 		{
 			@Cleanup
-			final IUser user = getContext().getUser(event.getPlayer());
+			final IUserComponent user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -223,7 +223,7 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 		public void onPlayerRespawn(final PlayerRespawnEvent event)
 		{
 			@Cleanup
-			final IUser user = getContext().getUser(event.getPlayer());
+			final IUserComponent user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
@@ -251,7 +251,7 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 		public void onPlayerTeleport(final PlayerTeleportEvent event)
 		{
 			@Cleanup
-			final IUser user = getContext().getUser(event.getPlayer());
+			final IUserComponent user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
@@ -280,7 +280,7 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 		public void onPlayerJoin(final PlayerJoinEvent event)
 		{
 			@Cleanup
-			final IUser user = getContext().getUser(event.getPlayer());
+			final IUserComponent user = getContext().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{

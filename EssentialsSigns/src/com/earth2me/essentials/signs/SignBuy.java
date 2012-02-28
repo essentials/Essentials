@@ -3,7 +3,7 @@ package com.earth2me.essentials.signs;
 import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 
 
 public class SignBuy extends EssentialsSign
@@ -14,7 +14,7 @@ public class SignBuy extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException
+	protected boolean onSignCreate(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException
 	{
 		validateTrade(sign, 1, 2, player, ess);
 		validateTrade(sign, 3, ess);
@@ -22,7 +22,7 @@ public class SignBuy extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
+	protected boolean onSignInteract(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		final Trade items = getTrade(sign, 1, 2, player, ess);
 		final Trade charge = getTrade(sign, 3, ess);

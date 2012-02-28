@@ -1,4 +1,4 @@
-package com.earth2me.essentials.components.users;
+package com.earth2me.essentials.components.settings.users;
 
 
 public class CooldownException extends Exception
@@ -8,5 +8,5 @@ public class CooldownException extends Exception
 	{
 		super(timeLeft);
 	}
-	
+
 }

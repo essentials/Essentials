@@ -4,8 +4,8 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.components.users.UserData.TimestampType;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.settings.users.TimestampType;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
@@ -49,7 +49,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerRespawn(final PlayerRespawnEvent event)
 	{
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		user.updateCompass();
 		user.updateDisplayName();
 	}
@@ -58,7 +58,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerChat(final PlayerChatEvent event)
 	{
 		@Cleanup
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		user.acquireReadLock();
 		if (user.getData().isMuted())
 		{
@@ -87,7 +87,7 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 		@Cleanup
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		user.acquireReadLock();
 		@Cleanup
 		final ISettingsComponent settings = context.getSettings();
@@ -122,7 +122,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
 		@Cleanup
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		user.acquireReadLock();
 		@Cleanup
 		final ISettingsComponent settings = context.getSettings();
@@ -145,7 +145,7 @@ public class EssentialsPlayerListener implements Listener
 	{
 		context.getBackup().startTask();
 		@Cleanup
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		user.acquireWriteLock();
 
 		user.updateDisplayName();
@@ -204,7 +204,7 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 		@Cleanup
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		user.acquireWriteLock();
 		user.getData().setNpc(false);
 
@@ -258,7 +258,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerEggThrow(final PlayerEggThrowEvent event)
 	{
 		@Cleanup
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		user.acquireReadLock();
 		final ItemStack hand = new ItemStack(Material.EGG, 1);
 		if (user.getData().hasUnlimited(hand.getType()))
@@ -272,7 +272,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event)
 	{
 		@Cleanup
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		user.acquireReadLock();
 		if (user.getData().hasUnlimited(event.getBucket()))
 		{
@@ -292,7 +292,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerAnimation(final PlayerAnimationEvent event)
 	{
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		user.updateActivity(true);
 		if (event.getAnimationType() == PlayerAnimationType.ARM_SWING)
 		{
@@ -300,7 +300,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 	}
 
-	private void usePowertools(final IUser user)
+	private void usePowertools(final IUserComponent user)
 	{
 		user.acquireReadLock();
 		try
@@ -354,7 +354,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			return;
 		}
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		final String cmd = event.getMessage().toLowerCase(Locale.ENGLISH).split(" ")[0].replace("/", "").toLowerCase(Locale.ENGLISH);
 		final List<String> commands = Arrays.asList("msg", "r", "mail", "m", "t", "emsg", "tell", "er", "reply", "ereply", "email");
 		if (commands.contains(cmd))
@@ -362,7 +362,7 @@ public class EssentialsPlayerListener implements Listener
 			for (Player player : context.getServer().getOnlinePlayers())
 			{
 				@Cleanup
-				IUser spyer = context.getUser(player);
+				IUserComponent spyer = context.getUser(player);
 				spyer.acquireReadLock();
 				if (spyer.getData().isSocialspy() && !user.equals(spyer))
 				{

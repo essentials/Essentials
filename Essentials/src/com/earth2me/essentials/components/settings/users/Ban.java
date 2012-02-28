@@ -1,4 +1,4 @@
-package com.earth2me.essentials.components.users;
+package com.earth2me.essentials.components.settings.users;
 
 import com.earth2me.essentials.storage.IStorageObject;
 import lombok.Data;

@@ -5,8 +5,8 @@ import com.earth2me.essentials.components.jails.IJailsComponent;
 import com.earth2me.essentials.components.kits.IKitsComponent;
 import com.earth2me.essentials.components.settings.economy.IWorthsComponent;
 import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
-import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.components.users.IUsersComponent;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.settings.users.IUsersComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.io.File;
 import java.util.logging.Logger;
@@ -85,13 +85,13 @@ public final class Context implements IContext
 	}
 
 	@Override
-	public IUser getUser(final Player player)
+	public IUserComponent getUser(final Player player)
 	{
 		return getUsers().getUser(player);
 	}
 
 	@Override
-	public IUser getUser(final String playerName)
+	public IUserComponent getUser(final String playerName)
 	{
 		return getUsers().getUser(playerName);
 	}

@@ -5,7 +5,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.perm.WarpPermissions;
@@ -22,7 +22,7 @@ public class Commandwarp extends EssentialsCommand
 	private final static int WARPS_PER_PAGE = 20;
 
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length == 0 || args[0].matches("[0-9]+"))
 		{
@@ -35,7 +35,7 @@ public class Commandwarp extends EssentialsCommand
 		}
 		if (args.length > 0)
 		{
-			IUser otherUser = null;
+			IUserComponent otherUser = null;
 			if (args.length == 2 && Permissions.WARP_OTHERS.isAuthorized(user))
 			{
 				otherUser = getContext().getUser(getServer().getPlayer(args[1]));
@@ -59,7 +59,7 @@ public class Commandwarp extends EssentialsCommand
 			warpList(sender, args);
 			throw new NoChargeException();
 		}
-		IUser otherUser = getContext().getUser(getServer().getPlayer(args[1]));
+		IUserComponent otherUser = getContext().getUser(getServer().getPlayer(args[1]));
 		if (otherUser == null)
 		{
 			throw new Exception(_("playerNotFound"));
@@ -79,7 +79,7 @@ public class Commandwarp extends EssentialsCommand
 		}
 		final List<String> warpNameList = new ArrayList<String>(warps.getList());
 
-		if (sender instanceof IUser)
+		if (sender instanceof IUserComponent)
 		{
 			final Iterator<String> iterator = warpNameList.iterator();
 			while (iterator.hasNext())
@@ -111,7 +111,7 @@ public class Commandwarp extends EssentialsCommand
 		}
 	}
 
-	private void warpUser(final IUser user, final String name) throws Exception
+	private void warpUser(final IUserComponent user, final String name) throws Exception
 	{
 		final Trade charge = new Trade("warp-" + name.toLowerCase(Locale.ENGLISH).replace('_', '-'), getContext());
 		charge.isAffordableFor(user);

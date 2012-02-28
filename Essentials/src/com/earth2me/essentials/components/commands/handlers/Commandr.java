@@ -6,7 +6,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IReplyTo;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,7 +28,7 @@ public class Commandr extends EssentialsCommand
 
 		if (sender instanceof Player)
 		{
-			IUser user = getContext().getUser((Player)sender);
+			IUserComponent user = getContext().getUser((Player)sender);
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
 				message = Util.replaceColor(message);
@@ -58,7 +58,7 @@ public class Commandr extends EssentialsCommand
 		sender.sendMessage(_("msgFormat", _("me"), targetName, message));
 		if (target instanceof Player)
 		{
-			IUser player = getContext().getUser((Player)target);
+			IUserComponent player = getContext().getUser((Player)target);
 			if (player.isIgnoringPlayer(sender instanceof Player ? ((Player)sender).getName() : Console.NAME))
 			{
 				return;

@@ -6,7 +6,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.List;
 import java.util.Locale;
@@ -18,11 +18,11 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class Commandhome extends EssentialsCommand
 {
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		final Trade charge = new Trade(getCommandName(), getContext());
 		charge.isAffordableFor(user);
-		IUser player = user;
+		IUserComponent player = user;
 		String homeName = "";
 		String[] nameParts;
 		if (args.length > 0)

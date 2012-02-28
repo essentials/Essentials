@@ -4,7 +4,7 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import java.util.Locale;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +14,7 @@ public class Commandworth extends EssentialsCommand
 {
 	//TODO: Remove duplication
 	@Override
-	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 		ItemStack iStack = user.getInventory().getItemInHand();
 		int amount = iStack.getAmount();

@@ -5,7 +5,7 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import org.bukkit.inventory.ItemStack;
 
 //TODO: Sell Enchantment on Trade signs?
@@ -18,7 +18,7 @@ public class SignTrade extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
+	protected boolean onSignCreate(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		validateTrade(sign, 1, false, ess);
 		validateTrade(sign, 2, true, ess);
@@ -31,7 +31,7 @@ public class SignTrade extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException, ChargeException
+	protected boolean onSignInteract(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		if (sign.getLine(3).substring(2).equalsIgnoreCase(username))
 		{
@@ -72,7 +72,7 @@ public class SignTrade extends EssentialsSign
 		return true;
 	}
 
-	private Trade rechargeSign(final ISign sign, final IContext ess, final IUser player) throws SignException, ChargeException
+	private Trade rechargeSign(final ISign sign, final IContext ess, final IUserComponent player) throws SignException, ChargeException
 	{
 		final Trade trade = getTrade(sign, 2, false, false, ess);
 		if (trade.getItemStack() != null && player.getItemInHand() != null
@@ -96,7 +96,7 @@ public class SignTrade extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignBreak(final ISign sign, final IUser player, final String username, final IContext ess) throws SignException
+	protected boolean onSignBreak(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException
 	{
 		if ((sign.getLine(3).length() > 3 && sign.getLine(3).substring(2).equalsIgnoreCase(username))
 			|| SignsPermissions.TRADE_OVERRIDE.isAuthorized(player))

@@ -4,9 +4,9 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.components.users.UserData.TimestampType;
+import com.earth2me.essentials.components.settings.users.TimestampType;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 
@@ -22,7 +22,7 @@ public class Commandmute extends EssentialsCommand
 		}
 
 		@Cleanup
-		final IUser player = getPlayer(args, 0, true);
+		final IUserComponent player = getPlayer(args, 0, true);
 		player.acquireReadLock();
 		if (!player.getData().isMuted() && Permissions.MUTE_EXEMPT.isAuthorized(player))
 		{

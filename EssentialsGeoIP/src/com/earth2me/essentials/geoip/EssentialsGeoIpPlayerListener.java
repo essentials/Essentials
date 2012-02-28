@@ -3,7 +3,7 @@ package com.earth2me.essentials.geoip;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IReloadable;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
@@ -44,7 +44,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final IUser u = context.getUser(event.getPlayer());
+		final IUserComponent u = context.getUser(event.getPlayer());
 		if (Permissions.GEOIP_HIDE.isAuthorized(u))
 		{
 			return;
@@ -93,7 +93,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 			{
 				for (Player player : event.getPlayer().getServer().getOnlinePlayers())
 				{
-					final IUser user = context.getUser(player);
+					final IUserComponent user = context.getUser(player);
 					if (Permissions.GEOIP_SHOW.isAuthorized(user))
 					{
 						user.sendMessage(_("geoipJoinFormat", user.getDisplayName(), builder.toString()));

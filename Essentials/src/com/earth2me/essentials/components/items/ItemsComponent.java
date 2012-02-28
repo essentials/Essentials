@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IItemsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.storage.ManagedFile;
 import java.util.HashMap;
@@ -64,7 +64,7 @@ public class ItemsComponent extends Component implements IItemsComponent
 	}
 
 	@Override
-	public ItemStack get(final String id, final IUser user) throws Exception
+	public ItemStack get(final String id, final IUserComponent user) throws Exception
 	{
 		final ItemStack stack = get(id.toLowerCase(Locale.ENGLISH));
 

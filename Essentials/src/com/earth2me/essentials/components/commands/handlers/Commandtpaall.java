@@ -4,7 +4,7 @@ import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,17 +25,17 @@ public class Commandtpaall extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final IUser player = getPlayer(args, 0);
+		final IUserComponent player = getPlayer(args, 0);
 		teleportAAllPlayers(sender, player);
 	}
 
-	private void teleportAAllPlayers(final CommandSender sender, final IUser user)
+	private void teleportAAllPlayers(final CommandSender sender, final IUserComponent user)
 	{
 		sender.sendMessage(_("teleportAAll"));
 		for (Player onlinePlayer : getServer().getOnlinePlayers())
 		{
 			@Cleanup
-			final IUser player = getContext().getUser(onlinePlayer);
+			final IUserComponent player = getContext().getUser(onlinePlayer);
 			player.acquireReadLock();
 			if (user == player)
 			{

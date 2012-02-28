@@ -4,7 +4,7 @@ import com.earth2me.essentials.DescParseTickFormat;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.*;
 import org.bukkit.World;
@@ -107,7 +107,7 @@ public class Commandtime extends EssentialsCommand
 		// If there is no selector we want the world the user is currently in. Or all worlds if it isn't a user.
 		if (selector == null)
 		{
-			final IUser user = sender instanceof Player ? getContext().getUser((Player)sender) : null;
+			final IUserComponent user = sender instanceof Player ? getContext().getUser((Player)sender) : null;
 			if (user == null)
 			{
 				worlds.addAll(getServer().getWorlds());

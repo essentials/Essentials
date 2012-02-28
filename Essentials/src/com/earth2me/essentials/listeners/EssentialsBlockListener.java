@@ -2,7 +2,7 @@ package com.earth2me.essentials.listeners;
 
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,7 +35,7 @@ public class EssentialsBlockListener implements Listener
 		{
 			return;
 		}
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		final boolean unlimitedForUser = user.getData().hasUnlimited(itemstack.getType());
 		if (unlimitedForUser && user.getGameMode() == GameMode.SURVIVAL)
 		{

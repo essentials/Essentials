@@ -3,7 +3,7 @@ package com.earth2me.essentials.textreader;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.HelpPermissions;
 import java.io.IOException;
 import java.util.*;
@@ -24,7 +24,7 @@ public class HelpInput implements IText
 	private final transient Map<String, Integer> bookmarks = new HashMap<String, Integer>();
 	private final static Logger logger = Logger.getLogger("Minecraft");
 
-	public HelpInput(final IUser user, final String match, final IContext ess) throws IOException
+	public HelpInput(final IUserComponent user, final String match, final IContext ess) throws IOException
 	{
 		@Cleanup
 		final ISettingsComponent settings = ess.getSettings();

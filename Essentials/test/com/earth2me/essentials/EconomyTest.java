@@ -1,8 +1,8 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.components.economy.NoLoanPermittedException;
-import com.earth2me.essentials.components.users.User;
-import com.earth2me.essentials.components.users.UserDoesNotExistException;
+import com.earth2me.essentials.components.settings.users.UserComponent;
+import com.earth2me.essentials.components.settings.users.UserDoesNotExistException;
 import com.earth2me.essentials.craftbukkit.DummyOfflinePlayer;
 import java.io.IOException;
 import junit.framework.TestCase;
@@ -35,7 +35,7 @@ public class EconomyTest extends TestCase
 		{
 			fail("IOException");
 		}
-		server.addPlayer(new User(new DummyOfflinePlayer(PLAYERNAME), essentials.getContext()));
+		server.addPlayer(new UserComponent(new DummyOfflinePlayer(PLAYERNAME), essentials.getContext()));
 	}
 
 	// only one big test, since we use static instances

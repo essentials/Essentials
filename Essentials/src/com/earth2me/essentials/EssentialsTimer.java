@@ -3,8 +3,8 @@ package com.earth2me.essentials;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.users.IUser;
-import com.earth2me.essentials.components.users.UserData.TimestampType;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.settings.users.TimestampType;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 public class EssentialsTimer implements Runnable
 {
 	private final transient IContext context;
-	private final transient Set<IUser> onlineUsers = new HashSet<IUser>();
+	private final transient Set<IUserComponent> onlineUsers = new HashSet<IUserComponent>();
 
 	EssentialsTimer(final IContext context)
 	{
@@ -33,7 +33,7 @@ public class EssentialsTimer implements Runnable
 
 			try
 			{
-				final IUser user = context.getUser(player);
+				final IUserComponent user = context.getUser(player);
 				onlineUsers.add(user);
 				user.setLastOnlineActivity(currentTime);
 				user.checkActivity();
@@ -65,10 +65,10 @@ public class EssentialsTimer implements Runnable
 			}
 		}
 
-		final Iterator<IUser> iterator = onlineUsers.iterator();
+		final Iterator<IUserComponent> iterator = onlineUsers.iterator();
 		while (iterator.hasNext())
 		{
-			final IUser user = iterator.next();
+			final IUserComponent user = iterator.next();
 			if (user.getLastOnlineActivity() < currentTime && user.getLastOnlineActivity() > user.getTimestamp(TimestampType.LOGOUT))
 			{
 				user.setTimestamp(TimestampType.LOGOUT, user.getLastOnlineActivity());

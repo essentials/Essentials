@@ -1,7 +1,7 @@
-package com.earth2me.essentials.api;
+package com.earth2me.essentials.components.settings.users;
 
 import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.components.users.IUser;
+import com.earth2me.essentials.components.settings.users.IUserComponent;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -19,7 +19,7 @@ public interface ITeleport
 
 	void teleport(Entity entity, Trade chargeFor, TeleportCause cause) throws Exception;
 
-	void home(IUser player, String toLowerCase, Trade charge) throws Exception;
+	void home(IUserComponent player, String toLowerCase, Trade charge) throws Exception;
 
 	void respawn(Trade charge, TeleportCause teleportCause) throws Exception;
 
