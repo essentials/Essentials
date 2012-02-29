@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
@@ -31,19 +31,19 @@ public class Commandafk extends EssentialsCommand
 	{
 		if (!user.toggleAfk())
 		{
-			//user.sendMessage(_("markedAsNotAway"));
+			//user.sendMessage($("markedAsNotAway"));
 			if (!user.isHidden())
 			{
-				getContext().getMessager().broadcastMessage(user, _("userIsNotAway", user.getDisplayName()));
+				getContext().getMessager().broadcastMessage(user, $("userIsNotAway", user.getDisplayName()));
 			}
 			user.updateActivity(false);
 		}
 		else
 		{
-			//user.sendMessage(_("markedAsAway"));
+			//user.sendMessage($("markedAsAway"));
 			if (!user.isHidden())
 			{
-				getContext().getMessager().broadcastMessage(user, _("userIsAway", user.getDisplayName()));
+				getContext().getMessager().broadcastMessage(user, $("userIsAway", user.getDisplayName()));
 			}
 		}
 	}

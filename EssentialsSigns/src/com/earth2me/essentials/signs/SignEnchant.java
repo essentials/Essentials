@@ -1,11 +1,11 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.ChargeException;
+import com.earth2me.essentials.components.economy.ChargeException;
 import com.earth2me.essentials.Enchantments;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.util.Locale;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -25,12 +25,12 @@ public class SignEnchant extends EssentialsSign
 		final String[] enchantLevel = sign.getLine(2).split(":");
 		if (enchantLevel.length != 2)
 		{
-			throw new SignException(_("invalidSignLine", 3));
+			throw new SignException($("invalidSignLine", 3));
 		}
 		final Enchantment enchantment = Enchantments.getByName(enchantLevel[0]);
 		if (enchantment == null)
 		{
-			throw new SignException(_("enchantmentNotFound"));
+			throw new SignException($("enchantmentNotFound"));
 		}
 		int level;
 		try
@@ -62,6 +62,7 @@ public class SignEnchant extends EssentialsSign
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	protected boolean onSignInteract(ISign sign, IUserComponent player, String username, IContext ess) throws SignException, ChargeException
 	{
 		final ItemStack search = sign.getLine(1).equals("*") || sign.getLine(1).equalsIgnoreCase("any") ? null : getItemStack(sign.getLine(1), 1, ess);
@@ -71,12 +72,12 @@ public class SignEnchant extends EssentialsSign
 		final String[] enchantLevel = sign.getLine(2).split(":");
 		if (enchantLevel.length != 2)
 		{
-			throw new SignException(_("invalidSignLine", 3));
+			throw new SignException($("invalidSignLine", 3));
 		}
 		final Enchantment enchantment = Enchantments.getByName(enchantLevel[0]);
 		if (enchantment == null)
 		{
-			throw new SignException(_("enchantmentNotFound"));
+			throw new SignException($("enchantmentNotFound"));
 		}
 		int level;
 		try
@@ -94,11 +95,11 @@ public class SignEnchant extends EssentialsSign
 			|| (playerHand.containsEnchantment(enchantment)
 				&& playerHand.getEnchantmentLevel(enchantment) == level))
 		{
-			throw new SignException(_("missingItems", 1, sign.getLine(1)));
+			throw new SignException($("missingItems", 1, sign.getLine(1)));
 		}
 		if (search != null && playerHand.getType() != search.getType())
 		{
-			throw new SignException(_("missingItems", 1, search.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ')));
+			throw new SignException($("missingItems", 1, search.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ')));
 		}
 
 		final ItemStack toEnchant = playerHand;

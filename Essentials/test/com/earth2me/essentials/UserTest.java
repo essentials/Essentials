@@ -1,7 +1,7 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.components.settings.users.UserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.components.users.UserComponent;
 import com.earth2me.essentials.craftbukkit.DummyOfflinePlayer;
 import java.io.IOException;
 import junit.framework.TestCase;

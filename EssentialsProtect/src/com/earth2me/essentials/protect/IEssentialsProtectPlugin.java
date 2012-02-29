@@ -1,5 +1,6 @@
 package com.earth2me.essentials.protect;
 
+import com.earth2me.essentials.protect.settings.ProtectSettingsComponent;
 import com.earth2me.essentials.api.IEssentialsPlugin;
 import com.earth2me.essentials.protect.data.IProtectedBlock;
 

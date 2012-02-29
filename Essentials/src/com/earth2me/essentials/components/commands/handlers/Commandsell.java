@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -74,7 +74,7 @@ public class Commandsell extends EssentialsCommand
 	{
 		if (is == null || is.getType() == Material.AIR)
 		{
-			throw new Exception(_("itemSellAir"));
+			throw new Exception($("itemSellAir"));
 		}
 		int id = is.getTypeId();
 		int amount = 0;
@@ -91,7 +91,7 @@ public class Commandsell extends EssentialsCommand
 
 		if (Double.isNaN(worth))
 		{
-			throw new Exception(_("itemCannotBeSold"));
+			throw new Exception($("itemCannotBeSold"));
 		}
 
 
@@ -130,9 +130,9 @@ public class Commandsell extends EssentialsCommand
 		{
 			if (!isBulkSell)
 			{
-				user.sendMessage(_("itemNotEnough1"));
-				user.sendMessage(_("itemNotEnough2"));
-				throw new Exception(_("itemNotEnough3"));
+				user.sendMessage($("itemNotEnough1"));
+				user.sendMessage($("itemNotEnough2"));
+				throw new Exception($("itemNotEnough3"));
 			}
 			else
 			{
@@ -147,8 +147,8 @@ public class Commandsell extends EssentialsCommand
 		user.updateInventory();
 		Trade.log("Command", "Sell", "Item", user.getName(), new Trade(ris, getContext()), user.getName(), new Trade(worth * amount, getContext()), user.getLocation(), getContext());
 		user.giveMoney(worth * amount);
-		user.sendMessage(_("itemSold", Util.formatCurrency(worth * amount, getContext()), amount, is.getType().toString().toLowerCase(Locale.ENGLISH), Util.formatCurrency(worth, getContext())));
-		getLogger().log(Level.INFO, _("itemSoldConsole", user.getDisplayName(), is.getType().toString().toLowerCase(Locale.ENGLISH), Util.formatCurrency(worth * amount, getContext()), amount, Util.formatCurrency(worth, getContext())));
+		user.sendMessage($("itemSold", Util.formatCurrency(worth * amount, getContext()), amount, is.getType().toString().toLowerCase(Locale.ENGLISH), Util.formatCurrency(worth, getContext())));
+		getLogger().log(Level.INFO, $("itemSoldConsole", user.getDisplayName(), is.getType().toString().toLowerCase(Locale.ENGLISH), Util.formatCurrency(worth * amount, getContext()), amount, Util.formatCurrency(worth, getContext())));
 
 	}
 }

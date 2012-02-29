@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.items;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IItemsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.storage.ManagedFile;
 import java.util.HashMap;
@@ -42,9 +42,9 @@ public class ItemsComponent extends Component implements IItemsComponent
 
 		items.clear();
 
-		for (String line : lines)
+		for (String paddedLine : lines)
 		{
-			line = line.trim();
+			final String line = paddedLine.trim();
 			if (line.length() > 0 && line.charAt(0) == '#')
 			{
 				continue;
@@ -140,14 +140,14 @@ public class ItemsComponent extends Component implements IItemsComponent
 			}
 			else
 			{
-				throw new Exception(_("unknownItemName", id));
+				throw new Exception($("unknownItemName", id));
 			}
 		}
 
 		final Material mat = Material.getMaterial(itemid);
 		if (mat == null)
 		{
-			throw new Exception(_("unknownItemId", itemid));
+			throw new Exception($("unknownItemId", itemid));
 		}
 		final ItemStack retval = new ItemStack(mat);
 		retval.setAmount(mat.getMaxStackSize());

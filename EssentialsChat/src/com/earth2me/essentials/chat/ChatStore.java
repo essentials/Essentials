@@ -2,7 +2,7 @@ package com.earth2me.essentials.chat;
 
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 
 
 public class ChatStore

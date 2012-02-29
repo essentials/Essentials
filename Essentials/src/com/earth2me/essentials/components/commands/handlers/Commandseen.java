@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.components.settings.users.TimestampType;
+import com.earth2me.essentials.components.users.TimeStampType;
 import org.bukkit.command.CommandSender;
 
 
@@ -21,19 +21,19 @@ public class Commandseen extends EssentialsCommand
 		try
 		{
 			IUserComponent u = getPlayer(args, 0);
-			sender.sendMessage(_("seenOnline", u.getDisplayName(), Util.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
+			sender.sendMessage($("seenOnline", u.getDisplayName(), Util.formatDateDiff(u.getTimeStamp(TimeStampType.LOGIN))));
 		}
 		catch (NoSuchFieldException e)
 		{
 			IUserComponent u = getContext().getUser(args[0]);
 			if (u == null)
 			{
-				throw new Exception(_("playerNotFound"));
+				throw new Exception($("playerNotFound"));
 			}
-			sender.sendMessage(_("seenOffline", u.getDisplayName(), Util.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
+			sender.sendMessage($("seenOffline", u.getDisplayName(), Util.formatDateDiff(u.getTimeStamp(TimeStampType.LOGOUT))));
 			if (u.isBanned())
 			{
-				sender.sendMessage(_("whoisBanned", _("true")));
+				sender.sendMessage($("whoisBanned", $("true")));
 			}
 		}
 	}

@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.GroupsPermissions;
 import com.earth2me.essentials.storage.StorageComponent;
 import java.text.MessageFormat;
@@ -26,7 +26,7 @@ public class GroupsComponent extends StorageComponent<Groups, IEssentials> imple
 	@Override
 	public String getContainerId()
 	{
-		return "settings.groups";
+		return "group-specific-settings";
 	}
 
 	public Collection<Entry<String, Group>> getGroups(final IUserComponent player)

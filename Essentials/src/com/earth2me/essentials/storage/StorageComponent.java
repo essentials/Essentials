@@ -8,24 +8,27 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 
-public abstract class StorageComponent<T extends IStorageObject, U extends Plugin> extends Component implements IStorageObjectHolder<T>
+public abstract class StorageComponent<T extends IStorageObject, U extends Plugin> extends Component implements IStorageComponent<T, U>
 {
+	// Explicitly defined getter.
+	@Setter
 	private transient T data;
 	private final transient ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
 	private final transient Class<T> clazz;
 	private final transient StorageObjectDataWriter writer;
 	private final transient StorageObjectDataReader reader;
 	private final transient AtomicBoolean loaded = new AtomicBoolean(false);
+	// Explicitly defined getter.
+	@Setter
 	private transient File storageFile;
 	private final transient U plugin;
 
-	public abstract String getContainerId();
-
-	public StorageComponent(final IContext context, final Class<T> clazz, U plugin)
+	protected StorageComponent(final IContext context, final Class<T> clazz, U plugin)
 	{
 		super(context);
 
@@ -45,6 +48,7 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 		}
 	}
 
+	@Override
 	public final U getPlugin()
 	{
 		return plugin;
@@ -90,14 +94,6 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 	}
 
 	@Override
-	public void close()
-	{
-		unlock();
-
-		super.close();
-	}
-
-	@Override
 	public final void unlock()
 	{
 		if (rwl.isWriteLockedByCurrentThread())
@@ -118,6 +114,7 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 		// Call super.reload in reload(boolean).
 	}
 
+	@Override
 	public void reload(final boolean instant)
 	{
 		reader.schedule(instant);
@@ -125,6 +122,7 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 		super.reload();
 	}
 
+	@Override
 	public final File getStorageFile()
 	{
 		if (storageFile == null)

@@ -1,12 +1,11 @@
 package com.earth2me.essentials.spawn;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.settings.Spawns;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.storage.StorageComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.storage.IStorageComponent;
 import com.earth2me.essentials.storage.LocationData.WorldNotLoadedException;
-import java.io.File;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -15,34 +14,19 @@ import org.bukkit.World;
 import org.bukkit.event.EventPriority;
 
 
-public final class SpawnStorageComponent extends StorageComponent<Spawns> implements IComponent
+public final class SpawnStorageComponent extends StorageComponent<Spawns, EssentialsSpawn> implements IStorageComponent<Spawns, EssentialsSpawn>
 {
-	public SpawnStorageComponent(final IContext context)
+	public SpawnStorageComponent(final IContext context, final EssentialsSpawn plugin)
 	{
-		super(context, Spawns.class);
-	}
-
-	@Override
-	public String getTypeId()
-	{
-		return "SpawnStorageComponent";
+		super(context, Spawns.class, plugin);
 	}
 
 	@Override
 	public void initialize()
 	{
+		super.initialize();
+
 		reload();
-	}
-
-	@Override
-	public void onEnable()
-	{
-	}
-
-	@Override
-	public File getStorageFile()
-	{
-		return new File(getContext().getDataFolder(), "spawn.yml");
 	}
 
 	public void setSpawn(final Location loc, final String group)
@@ -176,5 +160,11 @@ public final class SpawnStorageComponent extends StorageComponent<Spawns> implem
 		{
 			unlock();
 		}
+	}
+
+	@Override
+	public String getContainerId()
+	{
+		return "spawns-database";
 	}
 }

@@ -1,10 +1,10 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.components.settings.users.TimestampType;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.components.users.TimeStampType;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -55,7 +55,7 @@ public class EssentialsTimer implements Runnable
 					final List<String> mail = user.getMails();
 					if (mail != null && !mail.isEmpty())
 					{
-						user.sendMessage(_("youHaveNewMail", mail.size()));
+						user.sendMessage($("youHaveNewMail", mail.size()));
 					}
 				}
 			}
@@ -65,16 +65,19 @@ public class EssentialsTimer implements Runnable
 			}
 		}
 
+		// This cannot be a for-each loop, as we use iterator.remove().
 		final Iterator<IUserComponent> iterator = onlineUsers.iterator();
 		while (iterator.hasNext())
 		{
 			final IUserComponent user = iterator.next();
-			if (user.getLastOnlineActivity() < currentTime && user.getLastOnlineActivity() > user.getTimestamp(TimestampType.LOGOUT))
+
+			if (user.getLastOnlineActivity() < currentTime && user.getLastOnlineActivity() > user.getTimeStamp(TimeStampType.LOGOUT))
 			{
-				user.setTimestamp(TimestampType.LOGOUT, user.getLastOnlineActivity());
+				user.setTimeStamp(TimeStampType.LOGOUT, user.getLastOnlineActivity());
 				iterator.remove();
 				continue;
 			}
+
 			user.checkMuteTimeout(currentTime);
 			user.checkJailTimeout(currentTime);
 		}

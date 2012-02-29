@@ -1,9 +1,9 @@
 package com.earth2me.essentials.textreader;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.HelpPermissions;
 import java.io.IOException;
 import java.util.*;
@@ -24,6 +24,7 @@ public class HelpInput implements IText
 	private final transient Map<String, Integer> bookmarks = new HashMap<String, Integer>();
 	private final static Logger logger = Logger.getLogger("Minecraft");
 
+	@SuppressWarnings("unchecked")
 	public HelpInput(final IUserComponent user, final String match, final IContext ess) throws IOException
 	{
 		@Cleanup
@@ -36,7 +37,7 @@ public class HelpInput implements IText
 			try
 			{
 				final PluginDescriptionFile desc = p.getDescription();
-				final HashMap<String, HashMap<String, Object>> cmds = (HashMap<String, HashMap<String, Object>>)desc.getCommands();
+				final HashMap<String, HashMap<String, Object>> cmds = (HashMap)desc.getCommands();
 				pluginName = p.getDescription().getName().toLowerCase(Locale.ENGLISH);
 				for (Map.Entry<String, HashMap<String, Object>> k : cmds.entrySet())
 				{
@@ -77,10 +78,10 @@ public class HelpInput implements IText
 								{
 									lines.add("§c" + k.getKey() + "§7: " + value.get(DESCRIPTION));
 								}
-								else if (permissions instanceof List && !((List<Object>)permissions).isEmpty())
+								else if (permissions instanceof List && !((List)permissions).isEmpty())
 								{
 									boolean enabled = false;
-									for (Object o : (List<Object>)permissions)
+									for (Object o : (List)permissions)
 									{
 										if (o instanceof String && user.hasPermission(o.toString()))
 										{
@@ -124,7 +125,7 @@ public class HelpInput implements IText
 			{
 				if (!reported)
 				{
-					logger.log(Level.WARNING, _("commandHelpFailedForPlugin", pluginName), ex);
+					logger.log(Level.WARNING, $("commandHelpFailedForPlugin", pluginName), ex);
 				}
 				reported = true;
 				continue;
@@ -135,18 +136,18 @@ public class HelpInput implements IText
 	@Override
 	public List<String> getLines()
 	{
-		return lines;
+		return Collections.unmodifiableList(lines);
 	}
 
 	@Override
 	public List<String> getChapters()
 	{
-		return chapters;
+		return Collections.unmodifiableList(chapters);
 	}
 
 	@Override
 	public Map<String, Integer> getBookmarks()
 	{
-		return bookmarks;
+		return Collections.unmodifiableMap(bookmarks);
 	}
 }

@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.commands.handlers;
 
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 
 
 public class Commandpowertooltoggle extends EssentialsCommand
@@ -12,13 +12,13 @@ public class Commandpowertooltoggle extends EssentialsCommand
 	{
 		if (!user.getData().hasPowerTools())
 		{
-			user.sendMessage(_("noPowerTools"));
+			user.sendMessage($("noPowerTools"));
 			return;
 		}
 		user.acquireWriteLock();
 		user.getData().setPowerToolsEnabled(!user.getData().isPowerToolsEnabled());
 		user.sendMessage(user.getData().isPowerToolsEnabled()
-						 ? _("powerToolsEnabled")
-						 : _("powerToolsDisabled"));
+						 ? $("powerToolsEnabled")
+						 : $("powerToolsDisabled"));
 	}
 }

@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -79,7 +79,7 @@ public enum Mob
 		final LivingEntity entity = player.getWorld().spawn(loc, (Class<? extends LivingEntity>)this.bukkitType.getEntityClass());
 		if (entity == null)
 		{
-			logger.log(Level.WARNING, _("unableToSpawnMob"));
+			logger.log(Level.WARNING, $("unableToSpawnMob"));
 			throw new MobException();
 		}
 		return entity;

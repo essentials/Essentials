@@ -7,6 +7,8 @@ public interface IStorageObjectHolder<T extends IStorageObject> extends IReloada
 {
 	T getData();
 
+	void setData(T data);
+
 	void acquireReadLock();
 
 	void acquireWriteLock();

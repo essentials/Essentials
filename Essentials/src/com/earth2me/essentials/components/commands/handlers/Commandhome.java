@@ -1,15 +1,17 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.storage.LocationData;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -48,11 +50,11 @@ public class Commandhome extends EssentialsCommand
 				final Location bed = player.getBedSpawnLocation();
 				if (bed != null && bed.getBlock().getType() == Material.BED_BLOCK)
 				{
-					user.getTeleport().teleport(bed, charge, TeleportCause.COMMAND);
+					user.getTeleporter().teleport(bed, charge, TeleportCause.COMMAND);
 					throw new NoChargeException();
 				}
 			}
-			user.getTeleport().home(player, homeName.toLowerCase(Locale.ENGLISH), charge);
+			user.getTeleporter().home(player, homeName.toLowerCase(Locale.ENGLISH), charge);
 		}
 		catch (NotEnoughArgumentsException e)
 		{
@@ -61,32 +63,33 @@ public class Commandhome extends EssentialsCommand
 			{
 				bed = null;
 			}
-			final List<String> homes = player.getHomes();
+			final Map<String, LocationData> homes = player.getHomes();
 			if (homes.isEmpty() && player.equals(user))
 			{
 				if (bed != null)
 				{
-					user.getTeleport().teleport(bed, charge, TeleportCause.COMMAND);
+					user.getTeleporter().teleport(bed, charge, TeleportCause.COMMAND);
 					throw new NoChargeException();
 				}
-				user.getTeleport().respawn(charge, TeleportCause.COMMAND);
+				user.getTeleporter().respawn(charge, TeleportCause.COMMAND);
 
 			}
 			else if (homes.isEmpty())
 			{
-				throw new Exception(player == user ? _("noHomeSet") : _("noHomeSetPlayer"));
+				throw new Exception(player == user ? $("noHomeSet") : $("noHomeSetPlayer"));
 			}
 			else if (homes.size() == 1 && player.equals(user))
 			{
-				user.getTeleport().home(player, homes.get(0), charge);
+				user.getTeleporter().home(player, homes.keySet().toArray(new String[0])[0], charge);
 			}
 			else
 			{
+				final List<String> homeList = new ArrayList<String>(homes.keySet());
 				if (bed != null)
 				{
-					homes.add("bed");
+					homeList.add("bed");
 				}
-				user.sendMessage(_("homes", Util.joinList(homes)));
+				user.sendMessage($("homes", homeList));
 			}
 		}
 		throw new NoChargeException();

@@ -2,7 +2,7 @@ package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.economy.NoLoanPermittedException;
-import com.earth2me.essentials.components.settings.users.UserDoesNotExistException;
+import com.earth2me.essentials.components.users.UserDoesNotExistException;
 
 
 /**

@@ -2,8 +2,8 @@ package com.earth2me.essentials.spawn;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.SimpleTextInput;
@@ -116,12 +116,12 @@ public class EssentialsSpawnPlayerListener implements Listener
 				final Location spawn = spawns.getNewbieSpawn();
 				if (spawn != null)
 				{
-					user.getTeleport().now(spawn, false, TeleportCause.PLUGIN);
+					user.getTeleporter().now(spawn, false, TeleportCause.PLUGIN);
 				}
 			}
 			catch (Exception ex)
 			{
-				Bukkit.getLogger().log(Level.WARNING, _("teleportNewPlayerError"), ex);
+				Bukkit.getLogger().log(Level.WARNING, $("teleportNewPlayerError"), ex);
 			}
 		}
 	}

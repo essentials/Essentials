@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LightningStrike;
@@ -29,7 +29,7 @@ public class Commandlightning extends EssentialsCommand
 
 		if (getServer().matchPlayer(args[0]).isEmpty())
 		{
-			throw new Exception(_("playerNotFound"));
+			throw new Exception($("playerNotFound"));
 		}
 
 		int power = 1;
@@ -46,7 +46,7 @@ public class Commandlightning extends EssentialsCommand
 
 		for (Player matchPlayer : getServer().matchPlayer(args[0]))
 		{
-			sender.sendMessage(_("lightningUse", matchPlayer.getDisplayName()));
+			sender.sendMessage($("lightningUse", matchPlayer.getDisplayName()));
 			if (power <= 0)
 			{
 				matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
@@ -65,7 +65,7 @@ public class Commandlightning extends EssentialsCommand
 			settings.acquireReadLock();
 			if (settings.getData().getCommands().getLightning().isWarnPlayer())
 			{
-				matchPlayer.sendMessage(_("lightningSmited"));
+				matchPlayer.sendMessage($("lightningSmited"));
 			}
 		}
 	}

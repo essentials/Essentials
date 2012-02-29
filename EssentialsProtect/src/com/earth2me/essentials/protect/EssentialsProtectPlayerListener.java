@@ -1,6 +1,7 @@
 package com.earth2me.essentials.protect;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.protect.settings.ProtectSettingsComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -38,7 +39,7 @@ public class EssentialsProtectPlayerListener implements Listener
 			{
 				if (settings.getData().isWarnOnBuildDisallow())
 				{
-					user.sendMessage(_("buildAlert"));
+					user.sendMessage($("buildAlert"));
 				}
 				event.setCancelled(true);
 				return;
@@ -48,7 +49,7 @@ public class EssentialsProtectPlayerListener implements Listener
 			{
 				if (settings.getData().isWarnOnBuildDisallow())
 				{
-					user.sendMessage(_("buildAlert"));
+					user.sendMessage($("buildAlert"));
 				}
 				event.setCancelled(true);
 				return;
@@ -79,14 +80,14 @@ public class EssentialsProtectPlayerListener implements Listener
 				final String ownerNames = stringBuilder.toString();
 				if (ownerNames != null && !ownerNames.isEmpty())
 				{
-					user.sendMessage(_("protectionOwner", ownerNames));
+					user.sendMessage($("protectionOwner", ownerNames));
 				}
 			}
 			if (item != null
 				&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user)
 				&& settings.getData().getAlertOnUse().contains(item.getType()))
 			{
-				parent.getContext().getMessager().alert(user, item.getType().toString(), _("alertUsed"), Permissions.ALERTS);
+				parent.getContext().getMessager().alert(user, item.getType().toString(), $("alertUsed"), Permissions.ALERTS);
 			}
 		}
 		finally

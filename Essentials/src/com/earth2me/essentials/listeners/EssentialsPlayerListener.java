@@ -1,11 +1,12 @@
 package com.earth2me.essentials.listeners;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.components.settings.users.TimestampType;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.components.users.Inventory;
+import com.earth2me.essentials.components.users.TimeStampType;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
@@ -59,17 +60,16 @@ public class EssentialsPlayerListener implements Listener
 	{
 		@Cleanup
 		final IUserComponent user = context.getUser(event.getPlayer());
-		user.acquireReadLock();
-		if (user.getData().isMuted())
+		if (user.isMuted())
 		{
 			event.setCancelled(true);
-			user.sendMessage(_("playerMuted"));
-			LOGGER.info(_("mutedUserSpeaks", user.getName()));
+			user.sendMessage($("playerMuted"));
+			LOGGER.info($("mutedUserSpeaks", user.getName()));
 		}
 		final Iterator<Player> it = event.getRecipients().iterator();
 		while (it.hasNext())
 		{
-			final IUser player = context.getUser(it.next());
+			final IUserComponent player = context.getUser(it.next());
 			if (player.isIgnoringPlayer(user.getName()))
 			{
 				it.remove();
@@ -88,12 +88,11 @@ public class EssentialsPlayerListener implements Listener
 		}
 		@Cleanup
 		final IUserComponent user = context.getUser(event.getPlayer());
-		user.acquireReadLock();
-		@Cleanup
+		@Cleanup(value = "unlock")
 		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
 
-		if (user.getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers())
+		if (user.isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers())
 		{
 			final Location from = event.getFrom();
 			final Location to = event.getTo().clone();
@@ -111,7 +110,16 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 
-		final Location afk = user.getAfkPosition();
+		Location afk;
+		try
+		{
+			afk = user.getAfkPosition();
+		}
+		catch (Throwable ex)
+		{
+			afk = null;
+		}
+
 		if (afk == null || !event.getTo().getWorld().equals(afk.getWorld()) || afk.distanceSquared(event.getTo()) > 9)
 		{
 			user.updateActivity(true);
@@ -123,7 +131,7 @@ public class EssentialsPlayerListener implements Listener
 	{
 		@Cleanup
 		final IUserComponent user = context.getUser(event.getPlayer());
-		user.acquireReadLock();
+
 		@Cleanup
 		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
@@ -131,25 +139,23 @@ public class EssentialsPlayerListener implements Listener
 		{
 			user.toggleGodModeEnabled();
 		}
-		if (user.getData().getInventory() != null)
+		if (user.getInventory() != null)
 		{
-			user.getInventory().setContents(user.getData().getInventory().getBukkitInventory());
-			user.getData().setInventory(null);
+			user.setLastInventory(new Inventory(user.getInventory().getContents()));
 		}
 		user.updateActivity(false);
-		user.dispose();
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
 		context.getBackup().startTask();
+
 		@Cleanup
 		final IUserComponent user = context.getUser(event.getPlayer());
-		user.acquireWriteLock();
 
 		user.updateDisplayName();
-		user.getData().setIpAddress(user.getAddress().getAddress().getHostAddress());
+		user.setIpAddress(user.getAddress().getAddress().getHostAddress());
 		user.updateActivity(false);
 		if (Permissions.SLEEPINGIGNORED.isAuthorized(user))
 		{
@@ -184,14 +190,14 @@ public class EssentialsPlayerListener implements Listener
 
 		if (!settings.getData().getCommands().isDisabled("mail") && Permissions.MAIL.isAuthorized(user))
 		{
-			final List<String> mail = user.getData().getMails();
+			final List<String> mail = user.getMails();
 			if (mail == null || mail.isEmpty())
 			{
-				user.sendMessage(_("noNewMail"));
+				user.sendMessage($("noNewMail"));
 			}
 			else
 			{
-				user.sendMessage(_("youHaveNewMail", mail.size()));
+				user.sendMessage($("youHaveNewMail", mail.size()));
 			}
 		}
 	}
@@ -205,8 +211,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 		@Cleanup
 		final IUserComponent user = context.getUser(event.getPlayer());
-		user.acquireWriteLock();
-		user.getData().setNpc(false);
+		user.setNpc(false);
 
 		final long currentTime = System.currentTimeMillis();
 		final boolean banExpired = user.checkBanTimeout(currentTime);
@@ -215,19 +220,19 @@ public class EssentialsPlayerListener implements Listener
 
 		if (!banExpired && (user.isBanned() || event.getResult() == Result.KICK_BANNED))
 		{
-			final String banReason = user.getData().getBan() == null ? "" : user.getData().getBan().getReason();
-			event.disallow(Result.KICK_BANNED, banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban") ? _("defaultBanReason") : banReason);
+			final String banReason = user.getBan() == null ? "" : user.getBan().getReason();
+			event.disallow(Result.KICK_BANNED, banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban") ? $("defaultBanReason") : banReason);
 			return;
 		}
 
 		if (server.getOnlinePlayers().length >= server.getMaxPlayers() && !Permissions.JOINFULLSERVER.isAuthorized(user))
 		{
-			event.disallow(Result.KICK_FULL, _("serverFull"));
+			event.disallow(Result.KICK_FULL, $("serverFull"));
 			return;
 		}
 		event.allow();
 
-		user.setTimestamp(TimestampType.LOGIN, System.currentTimeMillis());
+		user.setTimeStamp(TimeStampType.LOGIN, System.currentTimeMillis());
 		user.updateCompass();
 	}
 
@@ -242,7 +247,7 @@ public class EssentialsPlayerListener implements Listener
 		@Cleanup
 		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
-		final IUser user = context.getUser(event.getPlayer());
+		final IUserComponent user = context.getUser(event.getPlayer());
 		//There is TeleportCause.COMMMAND but plugins have to actively pass the cause in on their teleports.
 		if ((event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND) && settings.getData().getCommands().getBack().isRegisterBackInListener())
 		{
@@ -259,9 +264,9 @@ public class EssentialsPlayerListener implements Listener
 	{
 		@Cleanup
 		final IUserComponent user = context.getUser(event.getPlayer());
-		user.acquireReadLock();
+
 		final ItemStack hand = new ItemStack(Material.EGG, 1);
-		if (user.getData().hasUnlimited(hand.getType()))
+		if (user.hasUnlimited(hand.getType()))
 		{
 			user.getInventory().addItem(hand);
 			user.updateInventory();
@@ -273,8 +278,8 @@ public class EssentialsPlayerListener implements Listener
 	{
 		@Cleanup
 		final IUserComponent user = context.getUser(event.getPlayer());
-		user.acquireReadLock();
-		if (user.getData().hasUnlimited(event.getBucket()))
+
+		if (user.hasUnlimited(event.getBucket()))
 		{
 			event.getItemStack().setType(event.getBucket());
 			context.getScheduler().scheduleSyncDelayedTask(new Runnable()
@@ -302,48 +307,40 @@ public class EssentialsPlayerListener implements Listener
 
 	private void usePowertools(final IUserComponent user)
 	{
-		user.acquireReadLock();
-		try
+		if (!user.hasPowerTools() || !user.isPowerToolsEnabled())
 		{
-			if (!user.getData().hasPowerTools() || !user.getData().isPowerToolsEnabled())
-			{
-				return;
-			}
-
-			final ItemStack hand = user.getItemInHand();
-			Material type;
-			if (hand == null || (type = hand.getType()) == Material.AIR)
-			{
-				return;
-			}
-			final List<String> commandList = user.getData().getPowertool(type);
-
-			if (commandList == null || commandList.isEmpty())
-			{
-				return;
-			}
-
-			// We need to loop through each command and execute
-			for (String command : commandList)
-			{
-				if (command.matches(".*\\{player\\}.*"))
-				{
-					//user.sendMessage("Click a player to use this command");
-					continue;
-				}
-				else if (command.startsWith("c:"))
-				{
-					user.chat(command.substring(2));
-				}
-				else
-				{
-					user.getServer().dispatchCommand(user.getBase(), command);
-				}
-			}
+			return;
 		}
-		finally
+
+		final ItemStack hand = user.getItemInHand();
+		Material type;
+		if (hand == null || (type = hand.getType()) == Material.AIR)
 		{
-			user.unlock();
+			return;
+		}
+		final List<String> commandList = user.getPowerTool(type);
+
+		if (commandList == null || commandList.isEmpty())
+		{
+			return;
+		}
+
+		// We need to loop through each command and execute
+		for (String command : commandList)
+		{
+			if (command.matches(".*\\{player\\}.*"))
+			{
+				//user.sendMessage("Click a player to use this command");
+				continue;
+			}
+			else if (command.startsWith("c:"))
+			{
+				user.chat(command.substring(2));
+			}
+			else
+			{
+				user.getServer().dispatchCommand(user.getBase(), command);
+			}
 		}
 	}
 
@@ -363,8 +360,8 @@ public class EssentialsPlayerListener implements Listener
 			{
 				@Cleanup
 				IUserComponent spyer = context.getUser(player);
-				spyer.acquireReadLock();
-				if (spyer.getData().isSocialspy() && !user.equals(spyer))
+
+				if (spyer.isSocialSpy() && !user.equals(spyer))
 				{
 					player.sendMessage(user.getDisplayName() + " : " + event.getMessage());
 				}
@@ -383,21 +380,21 @@ public class EssentialsPlayerListener implements Listener
 		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
 		@Cleanup
-		final IUser user = context.getUser(event.getPlayer());
-		user.acquireReadLock();
+		final IUserComponent user = context.getUser(event.getPlayer());
+
 		if (!settings.getData().getWorldOptions(event.getPlayer().getLocation().getWorld().getName()).isGodmode() && !Permissions.NOGOD_OVERRIDE.isAuthorized(user))
 		{
-			if (user.getData().isGodmode())
+			if (user.isGodModeEnabled())
 			{
-				user.sendMessage(_("noGodWorldWarning"));
+				user.sendMessage($("noGodWorldWarning"));
 			}
 		}
 		if (settings.getData().getCommands().getTpa().isCancelTpRequestsOnWorldChange())
 		{
-			if (user.getTeleportRequester() != null)
+			if (user.getTeleporter() != null)
 			{
 				user.requestTeleport(null, false);
-				user.sendMessage(_("teleportRequestsCancelledWorldChange"));
+				user.sendMessage($("teleportRequestsCancelledWorldChange"));
 			}
 		}
 	}
@@ -430,6 +427,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			return;
 		}
+
 		@Cleanup
 		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
@@ -437,10 +435,11 @@ public class EssentialsPlayerListener implements Listener
 		{
 			return;
 		}
+
 		@Cleanup
-		final IUser user = context.getUser(event.getPlayer());
-		user.acquireReadLock();
-		if (user.getData().isAfk())
+		final IUserComponent user = context.getUser(event.getPlayer());
+
+		if (user.isAfk())
 		{
 			event.setCancelled(true);
 		}

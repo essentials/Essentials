@@ -12,7 +12,6 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class I18nComponent extends Component implements II18nComponent
@@ -74,14 +73,15 @@ public class I18nComponent extends Component implements II18nComponent
 		}
 		catch (MissingResourceException ex)
 		{
-			Logger.getLogger("Minecraft").log(Level.WARNING, String.format("Missing translation key \"%s\" in translation file %s", ex.getKey(), localeBundle.getLocale().toString()), ex);
+			getContext().getLogger().log(Level.WARNING, String.format("Missing translation key \"%s\" in translation file %s", ex.getKey(), localeBundle.getLocale().toString()), ex);
 			return defaultBundle.getString(string);
 		}
 	}
 
-	public static String _(final String string, final Object... objects)
+	public static String $(final String string, final Object... objects)
 	{
-		if (instance == null) {
+		if (instance == null)
+		{
 			return "";
 		}
 		if (objects.length == 0)
@@ -126,7 +126,7 @@ public class I18nComponent extends Component implements II18nComponent
 		{
 			currentLocale = new Locale(parts[0], parts[1], parts[2]);
 		}
-		Logger.getLogger("Minecraft").log(Level.INFO, String.format("Using locale %s", currentLocale.toString()));
+		getContext().getLogger().log(Level.INFO, String.format("Using locale %s", currentLocale.toString()));
 		customBundle = ResourceBundle.getBundle(MESSAGES, currentLocale, new FileResClassLoader(I18nComponent.class.getClassLoader(), getContext()));
 		localeBundle = ResourceBundle.getBundle(MESSAGES, currentLocale);
 	}

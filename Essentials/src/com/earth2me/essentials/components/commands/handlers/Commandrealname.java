@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.util.Locale;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
@@ -21,12 +21,12 @@ public class Commandrealname extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		@Cleanup
+		@Cleanup(value="unlock")
 		final ISettingsComponent settings = getContext().getSettings();
 		final String whois = args[0].toLowerCase(Locale.ENGLISH);
 		for (Player onlinePlayer : getServer().getOnlinePlayers())
 		{
-			final IUser u = getContext().getUser(onlinePlayer);
+			final IUserComponent u = getContext().getUser(onlinePlayer);
 			if (u.isHidden())
 			{
 				continue;
@@ -39,7 +39,7 @@ public class Commandrealname extends EssentialsCommand
 			{
 				continue;
 			}
-			sender.sendMessage(u.getDisplayName() + " " + _("is") + " " + u.getName());
+			sender.sendMessage(u.getDisplayName() + " " + $("is") + " " + u.getName());
 		}
 	}
 }

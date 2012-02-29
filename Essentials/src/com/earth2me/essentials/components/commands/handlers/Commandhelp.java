@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.textreader.*;
 import org.bukkit.command.CommandSender;
 
@@ -42,6 +42,6 @@ public class Commandhelp extends EssentialsCommand
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		sender.sendMessage(_("helpConsole"));
+		sender.sendMessage($("helpConsole"));
 	}
 }

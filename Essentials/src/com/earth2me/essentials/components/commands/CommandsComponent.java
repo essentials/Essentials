@@ -5,8 +5,8 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.IComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.util.*;
 import java.util.logging.Level;
 import org.bukkit.ChatColor;
@@ -130,8 +130,8 @@ public class CommandsComponent extends Component implements ICommandsComponent
 				}
 				catch (Exception ex)
 				{
-					sender.sendMessage(_("commandNotLoaded", commandName));
-					getContext().getLogger().log(Level.SEVERE, _("commandNotLoaded", commandName), ex);
+					sender.sendMessage($("commandNotLoaded", commandName));
+					getContext().getLogger().log(Level.SEVERE, $("commandNotLoaded", commandName), ex);
 					return true;
 				}
 			}
@@ -139,8 +139,8 @@ public class CommandsComponent extends Component implements ICommandsComponent
 			// Check authorization
 			if (sender != null && cmd.isAuthorized(sender))
 			{
-				getContext().getLogger().log(Level.WARNING, _("deniedAccessCommand", user.getName()));
-				user.sendMessage(_("noAccessCommand"));
+				getContext().getLogger().log(Level.WARNING, $("deniedAccessCommand", user.getName()));
+				user.sendMessage($("noAccessCommand"));
 				return true;
 			}
 
@@ -153,15 +153,7 @@ public class CommandsComponent extends Component implements ICommandsComponent
 				}
 				else
 				{
-					user.acquireReadLock();
-					try
-					{
-						cmd.run(user, command, commandLabel, args);
-					}
-					finally
-					{
-						user.unlock();
-					}
+					cmd.run(user, command, commandLabel, args);
 				}
 				return true;
 			}
@@ -187,7 +179,7 @@ public class CommandsComponent extends Component implements ICommandsComponent
 		}
 		catch (Throwable ex)
 		{
-			getContext().getLogger().log(Level.SEVERE, _("commandFailed", commandLabel), ex);
+			getContext().getLogger().log(Level.SEVERE, $("commandFailed", commandLabel), ex);
 			return true;
 		}
 	}
@@ -195,10 +187,10 @@ public class CommandsComponent extends Component implements ICommandsComponent
 	@Override
 	public void showCommandError(final CommandSender sender, final String commandLabel, final Throwable exception)
 	{
-		sender.sendMessage(_("errorWithMessage", exception.getMessage()));
+		sender.sendMessage($("errorWithMessage", exception.getMessage()));
 		if (getContext().getSettings().isDebug())
 		{
-			getContext().getLogger().log(Level.WARNING, _("errorCallingCommand", commandLabel), exception);
+			getContext().getLogger().log(Level.WARNING, $("errorCallingCommand", commandLabel), exception);
 		}
 	}
 

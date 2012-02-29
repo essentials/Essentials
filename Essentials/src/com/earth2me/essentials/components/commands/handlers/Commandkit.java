@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.KitPermissions;
 import com.earth2me.essentials.components.settings.Kit;
 import java.util.Collection;
@@ -22,7 +22,7 @@ public class Commandkit extends EssentialsCommand
 			Collection<String> kitList = getContext().getKits().getList();
 			if (kitList.isEmpty())
 			{
-				user.sendMessage(_("noKits"));
+				user.sendMessage($("noKits"));
 			}
 			else
 			{
@@ -33,7 +33,7 @@ public class Commandkit extends EssentialsCommand
 						kitList.remove(kitName);
 					}
 				}
-				user.sendMessage(_("kits", Util.joinList(kitList)));
+				user.sendMessage($("kits", Util.joinList(kitList)));
 			}
 			throw new NoChargeException();
 		}
@@ -44,7 +44,7 @@ public class Commandkit extends EssentialsCommand
 
 			if (!KitPermissions.getPermission(kitName).isAuthorized(user))
 			{
-				throw new Exception(_("noKitPermission", "essentials.kit." + kitName));
+				throw new Exception($("noKitPermission", "essentials.kit." + kitName));
 			}
 
 			//TODO: Check kit delay
@@ -55,7 +55,7 @@ public class Commandkit extends EssentialsCommand
 			getContext().getKits().sendKit(user, kit);
 
 			charge.charge(user);
-			user.sendMessage(_("kitGive", kitName));
+			user.sendMessage($("kitGive", kitName));
 
 		}
 	}

@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,7 +20,7 @@ public class Commandburn extends EssentialsCommand
 		for (Player p : getServer().matchPlayer(args[0]))
 		{
 			p.setFireTicks(Integer.parseInt(args[1]) * 20);
-			sender.sendMessage(_("burnMsg", p.getDisplayName(), Integer.parseInt(args[1])));
+			sender.sendMessage($("burnMsg", p.getDisplayName(), Integer.parseInt(args[1])));
 		}
 	}
 }

@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.commands.handlers;
 
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.Console;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,9 +23,9 @@ public class Commandkick extends EssentialsCommand
 		final IUserComponent user = getPlayer(args, 0);
 		if (Permissions.KICK_EXEMPT.isAuthorized(user))
 		{
-			throw new Exception(_("kickExempt"));
+			throw new Exception($("kickExempt"));
 		}
-		final String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("kickDefault");
+		final String kickReason = args.length > 1 ? getFinalArg(args, 1) : $("kickDefault");
 		user.kickPlayer(kickReason);
 		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
 
@@ -34,7 +34,7 @@ public class Commandkick extends EssentialsCommand
 			final IUserComponent player = getContext().getUser(onlinePlayer);
 			if (Permissions.KICK_NOTIFY.isAuthorized(player))
 			{
-				onlinePlayer.sendMessage(_("playerKicked", senderName, user.getName(), kickReason));
+				onlinePlayer.sendMessage($("playerKicked", senderName, user.getName(), kickReason));
 			}
 		}
 	}

@@ -1,13 +1,13 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.api.EssentialsPlugin;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import org.bukkit.plugin.PluginManager;
 
 
 public final class EssentialsSignsPlugin extends EssentialsPlugin implements ISignsPlugin
 {
-	private transient SignsConfigHolder config;
+	private transient SignsSettingsComponent config;
 
 	@Override
 	public void onEnable()
@@ -20,13 +20,13 @@ public final class EssentialsSignsPlugin extends EssentialsPlugin implements ISi
 		pluginManager.registerEvents(new SignPlayerListener(getContext(), this), this);
 		pluginManager.registerEvents(new SignEntityListener(getContext(), this), this);
 
-		config = new SignsConfigHolder(getContext(), this);
+		config = new SignsSettingsComponent(getContext(), this);
 
-		getContext().getLogger().info(_("loadinfo", this.getDescription().getName(), this.getDescription().getVersion(), "essentials team"));
+		getContext().getLogger().info($("loadinfo", this.getDescription().getName(), this.getDescription().getVersion(), "essentials team"));
 	}
 
 	@Override
-	public SignsConfigHolder getSignsConfig()
+	public SignsSettingsComponent getSignsConfig()
 	{
 		return config;
 	}

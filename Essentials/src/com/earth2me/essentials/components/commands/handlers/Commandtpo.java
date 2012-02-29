@@ -2,8 +2,8 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -24,18 +24,18 @@ public class Commandtpo extends EssentialsCommand
 		// Check if user is offline
 		if (player.getBase() instanceof OfflinePlayer)
 		{
-			throw new NoSuchFieldException(_("playerNotFound"));
+			throw new NoSuchFieldException($("playerNotFound"));
 		}
 
 		// Verify permission
 		if (!player.isHidden() || Permissions.TELEPORT_HIDDEN.isAuthorized(user))
 		{
-			user.getTeleport().now(player, false, TeleportCause.COMMAND);
-			user.sendMessage(_("teleporting"));
+			user.getTeleporter().now(player, false, TeleportCause.COMMAND);
+			user.sendMessage($("teleporting"));
 		}
 		else
 		{
-			throw new NoSuchFieldException(_("playerNotFound"));
+			throw new NoSuchFieldException($("playerNotFound"));
 		}
 	}
 }

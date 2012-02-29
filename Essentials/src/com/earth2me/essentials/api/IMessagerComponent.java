@@ -1,7 +1,7 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.components.IComponent;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import org.bukkit.entity.Player;
 
 

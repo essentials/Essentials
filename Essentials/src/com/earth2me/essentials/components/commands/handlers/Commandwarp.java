@@ -1,12 +1,12 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.components.warps.IWarpsComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.perm.WarpPermissions;
 import java.util.ArrayList;
@@ -28,20 +28,20 @@ public class Commandwarp extends EssentialsCommand
 		{
 			if (!Permissions.WARP_LIST.isAuthorized(user))
 			{
-				throw new Exception(_("warpListPermission"));
+				throw new Exception($("warpListPermission"));
 			}
 			warpList(user, args);
 			throw new NoChargeException();
 		}
 		if (args.length > 0)
 		{
-			IUserComponent otherUser = null;
+			IUserComponent otherUser;
 			if (args.length == 2 && Permissions.WARP_OTHERS.isAuthorized(user))
 			{
 				otherUser = getContext().getUser(getServer().getPlayer(args[1]));
 				if (otherUser == null)
 				{
-					throw new Exception(_("playerNotFound"));
+					throw new Exception($("playerNotFound"));
 				}
 				warpUser(otherUser, args[0]);
 				throw new NoChargeException();
@@ -62,9 +62,9 @@ public class Commandwarp extends EssentialsCommand
 		IUserComponent otherUser = getContext().getUser(getServer().getPlayer(args[1]));
 		if (otherUser == null)
 		{
-			throw new Exception(_("playerNotFound"));
+			throw new Exception($("playerNotFound"));
 		}
-		otherUser.getTeleport().warp(args[0], null, TeleportCause.COMMAND);
+		otherUser.getTeleporter().warp(args[0], null, TeleportCause.COMMAND);
 		throw new NoChargeException();
 
 	}
@@ -75,7 +75,7 @@ public class Commandwarp extends EssentialsCommand
 		final IWarpsComponent warps = getContext().getWarps();
 		if (warps.isEmpty())
 		{
-			throw new Exception(_("noWarpsDefined"));
+			throw new Exception($("noWarpsDefined"));
 		}
 		final List<String> warpNameList = new ArrayList<String>(warps.getList());
 
@@ -102,12 +102,12 @@ public class Commandwarp extends EssentialsCommand
 
 		if (warpNameList.size() > WARPS_PER_PAGE)
 		{
-			sender.sendMessage(_("warpsCount", warpNameList.size(), page, (int)Math.ceil(warpNameList.size() / (double)WARPS_PER_PAGE)));
+			sender.sendMessage($("warpsCount", warpNameList.size(), page, (int)Math.ceil(warpNameList.size() / (double)WARPS_PER_PAGE)));
 			sender.sendMessage(warpList);
 		}
 		else
 		{
-			sender.sendMessage(_("warps", warpList));
+			sender.sendMessage($("warps", warpList));
 		}
 	}
 
@@ -117,9 +117,9 @@ public class Commandwarp extends EssentialsCommand
 		charge.isAffordableFor(user);
 		if (WarpPermissions.getPermission(name).isAuthorized(user))
 		{
-			user.getTeleport().warp(name, charge, TeleportCause.COMMAND);
+			user.getTeleporter().warp(name, charge, TeleportCause.COMMAND);
 			return;
 		}
-		throw new Exception(_("warpUsePermission"));
+		throw new Exception($("warpUsePermission"));
 	}
 }

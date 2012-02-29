@@ -1,7 +1,7 @@
 package com.earth2me.essentials.xmpp;
 
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Level;

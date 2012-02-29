@@ -1,13 +1,13 @@
 package com.earth2me.essentials.chat;
 
-import com.earth2me.essentials.api.ChargeException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.economy.ChargeException;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Locale;
 import java.util.Map;
@@ -21,7 +21,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 //TODO: Translate the local/spy tags
 public abstract class EssentialsChatPlayer implements Listener
 {
-	protected transient IContext ess;
+	private transient IContext context;
 	protected final static Logger LOGGER = Logger.getLogger("Minecraft");
 	protected final transient Server server;
 	protected final transient Map<PlayerChatEvent, ChatStore> chatStorage;
@@ -30,7 +30,7 @@ public abstract class EssentialsChatPlayer implements Listener
 								final IContext ess,
 								final Map<PlayerChatEvent, ChatStore> chatStorage)
 	{
-		this.ess = ess;
+		this.context = ess;
 		this.server = server;
 		this.chatStorage = chatStorage;
 	}
@@ -62,7 +62,7 @@ public abstract class EssentialsChatPlayer implements Listener
 		}
 		catch (ChargeException e)
 		{
-			ess.getCommands().showCommandError(chatStore.getUser(), chatStore.getLongType(), e);
+			getContext().getCommands().showCommandError(chatStore.getUser(), chatStore.getLongType(), e);
 			event.setCancelled(true);
 		}
 	}
@@ -71,7 +71,7 @@ public abstract class EssentialsChatPlayer implements Listener
 	{
 		if (sender instanceof Player)
 		{
-			charge.charge(ess.getUser((Player)sender));
+			charge.charge(getContext().getUser((Player)sender));
 		}
 	}
 
@@ -82,10 +82,10 @@ public abstract class EssentialsChatPlayer implements Listener
 		{
 			event.setMessage(Util.stripColor(event.getMessage()));
 		}
-		String group = ess.getGroups().getMainGroup(user);
+		String group = getContext().getGroups().getMainGroup(user);
 		String world = user.getWorld().getName();
 
-		IGroupsComponent groupSettings = ess.getGroups();
+		IGroupsComponent groupSettings = getContext().getGroups();
 		event.setFormat(groupSettings.getChatFormat(user).format(new Object[]
 				{
 					group, world, world.substring(0, 1).toUpperCase(Locale.ENGLISH)
@@ -112,7 +112,7 @@ public abstract class EssentialsChatPlayer implements Listener
 	protected void handleLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
 		long radius = 0;
-		ISettingsComponent settings = ess.getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -139,20 +139,30 @@ public abstract class EssentialsChatPlayer implements Listener
 				final StringBuilder format = new StringBuilder();
 				format.append(chatStore.getType()).append("Format");
 				event.setMessage(event.getMessage().substring(1));
-				event.setFormat(_(format.toString(), event.getFormat()));
+				event.setFormat($(format.toString(), event.getFormat()));
 				return;
 			}
 
 			final StringBuilder errorMsg = new StringBuilder();
 			errorMsg.append("notAllowedTo").append(chatStore.getType().substring(0, 1).toUpperCase(Locale.ENGLISH)).append(chatStore.getType().substring(1));
 
-			user.sendMessage(_(errorMsg.toString()));
+			user.sendMessage($(errorMsg.toString()));
 			event.setCancelled(true);
 			return;
 		}
 
 		event.setCancelled(true);
 		final EssentialsLocalChatEvent localChat = new EssentialsLocalChatEvent(event, radius);
-		ess.getServer().getPluginManager().callEvent(localChat);
+		getContext().getServer().getPluginManager().callEvent(localChat);
+	}
+
+	protected IContext getContext()
+	{
+		return context;
+	}
+
+	protected void setContext(IContext context)
+	{
+		this.context = context;
 	}
 }

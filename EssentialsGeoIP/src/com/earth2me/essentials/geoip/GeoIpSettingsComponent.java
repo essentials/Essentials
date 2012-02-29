@@ -10,4 +10,10 @@ public class GeoIpSettingsComponent extends StorageComponent<GeoIP, EssentialsGe
 	{
 		super(ess, GeoIP.class, plugin);
 	}
+
+	@Override
+	public String getContainerId()
+	{
+		return "geo-ip";
+	}
 }

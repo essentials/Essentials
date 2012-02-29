@@ -89,11 +89,11 @@ public class StorageTest extends TestCase
 			ext.start();
 			final ByteArrayInputStream bais = new ByteArrayInputStream(new byte[0]);
 			final Reader reader = new InputStreamReader(bais);
-			final com.earth2me.essentials.components.settings.users.UserSurrogate userdata = new YamlStorageReader(reader, null).load(com.earth2me.essentials.components.settings.users.UserSurrogate.class);
+			final com.earth2me.essentials.components.users.UserSurrogate userdata = new YamlStorageReader(reader, null).load(com.earth2me.essentials.components.users.UserSurrogate.class);
 			ext.mark("load empty user");
 			final ByteArrayInputStream bais3 = new ByteArrayInputStream(new byte[0]);
 			final Reader reader3 = new InputStreamReader(bais3);
-			final com.earth2me.essentials.components.settings.users.UserSurrogate userdata3 = new YamlStorageReader(reader3, null).load(com.earth2me.essentials.components.settings.users.UserSurrogate.class);
+			final com.earth2me.essentials.components.users.UserSurrogate userdata3 = new YamlStorageReader(reader3, null).load(com.earth2me.essentials.components.users.UserSurrogate.class);
 			ext.mark("load empty user (class cached)");
 
 			for (int j = 0; j < 10000; j++)
@@ -116,11 +116,11 @@ public class StorageTest extends TestCase
 			ext.mark("debug output");
 			final ByteArrayInputStream bais2 = new ByteArrayInputStream(written);
 			final Reader reader2 = new InputStreamReader(bais2);
-			final com.earth2me.essentials.components.settings.users.UserSurrogate userdata2 = new YamlStorageReader(reader2, null).load(com.earth2me.essentials.components.settings.users.UserSurrogate.class);
+			final com.earth2me.essentials.components.users.UserSurrogate userdata2 = new YamlStorageReader(reader2, null).load(com.earth2me.essentials.components.users.UserSurrogate.class);
 			ext.mark("reload file");
 			final ByteArrayInputStream bais4 = new ByteArrayInputStream(written);
 			final Reader reader4 = new InputStreamReader(bais4);
-			final com.earth2me.essentials.components.settings.users.UserSurrogate userdata4 = new YamlStorageReader(reader4, null).load(com.earth2me.essentials.components.settings.users.UserSurrogate.class);
+			final com.earth2me.essentials.components.users.UserSurrogate userdata4 = new YamlStorageReader(reader4, null).load(com.earth2me.essentials.components.users.UserSurrogate.class);
 			ext.mark("reload file (cached)");
 			System.out.println(userdata.toString());
 			System.out.println(userdata2.toString());

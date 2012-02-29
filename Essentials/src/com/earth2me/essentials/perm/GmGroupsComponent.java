@@ -5,23 +5,22 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.text.MessageFormat;
 import lombok.Cleanup;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
-import org.bukkit.plugin.Plugin;
 
 
 public final class GmGroupsComponent extends Component implements IGroupsComponent
 {
 	private final transient GroupManager groupManager;
 
-	public GmGroupsComponent(final IContext context, final Plugin groupManager)
+	public GmGroupsComponent(final IContext context, final GroupManager groupManager)
 	{
 		super(context);
 
-		this.groupManager = (GroupManager)groupManager;
+		this.groupManager = groupManager;
 	}
 
 	@Override

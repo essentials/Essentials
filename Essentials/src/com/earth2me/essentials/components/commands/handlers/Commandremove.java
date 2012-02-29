@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.commands.handlers;
 
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import java.util.Locale;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -42,7 +42,7 @@ public class Commandremove extends EssentialsCommand
 			}
 			catch (NumberFormatException e)
 			{
-				throw new Exception(_("numberRequired"));
+				throw new Exception($("numberRequired"));
 			}
 		}
 
@@ -70,7 +70,7 @@ public class Commandremove extends EssentialsCommand
 
 		if (world == null)
 		{
-			throw new Exception(_("invalidWorld"));
+			throw new Exception($("invalidWorld"));
 		}
 		ToRemove toRemove;
 		try
@@ -152,6 +152,6 @@ public class Commandremove extends EssentialsCommand
 				}
 			}
 		}
-		sender.sendMessage(_("removed", removed));
+		sender.sendMessage($("removed", removed));
 	}
 }

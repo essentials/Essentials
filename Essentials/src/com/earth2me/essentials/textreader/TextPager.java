@@ -1,6 +1,6 @@
 package com.earth2me.essentials.textreader;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -49,7 +49,7 @@ public class TextPager
 			final int pages = lines.size() / 9 + (lines.size() % 9 > 0 ? 1 : 0);
 			if (!onePage)
 			{
-				sender.sendMessage(_("infoPages", page, pages));
+				sender.sendMessage($("infoPages", page, pages));
 			}
 			for (int i = start; i < lines.size() && i < start + (onePage ? 20 : 9); i++)
 			{
@@ -57,7 +57,7 @@ public class TextPager
 			}
 			if (!onePage && page < pages)
 			{
-				sender.sendMessage(_("readNextPage", commandName, page + 1));
+				sender.sendMessage($("readNextPage", commandName, page + 1));
 			}
 			return;
 		}
@@ -70,7 +70,7 @@ public class TextPager
 				{
 					return;
 				}
-				sender.sendMessage(_("infoChapter"));
+				sender.sendMessage($("infoChapter"));
 				final StringBuilder sb = new StringBuilder();
 				boolean first = true;
 				for (String string : chapters)
@@ -116,7 +116,7 @@ public class TextPager
 				if (!onePage)
 				{
 
-					sender.sendMessage(_("infoPages", page, pages));
+					sender.sendMessage($("infoPages", page, pages));
 				}
 				for (int i = start; i < end && i < start + (onePage ? 20 : 9); i++)
 				{
@@ -124,7 +124,7 @@ public class TextPager
 				}
 				if (!onePage && page < pages)
 				{
-					sender.sendMessage(_("readNextPage", commandName, page + 1));
+					sender.sendMessage($("readNextPage", commandName, page + 1));
 				}
 				return;
 			}
@@ -149,7 +149,7 @@ public class TextPager
 
 		if (!bookmarks.containsKey(pageStr.toLowerCase(Locale.ENGLISH)))
 		{
-			sender.sendMessage(_("infoUnknownChapter"));
+			sender.sendMessage($("infoUnknownChapter"));
 			return;
 		}
 		final int chapterstart = bookmarks.get(pageStr.toLowerCase(Locale.ENGLISH)) + 1;
@@ -168,7 +168,7 @@ public class TextPager
 		final int pages = (chapterend - chapterstart) / 9 + ((chapterend - chapterstart) % 9 > 0 ? 1 : 0);
 		if (!onePage)
 		{
-			sender.sendMessage(_("infoChapterPages", pageStr, page, pages));
+			sender.sendMessage($("infoChapterPages", pageStr, page, pages));
 		}
 		for (int i = start; i < chapterend && i < start + (onePage ? 20 : 9); i++)
 		{
@@ -176,7 +176,7 @@ public class TextPager
 		}
 		if (!onePage && page < pages)
 		{
-			sender.sendMessage(_("readNextPage", commandName, pageStr + " " + (page + 1)));
+			sender.sendMessage($("readNextPage", commandName, pageStr + " " + (page + 1)));
 		}
 	}
 }

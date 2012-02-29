@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import org.bukkit.Location;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -34,8 +34,8 @@ public class Commandtppos extends EssentialsCommand
 		}
 		final Trade charge = new Trade(getCommandName(), getContext());
 		charge.isAffordableFor(user);
-		user.sendMessage(_("teleporting"));
-		user.getTeleport().teleport(location, charge, TeleportCause.COMMAND);
+		user.sendMessage($("teleporting"));
+		user.getTeleporter().teleport(location, charge, TeleportCause.COMMAND);
 		throw new NoChargeException();
 	}
 }

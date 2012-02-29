@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import org.bukkit.Location;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -26,11 +26,11 @@ public class Commandjump extends EssentialsCommand
 		}
 		catch (NullPointerException ex)
 		{
-			throw new Exception(_("jumpError"), ex);
+			throw new Exception($("jumpError"), ex);
 		}
 
 		final Trade charge = new Trade(getCommandName(), getContext());
 		charge.isAffordableFor(user);
-		user.getTeleport().teleport(loc, charge, TeleportCause.COMMAND);
+		user.getTeleporter().teleport(loc, charge, TeleportCause.COMMAND);
 	}
 }

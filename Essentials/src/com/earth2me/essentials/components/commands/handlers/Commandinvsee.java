@@ -3,9 +3,9 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.components.settings.users.Inventory;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.components.users.Inventory;
 import java.util.Arrays;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +16,7 @@ public class Commandinvsee extends EssentialsCommand
 	protected void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
 
-		if (args.length < 1 && user.getData().getInventory() == null)
+		if (args.length < 1 && user.getLastInventory() == null)
 		{
 			throw new NotEnoughArgumentsException();
 		}
@@ -26,16 +26,16 @@ public class Commandinvsee extends EssentialsCommand
 			invUser = getPlayer(args, 0);
 		}
 		user.acquireWriteLock();
-		if (invUser == user && user.getData().getInventory() != null)
+		if (invUser == user && user.getLastInventory() != null)
 		{
-			invUser.getInventory().setContents(user.getData().getInventory().getBukkitInventory());
-			user.getData().setInventory(null);
-			user.sendMessage(_("invRestored"));
+			invUser.getInventory().setContents(user.getLastInventory().getBukkitInventory());
+			user.setLastInventory(null);
+			user.sendMessage($("invRestored"));
 			throw new NoChargeException();
 		}
-		if (user.getData().getInventory() == null)
+		if (user.getLastInventory() == null)
 		{
-			user.getData().setInventory(new Inventory(user.getInventory().getContents()));
+			user.setLastInventory(new Inventory(user.getInventory().getContents()));
 		}
 		ItemStack[] invUserStack = invUser.getInventory().getContents();
 		final int userStackLength = user.getInventory().getContents().length;
@@ -45,11 +45,11 @@ public class Commandinvsee extends EssentialsCommand
 		}
 		if (invUserStack.length > userStackLength)
 		{
-			throw new Exception(_("invBigger"));
+			throw new Exception($("invBigger"));
 		}
 		user.getInventory().setContents(invUserStack);
-		user.sendMessage(_("invSee", invUser.getDisplayName()));
-		user.sendMessage(_("invSeeHelp"));
+		user.sendMessage($("invSee", invUser.getDisplayName()));
+		user.sendMessage($("invSeeHelp"));
 		throw new NoChargeException();
 	}
 }

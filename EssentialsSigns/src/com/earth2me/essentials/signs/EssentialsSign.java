@@ -1,11 +1,12 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.ChargeException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.economy.ChargeException;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsSign
 {
+	// TODO Eventually replace this with an EnumSet.
 	private static final Set<Material> EMPTY_SET = new HashSet<Material>();
 	protected transient final String signName;
 
@@ -38,7 +40,7 @@ public class EssentialsSign
 			// they won't change it to §1[Signname]
 			return true;
 		}
-		sign.setLine(0, _("signFormatFail", this.signName));
+		sign.setLine(0, $("signFormatFail", this.signName));
 		try
 		{
 			final boolean ret = onSignCreate(sign, user, getUsername(user), ess);
@@ -62,12 +64,12 @@ public class EssentialsSign
 
 	public String getSuccessName()
 	{
-		return _("signFormatSuccess", this.signName);
+		return $("signFormatSuccess", this.signName);
 	}
 
 	public String getTemplateName()
 	{
-		return _("signFormatTemplate", this.signName);
+		return $("signFormatTemplate", this.signName);
 	}
 
 	private String getUsername(final IUserComponent user)
@@ -253,7 +255,7 @@ public class EssentialsSign
 
 	public Set<Material> getBlocks()
 	{
-		return EMPTY_SET;
+		return Collections.emptySet();
 	}
 
 	protected final void validateTrade(final ISign sign, final int index, final IContext ess) throws SignException
@@ -299,7 +301,7 @@ public class EssentialsSign
 		final int amount = Math.min(getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * player.getInventory().getSize());
 		if (item.getTypeId() == 0 || amount < 1)
 		{
-			throw new SignException(_("moreThanZero"));
+			throw new SignException($("moreThanZero"));
 		}
 		item.setAmount(amount);
 		return new Trade(item, ess);
@@ -321,7 +323,7 @@ public class EssentialsSign
 		final int quantity = getInteger(line);
 		if (quantity < 1)
 		{
-			throw new SignException(_("moreThanZero"));
+			throw new SignException($("moreThanZero"));
 		}
 		return quantity;
 	}
@@ -365,7 +367,7 @@ public class EssentialsSign
 		final double quantity = getDouble(line);
 		if (Math.round(quantity * 100.0) < 1.0)
 		{
-			throw new SignException(_("moreThanZero"));
+			throw new SignException($("moreThanZero"));
 		}
 		return quantity;
 	}
@@ -401,7 +403,7 @@ public class EssentialsSign
 			final String[] split = line.split("[ :]+", 2);
 			if (split.length != 2)
 			{
-				throw new SignException(_("invalidCharge"));
+				throw new SignException($("invalidCharge"));
 			}
 			final int quantity = getIntegerPositive(split[0]);
 
@@ -432,8 +434,8 @@ public class EssentialsSign
 
 	static class EventSign implements ISign
 	{
-		private final transient SignChangeEvent event;
-		private final transient Block block;
+		final transient SignChangeEvent event;
+		final transient Block block;
 
 		public EventSign(final SignChangeEvent event)
 		{
@@ -468,8 +470,8 @@ public class EssentialsSign
 
 	static class BlockSign implements ISign
 	{
-		private final transient Sign sign;
-		private final transient Block block;
+		final transient Sign sign;
+		final transient Block block;
 
 		public BlockSign(final Block block)
 		{
@@ -500,17 +502,5 @@ public class EssentialsSign
 		{
 			sign.update();
 		}
-	}
-
-
-	public interface ISign
-	{
-		String getLine(final int index);
-
-		void setLine(final int index, final String text);
-
-		public Block getBlock();
-
-		void updateSign();
 	}
 }

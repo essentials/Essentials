@@ -2,8 +2,8 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 
@@ -25,11 +25,11 @@ public class Commandunban extends EssentialsCommand
 			player.acquireWriteLock();
 			player.getData().setBan(null);
 			player.setBanned(false);
-			sender.sendMessage(_("unbannedPlayer"));
+			sender.sendMessage($("unbannedPlayer"));
 		}
 		catch (NoSuchFieldException e)
 		{
-			throw new Exception(_("playerNotFound"));
+			throw new Exception($("playerNotFound"));
 		}
 	}
 }

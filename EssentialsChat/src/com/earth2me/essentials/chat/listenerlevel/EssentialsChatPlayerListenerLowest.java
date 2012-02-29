@@ -1,7 +1,7 @@
 package com.earth2me.essentials.chat.listenerlevel;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.chat.ChatStore;
 import com.earth2me.essentials.chat.EssentialsChatPlayer;
 import java.util.Map;
@@ -28,8 +28,8 @@ public class EssentialsChatPlayerListenerLowest extends EssentialsChatPlayer
 		{
 			return;
 		}
-		final IUserComponent user = ess.getUser(event.getPlayer());
-		final ChatStore chatStore = new ChatStore(ess, user, getChatType(event.getMessage()));
+		final IUserComponent user = getContext().getUser(event.getPlayer());
+		final ChatStore chatStore = new ChatStore(getContext(), user, getChatType(event.getMessage()));
 		setChatStore(event, chatStore);
 		formatChat(event, chatStore);
 	}

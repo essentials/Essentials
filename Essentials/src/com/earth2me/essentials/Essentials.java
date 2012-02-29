@@ -24,20 +24,20 @@ import com.earth2me.essentials.components.commands.CommandsComponent;
 import com.earth2me.essentials.components.economy.EconomyComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.i18n.I18nComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.components.items.ItemsComponent;
-import com.earth2me.essentials.components.jails.IJailsComponent;
-import com.earth2me.essentials.components.jails.JailsComponent;
-import com.earth2me.essentials.components.kits.IKitsComponent;
-import com.earth2me.essentials.components.kits.KitsComponent;
 import com.earth2me.essentials.components.settings.SettingsComponent;
-import com.earth2me.essentials.components.settings.economy.IWorthsComponent;
-import com.earth2me.essentials.components.settings.economy.WorthsComponent;
 import com.earth2me.essentials.components.settings.groups.GroupsComponent;
-import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
-import com.earth2me.essentials.components.settings.warps.WarpsComponent;
-import com.earth2me.essentials.components.settings.users.IUsersComponent;
-import com.earth2me.essentials.components.settings.users.UsersComponent;
+import com.earth2me.essentials.components.settings.jails.IJailsComponent;
+import com.earth2me.essentials.components.settings.jails.JailsComponent;
+import com.earth2me.essentials.components.settings.kits.IKitsComponent;
+import com.earth2me.essentials.components.settings.kits.KitsComponent;
+import com.earth2me.essentials.components.settings.worths.IWorthsComponent;
+import com.earth2me.essentials.components.settings.worths.WorthsComponent;
+import com.earth2me.essentials.components.users.IUsersComponent;
+import com.earth2me.essentials.components.users.UsersComponent;
+import com.earth2me.essentials.components.warps.IWarpsComponent;
+import com.earth2me.essentials.components.warps.WarpsComponent;
 import com.earth2me.essentials.listeners.*;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.io.File;
@@ -100,7 +100,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 
 		registerComponents(0);
 
-		logger.log(Level.INFO, _("usingTempFolderForTesting"));
+		logger.log(Level.INFO, $("usingTempFolderForTesting"));
 		logger.log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 
@@ -184,11 +184,11 @@ public class Essentials extends ComponentPlugin implements IEssentials
 
 		if (pluginManager.getPlugin("EssentialsUpdate") != null)
 		{
-			logger.log(Level.SEVERE, _("essentialsHelp2"));
+			logger.log(Level.SEVERE, $("essentialsHelp2"));
 		}
 		else
 		{
-			logger.log(Level.SEVERE, _("essentialsHelp1"));
+			logger.log(Level.SEVERE, $("essentialsHelp1"));
 		}
 		logger.log(Level.SEVERE, exception.toString());
 
@@ -228,7 +228,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			break;
 
 		case 2:
-			final IUsersComponent users = new UsersComponent(context, this);
+			final IUsersComponent users = new UsersComponent(context);
 			context.setUsers(users);
 			add(users);
 			execTimer.mark("Init(Usermap)");

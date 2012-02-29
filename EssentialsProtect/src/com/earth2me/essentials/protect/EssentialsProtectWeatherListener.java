@@ -1,5 +1,6 @@
 package com.earth2me.essentials.protect;
 
+import com.earth2me.essentials.protect.settings.ProtectSettingsComponent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

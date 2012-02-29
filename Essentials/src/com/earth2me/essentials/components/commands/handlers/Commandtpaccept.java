@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -17,7 +17,7 @@ public class Commandtpaccept extends EssentialsCommand
 	{
 		if (user.getTeleportRequester() == null)
 		{
-			throw new Exception(_("noPendingRequest"));
+			throw new Exception($("noPendingRequest"));
 		}
 
 		final IUserComponent target = user.getTeleportRequester();
@@ -26,12 +26,12 @@ public class Commandtpaccept extends EssentialsCommand
 			|| (user.isTeleportRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
 			|| (!user.isTeleportRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{
-			throw new Exception(_("noPendingRequest"));
+			throw new Exception($("noPendingRequest"));
 		}
 
 		if (args.length > 0 && !target.getName().contains(args[0]))
 		{
-			throw new Exception(_("noPendingRequest"));
+			throw new Exception($("noPendingRequest"));
 		}
 
 		int tpaAcceptCancellation = 0;
@@ -49,7 +49,7 @@ public class Commandtpaccept extends EssentialsCommand
 		if (tpaAcceptCancellation != 0 && (System.currentTimeMillis() - user.getTeleportRequestTime()) / 1000 > tpaAcceptCancellation)
 		{
 			user.requestTeleport(null, false);
-			throw new Exception(_("requestTimedOut"));
+			throw new Exception($("requestTimedOut"));
 		}
 
 		final Trade charge = new Trade(getCommandName(), getContext());
@@ -61,16 +61,16 @@ public class Commandtpaccept extends EssentialsCommand
 		{
 			charge.isAffordableFor(target);
 		}
-		user.sendMessage(_("requestAccepted"));
-		target.sendMessage(_("requestAcceptedFrom", user.getDisplayName()));
+		user.sendMessage($("requestAccepted"));
+		target.sendMessage($("requestAcceptedFrom", user.getDisplayName()));
 
 		if (user.isTeleportRequestHere())
 		{
-			user.getTeleport().teleport(target, charge, TeleportCause.COMMAND);
+			user.getTeleporter().teleport(target, charge, TeleportCause.COMMAND);
 		}
 		else
 		{
-			target.getTeleport().teleport(user, charge, TeleportCause.COMMAND);
+			target.getTeleporter().teleport(user, charge, TeleportCause.COMMAND);
 		}
 		user.requestTeleport(null, false);
 	}

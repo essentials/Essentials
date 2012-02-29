@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.commands.handlers;
 
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.DescParseTickFormat;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.*;
 import org.bukkit.World;
@@ -45,7 +45,7 @@ public class Commandptime extends EssentialsCommand
 		IUserComponent user = sender instanceof Player ? getContext().getUser((Player)sender) : null;
 		if ((!users.contains(user) || users.size() > 1) && user != null && !Permissions.PTIME_OTHERS.isAuthorized(user))
 		{
-			user.sendMessage(_("pTimeOthersPermission"));
+			user.sendMessage($("pTimeOthersPermission"));
 			return;
 		}
 
@@ -90,25 +90,25 @@ public class Commandptime extends EssentialsCommand
 	{
 		if (users.size() > 1)
 		{
-			sender.sendMessage(_("pTimePlayers"));
+			sender.sendMessage($("pTimePlayers"));
 		}
 
 		for (IUserComponent user : users)
 		{
 			if (user.getPlayerTimeOffset() == 0)
 			{
-				sender.sendMessage(_("pTimeNormal", user.getName()));
+				sender.sendMessage($("pTimeNormal", user.getName()));
 			}
 			else
 			{
 				String time = DescParseTickFormat.format(user.getPlayerTime());
 				if (!user.isPlayerTimeRelative())
 				{
-					sender.sendMessage(_("pTimeCurrentFixed", user.getName(), time));
+					sender.sendMessage($("pTimeCurrentFixed", user.getName(), time));
 				}
 				else
 				{
-					sender.sendMessage(_("pTimeCurrent", user.getName(), time));
+					sender.sendMessage($("pTimeCurrent", user.getName(), time));
 				}
 			}
 		}
@@ -159,18 +159,18 @@ public class Commandptime extends EssentialsCommand
 		// Inform the sender of the change
 		if (ticks == null)
 		{
-			sender.sendMessage(_("pTimeReset", msg.toString()));
+			sender.sendMessage($("pTimeReset", msg.toString()));
 		}
 		else
 		{
 			String time = DescParseTickFormat.format(ticks);
 			if (!relative)
 			{
-				sender.sendMessage(_("pTimeSetFixed", time, msg.toString()));
+				sender.sendMessage($("pTimeSetFixed", time, msg.toString()));
 			}
 			else
 			{
-				sender.sendMessage(_("pTimeSet", time, msg.toString()));
+				sender.sendMessage($("pTimeSet", time, msg.toString()));
 			}
 		}
 	}
@@ -222,7 +222,7 @@ public class Commandptime extends EssentialsCommand
 		// We failed to understand the world target...
 		else
 		{
-			throw new Exception(_("playerNotFound"));
+			throw new Exception($("playerNotFound"));
 		}
 
 		return users;

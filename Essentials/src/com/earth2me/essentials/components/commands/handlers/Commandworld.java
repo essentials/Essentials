@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.perm.WorldPermissions;
 import java.util.List;
 import org.bukkit.Location;
@@ -44,9 +44,9 @@ public class Commandworld extends EssentialsCommand
 			world = getContext().getWorld(getFinalArg(args, 0));
 			if (world == null)
 			{
-				user.sendMessage(_("invalidWorld"));
-				user.sendMessage(_("possibleWorlds", getServer().getWorlds().size() - 1));
-				user.sendMessage(_("typeWorldName"));
+				user.sendMessage($("invalidWorld"));
+				user.sendMessage($("possibleWorlds", getServer().getWorlds().size() - 1));
+				user.sendMessage($("typeWorldName"));
 				throw new NoChargeException();
 			}
 		}
@@ -54,7 +54,7 @@ public class Commandworld extends EssentialsCommand
 
 		if (!WorldPermissions.getPermission(world.getName()).isAuthorized(user))
 		{
-			user.sendMessage(_("invalidWorld")); //TODO: Make a "world teleport denied" translation
+			user.sendMessage($("invalidWorld")); //TODO: Make a "world teleport denied" translation
 			throw new NoChargeException();
 		}
 
@@ -77,7 +77,7 @@ public class Commandworld extends EssentialsCommand
 
 		final Trade charge = new Trade(getCommandName(), getContext());
 		charge.isAffordableFor(user);
-		user.getTeleport().teleport(target, charge, TeleportCause.COMMAND);
+		user.getTeleporter().teleport(target, charge, TeleportCause.COMMAND);
 		throw new NoChargeException();
 	}
 }

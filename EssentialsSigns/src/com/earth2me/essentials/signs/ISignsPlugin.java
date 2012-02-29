@@ -5,5 +5,5 @@ import com.earth2me.essentials.api.IEssentialsPlugin;
 
 public interface ISignsPlugin extends IEssentialsPlugin
 {
-	SignsConfigHolder getSignsConfig();
+	SignsSettingsComponent getSignsConfig();
 }

@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 
 
@@ -15,7 +15,7 @@ public class Commandme extends EssentialsCommand
 	{
 		if (user.getData().isMuted())
 		{
-			throw new Exception(_("voiceSilenced"));
+			throw new Exception($("voiceSilenced"));
 		}
 
 		if (args.length < 1)
@@ -33,6 +33,6 @@ public class Commandme extends EssentialsCommand
 		}
 
 
-		getContext().getMessager().broadcastMessage(user, _("action", user.getDisplayName(), message));
+		getContext().getMessager().broadcastMessage(user, $("action", user.getDisplayName(), message));
 	}
 }

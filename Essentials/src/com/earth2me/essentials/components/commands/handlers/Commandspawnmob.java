@@ -1,13 +1,13 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Mob;
 import com.earth2me.essentials.Mob.MobException;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.SpawnmobPermissions;
 import java.util.Locale;
 import java.util.Random;
@@ -35,9 +35,9 @@ public class Commandspawnmob extends EssentialsCommand
 			}
 			if (availableList.isEmpty())
 			{
-				availableList.add(_("none"));
+				availableList.add($("none"));
 			}
-			throw new NotEnoughArgumentsException(_("mobsAvailable", Util.joinList(availableList)));
+			throw new NotEnoughArgumentsException($("mobsAvailable", Util.joinList(availableList)));
 		}
 
 
@@ -70,18 +70,18 @@ public class Commandspawnmob extends EssentialsCommand
 		mob = Mob.fromName(mobType);
 		if (mob == null)
 		{
-			throw new Exception(_("invalidMob"));
+			throw new Exception($("invalidMob"));
 		}
 
 		if (!SpawnmobPermissions.getPermission(mob.name).isAuthorized(user))
 		{
-			throw new Exception(_("noPermToSpawnMob"));
+			throw new Exception($("noPermToSpawnMob"));
 		}
 
 		final Block block = Util.getTarget(user).getBlock();
 		if (block == null)
 		{
-			throw new Exception(_("unableToSpawnMob"));
+			throw new Exception($("unableToSpawnMob"));
 		}
 		IUserComponent otherUser = null;
 		if (args.length >= 3)
@@ -96,7 +96,7 @@ public class Commandspawnmob extends EssentialsCommand
 		}
 		catch (MobException e)
 		{
-			throw new Exception(_("unableToSpawnMob"));
+			throw new Exception($("unableToSpawnMob"));
 		}
 
 		if (mountType != null)
@@ -104,13 +104,13 @@ public class Commandspawnmob extends EssentialsCommand
 			mobMount = Mob.fromName(mountType);
 			if (mobMount == null)
 			{
-				user.sendMessage(_("invalidMob"));
+				user.sendMessage($("invalidMob"));
 				return;
 			}
 
 			if (!SpawnmobPermissions.getPermission(mobMount.name).isAuthorized(user))
 			{
-				throw new Exception(_("noPermToSpawnMob"));
+				throw new Exception($("noPermToSpawnMob"));
 			}
 			try
 			{
@@ -118,7 +118,7 @@ public class Commandspawnmob extends EssentialsCommand
 			}
 			catch (MobException e)
 			{
-				throw new Exception(_("unableToSpawnMob"));
+				throw new Exception($("unableToSpawnMob"));
 			}
 			spawnedMob.setPassenger(spawnedMount);
 		}
@@ -147,7 +147,7 @@ public class Commandspawnmob extends EssentialsCommand
 			if (mobCount > serverLimit)
 			{
 				mobCount = serverLimit;
-				user.sendMessage(_("mobSpawnLimit"));
+				user.sendMessage($("mobSpawnLimit"));
 			}
 
 			try
@@ -163,7 +163,7 @@ public class Commandspawnmob extends EssentialsCommand
 						}
 						catch (MobException e)
 						{
-							throw new Exception(_("unableToSpawnMob"));
+							throw new Exception($("unableToSpawnMob"));
 						}
 						spawnedMob.setPassenger(spawnedMount);
 					}
@@ -176,24 +176,24 @@ public class Commandspawnmob extends EssentialsCommand
 						changeMobData(mobMount.getType(), spawnedMount, mountData, user);
 					}
 				}
-				user.sendMessage(args[1] + " " + mob.name.toLowerCase(Locale.ENGLISH) + mob.suffix + " " + _("spawned"));
+				user.sendMessage(args[1] + " " + mob.name.toLowerCase(Locale.ENGLISH) + mob.suffix + " " + $("spawned"));
 			}
 			catch (MobException e1)
 			{
-				throw new Exception(_("unableToSpawnMob"), e1);
+				throw new Exception($("unableToSpawnMob"), e1);
 			}
 			catch (NumberFormatException e2)
 			{
-				throw new Exception(_("numberRequired"), e2);
+				throw new Exception($("numberRequired"), e2);
 			}
 			catch (NullPointerException np)
 			{
-				throw new Exception(_("soloMob"), np);
+				throw new Exception($("soloMob"), np);
 			}
 		}
 		else
 		{
-			user.sendMessage(mob.name + " " + _("spawned"));
+			user.sendMessage(mob.name + " " + $("spawned"));
 		}
 	}
 
@@ -207,7 +207,7 @@ public class Commandspawnmob extends EssentialsCommand
 			}
 			catch (Exception e)
 			{
-				throw new Exception(_("slimeMalformedSize"), e);
+				throw new Exception($("slimeMalformedSize"), e);
 			}
 		}
 		if ((type == CreatureType.SHEEP
@@ -243,7 +243,7 @@ public class Commandspawnmob extends EssentialsCommand
 			}
 			catch (Exception e)
 			{
-				throw new Exception(_("sheepMalformedColor"), e);
+				throw new Exception($("sheepMalformedColor"), e);
 			}
 		}
 		if (type == CreatureType.WOLF

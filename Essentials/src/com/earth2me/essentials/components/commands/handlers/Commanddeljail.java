@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import org.bukkit.command.CommandSender;
 
 
@@ -16,6 +16,6 @@ public class Commanddeljail extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		getContext().getJails().removeJail(args[0]);
-		sender.sendMessage(_("deleteJail", args[0]));
+		sender.sendMessage($("deleteJail", args[0]));
 	}
 }

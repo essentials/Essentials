@@ -3,7 +3,7 @@ package com.earth2me.essentials.textreader;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.InvalidNameException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.io.*;
 import java.lang.ref.SoftReference;
 import java.util.*;

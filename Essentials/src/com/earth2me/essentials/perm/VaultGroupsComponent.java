@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.text.MessageFormat;
 import lombok.Cleanup;
 import net.milkbowl.vault.chat.Chat;

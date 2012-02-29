@@ -1,6 +1,6 @@
 package com.earth2me.essentials.storage;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.api.IContext;
 import java.io.*;
 import java.math.BigInteger;
@@ -47,7 +47,7 @@ public class ManagedFile
 			}
 			catch (IOException ex)
 			{
-				Bukkit.getLogger().log(Level.SEVERE, _("itemsCsvNotLoaded"), ex);
+				Bukkit.getLogger().log(Level.SEVERE, $("itemsCsvNotLoaded"), ex);
 			}
 		}
 	}

@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.commands.handlers;
 
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.components.settings.users.TimestampType;
+import com.earth2me.essentials.components.users.TimeStampType;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,17 +19,17 @@ public class Commandheal extends EssentialsCommand
 
 		if (args.length > 0 && Permissions.HEAL_OTHERS.isAuthorized(user))
 		{
-			user.checkCooldown(TimestampType.LASTHEAL, getContext().getGroups().getHealCooldown(user), true, Permissions.HEAL_COOLDOWN_BYPASS);
+			user.checkCooldown(TimeStampType.LASTHEAL, getContext().getGroups().getHealCooldown(user), true, Permissions.HEAL_COOLDOWN_BYPASS);
 
 			healOtherPlayers(user, args[0]);
 			return;
 		}
 
-		user.checkCooldown(TimestampType.LASTHEAL, getContext().getGroups().getHealCooldown(user), true, Permissions.HEAL_COOLDOWN_BYPASS);
+		user.checkCooldown(TimeStampType.LASTHEAL, getContext().getGroups().getHealCooldown(user), true, Permissions.HEAL_COOLDOWN_BYPASS);
 
 		user.setHealth(20);
 		user.setFoodLevel(20);
-		user.sendMessage(_("heal"));
+		user.sendMessage($("heal"));
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class Commandheal extends EssentialsCommand
 		final List<Player> players = getServer().matchPlayer(name);
 		if (players.isEmpty())
 		{
-			sender.sendMessage(_("playerNotFound"));
+			sender.sendMessage($("playerNotFound"));
 			return;
 		}
 		for (Player p : players)
@@ -59,8 +59,8 @@ public class Commandheal extends EssentialsCommand
 			}
 			p.setHealth(20);
 			p.setFoodLevel(20);
-			p.sendMessage(_("heal"));
-			sender.sendMessage(_("healOther", p.getDisplayName()));
+			p.sendMessage($("heal"));
+			sender.sendMessage($("healOther", p.getDisplayName()));
 		}
 	}
 }

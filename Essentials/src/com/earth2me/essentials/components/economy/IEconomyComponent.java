@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.economy;
 
 import com.earth2me.essentials.components.IComponent;
-import com.earth2me.essentials.components.settings.users.UserDoesNotExistException;
+import com.earth2me.essentials.components.users.UserDoesNotExistException;
 
 
 public interface IEconomyComponent extends IComponent

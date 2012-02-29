@@ -1,6 +1,7 @@
 package com.earth2me.essentials.protect;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.protect.settings.ProtectSettingsComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.protect.data.IProtectedBlock;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class EssentialsProtectBlockListener implements Listener
 			if (!Permissions.ALERTS_NOTRIGGER.isAuthorized(user) &&
 				settings.getData().getAlertOnPlacement().contains(blockPlaced.getType()))
 			{
-				parent.getContext().getMessager().alert(user, blockPlaced.getType().toString(), _("alertPlaced"), Permissions.ALERTS);
+				parent.getContext().getMessager().alert(user, blockPlaced.getType().toString(), $("alertPlaced"), Permissions.ALERTS);
 			}
 
 			final Block below = blockPlaced.getRelative(BlockFace.DOWN);
@@ -284,7 +285,7 @@ public class EssentialsProtectBlockListener implements Listener
 
 			if (!Permissions.ALERTS_NOTRIGGER.isAuthorized(user) && settings.getData().getAlertOnBreak().contains(type))
 			{
-				parent.getContext().getMessager().alert(user, type.toString(), _("alertBroke"), Permissions.ALERTS);
+				parent.getContext().getMessager().alert(user, type.toString(), $("alertBroke"), Permissions.ALERTS);
 			}
 			final IProtectedBlock storage = parent.getStorage();
 

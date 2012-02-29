@@ -1,13 +1,13 @@
 package com.earth2me.essentials.listeners;
 
 import com.earth2me.essentials.api.*;
+import com.earth2me.essentials.components.settings.groups.GroupStorage;
+import com.earth2me.essentials.components.settings.groups.GroupsComponent;
 import com.earth2me.essentials.perm.GmGroupsComponent;
 import com.earth2me.essentials.perm.VaultGroupsComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
-import com.earth2me.essentials.components.settings.General;
-import com.earth2me.essentials.components.settings.groups.GroupStorage;
-import com.earth2me.essentials.components.settings.groups.GroupsComponent;
 import java.util.logging.Level;
+import org.anjocaido.groupmanager.GroupManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -77,7 +77,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 		if (storage == GroupStorage.GROUPMANAGER)
 		{
 			Plugin groupManager = context.getServer().getPluginManager().getPlugin("GroupManager");
-			if (groupManager != null && groupManager.isEnabled() && !(context.getGroups() instanceof GmGroupsComponent))
+			if (groupManager instanceof GroupManager && groupManager.isEnabled() && !(context.getGroups() instanceof GmGroupsComponent))
 			{
 				if (context.getGroups() instanceof IGroupsComponent)
 				{
@@ -85,7 +85,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 				}
 
 				// TODO Come up with a better way of doing this that doesn't involve casting to Context.
-				((Context)context).setGroups(new GmGroupsComponent(context, groupManager));
+				((Context)context).setGroups(new GmGroupsComponent(context, (GroupManager)groupManager));
 				return;
 			}
 		}
@@ -106,7 +106,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 		if (!(context.getGroups() instanceof IGroupsComponent))
 		{
 			// TODO Find a better way to do this.
-			((Context)context).setGroups(new GroupsComponent(context));
+			((Context)context).setGroups(new GroupsComponent(context, context.getEssentials()));
 			context.getEssentials().add(context.getGroups());
 		}
 	}

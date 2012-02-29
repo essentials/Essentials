@@ -1,9 +1,9 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.craftbukkit.ShowInventory;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +29,7 @@ public class SignFree extends EssentialsSign
 		final ItemStack item = getItemStack(sign.getLine(1), 1, ess);
 		if (item.getType() == Material.AIR)
 		{
-			throw new SignException(_("cantSpawnItem", "Air"));
+			throw new SignException($("cantSpawnItem", "Air"));
 		}
 
 		item.setAmount(item.getType().getMaxStackSize() * 9 * 4);

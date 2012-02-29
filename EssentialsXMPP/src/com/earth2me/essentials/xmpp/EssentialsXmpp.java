@@ -4,8 +4,8 @@ import com.earth2me.essentials.api.EssentialsPlugin;
 import com.earth2me.essentials.api.ICommandsComponent;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.commands.CommandsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -42,7 +42,7 @@ public class EssentialsXmpp extends EssentialsPlugin implements IEssentialsXmpp
 
 		commands = new CommandsComponent(EssentialsXmpp.class.getClassLoader(), "com.earth2me.essentials.xmpp.Command", "essentials.", getContext());
 
-		add(users = new UserManagerComponent(this.getDataFolder()));
+		add(users = new UserManagerComponent(getDataFolder()));
 		add(xmpp = new XmppManagerComponent(this));
 
 		initialize();

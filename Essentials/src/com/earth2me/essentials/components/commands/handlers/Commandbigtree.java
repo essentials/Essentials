@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import org.bukkit.Location;
 import org.bukkit.TreeType;
 
@@ -33,11 +33,11 @@ public class Commandbigtree extends EssentialsCommand
 		final boolean success = user.getWorld().generateTree(safeLocation, tree);
 		if (success)
 		{
-			user.sendMessage(_("bigTreeSuccess"));
+			user.sendMessage($("bigTreeSuccess"));
 		}
 		else
 		{
-			throw new Exception(_("bigTreeFailure"));
+			throw new Exception($("bigTreeFailure"));
 		}
 	}
 }

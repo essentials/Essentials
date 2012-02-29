@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.textreader.ArrayListInput;
 import com.earth2me.essentials.textreader.TextPager;
 import java.text.DateFormat;
@@ -52,7 +52,7 @@ public class Commandbalancetop extends EssentialsCommand
 				}
 				if (getContext().getUsers().getUniqueUsers() > MINUSERS)
 				{
-					sender.sendMessage(_("orderBalances", getContext().getUsers().getUniqueUsers()));
+					sender.sendMessage($("orderBalances", getContext().getUsers().getUniqueUsers()));
 				}
 			}
 			finally
@@ -65,7 +65,7 @@ public class Commandbalancetop extends EssentialsCommand
 		{
 			if (getContext().getUsers().getUniqueUsers() > MINUSERS)
 			{
-				sender.sendMessage(_("orderBalances", getContext().getUsers().getUniqueUsers()));
+				sender.sendMessage($("orderBalances", getContext().getUsers().getUniqueUsers()));
 			}
 			getContext().getScheduler().scheduleAsyncDelayedTask(new Viewer(sender, page, force));
 		}
@@ -77,7 +77,7 @@ public class Commandbalancetop extends EssentialsCommand
 		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(cacheage);
 		final DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-		sender.sendMessage(_("balanceTop", format.format(cal.getTime())));
+		sender.sendMessage($("balanceTop", format.format(cal.getTime())));
 		new TextPager(cache).showPage(Integer.toString(page), "", "balancetop", sender);
 	}
 

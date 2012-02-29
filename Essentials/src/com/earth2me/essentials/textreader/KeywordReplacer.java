@@ -2,12 +2,9 @@ package com.earth2me.essentials.textreader;
 
 import com.earth2me.essentials.DescParseTickFormat;
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import lombok.Cleanup;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -19,13 +16,13 @@ public class KeywordReplacer implements IText
 {
 	private final transient IText input;
 	private final transient List<String> replaced;
-	private final transient IContext ess;
+	private final transient IContext context;
 
 	public KeywordReplacer(final IText input, final CommandSender sender, final IContext ess)
 	{
 		this.input = input;
 		this.replaced = new ArrayList<String>(this.input.getLines().size());
-		this.ess = ess;
+		this.context = ess;
 		replaceKeywords(sender);
 	}
 
@@ -38,7 +35,7 @@ public class KeywordReplacer implements IText
 		if (sender instanceof Player)
 		{
 			@Cleanup
-			final IUserComponent user = ess.getUser((Player)sender);
+			final IUserComponent user = context.getUser((Player)sender);
 			user.acquireReadLock();
 			displayName = user.getDisplayName();
 			userName = user.getName();
@@ -49,7 +46,7 @@ public class KeywordReplacer implements IText
 			world = user.getLocation().getWorld().getName();
 			worldTime12 = DescParseTickFormat.format12(user.getWorld().getTime());
 			worldTime24 = DescParseTickFormat.format24(user.getWorld().getTime());
-			worldDate = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(DescParseTickFormat.ticksToDate(user.getWorld().getFullTime()));
+			worldDate = DateFormat.getDateInstance(DateFormat.MEDIUM, context.getI18n().getCurrentLocale()).format(DescParseTickFormat.ticksToDate(user.getWorld().getFullTime()));
 		}
 		else
 		{
@@ -57,18 +54,18 @@ public class KeywordReplacer implements IText
 		}
 
 		int playerHidden = 0;
-		for (Player p : ess.getServer().getOnlinePlayers())
+		for (Player p : context.getServer().getOnlinePlayers())
 		{
-			if (ess.getUser(p).isHidden())
+			if (context.getUser(p).isHidden())
 			{
 				playerHidden++;
 			}
 		}
-		online = Integer.toString(ess.getServer().getOnlinePlayers().length - playerHidden);
-		unique = Integer.toString(ess.getUsers().getUniqueUsers());
+		online = Integer.toString(context.getServer().getOnlinePlayers().length - playerHidden);
+		unique = Integer.toString(context.getUsers().getUniqueUsers());
 
 		final StringBuilder worldsBuilder = new StringBuilder();
-		for (World w : ess.getServer().getWorlds())
+		for (World w : context.getServer().getWorlds())
 		{
 			if (worldsBuilder.length() > 0)
 			{
@@ -79,9 +76,9 @@ public class KeywordReplacer implements IText
 		worlds = worldsBuilder.toString();
 
 		final StringBuilder playerlistBuilder = new StringBuilder();
-		for (Player p : ess.getServer().getOnlinePlayers())
+		for (Player p : context.getServer().getOnlinePlayers())
 		{
-			if (ess.getUser(p).isHidden())
+			if (context.getUser(p).isHidden())
 			{
 				continue;
 			}
@@ -94,7 +91,7 @@ public class KeywordReplacer implements IText
 		playerlist = playerlistBuilder.toString();
 
 		final StringBuilder pluginlistBuilder = new StringBuilder();
-		for (Plugin p : ess.getServer().getPluginManager().getPlugins())
+		for (Plugin p : context.getServer().getPluginManager().getPlugins())
 		{
 			if (pluginlistBuilder.length() > 0)
 			{
@@ -104,10 +101,10 @@ public class KeywordReplacer implements IText
 		}
 		plugins = pluginlistBuilder.toString();
 
-		date = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(new Date());
-		time = DateFormat.getTimeInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(new Date());
+		date = DateFormat.getDateInstance(DateFormat.MEDIUM, context.getI18n().getCurrentLocale()).format(new Date());
+		time = DateFormat.getTimeInstance(DateFormat.MEDIUM, context.getI18n().getCurrentLocale()).format(new Date());
 
-		version = ess.getServer().getVersion();
+		version = context.getServer().getVersion();
 
 		for (int i = 0; i < input.getLines().size(); i++)
 		{
@@ -139,7 +136,7 @@ public class KeywordReplacer implements IText
 	@Override
 	public List<String> getLines()
 	{
-		return replaced;
+		return Collections.unmodifiableList(replaced);
 	}
 
 	@Override

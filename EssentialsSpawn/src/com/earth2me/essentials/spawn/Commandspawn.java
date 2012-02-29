@@ -1,10 +1,10 @@
 package com.earth2me.essentials.spawn;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -24,8 +24,8 @@ public class Commandspawn extends EssentialsCommand
 			respawn(otherUser, null);
 			if (!otherUser.equals(user))
 			{
-				otherUser.sendMessage(_("teleportAtoB", user.getDisplayName(), "spawn"));
-				user.sendMessage(_("teleporting"));
+				otherUser.sendMessage($("teleportAtoB", user.getDisplayName(), "spawn"));
+				user.sendMessage($("teleporting"));
 			}
 		}
 		else
@@ -43,14 +43,14 @@ public class Commandspawn extends EssentialsCommand
 		}
 		final IUserComponent user = getPlayer(args, 0);
 		respawn(user, null);
-		user.sendMessage(_("teleportAtoB", user.getDisplayName(), "spawn"));
-		sender.sendMessage(_("teleporting"));
+		user.sendMessage($("teleportAtoB", user.getDisplayName(), "spawn"));
+		sender.sendMessage($("teleporting"));
 	}
 
 	private void respawn(final IUserComponent user, final Trade charge) throws Exception
 	{
 		final SpawnStorageComponent spawns = (SpawnStorageComponent)this.getComponent();
 		final Location spawn = spawns.getSpawn(getContext().getGroups().getMainGroup(user));
-		user.getTeleport().teleport(spawn, charge, TeleportCause.COMMAND);
+		user.getTeleporter().teleport(spawn, charge, TeleportCause.COMMAND);
 	}
 }

@@ -1,6 +1,6 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class Commandnuke extends EssentialsCommand
 			{
 				continue;
 			}
-			player.sendMessage(_("nuke"));
+			player.sendMessage($("nuke"));
 			final Location loc = player.getLocation();
 			final World world = loc.getWorld();
 			for (int x = -10; x <= 10; x += 5)

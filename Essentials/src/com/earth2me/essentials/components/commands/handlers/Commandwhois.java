@@ -1,11 +1,11 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Locale;
 import lombok.Cleanup;
@@ -42,14 +42,14 @@ public class Commandwhois extends EssentialsCommand
 		for (Player onlinePlayer : getServer().getOnlinePlayers())
 		{
 			@Cleanup
-			final IUser user = getContext().getUser(onlinePlayer);
+			final IUserComponent user = getContext().getUser(onlinePlayer);
 
 			if (user.isHidden() && !showhidden)
 			{
 				continue;
 			}
 			user.acquireReadLock();
-			final String nickName = Util.stripColor(user.getData().getNickname());
+			final String nickName = Util.stripColor(user.getData().getNickName());
 			if (!whois.equalsIgnoreCase(nickName)
 				&& !whois.substring(prefixLength).equalsIgnoreCase(nickName)
 				&& !whois.equalsIgnoreCase(user.getName()))
@@ -57,22 +57,22 @@ public class Commandwhois extends EssentialsCommand
 				continue;
 			}
 			sender.sendMessage("");
-			sender.sendMessage(_("whoisIs", user.getDisplayName(), user.getName()));
-			sender.sendMessage(_("whoisHealth", user.getHealth()));
-			sender.sendMessage(_("whoisOP", (user.isOp() ? _("true") : _("false"))));
-			sender.sendMessage(_("whoisGod", (user.isGodModeEnabled() ? _("true") : _("false"))));
-			sender.sendMessage(_("whoisGamemode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH))));
-			sender.sendMessage(_("whoisLocation", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
-			sender.sendMessage(_("whoisMoney", Util.formatCurrency(user.getMoney(), getContext())));
+			sender.sendMessage($("whoisIs", user.getDisplayName(), user.getName()));
+			sender.sendMessage($("whoisHealth", user.getHealth()));
+			sender.sendMessage($("whoisOP", (user.isOp() ? $("true") : $("false"))));
+			sender.sendMessage($("whoisGod", (user.isGodModeEnabled() ? $("true") : $("false"))));
+			sender.sendMessage($("whoisGamemode", $(user.getGameMode().toString().toLowerCase(Locale.ENGLISH))));
+			sender.sendMessage($("whoisLocation", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
+			sender.sendMessage($("whoisMoney", Util.formatCurrency(user.getMoney(), getContext())));
 			sender.sendMessage(user.getData().isAfk()
-							   ? _("whoisStatusAway")
-							   : _("whoisStatusAvailable"));
-			sender.sendMessage(_("whoisIPAddress", user.getAddress().getAddress().toString()));
-			final String location = user.getData().getGeolocation();
+							   ? $("whoisStatusAway")
+							   : $("whoisStatusAvailable"));
+			sender.sendMessage($("whoisIPAddress", user.getAddress().getAddress().toString()));
+			final String location = user.getData().getGeoLocation();
 			if (location != null
 				&& Permissions.GEOIP_SHOW.isAuthorized(sender))
 			{
-				sender.sendMessage(_("whoisGeoLocation", location));
+				sender.sendMessage($("whoisGeoLocation", location));
 			}
 		}
 	}

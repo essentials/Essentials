@@ -3,10 +3,10 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.Console;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.Ban;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.components.settings.users.Ban;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ public class Commandban extends EssentialsCommand
 		{
 			if (Permissions.BAN_EXEMPT.isAuthorized(user))
 			{
-				sender.sendMessage(_("banExempt"));
+				sender.sendMessage($("banExempt"));
 				return;
 			}
 		}
@@ -35,7 +35,7 @@ public class Commandban extends EssentialsCommand
 		{
 			if (Permissions.BAN_OFFLINE.isAuthorized(sender))
 			{
-				sender.sendMessage(_("banExempt"));
+				sender.sendMessage($("banExempt"));
 				return;
 			}
 		}
@@ -50,7 +50,7 @@ public class Commandban extends EssentialsCommand
 		}
 		else
 		{
-			banReason = _("defaultBanReason");
+			banReason = $("defaultBanReason");
 		}
 		user.setBanned(true);
 		user.kickPlayer(banReason);
@@ -58,10 +58,10 @@ public class Commandban extends EssentialsCommand
 
 		for (Player onlinePlayer : getServer().getOnlinePlayers())
 		{
-			final IUser player = getContext().getUser(onlinePlayer);
+			final IUserComponent player = getContext().getUser(onlinePlayer);
 			if (Permissions.BAN_NOTIFY.isAuthorized(player))
 			{
-				onlinePlayer.sendMessage(_("playerBanned", senderName, user.getName(), banReason));
+				onlinePlayer.sendMessage($("playerBanned", senderName, user.getName(), banReason));
 			}
 		}
 	}

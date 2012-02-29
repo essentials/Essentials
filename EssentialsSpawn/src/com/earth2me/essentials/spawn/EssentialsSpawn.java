@@ -1,11 +1,9 @@
 package com.earth2me.essentials.spawn;
 
 import com.earth2me.essentials.api.EssentialsPlugin;
-import com.earth2me.essentials.components.commands.CommandsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.ICommandsComponent;
 import com.earth2me.essentials.api.IContext;
-import java.util.logging.Level;
+import com.earth2me.essentials.components.commands.CommandsComponent;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -17,26 +15,26 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class EssentialsSpawn extends EssentialsPlugin
 {
 	private static final Logger LOGGER = Bukkit.getLogger();
-	private transient IContext ess;
+	private transient IContext context;
 	private transient SpawnStorageComponent spawns;
 	private transient ICommandsComponent commandHandler;
 
+	@Override
 	public void onEnable()
 	{
 		final PluginManager pluginManager = getServer().getPluginManager();
 
-		spawns = new SpawnStorageComponent(ess);
-		ess.getEssentials().add(spawns);
+		spawns = new SpawnStorageComponent(context, this);
+		context.getEssentials().add(spawns);
 
-		commandHandler = new CommandsComponent(EssentialsSpawn.class.getClassLoader(), "com.earth2me.essentials.spawn.Command", "essentials.", spawns, ess);
+		commandHandler = new CommandsComponent(EssentialsSpawn.class.getClassLoader(), "com.earth2me.essentials.spawn.Command", "essentials.", spawns, context);
 
-		final EssentialsSpawnPlayerListener playerListener = new EssentialsSpawnPlayerListener(ess, spawns);
+		final EssentialsSpawnPlayerListener playerListener = new EssentialsSpawnPlayerListener(context, spawns);
 		pluginManager.registerEvent(PlayerRespawnEvent.class, playerListener, spawns.getRespawnPriority(), new EventExecutor()
 		{
 			@Override
@@ -53,10 +51,6 @@ public class EssentialsSpawn extends EssentialsPlugin
 				((EssentialsSpawnPlayerListener)ll).onPlayerJoin((PlayerJoinEvent)event);
 			}
 		}, this);
-	}
-
-	public void onDisable()
-	{
 	}
 
 	@Override

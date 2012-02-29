@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.api.InvalidNameException;
@@ -105,7 +105,7 @@ public final class Util
 		boolean future = false;
 		if (toDate.equals(fromDate))
 		{
-			return _("now");
+			return $("now");
 		}
 		if (toDate.after(fromDate))
 		{
@@ -124,18 +124,18 @@ public final class Util
 		};
 		String[] names = new String[]
 		{
-			_("year"),
-			_("years"),
-			_("month"),
-			_("months"),
-			_("day"),
-			_("days"),
-			_("hour"),
-			_("hours"),
-			_("minute"),
-			_("minutes"),
-			_("second"),
-			_("seconds")
+			$("year"),
+			$("years"),
+			$("month"),
+			$("months"),
+			$("day"),
+			$("days"),
+			$("hour"),
+			$("hours"),
+			$("minute"),
+			$("minutes"),
+			$("second"),
+			$("seconds")
 		};
 		for (int i = 0; i < types.length; i++)
 		{
@@ -235,7 +235,7 @@ public final class Util
 		}
 		if (!found)
 		{
-			throw new Exception(_("illegalDate"));
+			throw new Exception($("illegalDate"));
 		}
 		Calendar c = new GregorianCalendar();
 		if (years > 0)
@@ -331,7 +331,7 @@ public final class Util
 	{
 		if (loc == null || loc.getWorld() == null)
 		{
-			throw new Exception(_("destinationNotSet"));
+			throw new Exception($("destinationNotSet"));
 		}
 		final World world = loc.getWorld();
 		int x = loc.getBlockX();
@@ -365,7 +365,7 @@ public final class Util
 				x += 1;
 				if (x - 32 > loc.getBlockX())
 				{
-					throw new Exception(_("holeInFloor"));
+					throw new Exception($("holeInFloor"));
 				}
 			}
 		}

@@ -2,8 +2,8 @@ package com.earth2me.essentials.geoip;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IReloadable;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
@@ -82,7 +82,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				u.acquireWriteLock();
 				try
 				{
-					u.getData().setGeolocation(builder.toString());
+					u.getData().setGeoLocation(builder.toString());
 				}
 				finally
 				{
@@ -96,7 +96,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 					final IUserComponent user = context.getUser(player);
 					if (Permissions.GEOIP_SHOW.isAuthorized(user))
 					{
-						user.sendMessage(_("geoipJoinFormat", user.getDisplayName(), builder.toString()));
+						user.sendMessage($("geoipJoinFormat", user.getDisplayName(), builder.toString()));
 					}
 				}
 			}
@@ -137,7 +137,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				}
 				else
 				{
-					LOGGER.log(Level.SEVERE, _("cantFindGeoIpDB"));
+					LOGGER.log(Level.SEVERE, $("cantFindGeoIpDB"));
 					return;
 				}
 			}
@@ -147,7 +147,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 			}
 			catch (IOException ex)
 			{
-				LOGGER.log(Level.SEVERE, _("cantReadGeoIpDB"), ex);
+				LOGGER.log(Level.SEVERE, $("cantReadGeoIpDB"), ex);
 			}
 		}
 		finally
@@ -160,14 +160,14 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 	{
 		if (url == null || url.isEmpty())
 		{
-			LOGGER.log(Level.SEVERE, _("geoIpUrlEmpty"));
+			LOGGER.log(Level.SEVERE, $("geoIpUrlEmpty"));
 			return;
 		}
 		InputStream input = null;
 		OutputStream output = null;
 		try
 		{
-			LOGGER.log(Level.INFO, _("downloadingGeoIp"));
+			LOGGER.log(Level.INFO, $("downloadingGeoIp"));
 			final URL downloadUrl = new URL(url);
 			final URLConnection conn = downloadUrl.openConnection();
 			conn.setConnectTimeout(10000);
@@ -190,11 +190,11 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 		}
 		catch (MalformedURLException ex)
 		{
-			LOGGER.log(Level.SEVERE, _("geoIpUrlInvalid"), ex);
+			LOGGER.log(Level.SEVERE, $("geoIpUrlInvalid"), ex);
 		}
 		catch (IOException ex)
 		{
-			LOGGER.log(Level.SEVERE, _("connectionFailed"), ex);
+			LOGGER.log(Level.SEVERE, $("connectionFailed"), ex);
 		}
 		finally
 		{
@@ -206,7 +206,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				}
 				catch (IOException ex)
 				{
-					LOGGER.log(Level.SEVERE, _("connectionFailed"), ex);
+					LOGGER.log(Level.SEVERE, $("connectionFailed"), ex);
 				}
 			}
 			if (input != null)
@@ -217,7 +217,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				}
 				catch (Throwable ex)
 				{
-					LOGGER.log(Level.SEVERE, _("connectionFailed"), ex);
+					LOGGER.log(Level.SEVERE, $("connectionFailed"), ex);
 				}
 			}
 		}

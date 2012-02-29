@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 
 
 public class Commandping extends EssentialsCommand
@@ -13,7 +13,7 @@ public class Commandping extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			user.sendMessage(_("pong"));
+			user.sendMessage($("pong"));
 		}
 		else
 		{

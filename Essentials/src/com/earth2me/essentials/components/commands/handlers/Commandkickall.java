@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -19,7 +19,7 @@ public class Commandkickall extends EssentialsCommand
 			}
 			else
 			{
-				onlinePlayer.kickPlayer(args.length > 0 ? getFinalArg(args, 0) : _("kickDefault"));
+				onlinePlayer.kickPlayer(args.length > 0 ? getFinalArg(args, 0) : $("kickDefault"));
 			}
 		}
 	}

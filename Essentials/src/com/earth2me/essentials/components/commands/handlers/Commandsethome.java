@@ -2,8 +2,8 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.HashMap;
 import java.util.Locale;
@@ -13,43 +13,44 @@ import lombok.Cleanup;
 public class Commandsethome extends EssentialsCommand
 {
 	@Override
-	public void run(final IUserComponent user, final String commandLabel, String[] args) throws Exception
+	public void run(final IUserComponent user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length > 0)
+		String[] arguments = args;
+		if (arguments.length > 0)
 		{
 			//Allowing both formats /sethome khobbits house | /sethome khobbits:house
-			final String[] nameParts = args[0].split(":");
-			if (nameParts[0].length() != args[0].length())
+			final String[] nameParts = arguments[0].split(":");
+			if (nameParts[0].length() != arguments[0].length())
 			{
-				args = nameParts;
+				arguments = nameParts;
 			}
 
-			if (args.length < 2)
+			if (arguments.length < 2)
 			{
 				if (Permissions.SETHOME_MULTIPLE.isAuthorized(user))
 				{
-					if ("bed".equals(args[0].toLowerCase(Locale.ENGLISH))) {
+					if ("bed".equals(arguments[0].toLowerCase(Locale.ENGLISH))) {
 						throw new NotEnoughArgumentsException();
 					}
 					if ((user.getHomes().size() < getContext().getGroups().getHomeLimit(user))
-						|| (user.getHomes().contains(args[0].toLowerCase(Locale.ENGLISH))))
+						|| (user.getHome(arguments[0].toLowerCase(Locale.ENGLISH)) != null))
 					{
 						user.acquireWriteLock();
 						if (user.getData().getHomes() == null)
 						{
 							user.getData().setHomes(new HashMap<String, com.earth2me.essentials.storage.LocationData>());
 						}
-						user.getData().getHomes().put(args[0].toLowerCase(Locale.ENGLISH), new com.earth2me.essentials.storage.LocationData(user.getLocation()));
+						user.getData().getHomes().put(arguments[0].toLowerCase(Locale.ENGLISH), new com.earth2me.essentials.storage.LocationData(user.getLocation()));
 					}
 					else
 					{
-						throw new Exception(_("maxHomes", getContext().getGroups().getHomeLimit(user)));
+						throw new Exception($("maxHomes", getContext().getGroups().getHomeLimit(user)));
 					}
 
 				}
 				else
 				{
-					throw new Exception(_("maxHomes", 1));
+					throw new Exception($("maxHomes", 1));
 				}
 			}
 			else
@@ -57,12 +58,12 @@ public class Commandsethome extends EssentialsCommand
 				if (Permissions.SETHOME_OTHERS.isAuthorized(user))
 				{
 					@Cleanup
-					IUserComponent usersHome = getContext().getUser(getContext().getServer().getPlayer(args[0]));
+					IUserComponent usersHome = getContext().getUser(getContext().getServer().getPlayer(arguments[0]));
 					if (usersHome == null)
 					{
-						throw new Exception(_("playerNotFound"));
+						throw new Exception($("playerNotFound"));
 					}
-					String name = args[1].toLowerCase(Locale.ENGLISH);
+					String name = arguments[1].toLowerCase(Locale.ENGLISH);
 					if (!Permissions.SETHOME_MULTIPLE.isAuthorized(user))
 					{
 						name = "home";
@@ -89,7 +90,7 @@ public class Commandsethome extends EssentialsCommand
 			}
 			user.getData().getHomes().put("home", new com.earth2me.essentials.storage.LocationData(user.getLocation()));
 		}
-		user.sendMessage(_("homeSet"));
+		user.sendMessage($("homeSet"));
 
 	}
 }

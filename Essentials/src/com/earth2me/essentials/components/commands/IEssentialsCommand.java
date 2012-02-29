@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IPermissions;
 import com.earth2me.essentials.components.IComponent;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
+import com.earth2me.essentials.components.users.IUserComponent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 

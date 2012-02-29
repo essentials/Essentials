@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.*;
 import org.bukkit.command.CommandSender;
@@ -32,11 +32,11 @@ public class Commandlist extends EssentialsCommand
 		String online;
 		if (showhidden && playerHidden > 0)
 		{
-			online = _("listAmountHidden", getServer().getOnlinePlayers().length - playerHidden, playerHidden, getServer().getMaxPlayers());
+			online = $("listAmountHidden", getServer().getOnlinePlayers().length - playerHidden, playerHidden, getServer().getMaxPlayers());
 		}
 		else
 		{
-			online = _("listAmount", getServer().getOnlinePlayers().length - playerHidden, getServer().getMaxPlayers());
+			online = $("listAmount", getServer().getOnlinePlayers().length - playerHidden, getServer().getMaxPlayers());
 		}
 		sender.sendMessage(online);
 
@@ -95,7 +95,7 @@ public class Commandlist extends EssentialsCommand
 					{
 						if (user.getData().isAfk())
 						{
-							groupString.append(_("listAfkTag"));
+							groupString.append($("listAfkTag"));
 						}
 					}
 					finally
@@ -104,7 +104,7 @@ public class Commandlist extends EssentialsCommand
 					}
 					if (user.isHidden())
 					{
-						groupString.append(_("listHiddenTag"));
+						groupString.append($("listHiddenTag"));
 					}
 					groupString.append(user.getDisplayName());
 					groupString.append("§f");
@@ -127,7 +127,7 @@ public class Commandlist extends EssentialsCommand
 			Collections.sort(users);
 
 			final StringBuilder onlineUsers = new StringBuilder();
-			onlineUsers.append(_("connectedPlayers"));
+			onlineUsers.append($("connectedPlayers"));
 			boolean first = true;
 			for (IUserComponent user : users)
 			{
@@ -144,7 +144,7 @@ public class Commandlist extends EssentialsCommand
 				{
 					if (user.getData().isAfk())
 					{
-						onlineUsers.append(_("listAfkTag"));
+						onlineUsers.append($("listAfkTag"));
 					}
 				}
 				finally
@@ -153,7 +153,7 @@ public class Commandlist extends EssentialsCommand
 				}
 				if (user.isHidden())
 				{
-					onlineUsers.append(_("listHiddenTag"));
+					onlineUsers.append($("listHiddenTag"));
 				}
 				onlineUsers.append(user.getDisplayName());
 				onlineUsers.append("§f");

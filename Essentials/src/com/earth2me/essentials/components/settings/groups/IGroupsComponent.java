@@ -1,13 +1,11 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.components.IComponent;
-import com.earth2me.essentials.components.settings.groups.Groups;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.storage.IStorageObjectHolder;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.text.MessageFormat;
 
 
-public interface IGroupsComponent extends IComponent, IStorageObjectHolder<Groups>
+public interface IGroupsComponent extends IComponent
 {
 	String getMainGroup(IUserComponent player);
 

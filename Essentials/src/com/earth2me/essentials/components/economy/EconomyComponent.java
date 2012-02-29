@@ -1,12 +1,12 @@
 package com.earth2me.essentials.components.economy;
 
-import com.earth2me.essentials.components.settings.economy.MoneyComponent;
+import com.earth2me.essentials.components.settings.money.MoneyComponent;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.components.settings.users.UserDoesNotExistException;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.components.users.UserDoesNotExistException;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.HashMap;
 import java.util.Locale;

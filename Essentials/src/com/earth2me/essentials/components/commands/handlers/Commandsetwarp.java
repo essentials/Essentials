@@ -2,10 +2,11 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.components.commands.WarpNotFoundException;
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
-import com.earth2me.essentials.components.settings.users.IUserComponent;
-import com.earth2me.essentials.components.settings.warps.IWarpsComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.components.warps.IWarpsComponent;
+import com.earth2me.essentials.components.warps.Warp;
+import com.earth2me.essentials.storage.LocationData;
 import org.bukkit.Location;
 
 
@@ -26,25 +27,20 @@ public class Commandsetwarp extends EssentialsCommand
 
 		final Location loc = user.getLocation();
 		final IWarpsComponent warps = getContext().getWarps();
-		Location warpLoc = null;
-
-		try
-		{
-			warpLoc = warps.getWarp(args[0]);
-		}
-		catch (WarpNotFoundException ex)
-		{
-		}
+		Location warpLoc = warps.getWarp(args[0]).getLocation().getBukkitLocation();
 
 		if (warpLoc == null || user.hasPermission("essentials.warp.overwrite." + args[0]))
 		{
-			warps.setWarp(args[0], loc);
+			final Warp warp = new Warp();
+			warp.setLocation(new LocationData(loc));
+			warp.setName(args[0]);
+			warps.setWarp(args[0], warp);
 		}
 		else
 		{
-			throw new Exception(_("warpOverwrite"));
+			throw new Exception($("warpOverwrite"));
 		}
 
-		user.sendMessage(_("warpSet", args[0]));
+		user.sendMessage($("warpSet", args[0]));
 	}
 }

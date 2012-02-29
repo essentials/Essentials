@@ -1,6 +1,6 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Mob;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
@@ -45,7 +45,7 @@ public class Commandkillall extends EssentialsCommand
 				}
 				catch (NumberFormatException e)
 				{
-					throw new Exception(_("numberRequired"));
+					throw new Exception($("numberRequired"));
 				}
 			}
 		}
@@ -78,7 +78,7 @@ public class Commandkillall extends EssentialsCommand
 		{
 			if (Mob.fromName(killType) == null)
 			{
-				throw new Exception(_("invalidMob"));
+				throw new Exception($("invalidMob"));
 			}
 			entityClass = Mob.fromName(killType).getType().getEntityClass();
 		}
@@ -141,6 +141,6 @@ public class Commandkillall extends EssentialsCommand
 				}
 			}
 		}
-		sender.sendMessage(_("kill", numKills));
+		sender.sendMessage($("kill", numKills));
 	}
 }
