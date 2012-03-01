@@ -71,10 +71,10 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 	public UserComponent(final IStatelessPlayer base, final IContext context)
 	{
 		super(context, UserSurrogate.class, context.getEssentials());
-		getName();
-
 		this.base = base;
 		this.teleporter = new Teleporter(this, context);
+		
+		getName();
 	}
 
 	@Override
