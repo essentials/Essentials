@@ -16,18 +16,15 @@ public class UserSurrogate implements IStorageObject
 	@MapValueType(LocationData.class)
 	private Map<String, LocationData> homes = new HashMap<String, LocationData>();
 	@ListType(Material.class)
-	// TODO Replace with EnumSet.
 	@SuppressWarnings("SetReplaceableByEnumSet")
 	private Set<Material> unlimited = new HashSet<Material>();
 	@MapValueType(List.class)
 	@MapKeyType(Material.class)
-	// TODO Replace with EnumMap.
 	@SuppressWarnings("MapReplaceableByEnumMap")
 	private Map<Material, List<String>> powerTools = new HashMap<Material, List<String>>();
 	private LocationData lastLocation;
 	@MapKeyType(TimeStampType.class)
 	@MapValueType(Long.class)
-	// TODO Replace with EnumMap.
 	@SuppressWarnings("MapReplaceableByEnumMap")
 	private Map<TimeStampType, Long> timeStamps = new HashMap<TimeStampType, Long>();
 	private String jail;
@@ -91,7 +88,6 @@ public class UserSurrogate implements IStorageObject
 	{
 		if (powerTools == null)
 		{
-			// TODO Replace with EnumMap
 			powerTools = new HashMap<Material, List<String>>();
 		}
 		powerTools.put(mat, commands);
