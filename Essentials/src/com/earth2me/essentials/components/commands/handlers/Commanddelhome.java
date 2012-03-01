@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Locale;
@@ -56,6 +56,6 @@ public class Commanddelhome extends EssentialsCommand
 		 */
 		user.acquireWriteLock();
 		user.getData().removeHome(name.toLowerCase(Locale.ENGLISH));
-		sender.sendMessage($("deleteHome", name));
+		sender.sendMessage(_("deleteHome", name));
 	}
 }

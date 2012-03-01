@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.settings.jails;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentials;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.storage.LocationData;
 import com.earth2me.essentials.storage.StorageComponent;
@@ -62,13 +62,13 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 				|| jailName == null
 				|| !getData().getJails().containsKey(jailName.toLowerCase(Locale.ENGLISH)))
 			{
-				throw new Exception($("jailNotExist"));
+				throw new Exception(_("jailNotExist"));
 			}
 
 			Location loc = getData().getJails().get(jailName.toLowerCase(Locale.ENGLISH)).getBukkitLocation();
 			if (loc == null || loc.getWorld() == null)
 			{
-				throw new Exception($("jailNotExist"));
+				throw new Exception(_("jailNotExist"));
 			}
 
 			return loc;
@@ -218,11 +218,11 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 			{
 				if (getContext().getSettings().isDebug())
 				{
-					getContext().getLogger().log(Level.INFO, $("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					getContext().getLogger().log(Level.INFO, $("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 		}
@@ -244,14 +244,14 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 			{
 				if (getContext().getSettings().isDebug())
 				{
-					getContext().getLogger().log(Level.INFO, $("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					getContext().getLogger().log(Level.INFO, $("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
-			user.sendMessage($("jailMessage"));
+			user.sendMessage(_("jailMessage"));
 		}
 
 		@EventHandler(priority = EventPriority.HIGH)
@@ -271,14 +271,14 @@ public final class JailsComponent extends StorageComponent<Jails, IEssentials> i
 			{
 				if (getContext().getSettings().isDebug())
 				{
-					getContext().getLogger().log(Level.INFO, $("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					getContext().getLogger().log(Level.INFO, $("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					getContext().getLogger().log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
-			user.sendMessage($("jailMessage"));
+			user.sendMessage(_("jailMessage"));
 		}
 	}
 }

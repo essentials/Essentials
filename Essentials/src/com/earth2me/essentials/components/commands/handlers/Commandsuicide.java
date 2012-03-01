@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -15,7 +15,7 @@ public class Commandsuicide extends EssentialsCommand
 		getServer().getPluginManager().callEvent(ede);
 		user.damage(1000);
 		user.setHealth(0);
-		user.sendMessage($("suicideMessage"));
-		getContext().getMessager().broadcastMessage(user,$("suicideSuccess", user.getDisplayName()));
+		user.sendMessage(_("suicideMessage"));
+		getContext().getMessager().broadcastMessage(user,_("suicideSuccess", user.getDisplayName()));
 	}
 }

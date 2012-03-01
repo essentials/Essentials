@@ -25,7 +25,7 @@ import com.earth2me.essentials.components.commands.CommandsComponent;
 import com.earth2me.essentials.components.economy.EconomyComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.i18n.I18nComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.items.ItemsComponent;
 import com.earth2me.essentials.components.settings.SettingsComponent;
 import com.earth2me.essentials.components.settings.groups.GroupsComponent;
@@ -102,7 +102,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 
 		registerComponents(0);
 
-		context.getLogger().log(Level.INFO, $("usingTempFolderForTesting"));
+		context.getLogger().log(Level.INFO, _("usingTempFolderForTesting"));
 		context.getLogger().log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 
@@ -187,11 +187,11 @@ public class Essentials extends ComponentPlugin implements IEssentials
 
 		if (pluginManager.getPlugin("EssentialsUpdate") != null)
 		{
-			context.getLogger().log(Level.SEVERE, $("essentialsHelp2"));
+			context.getLogger().log(Level.SEVERE, _("essentialsHelp2"));
 		}
 		else
 		{
-			context.getLogger().log(Level.SEVERE, $("essentialsHelp1"));
+			context.getLogger().log(Level.SEVERE, _("essentialsHelp1"));
 		}
 		context.getLogger().log(Level.SEVERE, exception.toString());
 

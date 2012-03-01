@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.users.TimeStampType;
 import com.earth2me.essentials.perm.Permissions;
@@ -29,7 +29,7 @@ public class Commandheal extends EssentialsCommand
 
 		user.setHealth(20);
 		user.setFoodLevel(20);
-		user.sendMessage($("heal"));
+		user.sendMessage(_("heal"));
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class Commandheal extends EssentialsCommand
 		final List<Player> players = getServer().matchPlayer(name);
 		if (players.isEmpty())
 		{
-			sender.sendMessage($("playerNotFound"));
+			sender.sendMessage(_("playerNotFound"));
 			return;
 		}
 		for (Player p : players)
@@ -59,8 +59,8 @@ public class Commandheal extends EssentialsCommand
 			}
 			p.setHealth(20);
 			p.setFoodLevel(20);
-			p.sendMessage($("heal"));
-			sender.sendMessage($("healOther", p.getDisplayName()));
+			p.sendMessage(_("heal"));
+			sender.sendMessage(_("healOther", p.getDisplayName()));
 		}
 	}
 }

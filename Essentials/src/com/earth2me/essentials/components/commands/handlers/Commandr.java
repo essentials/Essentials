@@ -4,7 +4,7 @@ import com.earth2me.essentials.Console;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IReplyTo;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
@@ -52,10 +52,10 @@ public class Commandr extends EssentialsCommand
 
 		if (target == null || ((target instanceof Player) && !((Player)target).isOnline()))
 		{
-			throw new Exception($("foreverAlone"));
+			throw new Exception(_("foreverAlone"));
 		}
 
-		sender.sendMessage($("msgFormat", $("me"), targetName, message));
+		sender.sendMessage(_("msgFormat", _("me"), targetName, message));
 		if (target instanceof Player)
 		{
 			IUserComponent player = getContext().getUser((Player)target);
@@ -64,7 +64,7 @@ public class Commandr extends EssentialsCommand
 				return;
 			}
 		}
-		target.sendMessage($("msgFormat", senderName, $("me"), message));
+		target.sendMessage(_("msgFormat", senderName, _("me"), message));
 		replyTo.setReplyTo(target);
 		if (target != sender)
 		{

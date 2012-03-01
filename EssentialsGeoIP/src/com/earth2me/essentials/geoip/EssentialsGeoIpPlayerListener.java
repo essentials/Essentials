@@ -2,7 +2,7 @@ package com.earth2me.essentials.geoip;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IReloadable;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.maxmind.geoip.Location;
@@ -94,7 +94,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 					final IUserComponent user = context.getUser(player);
 					if (Permissions.GEOIP_SHOW.isAuthorized(user))
 					{
-						user.sendMessage($("geoipJoinFormat", user.getDisplayName(), builder.toString()));
+						user.sendMessage(_("geoipJoinFormat", user.getDisplayName(), builder.toString()));
 					}
 				}
 			}
@@ -135,7 +135,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				}
 				else
 				{
-					plugin.getLogger().log(Level.SEVERE, $("cantFindGeoIpDB"));
+					plugin.getLogger().log(Level.SEVERE, _("cantFindGeoIpDB"));
 					return;
 				}
 			}
@@ -145,7 +145,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 			}
 			catch (IOException ex)
 			{
-				plugin.getLogger().log(Level.SEVERE, $("cantReadGeoIpDB"), ex);
+				plugin.getLogger().log(Level.SEVERE, _("cantReadGeoIpDB"), ex);
 			}
 		}
 		finally
@@ -158,14 +158,14 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 	{
 		if (url == null || url.isEmpty())
 		{
-			plugin.getLogger().log(Level.SEVERE, $("geoIpUrlEmpty"));
+			plugin.getLogger().log(Level.SEVERE, _("geoIpUrlEmpty"));
 			return;
 		}
 		InputStream input = null;
 		OutputStream output = null;
 		try
 		{
-			plugin.getLogger().log(Level.INFO, $("downloadingGeoIp"));
+			plugin.getLogger().log(Level.INFO, _("downloadingGeoIp"));
 			final URL downloadUrl = new URL(url);
 			final URLConnection conn = downloadUrl.openConnection();
 			conn.setConnectTimeout(10000);
@@ -188,11 +188,11 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 		}
 		catch (MalformedURLException ex)
 		{
-			plugin.getLogger().log(Level.SEVERE, $("geoIpUrlInvalid"), ex);
+			plugin.getLogger().log(Level.SEVERE, _("geoIpUrlInvalid"), ex);
 		}
 		catch (IOException ex)
 		{
-			plugin.getLogger().log(Level.SEVERE, $("connectionFailed"), ex);
+			plugin.getLogger().log(Level.SEVERE, _("connectionFailed"), ex);
 		}
 		finally
 		{
@@ -204,7 +204,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				}
 				catch (IOException ex)
 				{
-					plugin.getLogger().log(Level.SEVERE, $("connectionFailed"), ex);
+					plugin.getLogger().log(Level.SEVERE, _("connectionFailed"), ex);
 				}
 			}
 			if (input != null)
@@ -215,7 +215,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				}
 				catch (Throwable ex)
 				{
-					plugin.getLogger().log(Level.SEVERE, $("connectionFailed"), ex);
+					plugin.getLogger().log(Level.SEVERE, _("connectionFailed"), ex);
 				}
 			}
 		}

@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import org.bukkit.command.CommandSender;
 
 
@@ -16,6 +16,6 @@ public class Commandbroadcast extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		getContext().getMessager().broadcastMessage(null, $("broadcast", getFinalArg(args, 0)));
+		getContext().getMessager().broadcastMessage(null, _("broadcast", getFinalArg(args, 0)));
 	}
 }

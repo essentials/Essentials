@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.warps.IWarpsComponent;
 import com.earth2me.essentials.components.warps.Warp;
@@ -38,9 +38,9 @@ public class Commandsetwarp extends EssentialsCommand
 		}
 		else
 		{
-			throw new Exception($("warpOverwrite"));
+			throw new Exception(_("warpOverwrite"));
 		}
 
-		user.sendMessage($("warpSet", args[0]));
+		user.sendMessage(_("warpSet", args[0]));
 	}
 }

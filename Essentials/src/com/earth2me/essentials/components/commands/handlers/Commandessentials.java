@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
@@ -41,7 +41,7 @@ public class Commandessentials extends EssentialsCommand
 	{
 		sender.sendMessage("Essentials " + getContext().getEssentials().getDescription().getVersion());
 		sender.sendMessage("/<command> <reload/debug>");
-		sender.sendMessage($("blockList"));
+		sender.sendMessage(_("blockList"));
 		final StringBuilder disabledCommands = new StringBuilder();
 		for (Map.Entry<String, String> entry : getContext().getCommands().disabledCommands().entrySet())
 		{
@@ -63,7 +63,7 @@ public class Commandessentials extends EssentialsCommand
 	private void run_reload(final CommandSender sender, final String[] args) throws Exception
 	{
 		getContext().getEssentials().reload();
-		sender.sendMessage($("essentialsReload", getContext().getEssentials().getDescription().getVersion()));
+		sender.sendMessage(_("essentialsReload", getContext().getEssentials().getDescription().getVersion()));
 	}
 
 	private void run_nya(final CommandSender sender, final String[] args) throws Exception

@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
@@ -31,7 +31,7 @@ public class Commandtpaall extends EssentialsCommand
 
 	private void teleportAAllPlayers(final CommandSender sender, final IUserComponent user)
 	{
-		sender.sendMessage($("teleportAAll"));
+		sender.sendMessage(_("teleportAAll"));
 		for (Player onlinePlayer : getServer().getOnlinePlayers())
 		{
 			@Cleanup
@@ -48,8 +48,8 @@ public class Commandtpaall extends EssentialsCommand
 			try
 			{
 				player.requestTeleport(user, true);
-				player.sendMessage($("teleportHereRequest", user.getDisplayName()));
-				player.sendMessage($("typeTpaccept"));
+				player.sendMessage(_("teleportHereRequest", user.getDisplayName()));
+				player.sendMessage(_("typeTpaccept"));
 				int tpaAcceptCancellation = 0;
 				ISettingsComponent settings = getContext().getSettings();
 				settings.acquireReadLock();
@@ -63,7 +63,7 @@ public class Commandtpaall extends EssentialsCommand
 				}
 				if (tpaAcceptCancellation != 0)
 				{
-					player.sendMessage($("teleportRequestTimeoutInfo", tpaAcceptCancellation));
+					player.sendMessage(_("teleportRequestTimeoutInfo", tpaAcceptCancellation));
 				}
 			}
 			catch (Exception ex)

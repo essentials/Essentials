@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.users.TimeStampType;
 import com.earth2me.essentials.perm.Permissions;
@@ -32,7 +32,7 @@ public class Commandtogglejail extends EssentialsCommand
 			{
 				if (Permissions.TOGGLEJAIL_OFFLINE.isAuthorized(sender))
 				{
-					sender.sendMessage($("mayNotJail"));
+					sender.sendMessage(_("mayNotJail"));
 					return;
 				}
 			}
@@ -40,7 +40,7 @@ public class Commandtogglejail extends EssentialsCommand
 			{
 				if (Permissions.JAIL_EXEMPT.isAuthorized(player))
 				{
-					sender.sendMessage($("mayNotJail"));
+					sender.sendMessage(_("mayNotJail"));
 					return;
 				}
 			}
@@ -55,7 +55,7 @@ public class Commandtogglejail extends EssentialsCommand
 			}
 			player.acquireWriteLock();
 			player.getData().setJailed(true);
-			player.sendMessage($("userJailed"));
+			player.sendMessage(_("userJailed"));
 			player.getData().setJail(args[1]);
 			long timeDiff = 0;
 			if (args.length > 2)
@@ -65,14 +65,14 @@ public class Commandtogglejail extends EssentialsCommand
 				player.setTimeStamp(TimeStampType.JAIL, timeDiff);
 			}
 			sender.sendMessage((timeDiff > 0
-								? $("playerJailedFor", player.getName(), Util.formatDateDiff(timeDiff))
-								: $("playerJailed", player.getName())));
+								? _("playerJailedFor", player.getName(), Util.formatDateDiff(timeDiff))
+								: _("playerJailed", player.getName())));
 			return;
 		}
 
 		if (args.length >= 2 && player.getData().isJailed() && !args[1].equalsIgnoreCase(player.getData().getJail()))
 		{
-			sender.sendMessage($("jailAlreadyIncarcerated", player.getData().getJail()));
+			sender.sendMessage(_("jailAlreadyIncarcerated", player.getData().getJail()));
 			return;
 		}
 
@@ -82,7 +82,7 @@ public class Commandtogglejail extends EssentialsCommand
 			final long timeDiff = Util.parseDateDiff(time, true);
 			player.acquireWriteLock();
 			player.setTimeStamp(TimeStampType.JAIL, timeDiff);
-			sender.sendMessage($("jailSentenceExtended", Util.formatDateDiff(timeDiff)));
+			sender.sendMessage(_("jailSentenceExtended", Util.formatDateDiff(timeDiff)));
 			return;
 		}
 
@@ -95,13 +95,13 @@ public class Commandtogglejail extends EssentialsCommand
 			player.acquireWriteLock();
 			player.getData().setJailed(false);
 			player.setTimeStamp(TimeStampType.JAIL, 0);
-			player.sendMessage($("jailReleasedPlayerNotify"));
+			player.sendMessage(_("jailReleasedPlayerNotify"));
 			player.getData().setJail(null);
 			if (!(player.getBase() instanceof OfflinePlayer))
 			{
 				player.getTeleporter().back();
 			}
-			sender.sendMessage($("jailReleased", player.getName()));
+			sender.sendMessage(_("jailReleased", player.getName()));
 		}
 	}
 }

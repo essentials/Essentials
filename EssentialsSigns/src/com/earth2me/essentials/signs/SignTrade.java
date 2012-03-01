@@ -1,7 +1,7 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.components.economy.ChargeException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
@@ -47,7 +47,7 @@ public class SignTrade extends EssentialsSign
 			{
 				if (store == null)
 				{
-					throw new SignException($("tradeSignEmptyOwner"), e);
+					throw new SignException(_("tradeSignEmptyOwner"), e);
 				}
 			}
 			Trade.log("Sign", "Trade", "OwnerInteract", username, store, username, stored, sign.getBlock().getLocation(), ess);
@@ -157,7 +157,7 @@ public class SignTrade extends EssentialsSign
 				amount -= amount % money;
 				if (amount < 0.01 || money < 0.01)
 				{
-					throw new SignException($("moreThanZero"));
+					throw new SignException(_("moreThanZero"));
 				}
 				sign.setLine(index, Util.formatCurrency(money, ess) + ":" + Util.formatCurrency(amount, ess).substring(1));
 				return;
@@ -170,12 +170,12 @@ public class SignTrade extends EssentialsSign
 
 			if (amount < 1)
 			{
-				throw new SignException($("moreThanZero"));
+				throw new SignException(_("moreThanZero"));
 			}
 			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp"))
 				&& getItemStack(split[1], amount, ess).getTypeId() == 0)
 			{
-				throw new SignException($("moreThanZero"));
+				throw new SignException(_("moreThanZero"));
 			}
 			String newline = amount + " " + split[1] + ":0";
 			if ((newline + amount).length() > 15)
@@ -193,17 +193,17 @@ public class SignTrade extends EssentialsSign
 			amount -= amount % stackamount;
 			if (amount < 1 || stackamount < 1)
 			{
-				throw new SignException($("moreThanZero"));
+				throw new SignException(_("moreThanZero"));
 			}
 			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp"))
 				&& getItemStack(split[1], stackamount, ess).getTypeId() == 0)
 			{
-				throw new SignException($("moreThanZero"));
+				throw new SignException(_("moreThanZero"));
 			}
 			sign.setLine(index, stackamount + " " + split[1] + ":" + amount);
 			return;
 		}
-		throw new SignException($("invalidSignLine", index + 1));
+		throw new SignException(_("invalidSignLine", index + 1));
 	}
 
 	protected final Trade getTrade(final ISign sign, final int index, final boolean fullAmount, final boolean notEmpty, final IContext ess) throws SignException
@@ -228,7 +228,7 @@ public class SignTrade extends EssentialsSign
 			}
 			catch (SignException e)
 			{
-				throw new SignException($("tradeSignEmpty"));
+				throw new SignException(_("tradeSignEmpty"));
 			}
 		}
 
@@ -241,7 +241,7 @@ public class SignTrade extends EssentialsSign
 				amount -= amount % stackamount;
 				if (notEmpty && (amount < 1 || stackamount < 1))
 				{
-					throw new SignException($("tradeSignEmpty"));
+					throw new SignException(_("tradeSignEmpty"));
 				}
 				return new Trade(fullAmount ? amount : stackamount, ess);
 			}
@@ -253,13 +253,13 @@ public class SignTrade extends EssentialsSign
 				amount -= amount % stackamount;
 				if (notEmpty && (amount < 1 || stackamount < 1 || item.getTypeId() == 0))
 				{
-					throw new SignException($("tradeSignEmpty"));
+					throw new SignException(_("tradeSignEmpty"));
 				}
 				item.setAmount(fullAmount ? amount : stackamount);
 				return new Trade(item, ess);
 			}
 		}
-		throw new SignException($("invalidSignLine", index + 1));
+		throw new SignException(_("invalidSignLine", index + 1));
 	}
 
 	protected final void subtractAmount(final ISign sign, final int index, final Trade trade, final IContext ess) throws SignException
@@ -356,6 +356,6 @@ public class SignTrade extends EssentialsSign
 				return;
 			}
 		}
-		throw new SignException($("invalidSignLine", index + 1));
+		throw new SignException(_("invalidSignLine", index + 1));
 	}
 }

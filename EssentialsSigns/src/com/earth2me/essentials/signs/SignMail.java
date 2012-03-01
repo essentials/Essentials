@@ -1,6 +1,6 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUserComponent;
 import java.util.List;
@@ -28,14 +28,14 @@ public class SignMail extends EssentialsSign
 		}
 		if (mail == null || mail.isEmpty())
 		{
-			player.sendMessage($("noNewMail"));
+			player.sendMessage(_("noNewMail"));
 			return false;
 		}
 		for (String s : mail)
 		{
 			player.sendMessage(s);
 		}
-		player.sendMessage($("markMailAsRead"));
+		player.sendMessage(_("markMailAsRead"));
 		return true;
 	}
 }

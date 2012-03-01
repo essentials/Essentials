@@ -1,7 +1,7 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.api.IContext;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.settings.Spawns;
 import com.earth2me.essentials.components.settings.worths.WorthsComponent;
 import com.earth2me.essentials.components.warps.Warp;
@@ -75,7 +75,7 @@ public class EssentialsUpgrade
 		}
 		catch (Throwable e)
 		{
-			LOGGER.log(Level.SEVERE, $("upgradingFilesError"), e);
+			LOGGER.log(Level.SEVERE, _("upgradingFilesError"), e);
 		}
 	}
 
@@ -119,7 +119,7 @@ public class EssentialsUpgrade
 		}
 		catch (Throwable e)
 		{
-			LOGGER.log(Level.SEVERE, $("upgradingFilesError"), e);
+			LOGGER.log(Level.SEVERE, _("upgradingFilesError"), e);
 		}
 	}
 
@@ -169,11 +169,11 @@ public class EssentialsUpgrade
 		{
 			if (!file.renameTo(new File(file.getParentFile(), file.getName().concat("." + System.currentTimeMillis() + ".upgradebackup"))))
 			{
-				throw new Exception($("configFileMoveError"));
+				throw new Exception(_("configFileMoveError"));
 			}
 			if (!tempFile.renameTo(file))
 			{
-				throw new Exception($("configFileRenameError"));
+				throw new Exception(_("configFileRenameError"));
 			}
 		}
 		else
@@ -451,7 +451,7 @@ public class EssentialsUpgrade
 							context.getWarps().setWarp(warp.getName(), warp);
 							if (!listOfFiles[i].renameTo(new File(warpsFolder, filename + ".old")))
 							{
-								throw new Exception($("fileRenameError", filename));
+								throw new Exception(_("fileRenameError", filename));
 							}
 						}
 
@@ -625,7 +625,7 @@ public class EssentialsUpgrade
 					}
 					if (!configFile.renameTo(new File(context.getDataFolder(), "spawn.yml.old")))
 					{
-						throw new Exception($("fileRenameError", "spawn.yml"));
+						throw new Exception(_("fileRenameError", "spawn.yml"));
 					}
 					PrintWriter writer = new PrintWriter(configFile);
 					try
@@ -672,7 +672,7 @@ public class EssentialsUpgrade
 					}
 					if (!configFile.renameTo(new File(context.getDataFolder(), "jail.yml.old")))
 					{
-						throw new Exception($("fileRenameError", "jail.yml"));
+						throw new Exception(_("fileRenameError", "jail.yml"));
 					}
 					PrintWriter writer = new PrintWriter(configFile);
 					try

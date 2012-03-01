@@ -5,7 +5,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.components.economy.ChargeException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.ArrayList;
@@ -30,13 +30,13 @@ public class Commandrepair extends EssentialsCommand
 			final ItemStack item = user.getItemInHand();
 			if (item == null)
 			{
-				throw new Exception($("repairInvalidType"));
+				throw new Exception(_("repairInvalidType"));
 			}
 
 			if (!item.getEnchantments().isEmpty()
 				&& !Permissions.REPAIR_ENCHANTED.isAuthorized(user))
 			{
-				throw new Exception($("repairEnchanted"));
+				throw new Exception(_("repairEnchanted"));
 			}
 
 			final String itemName = item.getType().toString().toLowerCase(Locale.ENGLISH);
@@ -48,7 +48,7 @@ public class Commandrepair extends EssentialsCommand
 
 			charge.charge(user);
 
-			user.sendMessage($("repair", itemName.replace('_', ' ')));
+			user.sendMessage(_("repair", itemName.replace('_', ' ')));
 		}
 		else if (args[0].equalsIgnoreCase("all"))
 		{
@@ -62,11 +62,11 @@ public class Commandrepair extends EssentialsCommand
 
 			if (repaired.isEmpty())
 			{
-				throw new Exception($("repairNone"));
+				throw new Exception(_("repairNone"));
 			}
 			else
 			{
-				user.sendMessage($("repair", Util.joinList(repaired)));
+				user.sendMessage(_("repair", Util.joinList(repaired)));
 			}
 
 		}
@@ -81,12 +81,12 @@ public class Commandrepair extends EssentialsCommand
 		final Material material = Material.getMaterial(item.getTypeId());
 		if (material.isBlock() || material.getMaxDurability() < 1)
 		{
-			throw new Exception($("repairInvalidType"));
+			throw new Exception(_("repairInvalidType"));
 		}
 
 		if (item.getDurability() == 0)
 		{
-			throw new Exception($("repairAlreadyFixed"));
+			throw new Exception(_("repairAlreadyFixed"));
 		}
 
 		item.setDurability((short)0);

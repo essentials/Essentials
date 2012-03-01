@@ -4,7 +4,7 @@ import com.earth2me.essentials.Console;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.Ban;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
@@ -27,7 +27,7 @@ public class Commandtempban extends EssentialsCommand
 		{
 			if (Permissions.TEMPBAN_OFFLINE.isAuthorized(sender))
 			{
-				sender.sendMessage($("tempbanExempt"));
+				sender.sendMessage(_("tempbanExempt"));
 				return;
 			}
 		}
@@ -35,14 +35,14 @@ public class Commandtempban extends EssentialsCommand
 		{
 			if (Permissions.TEMPBAN_EXEMPT.isAuthorized(user))
 			{
-				sender.sendMessage($("tempbanExempt"));
+				sender.sendMessage(_("tempbanExempt"));
 				return;
 			}
 		}
 		final String time = getFinalArg(args, 1);
 		final long banTimestamp = Util.parseDateDiff(time, true);
 
-		final String banReason = $("tempBanned", Util.formatDateDiff(banTimestamp));
+		final String banReason = _("tempBanned", Util.formatDateDiff(banTimestamp));
 		user.acquireWriteLock();
 		user.getData().setBan(new Ban());
 		user.getData().getBan().setReason(banReason);
@@ -56,7 +56,7 @@ public class Commandtempban extends EssentialsCommand
 			final IUserComponent player = getContext().getUser(onlinePlayer);
 			if (Permissions.BAN_NOTIFY.isAuthorized(player))
 			{
-				onlinePlayer.sendMessage($("playerBanned", senderName, user.getName(), banReason));
+				onlinePlayer.sendMessage(_("playerBanned", senderName, user.getName(), banReason));
 			}
 		}
 	}

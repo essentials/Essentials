@@ -4,7 +4,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import java.util.Locale;
 import lombok.Cleanup;
@@ -39,7 +39,7 @@ public class Commandrealname extends EssentialsCommand
 			{
 				continue;
 			}
-			sender.sendMessage(u.getDisplayName() + " " + $("is") + " " + u.getName());
+			sender.sendMessage(u.getDisplayName() + " " + _("is") + " " + u.getName());
 		}
 	}
 }

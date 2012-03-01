@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.users.Inventory;
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public class Commandinvsee extends EssentialsCommand
 		{
 			invUser.getInventory().setContents(user.getLastInventory().getBukkitInventory());
 			user.setLastInventory(null);
-			user.sendMessage($("invRestored"));
+			user.sendMessage(_("invRestored"));
 			throw new NoChargeException();
 		}
 		if (user.getLastInventory() == null)
@@ -45,11 +45,11 @@ public class Commandinvsee extends EssentialsCommand
 		}
 		if (invUserStack.length > userStackLength)
 		{
-			throw new Exception($("invBigger"));
+			throw new Exception(_("invBigger"));
 		}
 		user.getInventory().setContents(invUserStack);
-		user.sendMessage($("invSee", invUser.getDisplayName()));
-		user.sendMessage($("invSeeHelp"));
+		user.sendMessage(_("invSee", invUser.getDisplayName()));
+		user.sendMessage(_("invSeeHelp"));
 		throw new NoChargeException();
 	}
 }

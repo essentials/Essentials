@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.users.TimeStampType;
 import com.earth2me.essentials.perm.Permissions;
@@ -26,7 +26,7 @@ public class Commandmute extends EssentialsCommand
 		player.acquireReadLock();
 		if (!player.getData().isMuted() && Permissions.MUTE_EXEMPT.isAuthorized(player))
 		{
-			throw new Exception($("muteExempt"));
+			throw new Exception(_("muteExempt"));
 		}
 		long muteTimestamp = 0;
 		if (args.length > 1)
@@ -39,14 +39,14 @@ public class Commandmute extends EssentialsCommand
 		sender.sendMessage(
 				muted
 				? (muteTimestamp > 0
-				   ? $("mutedPlayerFor", player.getDisplayName(), Util.formatDateDiff(muteTimestamp))
-				   : $("mutedPlayer", player.getDisplayName()))
-				: $("unmutedPlayer", player.getDisplayName()));
+				   ? _("mutedPlayerFor", player.getDisplayName(), Util.formatDateDiff(muteTimestamp))
+				   : _("mutedPlayer", player.getDisplayName()))
+				: _("unmutedPlayer", player.getDisplayName()));
 		player.sendMessage(
 				muted
 				? (muteTimestamp > 0
-				   ? $("playerMutedFor", Util.formatDateDiff(muteTimestamp))
-				   : $("playerMuted"))
-				: $("playerUnmuted"));
+				   ? _("playerMutedFor", Util.formatDateDiff(muteTimestamp))
+				   : _("playerMuted"))
+				: _("playerUnmuted"));
 	}
 }

@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.IComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.AbstractSuperpermsPermission;
 import java.util.List;
@@ -128,14 +128,14 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		}
 		if (args[pos].isEmpty())
 		{
-			throw new NoSuchFieldException($("playerNotFound"));
+			throw new NoSuchFieldException(_("playerNotFound"));
 		}
 		final IUserComponent user = getContext().getUser(args[pos]);
 		if (user != null)
 		{
 			if (!getOffline && (!user.isOnline() || user.isHidden()))
 			{
-				throw new NoSuchFieldException($("playerNotFound"));
+				throw new NoSuchFieldException(_("playerNotFound"));
 			}
 			return user;
 		}
@@ -157,7 +157,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 				return userMatch;
 			}
 		}
-		throw new NoSuchFieldException($("playerNotFound"));
+		throw new NoSuchFieldException(_("playerNotFound"));
 	}
 
 	@Override
@@ -182,7 +182,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		throw new Exception($("onlyPlayers", getCommandName()));
+		throw new Exception(_("onlyPlayers", getCommandName()));
 	}
 
 	public static String getFinalArg(final String[] args, final int start)

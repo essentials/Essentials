@@ -2,7 +2,7 @@ package com.earth2me.essentials.geoip;
 
 import com.earth2me.essentials.api.EssentialsPlugin;
 import com.earth2me.essentials.api.IContext;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.util.logging.Level;
 import org.bukkit.plugin.PluginManager;
 

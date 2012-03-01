@@ -5,7 +5,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import lombok.Cleanup;
@@ -29,9 +29,9 @@ public class Commandtp extends EssentialsCommand
 			player.acquireReadLock();
 			if (!player.getData().isTeleportEnabled())
 			{
-				throw new Exception($("teleportDisabled", player.getDisplayName()));
+				throw new Exception(_("teleportDisabled", player.getDisplayName()));
 			}
-			user.sendMessage($("teleporting"));
+			user.sendMessage(_("teleporting"));
 			final Trade charge = new Trade(getCommandName(), getContext());
 			charge.isAffordableFor(user);
 			user.getTeleporter().teleport(player, charge, TeleportCause.COMMAND);
@@ -43,11 +43,11 @@ public class Commandtp extends EssentialsCommand
 				//TODO: Translate this
 				throw new Exception("You need access to /tpohere to teleport other players.");
 			}
-			user.sendMessage($("teleporting"));
+			user.sendMessage(_("teleporting"));
 			final IUserComponent target = getPlayer(args, 0);
 			final IUserComponent toPlayer = getPlayer(args, 1);
 			target.getTeleporter().now(toPlayer, false, TeleportCause.COMMAND);
-			target.sendMessage($("teleportAtoB", user.getDisplayName(), toPlayer.getDisplayName()));
+			target.sendMessage(_("teleportAtoB", user.getDisplayName(), toPlayer.getDisplayName()));
 			break;
 		}
 	}
@@ -60,10 +60,10 @@ public class Commandtp extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		sender.sendMessage($("teleporting"));
+		sender.sendMessage(_("teleporting"));
 		final IUserComponent target = getPlayer(args, 0);
 		final IUserComponent toPlayer = getPlayer(args, 1);
 		target.getTeleporter().now(toPlayer, false, TeleportCause.COMMAND);
-		target.sendMessage($("teleportAtoB", Console.NAME, toPlayer.getDisplayName()));
+		target.sendMessage(_("teleportAtoB", Console.NAME, toPlayer.getDisplayName()));
 	}
 }

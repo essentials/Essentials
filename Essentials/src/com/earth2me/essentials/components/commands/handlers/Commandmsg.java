@@ -4,7 +4,7 @@ import com.earth2me.essentials.Console;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IReplyTo;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
@@ -32,7 +32,7 @@ public class Commandmsg extends EssentialsCommand
 			user.acquireReadLock();
 			if (user.getData().isMuted())
 			{
-				throw new Exception($("voiceSilenced"));
+				throw new Exception(_("voiceSilenced"));
 			}
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
@@ -48,16 +48,16 @@ public class Commandmsg extends EssentialsCommand
 			message = Util.replaceColor(message);
 		}
 
-		final String translatedMe = $("me");
+		final String translatedMe = _("me");
 
 		final IReplyTo replyTo = sender instanceof Player ? getContext().getUser((Player)sender) : Console.getConsoleReplyTo();
 		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
 
 		if (args[0].equalsIgnoreCase(Console.NAME))
 		{
-			sender.sendMessage($("msgFormat", translatedMe, Console.NAME, message));
+			sender.sendMessage(_("msgFormat", translatedMe, Console.NAME, message));
 			CommandSender cs = getServer().getConsoleSender();
-			cs.sendMessage($("msgFormat", senderName, translatedMe, message));
+			cs.sendMessage(_("msgFormat", senderName, translatedMe, message));
 			replyTo.setReplyTo(cs);
 			Console.getConsoleReplyTo().setReplyTo(sender);
 			return;
@@ -67,7 +67,7 @@ public class Commandmsg extends EssentialsCommand
 
 		if (matchedPlayers.isEmpty())
 		{
-			throw new Exception($("playerNotFound"));
+			throw new Exception(_("playerNotFound"));
 		}
 
 		int i = 0;
@@ -81,18 +81,18 @@ public class Commandmsg extends EssentialsCommand
 		}
 		if (i == matchedPlayers.size())
 		{
-			throw new Exception($("playerNotFound"));
+			throw new Exception(_("playerNotFound"));
 		}
 
 		for (Player matchedPlayer : matchedPlayers)
 		{
-			sender.sendMessage($("msgFormat", translatedMe, matchedPlayer.getDisplayName(), message));
+			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getDisplayName(), message));
 			final IUserComponent matchedUser = getContext().getUser(matchedPlayer);
 			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(((Player)sender).getName()) || matchedUser.isHidden()))
 			{
 				continue;
 			}
-			matchedPlayer.sendMessage($("msgFormat", senderName, translatedMe, message));
+			matchedPlayer.sendMessage(_("msgFormat", senderName, translatedMe, message));
 			replyTo.setReplyTo(getContext().getUser(matchedPlayer));
 			getContext().getUser(matchedPlayer).setReplyTo(sender);
 		}

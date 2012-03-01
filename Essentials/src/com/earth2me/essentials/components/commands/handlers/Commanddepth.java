@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 
 
@@ -13,15 +13,15 @@ public class Commanddepth extends EssentialsCommand
 		final int depth = user.getLocation().getBlockY() - 63;
 		if (depth > 0)
 		{
-			user.sendMessage($("depthAboveSea", depth));
+			user.sendMessage(_("depthAboveSea", depth));
 		}
 		else if (depth < 0)
 		{
-			user.sendMessage($("depthBelowSea", (-depth)));
+			user.sendMessage(_("depthBelowSea", (-depth)));
 		}
 		else
 		{
-			user.sendMessage($("depth"));
+			user.sendMessage(_("depth"));
 		}
 	}
 }

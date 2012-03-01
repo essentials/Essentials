@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.OfflinePlayer;
@@ -17,7 +17,7 @@ public class Commandtpaccept extends EssentialsCommand
 	{
 		if (user.getTeleportRequester() == null)
 		{
-			throw new Exception($("noPendingRequest"));
+			throw new Exception(_("noPendingRequest"));
 		}
 
 		final IUserComponent target = user.getTeleportRequester();
@@ -26,12 +26,12 @@ public class Commandtpaccept extends EssentialsCommand
 			|| (user.isTeleportRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
 			|| (!user.isTeleportRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{
-			throw new Exception($("noPendingRequest"));
+			throw new Exception(_("noPendingRequest"));
 		}
 
 		if (args.length > 0 && !target.getName().contains(args[0]))
 		{
-			throw new Exception($("noPendingRequest"));
+			throw new Exception(_("noPendingRequest"));
 		}
 
 		int tpaAcceptCancellation = 0;
@@ -49,7 +49,7 @@ public class Commandtpaccept extends EssentialsCommand
 		if (tpaAcceptCancellation != 0 && (System.currentTimeMillis() - user.getTeleportRequestTime()) / 1000 > tpaAcceptCancellation)
 		{
 			user.requestTeleport(null, false);
-			throw new Exception($("requestTimedOut"));
+			throw new Exception(_("requestTimedOut"));
 		}
 
 		final Trade charge = new Trade(getCommandName(), getContext());
@@ -61,8 +61,8 @@ public class Commandtpaccept extends EssentialsCommand
 		{
 			charge.isAffordableFor(target);
 		}
-		user.sendMessage($("requestAccepted"));
-		target.sendMessage($("requestAcceptedFrom", user.getDisplayName()));
+		user.sendMessage(_("requestAccepted"));
+		target.sendMessage(_("requestAcceptedFrom", user.getDisplayName()));
 
 		if (user.isTeleportRequestHere())
 		{

@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.List;
@@ -28,11 +28,11 @@ public class Commandclearinventory extends EssentialsCommand
 					for (Player p : online)
 					{
 						p.getInventory().clear();
-						user.sendMessage($("inventoryClearedOthers", p.getDisplayName()));
+						user.sendMessage(_("inventoryClearedOthers", p.getDisplayName()));
 					}
 					return;
 				}
-				throw new Exception($("playerNotFound"));
+				throw new Exception(_("playerNotFound"));
 			}
 			else
 			{
@@ -40,18 +40,18 @@ public class Commandclearinventory extends EssentialsCommand
 				if (p != null)
 				{
 					p.getInventory().clear();
-					user.sendMessage($("inventoryClearedOthers", p.getDisplayName()));
+					user.sendMessage(_("inventoryClearedOthers", p.getDisplayName()));
 				}
 				else
 				{
-					throw new Exception($("playerNotFound"));
+					throw new Exception(_("playerNotFound"));
 				}
 			}
 		}
 		else
 		{
 			user.getInventory().clear();
-			user.sendMessage($("inventoryCleared"));
+			user.sendMessage(_("inventoryCleared"));
 		}
 	}
 
@@ -72,11 +72,11 @@ public class Commandclearinventory extends EssentialsCommand
 				for (Player p : online)
 				{
 					p.getInventory().clear();
-					sender.sendMessage($("inventoryClearedOthers", p.getDisplayName()));
+					sender.sendMessage(_("inventoryClearedOthers", p.getDisplayName()));
 				}
 				return;
 			}
-			throw new Exception($("playerNotFound"));
+			throw new Exception(_("playerNotFound"));
 		}
 		else
 		{
@@ -84,11 +84,11 @@ public class Commandclearinventory extends EssentialsCommand
 			if (u != null)
 			{
 				u.getInventory().clear();
-				sender.sendMessage($("inventoryClearedOthers", u.getDisplayName()));
+				sender.sendMessage(_("inventoryClearedOthers", u.getDisplayName()));
 			}
 			else
 			{
-				throw new Exception($("playerNotFound"));
+				throw new Exception(_("playerNotFound"));
 			}
 		}
 	}

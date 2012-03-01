@@ -78,7 +78,7 @@ public class I18nComponent extends Component implements II18nComponent
 		}
 	}
 
-	public static String $(final String string, final Object... objects)
+	public static String _(final String string, final Object... objects)
 	{
 		if (instance == null)
 		{

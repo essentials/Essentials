@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 
 
@@ -48,6 +48,6 @@ public class Commandcompass extends EssentialsCommand
 		{
 			dir = "N";
 		}
-		user.sendMessage($("compassBearing", dir, bearing));
+		user.sendMessage(_("compassBearing", dir, bearing));
 	}
 }

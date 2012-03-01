@@ -1,6 +1,6 @@
 package com.earth2me.essentials.chat;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
@@ -33,7 +33,7 @@ public class EssentialsLocalChatEventListener implements Listener
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			String type = $("chatTypeLocal");
+			String type = _("chatTypeLocal");
 			final IUserComponent user = ess.getUser(onlinePlayer);
 			//TODO: remove reference to op
 			if (user.isIgnoringPlayer(sender.getName()) && !sender.isOp())
@@ -53,7 +53,7 @@ public class EssentialsLocalChatEventListener implements Listener
 				{
 					if (Permissions.CHAT_SPY.isAuthorized(user))
 					{
-						type = type.concat($("chatTypeSpy"));
+						type = type.concat(_("chatTypeSpy"));
 					}
 					else
 					{

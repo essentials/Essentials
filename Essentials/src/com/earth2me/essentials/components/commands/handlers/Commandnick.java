@@ -4,7 +4,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Locale;
@@ -28,16 +28,16 @@ public class Commandnick extends EssentialsCommand
 		settings.acquireReadLock();
 		if (!settings.getData().getChat().getChangeDisplayname())
 		{
-			throw new Exception($("nickDisplayName"));
+			throw new Exception(_("nickDisplayName"));
 		}
 		if (args.length > 1)
 		{
 			if (!Permissions.NICK_OTHERS.isAuthorized(user))
 			{
-				throw new Exception($("nickOthersPermission"));
+				throw new Exception(_("nickOthersPermission"));
 			}
 			setNickname(getPlayer(args, 0), formatNickname(user, args[1]));
-			user.sendMessage($("nickChanged"));
+			user.sendMessage(_("nickChanged"));
 			return;
 		}
 		setNickname(user, formatNickname(user, args[0]));
@@ -55,7 +55,7 @@ public class Commandnick extends EssentialsCommand
 		settings.acquireReadLock();
 		if (!settings.getData().getChat().getChangeDisplayname())
 		{
-			throw new Exception($("nickDisplayName"));
+			throw new Exception(_("nickDisplayName"));
 		}
 		if ((args[0].equalsIgnoreCase("*") || args[0].equalsIgnoreCase("all")) && args[1].equalsIgnoreCase("off"))
 		{
@@ -65,7 +65,7 @@ public class Commandnick extends EssentialsCommand
 		{
 			setNickname(getPlayer(args, 0), formatNickname(null, args[1]));
 		}
-		sender.sendMessage($("nickChanged"));
+		sender.sendMessage(_("nickChanged"));
 	}
 
 	private String formatNickname(final IUserComponent user, final String nick)
@@ -96,7 +96,7 @@ public class Commandnick extends EssentialsCommand
 	{
 		if (!nick.matches("^[a-zA-Z_0-9\u00a7]+$"))
 		{
-			throw new Exception($("nickNamesAlpha"));
+			throw new Exception(_("nickNamesAlpha"));
 		}
 		else if ("off".equalsIgnoreCase(nick) || target.getName().equalsIgnoreCase(nick))
 		{
@@ -111,7 +111,7 @@ public class Commandnick extends EssentialsCommand
 			}
 
 			target.updateDisplayName();
-			target.sendMessage($("nickNoMore"));
+			target.sendMessage(_("nickNoMore"));
 		}
 		else
 		{
@@ -126,7 +126,7 @@ public class Commandnick extends EssentialsCommand
 				String nk = nick.toLowerCase(Locale.ENGLISH);
 				if (nk.equals(dn) || nk.equals(n))
 				{
-					throw new Exception($("nickInUse"));
+					throw new Exception(_("nickInUse"));
 				}
 			}
 
@@ -141,7 +141,7 @@ public class Commandnick extends EssentialsCommand
 			}
 
 			target.updateDisplayName();
-			target.sendMessage($("nickSet", target.getDisplayName() + "§7."));
+			target.sendMessage(_("nickSet", target.getDisplayName() + "§7."));
 		}
 	}
 }

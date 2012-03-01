@@ -4,7 +4,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.storage.LocationData;
@@ -76,7 +76,7 @@ public class Commandhome extends EssentialsCommand
 			}
 			else if (homes.isEmpty())
 			{
-				throw new Exception(player == user ? $("noHomeSet") : $("noHomeSetPlayer"));
+				throw new Exception(player == user ? _("noHomeSet") : _("noHomeSetPlayer"));
 			}
 			else if (homes.size() == 1 && player.equals(user))
 			{
@@ -89,7 +89,7 @@ public class Commandhome extends EssentialsCommand
 				{
 					homeList.add("bed");
 				}
-				user.sendMessage($("homes", homeList));
+				user.sendMessage(_("homes", homeList));
 			}
 		}
 		throw new NoChargeException();

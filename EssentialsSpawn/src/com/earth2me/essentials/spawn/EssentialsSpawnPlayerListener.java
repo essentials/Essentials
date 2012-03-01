@@ -2,7 +2,7 @@ package com.earth2me.essentials.spawn;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
@@ -121,7 +121,7 @@ public class EssentialsSpawnPlayerListener implements Listener
 			}
 			catch (Exception ex)
 			{
-				Bukkit.getLogger().log(Level.WARNING, $("teleportNewPlayerError"), ex);
+				Bukkit.getLogger().log(Level.WARNING, _("teleportNewPlayerError"), ex);
 			}
 		}
 	}

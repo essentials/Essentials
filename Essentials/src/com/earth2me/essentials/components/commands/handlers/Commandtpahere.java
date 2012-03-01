@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import lombok.Cleanup;
 
@@ -23,11 +23,11 @@ public class Commandtpahere extends EssentialsCommand
 		player.acquireReadLock();
 		if (!player.getData().isTeleportEnabled())
 		{
-			throw new Exception($("teleportDisabled", player.getDisplayName()));
+			throw new Exception(_("teleportDisabled", player.getDisplayName()));
 		}
 		player.requestTeleport(user, true);
-		player.sendMessage($("teleportHereRequest", user.getDisplayName()));
-		player.sendMessage($("typeTpaccept"));
+		player.sendMessage(_("teleportHereRequest", user.getDisplayName()));
+		player.sendMessage(_("typeTpaccept"));
 		int tpaAcceptCancellation = 0;
 		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
@@ -41,8 +41,8 @@ public class Commandtpahere extends EssentialsCommand
 		}
 		if (tpaAcceptCancellation != 0)
 		{
-			player.sendMessage($("teleportRequestTimeoutInfo", tpaAcceptCancellation));
+			player.sendMessage(_("teleportRequestTimeoutInfo", tpaAcceptCancellation));
 		}
-		user.sendMessage($("requestSent", player.getDisplayName()));
+		user.sendMessage(_("requestSent", player.getDisplayName()));
 	}
 }

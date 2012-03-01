@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.backup;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -62,7 +62,7 @@ public class BackupComponent extends Component implements IBackupComponent
 		{
 			return;
 		}
-		getContext().getLogger().log(Level.INFO, $("backupStarted"));
+		getContext().getLogger().log(Level.INFO, _("backupStarted"));
 		final CommandSender consoleSender = getContext().getServer().getConsoleSender();
 		getContext().getServer().dispatchCommand(consoleSender, "save-all");
 		getContext().getServer().dispatchCommand(consoleSender, "save-off");
@@ -141,7 +141,7 @@ public class BackupComponent extends Component implements IBackupComponent
 			}
 
 			active.set(false);
-			getContext().getLogger().log(Level.INFO, $("backupFinished"));
+			getContext().getLogger().log(Level.INFO, _("backupFinished"));
 		}
 	}
 }

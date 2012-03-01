@@ -4,7 +4,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NoChargeException;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.List;
@@ -23,21 +23,21 @@ public class Commandmail extends EssentialsCommand
 			final List<String> mail = user.getData().getMails();
 			if (mail == null || mail.isEmpty())
 			{
-				user.sendMessage($("noMail"));
+				user.sendMessage(_("noMail"));
 				throw new NoChargeException();
 			}
 			for (String messages : mail)
 			{
 				user.sendMessage(messages);
 			}
-			user.sendMessage($("mailClear"));
+			user.sendMessage(_("mailClear"));
 			return;
 		}
 		if (args.length >= 3 && "send".equalsIgnoreCase(args[0]))
 		{
 			if (!Permissions.MAIL_SEND.isAuthorized(user))
 			{
-				throw new Exception($("noPerm", "essentials.mail.send"));
+				throw new Exception(_("noPerm", "essentials.mail.send"));
 			}
 
 			Player player = getServer().getPlayer(args[1]);
@@ -52,31 +52,31 @@ public class Commandmail extends EssentialsCommand
 			}
 			if (u == null)
 			{
-				throw new Exception($("playerNeverOnServer", args[1]));
+				throw new Exception(_("playerNeverOnServer", args[1]));
 			}
 			if (!u.isIgnoringPlayer(user.getName()))
 			{
 				final String mail = Util.sanitizeString(Util.stripColor(getFinalArg(args, 2)));
 				u.addMail(user.getName() + ": " + mail);
 			}
-			user.sendMessage($("mailSent"));
+			user.sendMessage(_("mailSent"));
 			return;
 		}
 		if (args.length > 1 && "sendall".equalsIgnoreCase(args[0]))
 		{
 			if (!Permissions.MAIL_SENDALL.isAuthorized(user))
 			{
-				throw new Exception($("noPerm", "essentials.mail.sendall"));
+				throw new Exception(_("noPerm", "essentials.mail.sendall"));
 			}
 			getContext().getScheduler().scheduleAsyncDelayedTask(new SendAll(user.getName() + ": " + Util.stripColor(getFinalArg(args, 1))));
-			user.sendMessage($("mailSent"));
+			user.sendMessage(_("mailSent"));
 			return;
 		}
 		if (args.length >= 1 && "clear".equalsIgnoreCase(args[0]))
 		{
 			user.acquireWriteLock();
 			user.getData().setMails(null);
-			user.sendMessage($("mailCleared"));
+			user.sendMessage(_("mailCleared"));
 			return;
 		}
 		throw new NotEnoughArgumentsException();
@@ -87,11 +87,11 @@ public class Commandmail extends EssentialsCommand
 	{
 		if (args.length >= 1 && "read".equalsIgnoreCase(args[0]))
 		{
-			throw new Exception($("onlyPlayers", getCommandName() + " read"));
+			throw new Exception(_("onlyPlayers", getCommandName() + " read"));
 		}
 		else if (args.length >= 1 && "clear".equalsIgnoreCase(args[0]))
 		{
-			throw new Exception($("onlyPlayers", getCommandName() + " clear"));
+			throw new Exception(_("onlyPlayers", getCommandName() + " clear"));
 		}
 		else if (args.length >= 3 && "send".equalsIgnoreCase(args[0]))
 		{
@@ -107,10 +107,10 @@ public class Commandmail extends EssentialsCommand
 			}
 			if (u == null)
 			{
-				throw new Exception($("playerNeverOnServer", args[1]));
+				throw new Exception(_("playerNeverOnServer", args[1]));
 			}
 			u.addMail("Server: " + getFinalArg(args, 2));
-			sender.sendMessage($("mailSent"));
+			sender.sendMessage(_("mailSent"));
 			return;
 		}
 		else if (args.length >= 1 && "sendall".equalsIgnoreCase(args[0]))
@@ -132,10 +132,10 @@ public class Commandmail extends EssentialsCommand
 			}
 			if (u == null)
 			{
-				throw new Exception($("playerNeverOnServer", args[0]));
+				throw new Exception(_("playerNeverOnServer", args[0]));
 			}
 			u.addMail("Server: " + getFinalArg(args, 1));
-			sender.sendMessage($("mailSent"));
+			sender.sendMessage(_("mailSent"));
 			return;
 		}
 		throw new NotEnoughArgumentsException();

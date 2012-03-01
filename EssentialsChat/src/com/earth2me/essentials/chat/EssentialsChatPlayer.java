@@ -6,7 +6,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IGroupsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.economy.ChargeException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Locale;
@@ -22,7 +22,6 @@ import org.bukkit.event.player.PlayerChatEvent;
 public abstract class EssentialsChatPlayer implements Listener
 {
 	private transient IContext context;
-	protected final static Logger LOGGER = Logger.getLogger("Minecraft");
 	protected final transient Server server;
 	protected final transient Map<PlayerChatEvent, ChatStore> chatStorage;
 
@@ -139,14 +138,14 @@ public abstract class EssentialsChatPlayer implements Listener
 				final StringBuilder format = new StringBuilder();
 				format.append(chatStore.getType()).append("Format");
 				event.setMessage(event.getMessage().substring(1));
-				event.setFormat($(format.toString(), event.getFormat()));
+				event.setFormat(_(format.toString(), event.getFormat()));
 				return;
 			}
 
 			final StringBuilder errorMsg = new StringBuilder();
 			errorMsg.append("notAllowedTo").append(chatStore.getType().substring(0, 1).toUpperCase(Locale.ENGLISH)).append(chatStore.getType().substring(1));
 
-			user.sendMessage($(errorMsg.toString()));
+			user.sendMessage(_(errorMsg.toString()));
 			event.setCancelled(true);
 			return;
 		}

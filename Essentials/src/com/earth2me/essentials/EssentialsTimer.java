@@ -2,7 +2,7 @@ package com.earth2me.essentials;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.users.TimeStampType;
 import com.earth2me.essentials.perm.Permissions;
@@ -55,7 +55,7 @@ public class EssentialsTimer implements Runnable
 					final List<String> mail = user.getMails();
 					if (mail != null && !mail.isEmpty())
 					{
-						user.sendMessage($("youHaveNewMail", mail.size()));
+						user.sendMessage(_("youHaveNewMail", mail.size()));
 					}
 				}
 			}

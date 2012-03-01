@@ -4,7 +4,7 @@ import com.earth2me.essentials.api.EssentialsPlugin;
 import com.earth2me.essentials.api.ICommandsComponent;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.commands.CommandsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import java.util.List;
 import java.util.Locale;

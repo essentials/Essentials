@@ -3,7 +3,7 @@ package com.earth2me.essentials;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.economy.ChargeException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.craftbukkit.SetExpFix;
@@ -69,13 +69,13 @@ public class Trade
 			&& getMoney() > 0
 			&& !Permissions.ECO_LOAN.isAuthorized(user))
 		{
-			throw new ChargeException($("notEnoughMoney"));
+			throw new ChargeException(_("notEnoughMoney"));
 		}
 
 		if (getItemStack() != null
 			&& !InventoryWorkaround.containsItem(user.getInventory(), true, true, itemStack))
 		{
-			throw new ChargeException($("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+			throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 		}
 
 		@Cleanup
@@ -88,13 +88,13 @@ public class Trade
 			&& 0 < settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command)
 			&& !Permissions.ECO_LOAN.isAuthorized(user))
 		{
-			throw new ChargeException($("notEnoughMoney"));
+			throw new ChargeException(_("notEnoughMoney"));
 		}
 
 		if (exp != null && exp > 0
 			&& SetExpFix.getTotalExperience(user) < exp)
 		{
-			throw new ChargeException($("notEnoughExperience"));
+			throw new ChargeException(_("notEnoughExperience"));
 		}
 	}
 
@@ -158,7 +158,7 @@ public class Trade
 			final double mon = user.getMoney();
 			if (mon < getMoney() && getMoney() > 0 && !Permissions.ECO_LOAN.isAuthorized(user))
 			{
-				throw new ChargeException($("notEnoughMoney"));
+				throw new ChargeException(_("notEnoughMoney"));
 			}
 			user.takeMoney(getMoney());
 		}
@@ -166,7 +166,7 @@ public class Trade
 		{
 			if (!InventoryWorkaround.containsItem(user.getInventory(), true, true, itemStack))
 			{
-				throw new ChargeException($("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+				throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 			}
 			InventoryWorkaround.removeItem(user.getInventory(), true, true, getItemStack());
 			user.updateInventory();
@@ -181,7 +181,7 @@ public class Trade
 			final double cost = settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
 			if (mon < cost && cost > 0 && !Permissions.ECO_LOAN.isAuthorized(user))
 			{
-				throw new ChargeException($("notEnoughMoney"));
+				throw new ChargeException(_("notEnoughMoney"));
 			}
 			user.takeMoney(cost);
 		}
@@ -190,7 +190,7 @@ public class Trade
 			final int experience = SetExpFix.getTotalExperience(user);
 			if (experience < getExperience() && getExperience() > 0)
 			{
-				throw new ChargeException($("notEnoughExperience"));
+				throw new ChargeException(_("notEnoughExperience"));
 			}
 			SetExpFix.setTotalExperience(user, experience - getExperience());
 		}

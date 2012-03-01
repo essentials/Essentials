@@ -2,7 +2,7 @@ package com.earth2me.essentials.textreader;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.HelpPermissions;
 import java.io.IOException;
@@ -124,7 +124,7 @@ public class HelpInput implements IText
 			{
 				if (!reported)
 				{
-					ess.getLogger().log(Level.WARNING, $("commandHelpFailedForPlugin", pluginName), ex);
+					ess.getLogger().log(Level.WARNING, _("commandHelpFailedForPlugin", pluginName), ex);
 				}
 				reported = true;
 				continue;

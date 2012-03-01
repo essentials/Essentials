@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,7 +25,7 @@ public final class Versioning
 			if (p.getDescription().getName().startsWith("Essentials")
 				&& !p.getDescription().getVersion().equals(pluginVersion))
 			{
-				plugin.getLogger().log(Level.WARNING, $("versionMismatch", plugin.getDescription().getName()));
+				plugin.getLogger().log(Level.WARNING, _("versionMismatch", plugin.getDescription().getName()));
 			}
 		}
 
@@ -35,14 +35,14 @@ public final class Versioning
 			final int versionNumber = Integer.parseInt(versionMatch.group(4));
 			if (versionNumber < BUKKIT_VERSION)
 			{
-				plugin.getLogger().log(Level.SEVERE, $("notRecommendedBukkit"));
-				plugin.getLogger().log(Level.SEVERE, $("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
+				plugin.getLogger().log(Level.SEVERE, _("notRecommendedBukkit"));
+				plugin.getLogger().log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
 				return false;
 			}
 		}
 		else
 		{
-			plugin.getLogger().log(Level.INFO, $("bukkitFormatChanged"));
+			plugin.getLogger().log(Level.INFO, _("bukkitFormatChanged"));
 			plugin.getLogger().log(Level.INFO, server.getVersion());
 			plugin.getLogger().log(Level.INFO, server.getBukkitVersion());
 		}

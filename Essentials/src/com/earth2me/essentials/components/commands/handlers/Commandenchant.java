@@ -4,7 +4,7 @@ import com.earth2me.essentials.Enchantments;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.EnchantPermissions;
 import java.util.Locale;
@@ -24,7 +24,7 @@ public class Commandenchant extends EssentialsCommand
 		final ItemStack stack = user.getItemInHand();
 		if (stack == null)
 		{
-			throw new Exception($("nothingInHand"));
+			throw new Exception(_("nothingInHand"));
 		}
 		if (args.length == 0)
 		{
@@ -38,7 +38,7 @@ public class Commandenchant extends EssentialsCommand
 					//enchantmentslist.add(enchantmentName);
 				}
 			}
-			throw new NotEnoughArgumentsException($("enchantments", Util.joinList(enchantmentslist.toArray())));
+			throw new NotEnoughArgumentsException(_("enchantments", Util.joinList(enchantmentslist.toArray())));
 		}
 		int level = -1;
 		if (args.length > 1)
@@ -70,11 +70,11 @@ public class Commandenchant extends EssentialsCommand
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
 		if (level == 0)
 		{
-			user.sendMessage($("enchantmentRemoved", enchantmentName.replace('_', ' ')));
+			user.sendMessage(_("enchantmentRemoved", enchantmentName.replace('_', ' ')));
 		}
 		else
 		{
-			user.sendMessage($("enchantmentApplied", enchantmentName.replace('_', ' ')));
+			user.sendMessage(_("enchantmentApplied", enchantmentName.replace('_', ' ')));
 		}
 	}
 
@@ -84,12 +84,12 @@ public class Commandenchant extends EssentialsCommand
 		final Enchantment enchantment = Enchantments.getByName(name);
 		if (enchantment == null)
 		{
-			throw new Exception($("enchantmentNotFound"));
+			throw new Exception(_("enchantmentNotFound"));
 		}
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
 		if (user != null && !EnchantPermissions.getPermission(enchantmentName).isAuthorized(user))
 		{
-			throw new Exception($("enchantmentPerm", enchantmentName));
+			throw new Exception(_("enchantmentPerm", enchantmentName));
 		}
 		return enchantment;
 	}

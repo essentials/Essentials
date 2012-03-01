@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.backup.IBackupComponent;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import org.bukkit.command.CommandSender;
 
 
@@ -13,6 +13,6 @@ public class Commandbackup extends EssentialsCommand
 	{
 		final IBackupComponent backup = getContext().getBackup();
 		backup.run();
-		sender.sendMessage($("backupStarted"));
+		sender.sendMessage(_("backupStarted"));
 	}
 }

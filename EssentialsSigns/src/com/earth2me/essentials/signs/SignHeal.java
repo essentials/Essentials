@@ -3,7 +3,7 @@ package com.earth2me.essentials.signs;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.economy.ChargeException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 
 
@@ -29,7 +29,7 @@ public class SignHeal extends EssentialsSign
 		player.setHealth(20);
 		player.setFoodLevel(20);
 		player.setFireTicks(0);
-		player.sendMessage($("youAreHealed"));
+		player.sendMessage(_("youAreHealed"));
 		charge.charge(player);
 		return true;
 	}

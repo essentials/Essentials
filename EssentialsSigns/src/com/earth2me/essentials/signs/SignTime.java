@@ -1,7 +1,7 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.components.economy.ChargeException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUserComponent;
@@ -29,7 +29,7 @@ public class SignTime extends EssentialsSign
 			sign.setLine(1, "§2Night");
 			return true;
 		}
-		throw new SignException($("onlyDayNight"));
+		throw new SignException(_("onlyDayNight"));
 	}
 
 	@Override
@@ -52,6 +52,6 @@ public class SignTime extends EssentialsSign
 			charge.charge(player);
 			return true;
 		}
-		throw new SignException($("onlyDayNight"));
+		throw new SignException(_("onlyDayNight"));
 	}
 }

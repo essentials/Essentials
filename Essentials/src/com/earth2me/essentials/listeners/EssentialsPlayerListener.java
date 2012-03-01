@@ -3,7 +3,7 @@ package com.earth2me.essentials.listeners;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.users.Inventory;
 import com.earth2me.essentials.components.users.TimeStampType;
@@ -61,8 +61,8 @@ public class EssentialsPlayerListener implements Listener
 		if (user.isMuted())
 		{
 			event.setCancelled(true);
-			user.sendMessage($("playerMuted"));
-			context.getLogger().info($("mutedUserSpeaks", user.getName()));
+			user.sendMessage(_("playerMuted"));
+			context.getLogger().info(_("mutedUserSpeaks", user.getName()));
 		}
 		final Iterator<Player> it = event.getRecipients().iterator();
 		while (it.hasNext())
@@ -191,11 +191,11 @@ public class EssentialsPlayerListener implements Listener
 			final List<String> mail = user.getMails();
 			if (mail == null || mail.isEmpty())
 			{
-				user.sendMessage($("noNewMail"));
+				user.sendMessage(_("noNewMail"));
 			}
 			else
 			{
-				user.sendMessage($("youHaveNewMail", mail.size()));
+				user.sendMessage(_("youHaveNewMail", mail.size()));
 			}
 		}
 	}
@@ -219,13 +219,13 @@ public class EssentialsPlayerListener implements Listener
 		if (!banExpired && (user.isBanned() || event.getResult() == Result.KICK_BANNED))
 		{
 			final String banReason = user.getBan() == null ? "" : user.getBan().getReason();
-			event.disallow(Result.KICK_BANNED, banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban") ? $("defaultBanReason") : banReason);
+			event.disallow(Result.KICK_BANNED, banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban") ? _("defaultBanReason") : banReason);
 			return;
 		}
 
 		if (server.getOnlinePlayers().length >= server.getMaxPlayers() && !Permissions.JOINFULLSERVER.isAuthorized(user))
 		{
-			event.disallow(Result.KICK_FULL, $("serverFull"));
+			event.disallow(Result.KICK_FULL, _("serverFull"));
 			return;
 		}
 		event.allow();
@@ -384,7 +384,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			if (user.isGodModeEnabled())
 			{
-				user.sendMessage($("noGodWorldWarning"));
+				user.sendMessage(_("noGodWorldWarning"));
 			}
 		}
 		if (settings.getData().getCommands().getTpa().isCancelTpRequestsOnWorldChange())
@@ -392,7 +392,7 @@ public class EssentialsPlayerListener implements Listener
 			if (user.getTeleporter() != null)
 			{
 				user.requestTeleport(null, false);
-				user.sendMessage($("teleportRequestsCancelledWorldChange"));
+				user.sendMessage(_("teleportRequestsCancelledWorldChange"));
 			}
 		}
 	}

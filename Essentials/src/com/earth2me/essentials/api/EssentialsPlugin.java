@@ -1,7 +1,7 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.components.ComponentPlugin;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.util.logging.Level;
 import org.bukkit.plugin.PluginManager;
 
@@ -21,7 +21,7 @@ public abstract class EssentialsPlugin extends ComponentPlugin implements IEssen
 
 		if (!this.getDescription().getVersion().equals(context.getEssentials().getDescription().getVersion()))
 		{
-			getContext().getLogger().log(Level.WARNING, $("versionMismatchAll"));
+			getContext().getLogger().log(Level.WARNING, _("versionMismatchAll"));
 		}
 
 		if (!context.getEssentials().isEnabled())

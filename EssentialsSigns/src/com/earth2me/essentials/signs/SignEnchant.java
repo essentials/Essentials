@@ -2,7 +2,7 @@ package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.components.economy.ChargeException;
 import com.earth2me.essentials.Enchantments;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUserComponent;
@@ -25,12 +25,12 @@ public class SignEnchant extends EssentialsSign
 		final String[] enchantLevel = sign.getLine(2).split(":");
 		if (enchantLevel.length != 2)
 		{
-			throw new SignException($("invalidSignLine", 3));
+			throw new SignException(_("invalidSignLine", 3));
 		}
 		final Enchantment enchantment = Enchantments.getByName(enchantLevel[0]);
 		if (enchantment == null)
 		{
-			throw new SignException($("enchantmentNotFound"));
+			throw new SignException(_("enchantmentNotFound"));
 		}
 		int level;
 		try
@@ -72,12 +72,12 @@ public class SignEnchant extends EssentialsSign
 		final String[] enchantLevel = sign.getLine(2).split(":");
 		if (enchantLevel.length != 2)
 		{
-			throw new SignException($("invalidSignLine", 3));
+			throw new SignException(_("invalidSignLine", 3));
 		}
 		final Enchantment enchantment = Enchantments.getByName(enchantLevel[0]);
 		if (enchantment == null)
 		{
-			throw new SignException($("enchantmentNotFound"));
+			throw new SignException(_("enchantmentNotFound"));
 		}
 		int level;
 		try
@@ -95,11 +95,11 @@ public class SignEnchant extends EssentialsSign
 			|| (playerHand.containsEnchantment(enchantment)
 				&& playerHand.getEnchantmentLevel(enchantment) == level))
 		{
-			throw new SignException($("missingItems", 1, sign.getLine(1)));
+			throw new SignException(_("missingItems", 1, sign.getLine(1)));
 		}
 		if (search != null && playerHand.getType() != search.getType())
 		{
-			throw new SignException($("missingItems", 1, search.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ')));
+			throw new SignException(_("missingItems", 1, search.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ')));
 		}
 
 		final ItemStack toEnchant = playerHand;

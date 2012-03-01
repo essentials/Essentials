@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.settings.kits;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IEssentials;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.settings.Kit;
 import com.earth2me.essentials.components.settings.Kits;
 import com.earth2me.essentials.components.users.IUserComponent;
@@ -33,12 +33,12 @@ public class KitsComponent extends StorageComponent<Kits, IEssentials> implement
 			if (getData().getKits() == null || kitName == null
 				|| !getData().getKits().containsKey(kitName.toLowerCase(Locale.ENGLISH)))
 			{
-				throw new IllegalStateException($("kitError2"));
+				throw new IllegalStateException(_("kitError2"));
 			}
 			final Kit kit = getData().getKits().get(kitName.toLowerCase(Locale.ENGLISH));
 			if (kit == null)
 			{
-				throw new IllegalStateException($("kitError2"));
+				throw new IllegalStateException(_("kitError2"));
 			}
 			return kit;
 		}

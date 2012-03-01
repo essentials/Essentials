@@ -4,7 +4,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -72,7 +72,7 @@ public class Teleporter implements Runnable, ITeleporter
 			try
 			{
 				cooldown(false);
-				user.sendMessage($("teleportationCommencing"));
+				user.sendMessage(_("teleportationCommencing"));
 				try
 				{
 
@@ -89,7 +89,7 @@ public class Teleporter implements Runnable, ITeleporter
 			}
 			catch (Exception ex)
 			{
-				user.sendMessage($("cooldownWithMessage", ex.getMessage()));
+				user.sendMessage(_("cooldownWithMessage", ex.getMessage()));
 			}
 		}
 	}
@@ -114,7 +114,7 @@ public class Teleporter implements Runnable, ITeleporter
 	{
 		final Location loc = context.getWarps().getWarp(warp).getLocation().getBukkitLocation();
 		teleport(new Target(loc), chargeFor, cause);
-		user.sendMessage($("warpingTo", warp));
+		user.sendMessage(_("warpingTo", warp));
 	}
 
 	public void cooldown(boolean check) throws Exception
@@ -125,7 +125,7 @@ public class Teleporter implements Runnable, ITeleporter
 		}
 		catch (CooldownException ex)
 		{
-			throw new Exception($("timeBeforeTeleport", ex.getMessage()));
+			throw new Exception(_("timeBeforeTeleport", ex.getMessage()));
 
 		}
 	}
@@ -141,7 +141,7 @@ public class Teleporter implements Runnable, ITeleporter
 			context.getServer().getScheduler().cancelTask(teleTimer);
 			if (notifyUser)
 			{
-				user.sendMessage($("pendingTeleportCancelled"));
+				user.sendMessage(_("pendingTeleportCancelled"));
 			}
 		}
 		finally
@@ -196,7 +196,7 @@ public class Teleporter implements Runnable, ITeleporter
 		Calendar c = new GregorianCalendar();
 		c.add(Calendar.SECOND, (int)teleportDelay);
 		c.add(Calendar.MILLISECOND, (int)((teleportDelay * 1000.0) % 1000.0));
-		user.sendMessage($("dontMoveMessage", Util.formatDateDiff(c.getTimeInMillis())));
+		user.sendMessage(_("dontMoveMessage", Util.formatDateDiff(c.getTimeInMillis())));
 		initTimer((long)(teleportDelay * 1000.0), target, chargeFor, cause);
 
 		teleTimer = context.getScheduler().scheduleSyncRepeatingTask(this, 10, 10);

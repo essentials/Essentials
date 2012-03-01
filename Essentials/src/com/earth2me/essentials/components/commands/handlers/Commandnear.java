@@ -2,7 +2,7 @@ package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.Location;
@@ -49,11 +49,11 @@ public class Commandnear extends EssentialsCommand
 		}
 		if (otherUser == null || Permissions.NEAR_OTHERS.isAuthorized(user))
 		{
-			user.sendMessage($("nearbyPlayers", getLocal(otherUser == null ? user : otherUser, radius)));
+			user.sendMessage(_("nearbyPlayers", getLocal(otherUser == null ? user : otherUser, radius)));
 		}
 		else
 		{
-			user.sendMessage($("noAccessCommand"));
+			user.sendMessage(_("noAccessCommand"));
 		}
 	}
 
@@ -76,7 +76,7 @@ public class Commandnear extends EssentialsCommand
 			{
 			}
 		}
-		sender.sendMessage($("nearbyPlayers", getLocal(otherUser, radius)));
+		sender.sendMessage(_("nearbyPlayers", getLocal(otherUser, radius)));
 	}
 
 	private String getLocal(final IUserComponent user, final long radius)
@@ -108,6 +108,6 @@ public class Commandnear extends EssentialsCommand
 				}
 			}
 		}
-		return output.length() > 1 ? output.toString() : $("none");
+		return output.length() > 1 ? output.toString() : _("none");
 	}
 }

@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.DescParseTickFormat;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.*;
@@ -34,7 +34,7 @@ public class Commandtime extends EssentialsCommand
 
 		if (Permissions.TIME_SET.isAuthorized(sender))
 		{
-			sender.sendMessage($("timeSetPermission"));
+			sender.sendMessage(_("timeSetPermission"));
 			return;
 		}
 
@@ -66,7 +66,7 @@ public class Commandtime extends EssentialsCommand
 
 		for (World world : worlds)
 		{
-			sender.sendMessage($("timeWorldCurrent", world.getName(), DescParseTickFormat.format(world.getTime())));
+			sender.sendMessage(_("timeWorldCurrent", world.getName(), DescParseTickFormat.format(world.getTime())));
 		}
 	}
 
@@ -94,7 +94,7 @@ public class Commandtime extends EssentialsCommand
 			output.append(world.getName());
 		}
 
-		sender.sendMessage($("timeWorldSet", DescParseTickFormat.format(ticks), output.toString()));
+		sender.sendMessage(_("timeWorldSet", DescParseTickFormat.format(ticks), output.toString()));
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Commandtime extends EssentialsCommand
 		// We failed to understand the world target...
 		else
 		{
-			throw new Exception($("invalidWorld"));
+			throw new Exception(_("invalidWorld"));
 		}
 
 		return worlds;

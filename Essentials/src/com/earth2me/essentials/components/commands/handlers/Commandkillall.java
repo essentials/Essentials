@@ -3,7 +3,7 @@ package com.earth2me.essentials.components.commands.handlers;
 import com.earth2me.essentials.Mob;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.util.Collections;
 import java.util.Locale;
 import org.bukkit.Chunk;
@@ -45,7 +45,7 @@ public class Commandkillall extends EssentialsCommand
 				}
 				catch (NumberFormatException e)
 				{
-					throw new Exception($("numberRequired"));
+					throw new Exception(_("numberRequired"));
 				}
 			}
 		}
@@ -78,7 +78,7 @@ public class Commandkillall extends EssentialsCommand
 		{
 			if (Mob.fromName(killType) == null)
 			{
-				throw new Exception($("invalidMob"));
+				throw new Exception(_("invalidMob"));
 			}
 			entityClass = Mob.fromName(killType).getType().getEntityClass();
 		}
@@ -141,6 +141,6 @@ public class Commandkillall extends EssentialsCommand
 				}
 			}
 		}
-		sender.sendMessage($("kill", numKills));
+		sender.sendMessage(_("kill", numKills));
 	}
 }

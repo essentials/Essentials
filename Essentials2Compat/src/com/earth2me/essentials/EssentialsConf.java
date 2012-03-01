@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Locale;
@@ -39,7 +39,7 @@ public class EssentialsConf extends YamlConfiguration
 		{
 			if (!configFile.getParentFile().mkdirs())
 			{
-				LOGGER.log(Level.SEVERE, $("failedToCreateConfig", configFile.toString()));
+				LOGGER.log(Level.SEVERE, _("failedToCreateConfig", configFile.toString()));
 			}
 		}
 		// This will delete files where the first character is 0. In most cases they are broken.
@@ -82,22 +82,22 @@ public class EssentialsConf extends YamlConfiguration
 		{
 			if (templateName != null)
 			{
-				LOGGER.log(Level.INFO, $("creatingConfigFromTemplate", configFile.toString()));
+				LOGGER.log(Level.INFO, _("creatingConfigFromTemplate", configFile.toString()));
 				createFromTemplate();
 			}
 			else
 			{
 				try
 				{
-					LOGGER.log(Level.INFO, $("creatingEmptyConfig", configFile.toString()));
+					LOGGER.log(Level.INFO, _("creatingEmptyConfig", configFile.toString()));
 					if (!configFile.createNewFile())
 					{
-						LOGGER.log(Level.SEVERE, $("failedToCreateConfig", configFile.toString()));
+						LOGGER.log(Level.SEVERE, _("failedToCreateConfig", configFile.toString()));
 					}
 				}
 				catch (IOException ex)
 				{
-					LOGGER.log(Level.SEVERE, $("failedToCreateConfig", configFile.toString()), ex);
+					LOGGER.log(Level.SEVERE, _("failedToCreateConfig", configFile.toString()), ex);
 				}
 			}
 		}
@@ -132,7 +132,7 @@ public class EssentialsConf extends YamlConfiguration
 			istr = resourceClass.getResourceAsStream(templateName);
 			if (istr == null)
 			{
-				LOGGER.log(Level.SEVERE, $("couldNotFindTemplate", templateName));
+				LOGGER.log(Level.SEVERE, _("couldNotFindTemplate", templateName));
 				return;
 			}
 			ostr = new FileOutputStream(configFile);
@@ -149,7 +149,7 @@ public class EssentialsConf extends YamlConfiguration
 		}
 		catch (IOException ex)
 		{
-			LOGGER.log(Level.SEVERE, $("failedToWriteConfig", configFile.toString()), ex);
+			LOGGER.log(Level.SEVERE, _("failedToWriteConfig", configFile.toString()), ex);
 		}
 		finally
 		{
@@ -173,7 +173,7 @@ public class EssentialsConf extends YamlConfiguration
 			}
 			catch (IOException ex)
 			{
-				LOGGER.log(Level.SEVERE, $("failedToCloseConfig", configFile.toString()), ex);
+				LOGGER.log(Level.SEVERE, _("failedToCloseConfig", configFile.toString()), ex);
 			}
 		}
 	}
@@ -209,7 +209,7 @@ public class EssentialsConf extends YamlConfiguration
 		final World world = server.getWorld(worldName);
 		if (world == null)
 		{
-			throw new Exception($("invalidWorld"));
+			throw new Exception(_("invalidWorld"));
 		}
 		return new Location(world,
 							getDouble((path == null ? "" : path + ".") + "x", 0),

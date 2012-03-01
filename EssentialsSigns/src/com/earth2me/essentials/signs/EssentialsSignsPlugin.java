@@ -1,7 +1,7 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.api.EssentialsPlugin;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import org.bukkit.plugin.PluginManager;
 
 
@@ -22,7 +22,7 @@ public final class EssentialsSignsPlugin extends EssentialsPlugin implements ISi
 
 		config = new SignsSettingsComponent(getContext(), this);
 
-		getContext().getLogger().info($("loadinfo", this.getDescription().getName(), this.getDescription().getVersion(), "essentials team"));
+		getContext().getLogger().info(_("loadinfo", this.getDescription().getName(), this.getDescription().getVersion(), "essentials team"));
 	}
 
 	@Override

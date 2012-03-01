@@ -4,7 +4,7 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IItemsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.storage.ManagedFile;
@@ -140,14 +140,14 @@ public class ItemsComponent extends Component implements IItemsComponent
 			}
 			else
 			{
-				throw new Exception($("unknownItemName", id));
+				throw new Exception(_("unknownItemName", id));
 			}
 		}
 
 		final Material mat = Material.getMaterial(itemid);
 		if (mat == null)
 		{
-			throw new Exception($("unknownItemId", itemid));
+			throw new Exception(_("unknownItemId", itemid));
 		}
 		final ItemStack retval = new ItemStack(mat);
 		retval.setAmount(mat.getMaxStackSize());

@@ -2,7 +2,7 @@ package com.earth2me.essentials.listeners;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.List;
@@ -104,7 +104,7 @@ public class EssentialsEntityListener implements Listener
 			if (Permissions.BACK_ONDEATH.isAuthorized(user) && !settings.getData().getCommands().isDisabled("back"))
 			{
 				user.setLastLocation();
-				user.sendMessage($("backAfterDeath"));
+				user.sendMessage(_("backAfterDeath"));
 			}
 			if (!settings.getData().getGeneral().isDeathMessages())
 			{

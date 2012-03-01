@@ -4,7 +4,7 @@ import com.earth2me.essentials.Console;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.components.economy.ChargeException;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.register.payment.Method;
@@ -490,10 +490,10 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 		try
 		{
 			setMoney(getMoney() + value);
-			sendMessage($("addedToAccount", Util.formatCurrency(value, getContext())));
+			sendMessage(_("addedToAccount", Util.formatCurrency(value, getContext())));
 			if (initiator != null)
 			{
-				initiator.sendMessage($("addedToOthersAccount", Util.formatCurrency(value, getContext()), this.getDisplayName()));
+				initiator.sendMessage(_("addedToOthersAccount", Util.formatCurrency(value, getContext()), this.getDisplayName()));
 			}
 		}
 		finally
@@ -513,12 +513,12 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 		{
 			setMoney(getMoney() - value);
 			receiver.setMoney(receiver.getMoney() + value);
-			sendMessage($("moneySentTo", Util.formatCurrency(value, getContext()), receiver.getDisplayName()));
-			receiver.sendMessage($("moneyRecievedFrom", Util.formatCurrency(value, getContext()), getDisplayName()));
+			sendMessage(_("moneySentTo", Util.formatCurrency(value, getContext()), receiver.getDisplayName()));
+			receiver.sendMessage(_("moneyRecievedFrom", Util.formatCurrency(value, getContext()), getDisplayName()));
 		}
 		else
 		{
-			throw new Exception($("notEnoughMoney"));
+			throw new Exception(_("notEnoughMoney"));
 		}
 	}
 
@@ -536,10 +536,10 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 			return;
 		}
 		setMoney(getMoney() - value);
-		sendMessage($("takenFromAccount", Util.formatCurrency(value, getContext())));
+		sendMessage(_("takenFromAccount", Util.formatCurrency(value, getContext())));
 		if (initiator != null)
 		{
-			initiator.sendMessage($("takenFromOthersAccount", Util.formatCurrency(value, getContext()), this.getDisplayName()));
+			initiator.sendMessage(_("takenFromOthersAccount", Util.formatCurrency(value, getContext()), this.getDisplayName()));
 		}
 	}
 
@@ -737,7 +737,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 
 				setTimeStamp(TimeStampType.JAIL, 0);
 				getData().setJailed(false);
-				sendMessage($("haveBeenReleased"));
+				sendMessage(_("haveBeenReleased"));
 				getData().setJail(null);
 
 				try
@@ -768,7 +768,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 			{
 				acquireWriteLock();
 				setTimeStamp(TimeStampType.MUTE, 0);
-				sendMessage($("canTalkAgain"));
+				sendMessage(_("canTalkAgain"));
 				getData().setMuted(false);
 				return true;
 			}
@@ -814,7 +814,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 				getData().setAfk(false);
 				if (broadcast && !hidden)
 				{
-					getContext().getMessager().broadcastMessage(this, $("userIsNotAway", getDisplayName()));
+					getContext().getMessager().broadcastMessage(this, _("userIsNotAway", getDisplayName()));
 				}
 			}
 			lastActivity = System.currentTimeMillis();
@@ -837,7 +837,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 			&& !Permissions.KICK_EXEMPT.isAuthorized(this)
 			&& !Permissions.AFK_KICKEXEMPT.isAuthorized(this))
 		{
-			final String kickReason = $("autoAfkKickReason", autoafkkick / 60.0);
+			final String kickReason = _("autoAfkKickReason", autoafkkick / 60.0);
 			lastActivity = 0;
 			kickPlayer(kickReason);
 
@@ -847,7 +847,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 				final IUserComponent user = getContext().getUser(player);
 				if (Permissions.KICK_NOTIFY.isAuthorized(user))
 				{
-					player.sendMessage($("playerKicked", Console.NAME, getName(), kickReason));
+					player.sendMessage(_("playerKicked", Console.NAME, getName(), kickReason));
 				}
 			}
 		}
@@ -860,7 +860,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 				setAfk(true);
 				if (!hidden)
 				{
-					getContext().getMessager().broadcastMessage(this, $("userIsAway", getDisplayName()));
+					getContext().getMessager().broadcastMessage(this, _("userIsAway", getDisplayName()));
 				}
 			}
 		}
@@ -958,7 +958,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 	{
 		if (giveItemStack(itemStack, canSpew))
 		{
-			sendMessage($("InvFull"));
+			sendMessage(_("InvFull"));
 		}
 		updateInventory();
 	}
@@ -976,7 +976,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 		}
 		if (spew)
 		{
-			sendMessage($("InvFull"));
+			sendMessage(_("InvFull"));
 		}
 		updateInventory();
 	}
