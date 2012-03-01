@@ -13,17 +13,7 @@ import org.bukkit.plugin.Plugin;
  *
  * @author paul
  */
-public interface IComponentPlugin extends IReloadable, List<IComponent>, Plugin
+public interface IComponentPlugin extends IReloadable, IComponentList, Plugin
 {
-
-	@Override
-	boolean add(final IComponent e);
-
-	/**
-	 * Initialize all components.
-	 */
-	void initialize() throws IllegalStateException;
-
-	boolean remove(final IComponent component);
 
 }
