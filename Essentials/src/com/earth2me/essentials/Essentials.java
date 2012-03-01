@@ -69,6 +69,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 
 	public Essentials()
 	{
+		super();
 		context = new Context(this);
 		context.setPaymentMethods(new PaymentMethods());
 
@@ -116,7 +117,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	{
 		try
 		{
-			if (!new Versioning().checkServerVersion(getServer(), getDescription().getVersion()))
+			if (!new Versioning().checkServerVersion(this))
 			{
 				setEnabled(false);
 				return false;

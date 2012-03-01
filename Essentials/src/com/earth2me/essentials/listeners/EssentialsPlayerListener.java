@@ -18,7 +18,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Cleanup;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,7 +35,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsPlayerListener implements Listener
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private final transient Server server;
 	private final transient IContext context;
 
@@ -64,7 +62,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			event.setCancelled(true);
 			user.sendMessage($("playerMuted"));
-			LOGGER.info($("mutedUserSpeaks", user.getName()));
+			context.getLogger().info($("mutedUserSpeaks", user.getName()));
 		}
 		final Iterator<Player> it = event.getRecipients().iterator();
 		while (it.hasNext())
@@ -179,11 +177,11 @@ public class EssentialsPlayerListener implements Listener
 			{
 				if (settings.getData().getGeneral().isDebug())
 				{
-					LOGGER.log(Level.WARNING, ex.getMessage(), ex);
+					context.getLogger().log(Level.WARNING, ex.getMessage(), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.WARNING, ex.getMessage());
+					context.getLogger().log(Level.WARNING, ex.getMessage());
 				}
 			}
 		}

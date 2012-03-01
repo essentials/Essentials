@@ -8,7 +8,6 @@ import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -32,7 +31,6 @@ public class Teleporter implements Runnable, ITeleporter
 	private Target teleportTarget;
 	private Trade chargeFor;
 	private final IContext context;
-	private static final Logger logger = Logger.getLogger("Minecraft");
 	private TeleportCause cause;
 
 	private void initTimer(long delay, Target target, Trade chargeFor, TeleportCause cause)

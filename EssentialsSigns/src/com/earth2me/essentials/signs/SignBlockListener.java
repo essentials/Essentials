@@ -3,7 +3,6 @@ package com.earth2me.essentials.signs;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.users.IUserComponent;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -18,7 +17,6 @@ public class SignBlockListener implements Listener
 {
 	private final transient IContext ess;
 	private final transient ISignsPlugin plugin;
-	private final static Logger LOGGER = Logger.getLogger("Minecraft");
 
 	public SignBlockListener(final IContext ess, final ISignsPlugin plugin)
 	{
@@ -61,7 +59,7 @@ public class SignBlockListener implements Listener
 			// prevent any signs be broken by destroying the block they are attached to
 			if (EssentialsSign.checkIfBlockBreaksSigns(block))
 			{
-				LOGGER.log(Level.INFO, "Prevented that a block was broken next to a sign.");
+				ess.getLogger().log(Level.INFO, "Prevented that a block was broken next to a sign.");
 				return true;
 			}
 			for (EssentialsSign sign : plugin.getSignsConfig().getEnabledSigns())
@@ -69,7 +67,7 @@ public class SignBlockListener implements Listener
 				if (sign.getBlocks().contains(block.getType())
 					&& !sign.onBlockBreak(block, player, ess))
 				{
-					LOGGER.log(Level.INFO, "A block was protected by a sign.");
+					ess.getLogger().log(Level.INFO, "A block was protected by a sign.");
 					return true;
 				}
 			}

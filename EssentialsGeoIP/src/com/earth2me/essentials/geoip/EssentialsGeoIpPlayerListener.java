@@ -14,7 +14,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,7 +25,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 {
 	private transient LookupService ls = null;
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient File databaseFile;
 	private final transient GeoIpSettingsComponent settings;
 	private final transient IContext context;
@@ -137,7 +135,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				}
 				else
 				{
-					LOGGER.log(Level.SEVERE, $("cantFindGeoIpDB"));
+					plugin.getLogger().log(Level.SEVERE, $("cantFindGeoIpDB"));
 					return;
 				}
 			}
@@ -147,7 +145,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 			}
 			catch (IOException ex)
 			{
-				LOGGER.log(Level.SEVERE, $("cantReadGeoIpDB"), ex);
+				plugin.getLogger().log(Level.SEVERE, $("cantReadGeoIpDB"), ex);
 			}
 		}
 		finally
@@ -160,14 +158,14 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 	{
 		if (url == null || url.isEmpty())
 		{
-			LOGGER.log(Level.SEVERE, $("geoIpUrlEmpty"));
+			plugin.getLogger().log(Level.SEVERE, $("geoIpUrlEmpty"));
 			return;
 		}
 		InputStream input = null;
 		OutputStream output = null;
 		try
 		{
-			LOGGER.log(Level.INFO, $("downloadingGeoIp"));
+			plugin.getLogger().log(Level.INFO, $("downloadingGeoIp"));
 			final URL downloadUrl = new URL(url);
 			final URLConnection conn = downloadUrl.openConnection();
 			conn.setConnectTimeout(10000);
@@ -190,11 +188,11 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 		}
 		catch (MalformedURLException ex)
 		{
-			LOGGER.log(Level.SEVERE, $("geoIpUrlInvalid"), ex);
+			plugin.getLogger().log(Level.SEVERE, $("geoIpUrlInvalid"), ex);
 		}
 		catch (IOException ex)
 		{
-			LOGGER.log(Level.SEVERE, $("connectionFailed"), ex);
+			plugin.getLogger().log(Level.SEVERE, $("connectionFailed"), ex);
 		}
 		finally
 		{
@@ -206,7 +204,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				}
 				catch (IOException ex)
 				{
-					LOGGER.log(Level.SEVERE, $("connectionFailed"), ex);
+					plugin.getLogger().log(Level.SEVERE, $("connectionFailed"), ex);
 				}
 			}
 			if (input != null)
@@ -217,7 +215,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 				}
 				catch (Throwable ex)
 				{
-					LOGGER.log(Level.SEVERE, $("connectionFailed"), ex);
+					plugin.getLogger().log(Level.SEVERE, $("connectionFailed"), ex);
 				}
 			}
 		}

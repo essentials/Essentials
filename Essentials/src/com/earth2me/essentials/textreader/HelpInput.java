@@ -22,7 +22,6 @@ public class HelpInput implements IText
 	private final transient List<String> lines = new ArrayList<String>();
 	private final transient List<String> chapters = new ArrayList<String>();
 	private final transient Map<String, Integer> bookmarks = new HashMap<String, Integer>();
-	private final static Logger logger = Logger.getLogger("Minecraft");
 
 	@SuppressWarnings("unchecked")
 	public HelpInput(final IUserComponent user, final String match, final IContext ess) throws IOException
@@ -125,7 +124,7 @@ public class HelpInput implements IText
 			{
 				if (!reported)
 				{
-					logger.log(Level.WARNING, $("commandHelpFailedForPlugin", pluginName), ex);
+					ess.getLogger().log(Level.WARNING, $("commandHelpFailedForPlugin", pluginName), ex);
 				}
 				reported = true;
 				continue;
