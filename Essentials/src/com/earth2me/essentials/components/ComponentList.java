@@ -12,7 +12,7 @@ public class ComponentList extends ArrayList<IComponent> implements IComponentLi
 	@Override
 	public void initialize() throws IllegalStateException
 	{
-		if (initialized == true)
+		if (initialized)
 		{
 			throw new IllegalStateException("The components have already been initialized.");
 		}
@@ -57,7 +57,7 @@ public class ComponentList extends ArrayList<IComponent> implements IComponentLi
 		if (!(component instanceof IComponent)) {
 			return false;
 		}
-		if (remove(component))
+		if (super.remove(component))
 		{
 			((IComponent)component).close();
 			return true;
