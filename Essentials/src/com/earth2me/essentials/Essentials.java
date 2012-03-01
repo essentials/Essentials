@@ -61,7 +61,6 @@ import org.yaml.snakeyaml.error.YAMLException;
 
 public class Essentials extends ComponentPlugin implements IEssentials
 {
-	private static final Logger logger = Logger.getLogger("Minecraft");
 	private transient boolean testing;
 	private transient final TntExplodeListener tntListener;
 	private transient ExecuteTimer execTimer;
@@ -97,11 +96,12 @@ public class Essentials extends ComponentPlugin implements IEssentials
 		{
 			throw new IOException();
 		}
+		context.setLogger(Logger.getLogger(Logger.GLOBAL_LOGGER_NAME));
 
 		registerComponents(0);
 
-		logger.log(Level.INFO, $("usingTempFolderForTesting"));
-		logger.log(Level.INFO, dataFolder.toString());
+		context.getLogger().log(Level.INFO, $("usingTempFolderForTesting"));
+		context.getLogger().log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 
 		registerComponents(1);
@@ -136,6 +136,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	{
 		execTimer = new ExecuteTimer();
 		execTimer.start();
+		context.setLogger(getLogger());
 
 		registerComponents(0);
 
@@ -174,7 +175,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 		final String timeroutput = execTimer.end();
 		if (context.getSettings().isDebug())
 		{
-			logger.log(Level.INFO, "Essentials load {0}", timeroutput);
+			context.getLogger().log(Level.INFO, "Essentials load {0}", timeroutput);
 		}
 	}
 
@@ -184,13 +185,13 @@ public class Essentials extends ComponentPlugin implements IEssentials
 
 		if (pluginManager.getPlugin("EssentialsUpdate") != null)
 		{
-			logger.log(Level.SEVERE, $("essentialsHelp2"));
+			context.getLogger().log(Level.SEVERE, $("essentialsHelp2"));
 		}
 		else
 		{
-			logger.log(Level.SEVERE, $("essentialsHelp1"));
+			context.getLogger().log(Level.SEVERE, $("essentialsHelp1"));
 		}
-		logger.log(Level.SEVERE, exception.toString());
+		context.getLogger().log(Level.SEVERE, exception.toString());
 
 		pluginManager.registerEvents(new Listener()
 		{
