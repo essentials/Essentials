@@ -40,7 +40,7 @@ public class EssentialsXmpp extends EssentialsPlugin implements IEssentialsXmpp
 		final PluginManager pluginManager = getServer().getPluginManager();
 		pluginManager.registerEvents(new EssentialsXmppPlayerListener(getContext()), this);
 
-		commands = new CommandsComponent(EssentialsXmpp.class.getClassLoader(), "com.earth2me.essentials.xmpp.Command", "essentials.", getContext());
+		commands = new CommandsComponent(EssentialsXmpp.class.getClassLoader(), "com.earth2me.essentials.xmpp.Command", getContext());
 
 		add(users = new UserManagerComponent(getDataFolder()));
 		add(xmpp = new XmppManagerComponent(this));

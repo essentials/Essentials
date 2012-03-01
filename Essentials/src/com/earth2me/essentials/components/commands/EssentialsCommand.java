@@ -112,7 +112,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		this.setLogger(getContext().getLogger());
 		this.setServer(getContext().getServer());
 		this.setCommandName(commandName);
-		this.permission = "essentials." + commandName;
+		this.permission = getPermissionBase() + commandName;
 	}
 
 	protected IUserComponent getPlayer(final String[] args, final int pos) throws NoSuchFieldException, NotEnoughArgumentsException
@@ -203,5 +203,10 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	public String getPermission()
 	{
 		return permission;
+	}
+	
+	public String getPermissionBase()
+	{
+		return "essentials.";
 	}
 }

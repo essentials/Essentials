@@ -257,7 +257,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			context.setKits(kits);
 			add(kits);
 
-			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", "essentials.", context);
+			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", context);
 			context.setCommands(commands);
 			add(commands);
 

@@ -22,26 +22,25 @@ public class CommandsComponent extends Component implements ICommandsComponent
 {
 	private final transient ClassLoader classLoader;
 	private final transient String commandPath;
-	private final transient String permissionPrefix;
 	private final transient IComponent component;
 	private final transient Map<String, List<PluginCommand>> altcommands = new HashMap<String, List<PluginCommand>>();
 	private final transient Map<String, String> disabledList = new HashMap<String, String>();
 	private final transient Map<String, IEssentialsCommand> commands = new HashMap<String, IEssentialsCommand>();
 
-	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IContext context)
+	public CommandsComponent(final ClassLoader classLoader, final String commandPath, final IContext context)
 	{
-		this(classLoader, commandPath, permissionPrefix, context.getCommands(), context);
+		this(classLoader, commandPath, context.getCommands(), context);
 	}
 
-	public CommandsComponent(ClassLoader classLoader, String commandPath, String permissionPrefix, IComponent component, IContext context)
+	public CommandsComponent(final ClassLoader classLoader, final String commandPath,
+							 final IComponent component, final IContext context)
 	{
 		super(context);
 
 		this.classLoader = classLoader;
 		this.commandPath = commandPath;
-		this.permissionPrefix = permissionPrefix;
 		this.component = component;
-		
+
 		this.reload();
 	}
 
