@@ -1,8 +1,8 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.Console;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
+import com.earth2me.essentials.components.messenger.Console;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

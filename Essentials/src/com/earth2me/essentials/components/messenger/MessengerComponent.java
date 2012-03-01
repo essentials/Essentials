@@ -1,8 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.earth2me.essentials.components.messager;
+package com.earth2me.essentials.components.messenger;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IMessagerComponent;
@@ -18,9 +14,9 @@ import org.bukkit.entity.Player;
 /**
  * Provides a means of transportation for messages from the server to clients.
  */
-public class MessagerComponent extends Component implements IMessagerComponent
+public class MessengerComponent extends Component implements IMessagerComponent
 {
-	public MessagerComponent(final IContext context)
+	public MessengerComponent(final IContext context)
 	{
 		super(context);
 	}

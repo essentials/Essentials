@@ -1,5 +1,6 @@
 package com.earth2me.essentials.components.users;
 
+import com.earth2me.essentials.components.messenger.IReplyTo;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IPermissions;
 import com.earth2me.essentials.components.IComponent;

@@ -1,6 +1,6 @@
 package com.earth2me.essentials.components.users;
 
-import com.earth2me.essentials.Console;
+import com.earth2me.essentials.components.messenger.Console;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.components.economy.ChargeException;

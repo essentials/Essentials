@@ -1,6 +1,5 @@
-package com.earth2me.essentials;
+package com.earth2me.essentials.components.messenger;
 
-import com.earth2me.essentials.components.users.IReplyTo;
 import org.bukkit.command.CommandSender;
 
 
