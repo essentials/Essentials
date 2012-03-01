@@ -1,4 +1,4 @@
-package com.earth2me.essentials.api;
+package com.earth2me.essentials.components.items;
 
 import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.users.IUserComponent;

@@ -26,6 +26,7 @@ import com.earth2me.essentials.components.economy.EconomyComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.i18n.I18nComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.items.IItemsComponent;
 import com.earth2me.essentials.components.items.ItemsComponent;
 import com.earth2me.essentials.components.settings.SettingsComponent;
 import com.earth2me.essentials.components.settings.groups.GroupsComponent;

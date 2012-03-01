@@ -1,7 +1,6 @@
 package com.earth2me.essentials.components.items;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.IItemsComponent;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
