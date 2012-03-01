@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.users;
 
+import com.earth2me.essentials.storage.IStorageObject;
 import com.earth2me.essentials.storage.MapKeyType;
 import com.earth2me.essentials.storage.MapValueType;
-import com.earth2me.essentials.storage.IStorageObject;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;

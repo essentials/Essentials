@@ -1,13 +1,13 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.Console;
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.perm.Permissions;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.components.users.Ban;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.perm.Permissions;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

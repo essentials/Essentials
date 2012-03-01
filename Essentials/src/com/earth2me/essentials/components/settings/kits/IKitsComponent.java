@@ -1,8 +1,8 @@
 package com.earth2me.essentials.components.settings.kits;
 
 import com.earth2me.essentials.components.IComponent;
-import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.settings.Kit;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.util.Collection;
 
 

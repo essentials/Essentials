@@ -5,7 +5,6 @@
 package com.earth2me.essentials.components;
 
 import com.earth2me.essentials.api.IReloadable;
-import java.util.List;
 import org.bukkit.plugin.Plugin;
 
 

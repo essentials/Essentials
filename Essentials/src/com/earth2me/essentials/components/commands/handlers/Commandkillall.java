@@ -1,9 +1,9 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.Mob;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import java.util.Collections;
 import java.util.Locale;
 import org.bukkit.Chunk;

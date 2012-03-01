@@ -1,7 +1,7 @@
 package com.earth2me.essentials.storage;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.api.IContext;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.DigestInputStream;

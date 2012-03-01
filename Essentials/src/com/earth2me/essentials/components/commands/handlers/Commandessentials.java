@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.commands.handlers;
 
-import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
+import static com.earth2me.essentials.components.i18n.I18nComponent.$;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;

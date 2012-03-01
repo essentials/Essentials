@@ -1,7 +1,7 @@
 package com.earth2me.essentials.components.settings;
 
-import com.earth2me.essentials.storage.ListType;
 import com.earth2me.essentials.storage.IStorageObject;
+import com.earth2me.essentials.storage.ListType;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
