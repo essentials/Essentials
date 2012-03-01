@@ -15,7 +15,7 @@ public class Component implements IComponent
 	 *
 	 * @param context The instance of Essentials hosting the component.
 	 */
-	protected Component(IContext context)
+	protected Component(final IContext context)
 	{
 		this.context = context;
 	}
