@@ -10,6 +10,8 @@ import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.io.File;
 import java.util.logging.Logger;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -20,37 +22,50 @@ import org.bukkit.entity.Player;
  */
 public final class Context implements IContext
 {
+	@Getter @Setter
 	private transient IBackupComponent backup;
+	@Getter @Setter
 	private transient IItemsComponent items;
+	@Getter @Setter
 	private transient IGroupsComponent groups;
+	@Getter @Setter
 	private transient IJailsComponent jails;
+	@Getter @Setter
 	private transient IKitsComponent kits;
+	@Getter @Setter
 	private transient ISettingsComponent settings;
+	@Getter @Setter
 	private transient IWarpsComponent warps;
+	@Getter @Setter
 	private transient IWorthsComponent worths;
+	@Getter @Setter
 	private transient PaymentMethods paymentMethods;
+	@Getter @Setter
 	private transient IUsersComponent users;
+	@Getter @Setter
 	private transient II18nComponent i18n;
+	@Getter @Setter
 	private transient ICommandsComponent commands;
+	@Getter @Setter
 	private transient IEconomyComponent economy;
+	@Getter @Setter
 	private transient Server server;
+	@Getter @Setter
 	private transient File dataFolder;
 	@SuppressWarnings("NonConstantLogger")
+	@Getter @Setter
 	private transient Logger logger;
+	@Getter @Setter
 	private transient IScheduler scheduler;
+	@Getter @Setter
 	private transient IMessagerComponent messager;
+	@Getter
 	private transient final IEssentials essentials;
 
 	public Context(final IEssentials essentials)
 	{
 		this.essentials = essentials;
-	}
-
-	@Override
-	@SuppressWarnings("ReturnOfCollectionOrArrayField") // Purposely modifiable collection.
-	public IEssentials getEssentials()
-	{
-		return essentials;
+		setDataFolder(essentials.getDataFolder());
 	}
 
 	@Override
@@ -94,203 +109,5 @@ public final class Context implements IContext
 	public IUserComponent getUser(final String playerName)
 	{
 		return getUsers().getUser(playerName);
-	}
-
-	@Override
-	public File getDataFolder()
-	{
-		return dataFolder;
-	}
-
-	@Override
-	public Logger getLogger()
-	{
-		return logger;
-	}
-
-	@Override
-	public IScheduler getScheduler()
-	{
-		return scheduler;
-	}
-
-	@Override
-	public IBackupComponent getBackup()
-	{
-		return backup;
-	}
-
-	@Override
-	public IItemsComponent getItems()
-	{
-		return items;
-	}
-
-	@Override
-	public IGroupsComponent getGroups()
-	{
-		return groups;
-	}
-
-	@Override
-	public IJailsComponent getJails()
-	{
-		return jails;
-	}
-
-	@Override
-	public IKitsComponent getKits()
-	{
-		return kits;
-	}
-
-	@Override
-	public ISettingsComponent getSettings()
-	{
-		return settings;
-	}
-
-	@Override
-	public IWarpsComponent getWarps()
-	{
-		return warps;
-	}
-
-	@Override
-	public IWorthsComponent getWorths()
-	{
-		return worths;
-	}
-
-	@Override
-	public PaymentMethods getPaymentMethods()
-	{
-		return paymentMethods;
-	}
-
-	@Override
-	public IUsersComponent getUsers()
-	{
-		return users;
-	}
-
-	@Override
-	public II18nComponent getI18n()
-	{
-		return i18n;
-	}
-
-	@Override
-	public ICommandsComponent getCommands()
-	{
-		return commands;
-	}
-
-	@Override
-	public IEconomyComponent getEconomy()
-	{
-		return economy;
-	}
-
-	@Override
-	public Server getServer()
-	{
-		return server;
-	}
-
-	@Override
-	public IMessagerComponent getMessager()
-	{
-		return messager;
-	}
-
-	public void setBackup(IBackupComponent backup)
-	{
-		this.backup = backup;
-	}
-
-	public void setItems(IItemsComponent items)
-	{
-		this.items = items;
-	}
-
-	public void setGroups(IGroupsComponent groups)
-	{
-		this.groups = groups;
-	}
-
-	public void setJails(IJailsComponent jails)
-	{
-		this.jails = jails;
-	}
-
-	public void setKits(IKitsComponent kits)
-	{
-		this.kits = kits;
-	}
-
-	public void setSettings(ISettingsComponent settings)
-	{
-		this.settings = settings;
-	}
-
-	public void setWarps(IWarpsComponent warps)
-	{
-		this.warps = warps;
-	}
-
-	public void setWorths(IWorthsComponent worths)
-	{
-		this.worths = worths;
-	}
-
-	public void setPaymentMethods(PaymentMethods paymentMethods)
-	{
-		this.paymentMethods = paymentMethods;
-	}
-
-	public void setUsers(IUsersComponent users)
-	{
-		this.users = users;
-	}
-
-	public void setI18n(II18nComponent i18n)
-	{
-		this.i18n = i18n;
-	}
-
-	public void setCommands(ICommandsComponent commands)
-	{
-		this.commands = commands;
-	}
-
-	public void setEconomy(IEconomyComponent economy)
-	{
-		this.economy = economy;
-	}
-
-	public void setServer(Server server)
-	{
-		this.server = server;
-	}
-
-	public void setDataFolder(File dataFolder)
-	{
-		this.dataFolder = dataFolder;
-	}
-
-	public void setLogger(Logger logger)
-	{
-		this.logger = logger;
-	}
-
-	public void setScheduler(IScheduler scheduler)
-	{
-		this.scheduler = scheduler;
-	}
-
-	public void setMessager(IMessagerComponent messager)
-	{
-		this.messager = messager;
 	}
 }
