@@ -41,7 +41,7 @@ public class StatelessPlayer implements IStatelessPlayer
 	}
 
 	@Override
-	public final void setOnlinePlayer(Player onlinePlayer)
+	public final void setOnlinePlayer(final Player onlinePlayer)
 	{
 		safePlayer = this.onlinePlayer = onlinePlayer;
 	}
