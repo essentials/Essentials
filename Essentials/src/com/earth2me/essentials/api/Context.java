@@ -1,5 +1,6 @@
 package com.earth2me.essentials.api;
 
+import com.earth2me.essentials.Util;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.settings.jails.IJailsComponent;
 import com.earth2me.essentials.components.settings.kits.IKitsComponent;
@@ -22,42 +23,60 @@ import org.bukkit.entity.Player;
  */
 public final class Context implements IContext
 {
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IBackupComponent backup;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IItemsComponent items;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IGroupsComponent groups;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IJailsComponent jails;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IKitsComponent kits;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient ISettingsComponent settings;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IWarpsComponent warps;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IWorthsComponent worths;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient PaymentMethods paymentMethods;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IUsersComponent users;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient II18nComponent i18n;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient ICommandsComponent commands;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IEconomyComponent economy;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient Server server;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient File dataFolder;
 	@SuppressWarnings("NonConstantLogger")
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient Logger logger;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IScheduler scheduler;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private transient IMessagerComponent messager;
 	@Getter
 	private transient final IEssentials essentials;
@@ -72,27 +91,19 @@ public final class Context implements IContext
 	public World getWorld(final String name)
 	{
 		// Catch invalid parameters.
-		if (name == null || name.length() < 1)
+		if (name == null || name.isEmpty())
 		{
 			return null;
 		}
 
-		// Check to see if the name is numeric.
-		char[] chars = name.toCharArray();
-		for (int i = 0; i < chars.length; i++)
+		if (Util.isNumber(name))
 		{
-			if (chars[i] < '0' || chars[i] > '1')
+			final int worldId = Integer.parseInt(name);
+			if (worldId < getServer().getWorlds().size())
 			{
-				// If not, get the world normally.
-				return getServer().getWorld(name);
+				// Valid number; get world by number.
+				return getServer().getWorlds().get(worldId);
 			}
-		}
-
-		final int worldId = Integer.parseInt(name);
-		if (worldId < getServer().getWorlds().size())
-		{
-			// Valid number; get world by number.
-			return getServer().getWorlds().get(worldId);
 		}
 
 		// Otherwise, return by name.

@@ -646,4 +646,9 @@ public final class Util
 
 		return EASY_COLOR_PATTERN.matcher(input).replaceAll("\u00a7$1");
 	}
+	
+	private static transient final Pattern NUMBER = Pattern.compile("[0-9]+");
+	public static boolean isNumber(final String input) {
+		return NUMBER.matcher(input).matches();
+	}
 }
