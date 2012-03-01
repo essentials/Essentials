@@ -17,7 +17,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 {
 	private final MoneyComponent npcsMoney;
 
-	public EconomyComponent(IContext context)
+	public EconomyComponent(final IContext context)
 	{
 		super(context);
 
@@ -40,17 +40,17 @@ public class EconomyComponent extends Component implements IEconomyComponent
 		super.close();
 	}
 
-	private double getNpcBalance(String name) throws UserDoesNotExistException
+	private double getNpcBalance(final String name) throws UserDoesNotExistException
 	{
 		npcsMoney.acquireReadLock();
 		try
 		{
-			Map<String, Double> balances = npcsMoney.getData().getBalances();
+			final Map<String, Double> balances = npcsMoney.getData().getBalances();
 			if (balances == null)
 			{
 				throw new UserDoesNotExistException(name);
 			}
-			Double balance = npcsMoney.getData().getBalances().get(name.toLowerCase(Locale.ENGLISH));
+			final Double balance = npcsMoney.getData().getBalances().get(name.toLowerCase(Locale.ENGLISH));
 			if (balance == null)
 			{
 				throw new UserDoesNotExistException(name);
@@ -63,7 +63,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 		}
 	}
 
-	private void setNpcBalance(String name, double balance, boolean checkExistance) throws UserDoesNotExistException
+	private void setNpcBalance(final String name, final double balance, final boolean checkExistance) throws UserDoesNotExistException
 	{
 		npcsMoney.acquireWriteLock();
 		try
@@ -89,7 +89,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	private double getStartingBalance()
 	{
 		double startingBalance = 0;
-		ISettingsComponent settings = getContext().getSettings();
+		final ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -111,9 +111,9 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	}
 
 	@Override
-	public double getMoney(String name) throws UserDoesNotExistException
+	public double getMoney(final String name) throws UserDoesNotExistException
 	{
-		IUserComponent user = getContext().getUser(name);
+		final IUserComponent user = getContext().getUser(name);
 		if (user == null)
 		{
 			return getNpcBalance(name);
@@ -122,9 +122,9 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	}
 
 	@Override
-	public void setMoney(String name, double balance) throws NoLoanPermittedException, UserDoesNotExistException
+	public void setMoney(final String name, final double balance) throws NoLoanPermittedException, UserDoesNotExistException
 	{
-		IUserComponent user = getContext().getUser(name);
+		final IUserComponent user = getContext().getUser(name);
 		if (user == null)
 		{
 			setNpcBalance(name, balance, true);
@@ -138,19 +138,19 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	}
 
 	@Override
-	public void resetBalance(String name) throws NoLoanPermittedException, UserDoesNotExistException
+	public void resetBalance(final String name) throws NoLoanPermittedException, UserDoesNotExistException
 	{
 		setMoney(name, getStartingBalance());
 	}
 
 	@Override
-	public String format(double amount)
+	public String format(final double amount)
 	{
 		return Util.formatCurrency(amount, getContext());
 	}
 
 	@Override
-	public boolean playerExists(String name)
+	public boolean playerExists(final String name)
 	{
 		try
 		{
@@ -164,9 +164,9 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	}
 
 	@Override
-	public boolean isNpc(String name) throws UserDoesNotExistException
+	public boolean isNpc(final String name) throws UserDoesNotExistException
 	{
-		boolean result = getContext().getUser(name) == null;
+		final boolean result = getContext().getUser(name) == null;
 		if (result)
 		{
 			getNpcBalance(name);
@@ -175,7 +175,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	}
 
 	@Override
-	public boolean createNpc(String name)
+	public boolean createNpc(final String name)
 	{
 		try
 		{
@@ -202,7 +202,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	}
 
 	@Override
-	public void removeNpc(String name) throws UserDoesNotExistException
+	public void removeNpc(final String name) throws UserDoesNotExistException
 	{
 		npcsMoney.acquireWriteLock();
 		try
