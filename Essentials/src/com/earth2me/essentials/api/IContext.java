@@ -1,9 +1,10 @@
 package com.earth2me.essentials.api;
 
+import com.earth2me.essentials.components.backup.IBackupComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
-import com.earth2me.essentials.components.settings.worths.IWorthsComponent;
 import com.earth2me.essentials.components.settings.jails.IJailsComponent;
 import com.earth2me.essentials.components.settings.kits.IKitsComponent;
+import com.earth2me.essentials.components.settings.worths.IWorthsComponent;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.users.IUsersComponent;
 import com.earth2me.essentials.components.warps.IWarpsComponent;
@@ -13,7 +14,6 @@ import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 
 /**

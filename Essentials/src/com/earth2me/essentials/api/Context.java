@@ -1,6 +1,7 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.Util;
+import com.earth2me.essentials.components.backup.IBackupComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.settings.jails.IJailsComponent;
 import com.earth2me.essentials.components.settings.kits.IKitsComponent;

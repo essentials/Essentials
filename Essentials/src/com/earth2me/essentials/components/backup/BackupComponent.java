@@ -1,6 +1,5 @@
 package com.earth2me.essentials.components.backup;
 
-import com.earth2me.essentials.api.IBackupComponent;
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.Component;

@@ -20,6 +20,7 @@ package com.earth2me.essentials;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.components.ComponentPlugin;
 import com.earth2me.essentials.components.backup.BackupComponent;
+import com.earth2me.essentials.components.backup.IBackupComponent;
 import com.earth2me.essentials.components.commands.CommandsComponent;
 import com.earth2me.essentials.components.economy.EconomyComponent;
 import com.earth2me.essentials.components.economy.IEconomyComponent;
