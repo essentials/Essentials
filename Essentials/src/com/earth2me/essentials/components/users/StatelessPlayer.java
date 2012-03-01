@@ -21,7 +21,7 @@ public class StatelessPlayer implements IStatelessPlayer
 	@Getter
 	private transient OfflinePlayer safePlayer;
 
-	public StatelessPlayer(OfflinePlayer player)
+	public StatelessPlayer(final OfflinePlayer player)
 	{
 		if (player.isOnline())
 		{
@@ -34,7 +34,7 @@ public class StatelessPlayer implements IStatelessPlayer
 	}
 
 	@Override
-	public final void setOfflinePlayer(OfflinePlayer offlinePlayer)
+	public final void setOfflinePlayer(final OfflinePlayer offlinePlayer)
 	{
 		safePlayer = offlinePlayer;
 		onlinePlayer = null;

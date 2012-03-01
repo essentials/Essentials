@@ -104,7 +104,7 @@ public class Teleporter implements Runnable, ITeleporter
 	public void respawn(final Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		final Location bed = user.getBedSpawnLocation();
-		final PlayerRespawnEvent pre = new PlayerRespawnEvent(user.getOnlinePlayer(), bed == null ? user.getWorld().getSpawnLocation() : bed, bed != null);
+		final PlayerRespawnEvent pre = new PlayerRespawnEvent(user.getBase(), bed == null ? user.getWorld().getSpawnLocation() : bed, bed != null);
 		context.getServer().getPluginManager().callEvent(pre);
 		teleport(new Target(pre.getRespawnLocation()), chargeFor, cause);
 	}

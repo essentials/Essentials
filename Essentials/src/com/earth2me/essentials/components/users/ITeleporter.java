@@ -24,5 +24,5 @@ public interface ITeleporter
 
 	void back() throws Exception;
 
-	public void warp(String name, Trade charge, TeleportCause teleportCause) throws Exception;
+	void warp(String name, Trade charge, TeleportCause teleportCause) throws Exception;
 }

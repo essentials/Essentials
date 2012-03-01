@@ -22,7 +22,7 @@ public class Commandtpaccept extends EssentialsCommand
 
 		final IUserComponent target = user.getTeleportRequester();
 		if (target == null
-			|| target.getBase() instanceof OfflinePlayer
+			|| !target.isOnline()
 			|| (user.isTeleportRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
 			|| (!user.isTeleportRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{

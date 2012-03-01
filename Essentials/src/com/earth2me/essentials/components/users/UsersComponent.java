@@ -128,7 +128,7 @@ public class UsersComponent extends MultiStorageComponent<UserSurrogate, IEssent
 		}
 		else
 		{
-			user.setBase(new StatelessPlayer(player));
+			user.setStatelessPlayer(new StatelessPlayer(player));
 		}
 
 		return user;

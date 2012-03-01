@@ -23,7 +23,7 @@ public class Commandtpohere extends EssentialsCommand
 		final IUserComponent player = getPlayer(args, 0, true);
 
 		// Check if user is offline
-		if (player.getBase() instanceof OfflinePlayer)
+		if (!player.isOnline())
 		{
 			throw new NoSuchFieldException(_("playerNotFound"));
 		}

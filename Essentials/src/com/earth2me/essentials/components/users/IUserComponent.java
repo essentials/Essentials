@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.users;
 
-import com.earth2me.essentials.components.messenger.IReplyTo;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IPermissions;
 import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.economy.ChargeException;
+import com.earth2me.essentials.components.messenger.IReplyTo;
 import com.earth2me.essentials.storage.ISubStorageComponent;
 import com.earth2me.essentials.storage.LocationData;
 import java.util.List;
@@ -20,10 +20,12 @@ import org.bukkit.inventory.ItemStack;
 
 public interface IUserComponent extends ISubStorageComponent<UserSurrogate, IEssentials>, Comparable<IUserComponent>, IComponent, IReplyTo, IStatelessPlayer, CommandSender, LivingEntity, Player, OfflinePlayer
 {
-	IStatelessPlayer getBase();
+	Player getBase();
+	
+	IStatelessPlayer getStatelessPlayer();
 
-	void setBase(final IStatelessPlayer base);
-
+	void setStatelessPlayer(final IStatelessPlayer base);
+	
 	LocationData getLastLocation();
 
 	void setLastLocation(final LocationData lastLocation);
@@ -169,9 +171,9 @@ public interface IUserComponent extends ISubStorageComponent<UserSurrogate, IEss
 
 	boolean isHidden();
 
-	public IUserComponent getTeleportRequester();
+	IUserComponent getTeleportRequester();
 
-	public boolean isTeleportRequestHere();
+	boolean isTeleportRequestHere();
 
-	public long getTeleportRequestTime();
+	long getTeleportRequestTime();
 }

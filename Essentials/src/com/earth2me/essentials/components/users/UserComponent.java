@@ -1,10 +1,10 @@
 package com.earth2me.essentials.components.users;
 
-import com.earth2me.essentials.components.messenger.Console;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.components.economy.ChargeException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.messenger.Console;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.register.payment.Method;
@@ -38,7 +38,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 	})
 	@Getter
 	@Setter
-	private transient IStatelessPlayer base;
+	private transient IStatelessPlayer statelessPlayer;
 	@Getter
 	@Setter
 	private transient CommandSender replyTo = null;
@@ -68,13 +68,17 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 		this(new StatelessPlayer(base), context);
 	}
 
-	public UserComponent(final IStatelessPlayer base, final IContext context)
+	public UserComponent(final IStatelessPlayer statelessPlayer, final IContext context)
 	{
 		super(context, UserSurrogate.class, context.getEssentials());
-		this.base = base;
+		this.statelessPlayer = statelessPlayer;
 		this.teleporter = new Teleporter(this, context);
-		
-		getName();
+	}
+
+	@Override
+	public Player getBase()
+	{
+		return statelessPlayer.getOnlinePlayer();
 	}
 
 	@Override
@@ -1009,7 +1013,7 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 	@Override
 	public void close()
 	{
-		base = null;
+		statelessPlayer = null;
 
 		super.close();
 	}

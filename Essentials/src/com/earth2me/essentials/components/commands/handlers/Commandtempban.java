@@ -23,7 +23,7 @@ public class Commandtempban extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		final IUserComponent user = getPlayer(args, 0, true);
-		if (user.getBase() instanceof OfflinePlayer)
+		if (!user.isOnline())
 		{
 			if (Permissions.TEMPBAN_OFFLINE.isAuthorized(sender))
 			{
