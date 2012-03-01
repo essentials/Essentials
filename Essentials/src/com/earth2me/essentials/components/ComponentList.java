@@ -71,14 +71,14 @@ public class ComponentList extends ArrayList<IComponent> implements IComponentLi
 	@Override
 	public void clear()
 	{
-		Throwable ex = null;
+		RuntimeException ex = null;
 		for (IComponent component : this)
 		{
 			try
 			{
 				component.close();
 			}
-			catch (Throwable iterationEx)
+			catch (RuntimeException iterationEx)
 			{
 				ex = iterationEx;
 			}
@@ -88,7 +88,7 @@ public class ComponentList extends ArrayList<IComponent> implements IComponentLi
 
 		if (ex != null)
 		{
-			throw new Error(ex);
+			throw ex;
 		}
 	}
 }
