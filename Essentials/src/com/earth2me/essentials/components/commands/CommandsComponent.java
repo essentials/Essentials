@@ -41,14 +41,8 @@ public class CommandsComponent extends Component implements ICommandsComponent
 		this.commandPath = commandPath;
 		this.permissionPrefix = permissionPrefix;
 		this.component = component;
-
-		for (Plugin plugin : context.getServer().getPluginManager().getPlugins())
-		{
-			if (plugin.isEnabled())
-			{
-				addPlugin(plugin);
-			}
-		}
+		
+		this.reload();
 	}
 
 	@Override
@@ -195,8 +189,16 @@ public class CommandsComponent extends Component implements ICommandsComponent
 	}
 
 	@Override
-	public void reload()
+	public final void reload()
 	{
+		altcommands.clear();
+		for (Plugin plugin : getContext().getServer().getPluginManager().getPlugins())
+		{
+			if (plugin.isEnabled())
+			{
+				addPlugin(plugin);
+			}
+		}
 	}
 
 	@Override
