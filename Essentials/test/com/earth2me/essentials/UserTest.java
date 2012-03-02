@@ -1,7 +1,6 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.craftbukkit.DummyOfflinePlayer;
 import com.earth2me.essentials.user.User;
 import java.io.IOException;
 import junit.framework.TestCase;
@@ -33,7 +32,7 @@ public class UserTest extends TestCase
 		{
 			fail("IOException");
 		}
-		base1 = new User(new DummyOfflinePlayer("testPlayer1"), ess);
+		base1 = new User(new FakeOfflinePlayer("testPlayer1"), ess);
 		server.addPlayer(base1);
 		ess.getUser(base1);
 	}

@@ -1,4 +1,4 @@
-package com.earth2me.essentials.craftbukkit;
+package com.earth2me.essentials;
 
 import java.util.Map;
 import org.bukkit.Bukkit;
@@ -7,11 +7,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 
-public class DummyOfflinePlayer implements OfflinePlayer
+public class FakeOfflinePlayer implements OfflinePlayer
 {
 	private final transient String name;
 
-	public DummyOfflinePlayer(String name)
+	public FakeOfflinePlayer(String name)
 	{
 		this.name = name;
 	}

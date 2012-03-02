@@ -1,4 +1,4 @@
-package com.earth2me.essentials.craftbukkit;
+package com.earth2me.essentials;
 
 import java.io.File;
 import java.util.Collection;
