@@ -10,7 +10,7 @@ import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.register.payment.Method;
 import com.earth2me.essentials.register.payment.PaymentMethods;
 import com.earth2me.essentials.storage.LocationData;
-import com.earth2me.essentials.storage.SubStorageComponent;
+import com.earth2me.essentials.storage.StorageComponent;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -30,7 +30,7 @@ import org.bukkit.permissions.ServerOperator;
 
 
 @SuppressWarnings("deprecation")
-public class UserComponent extends SubStorageComponent<UserSurrogate, IEssentials> implements IUserComponent
+public class UserComponent extends StorageComponent<UserSurrogate, IEssentials> implements IUserComponent
 {
 	@Delegate(types =
 	{
@@ -1376,5 +1376,11 @@ public class UserComponent extends SubStorageComponent<UserSurrogate, IEssential
 		{
 			unlock();
 		}
+	}
+
+	@Override
+	public String getContainerId()
+	{
+		return getName();
 	}
 }

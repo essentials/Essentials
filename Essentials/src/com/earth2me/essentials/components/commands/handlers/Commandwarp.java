@@ -73,7 +73,7 @@ public class Commandwarp extends EssentialsCommand
 	private void warpList(final CommandSender sender, final String[] args) throws Exception
 	{
 		final IWarpsComponent warps = getContext().getWarps();
-		if (warps.isEmpty())
+		if (warps.getKeySize() == 0)
 		{
 			throw new Exception(_("noWarpsDefined"));
 		}

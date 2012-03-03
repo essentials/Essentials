@@ -446,9 +446,7 @@ public class EssentialsUpgrade
 						{
 							final LocationData location = new LocationData(worldName, x, y, z, yaw, pitch);
 							final Warp warp = new Warp();
-							warp.setName(filename.substring(0, filename.length() - 4));
-							warp.setLocation(location);
-							context.getWarps().setWarp(warp.getName(), warp);
+							context.getWarps().setWarp(filename.substring(0, filename.length() - 4), location);
 							if (!listOfFiles[i].renameTo(new File(warpsFolder, filename + ".old")))
 							{
 								throw new Exception(_("fileRenameError", filename));

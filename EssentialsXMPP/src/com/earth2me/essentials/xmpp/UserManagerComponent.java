@@ -1,20 +1,22 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.EssentialsConf;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.IReloadable;
+import com.earth2me.essentials.components.Component;
 import java.io.File;
 import java.util.*;
 
 
-public class UserManagerComponent implements IReloadable
+/*public class UserManagerComponent extends Component implements IReloadable
 {
 	private final transient EssentialsConf users;
 	private final transient List<String> spyusers = new ArrayList<String>();
 	private final static String ADDRESS = "address";
 	private final static String SPY = "spy";
 
-	public UserManagerComponent(final File folder)
+	public UserManagerComponent(IContext context, final File folder)
 	{
+		super(context);
 		users = new EssentialsConf(new File(folder, "users.yml"));
 		reload();
 	}
@@ -86,4 +88,4 @@ public class UserManagerComponent implements IReloadable
 			}
 		}
 	}
-}
+}*/

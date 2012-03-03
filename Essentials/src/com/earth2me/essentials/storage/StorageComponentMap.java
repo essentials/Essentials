@@ -18,14 +18,14 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 
 
-public abstract class StorageObjectMap<I> extends CacheLoader<String, I> implements IStorageObjectMap<I>
+public abstract class StorageComponentMap<I> extends CacheLoader<String, I> implements IStorageComponentMap<I>
 {
 	protected final transient IContext context;
 	private final transient File folder;
 	protected final transient Cache<String, I> cache = CacheBuilder.newBuilder().softValues().build(this);
 	protected final transient ConcurrentSkipListSet<String> keys = new ConcurrentSkipListSet<String>();
 
-	public StorageObjectMap(final IContext context, final String folderName)
+	public StorageComponentMap(final IContext context, final String folderName)
 	{
 		super();
 		this.context = context;
@@ -34,7 +34,6 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 		{
 			folder.mkdirs();
 		}
-		loadAllObjectsAsync();
 	}
 
 	private void loadAllObjectsAsync()
@@ -97,15 +96,16 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	public abstract I load(final String name) throws Exception;
 
 	@Override
-	public void removeObject(final String name) throws InvalidNameException
+	public boolean removeObject(final String name) throws InvalidNameException
 	{
 		keys.remove(name.toLowerCase(Locale.ENGLISH));
 		cache.invalidate(name.toLowerCase(Locale.ENGLISH));
 		final File file = getStorageFile(name);
 		if (file.exists())
 		{
-			file.delete();
+			return file.delete();
 		}
+		return false;
 	}
 
 	@Override
@@ -134,5 +134,27 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	public void reload()
 	{
 		loadAllObjectsAsync();
+	}
+
+	@Override
+	public String getTypeId()
+	{
+		return getClass().getSimpleName();
+	}
+
+	@Override
+	public void initialize()
+	{
+	}
+
+	@Override
+	public void onEnable()
+	{
+		loadAllObjectsAsync();
+	}
+
+	@Override
+	public void close()
+	{
 	}
 }

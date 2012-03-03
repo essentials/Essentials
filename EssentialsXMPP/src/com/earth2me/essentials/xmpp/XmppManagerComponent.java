@@ -4,6 +4,7 @@ import com.earth2me.essentials.components.Component;
 import com.earth2me.essentials.components.users.IUserComponent;
 import java.io.File;
 import java.util.*;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -29,6 +30,7 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 	private transient boolean ignoreLagMessages = true;
 	private transient Thread loggerThread;
 	private transient boolean threadrunning = true;
+	private final transient LogHandler logHandler = new LogHandler();
 
 	public XmppManagerComponent(final IEssentialsXmpp parent)
 	{
@@ -100,38 +102,47 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 
 	private boolean connect()
 	{
-		final String server = settings.getString("xmpp.server");
-		if (server == null || server.equals("example.com"))
-		{
-			LOGGER.log(Level.WARNING, "config broken for xmpp");
-			return false;
-		}
-		final int port = settings.getInt("xmpp.port", 5222);
-		final String serviceName = settings.getString("xmpp.servicename", server);
-		final String xmppuser = settings.getString("xmpp.user");
-		final String password = settings.getString("xmpp.password");
-		final ConnectionConfiguration connConf = new ConnectionConfiguration(server, port, serviceName);
-		final StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Connecting to xmpp server ").append(server).append(":").append(port);
-		stringBuilder.append(" as user ").append(xmppuser).append(".");
-		LOGGER.log(Level.INFO, stringBuilder.toString());
-		connConf.setSASLAuthenticationEnabled(settings.getBoolean("xmpp.sasl-enabled", false));
-		connConf.setSendPresence(true);
-		connConf.setReconnectionAllowed(true);
-		connection = new XMPPConnection(connConf);
+		settings.acquireReadLock();
 		try
 		{
-			connection.connect();
-			connection.login(xmppuser, password);
-			connection.getRoster().setSubscriptionMode(SubscriptionMode.accept_all);
-			chatManager = connection.getChatManager();
-			chatManager.addChatListener(this);
-			return true;
+			ServerSettings serverSettings = settings.getData().getXmpp();
+			final String server = serverSettings.getServer();
+			if (server == null || server.equals("example.com"))
+			{
+				LOGGER.log(Level.WARNING, "config broken for xmpp");
+				return false;
+			}
+			final int port = serverSettings.getPort();
+			final String serviceName = serverSettings.getServicename() == null ? server : serverSettings.getServicename();
+			final String xmppuser = serverSettings.getUser();
+			final String password = serverSettings.getPassword();
+			final ConnectionConfiguration connConf = new ConnectionConfiguration(server, port, serviceName);
+			final StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append("Connecting to xmpp server ").append(server).append(":").append(port);
+			stringBuilder.append(" as user ").append(xmppuser).append(".");
+			LOGGER.log(Level.INFO, stringBuilder.toString());
+			connConf.setSASLAuthenticationEnabled(serverSettings.isSaslEnabled());
+			connConf.setSendPresence(true);
+			connConf.setReconnectionAllowed(true);
+			connection = new XMPPConnection(connConf);
+			try
+			{
+				connection.connect();
+				connection.login(xmppuser, password);
+				connection.getRoster().setSubscriptionMode(SubscriptionMode.accept_all);
+				chatManager = connection.getChatManager();
+				chatManager.addChatListener(this);
+				return true;
+			}
+			catch (XMPPException ex)
+			{
+				LOGGER.log(Level.WARNING, "Failed to connect to server: " + server, ex);
+				return false;
+			}
 		}
-		catch (XMPPException ex)
+		finally
 		{
-			LOGGER.log(Level.WARNING, "Failed to connect to server: " + server, ex);
-			return false;
+			settings.unlock();
 		}
 	}
 
@@ -170,8 +181,8 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 	@Override
 	public final void reload()
 	{
-		LOGGER.removeHandler(this);
-		settings.load();
+		LOGGER.removeHandler(logHandler);
+		settings.reload();
 		synchronized (chats)
 		{
 			disconnect();
@@ -182,57 +193,21 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 			}
 			startLoggerThread();
 		}
-		if (settings.getBoolean("log-enabled", false))
-		{
-			LOGGER.addHandler(this);
-			logUsers = settings.getStringList("log-users");
-			final String level = settings.getString("log-level", "info");
-			try
-			{
-				logLevel = Level.parse(level.toUpperCase(Locale.ENGLISH));
-			}
-			catch (IllegalArgumentException e)
-			{
-				logLevel = Level.INFO;
-			}
-			ignoreLagMessages = settings.getBoolean("ignore-lag-messages", true);
-		}
-	}
-
-	@Override
-	public void publish(final LogRecord logRecord)
-	{
+		settings.acquireReadLock();
 		try
 		{
-			if (ignoreLagMessages && logRecord.getMessage().equals("Can't keep up! Did the system time change, or is the server overloaded?"))
+			if (settings.getData().isLogEnabled())
 			{
-				return;
-			}
-			if (logRecord.getLevel().intValue() >= logLevel.intValue())
-			{
-				synchronized (logrecords)
-				{
-					logrecords.add(logRecord);
-				}
+				LOGGER.addHandler(logHandler);
+				logUsers = settings.getData().getLogUsers();
+				logLevel = settings.getData().getLogLevel();
+				ignoreLagMessages = settings.getData().isIgnoreLagMessages();
 			}
 		}
-		catch (Exception e)
+		finally
 		{
-			// Ignore all exceptions
-			// Otherwise we create a loop.
+			settings.unlock();
 		}
-	}
-
-	@Override
-	public void flush()
-	{
-		// Ignore this
-	}
-
-	@Override
-	public void close() throws SecurityException
-	{
-		// Ignore this
 	}
 
 	private void startLoggerThread()
@@ -275,14 +250,14 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 							catch (XMPPException ex)
 							{
 								failedUsers.add(user);
-								LOGGER.removeHandler(XmppManagerComponent.this);
+								LOGGER.removeHandler(logHandler);
 								LOGGER.log(Level.SEVERE, "Failed to deliver log message! Disabling logging to XMPP.", ex);
 							}
 						}
 						logUsers.removeAll(failedUsers);
 						if (logUsers.isEmpty())
 						{
-							LOGGER.removeHandler(XmppManagerComponent.this);
+							LOGGER.removeHandler(logHandler);
 							threadrunning = false;
 						}
 						copy.clear();
@@ -296,7 +271,7 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 						threadrunning = false;
 					}
 				}
-				LOGGER.removeHandler(XmppManagerComponent.this);
+				LOGGER.removeHandler(logHandler);
 			}
 		});
 		loggerThread.start();
@@ -353,16 +328,24 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 
 	private void sendCommand(final Chat chat, final String message)
 	{
-		if (settings.getStringList("op-users").contains(StringUtils.parseBareAddress(chat.getParticipant())))
+		settings.acquireReadLock();
+		try
 		{
-			try
+			if (settings.getData().getOpUsers().contains(StringUtils.parseBareAddress(chat.getParticipant())))
 			{
-				parent.getServer().dispatchCommand(parent.getServer().getConsoleSender(), message.substring(1));
+				try
+				{
+					parent.getServer().dispatchCommand(parent.getServer().getConsoleSender(), message.substring(1));
+				}
+				catch (Exception ex)
+				{
+					LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+				}
 			}
-			catch (Exception ex)
-			{
-				LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
-			}
+		}
+		finally
+		{
+			settings.unlock();
 		}
 	}
 
@@ -373,6 +356,46 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 		{
 			chat.removeMessageListener(this);
 			chats.remove(address);
+		}
+	}
+
+
+	private class LogHandler extends Handler
+	{
+		@Override
+		public void publish(LogRecord logRecord)
+		{
+			try
+			{
+				if (ignoreLagMessages && logRecord.getMessage().equals("Can't keep up! Did the system time change, or is the server overloaded?"))
+				{
+					return;
+				}
+				if (logRecord.getLevel().intValue() >= logLevel.intValue())
+				{
+					synchronized (logrecords)
+					{
+						logrecords.add(logRecord);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				// Ignore all exceptions
+				// Otherwise we create a loop.
+			}
+		}
+
+		@Override
+		public void flush()
+		{
+			//Ignore this
+		}
+
+		@Override
+		public void close() throws SecurityException
+		{
+			//Ignore this
 		}
 	}
 }

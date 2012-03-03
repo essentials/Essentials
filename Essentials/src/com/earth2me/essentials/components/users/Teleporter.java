@@ -112,7 +112,7 @@ public class Teleporter implements Runnable, ITeleporter
 	@Override
 	public void warp(String warp, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		final Location loc = context.getWarps().getWarp(warp).getLocation().getBukkitLocation();
+		final Location loc = context.getWarps().getWarp(warp);
 		teleport(new Target(loc), chargeFor, cause);
 		user.sendMessage(_("warpingTo", warp));
 	}

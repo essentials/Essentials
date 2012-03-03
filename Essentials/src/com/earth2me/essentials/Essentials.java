@@ -241,7 +241,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			context.setGroups(groups);
 			add(groups);
 
-			final IWarpsComponent warps = new WarpsComponent(context, this);
+			final IWarpsComponent warps = new WarpsComponent(context);
 			context.setWarps(warps);
 			add(warps);
 			execTimer.mark("Init(Spawn/Warp)");

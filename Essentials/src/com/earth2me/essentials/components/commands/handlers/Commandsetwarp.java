@@ -27,14 +27,11 @@ public class Commandsetwarp extends EssentialsCommand
 
 		final Location loc = user.getLocation();
 		final IWarpsComponent warps = getContext().getWarps();
-		Location warpLoc = warps.getWarp(args[0]).getLocation().getBukkitLocation();
+		Location warpLoc = warps.getWarp(args[0]);
 
 		if (warpLoc == null || user.hasPermission("essentials.warp.overwrite." + args[0]))
 		{
-			final Warp warp = new Warp();
-			warp.setLocation(new LocationData(loc));
-			warp.setName(args[0]);
-			warps.setWarp(args[0], warp);
+			warps.setWarp(args[0], loc);
 		}
 		else
 		{

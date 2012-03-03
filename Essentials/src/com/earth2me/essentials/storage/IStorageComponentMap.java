@@ -1,18 +1,18 @@
 package com.earth2me.essentials.storage;
 
-import com.earth2me.essentials.api.IReloadable;
 import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.components.IComponent;
 import java.io.File;
 import java.util.Set;
 
 
-interface IStorageObjectMap<I> extends IReloadable
+public interface IStorageComponentMap<I> extends IComponent
 {
 	boolean objectExists(final String name);
 
 	I getObject(final String name);
 
-	void removeObject(final String name) throws InvalidNameException;
+	boolean removeObject(final String name) throws InvalidNameException;
 
 	Set<String> getAllKeys();
 

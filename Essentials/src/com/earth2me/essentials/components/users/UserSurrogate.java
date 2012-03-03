@@ -45,6 +45,8 @@ public class UserSurrogate implements IStorageObject
 	private boolean socialSpy;
 	private boolean npc;
 	private boolean powerToolsEnabled;
+	private String xmppAddress;
+	private boolean xmppSpy = false;
 
 	public UserSurrogate()
 	{

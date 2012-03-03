@@ -19,7 +19,7 @@ import org.bukkit.plugin.PluginManager;
 public class EssentialsXmpp extends EssentialsPlugin implements IEssentialsXmpp
 {
 	private static EssentialsXmpp instance = null;
-	private transient UserManagerComponent users;
+	//private transient UserManagerComponent users;
 	private transient XmppManagerComponent xmpp;
 	private transient ICommandsComponent commands;
 
@@ -42,7 +42,7 @@ public class EssentialsXmpp extends EssentialsPlugin implements IEssentialsXmpp
 
 		commands = new CommandsComponent(EssentialsXmpp.class.getClassLoader(), "com.earth2me.essentials.xmpp.Command", getContext());
 
-		add(users = new UserManagerComponent(getDataFolder()));
+		//add(users = new UserManagerComponent(getContext(), getDataFolder()));
 		add(xmpp = new XmppManagerComponent(this));
 
 		initialize();
@@ -72,44 +72,73 @@ public class EssentialsXmpp extends EssentialsPlugin implements IEssentialsXmpp
 	}
 
 	@Override
-	public void setAddress(final Player user, final String address)
+	public void setAddress(final Player player, final String address)
 	{
-		final String username = user.getName().toLowerCase(Locale.ENGLISH);
-		instance.users.setAddress(username, address);
+		final IUserComponent user = getContext().getUser(player);
+		user.acquireWriteLock();
+		try {
+			user.getData().setXmppAddress(address);
+		} finally {
+			user.unlock();
+		}
 	}
 
 	@Override
 	public String getAddress(final String name)
 	{
-		return instance.users.getAddress(name);
+		final IUserComponent user = getContext().getUser(name);
+		if (user == null) {
+			return null;
+		}
+		user.acquireReadLock();
+		try {
+			return user.getData().getXmppAddress();
+		} finally {
+			user.unlock();
+		}
 	}
 
 	@Override
 	public IUserComponent getUserByAddress(final String address)
 	{
-		String username = instance.users.getUserByAddress(address);
-		return username == null ? null : getContext().getUser(username);
+		return null; // TODO: Rewrite me
+		//String username = instance.users.getUserByAddress(address);
+		//return username == null ? null : getContext().getUser(username);
 	}
 
 	@Override
-	public boolean toggleSpy(final Player user)
+	public boolean toggleSpy(final Player player)
 	{
-		final String username = user.getName().toLowerCase(Locale.ENGLISH);
-		final boolean spy = !instance.users.isSpy(username);
-		instance.users.setSpy(username, spy);
-		return spy;
+		final IUserComponent user = getContext().getUser(player);
+		user.acquireWriteLock();
+		try {
+			boolean value = !user.getData().isXmppSpy();
+			user.getData().setXmppSpy(value);
+			return value;
+		} finally {
+			user.unlock();
+		}
 	}
 
 	@Override
-	public String getAddress(final Player user)
+	public String getAddress(final Player player)
 	{
-		return instance.users.getAddress(user.getName());
+		final IUserComponent user = getContext().getUser(player);
+		if (user == null) {
+			return null;
+		}
+		user.acquireReadLock();
+		try {
+			return user.getData().getXmppAddress();
+		} finally {
+			user.unlock();
+		}
 	}
 
 	@Override
 	public boolean sendMessage(final Player user, final String message)
 	{
-		return instance.xmpp.sendMessage(instance.users.getAddress(user.getName()), message);
+		return instance.xmpp.sendMessage(getAddress(user), message);
 	}
 
 	@Override
@@ -121,13 +150,15 @@ public class EssentialsXmpp extends EssentialsPlugin implements IEssentialsXmpp
 	@Override
 	public List<String> getSpyUsers()
 	{
-		return instance.users.getSpyUsers();
+		return null;
+		//TODO fix me
+		//return instance.users.getSpyUsers();
 	}
 
 	@Override
 	public void broadcastMessage(final IUserComponent sender, final String message, final String xmppAddress)
 	{
-		getContext().broadcastMessage(sender, message);
+		getContext().getMessager().broadcastMessage(sender, message);
 		try
 		{
 			for (String address : getSpyUsers())

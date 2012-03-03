@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IPermissions;
 import com.earth2me.essentials.components.IComponent;
 import com.earth2me.essentials.components.economy.ChargeException;
 import com.earth2me.essentials.components.messenger.IReplyTo;
-import com.earth2me.essentials.storage.ISubStorageComponent;
+import com.earth2me.essentials.storage.IStorageComponent;
 import com.earth2me.essentials.storage.LocationData;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 
-public interface IUserComponent extends ISubStorageComponent<UserSurrogate, IEssentials>, Comparable<IUserComponent>, IComponent, IReplyTo, IStatelessPlayer, CommandSender, LivingEntity, Player, OfflinePlayer
+public interface IUserComponent extends IStorageComponent<UserSurrogate, IEssentials>, Comparable<IUserComponent>, IComponent, IReplyTo, IStatelessPlayer, CommandSender, LivingEntity, Player, OfflinePlayer
 {
 	Player getBase();
 	

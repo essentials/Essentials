@@ -1,119 +1,93 @@
 package com.earth2me.essentials.components.warps;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.storage.MultiStorageComponent;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
+import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.storage.LocationData;
+import com.earth2me.essentials.storage.StorageComponentMap;
 import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 import lombok.Cleanup;
+import org.bukkit.Location;
 
 
-public final class WarpsComponent extends MultiStorageComponent<Warp, IEssentials> implements IWarpsComponent
+public final class WarpsComponent extends StorageComponentMap<IWarpComponent> implements IWarpsComponent
 {
-	public WarpsComponent(IContext context, IEssentials plugin)
+	public WarpsComponent(final IContext context)
 	{
-		super(context);
+		super(context, "warps");
 	}
 
 	@Override
-	public String getContainerId()
-	{
-		return "warps";
-	}
-
-	@Override
-	public Warp getWarp(final String name)
+	public Location getWarp(final String name)
 	{
 		@Cleanup
-		IWarpComponent component = new WarpComponent(getContext(), getContext().getEssentials());
-		loadFile(component, getFile(name));
-		component.acquireReadLock();
-		return component.getData();
+		IWarpComponent warp = getObject(name);
+		warp.acquireReadLock();
+		try
+		{
+			return warp.getData().getLocation().getBukkitLocation();
+		}
+		catch (LocationData.WorldNotLoadedException ex)
+		{
+			return null;
+		}
 	}
 
 	@Override
 	public boolean containsWarp(final String name)
 	{
-		return isPersistent(name);
+		return objectExists(name);
 	}
 
 	@Override
-	public void setWarp(String name, Warp warp)
+	public void setWarp(String name, Location warp)
 	{
-		@Cleanup
-		IWarpComponent component = new WarpComponent(getContext(), getContext().getEssentials());
-		loadFile(component, getFile(name));
-		component.acquireWriteLock();
-		component.setData(warp);
+		setWarp(name, new LocationData(warp));
 	}
 
+	@Override
+	public void setWarp(final String name, final LocationData loc)
+	{
+		IWarpComponent warp = getObject(name);
+		if (warp == null)
+		{
+			warp = new WarpComponent(context, context.getEssentials());
+		}
+		warp.acquireWriteLock();
+		try
+		{
+			warp.getData().setName(name);
+			warp.getData().setLocation(loc);
+		}
+		finally
+		{
+			warp.unlock();
+		}
+	}
 	@Override
 	public boolean removeWarp(String name)
 	{
-		if (isPersistent(name))
+		try
 		{
-			getFile(name).delete();
-			return true;
+			return removeObject(name);
 		}
-		else
+		catch (InvalidNameException ex)
 		{
 			return false;
 		}
 	}
 
 	@Override
-	public List<String> getList()
+	public Set<String> getList()
 	{
-		final File folder = ensureFolder();
-		if (folder == null)
-		{
-			return Collections.emptyList();
-		}
-
-		final File[] files = folder.listFiles(new FilenameFilter()
-		{
-			@Override
-			public boolean accept(File file, String string)
-			{
-				return string.toLowerCase(Locale.ENGLISH).endsWith(".yml");
-			}
-		});
-
-		List<String> warps = new ArrayList<String>(files.length);
-		for (int i = 0; i < files.length; i++)
-		{
-			if (files[i].isFile() && files[i].canRead())
-			{
-				final String name = files[i].getName();
-				final int ext = name.lastIndexOf('.');
-				if (ext > 1)
-				{
-					warps.add(name.substring(0, ext - 1).intern());
-				}
-				else
-				{
-					warps.add(name);
-				}
-			}
-		}
-
-		return Collections.unmodifiableList(warps);
+		return Collections.unmodifiableSet(getAllKeys());
 	}
 
 	@Override
-	public boolean isEmpty()
+	public IWarpComponent load(String name) throws Exception
 	{
-		return ensureFolder().listFiles(new FilenameFilter()
-		{
-			@Override
-			public boolean accept(File file, String string)
-			{
-				return string.toLowerCase(Locale.ENGLISH).endsWith(".yml");
-			}
-		}).length == 0;
+		final IWarpComponent warp = new WarpComponent(context, context.getEssentials());
+		warp.reload();
+		return warp;
 	}
 }

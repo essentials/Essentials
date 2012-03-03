@@ -14,4 +14,10 @@ public final class XmppSettingsComponent extends StorageComponent<XmppSettings, 
 	{
 		super(context, XmppSettings.class, parent);
 	}
+
+	@Override
+	public String getContainerId()
+	{
+		return "xmpp";
+	}
 }

@@ -1,115 +1,74 @@
 package com.earth2me.essentials.components.users;
 
 import com.earth2me.essentials.api.IContext;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.storage.MultiStorageComponent;
-import java.util.HashMap;
+import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.storage.StorageComponentMap;
+import java.io.File;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 
-public class UsersComponent extends MultiStorageComponent<UserSurrogate, IEssentials> implements IUsersComponent
-{
-	private transient final Map<String, IUserComponent> cache = new HashMap<String, IUserComponent>();
-
-	public UsersComponent(final IContext context)
+public class UsersComponent extends StorageComponentMap<IUserComponent> implements IUsersComponent {
+	public UsersComponent(final IContext ess)
 	{
-		super(context);
-	}
-
-	@Override
-	public String getContainerId()
-	{
-		return "users";
+		super(ess, "users");
 	}
 
 	@Override
 	public boolean userExists(final String name)
 	{
-		if (getContext().getServer().getPlayer(name) != null)
-		{
-			return true;
-		}
-		else
-		{
-			return isPersistent(name);
-		}
+		return objectExists(name);
 	}
 
 	@Override
 	public IUserComponent getUser(final String name)
 	{
-		final String lowerName = name.toLowerCase(Locale.ENGLISH).intern();
-
-		if (cache.containsKey(lowerName))
-		{
-			return cache.get(lowerName);
-		}
-		else
-		{
-			IUserComponent user = loadFile(instantiate(name), getFile(name));
-			if (user == null)
-			{
-				return null;
-			}
-			else
-			{
-				getContext().getEssentials().add(user);
-				return cache.put(lowerName, user);
-			}
-		}
-	}
-
-	private IUserComponent instantiate(final String name)
-	{
-		final String lowerName = name.toLowerCase(Locale.ENGLISH).intern();
-
-		for (Player player : getContext().getServer().getOnlinePlayers())
-		{
-			// This is actually a safe comparision--strings are internalized.
-			// Do NOT use String.equals.  You will undermine the efficiency of inernalization.
-			if (player.getName().toLowerCase(Locale.ENGLISH).intern() == lowerName)
-			{
-				return new UserComponent(player, getContext());
-			}
-		}
-
-		if (!isPersistent(lowerName))
-		{
-			return null;
-		}
-		else
-		{
-			return new UserComponent(new OfflineUser(lowerName, getContext()), getContext());
-		}
+		return getObject(name);
 	}
 
 	@Override
-	public boolean removeUser(final String name)
+	public IUserComponent load(final String name) throws Exception
 	{
-		final String lowerName = name.toLowerCase(Locale.ENGLISH).intern();
-		if (!cache.containsKey(lowerName))
+		for (Player player : context.getServer().getOnlinePlayers())
 		{
-			return false;
+			if (player.getName().equalsIgnoreCase(name))
+			{
+				keys.add(name.toLowerCase(Locale.ENGLISH));
+				return new UserComponent(player, context);
+			}
 		}
+		final File userFile = getUserFile(name);
+		if (userFile.exists())
+		{
+			keys.add(name.toLowerCase(Locale.ENGLISH));
+			return new UserComponent(Bukkit.getOfflinePlayer(name), context);
+		}
+		throw new Exception("User not found!");
+	}
 
-		getContext().getEssentials().remove(cache.remove(lowerName));
-		return true;
+	@Override
+	public boolean removeUser(final String name) throws InvalidNameException
+	{
+		return removeObject(name);
 	}
 
 	@Override
 	public Set<String> getAllUniqueUsers()
 	{
-		return cache.keySet();
+		return getAllKeys();
 	}
 
 	@Override
 	public int getUniqueUsers()
 	{
-		return cache.size();
+		return getKeySize();
+	}
+
+	public File getUserFile(final String name) throws InvalidNameException
+	{
+		return getStorageFile(name);
 	}
 
 	@Override
@@ -119,29 +78,16 @@ public class UsersComponent extends MultiStorageComponent<UserSurrogate, IEssent
 		{
 			return (IUserComponent)player;
 		}
-
 		IUserComponent user = getUser(player.getName());
 
 		if (user == null)
 		{
-			user = new UserComponent(player, getContext());
+			user = new UserComponent(player, context);
 		}
 		else
 		{
-			user.setStatelessPlayer(new StatelessPlayer(player));
+			((UserComponent)user).getStatelessPlayer().setOnlinePlayer(player);
 		}
-
 		return user;
-	}
-
-	@Override
-	public void close()
-	{
-		for (Entry<String, IUserComponent> entry : cache.entrySet())
-		{
-			getContext().getEssentials().remove(entry.getValue());
-		}
-
-		cache.clear();
 	}
 }
