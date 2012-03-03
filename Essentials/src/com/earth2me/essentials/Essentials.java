@@ -17,73 +17,81 @@
  */
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.*;
-import com.earth2me.essentials.listener.*;
-import com.earth2me.essentials.register.payment.Methods;
-import com.earth2me.essentials.settings.GroupsHolder;
-import com.earth2me.essentials.settings.SettingsHolder;
-import com.earth2me.essentials.settings.SpawnsHolder;
-import com.earth2me.essentials.user.UserMap;
+import com.earth2me.essentials.components.ComponentPlugin;
+import com.earth2me.essentials.components.backup.BackupComponent;
+import com.earth2me.essentials.components.backup.IBackupComponent;
+import com.earth2me.essentials.components.commands.CommandsComponent;
+import com.earth2me.essentials.components.economy.EconomyComponent;
+import com.earth2me.essentials.components.economy.IEconomyComponent;
+import com.earth2me.essentials.components.i18n.I18nComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.items.IItemsComponent;
+import com.earth2me.essentials.components.items.ItemsComponent;
+import com.earth2me.essentials.components.settings.SettingsComponent;
+import com.earth2me.essentials.components.settings.groups.GroupsComponent;
+import com.earth2me.essentials.components.settings.jails.IJailsComponent;
+import com.earth2me.essentials.components.settings.jails.JailsComponent;
+import com.earth2me.essentials.components.settings.kits.IKitsComponent;
+import com.earth2me.essentials.components.settings.kits.KitsComponent;
+import com.earth2me.essentials.components.settings.spawns.ISpawnsComponent;
+import com.earth2me.essentials.components.settings.spawns.SpawnsComponent;
+import com.earth2me.essentials.components.settings.worths.IWorthsComponent;
+import com.earth2me.essentials.components.settings.worths.WorthsComponent;
+import com.earth2me.essentials.components.users.IUsersComponent;
+import com.earth2me.essentials.components.users.UsersComponent;
+import com.earth2me.essentials.components.warps.IWarpsComponent;
+import com.earth2me.essentials.components.warps.WarpsComponent;
+import com.earth2me.essentials.listeners.*;
+import com.earth2me.essentials.register.payment.PaymentMethods;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.InvalidDescriptionException;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.error.YAMLException;
 
 
-public class Essentials extends JavaPlugin implements IEssentials
+public class Essentials extends ComponentPlugin implements IEssentials
 {
-	public static final int BUKKIT_VERSION = 1952;
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private transient ISettings settings;
-	private final transient TntExplodeListener tntListener = new TntExplodeListener(this);
-	private transient IJails jails;
-	private transient IKits kits;
-	private transient IWarps warps;
-	private transient IWorth worth;
-	private transient List<IReload> reloadList;
-	private transient IBackup backup;
-	private transient IItemDb itemDb;
-	private transient IGroups groups;
-	private transient SpawnsHolder spawns;
-	private transient final Methods paymentMethod = new Methods();
-	//private transient PermissionsHandler permissionsHandler;
-	private transient IUserMap userMap;
+	private transient boolean testing;
+	private transient final TntExplodeListener tntListener;
 	private transient ExecuteTimer execTimer;
-	private transient I18n i18n;
-	private transient ICommandHandler commandHandler;
-	private transient Economy economy;
-	public transient boolean testing;
+	private transient final Context context;
+
+	public Essentials()
+	{
+		super();
+		context = new Context(this);
+		context.setPaymentMethods(new PaymentMethods());
+
+		tntListener = new TntExplodeListener(context);
+	}
 
 	@Override
-	public ISettings getSettings()
+	public Context getContext()
 	{
-		return settings;
+		return context;
 	}
 
 	public void setupForTesting(final Server server) throws IOException, InvalidDescriptionException
 	{
-		testing = true;
+		setTesting(true);
+
+		execTimer = new ExecuteTimer();
+		execTimer.start();
+
 		final File dataFolder = File.createTempFile("essentialstest", "");
 		if (!dataFolder.delete())
 		{
@@ -93,16 +101,37 @@ public class Essentials extends JavaPlugin implements IEssentials
 		{
 			throw new IOException();
 		}
-		i18n = new I18n(this);
-		i18n.onEnable();
-		LOGGER.log(Level.INFO, _("usingTempFolderForTesting"));
-		LOGGER.log(Level.INFO, dataFolder.toString());
+		context.setLogger(Logger.getLogger(Logger.GLOBAL_LOGGER_NAME));
+
+		registerComponents(ComponentStages.I18n);
+
+		context.getLogger().log(Level.INFO, _("usingTempFolderForTesting"));
+		context.getLogger().log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
-		settings = new SettingsHolder(this);
-		i18n.updateLocale("en");
-		userMap = new UserMap(this);
-		//permissionsHandler = new PermissionsHandler(this);
-		economy = new Economy(this);
+
+		registerComponents(ComponentStages.Settings);
+		context.getI18n().updateLocale("en");
+		registerComponents(ComponentStages.Normal);
+	}
+
+	private boolean checkVersion()
+	{
+		try
+		{
+			if (!new Versioning().checkServerVersion(this))
+			{
+				setEnabled(false);
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		finally
+		{
+			execTimer.mark("BukkitCheck");
+		}
 	}
 
 	@Override
@@ -110,331 +139,242 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		execTimer = new ExecuteTimer();
 		execTimer.start();
-		i18n = new I18n(this);
-		i18n.onEnable();
-		execTimer.mark("I18n1");
-		final PluginManager pm = getServer().getPluginManager();
-		for (Plugin plugin : pm.getPlugins())
+		context.setLogger(getLogger());
+
+		registerComponents(ComponentStages.I18n);
+
+		if (!checkVersion())
 		{
-			if (plugin.getDescription().getName().startsWith("Essentials")
-				&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion()))
-			{
-				LOGGER.log(Level.WARNING, _("versionMismatch", plugin.getDescription().getName()));
-			}
+			return;
 		}
-		final Matcher versionMatch = Pattern.compile("git-Bukkit-([0-9]+).([0-9]+).([0-9]+)-R[0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
-		if (versionMatch.matches())
-		{
-			final int versionNumber = Integer.parseInt(versionMatch.group(4));
-			if (versionNumber < BUKKIT_VERSION)
-			{
-				LOGGER.log(Level.SEVERE, _("notRecommendedBukkit"));
-				LOGGER.log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
-				this.setEnabled(false);
-				return;
-			}
-		}
-		else
-		{
-			LOGGER.log(Level.INFO, _("bukkitFormatChanged"));
-			LOGGER.log(Level.INFO, getServer().getVersion());
-			LOGGER.log(Level.INFO, getServer().getBukkitVersion());
-		}
-		execTimer.mark("BukkitCheck");
+
 		try
 		{
-			//final EssentialsUpgrade upgrade = new EssentialsUpgrade(this);
-			//upgrade.beforeSettings();
-			//execTimer.mark("Upgrade");
-			reloadList = new ArrayList<IReload>();
-			settings = new SettingsHolder(this);
-			reloadList.add(settings);
-			execTimer.mark("Settings");
-			//upgrade.afterSettings();
-			//execTimer.mark("Upgrade2");
-			i18n.updateLocale(settings.getLocale());
-			userMap = new UserMap(this);
-			reloadList.add(userMap);
-			execTimer.mark("Init(Usermap)");
-			groups = new GroupsHolder(this);
-			reloadList.add((GroupsHolder)groups);
-			warps = new Warps(this);
-			reloadList.add(warps);
-			execTimer.mark("Init(Spawn/Warp)");
-			worth = new Worth(this);
-			reloadList.add(worth);
-			itemDb = new ItemDb(this);
-			reloadList.add(itemDb);
-			execTimer.mark("Init(Worth/ItemDB)");
-			kits = new Kits(this);
-			reloadList.add(kits);
-			commandHandler = new EssentialsCommandHandler(Essentials.class.getClassLoader(), "com.earth2me.essentials.commands.Command", "essentials.", this);
-			reloadList.add(commandHandler);
-			economy = new Economy(this);
-			reloadList.add(economy);
-			spawns = new SpawnsHolder(this);
-			reloadList.add(spawns);
+			registerComponents(ComponentStages.Settings);
+			context.getI18n().reload();
+			registerComponents(ComponentStages.Normal);
+			registerComponents(ComponentStages.Commands);
+
 			reload();
 		}
 		catch (YAMLException exception)
 		{
-			if (pm.getPlugin("EssentialsUpdate") != null)
-			{
-				LOGGER.log(Level.SEVERE, _("essentialsHelp2"));
-			}
-			else
-			{
-				LOGGER.log(Level.SEVERE, _("essentialsHelp1"));
-			}
-			LOGGER.log(Level.SEVERE, exception.toString());
-			pm.registerEvents(new Listener()
-			{
-				@EventHandler(priority = EventPriority.LOW)
-				public void onPlayerJoin(final PlayerJoinEvent event)
-				{
-					event.getPlayer().sendMessage("Essentials failed to load, read the log file.");
-				}
-			}, this);
-			for (Player player : getServer().getOnlinePlayers())
-			{
-				player.sendMessage("Essentials failed to load, read the log file.");
-			}
-			this.setEnabled(false);
+			onLoadException(exception);
 			return;
 		}
-		backup = new Backup(this);
-		//permissionsHandler = new PermissionsHandler(this);
-		final EssentialsPluginListener serverListener = new EssentialsPluginListener(this);
-		pm.registerEvents(serverListener, this);
-		reloadList.add(serverListener);
 
-		final EssentialsPlayerListener playerListener = new EssentialsPlayerListener(this);
-		pm.registerEvents(playerListener, this);
+		registerComponents(ComponentStages.Backup);
 
-		final EssentialsBlockListener blockListener = new EssentialsBlockListener(this);
-		pm.registerEvents(blockListener, this);
+		final PluginManager pluginManager = getServer().getPluginManager();
+		registerNormalListeners(pluginManager);
 
-		final EssentialsEntityListener entityListener = new EssentialsEntityListener(this);
-		pm.registerEvents(entityListener, this);
+		registerComponents(ComponentStages.Jails);
 
-		jails = new Jails(this);
-		reloadList.add(jails);
-
-		pm.registerEvents(tntListener, this);
+		registerLateListeners(pluginManager);
 
 
-		final EssentialsTimer timer = new EssentialsTimer(this);
+		final EssentialsTimer timer = new EssentialsTimer(context);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, timer, 1, 100);
 		execTimer.mark("RegListeners");
 		final String timeroutput = execTimer.end();
-		if (getSettings().isDebug())
+		if (context.getSettings().isDebug())
 		{
-			LOGGER.log(Level.INFO, "Essentials load {0}", timeroutput);
+			context.getLogger().log(Level.INFO, "Essentials load {0}", timeroutput);
 		}
+	}
+
+	private void onLoadException(Exception exception)
+	{
+		final PluginManager pluginManager = getServer().getPluginManager();
+
+		if (pluginManager.getPlugin("EssentialsUpdate") != null)
+		{
+			context.getLogger().log(Level.SEVERE, _("essentialsHelp2"));
+		}
+		else
+		{
+			context.getLogger().log(Level.SEVERE, _("essentialsHelp1"));
+		}
+		context.getLogger().log(Level.SEVERE, exception.toString());
+
+		pluginManager.registerEvents(new Listener()
+		{
+			@EventHandler(priority = EventPriority.LOW)
+			public void onPlayerJoin(final PlayerJoinEvent event)
+			{
+				event.getPlayer().sendMessage("Essentials failed to load, read the log file.");
+			}
+		}, this);
+
+		for (Player player : getServer().getOnlinePlayers())
+		{
+			player.sendMessage("Essentials failed to load, read the log file.");
+		}
+
+		this.setEnabled(false);
+	}
+
+	private void registerComponents(ComponentStages stage)
+	{
+		switch (stage)
+		{
+		case I18n:
+			final II18nComponent i18n = new I18nComponent(context);
+			context.setI18n(i18n);
+			add(i18n);
+			execTimer.mark("I18n1");
+			break;
+
+		case Settings:
+			final ISettingsComponent settings = new SettingsComponent(context);
+			context.setSettings(settings);
+			add(settings);
+			execTimer.mark("Settings");
+			break;
+
+		case Normal:
+			final IUsersComponent users = new UsersComponent(context);
+			context.setUsers(users);
+			add(users);
+			execTimer.mark("Init(Usermap)");
+
+			final IGroupsComponent groups = new GroupsComponent(context);
+			context.setGroups(groups);
+			add(groups);
+
+			final IWarpsComponent warps = new WarpsComponent(context);
+			context.setWarps(warps);
+			add(warps);
+			execTimer.mark("Init(Spawn/Warp)");
+
+			final IWorthsComponent worths = new WorthsComponent(context);
+			context.setWorths(worths);
+			add(worths);
+
+			final IItemsComponent items = new ItemsComponent(context);
+			context.setItems(items);
+			add(items);
+			execTimer.mark("Init(Worth/ItemDB)");
+
+			final IKitsComponent kits = new KitsComponent(context);
+			context.setKits(kits);
+			add(kits);
+
+			final IEconomyComponent economy = new EconomyComponent(context);
+			context.setEconomy(economy);
+			add(economy);
+
+			final ISpawnsComponent spawns = new SpawnsComponent(context);
+			context.setSpawns(spawns);
+			add(spawns);
+			break;
+
+		case Commands:
+			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", context);
+			context.setCommands(commands);
+			add(commands);
+			break;
+
+		case Backup:
+			final IBackupComponent backup = new BackupComponent(context);
+			context.setBackup(backup);
+			add(backup);
+			break;
+
+		case Jails:
+			final IJailsComponent jails = new JailsComponent(context);
+			context.setJails(jails);
+			add(jails);
+			break;
+		}
+	}
+
+	private void registerNormalListeners(PluginManager pluginManager)
+	{
+		pluginManager.registerEvents(new EssentialsPluginListener(context), this);
+		pluginManager.registerEvents(new EssentialsPlayerListener(context), this);
+		pluginManager.registerEvents(new EssentialsBlockListener(context), this);
+		pluginManager.registerEvents(new EssentialsEntityListener(context), this);
+
+		registerSpawnListeners(pluginManager);
+	}
+
+	private void registerLateListeners(PluginManager pluginManager)
+	{
+		pluginManager.registerEvents(tntListener, this);
 	}
 
 	@Override
 	public void onDisable()
 	{
-		i18n.onDisable();
+		clear();
 		Trade.closeLog();
 	}
 
 	@Override
+	// Override it so we can mark with execTimer.
 	public void reload()
 	{
 		Trade.closeLog();
 
-		for (IReload iReload : reloadList)
+		for (IReloadable reloadable : this)
 		{
-			iReload.onReload();
-			execTimer.mark("Reload(" + iReload.getClass().getSimpleName() + ")");
+			reloadable.reload();
+			execTimer.mark("Reload(" + reloadable.getClass().getSimpleName() + ")");
 		}
-
-		i18n.updateLocale(settings.getLocale());
 	}
 
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
 	{
-		return commandHandler.handleCommand(sender, command, commandLabel, args);
-		//return onCommandEssentials(sender, command, commandLabel, args, Essentials.class.getClassLoader(), "com.earth2me.essentials.commands.Command", "essentials.", null);
+		return context.getCommands().handleCommand(sender, command, commandLabel, args);
 	}
 
 	@Override
-	public IJails getJails()
-	{
-		return jails;
-	}
-
-	@Override
-	public IKits getKits()
-	{
-		return kits;
-	}
-
-	@Override
-	public IWarps getWarps()
-	{
-		return warps;
-	}
-
-	@Override
-	public IWorth getWorth()
-	{
-		return worth;
-	}
-
-	@Override
-	public IBackup getBackup()
-	{
-		return backup;
-	}
-
-	@Override
-	public IUser getUser(final Player player)
-	{
-		return userMap.getUser(player);
-	}
-
-	@Override
-	public IUser getUser(final String playerName)
-	{
-		return userMap.getUser(playerName);
-	}
-
-	@Override
-	public World getWorld(final String name)
-	{
-		if (name.matches("[0-9]+"))
-		{
-			final int worldId = Integer.parseInt(name);
-			if (worldId < getServer().getWorlds().size())
-			{
-				return getServer().getWorlds().get(worldId);
-			}
-		}
-		return getServer().getWorld(name);
-	}
-
-	@Override
-	public void addReloadListener(final IReload listener)
-	{
-		reloadList.add(listener);
-	}
-
-	@Override
-	public Methods getPaymentMethod()
-	{
-		return paymentMethod;
-	}
-
-	@Override
-	public int broadcastMessage(final IUser sender, final String message)
-	{
-		if (sender == null)
-		{
-			return getServer().broadcastMessage(message);
-		}
-		if (sender.isHidden())
-		{
-			return 0;
-		}
-		final Player[] players = getServer().getOnlinePlayers();
-
-		for (Player player : players)
-		{
-			final IUser user = getUser(player);
-			if (!user.isIgnoringPlayer(sender.getName()))
-			{
-				player.sendMessage(message);
-			}
-		}
-
-		return players.length;
-	}
-
-	@Override
-	public int scheduleAsyncDelayedTask(final Runnable run)
-	{
-		return this.getServer().getScheduler().scheduleAsyncDelayedTask(this, run);
-	}
-
-	@Override
-	public int scheduleSyncDelayedTask(final Runnable run)
-	{
-		return this.getServer().getScheduler().scheduleSyncDelayedTask(this, run);
-	}
-
-	@Override
-	public int scheduleSyncDelayedTask(final Runnable run, final long delay)
-	{
-		return this.getServer().getScheduler().scheduleSyncDelayedTask(this, run, delay);
-	}
-
-	@Override
-	public int scheduleSyncRepeatingTask(final Runnable run, final long delay, final long period)
-	{
-		return this.getServer().getScheduler().scheduleSyncRepeatingTask(this, run, delay, period);
-	}
-
-	@Override
-	public TntExplodeListener getTNTListener()
+	public TntExplodeListener getTntListener()
 	{
 		return tntListener;
 	}
 
-	/*@Override
-	public PermissionsHandler getPermissionsHandler()
+	public boolean isTesting()
 	{
-		return permissionsHandler;
-	}*/
-
-	@Override
-	public IItemDb getItemDb()
-	{
-		return itemDb;
+		return testing;
 	}
 
-	@Override
-	public IUserMap getUserMap()
+	public void setTesting(boolean testing)
 	{
-		return userMap;
+		this.testing = testing;
 	}
 
-	@Override
-	public I18n getI18n()
+	private void registerSpawnListeners(PluginManager pluginManager)
 	{
-		return i18n;
+		final EssentialsSpawnPlayerListener playerListener = new EssentialsSpawnPlayerListener(context, context.getSpawns());
+		pluginManager.registerEvent(PlayerRespawnEvent.class, playerListener, context.getSpawns().getRespawnPriority(), new EventExecutor()
+		{
+			@Override
+			public void execute(final Listener ll, final Event event) throws EventException
+			{
+				((EssentialsSpawnPlayerListener)ll).onPlayerRespawn((PlayerRespawnEvent)event);
+			}
+		}, this);
+		pluginManager.registerEvent(PlayerJoinEvent.class, playerListener, context.getSpawns().getRespawnPriority(), new EventExecutor()
+		{
+			@Override
+			public void execute(final Listener ll, final Event event) throws EventException
+			{
+				((EssentialsSpawnPlayerListener)ll).onPlayerJoin((PlayerJoinEvent)event);
+			}
+		}, this);
 	}
 
-	@Override
-	public IGroups getGroups()
-	{
-		return groups;
-	}
 
-	@Override
-	public ICommandHandler getCommandHandler()
+	private enum ComponentStages
 	{
-		return commandHandler;
-	}
-
-	@Override
-	public void setGroups(final IGroups groups)
-	{
-		this.groups = groups;
-	}
-
-	@Override
-	public void removeReloadListener(IReload groups)
-	{
-		this.reloadList.remove(groups);
-	}
-
-	@Override
-	public IEconomy getEconomy()
-	{
-		return economy;
+		I18n,
+		Settings,
+		Normal,
+		Commands,
+		Backup,
+		Jails,
 	}
 }

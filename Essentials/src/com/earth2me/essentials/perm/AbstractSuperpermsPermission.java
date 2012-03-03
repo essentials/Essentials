@@ -1,13 +1,13 @@
 package com.earth2me.essentials.perm;
 
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.IPermissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
 
-public abstract class AbstractSuperpermsPermission implements IPermission
+public abstract class AbstractSuperpermsPermission implements IPermissions
 {
 	protected Permission bukkitPerm;
 
@@ -26,7 +26,7 @@ public abstract class AbstractSuperpermsPermission implements IPermission
 
 	/**
 	 * PermissionDefault is OP, if the method is not overwritten.
-	 * @return 
+	 * @return
 	 */
 	@Override
 	public PermissionDefault getPermissionDefault()

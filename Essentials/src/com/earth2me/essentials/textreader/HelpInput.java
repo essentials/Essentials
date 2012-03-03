@@ -1,9 +1,9 @@
 package com.earth2me.essentials.textreader;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.ISettingsComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.HelpPermissions;
 import java.io.IOException;
 import java.util.*;
@@ -22,12 +22,12 @@ public class HelpInput implements IText
 	private final transient List<String> lines = new ArrayList<String>();
 	private final transient List<String> chapters = new ArrayList<String>();
 	private final transient Map<String, Integer> bookmarks = new HashMap<String, Integer>();
-	private final static Logger logger = Logger.getLogger("Minecraft");
 
-	public HelpInput(final IUser user, final String match, final IEssentials ess) throws IOException
+	@SuppressWarnings("unchecked")
+	public HelpInput(final IUserComponent user, final String match, final IContext ess) throws IOException
 	{
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		boolean reported = false;
 		String pluginName = "";
@@ -36,7 +36,7 @@ public class HelpInput implements IText
 			try
 			{
 				final PluginDescriptionFile desc = p.getDescription();
-				final HashMap<String, HashMap<String, Object>> cmds = (HashMap<String, HashMap<String, Object>>)desc.getCommands();
+				final HashMap<String, HashMap<String, Object>> cmds = (HashMap)desc.getCommands();
 				pluginName = p.getDescription().getName().toLowerCase(Locale.ENGLISH);
 				for (Map.Entry<String, HashMap<String, Object>> k : cmds.entrySet())
 				{
@@ -77,10 +77,10 @@ public class HelpInput implements IText
 								{
 									lines.add("§c" + k.getKey() + "§7: " + value.get(DESCRIPTION));
 								}
-								else if (permissions instanceof List && !((List<Object>)permissions).isEmpty())
+								else if (permissions instanceof List && !((List)permissions).isEmpty())
 								{
 									boolean enabled = false;
-									for (Object o : (List<Object>)permissions)
+									for (Object o : (List)permissions)
 									{
 										if (o instanceof String && user.hasPermission(o.toString()))
 										{
@@ -124,7 +124,7 @@ public class HelpInput implements IText
 			{
 				if (!reported)
 				{
-					logger.log(Level.WARNING, _("commandHelpFailedForPlugin", pluginName), ex);
+					ess.getLogger().log(Level.WARNING, _("commandHelpFailedForPlugin", pluginName), ex);
 				}
 				reported = true;
 				continue;
@@ -135,18 +135,18 @@ public class HelpInput implements IText
 	@Override
 	public List<String> getLines()
 	{
-		return lines;
+		return Collections.unmodifiableList(lines);
 	}
 
 	@Override
 	public List<String> getChapters()
 	{
-		return chapters;
+		return Collections.unmodifiableList(chapters);
 	}
 
 	@Override
 	public Map<String, Integer> getBookmarks()
 	{
-		return bookmarks;
+		return Collections.unmodifiableMap(bookmarks);
 	}
 }

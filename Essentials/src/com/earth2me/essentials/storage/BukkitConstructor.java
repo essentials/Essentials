@@ -236,7 +236,7 @@ public class BukkitConstructor extends Constructor
 		@Override
 		public Object construct(final Node node)
 		{
-			if (node.getType().equals(Location.class))
+			if (node.getType().equals(LocationData.class))
 			{
 				//TODO: NPE checks
 				final MappingNode mnode = (MappingNode)node;
@@ -280,7 +280,7 @@ public class BukkitConstructor extends Constructor
 				{
 					return null;
 				}
-				return new Location(worldName, x, y, z, yaw, pitch);
+				return new LocationData(worldName, x, y, z, yaw, pitch);
 			}
 			return super.construct(node);
 		}
@@ -419,7 +419,7 @@ public class BukkitConstructor extends Constructor
 	{
 		Class<?> clazz;
 		final String name = node.getTag().getClassName();
-		if (plugin == null || (plugin instanceof Essentials && ((Essentials)plugin).testing))
+		if (plugin == null || (plugin instanceof Essentials && ((Essentials)plugin).isTesting()))
 		{
 			clazz = super.getClassForNode(node);
 		}

@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsUpdate extends JavaPlugin
 {
-	private transient EssentialsHelp essentialsHelp;
+	private transient EssentialsHelpListener essentialsHelp;
 	private transient UpdateProcess updateProcess;
 
 	@Override
@@ -19,7 +19,7 @@ public class EssentialsUpdate extends JavaPlugin
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "Could not create data folder: {0}", getDataFolder().getPath());
 		}
-		essentialsHelp = new EssentialsHelp(this);
+		essentialsHelp = new EssentialsHelpListener(this);
 		essentialsHelp.registerEvents();
 
 		final UpdateCheck updateCheck = new UpdateCheck(this);

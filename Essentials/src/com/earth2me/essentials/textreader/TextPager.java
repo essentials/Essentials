@@ -1,6 +1,6 @@
 package com.earth2me.essentials.textreader;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;

@@ -1,15 +1,14 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.api.InvalidNameException;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.external.gnu.inet.encoding.Punycode;
 import com.earth2me.essentials.external.gnu.inet.encoding.PunycodeException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.Cleanup;
@@ -268,7 +267,7 @@ public final class Util
 		}
 		return c.getTimeInMillis();
 	}
-	// The player can stand inside these materials 
+	// The player can stand inside these materials
 	private static final Set<Integer> AIR_MATERIALS = new HashSet<Integer>();
 	private static final HashSet<Byte> AIR_MATERIALS_TARGET = new HashSet<Byte>();
 
@@ -481,10 +480,10 @@ public final class Util
 	}
 	private static DecimalFormat df = new DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale.US));
 
-	public static String formatCurrency(final double value, final IEssentials ess)
+	public static String formatCurrency(final double value, final IContext ess)
 	{
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		String str = settings.getData().getEconomy().getCurrencySymbol() + df.format(value);
 		if (str.endsWith(".00"))
@@ -546,7 +545,7 @@ public final class Util
 		return buf.toString();
 	}
 
-	public static void registerPermissions(String path, Collection<String> nodes, boolean hasDefault, IEssentials ess)
+	public static void registerPermissions(String path, Collection<String> nodes, boolean hasDefault, IContext ess)
 	{
 		if (nodes == null || nodes.isEmpty())
 		{
@@ -645,5 +644,10 @@ public final class Util
 		}
 
 		return EASY_COLOR_PATTERN.matcher(input).replaceAll("\u00a7$1");
+	}
+	
+	private static transient final Pattern NUMBER = Pattern.compile("[0-9]+");
+	public static boolean isNumber(final String input) {
+		return NUMBER.matcher(input).matches();
 	}
 }

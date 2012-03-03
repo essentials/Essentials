@@ -1,10 +1,10 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.ChargeException;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.ISettingsComponent;
+import com.earth2me.essentials.components.economy.ChargeException;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.craftbukkit.SetExpFix;
 import com.earth2me.essentials.perm.NoCommandCostPermissions;
@@ -30,29 +30,29 @@ public class Trade
 	private final transient Double money;
 	private final transient ItemStack itemStack;
 	private final transient Integer exp;
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 
-	public Trade(final String command, final IEssentials ess)
+	public Trade(final String command, final IContext ess)
 	{
 		this(command, null, null, null, ess);
 	}
 
-	public Trade(final double money, final IEssentials ess)
+	public Trade(final double money, final IContext ess)
 	{
 		this(null, money, null, null, ess);
 	}
 
-	public Trade(final ItemStack items, final IEssentials ess)
+	public Trade(final ItemStack items, final IContext ess)
 	{
 		this(null, null, items, null, ess);
 	}
 
-	public Trade(final int exp, final IEssentials ess)
+	public Trade(final int exp, final IContext ess)
 	{
 		this(null, null, null, exp, ess);
 	}
 
-	private Trade(final String command, final Double money, final ItemStack item, final Integer exp, final IEssentials ess)
+	private Trade(final String command, final Double money, final ItemStack item, final Integer exp, final IContext ess)
 	{
 		this.command = command;
 		this.money = money;
@@ -61,7 +61,7 @@ public class Trade
 		this.ess = ess;
 	}
 
-	public void isAffordableFor(final IUser user) throws ChargeException
+	public void isAffordableFor(final IUserComponent user) throws ChargeException
 	{
 		final double mon = user.getMoney();
 		if (getMoney() != null
@@ -79,7 +79,7 @@ public class Trade
 		}
 
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 
 		if (command != null && !command.isEmpty()
@@ -98,12 +98,13 @@ public class Trade
 		}
 	}
 
-	public void pay(final IUser user)
+	public void pay(final IUserComponent user)
 	{
 		pay(user, true);
 	}
 
-	public boolean pay(final IUser user, final boolean dropItems)
+	@SuppressWarnings("deprecation")
+	public boolean pay(final IUserComponent user, final boolean dropItems)
 	{
 		boolean success = true;
 		if (getMoney() != null && getMoney() > 0)
@@ -149,7 +150,8 @@ public class Trade
 		return success;
 	}
 
-	public void charge(final IUser user) throws ChargeException
+	@SuppressWarnings("deprecation")
+	public void charge(final IUserComponent user) throws ChargeException
 	{
 		if (getMoney() != null)
 		{
@@ -173,7 +175,7 @@ public class Trade
 			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user))
 		{
 			@Cleanup
-			final ISettings settings = ess.getSettings();
+			final ISettingsComponent settings = ess.getSettings();
 			settings.acquireReadLock();
 			final double mon = user.getMoney();
 			final double cost = settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
@@ -210,10 +212,10 @@ public class Trade
 	}
 	private static FileWriter fw = null;
 
-	public static void log(String type, String subtype, String event, String sender, Trade charge, String receiver, Trade pay, Location loc, IEssentials ess)
+	public static void log(String type, String subtype, String event, String sender, Trade charge, String receiver, Trade pay, Location loc, IContext ess)
 	{
 		@Cleanup
-		final ISettings settings = ess.getSettings();
+		final ISettingsComponent settings = ess.getSettings();
 		settings.acquireReadLock();
 		if (!settings.getData().getEconomy().isLogEnabled())
 		{
@@ -227,7 +229,7 @@ public class Trade
 			}
 			catch (IOException ex)
 			{
-				Logger.getLogger("Minecraft").log(Level.SEVERE, null, ex);
+				ess.getLogger().log(Level.SEVERE, null, ex);
 			}
 		}
 		StringBuilder sb = new StringBuilder();
@@ -315,7 +317,7 @@ public class Trade
 		}
 		catch (IOException ex)
 		{
-			Logger.getLogger("Minecraft").log(Level.SEVERE, null, ex);
+			ess.getLogger().log(Level.SEVERE, null, ex);
 		}
 	}
 

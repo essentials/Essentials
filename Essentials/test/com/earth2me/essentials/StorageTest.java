@@ -1,8 +1,8 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.settings.Settings;
+import com.earth2me.essentials.components.settings.Settings;
+import com.earth2me.essentials.storage.IStorageObject;
 import com.earth2me.essentials.storage.ObjectLoadException;
-import com.earth2me.essentials.storage.StorageObject;
 import com.earth2me.essentials.storage.YamlStorageReader;
 import com.earth2me.essentials.storage.YamlStorageWriter;
 import java.io.*;
@@ -44,7 +44,7 @@ public class StorageTest extends TestCase
 	{
 		try
 		{
-			assertTrue(StorageObject.class.isAssignableFrom(Settings.class));
+			assertTrue(IStorageObject.class.isAssignableFrom(Settings.class));
 			ExecuteTimer ext = new ExecuteTimer();
 			ext.start();
 			final ByteArrayInputStream bais = new ByteArrayInputStream(new byte[0]);
@@ -89,16 +89,16 @@ public class StorageTest extends TestCase
 			ext.start();
 			final ByteArrayInputStream bais = new ByteArrayInputStream(new byte[0]);
 			final Reader reader = new InputStreamReader(bais);
-			final com.earth2me.essentials.user.UserData userdata = new YamlStorageReader(reader, null).load(com.earth2me.essentials.user.UserData.class);
+			final com.earth2me.essentials.components.users.UserSurrogate userdata = new YamlStorageReader(reader, null).load(com.earth2me.essentials.components.users.UserSurrogate.class);
 			ext.mark("load empty user");
 			final ByteArrayInputStream bais3 = new ByteArrayInputStream(new byte[0]);
 			final Reader reader3 = new InputStreamReader(bais3);
-			final com.earth2me.essentials.user.UserData userdata3 = new YamlStorageReader(reader3, null).load(com.earth2me.essentials.user.UserData.class);
+			final com.earth2me.essentials.components.users.UserSurrogate userdata3 = new YamlStorageReader(reader3, null).load(com.earth2me.essentials.components.users.UserSurrogate.class);
 			ext.mark("load empty user (class cached)");
 
 			for (int j = 0; j < 10000; j++)
 			{
-				userdata.getHomes().put("home", new com.earth2me.essentials.storage.Location(new Location(world, j, j, j)));
+				userdata.getHomes().put("home", new com.earth2me.essentials.storage.LocationData(new Location(world, j, j, j)));
 			}
 			ext.mark("change home 10000 times");
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -116,11 +116,11 @@ public class StorageTest extends TestCase
 			ext.mark("debug output");
 			final ByteArrayInputStream bais2 = new ByteArrayInputStream(written);
 			final Reader reader2 = new InputStreamReader(bais2);
-			final com.earth2me.essentials.user.UserData userdata2 = new YamlStorageReader(reader2, null).load(com.earth2me.essentials.user.UserData.class);
+			final com.earth2me.essentials.components.users.UserSurrogate userdata2 = new YamlStorageReader(reader2, null).load(com.earth2me.essentials.components.users.UserSurrogate.class);
 			ext.mark("reload file");
 			final ByteArrayInputStream bais4 = new ByteArrayInputStream(written);
 			final Reader reader4 = new InputStreamReader(bais4);
-			final com.earth2me.essentials.user.UserData userdata4 = new YamlStorageReader(reader4, null).load(com.earth2me.essentials.user.UserData.class);
+			final com.earth2me.essentials.components.users.UserSurrogate userdata4 = new YamlStorageReader(reader4, null).load(com.earth2me.essentials.components.users.UserSurrogate.class);
 			ext.mark("reload file (cached)");
 			System.out.println(userdata.toString());
 			System.out.println(userdata2.toString());
@@ -141,11 +141,11 @@ public class StorageTest extends TestCase
 		OfflinePlayer base1 = server.createPlayer("testPlayer1", ess);
 		server.addPlayer(base1);
 		ext.mark("fake user created");
-		UserData user = (UserData)ess.getUser(base1);
+		UserSurrogate user = (UserSurrogate)ess.getUser(base1);
 		ext.mark("load empty user");
 		for (int j = 0; j < 1; j++)
 		{
-			user.setHome("home", new Location(world, j, j, j));
+			user.setHome("home", new LocationData(world, j, j, j));
 		}
 		ext.mark("change home 1 times");
 		user.save();

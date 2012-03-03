@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Locale;
@@ -137,12 +137,14 @@ public class EssentialsConf extends YamlConfiguration
 			}
 			ostr = new FileOutputStream(configFile);
 			byte[] buffer = new byte[1024];
-			int length = 0;
-			length = istr.read(buffer);
-			while (length > 0)
+			for (int length;;)
 			{
-				ostr.write(buffer, 0, length);
 				length = istr.read(buffer);
+				if (length < 1)
+				{
+					break;
+				}
+				ostr.write(buffer, 0, length);
 			}
 		}
 		catch (IOException ex)
@@ -257,10 +259,10 @@ public class EssentialsConf extends YamlConfiguration
 
 	public void setProperty(final String path, final ItemStack stack)
 	{
-		final Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", stack.getType().toString());
-		map.put("amount", stack.getAmount());
-		map.put("damage", stack.getDurability());
+		final Map<String, Object> stackMap = new HashMap<String, Object>();
+		stackMap.put("type", stack.getType().toString());
+		stackMap.put("amount", stack.getAmount());
+		stackMap.put("damage", stack.getDurability());
 		Map<Enchantment, Integer> enchantments = stack.getEnchantments();
 		if (!enchantments.isEmpty())
 		{
@@ -269,13 +271,14 @@ public class EssentialsConf extends YamlConfiguration
 			{
 				enchant.put(entry.getKey().getName().toLowerCase(Locale.ENGLISH), entry.getValue());
 			}
-			map.put("enchant", enchant);
+			stackMap.put("enchant", enchant);
 		}
 		// getData().getData() is broken
 		//map.put("data", stack.getDurability());
-		set(path, map);
+		set(path, stackMap);
 	}
 
+	@Override
 	public long getLong(final String path, final long def)
 	{
 		try
@@ -302,7 +305,7 @@ public class EssentialsConf extends YamlConfiguration
 			return def;
 		}
 	}
-	
+
 	public void save() {
 		try
 		{
@@ -313,15 +316,15 @@ public class EssentialsConf extends YamlConfiguration
 			LOGGER.log(Level.SEVERE, null, ex);
 		}
 	}
-	
+
 	public Object getProperty(String path) {
 		return get(path);
 	}
-	
+
 	public void setProperty(String path, Object object) {
 		set(path, object);
 	}
-	
+
 	public void removeProperty(String path) {
 		set(path, null);
 	}

@@ -1,11 +1,11 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.ISettingsComponent;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.components.users.TimeStampType;
 import com.earth2me.essentials.perm.Permissions;
-import com.earth2me.essentials.user.UserData.TimestampType;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -16,30 +16,30 @@ import org.bukkit.entity.Player;
 
 public class EssentialsTimer implements Runnable
 {
-	private final transient IEssentials ess;
-	private final transient Set<IUser> onlineUsers = new HashSet<IUser>();
+	private final transient IContext context;
+	private final transient Set<IUserComponent> onlineUsers = new HashSet<IUserComponent>();
 
-	EssentialsTimer(final IEssentials ess)
+	EssentialsTimer(final IContext context)
 	{
-		this.ess = ess;
+		this.context = context;
 	}
 
 	@Override
 	public void run()
 	{
 		final long currentTime = System.currentTimeMillis();
-		for (Player player : ess.getServer().getOnlinePlayers())
+		for (Player player : context.getServer().getOnlinePlayers())
 		{
 
 			try
 			{
-				final IUser user = ess.getUser(player);
+				final IUserComponent user = context.getUser(player);
 				onlineUsers.add(user);
 				user.setLastOnlineActivity(currentTime);
 				user.checkActivity();
 
 				boolean mailDisabled = false;
-				ISettings settings = ess.getSettings();
+				ISettingsComponent settings = context.getSettings();
 				settings.acquireReadLock();
 				try
 				{
@@ -61,20 +61,23 @@ public class EssentialsTimer implements Runnable
 			}
 			catch (Exception e)
 			{
-				ess.getLogger().log(Level.WARNING, "EssentialsTimer Error:", e);
+				context.getLogger().log(Level.WARNING, "EssentialsTimer Error:", e);
 			}
 		}
 
-		final Iterator<IUser> iterator = onlineUsers.iterator();
+		// This cannot be a for-each loop, as we use iterator.remove().
+		final Iterator<IUserComponent> iterator = onlineUsers.iterator();
 		while (iterator.hasNext())
 		{
-			final IUser user = iterator.next();
-			if (user.getLastOnlineActivity() < currentTime && user.getLastOnlineActivity() > user.getTimestamp(TimestampType.LOGOUT))
+			final IUserComponent user = iterator.next();
+
+			if (user.getLastOnlineActivity() < currentTime && user.getLastOnlineActivity() > user.getTimeStamp(TimeStampType.LOGOUT))
 			{
-				user.setTimestamp(TimestampType.LOGOUT, user.getLastOnlineActivity());
+				user.setTimeStamp(TimeStampType.LOGOUT, user.getLastOnlineActivity());
 				iterator.remove();
 				continue;
 			}
+
 			user.checkMuteTimeout(currentTime);
 			user.checkJailTimeout(currentTime);
 		}

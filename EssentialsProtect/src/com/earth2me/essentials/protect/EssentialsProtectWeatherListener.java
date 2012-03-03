@@ -1,5 +1,6 @@
 package com.earth2me.essentials.protect;
 
+import com.earth2me.essentials.protect.settings.ProtectSettingsComponent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -10,9 +11,9 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 
 public class EssentialsProtectWeatherListener implements Listener
 {
-	private final transient IProtect prot;
+	private final transient IEssentialsProtectPlugin prot;
 
-	public EssentialsProtectWeatherListener(final IProtect prot)
+	public EssentialsProtectWeatherListener(final IEssentialsProtectPlugin prot)
 	{
 		this.prot = prot;
 	}
@@ -20,7 +21,7 @@ public class EssentialsProtectWeatherListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onWeatherChange(final WeatherChangeEvent event)
 	{
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectSettingsComponent settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -40,7 +41,7 @@ public class EssentialsProtectWeatherListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onLightningStrike(final LightningStrikeEvent event)
 	{
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectSettingsComponent settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -59,7 +60,7 @@ public class EssentialsProtectWeatherListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onThunderChange(final ThunderChangeEvent event)
 	{
-		final ProtectHolder settings = prot.getSettings();
+		final ProtectSettingsComponent settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
 		{

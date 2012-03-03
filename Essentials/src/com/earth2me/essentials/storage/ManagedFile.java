@@ -1,7 +1,7 @@
 package com.earth2me.essentials.storage;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.DigestInputStream;
@@ -20,15 +20,15 @@ public class ManagedFile
 	private final static int BUFFERSIZE = 1024 * 8;
 	private final transient File file;
 
-	public ManagedFile(final String filename, final IEssentials ess)
+	public ManagedFile(final String filename, final IContext context)
 	{
-		file = new File(ess.getDataFolder(), filename);
+		file = new File(context.getDataFolder(), filename);
 
 		if (file.exists())
 		{
 			try
 			{
-				if (checkForVersion(file, ess.getDescription().getVersion()) && !file.delete())
+				if (checkForVersion(file, context.getEssentials().getDescription().getVersion()) && !file.delete())
 				{
 					throw new IOException("Could not delete file " + file.toString());
 				}
@@ -156,7 +156,7 @@ public class ManagedFile
 								}
 								else
 								{
-									Bukkit.getLogger().warning("File " + file.toString() + " has been modified by user and file version differs, please update the file manually.");
+									Bukkit.getLogger().log(Level.WARNING, "File {0} has been modified by user and file version differs, please update the file manually.", file.toString());
 								}
 							}
 							finally
