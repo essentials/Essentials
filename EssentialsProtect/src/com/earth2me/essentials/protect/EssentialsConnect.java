@@ -66,6 +66,10 @@ public class EssentialsConnect
 		@Override
 		public void onReload()
 		{
+			if (protect.getStorage() != null)
+			{
+				protect.getStorage().onPluginDeactivation();
+			}
 
 			/*
 			 * for (ProtectConfig protectConfig : ProtectConfig.values()) { if (protectConfig.isList()) {
@@ -93,7 +97,7 @@ public class EssentialsConnect
 								settings.getData().getDbuser(),
 								settings.getData().getDbpassword()));
 					}
-					catch (ClassNotFoundException ex)
+					catch (PropertyVetoException ex)
 					{
 						LOGGER.log(Level.SEVERE, null, ex);
 					}
@@ -104,15 +108,15 @@ public class EssentialsConnect
 					{
 						protect.setStorage(new ProtectedBlockSQLite("jdbc:sqlite:plugins/Essentials/EssentialsProtect.db"));
 					}
-					catch (ClassNotFoundException ex)
+					catch (PropertyVetoException ex)
 					{
 						LOGGER.log(Level.SEVERE, null, ex);
 					}
 				}
-				/*
-				 * if (protect.getSettingBool(ProtectConfig.memstore)) { protect.setStorage(new
-				 * ProtectedBlockMemory(protect.getStorage(), protect)); }
-				 */
+				/*if (protect.getSettingBool(ProtectConfig.memstore))
+				{
+					protect.setStorage(new ProtectedBlockMemory(protect.getStorage(), protect));
+				}*/
 
 			}
 			finally

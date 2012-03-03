@@ -1,6 +1,11 @@
 package com.earth2me.essentials.protect.data;
 
-import java.sql.*;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,7 +16,7 @@ import org.bukkit.block.Block;
 public abstract class ProtectedBlockJDBC implements IProtectedBlock
 {
 	protected static final Logger LOGGER = Logger.getLogger("Minecraft");
-	protected String url;
+	protected final transient ComboPooledDataSource cpds;
 
 	protected abstract PreparedStatement getStatementCreateTable(Connection conn) throws SQLException;
 
@@ -29,20 +34,22 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 
 	protected abstract PreparedStatement getStatementAllBlocks(Connection conn) throws SQLException;
 
-	public ProtectedBlockJDBC(String driver, String url) throws ClassNotFoundException
+	public ProtectedBlockJDBC(String driver, String url) throws PropertyVetoException
 	{
 		this(driver, url, null, null);
 	}
 
-	public ProtectedBlockJDBC(String driver, String url, String username, String password) throws ClassNotFoundException
+	public ProtectedBlockJDBC(String driver, String url, String username, String password) throws PropertyVetoException
 	{
-		Class.forName(driver);
-		this.url = url;
+		cpds = new ComboPooledDataSource();
+		cpds.setDriverClass(driver);
+		cpds.setJdbcUrl(url);
 		if (username != null)
 		{
-			url += "?user=" + username;
-			url += "&password=" + password;
+			cpds.setUser(username);
+			cpds.setPassword(password);
 		}
+		cpds.setMaxStatements(20);
 		createAndConvertTable();
 	}
 
@@ -52,7 +59,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		PreparedStatement ps = null;
 		try
 		{
-			conn = DriverManager.getConnection(url);
+			conn = cpds.getConnection();
 			ps = getStatementCreateTable(conn);
 			ps.execute();
 			ps.close();
@@ -96,7 +103,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		PreparedStatement ps = null;
 		try
 		{
-			conn = DriverManager.getConnection(url);
+			conn = cpds.getConnection();
 			ps = getStatementDeleteAll(conn);
 			ps.executeUpdate();
 		}
@@ -151,7 +158,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		List<OwnedBlock> blocks = new ArrayList<OwnedBlock>();
 		try
 		{
-			conn = DriverManager.getConnection(url);
+			conn = cpds.getConnection();
 			ps = getStatementAllBlocks(conn);
 			rs = ps.executeQuery();
 			while (rs.next())
@@ -220,7 +227,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		PreparedStatement ps = null;
 		try
 		{
-			conn = DriverManager.getConnection(url);
+			conn = cpds.getConnection();
 			ps = getStatementInsert(conn, world, x, y, z, playerName);
 			ps.executeUpdate();
 		}
@@ -262,7 +269,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		ResultSet rs = null;
 		try
 		{
-			conn = DriverManager.getConnection(url);
+			conn = cpds.getConnection();
 			ps = getStatementPlayerCountByLocation(conn, block.getWorld().getName(), block.getX(), block.getY(), block.getZ(), playerName);
 			rs = ps.executeQuery();
 			return rs.next() && rs.getInt(1) > 0 && rs.getInt(2) == 0;
@@ -318,7 +325,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		List<String> owners = new ArrayList<String>();
 		try
 		{
-			conn = DriverManager.getConnection(url);
+			conn = cpds.getConnection();
 			ps = getStatementPlayersByLocation(conn, block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 			rs = ps.executeQuery();
 			while (rs.next())
@@ -376,7 +383,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		PreparedStatement ps = null;
 		try
 		{
-			conn = DriverManager.getConnection(url);
+			conn = cpds.getConnection();
 			ps = getStatementDeleteByLocation(conn, block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 			return ps.executeUpdate();
 		}
@@ -410,5 +417,10 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 				}
 			}
 		}
+	}
+
+	public void onPluginDeactivation()
+	{
+		cpds.close();
 	}
 }

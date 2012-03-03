@@ -240,4 +240,9 @@ public class ProtectedBlockMemory implements IProtectedBlock
 		}
 		return id;
 	}
+
+	public void onPluginDeactivation()
+	{
+		storage.onPluginDeactivation();
+	}
 }

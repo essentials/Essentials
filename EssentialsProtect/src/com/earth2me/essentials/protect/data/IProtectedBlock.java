@@ -19,4 +19,6 @@ public interface IProtectedBlock
 	public List<String> getOwners(Block block);
 
 	public int unprotectBlock(Block block);
+
+	public void onPluginDeactivation();
 }

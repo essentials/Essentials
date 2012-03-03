@@ -1,5 +1,6 @@
 package com.earth2me.essentials.protect.data;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +11,7 @@ import java.util.logging.Logger;
 
 public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 {
-	public ProtectedBlockMySQL(String url, String username, String password) throws ClassNotFoundException
+	public ProtectedBlockMySQL(String url, String username, String password) throws PropertyVetoException
 	{
 		super("com.mysql.jdbc.Driver", url, username, password);
 	}

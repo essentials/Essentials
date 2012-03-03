@@ -1,5 +1,6 @@
 package com.earth2me.essentials.protect.data;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -7,7 +8,7 @@ import java.sql.SQLException;
 
 public class ProtectedBlockSQLite extends ProtectedBlockJDBC
 {
-	public ProtectedBlockSQLite(String url) throws ClassNotFoundException
+	public ProtectedBlockSQLite(String url) throws PropertyVetoException
 	{
 		super("org.sqlite.JDBC", url);
 	}
