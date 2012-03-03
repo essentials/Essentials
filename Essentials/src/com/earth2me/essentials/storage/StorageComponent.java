@@ -10,7 +10,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import lombok.Setter;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
 
 public abstract class StorageComponent<T extends IStorageObject> extends Component implements IStorageComponent<T>
