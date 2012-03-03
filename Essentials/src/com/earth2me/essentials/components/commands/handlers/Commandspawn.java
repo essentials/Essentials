@@ -1,8 +1,9 @@
-package com.earth2me.essentials.spawn;
+package com.earth2me.essentials.components.commands.handlers;
 
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.components.commands.EssentialsCommand;
 import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
+import com.earth2me.essentials.components.settings.spawns.SpawnsComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
@@ -49,7 +50,7 @@ public class Commandspawn extends EssentialsCommand
 
 	private void respawn(final IUserComponent user, final Trade charge) throws Exception
 	{
-		final SpawnStorageComponent spawns = (SpawnStorageComponent)this.getComponent();
+		final SpawnsComponent spawns = (SpawnsComponent)this.getComponent();
 		final Location spawn = spawns.getSpawn(getContext().getGroups().getMainGroup(user));
 		user.getTeleporter().teleport(spawn, charge, TeleportCause.COMMAND);
 	}

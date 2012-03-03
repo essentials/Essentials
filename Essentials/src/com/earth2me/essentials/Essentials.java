@@ -34,6 +34,8 @@ import com.earth2me.essentials.components.settings.jails.IJailsComponent;
 import com.earth2me.essentials.components.settings.jails.JailsComponent;
 import com.earth2me.essentials.components.settings.kits.IKitsComponent;
 import com.earth2me.essentials.components.settings.kits.KitsComponent;
+import com.earth2me.essentials.components.settings.spawns.ISpawnsComponent;
+import com.earth2me.essentials.components.settings.spawns.SpawnsComponent;
 import com.earth2me.essentials.components.settings.worths.IWorthsComponent;
 import com.earth2me.essentials.components.settings.worths.WorthsComponent;
 import com.earth2me.essentials.components.users.IUsersComponent;
@@ -51,10 +53,10 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -261,6 +263,10 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			final IEconomyComponent economy = new EconomyComponent(context);
 			context.setEconomy(economy);
 			add(economy);
+
+			final ISpawnsComponent spawns = new SpawnsComponent(context);
+			context.setSpawns(spawns);
+			add(spawns);
 			break;
 
 		case Commands:
@@ -289,6 +295,8 @@ public class Essentials extends ComponentPlugin implements IEssentials
 		pluginManager.registerEvents(new EssentialsPlayerListener(context), this);
 		pluginManager.registerEvents(new EssentialsBlockListener(context), this);
 		pluginManager.registerEvents(new EssentialsEntityListener(context), this);
+
+		registerSpawnListeners(pluginManager);
 	}
 
 	private void registerLateListeners(PluginManager pluginManager)
@@ -336,6 +344,27 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	public void setTesting(boolean testing)
 	{
 		this.testing = testing;
+	}
+
+	private void registerSpawnListeners(PluginManager pluginManager)
+	{
+		final EssentialsSpawnPlayerListener playerListener = new EssentialsSpawnPlayerListener(context, context.getSpawns());
+		pluginManager.registerEvent(PlayerRespawnEvent.class, playerListener, context.getSpawns().getRespawnPriority(), new EventExecutor()
+		{
+			@Override
+			public void execute(final Listener ll, final Event event) throws EventException
+			{
+				((EssentialsSpawnPlayerListener)ll).onPlayerRespawn((PlayerRespawnEvent)event);
+			}
+		}, this);
+		pluginManager.registerEvent(PlayerJoinEvent.class, playerListener, context.getSpawns().getRespawnPriority(), new EventExecutor()
+		{
+			@Override
+			public void execute(final Listener ll, final Event event) throws EventException
+			{
+				((EssentialsSpawnPlayerListener)ll).onPlayerJoin((PlayerJoinEvent)event);
+			}
+		}, this);
 	}
 
 

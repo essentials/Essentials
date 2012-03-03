@@ -1,4 +1,4 @@
-package com.earth2me.essentials.spawn;
+package com.earth2me.essentials.components.settings.spawns;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.components.settings.Spawns;
@@ -14,9 +14,9 @@ import org.bukkit.World;
 import org.bukkit.event.EventPriority;
 
 
-public final class SpawnStorageComponent extends StorageComponent<Spawns> implements IStorageComponent<Spawns>
+public final class SpawnsComponent extends StorageComponent<Spawns> implements ISpawnsComponent
 {
-	public SpawnStorageComponent(final IContext context)
+	public SpawnsComponent(final IContext context)
 	{
 		super(context, Spawns.class);
 	}
@@ -29,6 +29,7 @@ public final class SpawnStorageComponent extends StorageComponent<Spawns> implem
 		reload();
 	}
 
+	@Override
 	public void setSpawn(final Location loc, final String group)
 	{
 		acquireWriteLock();
@@ -51,6 +52,7 @@ public final class SpawnStorageComponent extends StorageComponent<Spawns> implem
 		}
 	}
 
+	@Override
 	public Location getSpawn(final String group)
 	{
 		acquireReadLock();
@@ -98,6 +100,7 @@ public final class SpawnStorageComponent extends StorageComponent<Spawns> implem
 		return getContext().getServer().getWorlds().get(0).getSpawnLocation();
 	}
 
+	@Override
 	public EventPriority getRespawnPriority()
 	{
 		acquireReadLock();
@@ -118,6 +121,7 @@ public final class SpawnStorageComponent extends StorageComponent<Spawns> implem
 		}
 	}
 
+	@Override
 	public Location getNewbieSpawn()
 	{
 		acquireReadLock();
@@ -136,6 +140,7 @@ public final class SpawnStorageComponent extends StorageComponent<Spawns> implem
 		}
 	}
 
+	@Override
 	public boolean getAnnounceNewPlayers()
 	{
 		acquireReadLock();
@@ -149,6 +154,7 @@ public final class SpawnStorageComponent extends StorageComponent<Spawns> implem
 		}
 	}
 
+	@Override
 	public String getAnnounceNewPlayerFormat(IUserComponent user)
 	{
 		acquireReadLock();

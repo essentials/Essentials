@@ -1,15 +1,16 @@
-package com.earth2me.essentials.spawn;
+package com.earth2me.essentials.listeners;
 
 import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.ISettingsComponent;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.settings.spawns.ISpawnsComponent;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.SimpleTextInput;
 import com.earth2me.essentials.textreader.SimpleTextPager;
 import java.util.logging.Level;
-import org.bukkit.Bukkit;
+import lombok.Cleanup;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -22,9 +23,9 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class EssentialsSpawnPlayerListener implements Listener
 {
 	private final transient IContext context;
-	private final transient SpawnStorageComponent spawns;
+	private final transient ISpawnsComponent spawns;
 
-	public EssentialsSpawnPlayerListener(final IContext ess, final SpawnStorageComponent spawns)
+	public EssentialsSpawnPlayerListener(final IContext ess, final ISpawnsComponent spawns)
 	{
 		super();
 		this.context = ess;
@@ -35,17 +36,11 @@ public class EssentialsSpawnPlayerListener implements Listener
 	{
 		final IUserComponent user = context.getUser(event.getPlayer());
 
-		boolean respawnAtHome = false;
+		@Cleanup(value="unlock")
 		final ISettingsComponent settings = context.getSettings();
 		settings.acquireReadLock();
-		try
-		{
-			respawnAtHome = context.getSettings().getData().getCommands().getHome().isRespawnAtHome();
-		}
-		finally
-		{
-			settings.unlock();
-		}
+		final boolean respawnAtHome = context.getSettings().getData().getCommands().getHome().isRespawnAtHome();
+
 		if (respawnAtHome)
 		{
 			Location home;
@@ -58,12 +53,14 @@ public class EssentialsSpawnPlayerListener implements Listener
 			{
 				home = user.getHome(user.getLocation());
 			}
+
 			if (home != null)
 			{
 				event.setRespawnLocation(home);
 				return;
 			}
 		}
+
 		final Location spawn = spawns.getSpawn(context.getGroups().getMainGroup(user));
 		if (spawn != null)
 		{
@@ -121,7 +118,7 @@ public class EssentialsSpawnPlayerListener implements Listener
 			}
 			catch (Exception ex)
 			{
-				Bukkit.getLogger().log(Level.WARNING, _("teleportNewPlayerError"), ex);
+				context.getLogger().log(Level.WARNING, _("teleportNewPlayerError"), ex);
 			}
 		}
 	}

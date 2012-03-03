@@ -6,6 +6,7 @@ import com.earth2me.essentials.components.economy.IEconomyComponent;
 import com.earth2me.essentials.components.items.IItemsComponent;
 import com.earth2me.essentials.components.settings.jails.IJailsComponent;
 import com.earth2me.essentials.components.settings.kits.IKitsComponent;
+import com.earth2me.essentials.components.settings.spawns.ISpawnsComponent;
 import com.earth2me.essentials.components.settings.worths.IWorthsComponent;
 import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.components.users.IUsersComponent;
@@ -25,6 +26,9 @@ import org.bukkit.entity.Player;
  */
 public final class Context implements IContext
 {
+	@Getter
+	@Setter
+	private transient ISpawnsComponent spawns;
 	@Getter
 	@Setter
 	private transient IBackupComponent backup;
