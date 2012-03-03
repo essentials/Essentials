@@ -1,7 +1,10 @@
 package com.earth2me.essentials.components.users;
 
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.*;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IGroupsComponent;
+import com.earth2me.essentials.api.IPermissions;
+import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.components.economy.ChargeException;
 import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.components.messenger.Console;
