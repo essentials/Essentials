@@ -15,6 +15,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.help.HelpMap;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.map.MapView;
@@ -855,4 +859,20 @@ public class FakeServer implements Server
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
+
+    public HelpMap getHelpMap() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Inventory createInventory(InventoryHolder owner, InventoryType type) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Inventory createInventory(InventoryHolder owner, int size) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Inventory createInventory(InventoryHolder owner, int size, String title) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

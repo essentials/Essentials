@@ -70,5 +70,4 @@ public class BPermissionsHandler extends SuperpermsHandler
 	{
 		return info.getSuffix(base);
 	}
-
 }

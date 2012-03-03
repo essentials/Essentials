@@ -384,12 +384,9 @@ public class Essentials extends JavaPlugin implements IEssentials
 		return tntListener;
 	}
 
-	/*@Override
-	public PermissionsHandler getPermissionsHandler()
-	{
-		return permissionsHandler;
-	}*/
-
+	/*
+	 * @Override public PermissionsHandler getPermissionsHandler() { return permissionsHandler; }
+	 */
 	@Override
 	public IItemDb getItemDb()
 	{

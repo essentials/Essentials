@@ -85,9 +85,9 @@ public class TextInput implements IText
 						if (line.length() > 0 && line.charAt(0) == '#')
 						{
 							bookmarks.put(line.substring(1).toLowerCase(Locale.ENGLISH).replaceAll("&[0-9a-f]", ""), lineNumber);
-							chapters.add(line.substring(1).replace('&', 'ยง').replace("ยงยง", "&"));
+							chapters.add(line.substring(1).replace('&', 'ง').replace("ง", "&"));
 						}
-						lines.add(line.replace('&', 'ยง').replace("ยงยง", "&"));
+						lines.add(line.replace('&', 'ง').replace("ง", "&"));
 						lineNumber++;
 					}
 				}

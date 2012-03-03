@@ -237,8 +237,8 @@ public class User extends UserBase implements IUser
 				displayname = displayname.replace("{SUFFIX}", groups.getSuffix(this));
 			}
 			displayname = displayname.replace("{WORLDNAME}", this.getWorld().getName());
-			displayname = displayname.replace('&', 'ยง');
-			displayname = displayname.concat("ยงf");
+			displayname = displayname.replace('&', 'ง');
+			displayname = displayname.concat("งf");
 
 			return displayname;
 		}
@@ -258,7 +258,7 @@ public class User extends UserBase implements IUser
 		}
 		if (name.length() > 16)
 		{
-			name = name.substring(0, name.charAt(15) == 'ยง' ? 15 : 16);
+			name = name.substring(0, name.charAt(15) == 'ง' ? 15 : 16);
 		}
 		try
 		{
@@ -462,7 +462,7 @@ public class User extends UserBase implements IUser
 		settings.acquireReadLock();
 		final long autoafkkick = settings.getData().getCommands().getAfk().getAutoAFKKick();
 		if (autoafkkick > 0 && lastActivity > 0 && (lastActivity + (autoafkkick * 1000)) < System.currentTimeMillis()
-			&& !hidden 
+			&& !hidden
 			&& !Permissions.KICK_EXEMPT.isAuthorized(this)
 			&& !Permissions.AFK_KICKEXEMPT.isAuthorized(this))
 		{
@@ -632,12 +632,12 @@ public class User extends UserBase implements IUser
 	private boolean giveItemStack(ItemStack itemStack, Boolean canSpew) throws ChargeException
 	{
 		boolean spew = false;
-		
+
 		if (itemStack == null || itemStack.getType() == Material.AIR)
 		{
 			return spew;
 		}
-		
+
 		final Map<Integer, ItemStack> overfilled;
 		if (Permissions.OVERSIZEDSTACKS.isAuthorized(this))
 		{

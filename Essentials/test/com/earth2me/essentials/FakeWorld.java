@@ -12,6 +12,7 @@ import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
@@ -584,4 +585,32 @@ public class FakeWorld implements World
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
+
+    public LivingEntity spawnCreature(Location loc, EntityType type) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public <T> void playEffect(Location location, Effect effect, T data) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public <T> void playEffect(Location location, Effect effect, T data, int radius) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<MetadataValue> getMetadata(String metadataKey) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean hasMetadata(String metadataKey) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void removeMetadata(String metadataKey, Plugin owningPlugin) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

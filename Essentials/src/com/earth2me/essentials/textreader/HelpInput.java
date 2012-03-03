@@ -36,9 +36,9 @@ public class HelpInput implements IText
 			try
 			{
 				final PluginDescriptionFile desc = p.getDescription();
-				final HashMap<String, HashMap<String, Object>> cmds = (HashMap<String, HashMap<String, Object>>)desc.getCommands();
+				final Map<String, Map<String, Object>> cmds = desc.getCommands();
 				pluginName = p.getDescription().getName().toLowerCase(Locale.ENGLISH);
-				for (Map.Entry<String, HashMap<String, Object>> k : cmds.entrySet())
+				for (Map.Entry<String, Map<String, Object>> k : cmds.entrySet())
 				{
 					try
 					{
@@ -63,7 +63,7 @@ public class HelpInput implements IText
 						{
 							if (settings.getData().getCommands().getHelp().isShowNonEssCommandsInHelp())
 							{
-								final HashMap<String, Object> value = k.getValue();
+								final Map<String, Object> value = k.getValue();
 								Object permissions = null;
 								if (value.containsKey(PERMISSION))
 								{

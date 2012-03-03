@@ -107,7 +107,7 @@ public class Commandkillall extends EssentialsCommand
 				{
 					if (entity instanceof Animals || entity instanceof NPC || entity instanceof Snowman || entity instanceof WaterMob)
 					{
-						EntityDeathEvent event = new EntityDeathEvent(entity, Collections.EMPTY_LIST);
+						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
 						ess.getServer().getPluginManager().callEvent(event);
 						entity.remove();
 						numKills++;
@@ -117,7 +117,7 @@ public class Commandkillall extends EssentialsCommand
 				{
 					if (entity instanceof Monster || entity instanceof ComplexLivingEntity || entity instanceof Flying || entity instanceof Slime)
 					{
-						EntityDeathEvent event = new EntityDeathEvent(entity, Collections.EMPTY_LIST);
+						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
 						ess.getServer().getPluginManager().callEvent(event);
 						entity.remove();
 						numKills++;
@@ -125,14 +125,14 @@ public class Commandkillall extends EssentialsCommand
 				}
 				else if (all)
 				{
-					EntityDeathEvent event = new EntityDeathEvent(entity, Collections.EMPTY_LIST);
+					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
 					ess.getServer().getPluginManager().callEvent(event);
 					entity.remove();
 					numKills++;
 				}
 				else if (entityClass != null && entityClass.isAssignableFrom(entity.getClass()))
 				{
-					EntityDeathEvent event = new EntityDeathEvent(entity, Collections.EMPTY_LIST);
+					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
 					ess.getServer().getPluginManager().callEvent(event);
 					entity.remove();
 					numKills++;

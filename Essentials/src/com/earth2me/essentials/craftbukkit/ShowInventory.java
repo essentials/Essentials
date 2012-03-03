@@ -20,7 +20,7 @@ public class ShowInventory
 			final EntityPlayer entityPlayer = ((CraftPlayer)player).getHandle();
 			final CraftInventoryPlayer inv = new CraftInventoryPlayer(new PlayerInventory(((CraftPlayer)player).getHandle()));
 			inv.clear();
-			entityPlayer.a((IInventory)inv.getInventory());
+			entityPlayer.openContainer((IInventory)inv.getInventory());
 		}
 		catch (Throwable ex)
 		{
@@ -36,7 +36,7 @@ public class ShowInventory
 			final CraftInventoryPlayer inv = new CraftInventoryPlayer(new PlayerInventory(((CraftPlayer)player).getHandle()));
 			inv.clear();
 			InventoryWorkaround.addItem(inv, true, stack);
-			entityPlayer.a((IInventory)inv.getInventory());
+			entityPlayer.openContainer((IInventory)inv.getInventory());
 		}
 		catch (Throwable ex)
 		{
