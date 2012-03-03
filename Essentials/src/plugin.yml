@@ -286,6 +286,10 @@ commands:
     description: Creates a jail where you specified named [jailname]
     usage: /<command> <jailname>
     aliases: [esetjail]
+  setspawn:
+    description: Set the spawnpoint to your current position.
+    usage: /<command> <group>
+    aliases: [esetspawn]
   setwarp:
     description: Creates a new warp.
     usage: /<command> <warp>
@@ -298,6 +302,10 @@ commands:
     description: Toggles if you can see msg/mail commands in chat.
     usage: /<command>
     aliases: [esocialspy]
+  spawn:
+    description: Teleport to the spawnpoint.
+    usage: /<command> [player]
+    aliases: [esetspawn]
   spawner:
     description: Change the mob type of a spawner
     usage: /<command> <mob>

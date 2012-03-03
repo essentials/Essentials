@@ -23,6 +23,7 @@ import com.earth2me.essentials.listener.*;
 import com.earth2me.essentials.register.payment.Methods;
 import com.earth2me.essentials.settings.GroupsHolder;
 import com.earth2me.essentials.settings.SettingsHolder;
+import com.earth2me.essentials.settings.SpawnsHolder;
 import com.earth2me.essentials.user.UserMap;
 import java.io.File;
 import java.io.FileReader;
@@ -64,6 +65,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	private transient IBackup backup;
 	private transient IItemDb itemDb;
 	private transient IGroups groups;
+	private transient SpawnsHolder spawns;
 	private transient final Methods paymentMethod = new Methods();
 	//private transient PermissionsHandler permissionsHandler;
 	private transient IUserMap userMap;
@@ -170,6 +172,8 @@ public class Essentials extends JavaPlugin implements IEssentials
 			reloadList.add(commandHandler);
 			economy = new Economy(this);
 			reloadList.add(economy);
+			spawns = new SpawnsHolder(this);
+			reloadList.add(spawns);
 			reload();
 		}
 		catch (YAMLException exception)

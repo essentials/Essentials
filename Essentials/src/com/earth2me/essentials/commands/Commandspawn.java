@@ -1,11 +1,10 @@
-package com.earth2me.essentials.spawn;
+package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.commands.EssentialsCommand;
-import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.settings.SpawnsHolder;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -49,7 +48,7 @@ public class Commandspawn extends EssentialsCommand
 
 	private void respawn(final IUser user, final Trade charge) throws Exception
 	{
-		final SpawnStorage spawns = (SpawnStorage)this.module;
+		final SpawnsHolder spawns = (SpawnsHolder)this.module;
 		final Location spawn = spawns.getSpawn(ess.getGroups().getMainGroup(user));
 		user.getTeleport().teleport(spawn, charge, TeleportCause.COMMAND);
 	}
