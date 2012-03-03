@@ -8,11 +8,11 @@ import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.storage.StorageComponent;
 
 
-public final class XmppSettingsComponent extends StorageComponent<XmppSettings, IEssentialsXmpp>
+public final class XmppSettingsComponent extends StorageComponent<XmppSettings>
 {
-	public XmppSettingsComponent(IContext context, IEssentialsXmpp parent)
+	public XmppSettingsComponent(IContext context)
 	{
-		super(context, XmppSettings.class, parent);
+		super(context, XmppSettings.class);
 	}
 
 	@Override

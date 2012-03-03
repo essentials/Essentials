@@ -13,7 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 
-public abstract class StorageComponent<T extends IStorageObject, U extends Plugin> extends Component implements IStorageComponent<T, U>
+public abstract class StorageComponent<T extends IStorageObject> extends Component implements IStorageComponent<T>
 {
 	// Explicitly defined getter.
 	@Setter
@@ -26,14 +26,12 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 	// Explicitly defined getter.
 	@Setter
 	private transient File storageFile;
-	private final transient U plugin;
 
-	protected StorageComponent(final IContext context, final Class<T> clazz, U plugin)
+	protected StorageComponent(final IContext context, final Class<T> clazz)
 	{
 		super(context);
 
 		this.clazz = clazz;
-		this.plugin = plugin;
 
 		writer = new StorageObjectDataWriter();
 		reader = new StorageObjectDataReader();
@@ -46,12 +44,6 @@ public abstract class StorageComponent<T extends IStorageObject, U extends Plugi
 		{
 			Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 		}
-	}
-
-	@Override
-	public final U getPlugin()
-	{
-		return plugin;
 	}
 
 	@Override

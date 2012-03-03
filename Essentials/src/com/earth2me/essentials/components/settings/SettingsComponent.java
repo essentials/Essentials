@@ -6,13 +6,13 @@ import com.earth2me.essentials.api.ISettingsComponent;
 import com.earth2me.essentials.storage.StorageComponent;
 
 
-public class SettingsComponent extends StorageComponent<Settings, IEssentials> implements ISettingsComponent
+public class SettingsComponent extends StorageComponent<Settings> implements ISettingsComponent
 {
 	private transient volatile boolean debug;
 
-	public SettingsComponent(final IContext context, final IEssentials plugin)
+	public SettingsComponent(final IContext context)
 	{
-		super(context, Settings.class, plugin);
+		super(context, Settings.class);
 	}
 
 	@Override

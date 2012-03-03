@@ -35,7 +35,7 @@ public class EssentialsGeoIpPlayerListener implements Listener, IReloadable
 		super();
 		this.context = context;
 		this.plugin = plugin;
-		this.settings = new GeoIpSettingsComponent(context, plugin);
+		this.settings = new GeoIpSettingsComponent(context);
 		reload();
 	}
 

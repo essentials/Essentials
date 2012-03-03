@@ -5,11 +5,11 @@ import com.earth2me.essentials.protect.IEssentialsProtectPlugin;
 import com.earth2me.essentials.storage.StorageComponent;
 
 
-public class ProtectSettingsComponent extends StorageComponent<Protect, IEssentialsProtectPlugin>
+public class ProtectSettingsComponent extends StorageComponent<Protect>
 {
-	public ProtectSettingsComponent(IContext context, final IEssentialsProtectPlugin plugin)
+	public ProtectSettingsComponent(IContext context)
 	{
-		super(context, Protect.class, plugin);
+		super(context, Protect.class);
 	}
 
 	@Override

@@ -54,7 +54,7 @@ public class EssentialsUpgrade
 			}
 			final EssentialsConf conf = new EssentialsConf(configFile);
 			conf.load();
-			final WorthsComponent worth = new WorthsComponent(context, context.getEssentials());
+			final WorthsComponent worth = new WorthsComponent(context);
 			boolean found = false;
 			for (Material mat : Material.values())
 			{

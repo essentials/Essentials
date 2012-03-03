@@ -5,11 +5,11 @@ import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.storage.StorageComponent;
 
 
-public class MoneyComponent extends StorageComponent<Money, IEssentials>
+public class MoneyComponent extends StorageComponent<Money>
 {
-	public MoneyComponent(IContext context, IEssentials plugin)
+	public MoneyComponent(IContext context)
 	{
-		super(context, Money.class, plugin);
+		super(context, Money.class);
 	}
 
 	@Override

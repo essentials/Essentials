@@ -153,6 +153,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			registerComponents(1);
 			context.getI18n().reload();
 			registerComponents(2);
+			registerComponents(3);
 
 			reload();
 		}
@@ -162,12 +163,12 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			return;
 		}
 
-		registerComponents(3);
+		registerComponents(4);
 
 		final PluginManager pluginManager = getServer().getPluginManager();
 		registerNormalListeners(pluginManager);
 
-		registerComponents(4);
+		registerComponents(5);
 
 		registerLateListeners(pluginManager);
 
@@ -225,7 +226,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			break;
 
 		case 1:
-			final ISettingsComponent settings = new SettingsComponent(context, this);
+			final ISettingsComponent settings = new SettingsComponent(context);
 			context.setSettings(settings);
 			add(settings);
 			execTimer.mark("Settings");
@@ -237,7 +238,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			add(users);
 			execTimer.mark("Init(Usermap)");
 
-			final IGroupsComponent groups = new GroupsComponent(context, this);
+			final IGroupsComponent groups = new GroupsComponent(context);
 			context.setGroups(groups);
 			add(groups);
 
@@ -246,7 +247,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			add(warps);
 			execTimer.mark("Init(Spawn/Warp)");
 
-			final IWorthsComponent worths = new WorthsComponent(context, this);
+			final IWorthsComponent worths = new WorthsComponent(context);
 			context.setWorths(worths);
 			add(worths);
 
@@ -255,27 +256,28 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			add(items);
 			execTimer.mark("Init(Worth/ItemDB)");
 
-			final IKitsComponent kits = new KitsComponent(context, this);
+			final IKitsComponent kits = new KitsComponent(context);
 			context.setKits(kits);
 			add(kits);
-
-			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", context);
-			context.setCommands(commands);
-			add(commands);
 
 			final IEconomyComponent economy = new EconomyComponent(context);
 			context.setEconomy(economy);
 			add(economy);
 			break;
-
+		
 		case 3:
+			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", context);
+			context.setCommands(commands);
+			add(commands);
+
+		case 4:
 			final IBackupComponent backup = new BackupComponent(context);
 			context.setBackup(backup);
 			add(backup);
 			break;
 
-		case 4:
-			final IJailsComponent jails = new JailsComponent(context, this);
+		case 5:
+			final IJailsComponent jails = new JailsComponent(context);
 			context.setJails(jails);
 			add(jails);
 			break;

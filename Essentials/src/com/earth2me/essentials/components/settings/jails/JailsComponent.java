@@ -23,11 +23,11 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.plugin.PluginManager;
 
 
-public final class JailsComponent extends StorageComponent<Jails, IEssentials> implements IJailsComponent
+public final class JailsComponent extends StorageComponent<Jails> implements IJailsComponent
 {
-	public JailsComponent(final IContext context, final IEssentials plugin)
+	public JailsComponent(final IContext context)
 	{
-		super(context, Jails.class, plugin);
+		super(context, Jails.class);
 	}
 
 	@Override

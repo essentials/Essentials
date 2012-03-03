@@ -29,7 +29,7 @@ public class EssentialsSpawn extends EssentialsPlugin
 	{
 		final PluginManager pluginManager = getServer().getPluginManager();
 
-		spawns = new SpawnStorageComponent(context, this);
+		spawns = new SpawnStorageComponent(context);
 		context.getEssentials().add(spawns);
 
 		commandHandler = new CommandsComponent(EssentialsSpawn.class.getClassLoader(), "com.earth2me.essentials.spawn.Command", spawns, context);

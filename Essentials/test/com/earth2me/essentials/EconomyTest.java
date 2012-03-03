@@ -21,6 +21,7 @@ public class EconomyTest extends TestCase
 	{
 		super(testName);
 		essentials = new Essentials();
+		essentials.getContext().setScheduler(new BasicScheduler());
 		final FakeServer server = new FakeServer();
 		server.createWorld("testWorld", Environment.NORMAL);
 		try

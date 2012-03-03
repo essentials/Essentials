@@ -16,11 +16,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 
-public class GroupsComponent extends StorageComponent<Groups, IEssentials> implements IGroupsComponent
+public class GroupsComponent extends StorageComponent<Groups> implements IGroupsComponent
 {
-	public GroupsComponent(final IContext context, final IEssentials plugin)
+	public GroupsComponent(final IContext context)
 	{
-		super(context, Groups.class, plugin);
+		super(context, Groups.class);
 	}
 
 	@Override

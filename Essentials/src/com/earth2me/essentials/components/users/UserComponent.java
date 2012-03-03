@@ -30,7 +30,7 @@ import org.bukkit.permissions.ServerOperator;
 
 
 @SuppressWarnings("deprecation")
-public class UserComponent extends StorageComponent<UserSurrogate, IEssentials> implements IUserComponent
+public class UserComponent extends StorageComponent<UserSurrogate> implements IUserComponent
 {
 	@Delegate(types =
 	{
@@ -70,7 +70,7 @@ public class UserComponent extends StorageComponent<UserSurrogate, IEssentials> 
 
 	public UserComponent(final IStatelessPlayer statelessPlayer, final IContext context)
 	{
-		super(context, UserSurrogate.class, context.getEssentials());
+		super(context, UserSurrogate.class);
 		this.statelessPlayer = statelessPlayer;
 		this.teleporter = new Teleporter(this, context);
 	}

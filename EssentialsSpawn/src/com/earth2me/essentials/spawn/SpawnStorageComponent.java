@@ -14,11 +14,11 @@ import org.bukkit.World;
 import org.bukkit.event.EventPriority;
 
 
-public final class SpawnStorageComponent extends StorageComponent<Spawns, EssentialsSpawn> implements IStorageComponent<Spawns, EssentialsSpawn>
+public final class SpawnStorageComponent extends StorageComponent<Spawns> implements IStorageComponent<Spawns>
 {
-	public SpawnStorageComponent(final IContext context, final EssentialsSpawn plugin)
+	public SpawnStorageComponent(final IContext context)
 	{
-		super(context, Spawns.class, plugin);
+		super(context, Spawns.class);
 	}
 
 	@Override

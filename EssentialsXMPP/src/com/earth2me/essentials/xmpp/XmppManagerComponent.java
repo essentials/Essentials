@@ -37,7 +37,7 @@ public class XmppManagerComponent extends Component implements MessageListener, 
 		super(parent.getContext());
 
 		this.parent = parent;
-		this.settings = new XmppSettingsComponent(getContext(), parent);
+		this.settings = new XmppSettingsComponent(getContext());
 	}
 
 	@Override

@@ -5,13 +5,13 @@ import com.earth2me.essentials.storage.StorageComponent;
 import java.util.*;
 
 
-public class SignsSettingsComponent extends StorageComponent<SignsConfig, EssentialsSignsPlugin>
+public class SignsSettingsComponent extends StorageComponent<SignsConfig>
 {
 	private Set<EssentialsSign> enabledSigns = new HashSet<EssentialsSign>();
 
-	public SignsSettingsComponent(final IContext ess, final EssentialsSignsPlugin plugin)
+	public SignsSettingsComponent(final IContext ess)
 	{
-		super(ess, SignsConfig.class, plugin);
+		super(ess, SignsConfig.class);
 	}
 
 	@Override

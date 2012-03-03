@@ -5,11 +5,11 @@ import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.storage.StorageComponent;
 
 
-public final class WarpComponent extends StorageComponent<Warp, IEssentials> implements IWarpComponent
+public final class WarpComponent extends StorageComponent<Warp> implements IWarpComponent
 {
-	public WarpComponent(final IContext context, final IEssentials plugin)
+	public WarpComponent(final IContext context)
 	{
-		super(context, Warp.class, plugin);
+		super(context, Warp.class);
 	}
 
 	@Override

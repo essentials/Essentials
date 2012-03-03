@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 
-public interface IUserComponent extends IStorageComponent<UserSurrogate, IEssentials>, Comparable<IUserComponent>, IComponent, IReplyTo, IStatelessPlayer, CommandSender, LivingEntity, Player, OfflinePlayer
+public interface IUserComponent extends IStorageComponent<UserSurrogate>, Comparable<IUserComponent>, IReplyTo, IStatelessPlayer, CommandSender, LivingEntity, Player, OfflinePlayer
 {
 	Player getBase();
 	

@@ -21,7 +21,7 @@ public class EconomyComponent extends Component implements IEconomyComponent
 	{
 		super(context);
 
-		this.npcsMoney = new MoneyComponent(context, context.getEssentials());
+		this.npcsMoney = new MoneyComponent(context);
 	}
 
 	@Override

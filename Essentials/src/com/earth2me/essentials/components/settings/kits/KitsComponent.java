@@ -11,11 +11,11 @@ import java.util.*;
 import org.bukkit.inventory.ItemStack;
 
 
-public class KitsComponent extends StorageComponent<Kits, IEssentials> implements IKitsComponent
+public class KitsComponent extends StorageComponent<Kits> implements IKitsComponent
 {
-	public KitsComponent(final IContext context, final IEssentials plugin)
+	public KitsComponent(final IContext context)
 	{
-		super(context, Kits.class, plugin);
+		super(context, Kits.class);
 	}
 
 	@Override

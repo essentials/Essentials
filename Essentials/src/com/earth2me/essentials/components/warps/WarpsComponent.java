@@ -51,7 +51,7 @@ public final class WarpsComponent extends StorageComponentMap<IWarpComponent> im
 		IWarpComponent warp = getObject(name);
 		if (warp == null)
 		{
-			warp = new WarpComponent(context, context.getEssentials());
+			warp = new WarpComponent(context);
 		}
 		warp.acquireWriteLock();
 		try
@@ -86,7 +86,7 @@ public final class WarpsComponent extends StorageComponentMap<IWarpComponent> im
 	@Override
 	public IWarpComponent load(String name) throws Exception
 	{
-		final IWarpComponent warp = new WarpComponent(context, context.getEssentials());
+		final IWarpComponent warp = new WarpComponent(context);
 		warp.reload();
 		return warp;
 	}

@@ -20,7 +20,7 @@ public final class EssentialsSignsPlugin extends EssentialsPlugin implements ISi
 		pluginManager.registerEvents(new SignPlayerListener(getContext(), this), this);
 		pluginManager.registerEvents(new SignEntityListener(getContext(), this), this);
 
-		config = new SignsSettingsComponent(getContext(), this);
+		config = new SignsSettingsComponent(getContext());
 
 		getContext().getLogger().info(_("loadinfo", this.getDescription().getName(), this.getDescription().getVersion(), "essentials team"));
 	}

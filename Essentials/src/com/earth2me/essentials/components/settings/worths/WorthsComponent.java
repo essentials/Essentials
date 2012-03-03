@@ -11,11 +11,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 
-public class WorthsComponent extends StorageComponent<Worth, IEssentials> implements IWorthsComponent
+public class WorthsComponent extends StorageComponent<Worth> implements IWorthsComponent
 {
-	public WorthsComponent(final IContext context, final IEssentials plugin)
+	public WorthsComponent(final IContext context)
 	{
-		super(context, Worth.class, plugin);
+		super(context, Worth.class);
 	}
 
 	@Override

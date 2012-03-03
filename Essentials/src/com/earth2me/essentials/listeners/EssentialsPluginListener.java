@@ -106,7 +106,7 @@ public class EssentialsPluginListener implements Listener, IReloadable
 		if (!(context.getGroups() instanceof IGroupsComponent))
 		{
 			// TODO Find a better way to do this.
-			((Context)context).setGroups(new GroupsComponent(context, context.getEssentials()));
+			((Context)context).setGroups(new GroupsComponent(context));
 			context.getEssentials().add(context.getGroups());
 		}
 	}

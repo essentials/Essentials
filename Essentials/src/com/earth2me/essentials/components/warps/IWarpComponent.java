@@ -4,7 +4,7 @@ import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.storage.IStorageComponent;
 
 
-public interface IWarpComponent extends IStorageComponent<Warp, IEssentials>
+public interface IWarpComponent extends IStorageComponent<Warp>
 {
 
 }
