@@ -1,14 +1,14 @@
 package com.earth2me.essentials.perm;
 
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.IPermissions;
 import java.util.Locale;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
 
-public enum Permissions implements IPermission
+public enum Permissions implements IPermissions
 {
 	AFK,
 	AFK_KICKEXEMPT,

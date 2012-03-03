@@ -1,9 +1,9 @@
 package com.earth2me.essentials.textreader;
 
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
 import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.components.users.IUserComponent;
 import java.io.*;
 import java.lang.ref.SoftReference;
 import java.util.*;
@@ -21,7 +21,7 @@ public class TextInput implements IText
 	private final transient long lastChange;
 	private final static HashMap<String, SoftReference<TextInput>> cache = new HashMap<String, SoftReference<TextInput>>();
 
-	public TextInput(final CommandSender sender, final String filename, final boolean createFile, final IEssentials ess) throws IOException
+	public TextInput(final CommandSender sender, final String filename, final boolean createFile, final IContext context) throws IOException
 	{
 
 		File file = null;
@@ -29,11 +29,11 @@ public class TextInput implements IText
 		{
 			try
 			{
-				final IUser user = ess.getUser((Player)sender);
-				file = new File(ess.getDataFolder(), filename + "_" + Util.sanitizeFileName(user.getName()) + ".txt");
+				final IUserComponent user = context.getUser((Player)sender);
+				file = new File(context.getDataFolder(), filename + "_" + Util.sanitizeFileName(user.getName()) + ".txt");
 				if (!file.exists())
 				{
-					file = new File(ess.getDataFolder(), filename + "_" + Util.sanitizeFileName(ess.getGroups().getMainGroup(user)) + ".txt");
+					file = new File(context.getDataFolder(), filename + "_" + Util.sanitizeFileName(context.getGroups().getMainGroup(user)) + ".txt");
 				}
 			}
 			catch (InvalidNameException ex)
@@ -43,7 +43,7 @@ public class TextInput implements IText
 		}
 		if (file == null || !file.exists())
 		{
-			file = new File(ess.getDataFolder(), filename + ".txt");
+			file = new File(context.getDataFolder(), filename + ".txt");
 		}
 		if (file.exists())
 		{
@@ -105,7 +105,7 @@ public class TextInput implements IText
 			bookmarks = Collections.emptyMap();
 			if (createFile)
 			{
-				final InputStream input = ess.getResource(filename + ".txt");
+				final InputStream input = context.getEssentials().getResource(filename + ".txt");
 				final OutputStream output = new FileOutputStream(file);
 				try
 				{
@@ -130,18 +130,18 @@ public class TextInput implements IText
 	@Override
 	public List<String> getLines()
 	{
-		return lines;
+		return Collections.unmodifiableList(lines);
 	}
 
 	@Override
 	public List<String> getChapters()
 	{
-		return chapters;
+		return Collections.unmodifiableList(chapters);
 	}
 
 	@Override
 	public Map<String, Integer> getBookmarks()
 	{
-		return bookmarks;
+		return Collections.unmodifiableMap(bookmarks);
 	}
 }

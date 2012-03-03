@@ -1,13 +1,13 @@
 package com.earth2me.essentials.chat;
 
-import com.earth2me.essentials.api.ChargeException;
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IGroups;
-import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.api.IGroupsComponent;
+import com.earth2me.essentials.api.ISettingsComponent;
+import com.earth2me.essentials.components.economy.ChargeException;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
 import java.util.Locale;
 import java.util.Map;
@@ -21,16 +21,15 @@ import org.bukkit.event.player.PlayerChatEvent;
 //TODO: Translate the local/spy tags
 public abstract class EssentialsChatPlayer implements Listener
 {
-	protected transient IEssentials ess;
-	protected final static Logger LOGGER = Logger.getLogger("Minecraft");
+	private transient IContext context;
 	protected final transient Server server;
 	protected final transient Map<PlayerChatEvent, ChatStore> chatStorage;
 
 	public EssentialsChatPlayer(final Server server,
-								final IEssentials ess,
+								final IContext ess,
 								final Map<PlayerChatEvent, ChatStore> chatStorage)
 	{
-		this.ess = ess;
+		this.context = ess;
 		this.server = server;
 		this.chatStorage = chatStorage;
 	}
@@ -62,7 +61,7 @@ public abstract class EssentialsChatPlayer implements Listener
 		}
 		catch (ChargeException e)
 		{
-			ess.getCommandHandler().showCommandError(chatStore.getUser(), chatStore.getLongType(), e);
+			getContext().getCommands().showCommandError(chatStore.getUser(), chatStore.getLongType(), e);
 			event.setCancelled(true);
 		}
 	}
@@ -71,21 +70,21 @@ public abstract class EssentialsChatPlayer implements Listener
 	{
 		if (sender instanceof Player)
 		{
-			charge.charge(ess.getUser((Player)sender));
+			charge.charge(getContext().getUser((Player)sender));
 		}
 	}
 
 	protected void formatChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
-		final IUser user = chatStore.getUser();
+		final IUserComponent user = chatStore.getUser();
 		if (Permissions.CHAT_COLOR.isAuthorized(user))
 		{
 			event.setMessage(Util.stripColor(event.getMessage()));
 		}
-		String group = ess.getGroups().getMainGroup(user);
+		String group = getContext().getGroups().getMainGroup(user);
 		String world = user.getWorld().getName();
 
-		IGroups groupSettings = ess.getGroups();
+		IGroupsComponent groupSettings = getContext().getGroups();
 		event.setFormat(groupSettings.getChatFormat(user).format(new Object[]
 				{
 					group, world, world.substring(0, 1).toUpperCase(Locale.ENGLISH)
@@ -103,7 +102,7 @@ public abstract class EssentialsChatPlayer implements Listener
 		//case '?':
 		//return "question";
 		//case '@':
-		//	return "admin";			
+		//	return "admin";
 		default:
 			return "";
 		}
@@ -112,7 +111,7 @@ public abstract class EssentialsChatPlayer implements Listener
 	protected void handleLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
 		long radius = 0;
-		ISettings settings = ess.getSettings();
+		ISettingsComponent settings = getContext().getSettings();
 		settings.acquireReadLock();
 		try
 		{
@@ -130,7 +129,7 @@ public abstract class EssentialsChatPlayer implements Listener
 
 		radius *= radius;
 
-		final IUser user = chatStore.getUser();
+		final IUserComponent user = chatStore.getUser();
 
 		if (event.getMessage().length() > 1 && chatStore.getType().length() > 0)
 		{
@@ -153,6 +152,16 @@ public abstract class EssentialsChatPlayer implements Listener
 
 		event.setCancelled(true);
 		final EssentialsLocalChatEvent localChat = new EssentialsLocalChatEvent(event, radius);
-		ess.getServer().getPluginManager().callEvent(localChat);
+		getContext().getServer().getPluginManager().callEvent(localChat);
+	}
+
+	protected IContext getContext()
+	{
+		return context;
+	}
+
+	protected void setContext(IContext context)
+	{
+		this.context = context;
 	}
 }

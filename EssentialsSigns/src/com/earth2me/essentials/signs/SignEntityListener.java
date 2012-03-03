@@ -1,6 +1,6 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IContext;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -12,10 +12,10 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 
 public class SignEntityListener implements Listener
 {
-	private final transient IEssentials ess;
+	private final transient IContext ess;
 	private final transient ISignsPlugin plugin;
 
-	public SignEntityListener(final IEssentials ess, final ISignsPlugin plugin)
+	public SignEntityListener(final IContext ess, final ISignsPlugin plugin)
 	{
 		this.ess = ess;
 		this.plugin = plugin;
@@ -34,7 +34,7 @@ public class SignEntityListener implements Listener
 				event.setCancelled(true);
 				return;
 			}
-			for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
+			for (EssentialsSign sign : plugin.getSignsConfig().getEnabledSigns())
 			{
 				if (sign.getBlocks().contains(block.getType()))
 				{
@@ -62,7 +62,7 @@ public class SignEntityListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
-		for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
+		for (EssentialsSign sign : plugin.getSignsConfig().getEnabledSigns())
 		{
 			if (sign.getBlocks().contains(block.getType())
 				&& !sign.onBlockBreak(block, ess))

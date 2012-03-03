@@ -1,6 +1,6 @@
 package com.earth2me.essentials.perm;
 
-import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.IPermissions;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class NoCommandCostPermissions
 {
-	private static Map<String, IPermission> permissions = new HashMap<String, IPermission>();
+	private static Map<String, IPermissions> permissions = new HashMap<String, IPermissions>();
 
-	public static IPermission getPermission(final String command)
+	public static IPermissions getPermission(final String command)
 	{
-		IPermission perm = permissions.get(command);
+		IPermissions perm = permissions.get(command);
 		if (perm == null)
 		{
 			perm = new BasePermission("essentials.nocommandcost.", command.toLowerCase(Locale.ENGLISH));

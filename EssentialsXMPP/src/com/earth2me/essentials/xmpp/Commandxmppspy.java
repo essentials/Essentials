@@ -1,7 +1,7 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.commands.EssentialsCommand;
-import com.earth2me.essentials.commands.NotEnoughArgumentsException;
+import com.earth2me.essentials.components.commands.EssentialsCommand;
+import com.earth2me.essentials.components.commands.NotEnoughArgumentsException;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ public class Commandxmppspy extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final List<Player> matches = server.matchPlayer(args[0]);
+		final List<Player> matches = getServer().matchPlayer(args[0]);
 
 		if (matches.isEmpty())
 		{
@@ -28,7 +28,7 @@ public class Commandxmppspy extends EssentialsCommand
 		{
 			try
 			{
-				final boolean toggle = EssentialsXMPP.getInstance().toggleSpy(p);
+				final boolean toggle = EssentialsXmpp.getInstance().toggleSpy(p);
 				sender.sendMessage("XMPP Spy " + (toggle ? "enabled" : "disabled") + " for " + p.getDisplayName());
 			}
 			catch (Exception ex)

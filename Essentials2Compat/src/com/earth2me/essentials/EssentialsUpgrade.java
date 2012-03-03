@@ -1,10 +1,12 @@
 package com.earth2me.essentials;
 
+import com.earth2me.essentials.api.IContext;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.components.settings.Spawns;
+import com.earth2me.essentials.components.settings.worths.WorthsComponent;
+import com.earth2me.essentials.components.warps.Warp;
+import com.earth2me.essentials.storage.LocationData;
 import com.earth2me.essentials.storage.ManagedFile;
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.settings.Spawns;
-import com.earth2me.essentials.storage.Location;
 import com.earth2me.essentials.storage.YamlStorageWriter;
 import java.io.*;
 import java.math.BigInteger;
@@ -23,17 +25,17 @@ import org.bukkit.inventory.ItemStack;
 public class EssentialsUpgrade
 {
 	private final static Logger LOGGER = Logger.getLogger("Minecraft");
-	private final transient IEssentials ess;
+	private final transient IContext context;
 	private final transient EssentialsConf doneFile;
 
-	EssentialsUpgrade(final IEssentials essentials)
+	EssentialsUpgrade(final IContext essentials)
 	{
-		ess = essentials;
-		if (!ess.getDataFolder().exists())
+		context = essentials;
+		if (!context.getDataFolder().exists())
 		{
-			ess.getDataFolder().mkdirs();
+			context.getDataFolder().mkdirs();
 		}
-		doneFile = new EssentialsConf(new File(ess.getDataFolder(), "upgrades-done.yml"));
+		doneFile = new EssentialsConf(new File(context.getDataFolder(), "upgrades-done.yml"));
 		doneFile.load();
 	}
 
@@ -45,14 +47,14 @@ public class EssentialsUpgrade
 		}
 		try
 		{
-			final File configFile = new File(ess.getDataFolder(), "config.yml");
+			final File configFile = new File(context.getDataFolder(), "config.yml");
 			if (!configFile.exists())
 			{
 				return;
 			}
 			final EssentialsConf conf = new EssentialsConf(configFile);
 			conf.load();
-			final Worth worth = new Worth(ess);
+			final WorthsComponent worth = new WorthsComponent(context);
 			boolean found = false;
 			for (Material mat : Material.values())
 			{
@@ -85,12 +87,12 @@ public class EssentialsUpgrade
 		}
 		try
 		{
-			final File file = new File(ess.getDataFolder(), name + ".txt");
+			final File file = new File(context.getDataFolder(), name + ".txt");
 			if (file.exists())
 			{
 				return;
 			}
-			final File configFile = new File(ess.getDataFolder(), "config.yml");
+			final File configFile = new File(context.getDataFolder(), "config.yml");
 			if (!configFile.exists())
 			{
 				return;
@@ -125,7 +127,7 @@ public class EssentialsUpgrade
 	{
 		boolean needUpdate = false;
 		final BufferedReader bReader = new BufferedReader(new FileReader(file));
-		final File tempFile = File.createTempFile("essentialsupgrade", ".tmp.yml", ess.getDataFolder());
+		final File tempFile = File.createTempFile("essentialsupgrade", ".tmp.yml", context.getDataFolder());
 		final BufferedWriter bWriter = new BufferedWriter(new FileWriter(tempFile));
 		do
 		{
@@ -186,7 +188,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File userdataFolder = new File(ess.getDataFolder(), "userdata");
+		final File userdataFolder = new File(context.getDataFolder(), "userdata");
 		if (!userdataFolder.exists() || !userdataFolder.isDirectory())
 		{
 			return;
@@ -211,10 +213,10 @@ public class EssentialsUpgrade
 					{
 						continue;
 					}
-					World world = ess.getServer().getWorlds().get(0);
+					World world = context.getServer().getWorlds().get(0);
 					if (world != null)
 					{
-						final Location loc = new Location(
+						final LocationData loc = new LocationData(
 								(String)vals.get(5),
 								((Number)vals.get(0)).doubleValue(),
 								((Number)vals.get(1)).doubleValue(),
@@ -235,7 +237,7 @@ public class EssentialsUpgrade
 			}
 			catch (RuntimeException ex)
 			{
-				LOGGER.log(Level.INFO, "File: " + file.toString());
+				LOGGER.log(Level.INFO, "File: {0}", file.toString());
 				throw ex;
 			}
 		}
@@ -249,7 +251,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File userdataFolder = new File(ess.getDataFolder(), "userdata");
+		final File userdataFolder = new File(context.getDataFolder(), "userdata");
 		if (!userdataFolder.exists() || !userdataFolder.isDirectory())
 		{
 			return;
@@ -280,7 +282,7 @@ public class EssentialsUpgrade
 						{
 							List<String> temp = new ArrayList<String>();
 							temp.add((String)entry.getValue());
-							((Map<Integer, Object>)powertools).put(entry.getKey(), temp);
+							powertools.put(entry.getKey(), temp);
 						}
 					}
 					config.save();
@@ -288,7 +290,7 @@ public class EssentialsUpgrade
 			}
 			catch (RuntimeException ex)
 			{
-				LOGGER.log(Level.INFO, "File: " + file.toString());
+				LOGGER.log(Level.INFO, "File: {0}", file.toString());
 				throw ex;
 			}
 		}
@@ -302,7 +304,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File userdataFolder = new File(ess.getDataFolder(), "userdata");
+		final File userdataFolder = new File(context.getDataFolder(), "userdata");
 		if (!userdataFolder.exists() || !userdataFolder.isDirectory())
 		{
 			return;
@@ -324,14 +326,14 @@ public class EssentialsUpgrade
 				{
 					@SuppressWarnings("unchecked")
 					final String defworld = (String)config.getProperty("home.default");
-					final Location defloc = getFakeLocation(config, "home.worlds." + defworld);
+					final LocationData defloc = getFakeLocation(config, "home.worlds." + defworld);
 					if (defloc != null)
 					{
 						config.setProperty("homes.home", defloc);
 					}
 
 					Set<String> worlds = config.getConfigurationSection("home.worlds").getKeys(false);
-					Location loc;
+					LocationData loc;
 					String worldName;
 
 					if (worlds == null)
@@ -362,7 +364,7 @@ public class EssentialsUpgrade
 			}
 			catch (RuntimeException ex)
 			{
-				LOGGER.log(Level.INFO, "File: " + file.toString());
+				LOGGER.log(Level.INFO, "File: {0}", file.toString());
 				throw ex;
 			}
 		}
@@ -380,7 +382,7 @@ public class EssentialsUpgrade
 	 * { user.setMails(mails); } if (!user.hasHome()) { @SuppressWarnings("unchecked") final List<Object> vals =
 	 * (List<Object>)usersConfig.getProperty(username + ".home"); if (vals != null) { World world =
 	 * ess.getServer().getWorlds().get(0); if (vals.size() > 5) { world = getFakeWorld((String)vals.get(5)); } if (world
-	 * != null) { user.setHome("home", new Location(world, ((Number)vals.get(0)).doubleValue(),
+	 * != null) { user.setHome("home", new LocationData(world, ((Number)vals.get(0)).doubleValue(),
 	 * ((Number)vals.get(1)).doubleValue(), ((Number)vals.get(2)).doubleValue(), ((Number)vals.get(3)).floatValue(),
 	 * ((Number)vals.get(4)).floatValue())); } } } } usersFile.renameTo(new File(usersFile.getAbsolutePath() + ".old"));
 	 * }
@@ -388,7 +390,7 @@ public class EssentialsUpgrade
 
 	private void convertWarps()
 	{
-		final File warpsFolder = new File(ess.getDataFolder(), "warps");
+		final File warpsFolder = new File(context.getDataFolder(), "warps");
 		if (!warpsFolder.exists())
 		{
 			warpsFolder.mkdirs();
@@ -442,8 +444,9 @@ public class EssentialsUpgrade
 						}
 						if (worldName != null)
 						{
-							final Location loc = new Location(worldName, x, y, z, yaw, pitch);
-							((Warps)ess.getWarps()).setWarp(filename.substring(0, filename.length() - 4), loc);
+							final LocationData location = new LocationData(worldName, x, y, z, yaw, pitch);
+							final Warp warp = new Warp();
+							context.getWarps().setWarp(filename.substring(0, filename.length() - 4), location);
 							if (!listOfFiles[i].renameTo(new File(warpsFolder, filename + ".old")))
 							{
 								throw new Exception(_("fileRenameError", filename));
@@ -492,11 +495,11 @@ public class EssentialsUpgrade
 								break;
 							}
 						}
-						final Location loc = new Location(name, x, y, z, yaw, pitch);
+						final LocationData loc = new LocationData(name, x, y, z, yaw, pitch);
 						ess.getWarps().setWarp(name, loc);
 						if (!warpFile.renameTo(new File(ess.getDataFolder(), "warps.txt.old")))
 						{
-							throw new Exception(_("fileRenameError", "warps.txt"));
+							throw new Exception($("fileRenameError", "warps.txt"));
 						}
 					}
 				}
@@ -520,10 +523,10 @@ public class EssentialsUpgrade
 	 * final String sanitizedFilename = Util.sanitizeFileName(filename.substring(0, filename.length() - 4)) + ".yml"; if
 	 * (sanitizedFilename.equals(filename)) { continue; } final File tmpFile = new File(listOfFiles[i].getParentFile(),
 	 * sanitizedFilename + ".tmp"); final File newFile = new File(listOfFiles[i].getParentFile(), sanitizedFilename); if
-	 * (!listOfFiles[i].renameTo(tmpFile)) { LOGGER.log(Level.WARNING, _("userdataMoveError", filename,
-	 * sanitizedFilename)); continue; } if (newFile.exists()) { LOGGER.log(Level.WARNING, _("duplicatedUserdata",
+	 * (!listOfFiles[i].renameTo(tmpFile)) { LOGGER.log(Level.WARNING, $("userdataMoveError", filename,
+	 * sanitizedFilename)); continue; } if (newFile.exists()) { LOGGER.log(Level.WARNING, $("duplicatedUserdata",
 	 * filename, sanitizedFilename)); continue; } if (!tmpFile.renameTo(newFile)) { LOGGER.log(Level.WARNING,
-	 * _("userdataMoveBackError", sanitizedFilename, sanitizedFilename)); } }
+	 * $("userdataMoveBackError", sanitizedFilename, sanitizedFilename)); } }
 	 * doneFile.setProperty("sanitizeAllUserFilenames", true); doneFile.save(); }
 	 */
 	/*
@@ -533,14 +536,14 @@ public class EssentialsUpgrade
 	 * World.Environment.NORMAL); } return null;
 	}
 	 */
-	public Location getFakeLocation(EssentialsConf config, String path)
+	public LocationData getFakeLocation(EssentialsConf config, String path)
 	{
 		String worldName = config.getString((path != null ? path + "." : "") + "world");
 		if (worldName == null || worldName.isEmpty())
 		{
 			return null;
 		}
-		return new Location(worldName,
+		return new LocationData(worldName,
 							config.getDouble((path != null ? path + "." : "") + "x", 0),
 							config.getDouble((path != null ? path + "." : "") + "y", 0),
 							config.getDouble((path != null ? path + "." : "") + "z", 0),
@@ -554,7 +557,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File file = new File(ess.getDataFolder(), "items.csv");
+		final File file = new File(context.getDataFolder(), "items.csv");
 		if (file.exists())
 		{
 			try
@@ -601,7 +604,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File configFile = new File(ess.getDataFolder(), "spawn.yml");
+		final File configFile = new File(context.getDataFolder(), "spawn.yml");
 		if (configFile.exists())
 		{
 
@@ -615,10 +618,10 @@ public class EssentialsUpgrade
 					Set<String> keys = config.getKeys(false);
 					for (String group : keys)
 					{
-						Location loc = getFakeLocation(config, group);
+						LocationData loc = getFakeLocation(config, group);
 						spawns.getSpawns().put(group.toLowerCase(Locale.ENGLISH), loc);
 					}
-					if (!configFile.renameTo(new File(ess.getDataFolder(), "spawn.yml.old")))
+					if (!configFile.renameTo(new File(context.getDataFolder(), "spawn.yml.old")))
 					{
 						throw new Exception(_("fileRenameError", "spawn.yml"));
 					}
@@ -648,7 +651,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File configFile = new File(ess.getDataFolder(), "jail.yml");
+		final File configFile = new File(context.getDataFolder(), "jail.yml");
 		if (configFile.exists())
 		{
 
@@ -658,14 +661,14 @@ public class EssentialsUpgrade
 				config.load();
 				if (!config.hasProperty("jails"))
 				{
-					final com.earth2me.essentials.settings.Jails jails = new com.earth2me.essentials.settings.Jails();
+					final com.earth2me.essentials.components.settings.jails.Jails jails = new com.earth2me.essentials.components.settings.jails.Jails();
 					Set<String> keys = config.getKeys(false);
 					for (String jailName : keys)
 					{
-						Location loc = getFakeLocation(config, jailName);
+						LocationData loc = getFakeLocation(config, jailName);
 						jails.getJails().put(jailName.toLowerCase(Locale.ENGLISH), loc);
 					}
-					if (!configFile.renameTo(new File(ess.getDataFolder(), "jail.yml.old")))
+					if (!configFile.renameTo(new File(context.getDataFolder(), "jail.yml.old")))
 					{
 						throw new Exception(_("fileRenameError", "jail.yml"));
 					}
@@ -691,9 +694,9 @@ public class EssentialsUpgrade
 
 	public void beforeSettings()
 	{
-		if (!ess.getDataFolder().exists())
+		if (!context.getDataFolder().exists())
 		{
-			ess.getDataFolder().mkdirs();
+			context.getDataFolder().mkdirs();
 		}
 		moveWorthValuesToWorthYml();
 		moveMotdRulesToFile("motd");

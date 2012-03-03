@@ -1,64 +1,15 @@
 package com.earth2me.essentials.api;
 
-import com.earth2me.essentials.listener.TntExplodeListener;
-import com.earth2me.essentials.register.payment.Methods;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import com.earth2me.essentials.components.IComponentPlugin;
+import com.earth2me.essentials.listeners.TntExplodeListener;
 
 
-public interface IEssentials extends Plugin
+/**
+ * Outlines the main plugin.
+ */
+public interface IEssentials extends IComponentPlugin
 {
-	void addReloadListener(IReload listener);
+	TntExplodeListener getTntListener();
 
-	IUser getUser(Player player);
-
-	IUser getUser(String playerName);
-
-	int broadcastMessage(IUser sender, String message);
-
-	II18n getI18n();
-
-	ISettings getSettings();
-
-	IGroups getGroups();
-
-	IJails getJails();
-
-	IKits getKits();
-
-	IWarps getWarps();
-
-	IWorth getWorth();
-
-	IItemDb getItemDb();
-
-	IUserMap getUserMap();
-
-	IBackup getBackup();
-
-	ICommandHandler getCommandHandler();
-
-	World getWorld(String name);
-
-	Methods getPaymentMethod();
-
-	int scheduleAsyncDelayedTask(Runnable run);
-
-	int scheduleSyncDelayedTask(Runnable run);
-
-	int scheduleSyncDelayedTask(Runnable run, long delay);
-
-	int scheduleSyncRepeatingTask(Runnable run, long delay, long period);
-
-	//IPermissionsHandler getPermissionsHandler();
-	void reload();
-
-	TntExplodeListener getTNTListener();
-
-	void setGroups(IGroups groups);
-
-	void removeReloadListener(IReload groups);
-
-	IEconomy getEconomy();
+	IContext getContext();
 }

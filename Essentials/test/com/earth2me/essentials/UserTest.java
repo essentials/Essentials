@@ -1,7 +1,8 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.user.User;
+import com.earth2me.essentials.components.users.IUserComponent;
+import com.earth2me.essentials.components.users.UserComponent;
+import com.earth2me.essentials.craftbukkit.DummyOfflinePlayer;
 import java.io.IOException;
 import junit.framework.TestCase;
 import org.bukkit.World.Environment;
@@ -10,19 +11,19 @@ import org.bukkit.plugin.InvalidDescriptionException;
 
 public class UserTest extends TestCase
 {
-	private final IUser base1;
-	private final Essentials ess;
+	private final IUserComponent base1;
+	private final Essentials essentials;
 	private final FakeServer server;
 
 	public UserTest(String testName)
 	{
 		super(testName);
-		ess = new Essentials();
+		essentials = new Essentials();
 		server = new FakeServer();
 		server.createWorld("testWorld", Environment.NORMAL);
 		try
 		{
-			ess.setupForTesting(server);
+			essentials.setupForTesting(server);
 		}
 		catch (InvalidDescriptionException ex)
 		{
@@ -32,9 +33,9 @@ public class UserTest extends TestCase
 		{
 			fail("IOException");
 		}
-		base1 = new User(new FakeOfflinePlayer("testPlayer1"), ess);
+		base1 = new UserComponent(new DummyOfflinePlayer("testPlayer1"), essentials.getContext());
 		server.addPlayer(base1);
-		ess.getUser(base1);
+		essentials.getContext().getUser(base1);
 	}
 
 	private void should(String what)
@@ -50,11 +51,11 @@ public class UserTest extends TestCase
 
 	public void testHome()
 	{
-		IUser user = ess.getUser(base1);
+		IUserComponent user = ess.getUser(base1);
 		Location loc = base1.getLocation();
 		user.setHome();
 		OfflinePlayer base2 = server.createPlayer(base1.getName(), ess);
-		IUser user2 = ess.getUser(base2);
+		IUserComponent user2 = ess.getUser(base2);
 
 		Location home = user2.getHome(loc);
 		assertNotNull(home);
@@ -69,7 +70,7 @@ public class UserTest extends TestCase
 	/*public void testMoney()
 	{
 		should("properly set, take, give, and get money");
-		IUser user = ess.getUser(base1);
+		IUserComponent user = ess.getUser(base1);
 		double i;
 		user.setMoney(i = 100.5);
 		user.takeMoney(50);
@@ -82,10 +83,10 @@ public class UserTest extends TestCase
 	/*public void testGetGroup()
 	{
 		should("return the default group");
-		IUser user = ess.getUser(base1);
+		IUserComponent user = ess.getUser(base1);
 		//assertEquals(user.getGroup(), "default");
 	}*/
-	
+
 	public void testNoop()
 	{
 		assertTrue(true);

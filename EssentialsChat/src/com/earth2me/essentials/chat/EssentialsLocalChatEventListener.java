@@ -1,10 +1,9 @@
 package com.earth2me.essentials.chat;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.perm.Permissions;
-import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
@@ -16,11 +15,10 @@ import org.bukkit.event.Listener;
 
 public class EssentialsLocalChatEventListener implements Listener
 {
-	protected transient IEssentials ess;
+	protected transient IContext ess;
 	protected final transient Server server;
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 
-	public EssentialsLocalChatEventListener(final Server server, final IEssentials ess)
+	public EssentialsLocalChatEventListener(final Server server, final IContext ess)
 	{
 		this.ess = ess;
 		this.server = server;
@@ -36,8 +34,8 @@ public class EssentialsLocalChatEventListener implements Listener
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			String type = _("chatTypeLocal");
-			final IUser user = ess.getUser(onlinePlayer);
-			//TODO: remove reference to op 
+			final IUserComponent user = ess.getUser(onlinePlayer);
+			//TODO: remove reference to op
 			if (user.isIgnoringPlayer(sender.getName()) && !sender.isOp())
 			{
 				continue;

@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -9,9 +9,9 @@ import java.util.*;
  * This utility class is used for converting between the ingame
  * time in ticks to ingame time as a friendly string.
  * Note that the time is INGAME.
- * 
+ *
  * http://www.minecraftwiki.net/wiki/Day/night_cycle
- * 
+ *
  * @author Olof Larsson
  */
 public final class DescParseTickFormat

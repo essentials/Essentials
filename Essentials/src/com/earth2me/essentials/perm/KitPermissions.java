@@ -1,6 +1,6 @@
 package com.earth2me.essentials.perm;
 
-import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.IPermissions;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -9,11 +9,11 @@ import org.bukkit.permissions.PermissionDefault;
 
 public class KitPermissions
 {
-	private static Map<String, IPermission> permissions = new HashMap<String, IPermission>();
+	private static Map<String, IPermissions> permissions = new HashMap<String, IPermissions>();
 
-	public static IPermission getPermission(final String kitName)
+	public static IPermissions getPermission(final String kitName)
 	{
-		IPermission perm = permissions.get(kitName);
+		IPermissions perm = permissions.get(kitName);
 		if (perm == null)
 		{
 			perm = new BasePermission("essentials.kit.", kitName.toLowerCase(Locale.ENGLISH))

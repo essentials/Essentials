@@ -1,16 +1,16 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.ChargeException;
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.components.economy.ChargeException;
+import static com.earth2me.essentials.components.i18n.I18nComponent._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUserComponent;
 import org.bukkit.inventory.ItemStack;
 
 //TODO: Sell Enchantment on Trade signs?
 public class SignTrade extends EssentialsSign
-{	
+{
 
 	public SignTrade()
 	{
@@ -18,7 +18,7 @@ public class SignTrade extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
+	protected boolean onSignCreate(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		validateTrade(sign, 1, false, ess);
 		validateTrade(sign, 2, true, ess);
@@ -31,7 +31,7 @@ public class SignTrade extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
+	protected boolean onSignInteract(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException, ChargeException
 	{
 		if (sign.getLine(3).substring(2).equalsIgnoreCase(username))
 		{
@@ -72,7 +72,7 @@ public class SignTrade extends EssentialsSign
 		return true;
 	}
 
-	private Trade rechargeSign(final ISign sign, final IEssentials ess, final IUser player) throws SignException, ChargeException
+	private Trade rechargeSign(final ISign sign, final IContext ess, final IUserComponent player) throws SignException, ChargeException
 	{
 		final Trade trade = getTrade(sign, 2, false, false, ess);
 		if (trade.getItemStack() != null && player.getItemInHand() != null
@@ -96,7 +96,7 @@ public class SignTrade extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignBreak(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
+	protected boolean onSignBreak(final ISign sign, final IUserComponent player, final String username, final IContext ess) throws SignException
 	{
 		if ((sign.getLine(3).length() > 3 && sign.getLine(3).substring(2).equalsIgnoreCase(username))
 			|| SignsPermissions.TRADE_OVERRIDE.isAuthorized(player))
@@ -125,7 +125,7 @@ public class SignTrade extends EssentialsSign
 		}
 	}
 
-	protected final void validateTrade(final ISign sign, final int index, final boolean amountNeeded, final IEssentials ess) throws SignException
+	protected final void validateTrade(final ISign sign, final int index, final boolean amountNeeded, final IContext ess) throws SignException
 	{
 		final String line = sign.getLine(index).trim();
 		if (line.isEmpty())
@@ -206,7 +206,7 @@ public class SignTrade extends EssentialsSign
 		throw new SignException(_("invalidSignLine", index + 1));
 	}
 
-	protected final Trade getTrade(final ISign sign, final int index, final boolean fullAmount, final boolean notEmpty, final IEssentials ess) throws SignException
+	protected final Trade getTrade(final ISign sign, final int index, final boolean fullAmount, final boolean notEmpty, final IContext ess) throws SignException
 	{
 		final String line = sign.getLine(index).trim();
 		if (line.isEmpty())
@@ -262,7 +262,7 @@ public class SignTrade extends EssentialsSign
 		throw new SignException(_("invalidSignLine", index + 1));
 	}
 
-	protected final void subtractAmount(final ISign sign, final int index, final Trade trade, final IEssentials ess) throws SignException
+	protected final void subtractAmount(final ISign sign, final int index, final Trade trade, final IContext ess) throws SignException
 	{
 		final Double money = trade.getMoney();
 		if (money != null)
@@ -281,7 +281,7 @@ public class SignTrade extends EssentialsSign
 		}
 	}
 
-	protected final void addAmount(final ISign sign, final int index, final Trade trade, final IEssentials ess) throws SignException
+	protected final void addAmount(final ISign sign, final int index, final Trade trade, final IContext ess) throws SignException
 	{
 		final Double money = trade.getMoney();
 		if (money != null)
@@ -301,7 +301,7 @@ public class SignTrade extends EssentialsSign
 	}
 
 	//TODO: Translate these exceptions.
-	private void changeAmount(final ISign sign, final int index, final double value, final IEssentials ess) throws SignException
+	private void changeAmount(final ISign sign, final int index, final double value, final IContext ess) throws SignException
 	{
 
 		final String line = sign.getLine(index).trim();

@@ -1,6 +1,6 @@
 package com.earth2me.essentials.perm;
 
-import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.IPermissions;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class SpawnerPermissions
 {
-	private static Map<String, IPermission> permissions = new HashMap<String, IPermission>();
+	private static Map<String, IPermissions> permissions = new HashMap<String, IPermissions>();
 
-	public static IPermission getPermission(final String mobName)
+	public static IPermissions getPermission(final String mobName)
 	{
-		IPermission perm = permissions.get(mobName);
+		IPermissions perm = permissions.get(mobName);
 		if (perm == null)
 		{
 			perm = new BasePermission("essentials.spawner.", mobName.toLowerCase(Locale.ENGLISH).replace("_", ""));

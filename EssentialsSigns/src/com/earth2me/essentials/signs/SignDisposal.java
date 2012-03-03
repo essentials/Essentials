@@ -1,7 +1,7 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IContext;
+import com.earth2me.essentials.components.users.IUserComponent;
 import com.earth2me.essentials.craftbukkit.ShowInventory;
 
 
@@ -13,7 +13,7 @@ public class SignDisposal extends EssentialsSign
 	}
 
 	@Override
-	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess)
+	protected boolean onSignInteract(final ISign sign, final IUserComponent player, final String username, final IContext ess)
 	{
 		ShowInventory.showEmptyInventory(player.getBase());
 		return true;
