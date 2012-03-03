@@ -101,17 +101,15 @@ public class Essentials extends ComponentPlugin implements IEssentials
 		}
 		context.setLogger(Logger.getLogger(Logger.GLOBAL_LOGGER_NAME));
 
-		registerComponents(0);
+		registerComponents(ComponentStages.I18n);
 
 		context.getLogger().log(Level.INFO, _("usingTempFolderForTesting"));
 		context.getLogger().log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 
-		registerComponents(1);
-
+		registerComponents(ComponentStages.Settings);
 		context.getI18n().updateLocale("en");
-
-		registerComponents(2);
+		registerComponents(ComponentStages.Normal);
 	}
 
 	private boolean checkVersion()
@@ -141,7 +139,7 @@ public class Essentials extends ComponentPlugin implements IEssentials
 		execTimer.start();
 		context.setLogger(getLogger());
 
-		registerComponents(0);
+		registerComponents(ComponentStages.I18n);
 
 		if (!checkVersion())
 		{
@@ -150,10 +148,10 @@ public class Essentials extends ComponentPlugin implements IEssentials
 
 		try
 		{
-			registerComponents(1);
+			registerComponents(ComponentStages.Settings);
 			context.getI18n().reload();
-			registerComponents(2);
-			registerComponents(3);
+			registerComponents(ComponentStages.Normal);
+			registerComponents(ComponentStages.Commands);
 
 			reload();
 		}
@@ -163,12 +161,12 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			return;
 		}
 
-		registerComponents(4);
+		registerComponents(ComponentStages.Backup);
 
 		final PluginManager pluginManager = getServer().getPluginManager();
 		registerNormalListeners(pluginManager);
 
-		registerComponents(5);
+		registerComponents(ComponentStages.Jails);
 
 		registerLateListeners(pluginManager);
 
@@ -214,25 +212,25 @@ public class Essentials extends ComponentPlugin implements IEssentials
 		this.setEnabled(false);
 	}
 
-	private void registerComponents(int stage)
+	private void registerComponents(ComponentStages stage)
 	{
 		switch (stage)
 		{
-		case 0:
+		case I18n:
 			final II18nComponent i18n = new I18nComponent(context);
 			context.setI18n(i18n);
 			add(i18n);
 			execTimer.mark("I18n1");
 			break;
 
-		case 1:
+		case Settings:
 			final ISettingsComponent settings = new SettingsComponent(context);
 			context.setSettings(settings);
 			add(settings);
 			execTimer.mark("Settings");
 			break;
 
-		case 2:
+		case Normal:
 			final IUsersComponent users = new UsersComponent(context);
 			context.setUsers(users);
 			add(users);
@@ -265,19 +263,19 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			add(economy);
 			break;
 
-		case 3:
+		case Commands:
 			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", context);
 			context.setCommands(commands);
 			add(commands);
 			break;
 
-		case 4:
+		case Backup:
 			final IBackupComponent backup = new BackupComponent(context);
 			context.setBackup(backup);
 			add(backup);
 			break;
 
-		case 5:
+		case Jails:
 			final IJailsComponent jails = new JailsComponent(context);
 			context.setJails(jails);
 			add(jails);
@@ -338,5 +336,16 @@ public class Essentials extends ComponentPlugin implements IEssentials
 	public void setTesting(boolean testing)
 	{
 		this.testing = testing;
+	}
+
+
+	private enum ComponentStages
+	{
+		I18n,
+		Settings,
+		Normal,
+		Commands,
+		Backup,
+		Jails,
 	}
 }
