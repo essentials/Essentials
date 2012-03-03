@@ -264,11 +264,12 @@ public class Essentials extends ComponentPlugin implements IEssentials
 			context.setEconomy(economy);
 			add(economy);
 			break;
-		
+
 		case 3:
 			final ICommandsComponent commands = new CommandsComponent(Essentials.class.getClassLoader(), "com.earth2me.essentials.components.commands.handlers.Command", context);
 			context.setCommands(commands);
 			add(commands);
+			break;
 
 		case 4:
 			final IBackupComponent backup = new BackupComponent(context);
