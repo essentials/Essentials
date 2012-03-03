@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="collect">
+   <target name="collect">
+    <mkdir dir="jars"/>
+    <copy todir="jars">
+      <fileset dir=".">
+        <include name="**/target/Essentials*.jar"/>
+        <include name="**/Essentials/src/config.yml" />
+        <include name="**/src/messages*.properties" />
+        <include name="**/src/items.csv" />
+      </fileset>
+      <flattenmapper/>
+    </copy>
+	<move file="jars/Essentials-3.0-SNAPSHOT.jar" tofile="jars/Essentials.jar"/>
+	<move file="jars/EssentialsChat-3.0-SNAPSHOT.jar" tofile="jars/EssentialsChat.jar"/>
+	<move file="jars/EssentialsProtect-3.0-SNAPSHOT.jar" tofile="jars/EssentialsProtect.jar"/>
+	<move file="jars/EssentialsGeoIP-3.0-SNAPSHOT.jar" tofile="jars/EssentialsGeoIP.jar"/>
+	<move file="jars/EssentialsGroupManager-3.0-SNAPSHOT.jar" tofile="jars/EssentialsGroupManager.jar"/>
+	<move file="jars/EssentialsGroupBridge-3.0-SNAPSHOT.jar" tofile="jars/EssentialsGroupBridge.jar"/>
+	<move file="jars/EssentialsXMPP-3.0-SNAPSHOT.jar" tofile="jars/EssentialsXMPP.jar"/>
+    <move file="jars/Essentials2Compat-3.0-SNAPSHOT.jar" tofile="jars/Essentials2Compat.jar"/>
+    <move file="jars/EssentialsSigns-3.0-SNAPSHOT.jar" tofile="jars/EssentialsSigns.jar"/>
+    <move file="jars/EssentialsUpdate-3.0-SNAPSHOT.jar" tofile="jars/EssentialsUpdate.jar"/>
+  </target>
+</project>
