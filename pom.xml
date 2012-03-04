@@ -25,12 +25,8 @@
 
   <repositories>
     <repository>
-      <id>repobo-snap</id>
-      <url>http://repo.bukkit.org/content/groups/public</url>
-    </repository>
-    <repository>
-      <id>nexisonline-repo</id>
-      <url>http://repo.nexisonline.net:8080/nexus/content/groups/public/</url>
+      <id>essentials-repo</id>
+      <url>http://ess.ementalo.com/nexus/content/groups/public/</url>
     </repository>
   </repositories>
 
