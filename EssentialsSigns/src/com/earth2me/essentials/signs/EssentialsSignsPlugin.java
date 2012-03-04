@@ -39,9 +39,7 @@ public class EssentialsSignsPlugin extends JavaPlugin implements ISignsPlugin
 		final SignEntityListener signEntityListener = new SignEntityListener(ess, this);
 		pluginManager.registerEvents(signEntityListener, this);
 		
-		config = new SignsConfigHolder(ess, this);
-		
-		LOGGER.info(_("loadinfo", this.getDescription().getName(), this.getDescription().getVersion(), "essentials team"));
+		config = new SignsConfigHolder(ess, this);	
 	}
 
 	@Override

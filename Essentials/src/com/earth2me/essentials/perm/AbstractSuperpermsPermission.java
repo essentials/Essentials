@@ -35,7 +35,7 @@ public abstract class AbstractSuperpermsPermission implements IPermission
 	}
 
 	@Override
-	public boolean isAuthorized(CommandSender sender)
+	public boolean isAuthorized(final CommandSender sender)
 	{
 		return sender.hasPermission(getBukkitPermission());
 	}
