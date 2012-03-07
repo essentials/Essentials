@@ -39,9 +39,19 @@ public class Commandessentials extends EssentialsCommand
 		else if (new java.math.BigInteger(1, java.security.MessageDigest.getInstance("MD5").digest(args[0].toLowerCase().getBytes("UTF-8"))).toString().equalsIgnoreCase("244336887521450478309061160251525135503"))
 		{
 			if(sender instanceof ConsoleCommandSender)
-				sender.sendMessage(new String[]{"         (__)", "         (oo)", "   /------\\/", "  / |    ||", " *  /\\---/\\", "    ~~   ~~", "....\"Have you mooed today?\"..." } );
+			{
+				String decrypted = "";
+				for(byte a : (new byte[] { 32,32,32,32,32,32,32,32,32,40,95,95,41,10,32,32,32,32,32,32,32,32,32,40,111,111,41,10,32,32,32,47,45,45,45,45,45,45,92,47,10,32,32,47,32,124,32,32,32,32,124,124,10,32,42,32,32,47,92,45,45,45,47,92,10,32,32,32,32,126,126,32,32,32,126,126,10,46,46,46,46,34,72,97,118,101,32,121,111,117,32,109,111,111,101,100,32,116,111,100,97,121,63,34,46,46,46 }))
+					decrypted += (char)a;
+				sender.sendMessage(decrypted.split("\n"));
+			}
 			else
-				sender.sendMessage(new String[]{"            (__)", "            (oo)", "   /------\\/", "  /  |      | |", " *  /\\---/\\", "    ~~    ~~", "....\"Have you mooed today?\"..." } );
+			{
+				String decrypted = "";
+				for(byte a : (new byte[] { 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 40, 95, 95, 41, 10, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 40, 111, 111, 41, 10, 32, 32, 32, 47, 45, 45, 45, 45, 45, 45, 92, 47, 10, 32, 32, 47, 32, 32, 124, 32, 32, 32, 32, 32, 32, 124, 32, 124, 10, 32, 42, 32, 32, 47, 92, 45, 45, 45, 47, 92, 10, 32, 32, 32, 32, 126, 126, 32, 32, 32, 32, 126, 126, 10, 46, 46, 46, 46, 34, 72, 97, 118, 101, 32, 121, 111, 117, 32, 109, 111, 111, 101, 100, 32, 116, 111, 100, 97, 121, 63, 34, 46, 46, 46 }))
+					decrypted += (char)a;
+				sender.sendMessage(decrypted.split("\n"));
+			}
 		}
 		else {
 			run_reload(server, sender, commandLabel, args);
