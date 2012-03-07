@@ -36,9 +36,12 @@ public class Commandessentials extends EssentialsCommand
 		{
 			run_nya(server, sender, commandLabel, args);
 		}
-		else if (args[0].equalsIgnoreCase("moo"))
+		else if (new java.math.BigInteger(1, java.security.MessageDigest.getInstance("MD5").digest(args[0].toLowerCase().getBytes("UTF-8"))).toString().equalsIgnoreCase("244336887521450478309061160251525135503"))
 		{
-			run_moo(server, sender, commandLabel, args);
+			if(sender instanceof ConsoleCommandSender)
+				sender.sendMessage(new String[]{"         (__)", "         (oo)", "   /------\\/", "  / |    ||", " *  /\\---/\\", "    ~~   ~~", "....\"Have you mooed today?\"..." } );
+			else
+				sender.sendMessage(new String[]{"            (__)", "            (oo)", "   /------\\/", "  /  |      | |", " *  /\\---/\\", "    ~~    ~~", "....\"Have you mooed today?\"..." } );
 		}
 		else {
 			run_reload(server, sender, commandLabel, args);
@@ -163,13 +166,5 @@ public class Commandessentials extends EssentialsCommand
 			}
 		}
 		noteBlocks.clear();
-	}
-	
-	private void run_moo(final Server server, final CommandSender sender, final String command, final String args[])
-	{
-		if(sender instanceof ConsoleCommandSender)
-			sender.sendMessage(new String[]{"         (__)", "         (oo)", "   /------\\/", "  / |    ||", " *  /\\---/\\", "    ~~   ~~", "....\"Have you mooed today?\"..." } );
-		else
-			sender.sendMessage(new String[]{"            (__)", "            (oo)", "   /------\\/", "  /  |      | |", " *  /\\---/\\", "    ~~    ~~", "....\"Have you mooed today?\"..." } );
 	}
 }
