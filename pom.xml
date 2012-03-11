@@ -13,6 +13,7 @@
   <modules>
     <module>Essentials</module>
     <module>Essentials2Compat</module>
+    <module>EssentialsAntiCheat</module>
     <module>EssentialsChat</module>
     <module>EssentialsGeoIP</module>
     <module>EssentialsGroupBridge</module>
@@ -34,7 +35,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.2.3-R0.1-SNAPSHOT</version>
+      <version>1.2.3-R0.2-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

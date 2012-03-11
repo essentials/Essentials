@@ -12,6 +12,7 @@
       <flattenmapper/>
     </copy>
     <move file="jars/Essentials-3.0-SNAPSHOT.jar" tofile="jars/Essentials.jar"/>
+    <move file="jars/EssentialsAntiCheat-3.0-SNAPSHOT.jar" tofile="jars/EssentialsAntiCheat.jar"/>
     <move file="jars/EssentialsChat-3.0-SNAPSHOT.jar" tofile="jars/EssentialsChat.jar"/>
     <move file="jars/EssentialsProtect-3.0-SNAPSHOT.jar" tofile="jars/EssentialsProtect.jar"/>
     <move file="jars/EssentialsGeoIP-3.0-SNAPSHOT.jar" tofile="jars/EssentialsGeoIP.jar"/>
