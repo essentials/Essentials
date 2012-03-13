@@ -231,8 +231,8 @@ public class User extends UserBase implements IUser
 				displayname = displayname.replace("{SUFFIX}", groups.getSuffix(this));
 			}
 			displayname = displayname.replace("{WORLDNAME}", this.getWorld().getName());
-			displayname = displayname.replace('&', '�');
-			displayname = displayname.concat("�f");
+			displayname = displayname.replace('&', '\u00a7');
+			displayname = displayname.concat("\u00a7f");
 
 			return displayname;
 		}
@@ -252,7 +252,7 @@ public class User extends UserBase implements IUser
 		}
 		if (name.length() > 16)
 		{
-			name = name.substring(0, name.charAt(15) == '�' ? 15 : 16);
+			name = name.substring(0, name.charAt(15) == '\u00a7' ? 15 : 16);
 		}
 		try
 		{
