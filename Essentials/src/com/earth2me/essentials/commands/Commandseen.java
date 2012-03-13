@@ -3,7 +3,9 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.perm.Permissions;
 import com.earth2me.essentials.user.UserData.TimestampType;
+import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 
 
@@ -11,6 +13,17 @@ public class Commandseen extends EssentialsCommand
 {
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	{
+		seen(sender,args,true);
+	}
+	
+	@Override
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	{
+		seen(user,args,Permissions.SEEN_BANREASON.isAuthorized(user));
+	}
+	
+	protected void seen (final CommandSender sender, final String[] args, final boolean show) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -23,7 +36,9 @@ public class Commandseen extends EssentialsCommand
 		}
 		catch (NoSuchFieldException e)
 		{
+			@Cleanup
 			IUser u = ess.getUser(args[0]);
+			u.acquireReadLock();
 			if (u == null)
 			{
 				throw new Exception(_("playerNotFound"));
@@ -31,7 +46,7 @@ public class Commandseen extends EssentialsCommand
 			sender.sendMessage(_("seenOffline", u.getDisplayName(), Util.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
 			if (u.isBanned())
 			{
-				sender.sendMessage(_("whoisBanned", _("true")));
+				sender.sendMessage(_("whoisBanned", show ? u.getData().getBan().getReason() : _("true")));
 			}
 		}
 	}

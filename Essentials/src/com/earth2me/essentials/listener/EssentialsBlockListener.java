@@ -21,13 +21,9 @@ public class EssentialsBlockListener implements Listener
 		this.ess = ess;
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		// Do not rely on getItemInHand();
 		// http://leaky.bukkit.org/issues/663
 		final ItemStack itemstack = Util.convertBlockToItem(event.getBlockPlaced());

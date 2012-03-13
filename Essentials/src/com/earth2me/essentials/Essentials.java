@@ -53,7 +53,7 @@ import org.yaml.snakeyaml.error.YAMLException;
 
 public class Essentials extends JavaPlugin implements IEssentials
 {
-	public static final int BUKKIT_VERSION = 1952;
+	public static final int BUKKIT_VERSION = 2015;
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient ISettings settings;
 	private final transient TntExplodeListener tntListener = new TntExplodeListener(this);
@@ -122,11 +122,11 @@ public class Essentials extends JavaPlugin implements IEssentials
 				LOGGER.log(Level.WARNING, _("versionMismatch", plugin.getDescription().getName()));
 			}
 		}
-		final Matcher versionMatch = Pattern.compile("git-Bukkit-([0-9]+).([0-9]+).([0-9]+)-R[0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
+		final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
 		if (versionMatch.matches())
 		{
-			final int versionNumber = Integer.parseInt(versionMatch.group(4));
-			if (versionNumber < BUKKIT_VERSION)
+			final int versionNumber = Integer.parseInt(versionMatch.group(1));
+			if (versionNumber < BUKKIT_VERSION && versionNumber > 100)
 			{
 				LOGGER.log(Level.SEVERE, _("notRecommendedBukkit"));
 				LOGGER.log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));

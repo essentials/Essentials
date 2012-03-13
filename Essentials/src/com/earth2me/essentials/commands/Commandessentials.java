@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 
@@ -29,6 +30,10 @@ public class Commandessentials extends EssentialsCommand
 		else if (args[0].equalsIgnoreCase("nya"))
 		{
 			run_nya(sender, args);
+		}
+		else if (args[0].equalsIgnoreCase("moo"))
+		{
+			run_moo(sender, args);
 		}
 		else
 		{
@@ -109,7 +114,7 @@ public class Commandessentials extends EssentialsCommand
 			if (loc.getBlock().getTypeId() == 0)
 			{
 				noteBlocks.put(player, loc.getBlock());
-				loc.getBlock().setType(Material.NOTE_BLOCK);
+				player.sendBlockChange(loc, Material.NOTE_BLOCK, (byte)0);
 			}
 		}
 		taskid = ess.scheduleSyncRepeatingTask(new Runnable()
@@ -141,7 +146,6 @@ public class Commandessentials extends EssentialsCommand
 				}
 			}
 		}, 20, 2);
-		return;
 	}
 
 	private void stopTune()
@@ -155,5 +159,13 @@ public class Commandessentials extends EssentialsCommand
 			}
 		}
 		noteBlocks.clear();
+	}
+	
+	private void run_moo(final CommandSender sender, final String args[])
+	{
+		if(sender instanceof ConsoleCommandSender)
+			sender.sendMessage(new String[]{"         (__)", "         (oo)", "   /------\\/", "  / |    ||", " *  /\\---/\\", "    ~~   ~~", "....\"Have you mooed today?\"..." } );
+		else
+			sender.sendMessage(new String[]{"            (__)", "            (oo)", "   /------\\/", "  /  |      | |", " *  /\\---/\\", "    ~~    ~~", "....\"Have you mooed today?\"..." } );
 	}
 }

@@ -115,10 +115,10 @@ public class User extends UserBase implements IUser
 		try
 		{
 			setMoney(getMoney() + value);
-			sendMessage(_("addedToAccount", Util.formatCurrency(value, ess)));
+			sendMessage(_("addedToAccount", Util.displayCurrency(value, ess)));
 			if (initiator != null)
 			{
-				initiator.sendMessage(_("addedToOthersAccount", Util.formatCurrency(value, ess), this.getDisplayName()));
+				initiator.sendMessage(_("addedToOthersAccount", Util.displayCurrency(value, ess), this.getDisplayName()));
 			}
 		}
 		finally
@@ -138,8 +138,8 @@ public class User extends UserBase implements IUser
 		{
 			setMoney(getMoney() - value);
 			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("moneySentTo", Util.formatCurrency(value, ess), reciever.getDisplayName()));
-			reciever.sendMessage(_("moneyRecievedFrom", Util.formatCurrency(value, ess), getDisplayName()));
+			sendMessage(_("moneySentTo", Util.displayCurrency(value, ess), reciever.getDisplayName()));
+			reciever.sendMessage(_("moneyRecievedFrom", Util.displayCurrency(value, ess), getDisplayName()));
 		}
 		else
 		{
@@ -161,17 +161,11 @@ public class User extends UserBase implements IUser
 			return;
 		}
 		setMoney(getMoney() - value);
-		sendMessage(_("takenFromAccount", Util.formatCurrency(value, ess)));
+		sendMessage(_("takenFromAccount", Util.displayCurrency(value, ess)));
 		if (initiator != null)
 		{
-			initiator.sendMessage(_("takenFromOthersAccount", Util.formatCurrency(value, ess), this.getDisplayName()));
+			initiator.sendMessage(_("takenFromOthersAccount", Util.displayCurrency(value, ess), this.getDisplayName()));
 		}
-	}
-
-	public boolean canAfford(final double cost)
-	{
-		final double mon = getMoney();
-		return mon >= cost || Permissions.ECO_LOAN.isAuthorized(this);
 	}
 
 	public void setHome()
@@ -237,8 +231,8 @@ public class User extends UserBase implements IUser
 				displayname = displayname.replace("{SUFFIX}", groups.getSuffix(this));
 			}
 			displayname = displayname.replace("{WORLDNAME}", this.getWorld().getName());
-			displayname = displayname.replace('&', '§');
-			displayname = displayname.concat("§f");
+			displayname = displayname.replace('&', 'ï¿½');
+			displayname = displayname.concat("ï¿½f");
 
 			return displayname;
 		}
@@ -258,7 +252,7 @@ public class User extends UserBase implements IUser
 		}
 		if (name.length() > 16)
 		{
-			name = name.substring(0, name.charAt(15) == '§' ? 15 : 16);
+			name = name.substring(0, name.charAt(15) == 'ï¿½' ? 15 : 16);
 		}
 		try
 		{
@@ -666,5 +660,29 @@ public class User extends UserBase implements IUser
 			}
 		}
 		return spew;
+	}
+
+	@Override
+	public boolean canAfford(final double cost)
+	{
+		final double mon = getMoney();
+		if (Permissions.ECO_LOAN.isAuthorized(this))
+		{
+			@Cleanup
+			final ISettings settings = ess.getSettings();
+			settings.acquireReadLock();
+			return (mon - cost) >= settings.getData().getEconomy().getMinMoney();
+		}
+		return cost <= mon;
+	}
+	
+	public void updateMoneyCache(double userMoney) {
+		if (super.getMoney() != userMoney) {
+			super.setMoney(userMoney);
+		}
+	}
+
+	public boolean canAfford(double amount, boolean b) {
+		return true;
 	}
 }

@@ -26,7 +26,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -79,13 +78,9 @@ public class EssentialsPlayerListener implements Listener
 		user.updateDisplayName();
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerMove(final PlayerMoveEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		@Cleanup
 		final IUser user = ess.getUser(event.getPlayer());
 		user.acquireReadLock();
@@ -199,8 +194,13 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerLogin(final PlayerLoginEvent event)
 	{
-		if (event.getResult() != Result.ALLOWED && event.getResult() != Result.KICK_FULL && event.getResult() != Result.KICK_BANNED)
+		switch (event.getResult())
 		{
+		case ALLOWED:
+		case KICK_FULL:
+		case KICK_BANNED:
+			break;
+		default:
 			return;
 		}
 		@Cleanup
@@ -231,29 +231,22 @@ public class EssentialsPlayerListener implements Listener
 		user.updateCompass();
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerTeleport(final PlayerTeleportEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
-
 		@Cleanup
 		final ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
-		final IUser user = ess.getUser(event.getPlayer());
 		//There is TeleportCause.COMMMAND but plugins have to actively pass the cause in on their teleports.
 		if ((event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND) && settings.getData().getCommands().getBack().isRegisterBackInListener())
 		{
+			final IUser user = ess.getUser(event.getPlayer());
 			user.setLastLocation();
 		}
 
-		user.updateDisplayName();
-		user.updateCompass();
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerEggThrow(final PlayerEggThrowEvent event)
 	{
 		@Cleanup
@@ -267,7 +260,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event)
 	{
 		@Cleanup
@@ -287,71 +280,9 @@ public class EssentialsPlayerListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void onPlayerAnimation(final PlayerAnimationEvent event)
-	{
-		final IUser user = ess.getUser(event.getPlayer());
-		user.updateActivity(true);
-		if (event.getAnimationType() == PlayerAnimationType.ARM_SWING)
-		{
-			usePowertools(user);
-		}
-	}
-
-	private void usePowertools(final IUser user)
-	{
-		user.acquireReadLock();
-		try
-		{
-			if (!user.getData().hasPowerTools() || !user.getData().isPowerToolsEnabled())
-			{
-				return;
-			}
-
-			final ItemStack hand = user.getItemInHand();
-			Material type;
-			if (hand == null || (type = hand.getType()) == Material.AIR)
-			{
-				return;
-			}
-			final List<String> commandList = user.getData().getPowertool(type);
-
-			if (commandList == null || commandList.isEmpty())
-			{
-				return;
-			}
-
-			// We need to loop through each command and execute
-			for (String command : commandList)
-			{
-				if (command.matches(".*\\{player\\}.*"))
-				{
-					//user.sendMessage("Click a player to use this command");
-					continue;
-				}
-				else if (command.startsWith("c:"))
-				{
-					user.chat(command.substring(2));
-				}
-				else
-				{
-					user.getServer().dispatchCommand(user.getBase(), command);
-				}
-			}
-		}
-		finally
-		{
-			user.unlock();
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final IUser user = ess.getUser(event.getPlayer());
 		final String cmd = event.getMessage().toLowerCase(Locale.ENGLISH).split(" ")[0].replace("/", "").toLowerCase(Locale.ENGLISH);
 		final List<String> commands = Arrays.asList("msg", "r", "mail", "m", "t", "emsg", "tell", "er", "reply", "ereply", "email");
@@ -383,6 +314,10 @@ public class EssentialsPlayerListener implements Listener
 		@Cleanup
 		final IUser user = ess.getUser(event.getPlayer());
 		user.acquireReadLock();
+		if (settings.getData().getChat().getChangeDisplayname())
+		{
+			user.updateDisplayName();
+		}
 		if (!settings.getData().getWorldOptions(event.getPlayer().getLocation().getWorld().getName()).isGodmode() && !Permissions.NOGOD_OVERRIDE.isAuthorized(user))
 		{
 			if (user.getData().isGodmode())
@@ -400,34 +335,91 @@ public class EssentialsPlayerListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
-		if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
-		{
-			return;
-		}
-
 		@Cleanup
-		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		if (settings.getData().getCommands().getHome().isUpdateBedAtDaytime() && event.getClickedBlock().getType() == Material.BED_BLOCK)
+		final IUser user = ess.getUser(event.getPlayer());
+		user.acquireReadLock();
+		user.updateActivity(true);
+		switch (event.getAction())
 		{
-			event.getPlayer().setBedSpawnLocation(event.getClickedBlock().getLocation());
+		case RIGHT_CLICK_BLOCK:
+			if (event.isCancelled())
+			{
+				return;
+			}
+			@Cleanup
+			final ISettings settings = ess.getSettings();
+			settings.acquireReadLock();
+			if (settings.getData().getCommands().getHome().isUpdateBedAtDaytime() && event.getClickedBlock().getType() == Material.BED_BLOCK)
+			{
+				event.getPlayer().setBedSpawnLocation(event.getClickedBlock().getLocation());
+			}
+			break;
+		case LEFT_CLICK_AIR:
+		case LEFT_CLICK_BLOCK:
+			if (user.getData().hasPowerTools() && user.getData().isPowerToolsEnabled())
+			{
+				if (usePowertools(user))
+				{
+					event.setCancelled(true);
+				}
+			}
+			break;
+		default:
+			break;
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOW)
+	private boolean usePowertools(final IUser user)
+	{
+		final ItemStack is = user.getItemInHand();
+		int id;
+		if (is == null || (id = is.getTypeId()) == 0)
+		{
+			return false;
+		}
+		
+		final List<String> commandList = user.getData().getPowertool(is.getType());
+		if (commandList == null || commandList.isEmpty())
+		{
+			return false;
+		}
+		boolean used = false;
+		// We need to loop through each command and execute
+		for (final String command : commandList)
+		{
+			if (command.matches(".*\\{player\\}.*"))
+			{
+				//user.sendMessage("Click a player to use this command");
+				continue;
+			}
+			else if (command.startsWith("c:"))
+			{
+				used = true;
+				user.chat(command.substring(2));
+			}
+			else
+			{
+				used = true;
+				ess.scheduleSyncDelayedTask(
+						new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								user.getServer().dispatchCommand(user.getBase(), command);
+							}
+						});
+			}
+		}
+		return used;
+	}
+
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPlayerPickupItem(final PlayerPickupItemEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		@Cleanup
 		final ISettings settings = ess.getSettings();
 		settings.acquireReadLock();

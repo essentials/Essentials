@@ -16,6 +16,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.help.HelpMap;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -860,19 +861,27 @@ public class FakeServer implements Server
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-    public HelpMap getHelpMap() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public HelpMap getHelpMap()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public Inventory createInventory(InventoryHolder owner, InventoryType type) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public Inventory createInventory(InventoryHolder ih, InventoryType it)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public Inventory createInventory(InventoryHolder owner, int size) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public Inventory createInventory(InventoryHolder ih, int i)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public Inventory createInventory(InventoryHolder owner, int size, String title) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public Inventory createInventory(InventoryHolder ih, int i, String string)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

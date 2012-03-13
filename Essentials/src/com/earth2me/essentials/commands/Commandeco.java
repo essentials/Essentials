@@ -2,6 +2,7 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
+import static com.earth2me.essentials.I18n._;
 import java.util.Locale;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
@@ -29,7 +30,34 @@ public class Commandeco extends EssentialsCommand
 			throw new NotEnoughArgumentsException(ex);
 		}
 
-		if (args[1].contentEquals("*"))
+		if (args[1].contentEquals("**"))
+		{
+			for (String sUser : ess.getUserMap().getAllUniqueUsers())
+			{
+				final IUser player = ess.getUser(sUser);
+				switch (cmd)
+				{
+				case GIVE:
+					player.giveMoney(amount);
+					break;
+
+				case TAKE:
+					if (player.canAfford(amount, false))
+					{
+						player.takeMoney(amount);
+					}					
+					break;
+
+				case RESET:
+					@Cleanup 
+					ISettings settings = ess.getSettings();
+					settings.acquireReadLock();
+					player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
+					break;
+				}
+			}
+		}
+		else if (args[1].contentEquals("*"))
 		{
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
@@ -41,6 +69,10 @@ public class Commandeco extends EssentialsCommand
 					break;
 
 				case TAKE:
+					if (!player.canAfford(amount, false))
+					{
+						throw new Exception(_("notEnoughMoney"));
+					}
 					player.takeMoney(amount);
 					break;
 
@@ -63,6 +95,10 @@ public class Commandeco extends EssentialsCommand
 				break;
 
 			case TAKE:
+				if (!player.canAfford(amount, false))
+				{
+					throw new Exception(_("notEnoughMoney"));
+				}
 				player.takeMoney(amount, sender);
 				break;
 

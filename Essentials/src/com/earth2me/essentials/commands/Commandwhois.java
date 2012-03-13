@@ -5,6 +5,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.user.UserData;
 import java.util.Locale;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
@@ -61,7 +62,12 @@ public class Commandwhois extends EssentialsCommand
 			sender.sendMessage(_("whoisGod", (user.isGodModeEnabled() ? _("true") : _("false"))));
 			sender.sendMessage(_("whoisGamemode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH))));
 			sender.sendMessage(_("whoisLocation", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
-			sender.sendMessage(_("whoisMoney", Util.formatCurrency(user.getMoney(), ess)));
+			sender.sendMessage(_("whoisMoney", Util.displayCurrency(user.getMoney(), ess)));
+			sender.sendMessage(_("whoisJail", (user.getData().isJailed()
+											   ? user.getTimestamp(UserData.TimestampType.JAIL) > 0
+												 ? Util.formatDateDiff(user.getTimestamp(UserData.TimestampType.JAIL))
+												 : _("true")
+											   : _("false"))));
 			sender.sendMessage(user.getData().isAfk()
 							   ? _("whoisStatusAway")
 							   : _("whoisStatusAvailable"));

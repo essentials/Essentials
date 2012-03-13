@@ -29,50 +29,49 @@ public class EssentialsEntityListener implements Listener
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onEntityDamage(final EntityDamageEvent event)
+	public void onEntityDamage(final EntityDamageByEntityEvent event)
 	{
-		if (event instanceof EntityDamageByEntityEvent)
+		final Entity eAttack = event.getDamager();
+		final Entity eDefend = event.getEntity();
+		if (eDefend instanceof Player && eAttack instanceof Player)
 		{
-			final EntityDamageByEntityEvent edEvent = (EntityDamageByEntityEvent)event;
-			final Entity eAttack = edEvent.getDamager();
-			final Entity eDefend = edEvent.getEntity();
-			if (eDefend instanceof Player && eAttack instanceof Player)
+			@Cleanup
+			final IUser attacker = ess.getUser((Player)eAttack);
+			attacker.acquireReadLock();
+			attacker.updateActivity(true);
+			final ItemStack itemstack = attacker.getItemInHand();
+			final List<String> commandList = attacker.getData().getPowertool(itemstack.getType());
+			if (commandList != null && !commandList.isEmpty())
 			{
-				@Cleanup
-				final IUser attacker = ess.getUser((Player)eAttack);
-				attacker.acquireReadLock();
-				attacker.updateActivity(true);
-				final ItemStack itemstack = attacker.getItemInHand();
-				final List<String> commandList = attacker.getData().getPowertool(itemstack.getType());
-				if (commandList != null && !commandList.isEmpty())
+				for (String command : commandList)
 				{
-					for (String command : commandList)
+					if (command != null && !command.isEmpty())
 					{
-
-						if (command != null && !command.isEmpty())
-						{
-							final IUser defender = ess.getUser((Player)eDefend);
-							attacker.getServer().dispatchCommand(attacker, command.replaceAll("\\{player\\}", defender.getName()));
-							event.setCancelled(true);
-							return;
-						}
+						attacker.getServer().dispatchCommand(attacker, command.replaceAll("\\{player\\}", ((Player)eDefend).getName()));
+						event.setCancelled(true);
+						return;
 					}
 				}
 			}
-			if (eDefend instanceof Animals && eAttack instanceof Player)
+		}
+		else if (eDefend instanceof Animals && eAttack instanceof Player)
+		{
+			final Player player = (Player)eAttack;
+			final ItemStack hand = player.getItemInHand();
+			if (hand != null && hand.getType() == Material.MILK_BUCKET)
 			{
-				final IUser player = ess.getUser((Player)eAttack);
-				final ItemStack hand = player.getItemInHand();
-				if (hand != null && hand.getType() == Material.MILK_BUCKET)
-				{
-					((Animals)eDefend).setAge(-24000);
-					hand.setType(Material.BUCKET);
-					player.setItemInHand(hand);
-					player.updateInventory();
-					event.setCancelled(true);
-				}
+				((Animals)eDefend).setBaby();
+				hand.setType(Material.BUCKET);
+				player.setItemInHand(hand);
+				player.updateInventory();
+				event.setCancelled(true);
 			}
 		}
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	public void onEntityDamage(final EntityDamageEvent event)
+	{
 		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isGodModeEnabled())
 		{
 			final Player player = (Player)event.getEntity();
@@ -82,7 +81,7 @@ public class EssentialsEntityListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onEntityCombust(final EntityCombustEvent event)
 	{
 		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isGodModeEnabled())
@@ -92,28 +91,24 @@ public class EssentialsEntityListener implements Listener
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onEntityDeath(final EntityDeathEvent event)
+	public void onPlayerDeathEvent(final PlayerDeathEvent event)
 	{
-		if (event instanceof PlayerDeathEvent)
+		final IUser user = ess.getUser((Player)event.getEntity());
+		@Cleanup
+		final ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		if (Permissions.BACK_ONDEATH.isAuthorized(user) && !settings.getData().getCommands().isDisabled("back"))
 		{
-			final PlayerDeathEvent pdevent = (PlayerDeathEvent)event;
-			final IUser user = ess.getUser((Player)pdevent.getEntity());
-			@Cleanup
-			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
-			if (Permissions.BACK_ONDEATH.isAuthorized(user) && !settings.getData().getCommands().isDisabled("back"))
-			{
-				user.setLastLocation();
-				user.sendMessage(_("backAfterDeath"));
-			}
-			if (!settings.getData().getGeneral().isDeathMessages())
-			{
-				pdevent.setDeathMessage("");
-			}
+			user.setLastLocation();
+			user.sendMessage(_("backAfterDeath"));
+		}
+		if (!settings.getData().getGeneral().isDeathMessages())
+		{
+			event.setDeathMessage("");
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onFoodLevelChange(final FoodLevelChangeEvent event)
 	{
 		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isGodModeEnabled())
@@ -122,7 +117,7 @@ public class EssentialsEntityListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onEntityRegainHealth(final EntityRegainHealthEvent event)
 	{
 

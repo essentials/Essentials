@@ -123,7 +123,7 @@ public class Economy implements IEconomy
 	@Override
 	public String format(double amount)
 	{
-		return Util.formatCurrency(amount, ess);
+		return Util.displayCurrency(amount, ess);
 	}
 
 	@Override

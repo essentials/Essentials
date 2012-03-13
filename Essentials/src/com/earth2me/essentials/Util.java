@@ -350,7 +350,7 @@ public final class Util
 		while (isBlockUnsafe(world, x, y, z))
 		{
 			y += 1;
-			if (y >= 127)
+			if (y >= world.getHighestBlockYAt(x, z))
 			{
 				x += 1;
 				break;
@@ -361,8 +361,8 @@ public final class Util
 			y -= 1;
 			if (y <= 1)
 			{
-				y = 127;
 				x += 1;
+				y = world.getHighestBlockYAt(x, z);
 				if (x - 32 > loc.getBlockX())
 				{
 					throw new Exception(_("holeInFloor"));
@@ -479,19 +479,33 @@ public final class Util
 		}
 		return is;
 	}
-	private static DecimalFormat df = new DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale.US));
+	private static DecimalFormat dFormat = new DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale.US));
 
-	public static String formatCurrency(final double value, final IEssentials ess)
+	public static String formatAsCurrency(final double value)
 	{
-		@Cleanup
-		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		String str = settings.getData().getEconomy().getCurrencySymbol() + df.format(value);
+		
+		String str = dFormat.format(value);
 		if (str.endsWith(".00"))
 		{
 			str = str.substring(0, str.length() - 3);
 		}
 		return str;
+	}
+
+	public static String displayCurrency(final double value, final IEssentials ess)
+	{
+		@Cleanup
+		final ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		return _("currency", settings.getData().getEconomy().getCurrencySymbol(), formatAsCurrency(value));
+	}
+
+	public static String shortCurrency(final double value, final IEssentials ess)
+	{
+		@Cleanup
+		final ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		return settings.getData().getEconomy().getCurrencySymbol() + formatAsCurrency(value);
 	}
 
 	public static double roundDouble(final double d)

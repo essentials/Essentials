@@ -193,23 +193,33 @@ public class FakeInventory implements Inventory
 		}
 	}
 
-    public List<HumanEntity> getViewers() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public List<HumanEntity> getViewers()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public String getTitle() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public String getTitle()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public InventoryType getType() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public InventoryType getType()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public InventoryHolder getHolder() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public InventoryHolder getHolder()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public ListIterator<ItemStack> iterator() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public ListIterator<ItemStack> iterator()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

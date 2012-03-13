@@ -51,6 +51,8 @@ public class Commandkit extends EssentialsCommand
 			charge.isAffordableFor(user);
 
 			ess.getKits().sendKit(user, kit);
+			
+			//TODO: Merge kit changes from 2.9
 
 			charge.charge(user);
 			user.sendMessage(_("kitGive", kitName));

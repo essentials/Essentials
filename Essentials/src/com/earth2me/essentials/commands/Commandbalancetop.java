@@ -100,14 +100,18 @@ public class Commandbalancetop extends EssentialsCommand
 			{
 				if (force || cacheage <= System.currentTimeMillis() - CACHETIME)
 				{
-					cache.getLines().clear();
+					cache.getLines().clear();					
 					final Map<String, Double> balances = new HashMap<String, Double>();
+					double totalMoney = 0d;
 					for (String u : ess.getUserMap().getAllUniqueUsers())
 					{
 						final IUser user = ess.getUserMap().getUser(u);
 						if (user != null)
 						{
-							balances.put(user.getDisplayName(), user.getMoney());
+							final double userMoney = user.getMoney();
+							user.updateMoneyCache(userMoney);
+							totalMoney += userMoney;
+							balances.put(user.getDisplayName(), userMoney);
 						}
 					}
 
@@ -120,10 +124,12 @@ public class Commandbalancetop extends EssentialsCommand
 							return -entry1.getValue().compareTo(entry2.getValue());
 						}
 					});
+					
+					cache.getLines().add(_("serverTotal", Util.displayCurrency(totalMoney, ess)));
 					int pos = 1;
 					for (Map.Entry<String, Double> entry : sortedEntries)
 					{
-						cache.getLines().add(pos + ". " + entry.getKey() + ", " + Util.formatCurrency(entry.getValue(), ess));
+						cache.getLines().add(pos + ". " + entry.getKey() + ", " + Util.displayCurrency(entry.getValue(), ess));
 						pos++;
 					}
 					cacheage = System.currentTimeMillis();

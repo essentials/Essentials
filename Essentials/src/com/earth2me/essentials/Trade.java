@@ -153,8 +153,7 @@ public class Trade
 	{
 		if (getMoney() != null)
 		{
-			final double mon = user.getMoney();
-			if (mon < getMoney() && getMoney() > 0 && !Permissions.ECO_LOAN.isAuthorized(user))
+			if (!user.canAfford(getMoney()) && getMoney() > 0)
 			{
 				throw new ChargeException(_("notEnoughMoney"));
 			}
@@ -175,9 +174,8 @@ public class Trade
 			@Cleanup
 			final ISettings settings = ess.getSettings();
 			settings.acquireReadLock();
-			final double mon = user.getMoney();
 			final double cost = settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
-			if (mon < cost && cost > 0 && !Permissions.ECO_LOAN.isAuthorized(user))
+			if (!user.canAfford(cost) && cost > 0)
 			{
 				throw new ChargeException(_("notEnoughMoney"));
 			}

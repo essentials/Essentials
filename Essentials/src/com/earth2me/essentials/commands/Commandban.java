@@ -21,7 +21,7 @@ public class Commandban extends EssentialsCommand
 		}
 		@Cleanup
 		final IUser user = getPlayer(args, 0, true);
-		if (user.isOnline())
+		if (!user.isOnline())
 		{
 			if (Permissions.BAN_EXEMPT.isAuthorized(user))
 			{

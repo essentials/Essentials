@@ -118,7 +118,7 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 		acquireReadLock();
 		try
 		{
-			if (!(user.isOnline()))
+			if (user.isOnline())
 			{
 				Location loc = getJail(jail);
 				user.getTeleport().now(loc, false, TeleportCause.COMMAND);
@@ -160,7 +160,7 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 
 	private class JailBlockListener implements Listener
 	{
-		@EventHandler(priority = EventPriority.LOW)
+		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onBlockBreak(final BlockBreakEvent event)
 		{
 			@Cleanup
@@ -172,7 +172,7 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 			}
 		}
 
-		@EventHandler(priority = EventPriority.LOW)
+		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onBlockPlace(final BlockPlaceEvent event)
 		{
 			@Cleanup
@@ -184,7 +184,7 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 			}
 		}
 
-		@EventHandler(priority = EventPriority.LOW)
+		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onBlockDamage(final BlockDamageEvent event)
 		{
 			@Cleanup
@@ -200,7 +200,7 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 
 	private class JailPlayerListener implements Listener
 	{
-		@EventHandler(priority = EventPriority.LOW)
+		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onPlayerInteract(final PlayerInteractEvent event)
 		{
 			@Cleanup
@@ -212,7 +212,7 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 			}
 		}
 
-		@EventHandler(priority = EventPriority.HIGH)
+		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onPlayerRespawn(final PlayerRespawnEvent event)
 		{
 			@Cleanup
@@ -269,7 +269,7 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 			user.sendMessage(_("jailMessage"));
 		}
 
-		@EventHandler(priority = EventPriority.HIGH)
+		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onPlayerJoin(final PlayerJoinEvent event)
 		{
 			@Cleanup

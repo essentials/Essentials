@@ -18,8 +18,6 @@
 #   - CraftBukkit and Permissions have been updated: CraftBukkit and Essentials almost always line up, but sometimes other plugins fall behind CraftBukkit's multiple daily updates
 #   - You have saved the document as UTF-8, NOT the default, ANSI
 
-
-
 ############################################################
 # +------------------------------------------------------+ #
 # |                 Essentials (Global)                  | #
@@ -85,7 +83,7 @@ warn-on-smite: true
 overridden-commands:
   - god
 
-# Disabled commands will be completelly unavailable on the server.
+# Disabled commands will be completely unavailable on the server.
 disabled-commands:
 # - nick
 
@@ -160,12 +158,19 @@ player-commands:
 # All kit names should be lower case, and will be treated as lower in permissions/costs.
 # Times are measured in seconds.
 kits:
-  tools:
+  dtools:
     delay: 10
     items:
       - 277 1
       - 278 1
       - 279 1
+  tools:
+    delay: 10
+    items:
+      - 272 1
+      - 273 1
+      - 274 1
+      - 275 1
 
 # Essentials Sign Control
 # See http://ess.khhq.net/wiki/Sign_Tutorial for instructions on how to use these.
@@ -288,10 +293,10 @@ spawn-if-no-home: true
 update-bed-at-daytime: true
 
 # Allow players to have multiple homes.
+# Players need essentials.sethome.multiple before they can have more than 1 home, default to 'default' below.
 # Define different amounts of multiple homes for different permissions, e.g. essentials.sethome.multiple.vip
 # People with essentials.sethome.multiple.unlimited are not limited by these numbers.
 sethome-multiple:  
-  # essentials.sethome.multiple
   default: 3
   # essentials.sethome.multiple.vip
   vip: 5
@@ -327,6 +332,10 @@ currency-symbol: '$'
 # Set the maximum amount of money a player can have
 # The amount is always limited to 10 trillions because of the limitations of a java double
 max-money: 10000000000000
+
+# Set the minimum amount of money a player can have (must be above the negitive of max-money).
+# Setting this to 0, will disable overdrafts/loans completely.  Users need 'essentials.eco.loan' perm to go below 0.
+min-money: -10000
 
 # Enable this to log all interactions with trade/buy/sell signs and sell command
 economy-log-enabled: false
@@ -374,8 +383,6 @@ chat:
   #  Admins: '{WORLDNAME} &c[{GROUP}]&f {DISPLAYNAME}&7:&c {MESSAGE}'
 
   # If your using group formats make sure to remove the '#' to allow the setting to be read.
-
-
 
 ############################################################
 # +------------------------------------------------------+ #
@@ -532,7 +539,6 @@ protect:
     # Should we tell people they are not allowed to build
     warn-on-build-disallow: true
 
-
     # Disable weather options
     weather:
       storm: false
@@ -555,6 +561,11 @@ newbies:
   # When we spawn for the first time, which spawnpoint do we use?
   # Set to "none" if you want to use the spawn point of the world.
   spawnpoint: newbies
+  
+  # Do we want to give users anything on first join? Set to '' to disable
+  # This kit will be given reguardless of cost, and permissions.
+  #kit: ''
+  kit: tools
 
 # Set this to lowest, if you want Multiverse to handle the respawning
 # Set this to high, if you want EssentialsSpawn to handle the respawning

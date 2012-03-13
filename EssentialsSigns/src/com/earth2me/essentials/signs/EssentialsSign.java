@@ -267,7 +267,7 @@ public class EssentialsSign
 		final Double money = trade.getMoney();
 		if (money != null)
 		{
-			sign.setLine(index, Util.formatCurrency(money, ess));
+			sign.setLine(index, Util.shortCurrency(money, ess));
 		}
 	}
 

@@ -332,7 +332,7 @@ public class EssentialsProtectEntityListener implements Listener
 		settings.acquireReadLock();
 		try
 		{
-			if (settings.getData().getPrevent().isEndermanPickup())
+			if (event.getEntityType() == EntityType.ENDERMAN && settings.getData().getPrevent().isEndermanPickup())
 			{
 				event.setCancelled(true);
 			}

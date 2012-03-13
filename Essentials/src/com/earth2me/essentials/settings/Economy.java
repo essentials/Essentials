@@ -37,6 +37,18 @@ public class Economy implements StorageObject
 	{
 		return Math.abs(maxMoney) > MAXMONEY ? MAXMONEY : Math.abs(maxMoney);
 	}
+	
+	@Comment(
+	{
+		"Set the minimum amount of money a player can have (must be above the negative of max-money).",
+		"Setting this to 0, will disable overdrafts/loans completely.  Users need 'essentials.eco.loan' perm to go below 0."
+	})
+	private double minMoney = -MAXMONEY;
+	public double getMinMoney()
+	{
+		return Math.abs(minMoney) > MAXMONEY ? -MAXMONEY : minMoney;
+	}
+	
 	@Comment("Enable this to log all interactions with trade/buy/sell signs and sell command")
 	private boolean logEnabled = false;
 	private Worth worth = new Worth();

@@ -586,31 +586,45 @@ public class FakeWorld implements World
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-    public LivingEntity spawnCreature(Location loc, EntityType type) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public LivingEntity spawnCreature(Location arg0, EntityType arg1)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public <T> void playEffect(Location location, Effect effect, T data) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public <T> void playEffect(Location lctn, Effect effect, T t)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public <T> void playEffect(Location location, Effect effect, T data, int radius) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public <T> void playEffect(Location lctn, Effect effect, T t, int i)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public void setMetadata(String string, MetadataValue mv)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public List<MetadataValue> getMetadata(String metadataKey) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public List<MetadataValue> getMetadata(String string)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public boolean hasMetadata(String metadataKey) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public boolean hasMetadata(String string)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public void removeMetadata(String metadataKey, Plugin owningPlugin) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public void removeMetadata(String string, Plugin plugin)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

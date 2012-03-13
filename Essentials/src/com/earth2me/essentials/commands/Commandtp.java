@@ -37,8 +37,7 @@ public class Commandtp extends EssentialsCommand
 		default:
 			if (!Permissions.TPOHERE.isAuthorized(user))
 			{
-				//TODO: Translate this
-				throw new Exception("You need access to /tpohere to teleport other players.");
+				throw new Exception(_("needTpohere"));
 			}
 			user.sendMessage(_("teleporting"));
 			final IUser target = getPlayer(args, 0);

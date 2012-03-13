@@ -2,6 +2,7 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.perm.GivePermissions;
+import static com.earth2me.essentials.I18n._;
 import java.util.Locale;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -29,8 +30,8 @@ public class Commandgive extends EssentialsCommand
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
 		if (!GivePermissions.getPermission(stack.getType()).isAuthorized(sender))
 		{
-			throw new Exception(ChatColor.RED + "You are not allowed to spawn the item " + itemname);
-		}	
+			throw new Exception(_("cantSpawnItem", itemname));
+		}
 
 		if (args.length > 2 && Integer.parseInt(args[2]) > 0)
 		{
@@ -62,7 +63,7 @@ public class Commandgive extends EssentialsCommand
 
 		if (stack.getType() == Material.AIR)
 		{
-			throw new Exception(ChatColor.RED + "You can't give air.");
+			throw new Exception(_("cantSpawnItem", "Air"));
 		}
 		
 		giveTo.giveItems(stack, false);

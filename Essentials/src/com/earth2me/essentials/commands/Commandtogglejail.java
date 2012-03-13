@@ -26,7 +26,7 @@ public class Commandtogglejail extends EssentialsCommand
 
 		if (args.length >= 2 && !player.getData().isJailed())
 		{
-			if (player.getBase() instanceof OfflinePlayer)
+			if (!player.isOnline())
 			{
 				if (Permissions.TOGGLEJAIL_OFFLINE.isAuthorized(sender))
 				{
@@ -42,7 +42,7 @@ public class Commandtogglejail extends EssentialsCommand
 					return;
 				}
 			}
-			if (!(player.getBase() instanceof OfflinePlayer))
+			if (player.isOnline())
 			{
 				ess.getJails().sendToJail(player, args[1]);
 			}
@@ -95,7 +95,7 @@ public class Commandtogglejail extends EssentialsCommand
 			player.setTimestamp(TimestampType.JAIL, 0);
 			player.sendMessage(_("jailReleasedPlayerNotify"));
 			player.getData().setJail(null);
-			if (!(player.getBase() instanceof OfflinePlayer))
+			if (player.isOnline())
 			{
 				player.getTeleport().back();
 			}

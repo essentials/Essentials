@@ -101,4 +101,10 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	boolean gotMailInfo();
 
 	List<String> getMails();
+
+	public boolean canAfford(double money);
+
+	public void updateMoneyCache(double userMoney);
+
+	public boolean canAfford(double amount, boolean b);
 }

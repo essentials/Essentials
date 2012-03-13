@@ -20,7 +20,7 @@ public class SignKit extends EssentialsSign
 	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
 	{
 		validateTrade(sign, 3, ess);
-		
+
 		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
 
 		if (kitName.isEmpty())
@@ -62,6 +62,7 @@ public class SignKit extends EssentialsSign
 				final Kit kit = ess.getKits().getKit(kitName);				
 				ess.getKits().sendKit(player, kit);
 								
+				//TODO: Implement Kits from 2.9
 				charge.charge(player);
 			}
 			catch (Exception ex)
