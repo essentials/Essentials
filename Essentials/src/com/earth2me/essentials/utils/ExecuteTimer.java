@@ -1,4 +1,4 @@
-package com.earth2me.essentials;
+package com.earth2me.essentials.utils;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
