@@ -1,6 +1,6 @@
 package com.earth2me.essentials.protect;
 
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IPermission;
 import java.util.Locale;
 import org.bukkit.command.CommandSender;

@@ -4,7 +4,7 @@ import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Teleport;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.permissions.Permissions;

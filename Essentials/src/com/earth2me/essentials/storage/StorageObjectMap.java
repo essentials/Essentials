@@ -1,6 +1,6 @@
 package com.earth2me.essentials.storage;
 
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.google.common.cache.Cache;

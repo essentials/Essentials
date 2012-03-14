@@ -1,4 +1,4 @@
-package com.earth2me.essentials;
+package com.earth2me.essentials.utils;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IEssentials;
@@ -9,7 +9,6 @@ import com.earth2me.essentials.external.gnu.inet.encoding.PunycodeException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.Cleanup;

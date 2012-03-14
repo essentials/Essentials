@@ -1,6 +1,6 @@
 package com.earth2me.essentials.textreader;
 
-import com.earth2me.essentials.DescParseTickFormat;
+import com.earth2me.essentials.utils.DescParseTickFormat;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
 import java.text.DateFormat;

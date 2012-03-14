@@ -1,6 +1,6 @@
 package com.earth2me.essentials.ranks;
 
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IRanks;
 import com.earth2me.essentials.api.ISettings;

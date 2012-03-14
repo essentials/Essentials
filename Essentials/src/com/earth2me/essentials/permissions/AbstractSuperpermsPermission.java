@@ -1,6 +1,6 @@
 package com.earth2me.essentials.permissions;
 
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IPermission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;

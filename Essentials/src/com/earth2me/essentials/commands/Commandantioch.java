@@ -1,6 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
 import org.bukkit.Location;
 import org.bukkit.entity.TNTPrimed;

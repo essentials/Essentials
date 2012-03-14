@@ -1,7 +1,7 @@
 package com.earth2me.essentials.listener;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;

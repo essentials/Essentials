@@ -1,6 +1,6 @@
 package com.earth2me.essentials.api;
 
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
 
 
 /**
