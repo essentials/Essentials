@@ -1,4 +1,4 @@
-package com.earth2me.essentials.textreader;
+package com.earth2me.essentials.utils.textreader;
 
 import com.earth2me.essentials.utils.DescParseTickFormat;
 import com.earth2me.essentials.api.IEssentials;

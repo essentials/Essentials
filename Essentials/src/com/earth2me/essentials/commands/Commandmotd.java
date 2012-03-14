@@ -1,9 +1,9 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.textreader.IText;
-import com.earth2me.essentials.textreader.KeywordReplacer;
-import com.earth2me.essentials.textreader.TextInput;
-import com.earth2me.essentials.textreader.TextPager;
+import com.earth2me.essentials.utils.textreader.IText;
+import com.earth2me.essentials.utils.textreader.KeywordReplacer;
+import com.earth2me.essentials.utils.textreader.TextInput;
+import com.earth2me.essentials.utils.textreader.TextPager;
 import org.bukkit.command.CommandSender;
 
 

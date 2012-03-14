@@ -1,4 +1,4 @@
-package com.earth2me.essentials.textreader;
+package com.earth2me.essentials.utils.textreader;
 
 import static com.earth2me.essentials.I18n._;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.earth2me.essentials.textreader;
+package com.earth2me.essentials.utils.textreader;
 
 import org.bukkit.command.CommandSender;
 

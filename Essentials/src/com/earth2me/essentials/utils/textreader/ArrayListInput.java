@@ -1,4 +1,4 @@
-package com.earth2me.essentials.textreader;
+package com.earth2me.essentials.utils.textreader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,14 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 
-public class SimpleTextInput implements IText
+public class ArrayListInput implements IText
 {
-	private final transient List<String> lines = new ArrayList<String>();
+	private final transient List<String> lines = new ArrayList<String>();	
 	
-	public SimpleTextInput (final String input) {
-		lines.add(input);
-	}
-		
 	@Override
 	public List<String> getLines()
 	{
