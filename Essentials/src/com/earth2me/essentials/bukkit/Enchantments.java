@@ -1,4 +1,4 @@
-package com.earth2me.essentials;
+package com.earth2me.essentials.bukkit;
 
 import java.util.HashMap;
 import java.util.Locale;
