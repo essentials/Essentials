@@ -3,14 +3,14 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Mob;
 import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.SpawnerPermissions;
+import com.earth2me.essentials.utils.LocationUtil;
+import com.earth2me.essentials.utils.Util;
 import java.util.Locale;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.entity.EntityType;
 
 
 public class Commandspawner extends EssentialsCommand
@@ -23,7 +23,7 @@ public class Commandspawner extends EssentialsCommand
 			throw new NotEnoughArgumentsException(_("mobsAvailable", Util.joinList(Mob.getMobList())));
 		}
 
-		final Location target = Util.getTarget(user);
+		final Location target = LocationUtil.getTarget(user);
 		if (target == null || target.getBlock().getType() != Material.MOB_SPAWNER)
 		{
 			throw new Exception(_("mobSpawnTarget"));

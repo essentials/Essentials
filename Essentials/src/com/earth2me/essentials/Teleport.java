@@ -9,6 +9,8 @@ import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.CooldownException;
 import com.earth2me.essentials.user.UserData.TimestampType;
+import com.earth2me.essentials.utils.DateUtil;
+import com.earth2me.essentials.utils.LocationUtil;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
@@ -237,7 +239,7 @@ public class Teleport implements Runnable, ITeleport
 	{
 		cancel();
 		user.setLastLocation();
-		user.getBase().teleport(Util.getSafeDestination(target.getLocation()), cause);
+		user.getBase().teleport(LocationUtil.getSafeDestination(target.getLocation()), cause);
 	}
 
 	public void now(Location loc, boolean cooldown, TeleportCause cause) throws Exception

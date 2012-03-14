@@ -1,7 +1,6 @@
 package com.earth2me.essentials.listener;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
@@ -11,6 +10,7 @@ import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.TextInput;
 import com.earth2me.essentials.textreader.TextPager;
 import com.earth2me.essentials.user.UserData.TimestampType;
+import com.earth2me.essentials.utils.LocationUtil;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -97,7 +97,7 @@ public class EssentialsPlayerListener implements Listener
 			to.setZ(from.getZ());
 			try
 			{
-				event.setTo(Util.getSafeDestination(to));
+				event.setTo(LocationUtil.getSafeDestination(to));
 			}
 			catch (Exception ex)
 			{

@@ -3,11 +3,15 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Mob;
 import com.earth2me.essentials.Mob.MobException;
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.SpawnmobPermissions;
-import java.util.*;
+import com.earth2me.essentials.utils.LocationUtil;
+import com.earth2me.essentials.utils.Util;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Random;
+import java.util.Set;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -75,7 +79,7 @@ public class Commandspawnmob extends EssentialsCommand
 			throw new Exception(_("noPermToSpawnMob"));
 		}
 
-		final Block block = Util.getTarget(user).getBlock();
+		final Block block = LocationUtil.getTarget(user).getBlock();
 		if (block == null)
 		{
 			throw new Exception(_("unableToSpawnMob"));
@@ -86,7 +90,7 @@ public class Commandspawnmob extends EssentialsCommand
 			otherUser = getPlayer(args, 2);
 		}
 		final Location loc = (otherUser == null) ? block.getLocation() : otherUser.getLocation();
-		final Location sloc = Util.getSafeDestination(loc);
+		final Location sloc = LocationUtil.getSafeDestination(loc);
 		try
 		{
 			spawnedMob = mob.spawn(user, server, sloc);
