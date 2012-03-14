@@ -11,16 +11,5 @@
       </fileset>
       <flattenmapper/>
     </copy>
-    <move file="jars/Essentials-3.0-SNAPSHOT.jar" tofile="jars/Essentials.jar"/>
-    <move file="jars/EssentialsAntiCheat-3.0-SNAPSHOT.jar" tofile="jars/EssentialsAntiCheat.jar"/>
-    <move file="jars/EssentialsChat-3.0-SNAPSHOT.jar" tofile="jars/EssentialsChat.jar"/>
-    <move file="jars/EssentialsProtect-3.0-SNAPSHOT.jar" tofile="jars/EssentialsProtect.jar"/>
-    <move file="jars/EssentialsGeoIP-3.0-SNAPSHOT.jar" tofile="jars/EssentialsGeoIP.jar"/>
-    <move file="jars/EssentialsGroupManager-3.0-SNAPSHOT.jar" tofile="jars/EssentialsGroupManager.jar"/>
-    <move file="jars/EssentialsGroupBridge-3.0-SNAPSHOT.jar" tofile="jars/EssentialsGroupBridge.jar"/>
-    <move file="jars/EssentialsXMPP-3.0-SNAPSHOT.jar" tofile="jars/EssentialsXMPP.jar"/>
-    <move file="jars/Essentials2Compat-3.0-SNAPSHOT.jar" tofile="jars/Essentials2Compat.jar"/>
-    <move file="jars/EssentialsSigns-3.0-SNAPSHOT.jar" tofile="jars/EssentialsSigns.jar"/>
-    <move file="jars/EssentialsUpdate-3.0-SNAPSHOT.jar" tofile="jars/EssentialsUpdate.jar"/>
   </target>
 </project>

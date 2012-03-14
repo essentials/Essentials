@@ -15,7 +15,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>craftbukkit</artifactId>
-      <version>1.2.3-R0.2-SNAPSHOT</version>
+      <version>${bukkitversion}</version>
     </dependency>
   </dependencies>
 </project>
