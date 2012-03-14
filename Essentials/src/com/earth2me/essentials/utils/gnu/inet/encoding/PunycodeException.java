@@ -1,4 +1,4 @@
-package com.earth2me.essentials.external.gnu.inet.encoding;
+package com.earth2me.essentials.utils.gnu.inet.encoding;
 
 
 /**
