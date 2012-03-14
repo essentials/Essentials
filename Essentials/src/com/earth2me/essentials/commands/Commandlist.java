@@ -4,7 +4,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -62,7 +62,7 @@ public class Commandlist extends EssentialsCommand
 				{
 					continue;
 				}
-				final String group = ess.getGroups().getMainGroup(player);
+				final String group = ess.getRanks().getMainGroup(player);
 				List<IUser> list = sort.get(group);
 				if (list == null)
 				{

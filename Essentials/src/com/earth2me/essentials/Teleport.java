@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ITeleport;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.commands.NotEnoughArgumentsException;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.CooldownException;
 import com.earth2me.essentials.user.UserData.TimestampType;
 import java.util.Calendar;
@@ -153,7 +153,7 @@ public class Teleport implements Runnable, ITeleport
 	{
 		try
 		{
-			user.checkCooldown(TimestampType.LASTTELEPORT, ess.getGroups().getTeleportCooldown(user), !check, Permissions.TELEPORT_COOLDOWN_BYPASS);
+			user.checkCooldown(TimestampType.LASTTELEPORT, ess.getRanks().getTeleportCooldown(user), !check, Permissions.TELEPORT_COOLDOWN_BYPASS);
 		}
 		catch (CooldownException ex)
 		{
@@ -204,7 +204,7 @@ public class Teleport implements Runnable, ITeleport
 
 	private void teleport(Target target, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		double delay = ess.getGroups().getTeleportDelay(user);
+		double delay = ess.getRanks().getTeleportDelay(user);
 
 		if (chargeFor != null)
 		{

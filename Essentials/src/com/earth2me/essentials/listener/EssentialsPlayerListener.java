@@ -5,7 +5,7 @@ import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.TextInput;

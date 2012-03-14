@@ -1,7 +1,7 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.api.*;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.settings.MoneyHolder;
 import java.util.HashMap;
 import java.util.Locale;

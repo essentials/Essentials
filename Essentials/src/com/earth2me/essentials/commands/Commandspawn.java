@@ -3,7 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.settings.SpawnsHolder;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -49,7 +49,7 @@ public class Commandspawn extends EssentialsCommand
 	private void respawn(final IUser user, final Trade charge) throws Exception
 	{
 		final SpawnsHolder spawns = (SpawnsHolder)this.module;
-		final Location spawn = spawns.getSpawn(ess.getGroups().getMainGroup(user));
+		final Location spawn = spawns.getSpawn(ess.getRanks().getMainGroup(user));
 		user.getTeleport().teleport(spawn, charge, TeleportCause.COMMAND);
 	}
 }

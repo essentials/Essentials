@@ -4,7 +4,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.UserData.TimestampType;
 import java.util.HashSet;
 import java.util.Iterator;

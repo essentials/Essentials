@@ -4,7 +4,7 @@ import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.KitPermissions;
+import com.earth2me.essentials.permissions.KitPermissions;
 import com.earth2me.essentials.settings.Kit;
 import java.util.Locale;
 
@@ -52,7 +52,7 @@ public class SignKit extends EssentialsSign
 	{
 		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
 		final String group = sign.getLine(2);
-		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getGroups().inGroup(player, group)))
+		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getRanks().inGroup(player, group)))
 			|| (group.isEmpty() && KitPermissions.getPermission(kitName).isAuthorized(player)))
 		{
 			final Trade charge = getTrade(sign, 3, ess);

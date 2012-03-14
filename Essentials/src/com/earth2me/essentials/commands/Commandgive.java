@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.GivePermissions;
+import com.earth2me.essentials.permissions.GivePermissions;
 import static com.earth2me.essentials.I18n._;
 import java.util.Locale;
 import org.bukkit.ChatColor;

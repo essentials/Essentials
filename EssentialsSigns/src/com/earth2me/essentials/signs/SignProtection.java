@@ -154,7 +154,7 @@ public class SignProtection extends EssentialsSign
 		for (int i = 1; i <= 2; i++)
 		{
 			final String line = sign.getLine(i);
-			if (line.startsWith("(") && line.endsWith(")") && ess.getGroups().inGroup(user, line.substring(1, line.length() - 1)))
+			if (line.startsWith("(") && line.endsWith(")") && ess.getRanks().inGroup(user, line.substring(1, line.length() - 1)))
 			{
 				return SignProtectionState.ALLOWED;
 			}

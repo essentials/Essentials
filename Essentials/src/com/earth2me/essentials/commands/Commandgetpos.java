@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 

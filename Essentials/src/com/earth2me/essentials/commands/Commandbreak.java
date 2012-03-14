@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import static com.earth2me.essentials.I18n._;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

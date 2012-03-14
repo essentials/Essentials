@@ -21,7 +21,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.listener.*;
 import com.earth2me.essentials.register.payment.Methods;
-import com.earth2me.essentials.settings.GroupsHolder;
+import com.earth2me.essentials.ranks.RanksStorage;
 import com.earth2me.essentials.settings.SettingsHolder;
 import com.earth2me.essentials.settings.SpawnsHolder;
 import com.earth2me.essentials.user.UserMap;
@@ -64,7 +64,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	private transient List<IReload> reloadList;
 	private transient IBackup backup;
 	private transient IItemDb itemDb;
-	private transient IGroups groups;
+	private transient IRanks groups;
 	private transient SpawnsHolder spawns;
 	private transient final Methods paymentMethod = new Methods();
 	//private transient PermissionsHandler permissionsHandler;
@@ -156,8 +156,8 @@ public class Essentials extends JavaPlugin implements IEssentials
 			userMap = new UserMap(this);
 			reloadList.add(userMap);
 			execTimer.mark("Init(Usermap)");
-			groups = new GroupsHolder(this);
-			reloadList.add((GroupsHolder)groups);
+			groups = new RanksStorage(this);
+			reloadList.add((RanksStorage)groups);
 			warps = new Warps(this);
 			reloadList.add(warps);
 			execTimer.mark("Init(Spawn/Warp)");
@@ -406,7 +406,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public IGroups getGroups()
+	public IRanks getRanks()
 	{
 		return groups;
 	}
@@ -418,7 +418,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public void setGroups(final IGroups groups)
+	public void setRanks(final IRanks groups)
 	{
 		this.groups = groups;
 	}

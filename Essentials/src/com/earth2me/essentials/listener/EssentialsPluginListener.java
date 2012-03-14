@@ -3,11 +3,11 @@ package com.earth2me.essentials.listener;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IReload;
 import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.perm.GMGroups;
-import com.earth2me.essentials.perm.VaultGroups;
+import com.earth2me.essentials.ranks.GMGroups;
+import com.earth2me.essentials.ranks.VaultGroups;
 import com.earth2me.essentials.register.payment.Methods;
 import com.earth2me.essentials.settings.General;
-import com.earth2me.essentials.settings.GroupsHolder;
+import com.earth2me.essentials.ranks.RanksStorage;
 import java.util.logging.Level;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -78,33 +78,33 @@ public class EssentialsPluginListener implements Listener, IReload
 		if (storage == General.GroupStorage.GROUPMANAGER)
 		{
 			Plugin groupManager = ess.getServer().getPluginManager().getPlugin("GroupManager");
-			if (groupManager != null && groupManager.isEnabled() && !(ess.getGroups() instanceof GMGroups))
+			if (groupManager != null && groupManager.isEnabled() && !(ess.getRanks() instanceof GMGroups))
 			{
-				if (ess.getGroups() instanceof GroupsHolder)
+				if (ess.getRanks() instanceof RanksStorage)
 				{
-					ess.removeReloadListener((GroupsHolder)ess.getGroups());
+					ess.removeReloadListener((RanksStorage)ess.getRanks());
 				}
-				ess.setGroups(new GMGroups(ess, groupManager));
+				ess.setRanks(new GMGroups(ess, groupManager));
 				return;
 			}
 		}
 		if (storage == General.GroupStorage.VAULT)
 		{
 			Plugin vault = ess.getServer().getPluginManager().getPlugin("Vault");
-			if (vault != null && vault.isEnabled() && !(ess.getGroups() instanceof VaultGroups))
+			if (vault != null && vault.isEnabled() && !(ess.getRanks() instanceof VaultGroups))
 			{
-				if (ess.getGroups() instanceof GroupsHolder)
+				if (ess.getRanks() instanceof RanksStorage)
 				{
-					ess.removeReloadListener((GroupsHolder)ess.getGroups());
+					ess.removeReloadListener((RanksStorage)ess.getRanks());
 				}
-				ess.setGroups(new VaultGroups(ess));
+				ess.setRanks(new VaultGroups(ess));
 				return;
 			}
 		}
-		if (!(ess.getGroups() instanceof GroupsHolder))
+		if (!(ess.getRanks() instanceof RanksStorage))
 		{
-			ess.setGroups(new GroupsHolder(ess));
-			ess.addReloadListener((GroupsHolder)ess.getGroups());
+			ess.setRanks(new RanksStorage(ess));
+			ess.addReloadListener((RanksStorage)ess.getRanks());
 		}
 	}
 }

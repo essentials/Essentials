@@ -7,7 +7,7 @@ import com.earth2me.essentials.Teleport;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.register.payment.Method;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -208,7 +208,7 @@ public class User extends UserBase implements IUser
 			@Cleanup
 			final ISettings settings = ess.getSettings();
 			settings.acquireReadLock();
-			final IGroups groups = ess.getGroups();
+			final IRanks groups = ess.getRanks();
 			// default: {PREFIX}{NICKNAMEPREFIX}{NAME}{SUFFIX}
 			String displayname = settings.getData().getChat().getDisplaynameFormat();
 			if (settings.getData().getCommands().isDisabled("nick") || nick == null || nick.isEmpty() || nick.equals(getName()))

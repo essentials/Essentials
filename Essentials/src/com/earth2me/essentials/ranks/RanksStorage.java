@@ -1,11 +1,11 @@
-package com.earth2me.essentials.settings;
+package com.earth2me.essentials.ranks;
 
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IGroups;
+import com.earth2me.essentials.api.IRanks;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.GroupsPermissions;
+import com.earth2me.essentials.permissions.GroupsPermissions;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import java.io.File;
 import java.text.MessageFormat;
@@ -17,32 +17,32 @@ import java.util.Map.Entry;
 import lombok.Cleanup;
 
 
-public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IGroups
+public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRanks
 {
-	public GroupsHolder(final IEssentials ess)
+	public RanksStorage(final IEssentials ess)
 	{
-		super(ess, Groups.class);
+		super(ess, Ranks.class);
 		onReload();
 	}
 
 	@Override
 	public File getStorageFile()
 	{
-		return new File(ess.getDataFolder(), "groups.yml");
+		return new File(ess.getDataFolder(), "ranks.yml");
 	}
 	
-	public Collection<Entry<String, GroupOptions>> getGroups(final IUser player)
+	public Collection<Entry<String, RankOptions>> getGroups(final IUser player)
 	{
 		acquireReadLock();
 		try
 		{
-			final Map<String, GroupOptions> groups = getData().getGroups();
+			final Map<String, RankOptions> groups = getData().getRanks();
 			if (groups == null || groups.isEmpty())
 			{
 				return Collections.emptyList();
 			}
-			final ArrayList<Entry<String, GroupOptions>> list = new ArrayList();
-			for (Entry<String, GroupOptions> entry : groups.entrySet())
+			final ArrayList<Entry<String, RankOptions>> list = new ArrayList();
+			for (Entry<String, RankOptions> entry : groups.entrySet())
 			{
 				if (GroupsPermissions.getPermission(entry.getKey()).isAuthorized(player))
 				{
@@ -63,7 +63,7 @@ public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IG
 	@Override
 	public double getHealCooldown(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getHealCooldown() != null)
 			{
@@ -76,7 +76,7 @@ public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IG
 	@Override
 	public double getTeleportCooldown(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getTeleportCooldown() != null)
 			{
@@ -89,7 +89,7 @@ public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IG
 	@Override
 	public double getTeleportDelay(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getTeleportDelay() != null)
 			{
@@ -102,7 +102,7 @@ public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IG
 	@Override
 	public String getPrefix(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getPrefix() != null)
 			{
@@ -115,7 +115,7 @@ public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IG
 	@Override
 	public String getSuffix(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getSuffix() != null)
 			{
@@ -128,7 +128,7 @@ public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IG
 	@Override
 	public int getHomeLimit(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getHomes() != null)
 			{
@@ -156,7 +156,7 @@ public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IG
 	
 	private String getRawChatFormat(final IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getValue().getMessageFormat() != null)
 			{
@@ -172,7 +172,7 @@ public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IG
 	@Override
 	public boolean inGroup(IUser player, String groupname)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
 			if (groupOptions.getKey().equalsIgnoreCase(groupname))
 			{
@@ -185,7 +185,7 @@ public class GroupsHolder extends AsyncStorageObjectHolder<Groups> implements IG
 	@Override
 	public String getMainGroup(IUser player)
 	{
-		for (Entry<String, GroupOptions> groupOptions : getGroups(player))
+		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
 			return groupOptions.getKey();
 		}

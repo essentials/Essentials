@@ -6,7 +6,7 @@ import com.earth2me.essentials.Mob.MobException;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.SpawnmobPermissions;
+import com.earth2me.essentials.permissions.SpawnmobPermissions;
 import java.util.*;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;

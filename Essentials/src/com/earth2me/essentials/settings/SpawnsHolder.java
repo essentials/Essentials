@@ -167,7 +167,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		acquireReadLock();
 		try
 		{
-			return getData().getNewPlayerAnnouncement().replace('&', '§').replace("§§", "&").replace("{PLAYER}", user.getDisplayName()).replace("{DISPLAYNAME}", user.getDisplayName()).replace("{GROUP}", ess.getGroups().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getAddress().toString());
+			return getData().getNewPlayerAnnouncement().replace('&', 'ï¿½').replace("ï¿½ï¿½", "&").replace("{PLAYER}", user.getDisplayName()).replace("{DISPLAYNAME}", user.getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getAddress().toString());
 		}
 		finally
 		{
@@ -242,7 +242,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 					return;
 				}
 			}
-			final Location spawn = spawns.getSpawn(ess.getGroups().getMainGroup(user));
+			final Location spawn = spawns.getSpawn(ess.getRanks().getMainGroup(user));
 			if (spawn != null)
 			{
 				event.setRespawnLocation(spawn);

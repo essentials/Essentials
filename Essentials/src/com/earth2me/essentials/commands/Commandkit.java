@@ -4,7 +4,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.KitPermissions;
+import com.earth2me.essentials.permissions.KitPermissions;
 import com.earth2me.essentials.settings.Kit;
 import java.util.Collection;
 import java.util.Locale;

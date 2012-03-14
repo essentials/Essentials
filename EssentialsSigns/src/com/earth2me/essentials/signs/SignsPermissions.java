@@ -1,7 +1,7 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.api.IPermission;
-import com.earth2me.essentials.perm.BasePermission;
+import com.earth2me.essentials.permissions.BasePermission;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.earth2me.essentials.settings;
+package com.earth2me.essentials.ranks;
 
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.StorageObject;
@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class GroupOptions implements StorageObject
+public class RankOptions implements StorageObject
 {
 	@Comment("Message format of chat messages")
 	private String messageFormat;

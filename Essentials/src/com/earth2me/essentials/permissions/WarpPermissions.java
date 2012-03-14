@@ -1,4 +1,4 @@
-package com.earth2me.essentials.perm;
+package com.earth2me.essentials.permissions;
 
 import com.earth2me.essentials.api.IPermission;
 import java.util.HashMap;
@@ -7,16 +7,16 @@ import java.util.Map;
 import org.bukkit.permissions.PermissionDefault;
 
 
-public class KitPermissions
+public class WarpPermissions
 {
 	private static Map<String, IPermission> permissions = new HashMap<String, IPermission>();
 
-	public static IPermission getPermission(final String kitName)
+	public static IPermission getPermission(final String warpName)
 	{
-		IPermission perm = permissions.get(kitName);
+		IPermission perm = permissions.get(warpName);
 		if (perm == null)
 		{
-			perm = new BasePermission("essentials.kit.", kitName.toLowerCase(Locale.ENGLISH))
+			perm = new BasePermission("essentials.warp.", warpName.toLowerCase(Locale.ENGLISH))
 			{
 				@Override
 				public PermissionDefault getPermissionDefault()
@@ -24,7 +24,7 @@ public class KitPermissions
 					return PermissionDefault.TRUE;
 				}
 			};
-			permissions.put(kitName, perm);
+			permissions.put(warpName, perm);
 		}
 		return perm;
 	}

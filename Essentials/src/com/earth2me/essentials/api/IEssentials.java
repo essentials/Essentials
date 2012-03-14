@@ -21,7 +21,7 @@ public interface IEssentials extends Plugin
 
 	ISettings getSettings();
 
-	IGroups getGroups();
+	IRanks getRanks();
 
 	IJails getJails();
 
@@ -56,7 +56,7 @@ public interface IEssentials extends Plugin
 
 	TntExplodeListener getTNTListener();
 
-	void setGroups(IGroups groups);
+	void setRanks(IRanks groups);
 
 	void removeReloadListener(IReload groups);
 

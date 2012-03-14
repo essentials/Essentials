@@ -5,7 +5,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IEssentialsModule;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.AbstractSuperpermsPermission;
+import com.earth2me.essentials.permissions.AbstractSuperpermsPermission;
 import java.util.List;
 import java.util.logging.Logger;
 import org.bukkit.Server;

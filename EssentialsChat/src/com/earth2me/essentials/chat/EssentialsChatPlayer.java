@@ -5,10 +5,10 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IGroups;
+import com.earth2me.essentials.api.IRanks;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -82,10 +82,10 @@ public abstract class EssentialsChatPlayer implements Listener
 		{
 			event.setMessage(Util.stripColor(event.getMessage()));
 		}
-		String group = ess.getGroups().getMainGroup(user);
+		String group = ess.getRanks().getMainGroup(user);
 		String world = user.getWorld().getName();
 
-		IGroups groupSettings = ess.getGroups();
+		IRanks groupSettings = ess.getRanks();
 		event.setFormat(groupSettings.getChatFormat(user).format(new Object[]
 				{
 					group, world, world.substring(0, 1).toUpperCase(Locale.ENGLISH)

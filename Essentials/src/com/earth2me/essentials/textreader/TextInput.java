@@ -33,7 +33,7 @@ public class TextInput implements IText
 				file = new File(ess.getDataFolder(), filename + "_" + Util.sanitizeFileName(user.getName()) + ".txt");
 				if (!file.exists())
 				{
-					file = new File(ess.getDataFolder(), filename + "_" + Util.sanitizeFileName(ess.getGroups().getMainGroup(user)) + ".txt");
+					file = new File(ess.getDataFolder(), filename + "_" + Util.sanitizeFileName(ess.getRanks().getMainGroup(user)) + ".txt");
 				}
 			}
 			catch (InvalidNameException ex)
@@ -85,9 +85,9 @@ public class TextInput implements IText
 						if (line.length() > 0 && line.charAt(0) == '#')
 						{
 							bookmarks.put(line.substring(1).toLowerCase(Locale.ENGLISH).replaceAll("&[0-9a-f]", ""), lineNumber);
-							chapters.add(line.substring(1).replace('&', '§').replace("§", "&"));
+							chapters.add(line.substring(1).replace('&', 'ï¿½').replace("ï¿½", "&"));
 						}
-						lines.add(line.replace('&', '§').replace("§", "&"));
+						lines.add(line.replace('&', 'ï¿½').replace("ï¿½", "&"));
 						lineNumber++;
 					}
 				}

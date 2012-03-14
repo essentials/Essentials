@@ -5,7 +5,7 @@ import com.earth2me.essentials.Mob;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.SpawnerPermissions;
+import com.earth2me.essentials.permissions.SpawnerPermissions;
 import java.util.Locale;
 import org.bukkit.Location;
 import org.bukkit.Material;

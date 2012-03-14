@@ -3,7 +3,7 @@ package com.earth2me.essentials.api;
 import java.text.MessageFormat;
 
 
-public interface IGroups
+public interface IRanks
 {
 	String getMainGroup(IUser player);
 

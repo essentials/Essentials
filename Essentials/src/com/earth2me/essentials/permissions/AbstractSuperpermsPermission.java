@@ -1,4 +1,4 @@
-package com.earth2me.essentials.perm;
+package com.earth2me.essentials.permissions;
 
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IPermission;

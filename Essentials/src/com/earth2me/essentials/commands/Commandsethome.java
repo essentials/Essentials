@@ -2,7 +2,7 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.Permissions;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.HashMap;
 import java.util.Locale;
 import lombok.Cleanup;
@@ -29,7 +29,7 @@ public class Commandsethome extends EssentialsCommand
 					if ("bed".equals(args[0].toLowerCase(Locale.ENGLISH))) {
 						throw new NotEnoughArgumentsException();
 					}
-					if ((user.getHomes().size() < ess.getGroups().getHomeLimit(user))
+					if ((user.getHomes().size() < ess.getRanks().getHomeLimit(user))
 						|| (user.getHomes().contains(args[0].toLowerCase(Locale.ENGLISH))))
 					{
 						user.acquireWriteLock();
@@ -41,7 +41,7 @@ public class Commandsethome extends EssentialsCommand
 					}
 					else
 					{
-						throw new Exception(_("maxHomes", ess.getGroups().getHomeLimit(user)));
+						throw new Exception(_("maxHomes", ess.getRanks().getHomeLimit(user)));
 					}
 
 				}

@@ -1,8 +1,8 @@
-package com.earth2me.essentials.perm;
+package com.earth2me.essentials.ranks;
 
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IGroups;
+import com.earth2me.essentials.api.IRanks;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
 import java.text.MessageFormat;
@@ -11,7 +11,7 @@ import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.plugin.Plugin;
 
-public class GMGroups implements IGroups {
+public class GMGroups implements IRanks {
 	private final transient IEssentials ess;
 	private final transient GroupManager groupManager;
 

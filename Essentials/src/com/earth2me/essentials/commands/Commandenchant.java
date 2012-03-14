@@ -4,7 +4,7 @@ import com.earth2me.essentials.Enchantments;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.perm.EnchantPermissions;
+import com.earth2me.essentials.permissions.EnchantPermissions;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
