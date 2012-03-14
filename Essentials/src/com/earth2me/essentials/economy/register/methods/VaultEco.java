@@ -1,6 +1,6 @@
-package com.earth2me.essentials.register.payment.methods;
+package com.earth2me.essentials.economy.register.methods;
 
-import com.earth2me.essentials.register.payment.Method;
+import com.earth2me.essentials.economy.register.Method;
 import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.Plugin;

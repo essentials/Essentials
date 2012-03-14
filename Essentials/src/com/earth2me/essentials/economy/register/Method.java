@@ -1,4 +1,4 @@
-package com.earth2me.essentials.register.payment;
+package com.earth2me.essentials.economy.register;
 
 import org.bukkit.plugin.Plugin;
 

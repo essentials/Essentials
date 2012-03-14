@@ -25,7 +25,7 @@ import com.earth2me.essentials.backup.Backup;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.listener.*;
-import com.earth2me.essentials.register.payment.Methods;
+import com.earth2me.essentials.economy.register.Methods;
 import com.earth2me.essentials.ranks.RanksStorage;
 import com.earth2me.essentials.settings.SettingsHolder;
 import com.earth2me.essentials.settings.SpawnsHolder;

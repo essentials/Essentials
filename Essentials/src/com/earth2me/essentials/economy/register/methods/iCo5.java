@@ -1,6 +1,6 @@
-package com.earth2me.essentials.register.payment.methods;
+package com.earth2me.essentials.economy.register.methods;
 
-import com.earth2me.essentials.register.payment.Method;
+import com.earth2me.essentials.economy.register.Method;
 import com.iConomy.iConomy;
 import com.iConomy.system.Account;
 import com.iConomy.system.BankAccount;

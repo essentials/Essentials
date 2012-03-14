@@ -1,7 +1,7 @@
 package com.earth2me.essentials.api;
 
 import com.earth2me.essentials.listener.TntExplodeListener;
-import com.earth2me.essentials.register.payment.Methods;
+import com.earth2me.essentials.economy.register.Methods;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

@@ -8,7 +8,7 @@ import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.permissions.Permissions;
-import com.earth2me.essentials.register.payment.Method;
+import com.earth2me.essentials.economy.register.Method;
 import com.earth2me.essentials.utils.DateUtil;
 import java.util.Calendar;
 import java.util.GregorianCalendar;

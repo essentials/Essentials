@@ -1,21 +1,19 @@
-package com.earth2me.essentials.register.payment.methods;
+package com.earth2me.essentials.economy.register.methods;
 
-import com.earth2me.essentials.register.payment.Method;
-import com.iCo6.iConomy;
-import com.iCo6.system.Account;
-import com.iCo6.system.Accounts;
-import com.iCo6.system.Holdings;
+import com.earth2me.essentials.economy.register.Method;
+import com.nijiko.coelho.iConomy.iConomy;
+import com.nijiko.coelho.iConomy.system.Account;
 import org.bukkit.plugin.Plugin;
 
 
 /**
- * iConomy 6 Implementation of Method
+ * iConomy 4 Implementation of Method
  *
  * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun)
  * @copyright (c) 2011
  * @license AOL license <http://aol.nexua.org>
  */
-public class iCo6 implements Method
+public class iCo4 implements Method
 {
 	private iConomy iConomy;
 
@@ -34,7 +32,7 @@ public class iCo6 implements Method
 	@Override
 	public String getVersion()
 	{
-		return "6";
+		return "4";
 	}
 
 	@Override
@@ -46,7 +44,7 @@ public class iCo6 implements Method
 	@Override
 	public String format(double amount)
 	{
-		return com.iCo6.iConomy.format(amount);
+		return com.nijiko.coelho.iConomy.iConomy.getBank().format(amount);
 	}
 
 	@Override
@@ -64,7 +62,7 @@ public class iCo6 implements Method
 	@Override
 	public boolean hasAccount(String name)
 	{
-		return (new Accounts()).exists(name);
+		return com.nijiko.coelho.iConomy.iConomy.getBank().hasAccount(name);
 	}
 
 	@Override
@@ -81,7 +79,16 @@ public class iCo6 implements Method
 			return false;
 		}
 
-		return (new Accounts()).create(name);
+		try
+		{
+			com.nijiko.coelho.iConomy.iConomy.getBank().addAccount(name);
+		}
+		catch (Exception E)
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -92,13 +99,22 @@ public class iCo6 implements Method
 			return false;
 		}
 
-		return (new Accounts()).create(name, balance);
+		try
+		{
+			com.nijiko.coelho.iConomy.iConomy.getBank().addAccount(name, balance);
+		}
+		catch (Exception E)
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
 	public MethodAccount getAccount(String name)
 	{
-		return new iCoAccount((new Accounts()).get(name));
+		return new iCoAccount(com.nijiko.coelho.iConomy.iConomy.getBank().getAccount(name));
 	}
 
 	@Override
@@ -111,7 +127,7 @@ public class iCo6 implements Method
 	public boolean isCompatible(Plugin plugin)
 	{
 		return plugin.getDescription().getName().equalsIgnoreCase("iconomy")
-			   && plugin.getClass().getName().equals("com.iCo6.iConomy")
+			   && plugin.getClass().getName().equals("com.nijiko.coelho.iConomy.iConomy")
 			   && plugin instanceof iConomy;
 	}
 
@@ -125,12 +141,10 @@ public class iCo6 implements Method
 	public class iCoAccount implements MethodAccount
 	{
 		private Account account;
-		private Holdings holdings;
 
 		public iCoAccount(Account account)
 		{
 			this.account = account;
-			this.holdings = account.getHoldings();
 		}
 
 		public Account getiCoAccount()
@@ -141,86 +155,86 @@ public class iCo6 implements Method
 		@Override
 		public double balance()
 		{
-			return this.holdings.getBalance();
+			return this.account.getBalance();
 		}
 
 		@Override
 		public boolean set(double amount)
 		{
-			if (this.holdings == null)
+			if (this.account == null)
 			{
 				return false;
 			}
-			this.holdings.setBalance(amount);
+			this.account.setBalance(amount);
 			return true;
 		}
 
 		@Override
 		public boolean add(double amount)
 		{
-			if (this.holdings == null)
+			if (this.account == null)
 			{
 				return false;
 			}
-			this.holdings.add(amount);
+			this.account.add(amount);
 			return true;
 		}
 
 		@Override
 		public boolean subtract(double amount)
 		{
-			if (this.holdings == null)
+			if (this.account == null)
 			{
 				return false;
 			}
-			this.holdings.subtract(amount);
+			this.account.subtract(amount);
 			return true;
 		}
 
 		@Override
 		public boolean multiply(double amount)
 		{
-			if (this.holdings == null)
+			if (this.account == null)
 			{
 				return false;
 			}
-			this.holdings.multiply(amount);
+			this.account.multiply(amount);
 			return true;
 		}
 
 		@Override
 		public boolean divide(double amount)
 		{
-			if (this.holdings == null)
+			if (this.account == null)
 			{
 				return false;
 			}
-			this.holdings.divide(amount);
+			this.account.divide(amount);
 			return true;
 		}
 
 		@Override
 		public boolean hasEnough(double amount)
 		{
-			return this.holdings.hasEnough(amount);
+			return this.account.hasEnough(amount);
 		}
 
 		@Override
 		public boolean hasOver(double amount)
 		{
-			return this.holdings.hasOver(amount);
+			return this.account.hasOver(amount);
 		}
 
 		@Override
 		public boolean hasUnder(double amount)
 		{
-			return this.holdings.hasUnder(amount);
+			return (this.balance() < amount);
 		}
 
 		@Override
 		public boolean isNegative()
 		{
-			return this.holdings.isNegative();
+			return this.account.isNegative();
 		}
 
 		@Override

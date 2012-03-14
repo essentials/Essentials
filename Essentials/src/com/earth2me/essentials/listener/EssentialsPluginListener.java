@@ -5,7 +5,7 @@ import com.earth2me.essentials.api.IReload;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.ranks.GMGroups;
 import com.earth2me.essentials.ranks.VaultGroups;
-import com.earth2me.essentials.register.payment.Methods;
+import com.earth2me.essentials.economy.register.Methods;
 import com.earth2me.essentials.settings.General;
 import com.earth2me.essentials.ranks.RanksStorage;
 import java.util.logging.Level;
