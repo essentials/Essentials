@@ -1,4 +1,4 @@
-package com.earth2me.essentials.settings;
+package com.earth2me.essentials.economy;
 
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;

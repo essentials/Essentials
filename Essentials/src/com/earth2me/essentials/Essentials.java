@@ -17,6 +17,8 @@
  */
 package com.earth2me.essentials;
 
+import com.earth2me.essentials.economy.WorthHolder;
+import com.earth2me.essentials.economy.Economy;
 import com.earth2me.essentials.backup.Backup;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.*;
@@ -162,7 +164,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 			warps = new Warps(this);
 			reloadList.add(warps);
 			execTimer.mark("Init(Spawn/Warp)");
-			worth = new Worth(this);
+			worth = new WorthHolder(this);
 			reloadList.add(worth);
 			itemDb = new ItemDb(this);
 			reloadList.add(itemDb);

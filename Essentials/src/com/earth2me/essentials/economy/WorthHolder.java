@@ -1,4 +1,4 @@
-package com.earth2me.essentials;
+package com.earth2me.essentials.economy;
 
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IWorth;
@@ -13,11 +13,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 
-public class Worth extends AsyncStorageObjectHolder<com.earth2me.essentials.settings.Worth> implements IWorth
+public class WorthHolder extends AsyncStorageObjectHolder<com.earth2me.essentials.economy.Worth> implements IWorth
 {
-	public Worth(final IEssentials ess)
+	public WorthHolder(final IEssentials ess)
 	{
-		super(ess, com.earth2me.essentials.settings.Worth.class);
+		super(ess, com.earth2me.essentials.economy.Worth.class);
 		onReload(false);
 	}
 

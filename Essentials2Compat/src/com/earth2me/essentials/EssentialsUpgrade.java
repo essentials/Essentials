@@ -1,5 +1,6 @@
 package com.earth2me.essentials;
 
+import com.earth2me.essentials.economy.WorthHolder;
 import com.earth2me.essentials.storage.ManagedFile;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IEssentials;
@@ -52,7 +53,7 @@ public class EssentialsUpgrade
 			}
 			final EssentialsConf conf = new EssentialsConf(configFile);
 			conf.load();
-			final Worth worth = new Worth(ess);
+			final WorthHolder worth = new WorthHolder(ess);
 			boolean found = false;
 			for (Material mat : Material.values())
 			{

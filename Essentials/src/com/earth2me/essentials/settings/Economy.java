@@ -1,5 +1,6 @@
 package com.earth2me.essentials.settings;
 
+import com.earth2me.essentials.economy.Worth;
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.MapValueType;
 import com.earth2me.essentials.storage.StorageObject;
