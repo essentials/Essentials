@@ -6,6 +6,7 @@ import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.UserData;
+import com.earth2me.essentials.utils.DateUtil;
 import java.util.Locale;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
@@ -65,7 +66,7 @@ public class Commandwhois extends EssentialsCommand
 			sender.sendMessage(_("whoisMoney", Util.displayCurrency(user.getMoney(), ess)));
 			sender.sendMessage(_("whoisJail", (user.getData().isJailed()
 											   ? user.getTimestamp(UserData.TimestampType.JAIL) > 0
-												 ? Util.formatDateDiff(user.getTimestamp(UserData.TimestampType.JAIL))
+												 ? DateUtil.formatDateDiff(user.getTimestamp(UserData.TimestampType.JAIL))
 												 : _("true")
 											   : _("false"))));
 			sender.sendMessage(user.getData().isAfk()

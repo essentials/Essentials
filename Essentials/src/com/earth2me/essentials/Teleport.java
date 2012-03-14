@@ -227,7 +227,7 @@ public class Teleport implements Runnable, ITeleport
 		Calendar c = new GregorianCalendar();
 		c.add(Calendar.SECOND, (int)delay);
 		c.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
-		user.sendMessage(_("dontMoveMessage", Util.formatDateDiff(c.getTimeInMillis())));
+		user.sendMessage(_("dontMoveMessage", DateUtil.formatDateDiff(c.getTimeInMillis())));
 		initTimer((long)(delay * 1000.0), target, chargeFor, cause);
 
 		teleTimer = ess.scheduleSyncRepeatingTask(this, 10, 10);

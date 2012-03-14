@@ -9,6 +9,7 @@ import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.register.payment.Method;
+import com.earth2me.essentials.utils.DateUtil;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -88,7 +89,7 @@ public class User extends UserBase implements IUser
 			cooldownTime.add(Calendar.MILLISECOND, (int)((cooldown * 1000.0) % 1000.0));
 			if (cooldownTime.after(now) && !bypassPermission.isAuthorized(this))
 			{
-				throw new CooldownException(Util.formatDateDiff(cooldownTime.getTimeInMillis()));
+				throw new CooldownException(DateUtil.formatDateDiff(cooldownTime.getTimeInMillis()));
 			}
 		}
 		if (set)

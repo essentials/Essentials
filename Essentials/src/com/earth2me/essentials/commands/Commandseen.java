@@ -32,7 +32,7 @@ public class Commandseen extends EssentialsCommand
 		try
 		{
 			IUser u = getPlayer(args, 0);
-			sender.sendMessage(_("seenOnline", u.getDisplayName(), Util.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
+			sender.sendMessage(_("seenOnline", u.getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
 		}
 		catch (NoSuchFieldException e)
 		{
@@ -43,7 +43,7 @@ public class Commandseen extends EssentialsCommand
 			{
 				throw new Exception(_("playerNotFound"));
 			}
-			sender.sendMessage(_("seenOffline", u.getDisplayName(), Util.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
+			sender.sendMessage(_("seenOffline", u.getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
 			if (u.isBanned())
 			{
 				sender.sendMessage(_("whoisBanned", show ? u.getData().getBan().getReason() : _("true")));

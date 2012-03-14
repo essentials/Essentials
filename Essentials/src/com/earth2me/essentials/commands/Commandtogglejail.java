@@ -59,11 +59,11 @@ public class Commandtogglejail extends EssentialsCommand
 			if (args.length > 2)
 			{
 				final String time = getFinalArg(args, 2);
-				timeDiff = Util.parseDateDiff(time, true);
+				timeDiff = DateUtil.parseDateDiff(time, true);
 				player.setTimestamp(TimestampType.JAIL, timeDiff);
 			}
 			sender.sendMessage((timeDiff > 0
-								? _("playerJailedFor", player.getName(), Util.formatDateDiff(timeDiff))
+								? _("playerJailedFor", player.getName(), DateUtil.formatDateDiff(timeDiff))
 								: _("playerJailed", player.getName())));
 			return;
 		}
@@ -77,10 +77,10 @@ public class Commandtogglejail extends EssentialsCommand
 		if (args.length >= 2 && player.getData().isJailed() && args[1].equalsIgnoreCase(player.getData().getJail()))
 		{
 			final String time = getFinalArg(args, 2);
-			final long timeDiff = Util.parseDateDiff(time, true);
+			final long timeDiff = DateUtil.parseDateDiff(time, true);
 			player.acquireWriteLock();
 			player.setTimestamp(TimestampType.JAIL, timeDiff);
-			sender.sendMessage(_("jailSentenceExtended", Util.formatDateDiff(timeDiff)));
+			sender.sendMessage(_("jailSentenceExtended", DateUtil.formatDateDiff(timeDiff)));
 			return;
 		}
 
