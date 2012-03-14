@@ -1,8 +1,8 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Mob;
-import com.earth2me.essentials.Mob.MobException;
+import com.earth2me.essentials.bukkit.Mob;
+import com.earth2me.essentials.bukkit.Mob.MobException;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.SpawnmobPermissions;
