@@ -224,7 +224,6 @@ public class NoCheat extends JavaPlugin implements Listener
 			message += "§3 §9 §2 §0 §0 §3"; // CJB minimap players
 		}
 		p.sendMessage(message);
-		System.out.println(message);
 	}
 
 	public void setFileLogger(Logger logger)
