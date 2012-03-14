@@ -15,6 +15,19 @@ commands:
            /<command> reload: fast reload of NoCheats configuration file(s) - needs additional permissions
 
 permissions:
+  nocheat.mod.all:
+    description: Various simple cheat mods which they player may or may not be allowed to use
+    children:
+      nocheat.mod.zombes.fly:
+        description: Allow the use of the Zombes fly hack
+      nocheat.mod.zombes.cheat:
+        description: Allow the use of the Zombes cheat hack, includes xray
+      nocheat.mod.cjb.fly:
+        description: Allow the use of CJB's fly hack
+      nocheat.mod.cjb.xray:
+        description: Allow the use of CJB's xray
+      nocheat.mod.cjb.minimap:
+        description: Allow the use of CJB's minimap
   nocheat:
     description: Allow a player to bypass all checks and give him all admin permissions
     children:
