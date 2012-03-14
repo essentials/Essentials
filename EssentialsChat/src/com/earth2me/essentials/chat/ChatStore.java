@@ -1,6 +1,6 @@
 package com.earth2me.essentials.chat;
 
-import com.earth2me.essentials.Trade;
+import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
 

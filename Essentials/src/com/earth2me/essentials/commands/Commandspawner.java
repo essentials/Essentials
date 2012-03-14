@@ -2,7 +2,7 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.bukkit.Mob;
-import com.earth2me.essentials.Trade;
+import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.SpawnerPermissions;
 import com.earth2me.essentials.utils.LocationUtil;

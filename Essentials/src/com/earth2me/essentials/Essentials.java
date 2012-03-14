@@ -17,6 +17,7 @@
  */
 package com.earth2me.essentials;
 
+import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.commands.EssentialsCommandHandler;
 import com.earth2me.essentials.utils.ExecuteTimer;
 import com.earth2me.essentials.economy.WorthHolder;
