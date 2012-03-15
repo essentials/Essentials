@@ -60,6 +60,32 @@
           <outputDirectory>../jars</outputDirectory>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.bukkit</groupId>
+                  <artifactId>craftbukkit</artifactId>
+                  <version>${bukkitversion}</version>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>../jars</outputDirectory>
+                  <destFileName>craftbukkit.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
