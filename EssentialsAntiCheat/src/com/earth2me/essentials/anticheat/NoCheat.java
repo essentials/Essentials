@@ -198,30 +198,30 @@ public class NoCheat extends JavaPlugin implements Listener
 		}
 	}
 
-	//@EventHandler
+	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
 		Player p = event.getPlayer();
 		String message = "";
 		if (!p.hasPermission(Permissions.ZOMBES_FLY))
 		{
-			message += "§f §f §1 §0 §2 §4 "; // Zombes fly
+			message += "§f §f §1 §0 §2 §4"; // Zombes fly
 		}
 		if (!p.hasPermission(Permissions.ZOMBES_CHEAT))
 		{
-			message += "§f §f §2 §0 §4 §8 "; // Zombes cheat
+			message += "§f §f §2 §0 §4 §8"; // Zombes cheat
 		}
 		if (!p.hasPermission(Permissions.CJB_FLY))
 		{
-			message += "§3 §9 §2 §0 §0 §1 "; // CJB fly
+			message += "§3 §9 §2 §0 §0 §1"; // CJB fly
 		}
 		if (!p.hasPermission(Permissions.CJB_XRAY))
 		{
-			message += "§3 §9 §2 §0 §0 §2 "; // CJB xray
+			message += "§3 §9 §2 §0 §0 §2"; // CJB xray
 		}
 		if (!p.hasPermission(Permissions.CJB_MINIMAP))
 		{
-			message += "§3 §9 §2 §0 §0 §3 "; // CJB minimap players
+			message += "§3 §9 §2 §0 §0 §3"; // CJB minimap players
 		}
 		p.sendMessage(message);
 	}
