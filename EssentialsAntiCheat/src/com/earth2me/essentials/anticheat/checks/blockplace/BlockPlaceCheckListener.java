@@ -1,16 +1,16 @@
 package com.earth2me.essentials.anticheat.checks.blockplace;
 
+import com.earth2me.essentials.anticheat.EventManager;
+import com.earth2me.essentials.anticheat.NoCheat;
+import com.earth2me.essentials.anticheat.NoCheatPlayer;
+import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
+import com.earth2me.essentials.anticheat.config.Permissions;
 import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import com.earth2me.essentials.anticheat.EventManager;
-import com.earth2me.essentials.anticheat.NoCheat;
-import com.earth2me.essentials.anticheat.NoCheatPlayer;
-import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
-import com.earth2me.essentials.anticheat.config.Permissions;
 
 
 /**
@@ -37,11 +37,10 @@ public class BlockPlaceCheckListener implements Listener, EventManager
 	 *
 	 * @param event the BlockPlace event
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	protected void handleBlockPlaceEvent(BlockPlaceEvent event)
 	{
-
-		if (event.isCancelled() || event.getBlock() == null || event.getBlockAgainst() == null)
+		if (event.getBlock() == null || event.getBlockAgainst() == null)
 		{
 			return;
 		}

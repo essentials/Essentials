@@ -1,5 +1,10 @@
 package com.earth2me.essentials.anticheat.checks.fight;
 
+import com.earth2me.essentials.anticheat.EventManager;
+import com.earth2me.essentials.anticheat.NoCheat;
+import com.earth2me.essentials.anticheat.NoCheatPlayer;
+import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,10 +22,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.player.PlayerAnimationEvent;
-import com.earth2me.essentials.anticheat.EventManager;
-import com.earth2me.essentials.anticheat.NoCheat;
-import com.earth2me.essentials.anticheat.NoCheatPlayer;
-import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
 
 
 /**
@@ -29,16 +30,13 @@ import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
  */
 public class FightCheckListener implements Listener, EventManager
 {
-	private final List<FightCheck> checks;
+	private final List<FightCheck> checks = new ArrayList<FightCheck>();
 	private final GodmodeCheck godmodeCheck;
 	private final InstanthealCheck instanthealCheck;
 	private final NoCheat plugin;
 
 	public FightCheckListener(NoCheat plugin)
 	{
-
-		this.checks = new ArrayList<FightCheck>(4);
-
 		// Keep these in a list, because they can be executed in a bundle
 		this.checks.add(new SpeedCheck(plugin));
 		this.checks.add(new NoswingCheck(plugin));
@@ -87,15 +85,9 @@ public class FightCheckListener implements Listener, EventManager
 	 *
 	 * @param event The EntityDamage Event
 	 */
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void entityDamageForGodmodeCheck(final EntityDamageEvent event)
 	{
-
-		if (event.isCancelled())
-		{
-			return;
-		}
-
 		// Filter unwanted events right here
 		final Entity entity = event.getEntity();
 		if (!(entity instanceof Player) || entity.isDead())
@@ -130,11 +122,11 @@ public class FightCheckListener implements Listener, EventManager
 	 *
 	 * @param event The EntityRegainHealth Event
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void satiatedRegen(final EntityRegainHealthEvent event)
 	{
 
-		if (!(event.getEntity() instanceof Player) || event.isCancelled() || event.getRegainReason() != RegainReason.SATIATED)
+		if (!(event.getEntity() instanceof Player) || event.getRegainReason() != RegainReason.SATIATED)
 		{
 			return;
 		}
@@ -223,8 +215,6 @@ public class FightCheckListener implements Listener, EventManager
 		// Skip the next damage event, because it is with high probability
 		// something from the Heroes plugin
 		data.skipNext = true;
-
-		return;
 	}
 
 	/**

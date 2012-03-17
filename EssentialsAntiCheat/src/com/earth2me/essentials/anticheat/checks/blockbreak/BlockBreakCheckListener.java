@@ -1,5 +1,10 @@
 package com.earth2me.essentials.anticheat.checks.blockbreak;
 
+import com.earth2me.essentials.anticheat.EventManager;
+import com.earth2me.essentials.anticheat.NoCheat;
+import com.earth2me.essentials.anticheat.NoCheatPlayer;
+import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
+import com.earth2me.essentials.anticheat.config.Permissions;
 import java.util.LinkedList;
 import java.util.List;
 import org.bukkit.event.EventHandler;
@@ -9,11 +14,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import com.earth2me.essentials.anticheat.EventManager;
-import com.earth2me.essentials.anticheat.NoCheat;
-import com.earth2me.essentials.anticheat.NoCheatPlayer;
-import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
-import com.earth2me.essentials.anticheat.config.Permissions;
 
 
 /**
@@ -42,15 +42,9 @@ public class BlockBreakCheckListener implements Listener, EventManager
 	 *
 	 * @param event The blockbreak event
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void blockBreak(final BlockBreakEvent event)
 	{
-
-		if (event.isCancelled())
-		{
-			return;
-		}
-
 		boolean cancelled = false;
 
 		final NoCheatPlayer player = plugin.getPlayer(event.getPlayer());
@@ -105,15 +99,9 @@ public class BlockBreakCheckListener implements Listener, EventManager
 	 *
 	 * @param event The BlockDamage event
 	 */
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void blockHit(final BlockDamageEvent event)
 	{
-
-		if (event.isCancelled())
-		{
-			return;
-		}
-
 		NoCheatPlayer player = plugin.getPlayer(event.getPlayer());
 		BlockBreakData data = BlockBreakCheck.getData(player);
 

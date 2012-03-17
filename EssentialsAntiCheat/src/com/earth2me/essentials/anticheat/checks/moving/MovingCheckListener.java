@@ -48,16 +48,9 @@ public class MovingCheckListener implements Listener, EventManager
 	 *
 	 * @param event The BlockPlaceEvent
 	 */
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void blockPlace(final BlockPlaceEvent event)
 	{
-
-		// Block wasn't placed, so we don't care
-		if (event.isCancelled())
-		{
-			return;
-		}
-
 		final NoCheatPlayer player = plugin.getPlayer(event.getPlayer());
 		final MovingConfig config = MovingCheck.getConfig(player);
 
@@ -136,8 +129,6 @@ public class MovingCheckListener implements Listener, EventManager
 		// after teleports. Always!
 		data.teleportTo.reset();
 		data.clearRunFlyData();
-
-		return;
 	}
 
 	/**
@@ -187,12 +178,12 @@ public class MovingCheckListener implements Listener, EventManager
 	 *
 	 * @param event The PlayerMoveEvent
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void move(final PlayerMoveEvent event)
 	{
 
 		// Don't care for vehicles
-		if (event.isCancelled() || event.getPlayer().isInsideVehicle())
+		if (event.getPlayer().isInsideVehicle())
 		{
 			return;
 		}
@@ -310,14 +301,9 @@ public class MovingCheckListener implements Listener, EventManager
 	 *
 	 * @param event The PlayerVelocityEvent
 	 */
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void velocity(final PlayerVelocityEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
-
 		final MovingData data = MovingCheck.getData(plugin.getPlayer(event.getPlayer()));
 
 		final Vector v = event.getVelocity();
