@@ -198,7 +198,7 @@ public class NoCheat extends JavaPlugin implements Listener
 		}
 	}
 
-	@EventHandler
+	//@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
 		Player p = event.getPlayer();
