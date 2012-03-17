@@ -10,7 +10,7 @@ public class Permissions
 	private static final String NOCHEAT = "nocheat";
 	private static final String ADMIN = NOCHEAT + ".admin";
 	private static final String CHECKS = NOCHEAT + ".checks";
-	private static final String MODS = NOCHEAT + ".mod";
+	private static final String MOD = NOCHEAT + ".mod";
 	public static final String MOVING = CHECKS + ".moving";
 	public static final String MOVING_RUNFLY = MOVING + ".runfly";
 	public static final String MOVING_SWIMMING = MOVING + ".swimming";
@@ -42,9 +42,9 @@ public class Permissions
 	public static final String INVENTORY_DROP = INVENTORY + ".drop";
 	public static final String INVENTORY_INSTANTBOW = INVENTORY + ".instantbow";
 	public static final String INVENTORY_INSTANTEAT = INVENTORY + ".instanteat";
-	public static final String ZOMBES_CHEAT = MODS + ".zombes.fly";
-	public static final String ZOMBES_FLY = MODS + ".zombes.cheat";
-	public static final String CJB_FLY = MODS + ".cjb.fly";
-	public static final String CJB_XRAY = MODS + ".cjb.xray";
-	public static final String CJB_MINIMAP = MODS + ".cjb.minimap";
+	public static final String ZOMBES_CHEAT = MOD + ".zombes.cheat";
+	public static final String ZOMBES_FLY = MOD + ".zombes.fly";
+	public static final String CJB_FLY = MOD + ".cjb.fly";
+	public static final String CJB_XRAY = MOD + ".cjb.xray";
+	public static final String CJB_MINIMAP = MOD + ".cjb.minimap";
 }
