@@ -45,6 +45,7 @@
     <resources>
       <resource>
         <directory>${basedir}/src</directory>
+        <filtering>true</filtering>
         <includes>
           <include>*.*</include>
         </includes>
@@ -101,6 +102,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <bukkitversion>1.2.3-R0.3-SNAPSHOT</bukkitversion>
+    <build.number>Unknown</build.number>
     <org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>true</org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>
     <org-netbeans-modules-editor-indent.CodeStyle.project.indent-shift-width>2</org-netbeans-modules-editor-indent.CodeStyle.project.indent-shift-width>
     <org-netbeans-modules-editor-indent.CodeStyle.project.spaces-per-tab>2</org-netbeans-modules-editor-indent.CodeStyle.project.spaces-per-tab>

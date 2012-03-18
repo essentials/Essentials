@@ -2,7 +2,7 @@
 name: EssentialsSigns
 main: com.earth2me.essentials.signs.EssentialsSignsPlugin
 # Note to developers: This next line cannot change, or the automatic versioning system will break.
-version: TeamCity
+version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides signs, utilizing Essentials.
 authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits]

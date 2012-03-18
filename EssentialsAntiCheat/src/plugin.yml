@@ -1,7 +1,7 @@
 name: EssentialsAntiCheat
 main: com.earth2me.essentials.anticheat.NoCheat
 # Note to developers: This next line cannot change, or the automatic versioning system will break.
-version: TeamCity
+version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Detect and Fight the exploitation of various Flaws/Bugs in Minecraft.
 authors: [Evenprime, md_5]
