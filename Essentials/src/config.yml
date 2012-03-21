@@ -97,9 +97,11 @@ player-commands:
   - back
   - back.ondeath
   - balance
+  - balancetop
   - clearinventory
   - compass
   - depth
+  - delhome
   - getpos
   - geoip.show
   - help
@@ -108,19 +110,24 @@ player-commands:
   - home.others
   - ignore
   - info
+  - itemdb
   - kit
+  - kit.tools
   - list
   - mail
   - mail.send
   - me
   - motd
   - msg
+  - near
   - nick
   - pay
   - ping
   - powertool
+  - powertooltoggle
   - protect
   - r
+  - realname
   - rules
   - seen
   - sell
