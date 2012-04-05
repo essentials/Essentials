@@ -16,6 +16,7 @@ public abstract class ConfPaths
     public final static String  LOGGING_LOGTOINGAMECHAT                   = LOGGING + "ingamechat";
     public final static String  LOGGING_SHOWACTIVECHECKS                  = LOGGING + "showactivechecks";
     public final static String  LOGGING_DEBUGMESSAGES                     = LOGGING + "debugmessages";
+	public final static String DISABLE_MODS                               = "disableMods";
 
     private final static String CHECKS                                    = "checks.";
 

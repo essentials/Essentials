@@ -8,6 +8,7 @@ logging:
   file: true
   console: true
   ingamechat: true
+disableMods: false
 checks:
   inventory:
     drop:

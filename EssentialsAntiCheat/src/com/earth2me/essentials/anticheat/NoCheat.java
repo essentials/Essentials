@@ -8,6 +8,7 @@ import com.earth2me.essentials.anticheat.checks.fight.FightCheckListener;
 import com.earth2me.essentials.anticheat.checks.inventory.InventoryCheckListener;
 import com.earth2me.essentials.anticheat.checks.moving.MovingCheckListener;
 import com.earth2me.essentials.anticheat.command.CommandHandler;
+import com.earth2me.essentials.anticheat.config.ConfPaths;
 import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
 import com.earth2me.essentials.anticheat.config.ConfigurationManager;
 import com.earth2me.essentials.anticheat.config.Permissions;
@@ -30,12 +31,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-/**
- *
- * NoCheat
- *
- * Check various player events for their plausibility and log/deny them/react to them based on configuration
- */
 public class NoCheat extends JavaPlugin implements Listener
 {
 	private ConfigurationManager conf;
@@ -201,29 +196,32 @@ public class NoCheat extends JavaPlugin implements Listener
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
-		Player p = event.getPlayer();
-		String message = "";
-		if (!p.hasPermission(Permissions.ZOMBES_FLY))
+		if (getConfig().getBoolean(ConfPaths.DISABLE_MODS))
 		{
-			message += "§f §f §1 §0 §2 §4"; // Zombes fly
+			Player p = event.getPlayer();
+			String message = "";
+			if (!p.hasPermission(Permissions.ZOMBES_FLY))
+			{
+				message += "§f §f §1 §0 §2 §4"; // Zombes fly
+			}
+			if (!p.hasPermission(Permissions.ZOMBES_CHEAT))
+			{
+				message += "§f §f §2 §0 §4 §8"; // Zombes cheat
+			}
+			if (!p.hasPermission(Permissions.CJB_FLY))
+			{
+				message += "§3 §9 §2 §0 §0 §1"; // CJB fly
+			}
+			if (!p.hasPermission(Permissions.CJB_XRAY))
+			{
+				message += "§3 §9 §2 §0 §0 §2"; // CJB xray
+			}
+			if (!p.hasPermission(Permissions.CJB_MINIMAP))
+			{
+				message += "§3 §9 §2 §0 §0 §3"; // CJB minimap players
+			}
+			p.sendMessage(message);
 		}
-		if (!p.hasPermission(Permissions.ZOMBES_CHEAT))
-		{
-			message += "§f §f §2 §0 §4 §8"; // Zombes cheat
-		}
-		if (!p.hasPermission(Permissions.CJB_FLY))
-		{
-			message += "§3 §9 §2 §0 §0 §1"; // CJB fly
-		}
-		if (!p.hasPermission(Permissions.CJB_XRAY))
-		{
-			message += "§3 §9 §2 §0 §0 §2"; // CJB xray
-		}
-		if (!p.hasPermission(Permissions.CJB_MINIMAP))
-		{
-			message += "§3 §9 §2 §0 §0 §3"; // CJB minimap players
-		}
-		p.sendMessage(message);
 	}
 
 	public void setFileLogger(Logger logger)
