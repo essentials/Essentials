@@ -25,6 +25,7 @@ public class Permissions
 	public static final String BLOCKPLACE = CHECKS + ".blockplace";
 	public static final String BLOCKPLACE_REACH = BLOCKPLACE + ".reach";
 	public static final String BLOCKPLACE_DIRECTION = BLOCKPLACE + ".direction";
+	public static final String BLOCKPLACE_SPEED = BLOCKPLACE + ".speed";
 	public static final String CHAT = CHECKS + ".chat";
 	public static final String CHAT_SPAM = CHAT + ".spam";
 	public static final String CHAT_COLOR = CHAT + ".color";

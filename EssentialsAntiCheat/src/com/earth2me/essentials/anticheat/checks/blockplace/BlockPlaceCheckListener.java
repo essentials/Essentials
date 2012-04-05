@@ -21,6 +21,7 @@ public class BlockPlaceCheckListener implements Listener, EventManager
 {
 	private final ReachCheck reachCheck;
 	private final DirectionCheck directionCheck;
+	private final SpeedCheck speedCheck;
 	private final NoCheat plugin;
 
 	public BlockPlaceCheckListener(NoCheat plugin)
@@ -28,6 +29,7 @@ public class BlockPlaceCheckListener implements Listener, EventManager
 
 		this.plugin = plugin;
 
+		speedCheck = new SpeedCheck(plugin);
 		reachCheck = new ReachCheck(plugin);
 		directionCheck = new DirectionCheck(plugin);
 	}
@@ -69,6 +71,11 @@ public class BlockPlaceCheckListener implements Listener, EventManager
 			cancelled = directionCheck.check(player, data, cc);
 		}
 
+		// Third the speed
+		if (!cancelled && cc.speedCheck && !player.hasPermission(Permissions.BLOCKPLACE_SPEED))
+		{
+			cancelled = speedCheck.check(player, data, cc);
+		}
 		// If one of the checks requested to cancel the event, do so
 		if (cancelled)
 		{
@@ -76,6 +83,7 @@ public class BlockPlaceCheckListener implements Listener, EventManager
 		}
 	}
 
+	@Override
 	public List<String> getActiveChecks(ConfigurationCacheStore cc)
 	{
 		LinkedList<String> s = new LinkedList<String>();
@@ -90,7 +98,10 @@ public class BlockPlaceCheckListener implements Listener, EventManager
 		{
 			s.add("blockplace.direction");
 		}
-
+		if (bp.speedCheck)
+		{
+			s.add("blockplace.speed");
+		}
 		return s;
 	}
 }

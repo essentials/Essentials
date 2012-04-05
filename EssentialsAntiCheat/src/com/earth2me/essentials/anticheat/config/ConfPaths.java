@@ -84,6 +84,9 @@ public abstract class ConfPaths
 
     private final static String BLOCKPLACE                                = CHECKS + "blockplace.";
 
+	public final static String BLOCKPLACE_SPEED                           = BLOCKPLACE + "speed.";
+	public final static String BLOCKPLACE_SPEED_CHECK                     = BLOCKPLACE_SPEED + "active";
+	public final static String BLOCKPLACE_SPEED_ACTIONS                    = BLOCKPLACE_SPEED + "actions";
     private final static String BLOCKPLACE_REACH                          = BLOCKPLACE + "reach.";
     public final static String  BLOCKPLACE_REACH_CHECK                    = BLOCKPLACE_REACH + "active";
     public final static String  BLOCKPLACE_REACH_ACTIONS                  = BLOCKPLACE_REACH + "actions";

@@ -21,9 +21,13 @@ public class BlockPlaceConfig implements ConfigItem
 	public final ActionList directionActions;
 	public final long directionPenaltyTime;
 	public final double directionPrecision;
+	public final boolean speedCheck;
+	public final ActionList speedActions;
 
 	public BlockPlaceConfig(NoCheatConfiguration data)
 	{
+		speedCheck = data.getBoolean(ConfPaths.BLOCKPLACE_SPEED_CHECK);
+		speedActions = data.getActionList(ConfPaths.BLOCKPLACE_SPEED_ACTIONS, Permissions.BLOCKPLACE_SPEED);
 
 		reachCheck = data.getBoolean(ConfPaths.BLOCKPLACE_REACH_CHECK);
 		reachDistance = 535D / 100D;

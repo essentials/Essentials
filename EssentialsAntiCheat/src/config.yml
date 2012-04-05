@@ -53,6 +53,9 @@ checks:
       active: true
       actions: log:bbnoswing:3:2:if cancel
   blockplace:
+    speed:
+      active: true
+      actions: TODO
     reach:
       active: true
       actions: cancel vl>5 log:bpreach:0:2:if cancel
