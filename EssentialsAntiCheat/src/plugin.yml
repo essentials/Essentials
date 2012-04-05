@@ -2,7 +2,7 @@ name: EssentialsAntiCheat
 main: com.earth2me.essentials.anticheat.NoCheat
 # Note to developers: This next line cannot change, or the automatic versioning system will break.
 version: ${build.number}
-website: http://tiny.cc/EssentialsWiki
+website: ${project.url}
 description: Detect and Fight the exploitation of various Flaws/Bugs in Minecraft.
 authors: [Evenprime, md_5]
 commands:

@@ -5,10 +5,8 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.*;
+import org.bukkit.configuration.file.FileConfiguration;
 
 
 /**
@@ -17,9 +15,8 @@ import java.util.logging.*;
  */
 public class ConfigurationManager
 {
-	private final static String configFileName = "config.yml";
-	private final Map<String, ConfigurationCacheStore> worldnameToConfigCacheMap = new HashMap<String, ConfigurationCacheStore>();
 	private FileHandler fileHandler;
+	private ConfigurationCacheStore cache;
 	private final NoCheat plugin;
 
 
@@ -58,12 +55,10 @@ public class ConfigurationManager
 
 	public ConfigurationManager(NoCheat plugin, File rootConfigFolder)
 	{
-
 		this.plugin = plugin;
 
 		// Setup the real configuration
 		initializeConfig(rootConfigFolder);
-
 	}
 
 	/**
@@ -73,105 +68,19 @@ public class ConfigurationManager
 	 */
 	private void initializeConfig(File rootConfigFolder)
 	{
-
-		// First try to obtain and parse the global config file
-		NoCheatConfiguration root = new NoCheatConfiguration();
-		root.setDefaults(new DefaultConfiguration());
-		root.options().copyDefaults(true);
-		root.options().copyHeader(true);
-
-		File globalConfigFile = getGlobalConfigFile(rootConfigFolder);
-
-		if (globalConfigFile.exists())
-		{
-			try
-			{
-				root.load(globalConfigFile);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-
-		try
-		{
-			root.save(globalConfigFile);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		FileConfiguration conf = plugin.getConfig();
+		conf.options().copyDefaults(true);
+		conf.options().copyHeader(true);
+		plugin.saveConfig();
+		NoCheatConfiguration root = new NoCheatConfiguration(conf);
 
 		root.regenerateActionLists();
 
 		// Create a corresponding Configuration Cache
 		// put the global config on the config map
-		worldnameToConfigCacheMap.put(null, new ConfigurationCacheStore(root));
+		cache = new ConfigurationCacheStore(root);
 
 		plugin.setFileLogger(setupFileLogger(new File(rootConfigFolder, root.getString(ConfPaths.LOGGING_FILENAME))));
-
-		// Try to find world-specific config files
-		Map<String, File> worldFiles = getWorldSpecificConfigFiles(rootConfigFolder);
-
-		for (Entry<String, File> worldEntry : worldFiles.entrySet())
-		{
-
-			File worldConfigFile = worldEntry.getValue();
-
-			NoCheatConfiguration world = new NoCheatConfiguration();
-			world.setDefaults(root);
-
-			try
-			{
-				world.load(worldConfigFile);
-
-				worldnameToConfigCacheMap.put(worldEntry.getKey(), new ConfigurationCacheStore(world));
-
-				// write the config file back to disk immediately
-				world.save(worldConfigFile);
-
-			}
-			catch (Exception e)
-			{
-				plugin.getLogger().warning("Couldn't load world-specific config for " + worldEntry.getKey());
-				e.printStackTrace();
-			}
-
-			world.regenerateActionLists();
-		}
-	}
-
-	private static File getGlobalConfigFile(File rootFolder)
-	{
-
-		File globalConfig = new File(rootFolder, configFileName);
-
-		return globalConfig;
-	}
-
-	private static Map<String, File> getWorldSpecificConfigFiles(File rootFolder)
-	{
-
-		HashMap<String, File> files = new HashMap<String, File>();
-
-		if (rootFolder.isDirectory())
-		{
-			for (File f : rootFolder.listFiles())
-			{
-				if (f.isFile())
-				{
-					String filename = f.getName();
-					if (filename.matches(".+_" + configFileName + "$"))
-					{
-						// Get the first part = world name
-						String worldname = filename.substring(0, filename.length() - (configFileName.length() + 1));
-						files.put(worldname, f);
-					}
-				}
-			}
-		}
-		return files;
 	}
 
 	private Logger setupFileLogger(File logfile)
@@ -237,21 +146,6 @@ public class ConfigurationManager
 	 */
 	public ConfigurationCacheStore getConfigurationCacheForWorld(String worldname)
 	{
-
-		ConfigurationCacheStore cache = worldnameToConfigCacheMap.get(worldname);
-
-		if (cache != null)
-		{
-			return cache;
-		}
-		else
-		{
-			// Enter a reference to the cache under the new name
-			// to be faster in looking it up later
-			cache = worldnameToConfigCacheMap.get(null);
-			worldnameToConfigCacheMap.put(worldname, cache);
-
-			return cache;
-		}
+		return cache;
 	}
 }

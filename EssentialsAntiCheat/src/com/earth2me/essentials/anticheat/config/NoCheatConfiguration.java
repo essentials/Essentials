@@ -2,36 +2,17 @@ package com.earth2me.essentials.anticheat.config;
 
 import com.earth2me.essentials.anticheat.actions.Action;
 import com.earth2me.essentials.anticheat.actions.types.ActionList;
-import java.lang.reflect.Field;
-import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.yaml.snakeyaml.DumperOptions;
+import org.bukkit.configuration.file.FileConfiguration;
 
 
-public class NoCheatConfiguration extends YamlConfiguration
+public class NoCheatConfiguration
 {
 	private ActionFactory factory;
+	private FileConfiguration conf;
 
-	@Override
-	public String saveToString()
+	public NoCheatConfiguration(FileConfiguration conf)
 	{
-		// Some reflection wizardry to avoid having a lot of
-		// linebreaks in the yml file, and get a "footer" into the file
-		try
-		{
-			Field op;
-			op = YamlConfiguration.class.getDeclaredField("yamlOptions");
-			op.setAccessible(true);
-			DumperOptions options = (DumperOptions)op.get(this);
-			options.setWidth(200);
-		}
-		catch (Exception e)
-		{
-		}
-
-		String result = super.saveToString();
-
-		return result;
+		this.conf = conf;
 	}
 
 	/**
@@ -39,7 +20,7 @@ public class NoCheatConfiguration extends YamlConfiguration
 	 */
 	public void regenerateActionLists()
 	{
-		factory = new ActionFactory(((MemorySection)this.get(ConfPaths.STRINGS)).getValues(false));
+		factory = new ActionFactory(conf.getConfigurationSection(ConfPaths.STRINGS).getValues(false));
 	}
 
 	/**
@@ -50,8 +31,7 @@ public class NoCheatConfiguration extends YamlConfiguration
 	 */
 	public ActionList getActionList(String path, String permission)
 	{
-
-		String value = this.getString(path);
+		String value = conf.getString(path);
 		return factory.createActionList(value, permission);
 	}
 
@@ -77,6 +57,26 @@ public class NoCheatConfiguration extends YamlConfiguration
 			}
 		}
 
-		set(path, string.toString().trim());
+		conf.set(path, string.toString().trim());
+	}
+
+	public int getInt(String path)
+	{
+		return conf.getInt(path);
+	}
+
+	public int getInt(String path, int def)
+	{
+		return conf.getInt(path, def);
+	}
+
+	public boolean getBoolean(String path)
+	{
+		return conf.getBoolean(path);
+	}
+
+	public String getString(String path)
+	{
+		return conf.getString(path);
 	}
 }
