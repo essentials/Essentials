@@ -85,7 +85,6 @@ public class CheckUtil
 	// Until I can think of a better way to determine if a block is solid or
 	// not, this is what I'll do
 	private static final int types[];
-	private static final Set<Material> foods = EnumSet.noneOf(Material.class);
 
 	static
 	{
@@ -157,24 +156,6 @@ public class CheckUtil
 		// nonsolid too
 		types[Material.STONE_PLATE.getId()] = SOLID | NONSOLID;
 		types[Material.WOOD_PLATE.getId()] = SOLID | NONSOLID;
-
-		// We need to know what is considered food for the instanteat check
-		foods.add(Material.APPLE);
-		foods.add(Material.BREAD);
-		foods.add(Material.COOKED_BEEF);
-		foods.add(Material.COOKED_CHICKEN);
-		foods.add(Material.COOKED_FISH);
-		foods.add(Material.COOKIE);
-		foods.add(Material.GOLDEN_APPLE);
-		foods.add(Material.GRILLED_PORK);
-		foods.add(Material.MELON);
-		foods.add(Material.MUSHROOM_SOUP);
-		foods.add(Material.PORK);
-		foods.add(Material.RAW_BEEF);
-		foods.add(Material.RAW_CHICKEN);
-		foods.add(Material.RAW_FISH);
-		foods.add(Material.ROTTEN_FLESH);
-		foods.add(Material.SPIDER_EYE);
 	}
 
 	/**
@@ -363,6 +344,6 @@ public class CheckUtil
 		{
 			return false;
 		}
-		return foods.contains(item.getType());
+		return item.getType().isEdible();
 	}
 }
