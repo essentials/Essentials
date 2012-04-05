@@ -13,7 +13,6 @@ import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
 import com.earth2me.essentials.anticheat.config.ConfigurationManager;
 import com.earth2me.essentials.anticheat.config.Permissions;
 import com.earth2me.essentials.anticheat.data.PlayerManager;
-import com.earth2me.essentials.anticheat.debug.ActiveCheckPrinter;
 import com.earth2me.essentials.anticheat.debug.LagMeasureTask;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,9 +76,6 @@ public class NoCheat extends JavaPlugin implements Listener
 			lagMeasureTask = new LagMeasureTask(this);
 			lagMeasureTask.start();
 		}
-
-		// Then print a list of active checks per world
-		ActiveCheckPrinter.printActiveChecks(this, eventManagers);
 
 		// register all listeners
 		for (EventManager eventManager : eventManagers)

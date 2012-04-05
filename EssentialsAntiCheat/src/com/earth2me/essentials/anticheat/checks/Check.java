@@ -14,10 +14,6 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandException;
 
 
-/**
- * The abstract Check class, providing some basic functionality
- *
- */
 public abstract class Check
 {
 	private final String name;
@@ -36,7 +32,6 @@ public abstract class Check
 	 * Execute some actions for the specified player
 	 *
 	 * @param player
-	 * @param actions
 	 * @return
 	 */
 	protected final boolean executeActions(NoCheatPlayer player, ActionList actionList, double violationLevel)
@@ -92,7 +87,7 @@ public abstract class Check
 		player.getDataStore().getStatistics().increment(id, vl);
 	}
 
-	private final void executeLogAction(LogAction l, Check check, NoCheatPlayer player, ConfigurationCacheStore cc)
+	private void executeLogAction(LogAction l, Check check, NoCheatPlayer player, ConfigurationCacheStore cc)
 	{
 
 		if (!cc.logging.active)
@@ -104,7 +99,7 @@ public abstract class Check
 		Bukkit.getServer().getPluginManager().callEvent(new NoCheatLogEvent(cc.logging.prefix, l.getLogMessage(player, check), cc.logging.toConsole && l.toConsole(), cc.logging.toChat && l.toChat(), cc.logging.toFile && l.toFile()));
 	}
 
-	private final void executeConsoleCommand(ConsolecommandAction action, Check check, NoCheatPlayer player, ConfigurationCacheStore cc)
+	private void executeConsoleCommand(ConsolecommandAction action, Check check, NoCheatPlayer player, ConfigurationCacheStore cc)
 	{
 		final String command = action.getCommand(player, check);
 

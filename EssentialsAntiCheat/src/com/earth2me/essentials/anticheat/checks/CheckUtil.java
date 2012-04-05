@@ -2,7 +2,7 @@ package com.earth2me.essentials.anticheat.checks;
 
 import com.earth2me.essentials.anticheat.NoCheatPlayer;
 import com.earth2me.essentials.anticheat.data.PreciseLocation;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Set;
 import net.minecraft.server.Block;
 import org.bukkit.Location;
@@ -12,10 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 
-/**
- * Some stuff that's used by different checks or just too complex to keep in other places
- *
- */
 public class CheckUtil
 {
 	/**
@@ -64,7 +60,7 @@ public class CheckUtil
 	 * @param limit
 	 * @return
 	 */
-	public static final double reachCheck(final NoCheatPlayer player, final double targetX, final double targetY, final double targetZ, final double limit)
+	public static double reachCheck(final NoCheatPlayer player, final double targetX, final double targetY, final double targetZ, final double limit)
 	{
 
 		final Location eyes = player.getPlayer().getEyeLocation();
@@ -89,7 +85,7 @@ public class CheckUtil
 	// Until I can think of a better way to determine if a block is solid or
 	// not, this is what I'll do
 	private static final int types[];
-	private static final Set<Material> foods = new HashSet<Material>();
+	private static final Set<Material> foods = EnumSet.noneOf(Material.class);
 
 	static
 	{
@@ -190,7 +186,7 @@ public class CheckUtil
 	 *
 	 * @return
 	 */
-	public static final int evaluateLocation(final World world, final PreciseLocation location)
+	public static int evaluateLocation(final World world, final PreciseLocation location)
 	{
 
 		final int lowerX = lowerBorder(location.x);
@@ -230,7 +226,7 @@ public class CheckUtil
 	 * @param z
 	 * @return Returns INGROUND, ONGROUND, LIQUID, combination of the three or 0
 	 */
-	private static final int evaluateSimpleLocation(final World world, final int x, final int y, final int z)
+	private static int evaluateSimpleLocation(final World world, final int x, final int y, final int z)
 	{
 
 		// First we need to know about the block itself, the block
@@ -284,32 +280,32 @@ public class CheckUtil
 		return type;
 	}
 
-	public static final boolean isSolid(final int value)
+	public static boolean isSolid(final int value)
 	{
 		return (value & SOLID) == SOLID;
 	}
 
-	public static final boolean isLiquid(final int value)
+	public static boolean isLiquid(final int value)
 	{
 		return (value & LIQUID) == LIQUID;
 	}
 
-	private static final boolean isNonSolid(final int value)
+	private static boolean isNonSolid(final int value)
 	{
 		return ((value & NONSOLID) == NONSOLID);
 	}
 
-	private static final boolean isLadder(final int value)
+	private static boolean isLadder(final int value)
 	{
 		return ((value & LADDER) == LADDER);
 	}
 
-	public static final boolean isOnGround(final int fromType)
+	public static boolean isOnGround(final int fromType)
 	{
 		return (fromType & ONGROUND) == ONGROUND;
 	}
 
-	public static final boolean isInGround(final int fromType)
+	public static boolean isInGround(final int fromType)
 	{
 		return (fromType & INGROUND) == INGROUND;
 	}
@@ -320,7 +316,7 @@ public class CheckUtil
 	 * @param d1
 	 * @return
 	 */
-	private static final int lowerBorder(final double d1)
+	private static int lowerBorder(final double d1)
 	{
 
 		final double floor = Math.floor(d1);
@@ -341,7 +337,7 @@ public class CheckUtil
 	 * @param d1
 	 * @return
 	 */
-	private static final int upperBorder(final double d1)
+	private static int upperBorder(final double d1)
 	{
 
 		final double floor = Math.floor(d1);
