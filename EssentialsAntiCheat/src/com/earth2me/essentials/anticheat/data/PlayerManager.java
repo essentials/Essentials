@@ -2,7 +2,7 @@ package com.earth2me.essentials.anticheat.data;
 
 import com.earth2me.essentials.anticheat.NoCheat;
 import com.earth2me.essentials.anticheat.NoCheatPlayer;
-import com.earth2me.essentials.anticheat.player.NoCheatPlayerImpl;
+import com.earth2me.essentials.anticheat.NoCheatPlayerImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

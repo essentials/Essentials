@@ -13,7 +13,6 @@ import com.earth2me.essentials.anticheat.config.ConfigurationCacheStore;
 import com.earth2me.essentials.anticheat.config.ConfigurationManager;
 import com.earth2me.essentials.anticheat.config.Permissions;
 import com.earth2me.essentials.anticheat.data.PlayerManager;
-import com.earth2me.essentials.anticheat.debug.LagMeasureTask;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

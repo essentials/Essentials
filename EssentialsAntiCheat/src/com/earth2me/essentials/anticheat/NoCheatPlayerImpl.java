@@ -1,4 +1,6 @@
-package com.earth2me.essentials.anticheat.player;
+package com.earth2me.essentials.anticheat;
+
+
 
 import com.earth2me.essentials.anticheat.NoCheat;
 import com.earth2me.essentials.anticheat.NoCheatPlayer;
@@ -38,41 +40,49 @@ public class NoCheatPlayerImpl implements NoCheatPlayer
 		this.config = plugin.getConfig(player);
 	}
 
+	@Override
 	public boolean isDead()
 	{
 		return this.player.getHealth() <= 0 || this.player.isDead();
 	}
 
+	@Override
 	public boolean hasPermission(String permission)
 	{
 		return player.hasPermission(permission);
 	}
 
+	@Override
 	public DataStore getDataStore()
 	{
 		return data;
 	}
 
+	@Override
 	public ConfigurationCacheStore getConfigurationStore()
 	{
 		return config;
 	}
 
+	@Override
 	public Player getPlayer()
 	{
 		return player;
 	}
 
+	@Override
 	public String getName()
 	{
 		return player.getName();
 	}
 
+	@Override
 	public int getTicksLived()
 	{
 		return player.getTicksLived();
 	}
 
+	@Override
 	public float getSpeedAmplifier()
 	{
 		EntityPlayer ep = ((CraftPlayer)player).getHandle();
@@ -111,6 +121,7 @@ public class NoCheatPlayerImpl implements NoCheatPlayer
 		}
 	}
 
+	@Override
 	public boolean isSprinting()
 	{
 		return player.isSprinting();
@@ -131,6 +142,7 @@ public class NoCheatPlayerImpl implements NoCheatPlayer
 		return lastUsedTime + 60000L < currentTimeInMilliseconds;
 	}
 
+	@Override
 	public boolean isCreative()
 	{
 		return player.getGameMode() == GameMode.CREATIVE || player.getAllowFlight();

@@ -1,4 +1,4 @@
-package com.earth2me.essentials.anticheat.debug;
+package com.earth2me.essentials.anticheat;
 
 import com.earth2me.essentials.anticheat.NoCheat;
 import org.bukkit.World;
