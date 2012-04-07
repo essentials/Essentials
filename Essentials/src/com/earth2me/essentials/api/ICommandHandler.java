@@ -1,8 +1,8 @@
 package com.earth2me.essentials.api;
 
+import com.earth2me.essentials.api.server.ICommandSender;
 import java.util.Map;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 
@@ -14,7 +14,7 @@ public interface ICommandHandler extends IReload
 
 	public void addPlugin(Plugin plugin);
 
-	boolean handleCommand(CommandSender sender, Command command, String commandLabel, String[] args);
+	boolean handleCommand(ICommandSender sender, Command command, String commandLabel, String[] args);
 
-	void showCommandError(CommandSender sender, String commandLabel, Throwable exception);
+	void showCommandError(ICommandSender sender, String commandLabel, Throwable exception);
 }

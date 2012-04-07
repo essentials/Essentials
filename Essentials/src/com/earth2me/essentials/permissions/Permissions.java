@@ -2,10 +2,9 @@ package com.earth2me.essentials.permissions;
 
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.Permission;
 import java.util.Locale;
-import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 
 public enum Permissions implements IPermission
@@ -23,11 +22,11 @@ public enum Permissions implements IPermission
 	CHAT_SPY,
 	CLEARINVENTORY_OTHERS,
 	DELHOME_OTHERS,
-	ECO_LOAN(PermissionDefault.FALSE),
+	ECO_LOAN(Permission.Default.FALSE),
 	FEED_OTHERS,
 	GAMEMODE_OTHERS,
-	GEOIP_HIDE(PermissionDefault.FALSE),
-	GEOIP_SHOW(PermissionDefault.TRUE),
+	GEOIP_HIDE(Permission.Default.FALSE),
+	GEOIP_SHOW(Permission.Default.TRUE),
 	GETPOS_OTHERS,
 	GOD_OTHERS,
 	HEAL_COOLDOWN_BYPASS,
@@ -50,7 +49,7 @@ public enum Permissions implements IPermission
 	NICK_COLOR,
 	NICK_OTHERS,
 	NOGOD_OVERRIDE,
-	OVERSIZEDSTACKS(PermissionDefault.FALSE),
+	OVERSIZEDSTACKS(Permission.Default.FALSE),
 	POWERTOOL_APPEND,
 	PTIME_OTHERS,
 	REPAIR_ARMOR,
@@ -73,32 +72,32 @@ public enum Permissions implements IPermission
 	TPAHERE,
 	TPOHERE,
 	UNLIMITED_OTHERS,
-	WARP_LIST(PermissionDefault.TRUE),
+	WARP_LIST(Permission.Default.TRUE),
 	WARP_OTHERS;
 	private static final String base = "essentials.";
 	private final String permission;
-	private final PermissionDefault defaultPerm;
+	private final Permission.Default defaultPerm;
 	private transient Permission bukkitPerm = null;
 
 	private Permissions()
 	{
-		this(PermissionDefault.OP);
+		this(Permission.Default.OP);
 	}
 
-	private Permissions(final PermissionDefault defaultPerm)
+	private Permissions(final Permission.Default defaultPerm)
 	{
 		permission = base + toString().toLowerCase(Locale.ENGLISH).replace('_', '.');
 		this.defaultPerm = defaultPerm;
 	}
 
 	@Override
-	public String getPermission()
+	public String getPermissionName()
 	{
 		return permission;
 	}
 
 	@Override
-	public Permission getBukkitPermission()
+	public Permission getPermission()
 	{
 		if (bukkitPerm != null)
 		{
@@ -106,19 +105,19 @@ public enum Permissions implements IPermission
 		}
 		else
 		{
-			return Util.registerPermission(getPermission(), getPermissionDefault());
+			return Permission.create(getPermissionName(), getPermissionDefault());
 		}
 	}
 
 	@Override
-	public PermissionDefault getPermissionDefault()
+	public Permission.Default getPermissionDefault()
 	{
 		return this.defaultPerm;
 	}
 
 	@Override
-	public boolean isAuthorized(CommandSender sender)
+	public boolean isAuthorized(ICommandSender sender)
 	{
-		return sender.hasPermission(getBukkitPermission());
+		return sender.hasPermission(getPermission());
 	}
 }

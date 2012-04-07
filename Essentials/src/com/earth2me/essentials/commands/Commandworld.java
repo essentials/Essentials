@@ -3,10 +3,10 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.Location;
 import com.earth2me.essentials.permissions.WorldPermissions;
 import java.util.List;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -15,15 +15,15 @@ public class Commandworld extends EssentialsCommand
 	@Override
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		World world;
+		IWorld world;
 
 		if (args.length < 1)
 		{
-			World nether = null;
+			IWorld nether = null;
 
-			final List<World> worlds = server.getWorlds();
+			final List<IWorld> worlds = server.getWorlds();
 
-			for (World world2 : worlds)
+			for (IWorld world2 : worlds)
 			{
 				if (world2.getEnvironment() == World.Environment.NETHER)
 				{
@@ -71,7 +71,7 @@ public class Commandworld extends EssentialsCommand
 		}
 
 		final Location loc = user.getLocation();
-		final Location target = new Location(world, loc.getBlockX() * factor + .5, loc.getBlockY(), loc.getBlockZ() * factor + .5);
+		final Location target = Location.create(world, loc.getBlockX() * factor + .5, loc.getBlockY(), loc.getBlockZ() * factor + .5);
 
 		final Trade charge = new Trade(commandName, ess);
 		charge.isAffordableFor(user);

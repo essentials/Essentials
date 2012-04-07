@@ -1,11 +1,11 @@
 package com.earth2me.essentials.api;
 
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.api.server.ICommandSender;
 
 
 public interface IReplyTo
 {
-	void setReplyTo(CommandSender user);
+	void setReplyTo(ICommandSender user);
 
-	CommandSender getReplyTo();
+	ICommandSender getReplyTo();
 }

@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 public class SetExpFix
 {
-	public static void setTotalExperience(final Player player, final int exp)
+	public static void setTotalExperience(final IPlayer player, final int exp)
 	{
 		if (exp < 0)
 		{
@@ -34,7 +34,7 @@ public class SetExpFix
 		}
 	}
 
-	private static int getExpToLevel(final Player player)
+	private static int getExpToLevel(final IPlayer player)
 	{		
 		return getExpToLevel(player.getLevel());
 	}
@@ -44,7 +44,7 @@ public class SetExpFix
 		return 7 + (level * 7 >> 1);
 	}
 	
-	public static int getTotalExperience(final Player player)
+	public static int getTotalExperience(final IPlayer player)
 	{
 		int exp = (int) (getExpToLevel(player) * player.getExp());
 		int currentLevel = player.getLevel();

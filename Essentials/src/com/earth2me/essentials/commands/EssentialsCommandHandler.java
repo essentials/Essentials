@@ -2,6 +2,7 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.*;
+import com.earth2me.essentials.api.server.ICommandSender;
 import com.earth2me.essentials.commands.EssentialsCommand;
 import com.earth2me.essentials.commands.IEssentialsCommand;
 import com.earth2me.essentials.commands.NoChargeException;
@@ -53,7 +54,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 	}
 
 	@Override
-	public boolean handleCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
+	public boolean handleCommand(final ICommandSender sender, final Command command, final String commandLabel, final String[] args)
 	{
 		boolean disabled = false;
 		boolean overridden = false;
@@ -193,7 +194,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 	}
 
 	@Override
-	public void showCommandError(final CommandSender sender, final String commandLabel, final Throwable exception)
+	public void showCommandError(final ICommandSender sender, final String commandLabel, final Throwable exception)
 	{
 		sender.sendMessage(_("errorWithMessage", exception.getMessage()));
 		if (ess.getSettings().isDebug())

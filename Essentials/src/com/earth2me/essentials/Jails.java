@@ -49,7 +49,7 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 	@Override
 	public File getStorageFile()
 	{
-		return new File(ess.getDataFolder(), "jail.yml");
+		return new File(ess.getPlugin().getDataFolder(), "jail.yml");
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 			{
 				throw new Exception(_("jailNotExist"));
 			}
-			Location loc = getData().getJails().get(jailName.toLowerCase(Locale.ENGLISH)).getBukkitLocation();
+			Location loc = getData().getJails().get(jailName.toLowerCase(Locale.ENGLISH)).getStoredLocation();
 			if (loc == null || loc.getWorld() == null)
 			{
 				throw new Exception(_("jailNotExist"));
@@ -147,9 +147,9 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 		{
 			if (getData().getJails() == null)
 			{
-				getData().setJails(new HashMap<String, com.earth2me.essentials.storage.Location>());
+				getData().setJails(new HashMap<String, com.earth2me.essentials.storage.StoredLocation>());
 			}
-			getData().getJails().put(jailName.toLowerCase(Locale.ENGLISH), new com.earth2me.essentials.storage.Location(loc));
+			getData().getJails().put(jailName.toLowerCase(Locale.ENGLISH), new com.earth2me.essentials.storage.StoredLocation(loc));
 		}
 		finally
 		{

@@ -3,6 +3,7 @@ package com.earth2me.essentials.commands;
 import com.earth2me.essentials.utils.DescParseTickFormat;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
 import com.earth2me.essentials.permissions.Permissions;
 import java.util.*;
 import org.bukkit.World;
@@ -23,7 +24,7 @@ public class Commandptime extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		// Which Players(s) / Users(s) are we interested in?
 		String userSelector = null;

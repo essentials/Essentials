@@ -23,7 +23,7 @@ public class Kits extends AsyncStorageObjectHolder<com.earth2me.essentials.setti
 	@Override
 	public File getStorageFile() throws IOException
 	{
-		return new File(ess.getDataFolder(), "kits.yml");
+		return new File(ess.getPlugin().getDataFolder(), "kits.yml");
 	}
 
 	@Override

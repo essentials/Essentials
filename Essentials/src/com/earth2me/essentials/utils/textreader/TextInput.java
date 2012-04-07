@@ -1,16 +1,15 @@
 package com.earth2me.essentials.utils.textreader;
 
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.Player;
+import com.earth2me.essentials.utils.Util;
 import java.io.*;
 import java.lang.ref.SoftReference;
 import java.util.*;
 import java.util.logging.Level;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class TextInput implements IText
@@ -21,29 +20,29 @@ public class TextInput implements IText
 	private final transient long lastChange;
 	private final static HashMap<String, SoftReference<TextInput>> cache = new HashMap<String, SoftReference<TextInput>>();
 
-	public TextInput(final CommandSender sender, final String filename, final boolean createFile, final IEssentials ess) throws IOException
+	public TextInput(final ICommandSender sender, final String filename, final boolean createFile, final IEssentials ess) throws IOException
 	{
 
 		File file = null;
-		if (sender instanceof Player)
+		if (sender.isPlayer())
 		{
 			try
 			{
-				final IUser user = ess.getUser((Player)sender);
-				file = new File(ess.getDataFolder(), filename + "_" + Util.sanitizeFileName(user.getName()) + ".txt");
+				final IUser user = ((Player)sender).getUser();
+				file = new File(ess.getPlugin().getDataFolder(), filename + "_" + Util.sanitizeFileName(user.getName()) + ".txt");
 				if (!file.exists())
 				{
-					file = new File(ess.getDataFolder(), filename + "_" + Util.sanitizeFileName(ess.getRanks().getMainGroup(user)) + ".txt");
+					file = new File(ess.getPlugin().getDataFolder(), filename + "_" + Util.sanitizeFileName(ess.getRanks().getMainGroup(user)) + ".txt");
 				}
 			}
 			catch (InvalidNameException ex)
 			{
-				Bukkit.getLogger().log(Level.WARNING, ex.getMessage(), ex);
+				ess.getLogger().log(Level.WARNING, ex.getMessage(), ex);
 			}
 		}
 		if (file == null || !file.exists())
 		{
-			file = new File(ess.getDataFolder(), filename + ".txt");
+			file = new File(ess.getPlugin().getDataFolder(), filename + ".txt");
 		}
 		if (file.exists())
 		{
@@ -105,7 +104,7 @@ public class TextInput implements IText
 			bookmarks = Collections.emptyMap();
 			if (createFile)
 			{
-				final InputStream input = ess.getResource(filename + ".txt");
+				final InputStream input = ess.getPlugin().getResource(filename + ".txt");
 				final OutputStream output = new FileOutputStream(file);
 				try
 				{

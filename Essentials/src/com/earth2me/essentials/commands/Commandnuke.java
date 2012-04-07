@@ -1,6 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.server.ICommandSender;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import org.bukkit.entity.TNTPrimed;
 public class Commandnuke extends EssentialsCommand
 {
 	@Override
-	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws NoSuchFieldException, NotEnoughArgumentsException
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws NoSuchFieldException, NotEnoughArgumentsException
 	{
 		List<Player> targets;
 		if (args.length > 0)

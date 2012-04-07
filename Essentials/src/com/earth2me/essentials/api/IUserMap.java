@@ -1,8 +1,8 @@
 package com.earth2me.essentials.api;
 
+import com.earth2me.essentials.api.server.Player;
 import java.io.File;
 import java.util.Set;
-import org.bukkit.entity.Player;
 
 
 public interface IUserMap extends IReload

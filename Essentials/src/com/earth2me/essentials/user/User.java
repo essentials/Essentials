@@ -1,36 +1,27 @@
 package com.earth2me.essentials.user;
 
-import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Teleport;
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.*;
-import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
-import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.api.server.*;
 import com.earth2me.essentials.economy.register.Method;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.utils.DateUtil;
+import com.earth2me.essentials.utils.Util;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Logger;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 
 public class User extends UserBase implements IUser
 {
-	private CommandSender replyTo = null;
+	private ICommandSender replyTo = null;
 	@Getter
 	private transient IUser teleportRequester;
 	@Getter
@@ -47,18 +38,11 @@ public class User extends UserBase implements IUser
 	@Setter
 	private boolean hidden = false;
 	private transient Location afkPosition;
-	private static final Logger logger = Bukkit.getLogger();
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
 
 	public User(final Player base, final IEssentials ess)
 	{
 		super(base, ess);
-		teleport = new Teleport(this, ess);
-	}
-
-	public User(final OfflinePlayer offlinePlayer, final IEssentials ess)
-	{
-		super(offlinePlayer, ess);
 		teleport = new Teleport(this, ess);
 	}
 
@@ -105,7 +89,7 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void giveMoney(final double value, final CommandSender initiator)
+	public void giveMoney(final double value, final ICommandSender initiator)
 	{
 
 		if (value == 0)
@@ -155,7 +139,7 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void takeMoney(final double value, final CommandSender initiator)
+	public void takeMoney(final double value, final ICommandSender initiator)
 	{
 		if (value == 0)
 		{
@@ -185,7 +169,7 @@ public class User extends UserBase implements IUser
 		acquireWriteLock();
 		try
 		{
-			getData().setLastLocation(new com.earth2me.essentials.storage.Location(getLocation()));
+			getData().setLastLocation(new com.earth2me.essentials.storage.StoredLocation(getLocation()));
 		}
 		finally
 		{
@@ -261,7 +245,7 @@ public class User extends UserBase implements IUser
 		}
 		catch (IllegalArgumentException e)
 		{
-			logger.info("Playerlist for " + name + " was not updated. Use a shorter displayname prefix.");
+			ess.getLogger().info("Playerlist for " + name + " was not updated. Use a shorter displayname prefix.");
 		}
 	}
 
@@ -277,7 +261,7 @@ public class User extends UserBase implements IUser
 		@Cleanup
 		final ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
-		if (isOnlineUser() && settings.getData().getChat().getChangeDisplayname())
+		if (isOnline() && settings.getData().getChat().getChangeDisplayname())
 		{
 			setDisplayNick();
 		}
@@ -466,9 +450,9 @@ public class User extends UserBase implements IUser
 			kickPlayer(kickReason);
 
 
-			for (Player player : ess.getServer().getOnlinePlayers())
+			for (IPlayer player : ess.getServer().getOnlinePlayers())
 			{
-				final IUser user = ess.getUser(player);
+				final IUser user = player.getUser();
 				if (Permissions.KICK_NOTIFY.isAuthorized(user))
 				{
 					player.sendMessage(_("playerKicked", Console.NAME, getName(), kickReason));
@@ -572,13 +556,13 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void setReplyTo(CommandSender user)
+	public void setReplyTo(ICommandSender user)
 	{
 		replyTo = user;
 	}
 
 	@Override
-	public CommandSender getReplyTo()
+	public ICommandSender getReplyTo()
 	{
 		return replyTo;
 	}
@@ -628,7 +612,7 @@ public class User extends UserBase implements IUser
 	{
 		boolean spew = false;
 
-		if (itemStack == null || itemStack.getType() == Material.AIR)
+		if (itemStack == null || itemStack.isAir())
 		{
 			return spew;
 		}
@@ -641,11 +625,11 @@ public class User extends UserBase implements IUser
 			settings.acquireReadLock();
 			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
 
-			overfilled = InventoryWorkaround.addItem(getInventory(), true, oversizedStackSize, itemStack);
+			overfilled = getInventory().addItem(true, oversizedStackSize, itemStack);
 		}
 		else
 		{
-			overfilled = InventoryWorkaround.addItem(getInventory(), true, itemStack);
+			overfilled = getInventory().addItem(true, itemStack);
 		}
 		if (canSpew)
 		{

@@ -1,12 +1,13 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.economy.Trade;
-import com.earth2me.essentials.utils.Util;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ITeleport;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.Player;
+import com.earth2me.essentials.api.server.Location;
 import com.earth2me.essentials.commands.NotEnoughArgumentsException;
+import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.CooldownException;
 import com.earth2me.essentials.user.UserData.TimestampType;
@@ -15,10 +16,6 @@ import com.earth2me.essentials.utils.LocationUtil;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -30,7 +27,7 @@ public class Teleport implements Runnable, ITeleport
 	private static class Target
 	{
 		private final Location location;
-		private final Entity entity;
+		private final Player entity;
 
 		public Target(Location location)
 		{
@@ -38,7 +35,7 @@ public class Teleport implements Runnable, ITeleport
 			this.entity = null;
 		}
 
-		public Target(Entity entity)
+		public Target(Player entity)
 		{
 			this.entity = entity;
 			this.location = null;
@@ -121,7 +118,7 @@ public class Teleport implements Runnable, ITeleport
 				}
 				catch (Throwable ex)
 				{
-					ess.getCommandHandler().showCommandError(user.getBase(), "teleport", ex);
+					ess.getCommandHandler().showCommandError(user, "teleport", ex);
 				}
 			}
 			catch (Exception ex)
@@ -139,11 +136,9 @@ public class Teleport implements Runnable, ITeleport
 
 	public void respawn(final Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		final Player player = user.getBase();
-		final Location bed = player.getBedSpawnLocation();
-		final PlayerRespawnEvent pre = new PlayerRespawnEvent(player, bed == null ? player.getWorld().getSpawnLocation() : bed, bed != null);
-		ess.getServer().getPluginManager().callEvent(pre);
-		teleport(new Target(pre.getRespawnLocation()), chargeFor, cause);
+		final Location bed = user.getBedSpawnLocation();
+		final Location respawnLoc = ess.getPlugin().callRespawnEvent(user, bed == null ? user.getWorld().getSpawnLocation() : bed, bed != null);
+		teleport(new Target(respawnLoc), chargeFor, cause);
 	}
 
 	public void warp(String warp, Trade chargeFor, TeleportCause cause) throws Exception
@@ -174,7 +169,7 @@ public class Teleport implements Runnable, ITeleport
 		}
 		try
 		{
-			ess.getServer().getScheduler().cancelTask(teleTimer);
+			ess.getPlugin().cancelTask(teleTimer);
 			if (notifyUser)
 			{
 				user.sendMessage(_("pendingTeleportCancelled"));
@@ -201,7 +196,7 @@ public class Teleport implements Runnable, ITeleport
 		teleport(new Target(loc), chargeFor, cause);
 	}
 
-	public void teleport(Entity entity, Trade chargeFor, TeleportCause cause) throws Exception
+	public void teleport(Player entity, Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		teleport(new Target(entity), chargeFor, cause);
 	}
@@ -233,7 +228,7 @@ public class Teleport implements Runnable, ITeleport
 		user.sendMessage(_("dontMoveMessage", DateUtil.formatDateDiff(c.getTimeInMillis())));
 		initTimer((long)(delay * 1000.0), target, chargeFor, cause);
 
-		teleTimer = ess.scheduleSyncRepeatingTask(this, 10, 10);
+		teleTimer = ess.getPlugin().scheduleSyncRepeatingTask(this, 10, 10);
 	}
 
 	private void now(Target target, TeleportCause cause) throws Exception
@@ -259,7 +254,7 @@ public class Teleport implements Runnable, ITeleport
 		now(new Target(loc), cause);
 	}
 
-	public void now(Entity entity, boolean cooldown, TeleportCause cause) throws Exception
+	public void now(Player entity, boolean cooldown, TeleportCause cause) throws Exception
 	{
 		if (cooldown)
 		{
@@ -273,7 +268,7 @@ public class Teleport implements Runnable, ITeleport
 		user.acquireReadLock();
 		try
 		{
-			teleport(new Target(user.getData().getLastLocation().getBukkitLocation()), chargeFor, TeleportCause.COMMAND);
+			teleport(new Target(user.getData().getLastLocation().getStoredLocation()), chargeFor, TeleportCause.COMMAND);
 		}
 		finally
 		{
@@ -286,7 +281,7 @@ public class Teleport implements Runnable, ITeleport
 		user.acquireReadLock();
 		try
 		{
-			now(new Target(user.getData().getLastLocation().getBukkitLocation()), TeleportCause.COMMAND);
+			now(new Target(user.getData().getLastLocation().getStoredLocation()), TeleportCause.COMMAND);
 		}
 		finally
 		{

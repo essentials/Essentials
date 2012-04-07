@@ -2,6 +2,7 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
 import com.earth2me.essentials.permissions.Permissions;
 import java.util.Locale;
 import org.bukkit.GameMode;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Player;
 public class Commandgamemode extends EssentialsCommand
 {
 	@Override
-	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -35,7 +36,7 @@ public class Commandgamemode extends EssentialsCommand
 		user.sendMessage(_("gameMode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName()));
 	}
 
-	private void gamemodeOtherPlayers(final CommandSender sender, final String name)
+	private void gamemodeOtherPlayers(final ICommandSender sender, final String name)
 	{
 		for (Player matchPlayer : server.matchPlayer(name))
 		{

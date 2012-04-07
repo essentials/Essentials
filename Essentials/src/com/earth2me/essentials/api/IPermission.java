@@ -1,17 +1,16 @@
 package com.earth2me.essentials.api;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.Permission;
 
 
 public interface IPermission
 {
-	String getPermission();
+	String getPermissionName();
 
-	boolean isAuthorized(CommandSender sender);
+	boolean isAuthorized(ICommandSender sender);
 
-	Permission getBukkitPermission();
+	Permission getPermission();
 
-	PermissionDefault getPermissionDefault();
+	Permission.Default getPermissionDefault();
 }

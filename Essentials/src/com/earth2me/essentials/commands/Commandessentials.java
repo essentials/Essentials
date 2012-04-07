@@ -1,6 +1,8 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.Player;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
@@ -8,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandessentials extends EssentialsCommand
@@ -17,7 +18,7 @@ public class Commandessentials extends EssentialsCommand
 	private final transient Map<Player, Block> noteBlocks = new HashMap<Player, Block>();
 
 	@Override
-	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length == 0)
 		{
@@ -41,9 +42,9 @@ public class Commandessentials extends EssentialsCommand
 		}
 	}
 
-	private void run_disabled(final CommandSender sender, final String[] args) throws Exception
+	private void run_disabled(final ICommandSender sender, final String[] args) throws Exception
 	{
-		sender.sendMessage("Essentials " + ess.getDescription().getVersion());
+		sender.sendMessage("Essentials " + ess.getPlugin().getVersion());
 		sender.sendMessage("/<command> <reload/debug>");
 		sender.sendMessage(_("blockList"));
 		final StringBuilder disabledCommands = new StringBuilder();
@@ -58,19 +59,19 @@ public class Commandessentials extends EssentialsCommand
 		sender.sendMessage(disabledCommands.toString());
 	}
 
-	private void run_debug(final CommandSender sender, final String[] args) throws Exception
+	private void run_debug(final ICommandSender sender, final String[] args) throws Exception
 	{
 		ess.getSettings().setDebug(!ess.getSettings().isDebug());
-		sender.sendMessage("Essentials " + ess.getDescription().getVersion() + " debug mode " + (ess.getSettings().isDebug() ? "enabled" : "disabled"));
+		sender.sendMessage("Essentials " + ess.getPlugin().getVersion() + " debug mode " + (ess.getSettings().isDebug() ? "enabled" : "disabled"));
 	}
 
-	private void run_reload(final CommandSender sender, final String[] args) throws Exception
+	private void run_reload(final ICommandSender sender, final String[] args) throws Exception
 	{
 		ess.reload();
-		sender.sendMessage(_("essentialsReload", ess.getDescription().getVersion()));
+		sender.sendMessage(_("essentialsReload", ess.getPlugin().getVersion()));
 	}
 
-	private void run_nya(final CommandSender sender, final String[] args) throws Exception
+	private void run_nya(final ICommandSender sender, final String[] args) throws Exception
 	{
 		final Map<String, Byte> noteMap = new HashMap<String, Byte>();
 		noteMap.put("1F#", (byte)0x0);
@@ -117,7 +118,7 @@ public class Commandessentials extends EssentialsCommand
 				player.sendBlockChange(loc, Material.NOTE_BLOCK, (byte)0);
 			}
 		}
-		taskid = ess.scheduleSyncRepeatingTask(new Runnable()
+		taskid = ess.getPlugin().scheduleSyncRepeatingTask(new Runnable()
 		{
 			int i = 0;
 
@@ -150,7 +151,7 @@ public class Commandessentials extends EssentialsCommand
 
 	private void stopTune()
 	{
-		ess.getServer().getScheduler().cancelTask(taskid);
+		ess.getPlugin().cancelTask(taskid);
 		for (Block block : noteBlocks.values())
 		{
 			if (block.getType() == Material.NOTE_BLOCK)
@@ -161,9 +162,9 @@ public class Commandessentials extends EssentialsCommand
 		noteBlocks.clear();
 	}
 	
-	private void run_moo(final CommandSender sender, final String args[])
+	private void run_moo(final ICommandSender sender, final String args[])
 	{
-		if(sender instanceof ConsoleCommandSender)
+		if(sender == ess.getServer().getConsoleSender())
 			sender.sendMessage(new String[]{"         (__)", "         (oo)", "   /------\\/", "  / |    ||", " *  /\\---/\\", "    ~~   ~~", "....\"Have you mooed today?\"..." } );
 		else
 			sender.sendMessage(new String[]{"            (__)", "            (oo)", "   /------\\/", "  /  |      | |", " *  /\\---/\\", "    ~~    ~~", "....\"Have you mooed today?\"..." } );

@@ -2,14 +2,14 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ItemStack;
+import com.earth2me.essentials.api.server.Material;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.permissions.UnlimitedItemPermissions;
 import java.util.Locale;
 import java.util.Set;
 import lombok.Cleanup;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 
 public class Commandunlimited extends EssentialsCommand
@@ -42,7 +42,7 @@ public class Commandunlimited extends EssentialsCommand
 			final Set<Material> itemList = target.getData().getUnlimited();
 			for(Material mat : itemList)
 			{
-				toggleUnlimited(user, target, mat.name());
+				toggleUnlimited(user, target, mat.getName());
 				
 			}
 		}
@@ -69,7 +69,7 @@ public class Commandunlimited extends EssentialsCommand
 				output.append(", ");
 			}
 			first = false;
-			final String matname = mater.name().toLowerCase(Locale.ENGLISH).replace("_", "");
+			final String matname = mater.getName().toLowerCase(Locale.ENGLISH).replace("_", "");
 			output.append(matname);
 		}
 
@@ -93,7 +93,7 @@ public class Commandunlimited extends EssentialsCommand
 		{
 			message = "enableUnlimited";
 			enableUnlimited = true;
-			if (!InventoryWorkaround.containsItem(target.getInventory(), true, true, stack))
+			if (!target.getInventory().containsItem(true, true, stack))
 			{
 				target.getInventory().addItem(stack);
 			}

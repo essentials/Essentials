@@ -1,17 +1,17 @@
 package com.earth2me.essentials.utils.textreader;
 
-import com.earth2me.essentials.utils.DescParseTickFormat;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.Player;
+import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.utils.DescParseTickFormat;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import lombok.Cleanup;
-import org.bukkit.World;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 
@@ -21,7 +21,7 @@ public class KeywordReplacer implements IText
 	private final transient List<String> replaced;
 	private final transient IEssentials ess;
 	
-	public KeywordReplacer(final IText input, final CommandSender sender, final IEssentials ess)
+	public KeywordReplacer(final IText input, final ICommandSender sender, final IEssentials ess)
 	{
 		this.input = input;
 		this.replaced = new ArrayList<String>(this.input.getLines().size());
@@ -29,16 +29,16 @@ public class KeywordReplacer implements IText
 		replaceKeywords(sender);
 	}
 	
-	private void replaceKeywords(final CommandSender sender)
+	private void replaceKeywords(final ICommandSender sender)
 	{
 		String displayName, ipAddress, balance, mails, world;
 		String worlds, online, unique, playerlist, date, time;
 		String worldTime12, worldTime24, worldDate, plugins;
 		String userName, address, version;
-		if (sender instanceof Player)
+		if (sender.isPlayer())
 		{
 			@Cleanup
-			final IUser user = ess.getUser((Player)sender);
+			final IUser user = ((Player)sender).getUser();
 			user.acquireReadLock();
 			displayName = user.getDisplayName();
 			userName = user.getName();
@@ -59,16 +59,16 @@ public class KeywordReplacer implements IText
 		int playerHidden = 0;
 		for (Player p : ess.getServer().getOnlinePlayers())
 		{
-			if (ess.getUser(p).isHidden())
+			if (p.getUser().isHidden())
 			{
 				playerHidden++;
 			}
 		}
-		online = Integer.toString(ess.getServer().getOnlinePlayers().length - playerHidden);
+		online = Integer.toString(ess.getServer().getOnlinePlayers().size() - playerHidden);
 		unique = Integer.toString(ess.getUserMap().getUniqueUsers());
 
 		final StringBuilder worldsBuilder = new StringBuilder();
-		for (World w : ess.getServer().getWorlds())
+		for (IWorld w : ess.getServer().getWorlds())
 		{
 			if (worldsBuilder.length() > 0)
 			{
@@ -81,7 +81,7 @@ public class KeywordReplacer implements IText
 		final StringBuilder playerlistBuilder = new StringBuilder();
 		for (Player p : ess.getServer().getOnlinePlayers())
 		{
-			if (ess.getUser(p).isHidden())
+			if (p.getUser().isHidden())
 			{
 				continue;
 			}

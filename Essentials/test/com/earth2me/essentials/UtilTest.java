@@ -13,28 +13,12 @@ import org.bukkit.World.Environment;
 import org.bukkit.plugin.InvalidDescriptionException;
 
 
-public class UtilTest extends TestCase
+public class UtilTest extends EssentialsTest
 {
-	private final Essentials ess;
-	private final FakeServer server;
 
-	public UtilTest()
+	public UtilTest(String name)
 	{
-		ess = new Essentials();
-		server = new FakeServer();
-		server.createWorld("testWorld", Environment.NORMAL);
-		try
-		{
-			ess.setupForTesting(server);
-		}
-		catch (InvalidDescriptionException ex)
-		{
-			fail("InvalidDescriptionException");
-		}
-		catch (IOException ex)
-		{
-			fail("IOException");
-		}
+		super(name);
 	}
 
 	public void testFDDnow()

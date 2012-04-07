@@ -73,9 +73,9 @@ public class YamlStorageWriter implements IStorageWriter
 				{
 					writeCollection((Collection<Object>)data, depth + 1);
 				}
-				else if (data instanceof Location)
+				else if (data instanceof StoredLocation)
 				{
-					writeLocation((Location)data, depth + 1);
+					writeLocation((StoredLocation)data, depth + 1);
 				}
 				else
 				{
@@ -150,9 +150,9 @@ public class YamlStorageWriter implements IStorageWriter
 					writer.println();
 					writeToFile(entry, depth + 1, entry.getClass());
 				}
-				else if (entry instanceof Location)
+				else if (entry instanceof StoredLocation)
 				{
-					writeLocation((Location)entry, depth + 1);
+					writeLocation((StoredLocation)entry, depth + 1);
 				}
 				else
 				{
@@ -187,9 +187,9 @@ public class YamlStorageWriter implements IStorageWriter
 				{
 					writeCollection((Collection<Object>)value, depth + 1);
 				}
-				else if (value instanceof Location)
+				else if (value instanceof StoredLocation)
 				{
-					writeLocation((Location)value, depth + 1);
+					writeLocation((StoredLocation)value, depth + 1);
 				}
 				else
 				{
@@ -323,7 +323,7 @@ public class YamlStorageWriter implements IStorageWriter
 		writer.print(enchLevel.getValue());
 	}
 
-	private void writeLocation(final Location entry, final int depth)
+	private void writeLocation(final StoredLocation entry, final int depth)
 	{
 		writer.println();
 		writeIndention(depth);

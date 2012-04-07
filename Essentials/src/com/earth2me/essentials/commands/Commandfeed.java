@@ -4,7 +4,6 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.Permissions;
 import java.util.List;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
@@ -25,7 +24,7 @@ public class Commandfeed extends EssentialsCommand
 		}
 	}
 
-	private void feedOtherPlayers(final CommandSender sender, final String name)
+	private void feedOtherPlayers(final ICommandSender sender, final String name)
 	{
 		final List<Player> players = server.matchPlayer(name);
 		if (players.isEmpty())

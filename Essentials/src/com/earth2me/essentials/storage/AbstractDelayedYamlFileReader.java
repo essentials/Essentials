@@ -15,24 +15,24 @@ import org.bukkit.plugin.Plugin;
 public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> implements Runnable
 {
 	private final transient Class<T> clazz;
-	private final transient Plugin plugin;
+	private final transient IEssentials ess;
 	private final transient ReentrantLock lock = new ReentrantLock();
 
 	public AbstractDelayedYamlFileReader(final IEssentials ess, final Class<T> clazz)
 	{
 		this.clazz = clazz;
-		this.plugin = ess;
+		this.ess = ess;
 	}
 
 	public void schedule(boolean instant)
 	{
-		if (instant || ((Essentials)plugin).testing)
+		if (instant)
 		{
 			run();
 		}
 		else
 		{
-			plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, this);
+			ess.getPlugin().scheduleAsyncDelayedTask(this);
 		}
 	}
 
@@ -50,7 +50,7 @@ public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> imp
 				final FileReader reader = new FileReader(file);
 				try
 				{
-					final T object = new YamlStorageReader(reader, plugin).load(clazz);
+					final T object = new YamlStorageReader(reader, ess.getPlugin()).load(clazz);
 					onSuccess(object);
 				}
 				finally

@@ -4,8 +4,8 @@ import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IEssentialsModule;
 import com.earth2me.essentials.api.IPermission;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 
 
 public interface IEssentialsCommand extends IPermission
@@ -13,7 +13,7 @@ public interface IEssentialsCommand extends IPermission
 	void run(IUser user, Command cmd, String commandLabel, String[] args)
 			throws Exception;
 
-	void run(CommandSender sender, Command cmd, String commandLabel, String[] args)
+	void run(ICommandSender sender, Command cmd, String commandLabel, String[] args)
 			throws Exception;
 
 	void init(IEssentials ess, String commandLabel);

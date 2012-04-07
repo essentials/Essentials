@@ -1,6 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.server.ICommandSender;
 import com.earth2me.essentials.bukkit.Mob;
 import java.util.Collections;
 import java.util.Locale;
@@ -15,7 +16,7 @@ public class Commandkillall extends EssentialsCommand
 {
 	//TODO: Tidy - missed this during command cleanup
 	@Override
-	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		String type = "all";
 		int radius = -1;

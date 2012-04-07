@@ -1,13 +1,13 @@
 package com.earth2me.essentials.api;
 
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.Player;
+import com.earth2me.essentials.api.server.ItemStack;
+import com.earth2me.essentials.api.server.Location;
 import com.earth2me.essentials.storage.IStorageObjectHolder;
 import com.earth2me.essentials.user.CooldownException;
 import com.earth2me.essentials.user.UserData;
 import java.util.List;
-import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 
 public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, IReplyTo, Comparable<IUser>
@@ -18,11 +18,11 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 
 	void takeMoney(double value);
 
-	void takeMoney(double value, CommandSender initiator);
+	void takeMoney(double value, ICommandSender initiator);
 
 	void giveMoney(double value);
 
-	void giveMoney(double value, CommandSender initiator);
+	void giveMoney(double value, ICommandSender initiator);
 
 	void giveItems(ItemStack itemStack, Boolean canSpew) throws ChargeException;
 

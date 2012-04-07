@@ -3,9 +3,10 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.ItemStack;
 import java.util.Locale;
 import org.bukkit.command.CommandSender;
-import org.bukkit.inventory.ItemStack;
 
 
 public class Commandworth extends EssentialsCommand
@@ -14,7 +15,7 @@ public class Commandworth extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		ItemStack iStack = user.getInventory().getItemInHand();
+		ItemStack iStack = user.getItemInHand();
 		int amount = iStack.getAmount();
 
 		if (args.length > 0)
@@ -56,7 +57,7 @@ public class Commandworth extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{

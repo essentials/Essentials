@@ -1,18 +1,17 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IEssentialsModule;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.IServer;
+import com.earth2me.essentials.api.server.Player;
+import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.permissions.AbstractSuperpermsPermission;
 import java.util.List;
 import java.util.logging.Logger;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
 
 
 public abstract class EssentialsCommand extends AbstractSuperpermsPermission implements IEssentialsCommand
@@ -20,10 +19,9 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	protected transient String commandName;
 	protected transient IEssentials ess;
 	protected transient IEssentialsModule module;
-	protected transient Server server;
+	protected transient IServer server;
 	protected transient Logger logger;
 	private transient String permission;
-	private transient Permission bukkitPerm;
 
 	public void init(final IEssentials ess, final String commandName)
 	{
@@ -70,13 +68,13 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		{
 			for (Player player : matches)
 			{
-				final IUser userMatch = ess.getUser(player);
+				final IUser userMatch = player.getUser();
 				if (userMatch.getDisplayName().startsWith(args[pos]) && (getOffline || !userMatch.isHidden()))
 				{
 					return userMatch;
 				}
 			}
-			final IUser userMatch = ess.getUser(matches.get(0));
+			final IUser userMatch = matches.get(0).getUser();
 			if (getOffline || !userMatch.isHidden())
 			{
 				return userMatch;
@@ -96,16 +94,16 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		run((CommandSender)user.getBase(), commandLabel, args);
+		run((ICommandSender)user, commandLabel, args);
 	}
 
 	@Override
-	public final void run(final CommandSender sender, final Command cmd, final String commandLabel, final String[] args) throws Exception
+	public final void run(final ICommandSender sender, final Command cmd, final String commandLabel, final String[] args) throws Exception
 	{
 		run(sender, commandLabel, args);
 	}
 
-	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		throw new Exception(_("onlyPlayers", commandName));
 	}
@@ -125,7 +123,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	}
 
 	@Override
-	public String getPermission()
+	public String getPermissionName()
 	{
 		return permission;
 	}

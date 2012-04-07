@@ -4,6 +4,7 @@ import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
 import com.earth2me.essentials.permissions.Permissions;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
@@ -49,7 +50,7 @@ public class Commandtp extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{

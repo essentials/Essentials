@@ -2,6 +2,7 @@ package com.earth2me.essentials.economy;
 
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IWorth;
+import com.earth2me.essentials.api.server.ItemStack;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import com.earth2me.essentials.storage.EnchantmentLevel;
 import java.io.File;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 
@@ -81,6 +81,6 @@ public class WorthHolder extends AsyncStorageObjectHolder<com.earth2me.essential
 	@Override
 	public File getStorageFile() throws IOException
 	{
-		return new File(ess.getDataFolder(), "worth.yml");
+		return new File(ess.getPlugin().getDataFolder(), "worth.yml");
 	}
 }

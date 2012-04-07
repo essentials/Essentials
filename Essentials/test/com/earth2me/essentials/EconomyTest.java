@@ -10,31 +10,15 @@ import org.bukkit.plugin.InvalidDescriptionException;
 import org.junit.Test;
 
 
-public class EconomyTest extends TestCase
+public class EconomyTest extends EssentialsTest
 {
-	private final transient Essentials ess;
 	private final static String NPCNAME = "npc1";
 	private final static String PLAYERNAME = "TestPlayer1";
 
 	public EconomyTest(final String testName)
 	{
 		super(testName);
-		ess = new Essentials();
-		final FakeServer server = new FakeServer();
-		server.createWorld("testWorld", Environment.NORMAL);
-		try
-		{
-			ess.setupForTesting(server);
-		}
-		catch (InvalidDescriptionException ex)
-		{
-			fail("InvalidDescriptionException");
-		}
-		catch (IOException ex)
-		{
-			fail("IOException");
-		}
-		server.addPlayer(new User(new FakeOfflinePlayer(PLAYERNAME), ess));
+		server.addPlayer(PLAYERNAME);
 	}
 
 	// only one big test, since we use static instances

@@ -4,6 +4,7 @@ import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.api.IUserMap;
 import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.storage.StorageObjectMap;
 import java.io.File;
 import java.util.Locale;

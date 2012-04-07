@@ -4,6 +4,8 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.permissions.Permissions;
 import java.util.*;
 import org.bukkit.command.CommandSender;
@@ -13,7 +15,7 @@ import org.bukkit.entity.Player;
 public class Commandlist extends EssentialsCommand
 {
 	@Override
-	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		boolean showhidden = false;
 		if (Permissions.LIST_HIDDEN.isAuthorized(sender))
@@ -23,7 +25,7 @@ public class Commandlist extends EssentialsCommand
 		int playerHidden = 0;
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			if (ess.getUser(onlinePlayer).isHidden())
+			if (onlinePlayer.getUser().isHidden())
 			{
 				playerHidden++;
 			}
@@ -32,11 +34,11 @@ public class Commandlist extends EssentialsCommand
 		String online;
 		if (showhidden && playerHidden > 0)
 		{
-			online = _("listAmountHidden", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
+			online = _("listAmountHidden", server.getOnlinePlayers().size() - playerHidden, playerHidden, server.getMaxPlayers());
 		}
 		else
 		{
-			online = _("listAmount", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
+			online = _("listAmount", server.getOnlinePlayers().size() - playerHidden, server.getMaxPlayers());
 		}
 		sender.sendMessage(online);
 
@@ -55,9 +57,9 @@ public class Commandlist extends EssentialsCommand
 		if (sortListByGroups)
 		{
 			Map<String, List<IUser>> sort = new HashMap<String, List<IUser>>();
-			for (Player OnlinePlayer : server.getOnlinePlayers())
+			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				final IUser player = ess.getUser(OnlinePlayer);
+				final IUser player = onlinePlayer.getUser();
 				if (player.isHidden() && !showhidden)
 				{
 					continue;
@@ -115,9 +117,9 @@ public class Commandlist extends EssentialsCommand
 		else
 		{
 			final List<IUser> users = new ArrayList<IUser>();
-			for (Player OnlinePlayer : server.getOnlinePlayers())
+			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				final IUser player = ess.getUser(OnlinePlayer);
+				final IUser player =onlinePlayer.getUser();
 				if (player.isHidden() && !showhidden)
 				{
 					continue;

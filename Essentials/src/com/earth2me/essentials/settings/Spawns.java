@@ -1,7 +1,7 @@
 package com.earth2me.essentials.settings;
 
 import com.earth2me.essentials.storage.Comment;
-import com.earth2me.essentials.storage.Location;
+import com.earth2me.essentials.storage.StoredLocation;
 import com.earth2me.essentials.storage.MapValueType;
 import com.earth2me.essentials.storage.StorageObject;
 import java.util.HashMap;
@@ -35,6 +35,6 @@ public class Spawns implements StorageObject
 	})
 	private String newbieSpawn = "none";
 	@Comment("List of all spawnpoints")
-	@MapValueType(Location.class)
-	private Map<String, Location> spawns = new HashMap<String, Location>();
+	@MapValueType(StoredLocation.class)
+	private Map<String, StoredLocation> spawns = new HashMap<String, StoredLocation>();
 }

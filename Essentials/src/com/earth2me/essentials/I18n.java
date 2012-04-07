@@ -137,7 +137,7 @@ public class I18n implements II18n
 		public FileResClassLoader(final ClassLoader classLoader, final IEssentials ess)
 		{
 			super(classLoader);
-			this.dataFolder = ess.getDataFolder();
+			this.dataFolder = ess.getPlugin().getDataFolder();
 		}
 
 		@Override

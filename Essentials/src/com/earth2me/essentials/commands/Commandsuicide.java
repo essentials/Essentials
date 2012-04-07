@@ -10,8 +10,7 @@ public class Commandsuicide extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		EntityDamageEvent ede = new EntityDamageEvent(user.getBase(), EntityDamageEvent.DamageCause.SUICIDE, 1000);
-		server.getPluginManager().callEvent(ede);
+		ess.getPlugin().callSuicideEvent(user.getBase());
 		user.damage(1000);
 		user.setHealth(0);
 		user.sendMessage(_("suicideMessage"));

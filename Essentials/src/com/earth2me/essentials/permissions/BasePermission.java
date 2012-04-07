@@ -9,7 +9,7 @@ public class BasePermission extends AbstractSuperpermsPermission {
 		this.permission = base + permission;
 	}
 
-	public String getPermission()
+	public String getPermissionName()
 	{
 		return permission;
 	}	

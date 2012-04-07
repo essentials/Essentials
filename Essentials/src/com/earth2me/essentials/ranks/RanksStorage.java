@@ -28,7 +28,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	@Override
 	public File getStorageFile()
 	{
-		return new File(ess.getDataFolder(), "ranks.yml");
+		return new File(ess.getPlugin().getDataFolder(), "ranks.yml");
 	}
 	
 	public Collection<Entry<String, RankOptions>> getGroups(final IUser player)

@@ -1,8 +1,8 @@
 package com.earth2me.essentials.api;
 
+import com.earth2me.essentials.api.server.Location;
 import java.io.File;
 import java.util.Collection;
-import org.bukkit.Location;
 
 
 public interface IWarps extends IReload

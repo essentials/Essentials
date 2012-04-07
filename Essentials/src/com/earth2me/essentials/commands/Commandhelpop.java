@@ -3,6 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.permissions.Permissions;
 import java.util.logging.Level;
 import org.bukkit.entity.Player;
@@ -22,7 +23,7 @@ public class Commandhelpop extends EssentialsCommand
 		logger.log(Level.INFO, message);
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final IUser player = ess.getUser(onlinePlayer);
+			final IUser player = onlinePlayer.getUser();
 			if (!Permissions.HELPOP_RECEIVE.isAuthorized(player))
 			{
 				continue;

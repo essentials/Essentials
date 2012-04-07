@@ -4,6 +4,7 @@ import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.Ban;
 import com.earth2me.essentials.utils.DateUtil;
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player;
 public class Commandtempban extends EssentialsCommand
 {
 	@Override
-	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{

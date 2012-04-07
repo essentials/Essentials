@@ -1,14 +1,14 @@
 package com.earth2me.essentials.storage;
 
+import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.Location;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 
 
-public class Location
+public class StoredLocation
 {
-	private WeakReference<org.bukkit.Location> location;
+	private WeakReference<Location> location;
 	private final String worldname;
 	private UUID worldUID = null;
 	private final double x;
@@ -17,9 +17,9 @@ public class Location
 	private final float yaw;
 	private final float pitch;
 
-	public Location(org.bukkit.Location loc)
+	public StoredLocation(Location loc)
 	{
-		location = new WeakReference<org.bukkit.Location>(loc);
+		location = new WeakReference<Location>(loc);
 		worldname = loc.getWorld().getName();
 		worldUID = loc.getWorld().getUID();
 		x = loc.getX();
@@ -29,7 +29,7 @@ public class Location
 		pitch = loc.getPitch();
 	}
 
-	public Location(String worldname, double x, double y, double z, float yaw, float pitch)
+	public StoredLocation(String worldname, double x, double y, double z, float yaw, float pitch)
 	{
 		this.worldname = worldname;
 		this.x = x;
@@ -39,7 +39,7 @@ public class Location
 		this.pitch = pitch;
 	}
 
-	public Location(String worldname, double x, double y, double z)
+	public StoredLocation(String worldname, double x, double y, double z)
 	{
 		this.worldname = worldname;
 		this.x = x;
@@ -49,13 +49,13 @@ public class Location
 		this.pitch = 0f;
 	}
 
-	public org.bukkit.Location getBukkitLocation() throws WorldNotLoadedException
+	public Location getStoredLocation() throws WorldNotLoadedException
 	{
 
-		org.bukkit.Location loc = location == null ? null : location.get();
+		Location loc = location == null ? null : location.get();
 		if (loc == null)
 		{
-			World world = null;
+			IWorld world = null;
 			if (worldUID != null)
 			{
 				world = Bukkit.getWorld(worldUID);
@@ -68,8 +68,8 @@ public class Location
 			{
 				throw new WorldNotLoadedException(worldname);
 			}
-			loc = new org.bukkit.Location(world, getX(), getY(), getZ(), getYaw(), getPitch());
-			location = new WeakReference<org.bukkit.Location>(loc);
+			loc = Location.create(world, getX(), getY(), getZ(), getYaw(), getPitch());
+			location = new WeakReference<Location>(loc);
 		}
 		return loc;
 	}

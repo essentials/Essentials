@@ -5,6 +5,8 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IItemDb;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ItemStack;
+import com.earth2me.essentials.api.server.Material;
 import com.earth2me.essentials.permissions.Permissions;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +14,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 import lombok.Cleanup;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 
 public class ItemDb implements IItemDb
@@ -129,9 +129,9 @@ public class ItemDb implements IItemDb
 					metaData = (short)((item >> 32) & 0xffffL);
 				}
 			}
-			else if (Material.getMaterial(itemname) != null)
+			else if (Material.get(itemname) != null)
 			{
-				itemid = Material.getMaterial(itemname).getId();
+				itemid = Material.get(itemname).getId();
 				metaData = 0;
 			}
 			else
@@ -140,14 +140,12 @@ public class ItemDb implements IItemDb
 			}
 		}
 
-		final Material mat = Material.getMaterial(itemid);
+		final Material mat = Material.get(itemid);
 		if (mat == null)
 		{
 			throw new Exception(_("unknownItemId", itemid));
 		}
-		final ItemStack retval = new ItemStack(mat);
-		retval.setAmount(mat.getMaxStackSize());
-		retval.setDurability(metaData);
+		final ItemStack retval = ItemStack.create(mat, mat.getMaxStackSize(), metaData);
 		return retval;
 	}
 }

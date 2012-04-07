@@ -1,17 +1,17 @@
 package com.earth2me.essentials.api;
 
-import com.earth2me.essentials.listener.TntExplodeListener;
+import com.earth2me.essentials.api.server.Player;
+import com.earth2me.essentials.api.server.IPlugin;
+import com.earth2me.essentials.api.server.IServer;
+import com.earth2me.essentials.api.server.IWorld;
 import com.earth2me.essentials.economy.register.Methods;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import com.earth2me.essentials.listener.TntExplodeListener;
+import java.util.logging.Logger;
 
 
-public interface IEssentials extends Plugin
+public interface IEssentials extends IComponent
 {
 	void addReloadListener(IReload listener);
-
-	IUser getUser(Player player);
 
 	IUser getUser(String playerName);
 
@@ -39,21 +39,16 @@ public interface IEssentials extends Plugin
 
 	ICommandHandler getCommandHandler();
 
-	World getWorld(String name);
+	IWorld getWorld(String name);
 
 	Methods getPaymentMethod();
 
-	int scheduleAsyncDelayedTask(Runnable run);
-
-	int scheduleSyncDelayedTask(Runnable run);
-
-	int scheduleSyncDelayedTask(Runnable run, long delay);
-
-	int scheduleSyncRepeatingTask(Runnable run, long delay, long period);
-
+	//int scheduleAsyncDelayedTask(Runnable run);
+	//int scheduleSyncDelayedTask(Runnable run);
+	//int scheduleSyncDelayedTask(Runnable run, long delay);
+	//int scheduleSyncRepeatingTask(Runnable run, long delay, long period);
 	//IPermissionsHandler getPermissionsHandler();
-	void reload();
-
+	//void reload();
 	TntExplodeListener getTNTListener();
 
 	void setRanks(IRanks groups);
@@ -61,4 +56,10 @@ public interface IEssentials extends Plugin
 	void removeReloadListener(IReload groups);
 
 	IEconomy getEconomy();
+
+	IServer getServer();
+
+	Logger getLogger();
+
+	IPlugin getPlugin();
 }

@@ -1,5 +1,6 @@
 package com.earth2me.essentials.xmpp;
 
+import com.earth2me.essentials.api.server.ICommandSender;
 import com.earth2me.essentials.commands.EssentialsCommand;
 import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import java.util.List;
@@ -10,7 +11,7 @@ import org.bukkit.entity.Player;
 public class Commandxmppspy extends EssentialsCommand
 {
 	@Override
-	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws NotEnoughArgumentsException
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws NotEnoughArgumentsException
 	{
 		if (args.length < 1)
 		{

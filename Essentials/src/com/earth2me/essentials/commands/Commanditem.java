@@ -2,11 +2,10 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.Enchantment;
+import com.earth2me.essentials.api.server.ItemStack;
 import com.earth2me.essentials.permissions.ItemPermissions;
 import java.util.Locale;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
 
 
 public class Commanditem extends EssentialsCommand
@@ -54,7 +53,7 @@ public class Commanditem extends EssentialsCommand
 			}
 		}
 
-		if (stack.getType() == Material.AIR)
+		if (stack.isAir())
 		{
 			throw new Exception(_("cantSpawnItem", "Air"));
 		}

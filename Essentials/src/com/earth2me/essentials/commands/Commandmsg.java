@@ -5,6 +5,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IReplyTo;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
 import com.earth2me.essentials.permissions.Permissions;
 import java.util.List;
 import lombok.Cleanup;
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player;
 public class Commandmsg extends EssentialsCommand
 {
 	@Override
-	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2 || args[0].trim().isEmpty() || args[1].trim().isEmpty())
 		{
@@ -54,7 +55,7 @@ public class Commandmsg extends EssentialsCommand
 		if (args[0].equalsIgnoreCase(Console.NAME))
 		{
 			sender.sendMessage(_("msgFormat", translatedMe, Console.NAME, message));
-			CommandSender cs = server.getConsoleSender();
+			ICommandSender cs = server.getConsoleSender();
 			cs.sendMessage(_("msgFormat", senderName, translatedMe, message));
 			replyTo.setReplyTo(cs);
 			Console.getConsoleReplyTo().setReplyTo(sender);

@@ -4,6 +4,8 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IBackup;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.IServer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +21,7 @@ import org.bukkit.command.CommandSender;
 public class Backup implements Runnable, IBackup
 {
 	private static final Logger LOGGER = Bukkit.getLogger();
-	private transient final Server server;
+	private transient final IServer server;
 	private transient final IEssentials ess;
 	private transient final AtomicBoolean running = new AtomicBoolean(false);
 	private transient int taskId = -1;
@@ -29,7 +31,7 @@ public class Backup implements Runnable, IBackup
 	{
 		this.ess = ess;
 		server = ess.getServer();
-		if (server.getOnlinePlayers().length > 0)
+		if (!server.getOnlinePlayers().isEmpty())
 		{
 			startTask();
 		}
@@ -49,7 +51,7 @@ public class Backup implements Runnable, IBackup
 				running.set(false);
 				return;
 			}
-			taskId = ess.scheduleSyncRepeatingTask(this, interval, interval);
+			taskId = ess.getPlugin().scheduleSyncRepeatingTask(this, interval, interval);
 		}
 	}
 
@@ -69,11 +71,11 @@ public class Backup implements Runnable, IBackup
 			return;
 		}
 		LOGGER.log(Level.INFO, _("backupStarted"));
-		final CommandSender consoleSender = server.getConsoleSender();
+		final ICommandSender consoleSender = server.getConsoleSender();
 		server.dispatchCommand(consoleSender, "save-all");
 		server.dispatchCommand(consoleSender, "save-off");
 
-		ess.scheduleAsyncDelayedTask(new BackupRunner(command));
+		ess.getPlugin().scheduleAsyncDelayedTask(new BackupRunner(command));
 	}
 
 
@@ -93,7 +95,7 @@ public class Backup implements Runnable, IBackup
 			{
 				final ProcessBuilder childBuilder = new ProcessBuilder(command);
 				childBuilder.redirectErrorStream(true);
-				childBuilder.directory(ess.getDataFolder().getParentFile().getParentFile());
+				childBuilder.directory(ess.getPlugin().getRootFolder());
 				final Process child = childBuilder.start();
 				final BufferedReader reader = new BufferedReader(new InputStreamReader(child.getInputStream()));
 				try
@@ -125,7 +127,7 @@ public class Backup implements Runnable, IBackup
 			}
 			finally
 			{
-				ess.scheduleSyncDelayedTask(new EnableSavingRunner());
+				ess.getPlugin().scheduleSyncDelayedTask(new EnableSavingRunner());
 			}
 		}
 	}
@@ -137,12 +139,12 @@ public class Backup implements Runnable, IBackup
 		public void run()
 		{
 			server.dispatchCommand(server.getConsoleSender(), "save-on");
-			if (server.getOnlinePlayers().length == 0)
+			if (server.getOnlinePlayers().isEmpty())
 			{
 				running.set(false);
 				if (taskId != -1)
 				{
-					server.getScheduler().cancelTask(taskId);
+					ess.getPlugin().cancelTask(taskId);
 				}
 			}
 

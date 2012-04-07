@@ -22,13 +22,13 @@ public class ManagedFile
 
 	public ManagedFile(final String filename, final IEssentials ess)
 	{
-		file = new File(ess.getDataFolder(), filename);
+		file = new File(ess.getPlugin().getDataFolder(), filename);
 
 		if (file.exists())
 		{
 			try
 			{
-				if (checkForVersion(file, ess.getDescription().getVersion()) && !file.delete())
+				if (checkForVersion(file, ess.getPlugin().getVersion()) && !file.delete())
 				{
 					throw new IOException("Could not delete file " + file.toString());
 				}

@@ -1,10 +1,11 @@
 package com.earth2me.essentials.user;
 
+import com.earth2me.essentials.api.server.Material;
 import com.earth2me.essentials.storage.*;
 import java.util.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.bukkit.Material;
+
 
 
 @Data
@@ -17,14 +18,14 @@ public class UserData implements StorageObject
 	}
 	private String nickname;
 	private Double money;
-	@MapValueType(Location.class)
-	private Map<String, Location> homes = new HashMap<String, Location>();
+	@MapValueType(StoredLocation.class)
+	private Map<String, StoredLocation> homes = new HashMap<String, StoredLocation>();
 	@ListType(Material.class)
 	private Set<Material> unlimited = new HashSet<Material>();
 	@MapValueType(List.class)
 	@MapKeyType(Material.class)
 	private Map<Material, List<String>> powerTools = new HashMap<Material, List<String>>();
-	private Location lastLocation;
+	private StoredLocation lastLocation;
 	@MapKeyType(TimestampType.class)
 	@MapValueType(Long.class)
 	private Map<TimestampType, Long> timestamps = new HashMap<TimestampType, Long>();
@@ -49,10 +50,6 @@ public class UserData implements StorageObject
 
 	public UserData()
 	{
-		unlimited.add(Material.AIR);
-		unlimited.add(Material.ARROW);
-		unlimited.add(Material.APPLE);
-		powerTools.put(Material.DEAD_BUSH, Collections.singletonList("test"));
 		timestamps.put(TimestampType.JAIL, Long.MIN_VALUE);
 	}
 

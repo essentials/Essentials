@@ -1,14 +1,14 @@
 package com.earth2me.essentials.permissions;
 
 import com.earth2me.essentials.api.IPermission;
-import java.util.EnumMap;
+import com.earth2me.essentials.api.server.Material;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import org.bukkit.Material;
 
 public class UnlimitedItemPermissions
 {
-	private static Map<Material, IPermission> permissions = new EnumMap<Material, IPermission>(Material.class);
+	private static Map<Material, IPermission> permissions = new HashMap<Material, IPermission>();
 
 	public static IPermission getPermission(final Material mat)
 	{

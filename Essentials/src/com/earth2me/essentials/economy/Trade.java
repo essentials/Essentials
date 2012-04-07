@@ -5,8 +5,8 @@ import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
-import com.earth2me.essentials.craftbukkit.SetExpFix;
+import com.earth2me.essentials.api.server.ItemStack;
+import com.earth2me.essentials.api.server.Location;
 import com.earth2me.essentials.permissions.NoCommandCostPermissions;
 import com.earth2me.essentials.permissions.Permissions;
 import java.io.File;
@@ -19,9 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Cleanup;
-import org.bukkit.Location;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemStack;
+
 
 
 public class Trade
@@ -73,7 +71,7 @@ public class Trade
 		}
 
 		if (getItemStack() != null
-			&& !InventoryWorkaround.containsItem(user.getInventory(), true, true, itemStack))
+			&& !user.getInventory().containsItem(true, true, itemStack))
 		{
 			throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 		}
@@ -92,7 +90,7 @@ public class Trade
 		}
 
 		if (exp != null && exp > 0
-			&& SetExpFix.getTotalExperience(user) < exp)
+			&& user.getTotalExperience() < exp)
 		{
 			throw new ChargeException(_("notEnoughExperience"));
 		}
@@ -114,37 +112,37 @@ public class Trade
 		{
 			if (dropItems)
 			{
-				final Map<Integer, ItemStack> leftOver = InventoryWorkaround.addItem(user.getInventory(), true, getItemStack());
+				final Map<Integer, ItemStack> leftOver = user.getInventory().addItem(true, getItemStack());
 				final Location loc = user.getLocation();
 				for (ItemStack dropStack : leftOver.values())
 				{
 					final int maxStackSize = dropStack.getType().getMaxStackSize();
 					final int stacks = dropStack.getAmount() / maxStackSize;
 					final int leftover = dropStack.getAmount() % maxStackSize;
-					final Item[] itemStacks = new Item[stacks + (leftover > 0 ? 1 : 0)];
+					final ItemStack[] itemStacks = new ItemStack[stacks + (leftover > 0 ? 1 : 0)];
 					for (int i = 0; i < stacks; i++)
 					{
 						final ItemStack stack = dropStack.clone();
 						stack.setAmount(maxStackSize);
-						itemStacks[i] = loc.getWorld().dropItem(loc, stack);
+						itemStacks[i] = user.getWorld().dropItem(loc, stack);
 					}
 					if (leftover > 0)
 					{
 						final ItemStack stack = dropStack.clone();
 						stack.setAmount(leftover);
-						itemStacks[stacks] = loc.getWorld().dropItem(loc, stack);
+						itemStacks[stacks] = user.getWorld().dropItem(loc, stack);
 					}
 				}
 			}
 			else
 			{
-				success = InventoryWorkaround.addAllItems(user.getInventory(), true, getItemStack());
+				success = user.getInventory().addAllItems(true, getItemStack());
 			}
 			user.updateInventory();
 		}
 		if (getExperience() != null)
 		{
-			SetExpFix.setTotalExperience(user, SetExpFix.getTotalExperience(user) + getExperience());
+			user.setTotalExperience(user.getTotalExperience() + getExperience());
 		}
 		return success;
 	}
@@ -161,11 +159,11 @@ public class Trade
 		}
 		if (getItemStack() != null)
 		{
-			if (!InventoryWorkaround.containsItem(user.getInventory(), true, true, itemStack))
+			if (!user.getInventory().containsItem(true, true, itemStack))
 			{
 				throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 			}
-			InventoryWorkaround.removeItem(user.getInventory(), true, true, getItemStack());
+			user.getInventory().removeItem(true, true, getItemStack());
 			user.updateInventory();
 		}
 		if (command != null && !command.isEmpty()
@@ -183,12 +181,12 @@ public class Trade
 		}
 		if (getExperience() != null)
 		{
-			final int experience = SetExpFix.getTotalExperience(user);
+			final int experience = user.getTotalExperience();
 			if (experience < getExperience() && getExperience() > 0)
 			{
 				throw new ChargeException(_("notEnoughExperience"));
 			}
-			SetExpFix.setTotalExperience(user, experience - getExperience());
+			user.setTotalExperience(experience - getExperience());
 		}
 	}
 
@@ -221,7 +219,7 @@ public class Trade
 		{
 			try
 			{
-				fw = new FileWriter(new File(ess.getDataFolder(), "trade.log"), true);
+				fw = new FileWriter(new File(ess.getPlugin().getDataFolder(), "trade.log"), true);
 			}
 			catch (IOException ex)
 			{

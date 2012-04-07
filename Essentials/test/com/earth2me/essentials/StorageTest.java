@@ -15,29 +15,11 @@ import org.bukkit.plugin.InvalidDescriptionException;
 import org.junit.Test;
 
 
-public class StorageTest extends TestCase
+public class StorageTest extends EssentialsTest
 {
-	Essentials ess;
-	FakeServer server;
-	World world;
-
-	public StorageTest()
+	public StorageTest(final String name)
 	{
-		ess = new Essentials();
-		server = new FakeServer();
-		world = server.createWorld("testWorld", Environment.NORMAL);
-		try
-		{
-			ess.setupForTesting(server);
-		}
-		catch (InvalidDescriptionException ex)
-		{
-			fail("InvalidDescriptionException");
-		}
-		catch (IOException ex)
-		{
-			fail("IOException");
-		}
+		super(name);
 	}
 
 	@Test
@@ -99,7 +81,7 @@ public class StorageTest extends TestCase
 
 			for (int j = 0; j < 10000; j++)
 			{
-				userdata.getHomes().put("home", new com.earth2me.essentials.storage.Location(new Location(world, j, j, j)));
+				userdata.getHomes().put("home", new com.earth2me.essentials.storage.StoredLocation(new Location(world, j, j, j)));
 			}
 			ext.mark("change home 10000 times");
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();

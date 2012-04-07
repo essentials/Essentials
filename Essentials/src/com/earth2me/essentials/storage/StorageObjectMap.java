@@ -1,8 +1,8 @@
 package com.earth2me.essentials.storage;
 
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.utils.Util;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
-import org.bukkit.Bukkit;
 
 
 public abstract class StorageObjectMap<I> extends CacheLoader<String, I> implements IStorageObjectMap<I>
@@ -29,7 +28,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	{
 		super();
 		this.ess = ess;
-		this.folder = new File(ess.getDataFolder(), folderName);
+		this.folder = new File(ess.getPlugin().getDataFolder(), folderName);
 		if (!folder.exists())
 		{
 			folder.mkdirs();
@@ -39,7 +38,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 
 	private void loadAllObjectsAsync()
 	{
-		ess.scheduleAsyncDelayedTask(new Runnable()
+		ess.getPlugin().scheduleAsyncDelayedTask(new Runnable()
 		{
 			@Override
 			public void run()
@@ -63,7 +62,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 					}
 					catch (InvalidNameException ex)
 					{
-						Bukkit.getLogger().log(Level.WARNING, "Invalid filename: " + string, ex);
+						ess.getLogger().log(Level.WARNING, "Invalid filename: " + string, ex);
 					}
 				}
 			}

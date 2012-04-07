@@ -2,9 +2,8 @@ package com.earth2me.essentials.permissions;
 
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IPermission;
-import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
+import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.Permission;
 
 
 public abstract class AbstractSuperpermsPermission implements IPermission
@@ -12,7 +11,7 @@ public abstract class AbstractSuperpermsPermission implements IPermission
 	protected Permission bukkitPerm;
 
 	@Override
-	public Permission getBukkitPermission()
+	public Permission getPermission()
 	{
 		if (bukkitPerm != null)
 		{
@@ -20,7 +19,7 @@ public abstract class AbstractSuperpermsPermission implements IPermission
 		}
 		else
 		{
-			return Util.registerPermission(getPermission(), getPermissionDefault());
+			return Permission.create(getPermissionName(), getPermissionDefault());
 		}
 	}
 
@@ -29,14 +28,14 @@ public abstract class AbstractSuperpermsPermission implements IPermission
 	 * @return 
 	 */
 	@Override
-	public PermissionDefault getPermissionDefault()
+	public Permission.Default getPermissionDefault()
 	{
-		return PermissionDefault.OP;
+		return Permission.Default.OP;
 	}
 
 	@Override
-	public boolean isAuthorized(final CommandSender sender)
+	public boolean isAuthorized(final ICommandSender sender)
 	{
-		return sender.hasPermission(getBukkitPermission());
+		return sender.hasPermission(getPermission());
 	}
 }

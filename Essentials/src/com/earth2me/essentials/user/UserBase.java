@@ -4,52 +4,27 @@ import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.api.server.Player;
+import com.earth2me.essentials.api.server.Location;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
-import com.earth2me.essentials.storage.Location.WorldNotLoadedException;
+import com.earth2me.essentials.storage.IStorageObjectHolder;
+import com.earth2me.essentials.storage.StoredLocation.WorldNotLoadedException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import lombok.Cleanup;
 import lombok.Delegate;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permissible;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.ServerOperator;
 
 
-public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implements Player, IOfflineUser
+public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implements Player, IStorageObjectHolder<UserData>
 {
-	@Delegate(types =
-	{
-		Player.class, Entity.class, CommandSender.class, ServerOperator.class,
-		HumanEntity.class, ConfigurationSerializable.class, LivingEntity.class,
-		Permissible.class
-	}, excludes =
-	{
-		IOfflinePlayer.class
-	})
+	@Delegate
 	protected Player base;
-	protected transient OfflinePlayer offlinePlayer;
 
 	public UserBase(final Player base, final IEssentials ess)
 	{
 		super(ess, UserData.class);
 		this.base = base;
-		onReload();
-	}
-
-	public UserBase(final OfflinePlayer offlinePlayer, final IEssentials ess)
-	{
-		super(ess, UserData.class);
-		this.offlinePlayer = offlinePlayer;
 		onReload();
 	}
 
@@ -68,85 +43,11 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		setBase(base);
 	}
 
-	public void update(final OfflinePlayer offlinePlayer)
-	{
-		this.offlinePlayer = offlinePlayer;
-	}
+
 
 	public void dispose()
 	{
-		this.offlinePlayer = Bukkit.getOfflinePlayer(base.getName());
 		this.base = null;
-	}
-
-	public boolean isOnlineUser()
-	{
-		return base != null;
-	}
-
-	@Override
-	public String getName()
-	{
-		if (isOnlineUser())
-		{
-			return base.getName();
-		}
-		else
-		{
-			return offlinePlayer.getName();
-		}
-	}
-
-	@Override
-	public String getDisplayName()
-	{
-		if (isOnlineUser())
-		{
-			return base.getDisplayName();
-		}
-		else
-		{
-			return offlinePlayer.getName();
-		}
-	}
-
-	@Override
-	public Location getBedSpawnLocation()
-	{
-		if (isOnlineUser())
-		{
-			return base.getBedSpawnLocation();
-		}
-		else
-		{
-			return offlinePlayer.getBedSpawnLocation();
-		}
-	}
-
-	@Override
-	public void setBanned(boolean bln)
-	{
-		if (isOnlineUser())
-		{
-			base.setBanned(bln);
-		}
-		else
-		{
-			offlinePlayer.setBanned(bln);
-		}
-	}
-
-	@Override
-	public boolean hasPermission(Permission prmsn)
-	{
-		if (isOnlineUser())
-		{
-			return base.hasPermission(prmsn);
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	@Override
@@ -250,13 +151,13 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		acquireWriteLock();
 		try
 		{
-			Map<String, com.earth2me.essentials.storage.Location> homes = getData().getHomes();
+			Map<String, com.earth2me.essentials.storage.StoredLocation> homes = getData().getHomes();
 			if (homes == null)
 			{
-				homes = new HashMap<String, com.earth2me.essentials.storage.Location>();
+				homes = new HashMap<String, com.earth2me.essentials.storage.StoredLocation>();
 				getData().setHomes(homes);
 			}
-			homes.put(Util.sanitizeKey(name), new com.earth2me.essentials.storage.Location(loc));
+			homes.put(Util.sanitizeKey(name), new com.earth2me.essentials.storage.StoredLocation(loc));
 		}
 		finally
 		{
@@ -424,13 +325,13 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 				return null;
 			}
 			ArrayList<Location> worldHomes = new ArrayList<Location>();
-			for (com.earth2me.essentials.storage.Location location : getData().getHomes().values())
+			for (com.earth2me.essentials.storage.StoredLocation location : getData().getHomes().values())
 			{
 				if (location.getWorldName().equals(loc.getWorld().getName()))
 				{
 					try
 					{
-						worldHomes.add(location.getBukkitLocation());
+						worldHomes.add(location.getStoredLocation());
 					}
 					catch (WorldNotLoadedException ex)
 					{

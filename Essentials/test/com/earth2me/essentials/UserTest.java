@@ -8,33 +8,16 @@ import org.bukkit.World.Environment;
 import org.bukkit.plugin.InvalidDescriptionException;
 
 
-public class UserTest extends TestCase
+public class UserTest extends EssentialsTest
 {
 	private final IUser base1;
-	private final Essentials ess;
-	private final FakeServer server;
 
 	public UserTest(String testName)
 	{
 		super(testName);
-		ess = new Essentials();
-		server = new FakeServer();
-		server.createWorld("testWorld", Environment.NORMAL);
-		try
-		{
-			ess.setupForTesting(server);
-		}
-		catch (InvalidDescriptionException ex)
-		{
-			fail("InvalidDescriptionException");
-		}
-		catch (IOException ex)
-		{
-			fail("IOException");
-		}
-		base1 = new User(new FakeOfflinePlayer("testPlayer1"), ess);
-		server.addPlayer(base1);
-		ess.getUser(base1);
+		
+		server.addPlayer("testPlayer1");
+		base1 = ess.getUser("testPlayer1");
 	}
 
 	private void should(String what)

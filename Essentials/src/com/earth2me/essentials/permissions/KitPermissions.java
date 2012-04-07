@@ -1,10 +1,10 @@
 package com.earth2me.essentials.permissions;
 
 import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.server.Permission;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import org.bukkit.permissions.PermissionDefault;
 
 
 public class KitPermissions
@@ -19,9 +19,9 @@ public class KitPermissions
 			perm = new BasePermission("essentials.kit.", kitName.toLowerCase(Locale.ENGLISH))
 			{
 				@Override
-				public PermissionDefault getPermissionDefault()
+				public Permission.Default getPermissionDefault()
 				{
-					return PermissionDefault.TRUE;
+					return Permission.Default.TRUE;
 				}
 			};
 			permissions.put(kitName, perm);

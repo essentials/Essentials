@@ -6,7 +6,7 @@ import com.earth2me.essentials.api.IEssentialsModule;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
-import com.earth2me.essentials.storage.Location.WorldNotLoadedException;
+import com.earth2me.essentials.storage.StoredLocation.WorldNotLoadedException;
 import com.earth2me.essentials.utils.textreader.IText;
 import com.earth2me.essentials.utils.textreader.KeywordReplacer;
 import com.earth2me.essentials.utils.textreader.SimpleTextInput;
@@ -39,7 +39,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 	@Override
 	public File getStorageFile()
 	{
-		return new File(ess.getDataFolder(), "spawn.yml");
+		return new File(ess.getPlugin().getDataFolder(), "spawn.yml");
 	}
 
 	public void setSpawn(final Location loc, final String group)
@@ -49,9 +49,9 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		{
 			if (getData().getSpawns() == null)
 			{
-				getData().setSpawns(new HashMap<String, com.earth2me.essentials.storage.Location>());
+				getData().setSpawns(new HashMap<String, com.earth2me.essentials.storage.StoredLocation>());
 			}
-			getData().getSpawns().put(group.toLowerCase(Locale.ENGLISH), new com.earth2me.essentials.storage.Location(loc));
+			getData().getSpawns().put(group.toLowerCase(Locale.ENGLISH), new com.earth2me.essentials.storage.StoredLocation(loc));
 		}
 		finally
 		{
@@ -73,7 +73,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 			{
 				return getWorldSpawn();
 			}
-			final Map<String, com.earth2me.essentials.storage.Location> spawnMap = getData().getSpawns();
+			final Map<String, com.earth2me.essentials.storage.StoredLocation> spawnMap = getData().getSpawns();
 			String groupName = group.toLowerCase(Locale.ENGLISH);
 			if (!spawnMap.containsKey(groupName))
 			{
@@ -85,7 +85,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 			}
 			try
 			{
-				return spawnMap.get(groupName).getBukkitLocation();
+				return spawnMap.get(groupName).getStoredLocation();
 			}
 			catch (WorldNotLoadedException ex)
 			{
@@ -260,7 +260,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 			if (spawns.getNewbieSpawn() != null)
 			{
-				ess.scheduleSyncDelayedTask(new NewPlayerTeleport(user), 1L);
+				ess.getPlugin().scheduleSyncDelayedTask(new NewPlayerTeleport(user), 1L);
 			}
 
 			if (spawns.getAnnounceNewPlayers())

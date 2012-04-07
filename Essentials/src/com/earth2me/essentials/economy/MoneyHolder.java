@@ -17,6 +17,6 @@ public class MoneyHolder extends AsyncStorageObjectHolder<Money>
 	@Override
 	public File getStorageFile() throws IOException
 	{
-		return new File(ess.getDataFolder(), "economy_npcs.yml");
+		return new File(ess.getPlugin().getDataFolder(), "economy_npcs.yml");
 	}
 }

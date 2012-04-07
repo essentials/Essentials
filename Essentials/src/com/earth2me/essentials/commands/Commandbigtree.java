@@ -2,8 +2,8 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.Location;
 import com.earth2me.essentials.utils.LocationUtil;
-import org.bukkit.Location;
 import org.bukkit.TreeType;
 
 

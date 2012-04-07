@@ -3,6 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ILocation;
 import com.earth2me.essentials.utils.LocationUtil;
 import org.bukkit.Location;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -14,7 +15,7 @@ public class Commandjump extends EssentialsCommand
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		Location loc;
-		final Location cloc = user.getLocation();
+		final ILocation cloc = user.getLocation();
 
 		try
 		{

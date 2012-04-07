@@ -1,10 +1,10 @@
 package com.earth2me.essentials.permissions;
 
 import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.server.Permission;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import org.bukkit.permissions.PermissionDefault;
 
 
 public class WarpPermissions
@@ -19,9 +19,9 @@ public class WarpPermissions
 			perm = new BasePermission("essentials.warp.", warpName.toLowerCase(Locale.ENGLISH))
 			{
 				@Override
-				public PermissionDefault getPermissionDefault()
+				public Permission.Default getPermissionDefault()
 				{
-					return PermissionDefault.TRUE;
+					return Permission.Default.TRUE;
 				}
 			};
 			permissions.put(warpName, perm);

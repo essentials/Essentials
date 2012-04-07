@@ -1,17 +1,16 @@
 package com.earth2me.essentials.storage;
 
 import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.api.server.IPlugin;
+import com.earth2me.essentials.api.server.Material;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.error.YAMLException;
@@ -22,9 +21,9 @@ import org.yaml.snakeyaml.nodes.*;
 public class BukkitConstructor extends Constructor
 {
 	private final transient Pattern NUMPATTERN = Pattern.compile("\\d+");
-	private final transient Plugin plugin;
+	private final transient IPlugin plugin;
 
-	public BukkitConstructor(final Class clazz, final Plugin plugin)
+	public BukkitConstructor(final Class clazz, final IPlugin plugin)
 	{
 		super(clazz);
 		this.plugin = plugin;
@@ -69,11 +68,11 @@ public class BukkitConstructor extends Constructor
 				if (NUMPATTERN.matcher(split[0]).matches())
 				{
 					final int typeId = Integer.parseInt(split[0]);
-					mat = Material.getMaterial(typeId);
+					mat = Material.get(typeId);
 				}
 				else
 				{
-					mat = Material.matchMaterial(split[0]);
+					mat = Material.match(split[0]);
 				}
 				if (mat == null)
 				{
@@ -236,7 +235,7 @@ public class BukkitConstructor extends Constructor
 		@Override
 		public Object construct(final Node node)
 		{
-			if (node.getType().equals(Location.class))
+			if (node.getType().equals(StoredLocation.class))
 			{
 				//TODO: NPE checks
 				final MappingNode mnode = (MappingNode)node;
@@ -280,7 +279,7 @@ public class BukkitConstructor extends Constructor
 				{
 					return null;
 				}
-				return new Location(worldName, x, y, z, yaw, pitch);
+				return new StoredLocation(worldName, x, y, z, yaw, pitch);
 			}
 			return super.construct(node);
 		}
@@ -419,14 +418,13 @@ public class BukkitConstructor extends Constructor
 	{
 		Class<?> clazz;
 		final String name = node.getTag().getClassName();
-		if (plugin == null || (plugin instanceof Essentials && ((Essentials)plugin).testing))
+		if (Essentials.testing)
 		{
 			clazz = super.getClassForNode(node);
 		}
 		else
 		{
-			final JavaPluginLoader jpl = (JavaPluginLoader)plugin.getPluginLoader();
-			clazz = jpl.getClassByName(name);
+			clazz = plugin.getClassByName(name);
 		}
 
 		if (clazz == null)

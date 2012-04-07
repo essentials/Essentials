@@ -31,7 +31,7 @@ public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implement
 	@Override
 	public File getStorageFile()
 	{
-		return new File(ess.getDataFolder(), "settings.yml");
+		return new File(ess.getPlugin().getDataFolder(), "settings.yml");
 	}
 
 	@Override

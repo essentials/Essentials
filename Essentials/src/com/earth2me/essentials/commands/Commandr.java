@@ -5,6 +5,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IReplyTo;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ICommandSender;
 import com.earth2me.essentials.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 public class Commandr extends EssentialsCommand
 {
 	@Override
-	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -45,7 +46,7 @@ public class Commandr extends EssentialsCommand
 			senderName = Console.NAME;
 		}
 
-		final CommandSender target = replyTo.getReplyTo();
+		final ICommandSender target = replyTo.getReplyTo();
 		final String targetName = target instanceof Player ? ((Player)target).getDisplayName() : Console.NAME;
 
 		if (target == null || ((target instanceof Player) && !((Player)target).isOnline()))
@@ -78,7 +79,7 @@ public class Commandr extends EssentialsCommand
 	}
 
 	@Override
-	public String getPermission()
+	public String getPermissionName()
 	{
 		return "essentials.msg";
 	}

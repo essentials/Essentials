@@ -1,6 +1,6 @@
 package com.earth2me.essentials.api;
 
-import org.bukkit.inventory.ItemStack;
+import com.earth2me.essentials.api.server.ItemStack;
 
 
 public interface IItemDb extends IReload

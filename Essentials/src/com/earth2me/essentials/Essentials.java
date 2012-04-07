@@ -17,50 +17,43 @@
  */
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.economy.Trade;
-import com.earth2me.essentials.commands.EssentialsCommandHandler;
-import com.earth2me.essentials.utils.ExecuteTimer;
-import com.earth2me.essentials.economy.WorthHolder;
-import com.earth2me.essentials.economy.Economy;
-import com.earth2me.essentials.backup.Backup;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.*;
-import com.earth2me.essentials.listener.*;
+import com.earth2me.essentials.api.server.Player;
+import com.earth2me.essentials.api.server.IPlugin;
+import com.earth2me.essentials.api.server.IServer;
+import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.backup.Backup;
+import com.earth2me.essentials.commands.EssentialsCommandHandler;
+import com.earth2me.essentials.economy.Economy;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.economy.WorthHolder;
 import com.earth2me.essentials.economy.register.Methods;
+import com.earth2me.essentials.listener.*;
 import com.earth2me.essentials.ranks.RanksStorage;
 import com.earth2me.essentials.settings.SettingsHolder;
 import com.earth2me.essentials.settings.SpawnsHolder;
 import com.earth2me.essentials.user.UserMap;
+import com.earth2me.essentials.utils.ExecuteTimer;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import lombok.Getter;
 import org.bukkit.Server;
-import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.InvalidDescriptionException;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.error.YAMLException;
 
 
-public class Essentials extends JavaPlugin implements IEssentials
+public class Essentials implements IEssentials
 {
-	public static final int BUKKIT_VERSION = 2015;
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient ISettings settings;
 	private final transient TntExplodeListener tntListener = new TntExplodeListener(this);
 	private transient IJails jails;
@@ -76,10 +69,26 @@ public class Essentials extends JavaPlugin implements IEssentials
 	//private transient PermissionsHandler permissionsHandler;
 	private transient IUserMap userMap;
 	private transient ExecuteTimer execTimer;
-	private transient I18n i18n;
+	@Getter
+	private final I18n i18n;
 	private transient ICommandHandler commandHandler;
 	private transient Economy economy;
-	public transient boolean testing;
+	@Getter
+	private final IServer server;
+	@Getter
+	private final Logger logger;
+	@Getter
+	private final IPlugin plugin;
+	public static boolean testing;
+
+	public Essentials(final IServer server, final Logger logger, final IPlugin plugin)
+	{
+		this.server = server;
+		this.logger = logger;
+		this.plugin = plugin;
+		this.i18n = new I18n(this);
+		i18n.onEnable();
+	}
 
 	@Override
 	public ISettings getSettings()
@@ -99,11 +108,10 @@ public class Essentials extends JavaPlugin implements IEssentials
 		{
 			throw new IOException();
 		}
-		i18n = new I18n(this);
-		i18n.onEnable();
-		LOGGER.log(Level.INFO, _("usingTempFolderForTesting"));
-		LOGGER.log(Level.INFO, dataFolder.toString());
-		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
+
+		logger.log(Level.INFO, _("usingTempFolderForTesting"));
+		logger.log(Level.INFO, dataFolder.toString());
+		//this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 		settings = new SettingsHolder(this);
 		i18n.updateLocale("en");
 		userMap = new UserMap(this);
@@ -116,36 +124,9 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		execTimer = new ExecuteTimer();
 		execTimer.start();
-		i18n = new I18n(this);
-		i18n.onEnable();
+
 		execTimer.mark("I18n1");
-		final PluginManager pm = getServer().getPluginManager();
-		for (Plugin plugin : pm.getPlugins())
-		{
-			if (plugin.getDescription().getName().startsWith("Essentials")
-				&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion()))
-			{
-				LOGGER.log(Level.WARNING, _("versionMismatch", plugin.getDescription().getName()));
-			}
-		}
-		final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
-		if (versionMatch.matches())
-		{
-			final int versionNumber = Integer.parseInt(versionMatch.group(1));
-			if (versionNumber < BUKKIT_VERSION && versionNumber > 100)
-			{
-				LOGGER.log(Level.SEVERE, _("notRecommendedBukkit"));
-				LOGGER.log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
-				this.setEnabled(false);
-				return;
-			}
-		}
-		else
-		{
-			LOGGER.log(Level.INFO, _("bukkitFormatChanged"));
-			LOGGER.log(Level.INFO, getServer().getVersion());
-			LOGGER.log(Level.INFO, getServer().getBukkitVersion());
-		}
+		
 		execTimer.mark("BukkitCheck");
 		try
 		{
@@ -180,19 +161,19 @@ public class Essentials extends JavaPlugin implements IEssentials
 			reloadList.add(economy);
 			spawns = new SpawnsHolder(this);
 			reloadList.add(spawns);
-			reload();
+			onReload();
 		}
 		catch (YAMLException exception)
 		{
 			if (pm.getPlugin("EssentialsUpdate") != null)
 			{
-				LOGGER.log(Level.SEVERE, _("essentialsHelp2"));
+				logger.log(Level.SEVERE, _("essentialsHelp2"));
 			}
 			else
 			{
-				LOGGER.log(Level.SEVERE, _("essentialsHelp1"));
+				logger.log(Level.SEVERE, _("essentialsHelp1"));
 			}
-			LOGGER.log(Level.SEVERE, exception.toString());
+			logger.log(Level.SEVERE, exception.toString());
 			pm.registerEvents(new Listener()
 			{
 				@EventHandler(priority = EventPriority.LOW)
@@ -230,12 +211,12 @@ public class Essentials extends JavaPlugin implements IEssentials
 
 
 		final EssentialsTimer timer = new EssentialsTimer(this);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, timer, 1, 100);
+		getPlugin().scheduleSyncRepeatingTask(timer, 1, 100);
 		execTimer.mark("RegListeners");
 		final String timeroutput = execTimer.end();
 		if (getSettings().isDebug())
 		{
-			LOGGER.log(Level.INFO, "Essentials load {0}", timeroutput);
+			logger.log(Level.INFO, "Essentials load {0}", timeroutput);
 		}
 	}
 
@@ -247,7 +228,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public void reload()
+	public void onReload()
 	{
 		Trade.closeLog();
 
@@ -258,13 +239,6 @@ public class Essentials extends JavaPlugin implements IEssentials
 		}
 
 		i18n.updateLocale(settings.getLocale());
-	}
-
-	@Override
-	public boolean onCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
-	{
-		return commandHandler.handleCommand(sender, command, commandLabel, args);
-		//return onCommandEssentials(sender, command, commandLabel, args, Essentials.class.getClassLoader(), "com.earth2me.essentials.commands.Command", "essentials.", null);
 	}
 
 	@Override
@@ -298,19 +272,13 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public IUser getUser(final Player player)
-	{
-		return userMap.getUser(player);
-	}
-
-	@Override
 	public IUser getUser(final String playerName)
 	{
 		return userMap.getUser(playerName);
 	}
 
 	@Override
-	public World getWorld(final String name)
+	public IWorld getWorld(final String name)
 	{
 		if (name.matches("[0-9]+"))
 		{
@@ -346,42 +314,16 @@ public class Essentials extends JavaPlugin implements IEssentials
 		{
 			return 0;
 		}
-		final Player[] players = getServer().getOnlinePlayers();
-
-		for (Player player : players)
+		for (Player player : getServer().getOnlinePlayers())
 		{
-			final IUser user = getUser(player);
+			final IUser user = player.getUser();
 			if (!user.isIgnoringPlayer(sender.getName()))
 			{
 				player.sendMessage(message);
 			}
 		}
 
-		return players.length;
-	}
-
-	@Override
-	public int scheduleAsyncDelayedTask(final Runnable run)
-	{
-		return this.getServer().getScheduler().scheduleAsyncDelayedTask(this, run);
-	}
-
-	@Override
-	public int scheduleSyncDelayedTask(final Runnable run)
-	{
-		return this.getServer().getScheduler().scheduleSyncDelayedTask(this, run);
-	}
-
-	@Override
-	public int scheduleSyncDelayedTask(final Runnable run, final long delay)
-	{
-		return this.getServer().getScheduler().scheduleSyncDelayedTask(this, run, delay);
-	}
-
-	@Override
-	public int scheduleSyncRepeatingTask(final Runnable run, final long delay, final long period)
-	{
-		return this.getServer().getScheduler().scheduleSyncRepeatingTask(this, run, delay, period);
+		return getServer().getOnlinePlayers().size();
 	}
 
 	@Override
@@ -404,13 +346,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		return userMap;
 	}
-
-	@Override
-	public I18n getI18n()
-	{
-		return i18n;
-	}
-
+	
 	@Override
 	public IRanks getRanks()
 	{

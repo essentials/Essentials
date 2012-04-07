@@ -23,48 +23,42 @@ public class VaultGroups implements IRanks
 	@Override
 	public double getHealCooldown(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		Chat chat = ess.getServer().getServiceProvider(Chat.class);
 		return chat.getPlayerInfoDouble(player.getBase(), "healcooldown", 0);
 	}
 
 	@Override
 	public double getTeleportCooldown(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		Chat chat = ess.getServer().getServiceProvider(Chat.class);
 		return chat.getPlayerInfoDouble(player.getBase(), "teleportcooldown", 0);
 	}
 
 	@Override
 	public double getTeleportDelay(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		Chat chat = ess.getServer().getServiceProvider(Chat.class);
 		return chat.getPlayerInfoDouble(player.getBase(), "teleportdelay", 0);
 	}
 
 	@Override
 	public String getPrefix(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		Chat chat = ess.getServer().getServiceProvider(Chat.class);
 		return chat.getPlayerPrefix(player.getBase());
 	}
 
 	@Override
 	public String getSuffix(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		Chat chat = ess.getServer().getServiceProvider(Chat.class);
 		return chat.getPlayerSuffix(player.getBase());
 	}
 
 	@Override
 	public int getHomeLimit(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		Chat chat = ess.getServer().getServiceProvider(Chat.class);
 		return chat.getPlayerInfoInteger(player.getBase(), "homes", 0);
 	}
 
@@ -85,8 +79,7 @@ public class VaultGroups implements IRanks
 
 	private String getRawChatFormat(final IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		Chat chat = ess.getServer().getServiceProvider(Chat.class);
 		String chatformat = chat.getPlayerInfoString(player.getBase(), "chatformat", "");
 		if (chatformat != null && !chatformat.isEmpty())
 		{
@@ -102,16 +95,14 @@ public class VaultGroups implements IRanks
 	@Override
 	public String getMainGroup(IUser player)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		Chat chat = ess.getServer().getServiceProvider(Chat.class);
 		return chat.getPrimaryGroup(player.getBase());
 	}
 
 	@Override
 	public boolean inGroup(IUser player, String groupname)
 	{
-		RegisteredServiceProvider<Chat> rsp = ess.getServer().getServicesManager().getRegistration(Chat.class);
-		Chat chat = rsp.getProvider();
+		Chat chat = ess.getServer().getServiceProvider(Chat.class);
 		for (String group : chat.getPlayerGroups(player.getBase()))
 		{
 			if (group.equalsIgnoreCase(groupname))

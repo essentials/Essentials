@@ -1,16 +1,17 @@
 package com.earth2me.essentials.permissions;
 
 import com.earth2me.essentials.api.IPermission;
-import java.util.EnumMap;
+import com.earth2me.essentials.api.server.Material;
+import com.earth2me.essentials.api.server.Permission;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import org.bukkit.Material;
-import org.bukkit.permissions.PermissionDefault;
+
 
 
 public class ItemPermissions
 {
-	private static Map<Material, IPermission> permissions = new EnumMap<Material, IPermission>(Material.class);
+	private static Map<Material, IPermission> permissions = new HashMap<Material, IPermission>();
 
 	public static IPermission getPermission(final Material mat)
 	{
@@ -20,9 +21,9 @@ public class ItemPermissions
 			perm = new BasePermission("essentials.itemspawn.item-", mat.toString().toLowerCase(Locale.ENGLISH).replace("_", ""))
 			{
 				@Override
-				public PermissionDefault getPermissionDefault()
+				public Permission.Default getPermissionDefault()
 				{
-					return PermissionDefault.TRUE;
+					return Permission.Default.TRUE;
 				}
 			};
 			permissions.put(mat, perm);

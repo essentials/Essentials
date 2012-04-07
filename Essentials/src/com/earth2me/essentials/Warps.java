@@ -5,20 +5,17 @@ import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IWarp;
 import com.earth2me.essentials.api.IWarps;
 import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.api.server.Location;
 import com.earth2me.essentials.commands.WarpNotFoundException;
 import com.earth2me.essentials.settings.WarpHolder;
 import com.earth2me.essentials.storage.StorageObjectMap;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 
 
 public class Warps extends StorageObjectMap<IWarp> implements IWarps
 {
-	private static final Logger logger = Bukkit.getLogger();
-
 	public Warps(IEssentials ess)
 	{
 		super(ess, "warps");
@@ -66,7 +63,7 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 		warp.acquireReadLock();
 		try
 		{
-			return warp.getData().getLocation().getBukkitLocation();
+			return warp.getData().getLocation().getStoredLocation();
 		}
 		finally
 		{
@@ -77,10 +74,10 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 	@Override
 	public void setWarp(final String name, final Location loc) throws Exception
 	{
-		setWarp(name, new com.earth2me.essentials.storage.Location(loc));
+		setWarp(name, new com.earth2me.essentials.storage.StoredLocation(loc));
 	}
 	
-	public void setWarp(final String name, final com.earth2me.essentials.storage.Location loc) throws Exception
+	public void setWarp(final String name, final com.earth2me.essentials.storage.StoredLocation loc) throws Exception
 	{
 		IWarp warp = getObject(name);
 		if (warp == null)

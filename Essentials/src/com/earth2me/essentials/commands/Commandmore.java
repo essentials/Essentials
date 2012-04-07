@@ -3,6 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.server.ItemStack;
 import com.earth2me.essentials.permissions.ItemPermissions;
 import com.earth2me.essentials.permissions.Permissions;
 import java.util.Locale;

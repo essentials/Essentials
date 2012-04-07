@@ -2,14 +2,14 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.api.server.ICommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandext extends EssentialsCommand
 {
 	@Override
-	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -32,7 +32,7 @@ public class Commandext extends EssentialsCommand
 		extinguishPlayers(user, args[0]);
 	}
 
-	private void extinguishPlayers(final CommandSender sender, final String name) throws Exception
+	private void extinguishPlayers(final ICommandSender sender, final String name) throws Exception
 	{
 		for (Player matchPlayer : server.matchPlayer(name))
 		{

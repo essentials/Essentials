@@ -14,24 +14,17 @@ import org.bukkit.plugin.Plugin;
 
 public abstract class AbstractDelayedYamlFileWriter implements Runnable
 {
-	private final transient Plugin plugin;
+	private final transient IEssentials ess;
 	private final transient ReentrantLock lock = new ReentrantLock();
 
 	public AbstractDelayedYamlFileWriter(final IEssentials ess)
 	{
-		this.plugin = ess;
+		this.ess = ess;
 	}
 
 	public void schedule()
 	{
-		if (((Essentials)plugin).testing)
-		{
-			run();
-		}
-		else
-		{
-			plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, this);
-		}
+		ess.getPlugin().scheduleAsyncDelayedTask(this);
 	}
 
 	public abstract File getFile() throws IOException;
