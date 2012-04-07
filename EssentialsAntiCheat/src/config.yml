@@ -55,7 +55,8 @@ checks:
   blockplace:
     speed:
       active: true
-      actions: TODO
+      actions: cancel vl>1000 log:bpspeed:3:5:cif cancel vl>4000
+      speed: 145
     reach:
       active: true
       actions: cancel vl>5 log:bpreach:0:2:if cancel

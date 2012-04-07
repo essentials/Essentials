@@ -11,7 +11,7 @@ public class Statistics
 	public enum Id
 	{
 		BB_DIRECTION("blockbreak.direction"), BB_NOSWING("blockbreak.noswing"),
-		BB_REACH("blockbreak.reach"), BP_DIRECTION("blockplace.direction"),
+		BB_REACH("blockbreak.reach"), BP_DIRECTION("blockplace.direction"), BP_SPEED("blockplace.speed"),
 		BP_REACH("blockplace.reach"), CHAT_COLOR("chat.color"),
 		CHAT_SPAM("chat.spam"), FI_DIRECTION("fight.direction"),
 		FI_NOSWING("fight.noswing"), FI_REACH("fight.reach"),
