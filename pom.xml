@@ -9,7 +9,7 @@
   <packaging>pom</packaging>
   <name>BuildAll</name>
   <url>http://tiny.cc/EssentialsWiki</url>
-    
+
   <modules>
     <module>Essentials</module>
     <module>Essentials2Compat</module>
@@ -35,16 +35,17 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>${bukkitversion}</version>
+      <version>${bukkit.version}</version>
     </dependency>
   </dependencies>
 
   <build>
-    <sourceDirectory>${basedir}/src</sourceDirectory>
-    <testSourceDirectory>${basedir}/test</testSourceDirectory>
+    <finalName>${project.name}</finalName>
+    <sourceDirectory>${project.basedir}/src</sourceDirectory>
+    <testSourceDirectory>${project.basedir}/test</testSourceDirectory>
     <resources>
       <resource>
-        <directory>${basedir}/src</directory>
+        <directory>${project.basedir}/src</directory>
         <filtering>true</filtering>
         <includes>
           <include>*.*</include>
@@ -54,6 +55,14 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <outputDirectory>../jars</outputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
@@ -61,47 +70,12 @@
           <target>1.6</target>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <finalName>${project.artifactId}</finalName>
-          <outputDirectory>../jars</outputDirectory>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.4</version>
-        <executions>
-          <execution>
-            <id>copy</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.bukkit</groupId>
-                  <artifactId>craftbukkit</artifactId>
-                  <version>${bukkitversion}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>../jars</outputDirectory>
-                  <destFileName>craftbukkit.jar</destFileName>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <bukkitversion>1.2.3-R0.3-SNAPSHOT</bukkitversion>
+    <bukkit.version>1.2.5-R1.2-SNAPSHOT</bukkit.version>
     <build.number>Unknown</build.number>
     <org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>true</org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>
     <org-netbeans-modules-editor-indent.CodeStyle.project.indent-shift-width>2</org-netbeans-modules-editor-indent.CodeStyle.project.indent-shift-width>

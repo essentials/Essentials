@@ -16,7 +16,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.help.HelpMap;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -881,6 +880,24 @@ public class FakeServer implements Server
 
 	@Override
 	public Inventory createInventory(InventoryHolder ih, int i, String string)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public String getWorldType()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean getGenerateStructures()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public long getConnectionThrottle()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

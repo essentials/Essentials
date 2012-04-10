@@ -11,6 +11,7 @@ build.xml
 
 # maven
 target
+jars
 
 # vim
 .*.sw[a-p]
@@ -29,6 +30,3 @@ manifest.mf
 *.ipr
 *.iws
 .idea/
-
-EssentialsRelease/
-jars/
