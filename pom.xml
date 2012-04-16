@@ -13,7 +13,6 @@
   <modules>
     <module>Essentials</module>
     <module>Essentials2Compat</module>
-    <module>EssentialsAntiCheat</module>
     <module>EssentialsChat</module>
     <module>EssentialsGeoIP</module>
     <module>EssentialsGroupBridge</module>
