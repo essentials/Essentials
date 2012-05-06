@@ -42,9 +42,7 @@ public class Commandgamemode extends EssentialsCommand
 
 	private void gamemodeOtherPlayers(final Server server, final CommandSender sender, final String[] args)
 	{
-		for (Player matchPlayer : server.matchPlayer(args[0]))
-		{
-			final User player = ess.getUser(matchPlayer);
+			final User player = ess.getUser(server.getPlayer(args[0]));
 			if (player.isHidden())
 			{
 				continue;
@@ -66,6 +64,5 @@ public class Commandgamemode extends EssentialsCommand
 				player.setGameMode(player.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
 			}
 			sender.sendMessage(_("gameMode", _(player.getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getDisplayName()));
-		}
 	}
 }
