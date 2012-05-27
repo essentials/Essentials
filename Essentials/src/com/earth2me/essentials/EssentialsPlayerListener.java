@@ -364,13 +364,6 @@ public class EssentialsPlayerListener implements Listener
 			final User user = ess.getUser(player);
 			user.updateActivity(true);
 		}
-		
-		final User user = ess.getUser(event.getPlayer());
-		if (user.isFrozen())
-		{
-			event.setCancelled(true);
-			user.sendMessage(_("playerFrozen"));
-		}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
