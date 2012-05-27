@@ -437,8 +437,3 @@ commands:
   freeze:
     description: Freezes the specified player.
     usage: /<command> [player]
-    aliases: [efreeze]
-  unfreeze:
-    description: Unfreezes the specified player.
-    usage: /<command> [player]
-    aliases: [eunfreeze]

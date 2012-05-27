@@ -12,6 +12,8 @@ public abstract class UserData extends PlayerExtension implements IConf
 {
 	protected final transient IEssentials ess;
 	private final EssentialsConf config;
+	private boolean frozen;
+	private long freezeTimeout;
 
 	protected UserData(Player base, IEssentials ess)
 	{
@@ -809,4 +811,31 @@ public abstract class UserData extends PlayerExtension implements IConf
 	{
 		config.save();
 	}
+    public long getFreezeTimeout()
+	{
+		return muteTimeout;
+	}
+	public boolean isFrozen()
+	{
+		return muted;
+	}
+	public void setFreezeTimeout(long time)
+	{
+		freezeTimeout = time;
+		config.setProperty("timestamps.freeze", time);
+		config.save();
+	}
+    public void setFrozen(boolean set)
+	{
+		frozen = set;
+		config.setProperty("frozen", set);
+		config.save();
+	}
+	public boolean toggleFrozen()
+	{
+		boolean ret = !isMuted();
+		setMuted(ret);
+		return ret;
+	}
+
 }

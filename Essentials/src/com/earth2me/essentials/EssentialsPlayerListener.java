@@ -110,7 +110,6 @@ public class EssentialsPlayerListener implements Listener
 		if (user.isFrozen())
 		{
 			event.setCancelled(true);
-			user.sendMessage(_("playerFrozen"));
 		}
 	}
 	
@@ -358,7 +357,6 @@ public class EssentialsPlayerListener implements Listener
 		if (user.isFrozen())
 		{
 			event.setCancelled(true);
-			user.sendMessage(_("playerFrozen"));
 		}
 		
 		switch (event.getAction())
