@@ -18,6 +18,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -104,8 +107,46 @@ public class EssentialsPlayerListener implements Listener
 		{
 			user.updateActivity(true);
 		}
+		if (user.isFrozen())
+		{
+			event.setCancelled(true);
+			user.sendMessage(_("playerFrozen"));
+		}
 	}
-
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onBlockBreak(BlockBreakEvent event)
+	{
+		final User user = ess.getUser(event.getPlayer());
+		if (user.isFrozen())
+		{
+			event.setCancelled(true);
+			user.sendMessage(_("playerFrozen"));
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onBlockIgnite(BlockIgniteEvent event)
+	{
+		final User user = ess.getUser(event.getPlayer());
+		if (user.isFrozen())
+		{
+			event.setCancelled(true);
+			user.sendMessage(_("playerFrozen"));
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onBlockPlace(BlockPlaceEvent event)
+	{
+		final User user = ess.getUser(event.getPlayer());
+		if(user.isFrozen())
+		{
+			event.setCancelled(true);
+			user.sendMessage(_("playerFrozen"));
+		}
+	}
+	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
@@ -323,6 +364,13 @@ public class EssentialsPlayerListener implements Listener
 			final User user = ess.getUser(player);
 			user.updateActivity(true);
 		}
+		
+		final User user = ess.getUser(event.getPlayer());
+		if (user.isFrozen())
+		{
+			event.setCancelled(true);
+			user.sendMessage(_("playerFrozen"));
+		}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -346,6 +394,13 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
+		final User user = ess.getUser(event.getPlayer());
+		if (user.isFrozen())
+		{
+			event.setCancelled(true);
+			user.sendMessage(_("playerFrozen"));
+		}
+		
 		switch (event.getAction())
 		{
 		case RIGHT_CLICK_BLOCK:
@@ -360,7 +415,6 @@ public class EssentialsPlayerListener implements Listener
 		case LEFT_CLICK_BLOCK:
 			if (event.getItem() != null && event.getItem().getTypeId() != AIR)
 			{
-				final User user = ess.getUser(event.getPlayer());
 				if (user.hasPowerTools() && user.arePowerToolsEnabled() && usePowertools(user, event.getItem().getTypeId()))
 				{
 					event.setCancelled(true);
