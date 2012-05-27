@@ -114,39 +114,6 @@ public class EssentialsPlayerListener implements Listener
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void onBlockBreak(BlockBreakEvent event)
-	{
-		final User user = ess.getUser(event.getPlayer());
-		if (user.isFrozen())
-		{
-			event.setCancelled(true);
-			user.sendMessage(_("playerFrozen"));
-		}
-	}
-	
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void onBlockIgnite(BlockIgniteEvent event)
-	{
-		final User user = ess.getUser(event.getPlayer());
-		if (user.isFrozen())
-		{
-			event.setCancelled(true);
-			user.sendMessage(_("playerFrozen"));
-		}
-	}
-	
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void onBlockPlace(BlockPlaceEvent event)
-	{
-		final User user = ess.getUser(event.getPlayer());
-		if(user.isFrozen())
-		{
-			event.setCancelled(true);
-			user.sendMessage(_("playerFrozen"));
-		}
-	}
-	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
