@@ -31,7 +31,7 @@ public class VersionTest extends TestCase
 	@Test
 	public void testTeamCity()
 	{
-		final Version instance = new Version("Teamcity");
+		final Version instance = new Version("Unknown");
 		assertEquals("Testing Type", Type.DEVELOPER, instance.getType());
 	}
 

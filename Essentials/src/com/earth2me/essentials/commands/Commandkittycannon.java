@@ -1,10 +1,17 @@
 package com.earth2me.essentials.commands;
 
+<<<<<<< HEAD
 import com.earth2me.essentials.Mob;
 import com.earth2me.essentials.User;
 import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Server;
+=======
+import com.earth2me.essentials.bukkit.Mob;
+import com.earth2me.essentials.api.IUser;
+import java.util.Random;
+import org.bukkit.Location;
+>>>>>>> 3.0
 import org.bukkit.entity.Ocelot;
 
 
@@ -12,6 +19,7 @@ public class Commandkittycannon extends EssentialsCommand
 {
 	private static Random random = new Random();
 
+<<<<<<< HEAD
 	public Commandkittycannon()
 	{
 		super("kittycannon");
@@ -19,6 +27,10 @@ public class Commandkittycannon extends EssentialsCommand
 
 	@Override
 	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+=======
+	@Override
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+>>>>>>> 3.0
 	{
 		final Mob cat = Mob.OCELOT;
 		final Ocelot ocelot = (Ocelot)cat.spawn(user, server, user.getEyeLocation());

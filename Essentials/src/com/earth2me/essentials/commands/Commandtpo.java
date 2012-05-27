@@ -1,20 +1,15 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import org.bukkit.Server;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Commandtpo extends EssentialsCommand
 {
-	public Commandtpo()
-	{
-		super("tpo");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		switch (args.length)
 		{

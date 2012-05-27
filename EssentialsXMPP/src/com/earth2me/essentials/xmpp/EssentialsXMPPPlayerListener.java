@@ -1,7 +1,7 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.IEssentials;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IUser;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -23,21 +23,21 @@ class EssentialsXMPPPlayerListener implements Listener
 	@EventHandler(priority= EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final User user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUser(event.getPlayer());
 		sendMessageToSpyUsers("Player " + user.getDisplayName() + " joined the game");
 	}
 
 	@EventHandler(priority= EventPriority.MONITOR)
 	public void onPlayerChat(final PlayerChatEvent event)
 	{
-		final User user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUser(event.getPlayer());
 		sendMessageToSpyUsers(String.format(event.getFormat(), user.getDisplayName(), event.getMessage()));
 	}
 
 	@EventHandler(priority= EventPriority.MONITOR)
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
-		final User user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUser(event.getPlayer());
 		sendMessageToSpyUsers("Player " + user.getDisplayName() + " left the game");
 	}
 

@@ -1,24 +1,23 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.user.UserData;
+import com.earth2me.essentials.utils.DateUtil;
 import com.earth2me.essentials.craftbukkit.SetExpFix;
 import java.util.Locale;
-import org.bukkit.Server;
+import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandwhois extends EssentialsCommand
 {
-	public Commandwhois()
-	{
-		super("whois");
-	}
-
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -27,7 +26,7 @@ public class Commandwhois extends EssentialsCommand
 		boolean showhidden = false;
 		if (sender instanceof Player)
 		{
-			if (ess.getUser(sender).isAuthorized("essentials.list.hidden"))
+			if (Permissions.LIST_HIDDEN.isAuthorized(sender))
 			{
 				showhidden = true;
 			}
@@ -37,15 +36,21 @@ public class Commandwhois extends EssentialsCommand
 			showhidden = true;
 		}
 		final String whois = args[0].toLowerCase(Locale.ENGLISH);
-		final int prefixLength = Util.stripFormat(ess.getSettings().getNicknamePrefix()).length();
+		@Cleanup
+		ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		final int prefixLength = Util.stripColor(settings.getData().getChat().getNicknamePrefix()).length();
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final User user = ess.getUser(onlinePlayer);
+			@Cleanup
+			final IUser user = ess.getUser(onlinePlayer);
+
 			if (user.isHidden() && !showhidden)
 			{
 				continue;
 			}
-			final String nickName = Util.stripFormat(user.getNickname());
+			user.acquireReadLock();
+			final String nickName = Util.stripFormat(user.getData().getNickname());
 			if (!whois.equalsIgnoreCase(nickName)
 				&& !whois.substring(prefixLength).equalsIgnoreCase(nickName)
 				&& !whois.equalsIgnoreCase(user.getName()))
@@ -61,22 +66,19 @@ public class Commandwhois extends EssentialsCommand
 			sender.sendMessage(_("whoisGod", (user.isGodModeEnabled() ? _("true") : _("false"))));
 			sender.sendMessage(_("whoisGamemode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH))));
 			sender.sendMessage(_("whoisLocation", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
-			if (!ess.getSettings().isEcoDisabled())
-			{
-				sender.sendMessage(_("whoisMoney", Util.displayCurrency(user.getMoney(), ess)));
-			}
-			sender.sendMessage(_("whoisJail", (user.isJailed()
-											   ? user.getJailTimeout() > 0
-												 ? Util.formatDateDiff(user.getJailTimeout())
+			sender.sendMessage(_("whoisMoney", Util.displayCurrency(user.getMoney(), ess)));
+			sender.sendMessage(_("whoisJail", (user.getData().isJailed()
+											   ? user.getTimestamp(UserData.TimestampType.JAIL) > 0
+												 ? DateUtil.formatDateDiff(user.getTimestamp(UserData.TimestampType.JAIL))
 												 : _("true")
 											   : _("false"))));
-			sender.sendMessage(user.isAfk()
+			sender.sendMessage(user.getData().isAfk()
 							   ? _("whoisStatusAway")
 							   : _("whoisStatusAvailable"));
 			sender.sendMessage(_("whoisIPAddress", user.getAddress().getAddress().toString()));
-			final String location = user.getGeoLocation();
+			final String location = user.getData().getGeolocation();
 			if (location != null
-				&& (sender instanceof Player ? ess.getUser(sender).isAuthorized("essentials.geoip.show") : true))
+				&& Permissions.GEOIP_SHOW.isAuthorized(sender))
 			{
 				sender.sendMessage(_("whoisGeoLocation", location));
 			}

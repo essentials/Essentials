@@ -1,15 +1,16 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import com.earth2me.essentials.Warps;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.api.IWarps;
+import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.permissions.WarpPermissions;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -18,17 +19,12 @@ public class Commandwarp extends EssentialsCommand
 {
 	private final static int WARPS_PER_PAGE = 20;
 
-	public Commandwarp()
-	{
-		super("warp");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length == 0 || args[0].matches("[0-9]+"))
 		{
-			if (!user.isAuthorized("essentials.warp.list"))
+			if (!Permissions.WARP_LIST.isAuthorized(user))
 			{
 				throw new Exception(_("warpListPermission"));
 			}
@@ -37,31 +33,31 @@ public class Commandwarp extends EssentialsCommand
 		}
 		if (args.length > 0)
 		{
-			User otherUser = null;
-			if (args.length == 2 && user.isAuthorized("essentials.warp.otherplayers"))
+			IUser otherUser = null;
+			if (args.length == 2 && Permissions.WARP_OTHERS.isAuthorized(user))
 			{
 				otherUser = ess.getUser(server.getPlayer(args[1]));
 				if (otherUser == null)
 				{
 					throw new Exception(_("playerNotFound"));
 				}
-				warpUser(user, otherUser, args[0]);
+				warpUser(otherUser, args[0]);
 				throw new NoChargeException();
 			}
-			warpUser(user, user, args[0]);
+			warpUser(user, args[0]);
 			throw new NoChargeException();
 		}
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2 || args[0].matches("[0-9]+"))
 		{
 			warpList(sender, args);
 			throw new NoChargeException();
 		}
-		User otherUser = ess.getUser(server.getPlayer(args[1]));
+		IUser otherUser = ess.getUser(server.getPlayer(args[1]));
 		if (otherUser == null)
 		{
 			throw new Exception(_("playerNotFound"));
@@ -74,20 +70,20 @@ public class Commandwarp extends EssentialsCommand
 	//TODO: Use one of the new text classes, like /help ?
 	private void warpList(final CommandSender sender, final String[] args) throws Exception
 	{
-		final Warps warps = ess.getWarps();
+		final IWarps warps = ess.getWarps();
 		if (warps.isEmpty())
 		{
 			throw new Exception(_("noWarpsDefined"));
 		}
-		final List<String> warpNameList = new ArrayList<String>(warps.getWarpNames());
+		final List<String> warpNameList = new ArrayList<String>(warps.getList());
 
-		if (sender instanceof User)
+		if (sender instanceof IUser)
 		{
 			final Iterator<String> iterator = warpNameList.iterator();
 			while (iterator.hasNext())
 			{
 				final String warpName = iterator.next();
-				if (ess.getSettings().getPerWarpPermission() && !((User)sender).isAuthorized("essentials.warp." + warpName))
+				if (!WarpPermissions.getPermission(warpName).isAuthorized(sender))
 				{
 					iterator.remove();
 				}
@@ -113,17 +109,18 @@ public class Commandwarp extends EssentialsCommand
 		}
 	}
 
-	private void warpUser(final User owner, final User user, final String name) throws Exception
+	private void warpUser(final IUser user, final String name) throws Exception
 	{
 		final Trade chargeWarp = new Trade("warp-" + name.toLowerCase(Locale.ENGLISH).replace('_', '-'), ess);
 		final Trade chargeCmd = new Trade(this.getName(), ess);
 		final double fullCharge = chargeWarp.getCommandCost(user) + chargeCmd.getCommandCost(user);
 		final Trade charge = new Trade(fullCharge, ess);
-		charge.isAffordableFor(owner);
-		if (ess.getSettings().getPerWarpPermission() && !owner.isAuthorized("essentials.warp." + name))
+		charge.isAffordableFor(user);
+		if (WarpPermissions.getPermission(name).isAuthorized(user))
 		{
-			throw new Exception(_("warpUsePermission"));
+			user.getTeleport().warp(name, charge, TeleportCause.COMMAND);
+			return;
 		}
-		user.getTeleport().warp(name, charge, TeleportCause.COMMAND);
+		throw new Exception(_("warpUsePermission"));
 	}
 }

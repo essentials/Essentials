@@ -1,22 +1,26 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.EssentialsConf;
-import com.earth2me.essentials.IConf;
+import com.earth2me.essentials.api.IReload;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 
-public class UserManager implements IConf
+public class UserManager implements IReload
 {
-	private final transient EssentialsConf users;
+	private transient YamlConfiguration users;
+	private final transient File folder;
 	private final transient List<String> spyusers = new ArrayList<String>();
 	private final static String ADDRESS = "address";
 	private final static String SPY = "spy";
 
 	public UserManager(final File folder)
 	{
-		users = new EssentialsConf(new File(folder, "users.yml"));
-		reloadConfig();
+		this.folder = folder;
+		onReload();
 	}
 
 	public final boolean isSpy(final String username)
@@ -63,15 +67,22 @@ public class UserManager implements IConf
 		final Map<String, Object> userdata = new HashMap<String, Object>();
 		userdata.put(ADDRESS, address);
 		userdata.put(SPY, spy);
-		users.setProperty(username, userdata);
-		users.save();
-		reloadConfig();
+		users.set(username, userdata);
+		try
+		{
+			users.save(new File(folder, "users.yml"));
+		}
+		catch (IOException ex)
+		{
+			Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		onReload();
 	}
 
 	@Override
-	public final void reloadConfig()
+	public final void onReload()
 	{
-		users.load();
+		users = YamlConfiguration.loadConfiguration(new File(folder, "users.yml"));
 		spyusers.clear();
 		final Set<String> keys = users.getKeys(false);
 		for (String key : keys)

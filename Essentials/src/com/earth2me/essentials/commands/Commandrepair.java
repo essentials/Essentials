@@ -1,24 +1,22 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.api.ChargeException;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.*;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.inventory.ItemStack;
 
 
 public class Commandrepair extends EssentialsCommand
 {
-	public Commandrepair()
-	{
-		super("repair");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -34,8 +32,7 @@ public class Commandrepair extends EssentialsCommand
 			}
 
 			if (!item.getEnchantments().isEmpty()
-				&& !ess.getSettings().getRepairEnchanted()
-				&& !user.isAuthorized("essentials.repair.enchanted"))
+				&& !Permissions.REPAIR_ENCHANTED.isAuthorized(user))
 			{
 				throw new Exception(_("repairEnchanted"));
 			}
@@ -58,7 +55,7 @@ public class Commandrepair extends EssentialsCommand
 			final List<String> repaired = new ArrayList<String>();
 			repairItems(user.getInventory().getContents(), user, repaired);
 
-			if (user.isAuthorized("essentials.repair.armor"))
+			if (Permissions.REPAIR_ARMOR.isAuthorized(user))
 			{
 				repairItems(user.getInventory().getArmorContents(), user, repaired);
 			}
@@ -116,8 +113,7 @@ public class Commandrepair extends EssentialsCommand
 				continue;
 			}
 			if (!item.getEnchantments().isEmpty()
-				&& !ess.getSettings().getRepairEnchanted()
-				&& !user.isAuthorized("essentials.repair.enchanted"))
+				&& !Permissions.REPAIR_ENCHANTED.isAuthorized(user))
 			{
 				continue;
 			}

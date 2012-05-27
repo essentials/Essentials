@@ -1,38 +1,33 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.Locale;
 import org.bukkit.GameMode;
-import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandgamemode extends EssentialsCommand
 {
-	public Commandgamemode()
-	{
-		super("gamemode");
-	}
-
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		gamemodeOtherPlayers(server, sender, args);
+		gamemodeOtherPlayers(sender, args[0]);
 	}
 
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length > 0 && args[0].trim().length() > 2 && user.isAuthorized("essentials.gamemode.others"))
+		if (args.length > 0 && !args[0].trim().isEmpty() && Permissions.GAMEMODE_OTHERS.isAuthorized(user))
 		{
-			gamemodeOtherPlayers(server, user, args);
+			gamemodeOtherPlayers(user, args[0]);
 			return;
 		}
 
@@ -40,11 +35,11 @@ public class Commandgamemode extends EssentialsCommand
 		user.sendMessage(_("gameMode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName()));
 	}
 
-	private void gamemodeOtherPlayers(final Server server, final CommandSender sender, final String[] args)
+	private void gamemodeOtherPlayers(final CommandSender sender, final String name)
 	{
 		for (Player matchPlayer : server.matchPlayer(args[0]))
 		{
-			final User player = ess.getUser(matchPlayer);
+			final IUser player = ess.getUser(matchPlayer);
 			if (player.isHidden())
 			{
 				continue;

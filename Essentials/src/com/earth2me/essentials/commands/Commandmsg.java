@@ -2,24 +2,20 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IReplyTo;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IReplyTo;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.List;
-import org.bukkit.Server;
+import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandmsg extends EssentialsCommand
 {
-	public Commandmsg()
-	{
-		super("msg");
-	}
-
 	@Override
-	public void run(Server server, CommandSender sender, String commandLabel, String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2 || args[0].trim().isEmpty() || args[1].trim().isEmpty())
 		{
@@ -29,12 +25,21 @@ public class Commandmsg extends EssentialsCommand
 		String message = getFinalArg(args, 1);
 		if (sender instanceof Player)
 		{
-			User user = ess.getUser(sender);
-			if (user.isMuted())
+			@Cleanup
+			IUser user = ess.getUser((Player)sender);
+			user.acquireReadLock();
+			if (user.getData().isMuted())
 			{
 				throw new Exception(_("voiceSilenced"));
 			}
-			message = Util.formatMessage(user, "essentials.msg", message);
+			if (Permissions.MSG_COLOR.isAuthorized(user))
+			{
+				message = Util.replaceColor(message);
+			}
+			else
+			{
+				message = Util.stripColor(message);
+			}
 		}
 		else
 		{
@@ -49,7 +54,7 @@ public class Commandmsg extends EssentialsCommand
 		if (args[0].equalsIgnoreCase(Console.NAME))
 		{
 			sender.sendMessage(_("msgFormat", translatedMe, Console.NAME, message));
-			CommandSender cs = Console.getCommandSender(server);
+			CommandSender cs = server.getConsoleSender();
 			cs.sendMessage(_("msgFormat", senderName, translatedMe, message));
 			replyTo.setReplyTo(cs);
 			Console.getConsoleReplyTo().setReplyTo(sender);
@@ -66,7 +71,7 @@ public class Commandmsg extends EssentialsCommand
 		int i = 0;
 		for (Player matchedPlayer : matchedPlayers)
 		{
-			final User u = ess.getUser(matchedPlayer);
+			final IUser u = ess.getUser(matchedPlayer);
 			if (u.isHidden())
 			{
 				i++;
@@ -80,8 +85,8 @@ public class Commandmsg extends EssentialsCommand
 		for (Player matchedPlayer : matchedPlayers)
 		{
 			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getDisplayName(), message));
-			final User matchedUser = ess.getUser(matchedPlayer);
-			if (sender instanceof Player && (matchedUser.isIgnoredPlayer(((Player)sender).getName()) || matchedUser.isHidden()))
+			final IUser matchedUser = ess.getUser(matchedPlayer);
+			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(((Player)sender).getName()) || matchedUser.isHidden()))
 			{
 				continue;
 			}

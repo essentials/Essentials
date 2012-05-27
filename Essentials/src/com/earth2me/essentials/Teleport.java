@@ -1,7 +1,16 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.api.ITeleport;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.utils.Util;
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.ITeleport;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.user.CooldownException;
+import com.earth2me.essentials.user.UserData.TimestampType;
+import com.earth2me.essentials.utils.DateUtil;
+import com.earth2me.essentials.utils.LocationUtil;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
@@ -111,7 +120,7 @@ public class Teleport implements Runnable, ITeleport
 				}
 				catch (Throwable ex)
 				{
-					ess.showError(user.getBase(), ex, "teleport");
+					ess.getCommandHandler().showCommandError(user.getBase(), "teleport", ex);
 				}
 			}
 			catch (Exception ex)
@@ -138,30 +147,21 @@ public class Teleport implements Runnable, ITeleport
 
 	public void warp(String warp, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		Location loc = ess.getWarps().getWarp(warp);
+		final Location loc = ess.getWarps().getWarp(warp);
 		teleport(new Target(loc), chargeFor, cause);
 		user.sendMessage(_("warpingTo", warp));
 	}
 
 	public void cooldown(boolean check) throws Exception
 	{
-		Calendar now = new GregorianCalendar();
-		if (user.getLastTeleportTimestamp() > 0)
+		try
 		{
-			double cooldown = ess.getSettings().getTeleportCooldown();
-			Calendar cooldownTime = new GregorianCalendar();
-			cooldownTime.setTimeInMillis(user.getLastTeleportTimestamp());
-			cooldownTime.add(Calendar.SECOND, (int)cooldown);
-			cooldownTime.add(Calendar.MILLISECOND, (int)((cooldown * 1000.0) % 1000.0));
-			if (cooldownTime.after(now) && !user.isAuthorized("essentials.teleport.cooldown.bypass"))
-			{
-				throw new Exception(_("timeBeforeTeleport", Util.formatDateDiff(cooldownTime.getTimeInMillis())));
-			}
+			user.checkCooldown(TimestampType.LASTTELEPORT, ess.getRanks().getTeleportCooldown(user), !check, Permissions.TELEPORT_COOLDOWN_BYPASS);
 		}
-		// if justCheck is set, don't update lastTeleport; we're just checking
-		if (!check)
+		catch (CooldownException ex)
 		{
-			user.setLastTeleportTimestamp(now.getTimeInMillis());
+			throw new Exception(_("timeBeforeTeleport", ex.getMessage()));
+
 		}
 	}
 
@@ -207,14 +207,14 @@ public class Teleport implements Runnable, ITeleport
 
 	private void teleport(Target target, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		double delay = ess.getSettings().getTeleportDelay();
+		double delay = ess.getRanks().getTeleportDelay(user);
 
 		if (chargeFor != null)
 		{
 			chargeFor.isAffordableFor(user);
 		}
 		cooldown(true);
-		if (delay <= 0 || user.isAuthorized("essentials.teleport.timer.bypass"))
+		if (delay <= 0 || Permissions.TELEPORT_TIMER_BYPASS.isAuthorized(user))
 		{
 			cooldown(false);
 			now(target, cause);
@@ -229,7 +229,7 @@ public class Teleport implements Runnable, ITeleport
 		Calendar c = new GregorianCalendar();
 		c.add(Calendar.SECOND, (int)delay);
 		c.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
-		user.sendMessage(_("dontMoveMessage", Util.formatDateDiff(c.getTimeInMillis())));
+		user.sendMessage(_("dontMoveMessage", DateUtil.formatDateDiff(c.getTimeInMillis())));
 		initTimer((long)(delay * 1000.0), target, chargeFor, cause);
 
 		teleTimer = ess.scheduleSyncRepeatingTask(this, 10, 10);
@@ -239,7 +239,7 @@ public class Teleport implements Runnable, ITeleport
 	{
 		cancel();
 		user.setLastLocation();
-		user.getBase().teleport(Util.getSafeDestination(target.getLocation()), cause);
+		user.getBase().teleport(LocationUtil.getSafeDestination(target.getLocation()), cause);
 	}
 
 	public void now(Location loc, boolean cooldown, TeleportCause cause) throws Exception
@@ -269,12 +269,28 @@ public class Teleport implements Runnable, ITeleport
 
 	public void back(Trade chargeFor) throws Exception
 	{
-		teleport(new Target(user.getLastLocation()), chargeFor, TeleportCause.COMMAND);
+		user.acquireReadLock();
+		try
+		{
+			teleport(new Target(user.getData().getLastLocation().getBukkitLocation()), chargeFor, TeleportCause.COMMAND);
+		}
+		finally
+		{
+			user.unlock();
+		}
 	}
 
 	public void back() throws Exception
 	{
-		now(new Target(user.getLastLocation()), TeleportCause.COMMAND);
+		user.acquireReadLock();
+		try
+		{
+			now(new Target(user.getData().getLastLocation().getBukkitLocation()), TeleportCause.COMMAND);
+		}
+		finally
+		{
+			user.unlock();
+		}
 	}
 
 	public void home(Location loc, Trade chargeFor) throws Exception

@@ -1,22 +1,18 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IUser;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
 import java.util.Locale;
-import org.bukkit.Server;
+import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandeco extends EssentialsCommand
 {
-	public Commandeco()
-	{
-		super("eco");
-	}
-
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
@@ -38,7 +34,7 @@ public class Commandeco extends EssentialsCommand
 		{
 			for (String sUser : ess.getUserMap().getAllUniqueUsers())
 			{
-				final User player = ess.getUser(sUser);
+				final IUser player = ess.getUser(sUser);
 				switch (cmd)
 				{
 				case GIVE:
@@ -53,7 +49,10 @@ public class Commandeco extends EssentialsCommand
 					break;
 
 				case RESET:
-					player.setMoney(amount == 0 ? ess.getSettings().getStartingBalance() : amount);
+					@Cleanup 
+					ISettings settings = ess.getSettings();
+					settings.acquireReadLock();
+					player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
 					break;
 				}
 			}
@@ -62,7 +61,7 @@ public class Commandeco extends EssentialsCommand
 		{
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				final User player = ess.getUser(onlinePlayer);
+				final IUser player = ess.getUser(onlinePlayer);
 				switch (cmd)
 				{
 				case GIVE:
@@ -78,14 +77,17 @@ public class Commandeco extends EssentialsCommand
 					break;
 
 				case RESET:
-					player.setMoney(amount == 0 ? ess.getSettings().getStartingBalance() : amount);
+					@Cleanup 
+					ISettings settings = ess.getSettings();
+					settings.acquireReadLock();
+					player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
 					break;
 				}
 			}
 		}
 		else
 		{
-			final User player = getPlayer(server, args, 1, true);
+			final IUser player = getPlayer(args, 1, true);
 			switch (cmd)
 			{
 			case GIVE:
@@ -101,7 +103,9 @@ public class Commandeco extends EssentialsCommand
 				break;
 
 			case RESET:
-				player.setMoney(amount == 0 ? ess.getSettings().getStartingBalance() : amount);
+				@Cleanup ISettings settings = ess.getSettings();
+				settings.acquireReadLock();
+				player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
 				break;
 			}
 		}

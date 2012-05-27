@@ -1,24 +1,20 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.DescParseTickFormat;
+import com.earth2me.essentials.utils.DescParseTickFormat;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.Util;
 import java.util.*;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandtime extends EssentialsCommand
 {
-	public Commandtime()
-	{
-		super("time");
-	}
-
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		final List<String> argList = new ArrayList<String>(Arrays.asList(args));
 		if ((argList.remove("set") || argList.remove("add")) && Util.isInt(argList.get(0)))
@@ -33,7 +29,7 @@ public class Commandtime extends EssentialsCommand
 		{
 			worldSelector = validArgs[1];
 		}
-		final Set<World> worlds = getWorlds(server, sender, worldSelector);
+		final Set<World> worlds = getWorlds(sender, worldSelector);
 
 		// If no arguments we are reading the time
 		if (validArgs.length == 0)
@@ -42,10 +38,9 @@ public class Commandtime extends EssentialsCommand
 			return;
 		}
 
-		final User user = ess.getUser(sender);
-		if (user != null && !user.isAuthorized("essentials.time.set"))
+		if (Permissions.TIME_SET.isAuthorized(sender))
 		{
-			user.sendMessage(_("timeSetPermission"));
+			sender.sendMessage(_("timeSetPermission"));
 			return;
 		}
 
@@ -111,14 +106,14 @@ public class Commandtime extends EssentialsCommand
 	/**
 	 * Used to parse an argument of the type "world(s) selector"
 	 */
-	private Set<World> getWorlds(final Server server, final CommandSender sender, final String selector) throws Exception
+	private Set<World> getWorlds(final CommandSender sender, final String selector) throws Exception
 	{
 		final Set<World> worlds = new TreeSet<World>(new WorldNameComparator());
 
 		// If there is no selector we want the world the user is currently in. Or all worlds if it isn't a user.
 		if (selector == null)
 		{
-			final User user = ess.getUser(sender);
+			final IUser user = sender instanceof Player ? ess.getUser((Player)sender) : null;
 			if (user == null)
 			{
 				worlds.addAll(server.getWorlds());

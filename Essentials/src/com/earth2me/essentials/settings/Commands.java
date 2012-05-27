@@ -15,12 +15,14 @@ import lombok.EqualsAndHashCode;
 public class Commands implements StorageObject
 {
 	private Afk afk = new Afk();
+	private Back back = new Back();
 	private God god = new God();
 	private Help help = new Help();
 	private Home home = new Home();
-	private Kit kit = new Kit();
 	private Lightning lightning = new Lightning();
+	private com.earth2me.essentials.settings.commands.List list = new com.earth2me.essentials.settings.commands.List();
 	private Spawnmob spawnmob = new Spawnmob();
+	private Tpa tpa = new Tpa();
 	@ListType
 	@Comment(
 	{
@@ -33,8 +35,40 @@ public class Commands implements StorageObject
 		"We should try to take priority over /god.  If this doesn't work, use /essentials:god or /egod.",
 		"If god is set using WorldGuard, use /ungod to remove then use whichever you see fit."
 	})
-	private List<String> overwritten = new ArrayList<String>();
+	private List<String> overridden = new ArrayList<String>();
 	@ListType
 	@Comment("Disabled commands will be completelly unavailable on the server.")
 	private List<String> disabled = new ArrayList<String>();
+
+	public boolean isDisabled(final String commandName)
+	{
+		if (disabled == null)
+		{
+			return false;
+		}
+		for (String disabledCommand : disabled)
+		{
+			if (commandName.equalsIgnoreCase(disabledCommand))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isOverridden(final String commandName)
+	{
+		if (overridden == null)
+		{
+			return false;
+		}
+		for (String overriddenCommand : overridden)
+		{
+			if (commandName.equalsIgnoreCase(overriddenCommand))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -1,15 +1,19 @@
 package com.earth2me.essentials.chat;
 
-import com.earth2me.essentials.ChargeException;
+import com.earth2me.essentials.api.ChargeException;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IRanks;
+import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
-import org.bukkit.Location;
 import org.bukkit.Server;
-import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
@@ -18,53 +22,21 @@ import org.bukkit.event.player.PlayerChatEvent;
 public abstract class EssentialsChatPlayer implements Listener
 {
 	protected transient IEssentials ess;
-	protected final static Logger logger = Logger.getLogger("Minecraft");
-	protected final transient Map<String, IEssentialsChatListener> listeners;
+	protected final static Logger LOGGER = Logger.getLogger("Minecraft");
 	protected final transient Server server;
 	protected final transient Map<PlayerChatEvent, ChatStore> chatStorage;
 
 	public EssentialsChatPlayer(final Server server,
 								final IEssentials ess,
-								final Map<String, IEssentialsChatListener> listeners,
 								final Map<PlayerChatEvent, ChatStore> chatStorage)
 	{
 		this.ess = ess;
-		this.listeners = listeners;
 		this.server = server;
 		this.chatStorage = chatStorage;
 	}
 
 	public void onPlayerChat(final PlayerChatEvent event)
 	{
-	}
-
-	public boolean isAborted(final PlayerChatEvent event)
-	{
-		if (event.isCancelled())
-		{
-			return true;
-		}
-		for (IEssentialsChatListener listener : listeners.values())
-		{
-			if (listener.shouldHandleThisChat(event))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public String getChatType(final String message)
-	{
-		switch (message.charAt(0))
-		{
-		case '!':
-			return "shout";
-		case '?':
-			return "question";
-		default:
-			return "";
-		}
 	}
 
 	public ChatStore getChatStore(final PlayerChatEvent event)
@@ -82,12 +54,7 @@ public abstract class EssentialsChatPlayer implements Listener
 		return chatStorage.remove(event);
 	}
 
-	protected void charge(final User user, final Trade charge) throws ChargeException
-	{
-		charge.charge(user);
-	}
-
-	protected boolean charge(final PlayerChatEvent event, final ChatStore chatStore)
+	protected void chargeChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
 		try
 		{
@@ -95,34 +62,85 @@ public abstract class EssentialsChatPlayer implements Listener
 		}
 		catch (ChargeException e)
 		{
-			ess.showError(chatStore.getUser(), e, chatStore.getLongType());
+			ess.getCommandHandler().showCommandError(chatStore.getUser(), chatStore.getLongType(), e);
 			event.setCancelled(true);
-			return false;
 		}
-		return true;
 	}
 
-	protected void sendLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
+	protected void charge(final CommandSender sender, final Trade charge) throws ChargeException
 	{
-		event.setCancelled(true);
-		final User sender = chatStore.getUser();
-		logger.info(_("localFormat", sender.getName(), event.getMessage()));
-		final Location loc = sender.getLocation();
-		final World world = loc.getWorld();
+		if (sender instanceof Player)
+		{
+			charge.charge(ess.getUser((Player)sender));
+		}
+	}
 
-		if (charge(event, chatStore) == false)
+	protected void formatChat(final PlayerChatEvent event, final ChatStore chatStore)
+	{
+		final IUser user = chatStore.getUser();
+		if (Permissions.CHAT_COLOR.isAuthorized(user))
+		{
+			event.setMessage(Util.stripColor(event.getMessage()));
+		}
+		String group = ess.getRanks().getMainGroup(user);
+		String world = user.getWorld().getName();
+
+		IRanks groupSettings = ess.getRanks();
+		event.setFormat(groupSettings.getChatFormat(user).format(new Object[]
+				{
+					group, world, world.substring(0, 1).toUpperCase(Locale.ENGLISH)
+				}));
+
+	}
+
+	//TODO: Flesh this out - '?' trigger is too easily accidentally triggered
+	protected String getChatType(final String message)
+	{
+		switch (message.charAt(0))
+		{
+		case '!':
+			return "shout";
+		//case '?':
+		//return "question";
+		//case '@':
+		//	return "admin";			
+		default:
+			return "";
+		}
+	}
+
+	protected void handleLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
+	{
+		long radius = 0;
+		ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		try
+		{
+			radius = settings.getData().getChat().getLocalRadius();
+		}
+		finally
+		{
+			settings.unlock();
+		}
+
+		if (radius < 1)
 		{
 			return;
 		}
 
-		for (Player onlinePlayer : server.getOnlinePlayers())
+		radius *= radius;
+
+		final IUser user = chatStore.getUser();
+
+		if (event.getMessage().length() > 1 && chatStore.getType().length() > 0)
 		{
-			String type = _("chatTypeLocal");
-			final User onlineUser = ess.getUser(onlinePlayer);
-			//TODO: remove reference to op 
-			if (onlineUser.isIgnoredPlayer(sender.getName()) && !sender.isOp())
+			if (ChatPermissions.getPermission(chatStore.getType()).isAuthorized(user))
 			{
-				continue;
+				final StringBuilder format = new StringBuilder();
+				format.append(chatStore.getType()).append("Format");
+				event.setMessage(event.getMessage().substring(1));
+				event.setFormat(_(format.toString(), event.getFormat()));
+				return;
 			}
 			if (!onlineUser.equals(sender))
 			{
@@ -145,12 +163,16 @@ public abstract class EssentialsChatPlayer implements Listener
 				}
 			}
 
-			String message = String.format(event.getFormat(), type.concat(sender.getDisplayName()), event.getMessage());
-			for (IEssentialsChatListener listener : listeners.values())
-			{
-				message = listener.modifyMessage(event, onlinePlayer, message);
-			}
-			onlineUser.sendMessage(message);
+			final StringBuilder errorMsg = new StringBuilder();
+			errorMsg.append("notAllowedTo").append(chatStore.getType().substring(0, 1).toUpperCase(Locale.ENGLISH)).append(chatStore.getType().substring(1));
+
+			user.sendMessage(_(errorMsg.toString()));
+			event.setCancelled(true);
+			return;
 		}
+
+		event.setCancelled(true);
+		final EssentialsLocalChatEvent localChat = new EssentialsLocalChatEvent(event, radius);
+		ess.getServer().getPluginManager().callEvent(localChat);
 	}
 }

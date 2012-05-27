@@ -1,32 +1,28 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.inventory.ItemStack;
 
 
 public class Commandpowertool extends EssentialsCommand
 {
-	public Commandpowertool()
-	{
-		super("powertool");
-	}
-
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		String command = getFinalArg(args, 0);
 
 		// check to see if this is a clear all command
 		if (command != null && command.equalsIgnoreCase("d:"))
 		{
-			user.clearAllPowertools();
+			user.acquireWriteLock();
+			user.getData().clearAllPowertools();
 			user.sendMessage(_("powerToolClearAll"));
 			return;
 		}
@@ -38,7 +34,7 @@ public class Commandpowertool extends EssentialsCommand
 		}
 
 		final String itemName = itemStack.getType().toString().toLowerCase(Locale.ENGLISH).replaceAll("_", " ");
-		List<String> powertools = user.getPowertool(itemStack);
+		List<String> powertools = user.getData().getPowertool(itemStack.getType());
 		if (command != null && !command.isEmpty())
 		{
 			if (command.equalsIgnoreCase("l:"))
@@ -68,7 +64,7 @@ public class Commandpowertool extends EssentialsCommand
 			{
 				if (command.startsWith("a:"))
 				{
-					if (!user.isAuthorized("essentials.powertool.append"))
+					if (!Permissions.POWERTOOL_APPEND.isAuthorized(user))
 					{
 						throw new Exception(_("noPerm", "essentials.powertool.append"));
 					}
@@ -106,6 +102,7 @@ public class Commandpowertool extends EssentialsCommand
 			user.setPowerToolsEnabled(true);
 			user.sendMessage(_("powerToolsEnabled"));
 		}
-		user.setPowertool(itemStack, powertools);
+		user.acquireWriteLock();
+		user.getData().setPowertool(itemStack.getType(), powertools);
 	}
 }

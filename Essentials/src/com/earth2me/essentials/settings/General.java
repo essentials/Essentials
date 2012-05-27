@@ -25,9 +25,30 @@ public class General implements StorageObject
 	private String locale;
 	@Comment(
 	{
-		"Should we announce to the server when someone logs in for the first time?",
-		"If so, use this format, replacing {DISPLAYNAME} with the player name.",
-		"If not, set to ''"
+		"The number of items given, if the quantity parameter is left out in /item or /give.",
+		"If this number is below 1, the maximum stack size size is given. If oversized stacks",
+		"is not enabled, any number higher then the maximum stack size results in more than one stack."
 	})
-	private String newPlayerAnnouncement = "&dWelcome {DISPLAYNAME} to the server!";
+	private int defaultStacksize = -1;
+	@Comment(
+	{
+		"Oversized stacks are stacks that ignore the normal max stacksize.",
+		"They can be obtained using /give and /item, if the player has essentials.oversizedstacks permission.",
+		"How many items should be in a oversized stack?"
+	})
+	private int oversizedStacksize = 64;
+
+
+	public enum GroupStorage
+	{
+		FILE, GROUPMANAGER, VAULT
+	}
+	@Comment(
+	{
+		"Sets the place where group options should be stored:",
+		" FILE: Options are stored inside groups.yml in the Essentials folder",
+		" GROUPMANAGER: Options are stored using the GroupManager groups",
+		" VAULT: Options are stored using a permissions plugin supported by Vault"
+	})
+	private GroupStorage groupStorage = GroupStorage.FILE;
 }

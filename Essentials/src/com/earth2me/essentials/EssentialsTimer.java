@@ -1,5 +1,11 @@
 package com.earth2me.essentials;
 
+import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.user.UserData.TimestampType;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,7 +17,7 @@ import org.bukkit.entity.Player;
 public class EssentialsTimer implements Runnable
 {
 	private final transient IEssentials ess;
-	private final transient Set<User> onlineUsers = new HashSet<User>();
+	private final transient Set<IUser> onlineUsers = new HashSet<IUser>();
 	private transient long lastPoll = System.currentTimeMillis();
 	private final transient LinkedList<Float> history = new LinkedList<Float>();
 
@@ -41,12 +47,34 @@ public class EssentialsTimer implements Runnable
 		lastPoll = currentTime;
 		for (Player player : ess.getServer().getOnlinePlayers())
 		{
+
 			try
 			{
-				final User user = ess.getUser(player);
+				final IUser user = ess.getUser(player);
 				onlineUsers.add(user);
 				user.setLastOnlineActivity(currentTime);
 				user.checkActivity();
+
+				boolean mailDisabled = false;
+				ISettings settings = ess.getSettings();
+				settings.acquireReadLock();
+				try
+				{
+					mailDisabled = settings.getData().getCommands().isDisabled("mail");
+				}
+				finally
+				{
+					settings.unlock();
+				}
+				// New mail notification
+				if (user != null && !mailDisabled && Permissions.MAIL.isAuthorized(user) && !user.gotMailInfo())
+				{
+					final List<String> mail = user.getMails();
+					if (mail != null && !mail.isEmpty())
+					{
+						user.sendMessage(_("youHaveNewMail", mail.size()));
+					}
+				}
 			}
 			catch (Exception e)
 			{
@@ -54,13 +82,13 @@ public class EssentialsTimer implements Runnable
 			}
 		}
 
-		final Iterator<User> iterator = onlineUsers.iterator();
+		final Iterator<IUser> iterator = onlineUsers.iterator();
 		while (iterator.hasNext())
 		{
-			final User user = iterator.next();
-			if (user.getLastOnlineActivity() < currentTime && user.getLastOnlineActivity() > user.getLastLogout())
+			final IUser user = iterator.next();
+			if (user.getLastOnlineActivity() < currentTime && user.getLastOnlineActivity() > user.getTimestamp(TimestampType.LOGOUT))
 			{
-				user.setLastLogout(user.getLastOnlineActivity());
+				user.setTimestamp(TimestampType.LOGOUT, user.getLastOnlineActivity());
 				iterator.remove();
 				continue;
 			}

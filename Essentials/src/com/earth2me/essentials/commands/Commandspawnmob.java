@@ -1,14 +1,17 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Mob;
-import com.earth2me.essentials.Mob.MobException;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.bukkit.Mob;
+import com.earth2me.essentials.bukkit.Mob.MobException;
+import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.SpawnmobPermissions;
+import com.earth2me.essentials.utils.LocationUtil;
+import com.earth2me.essentials.utils.Util;
+import java.util.HashSet;
 import java.util.*;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Villager.Profession;
@@ -17,13 +20,8 @@ import org.bukkit.material.Colorable;
 
 public class Commandspawnmob extends EssentialsCommand
 {
-	public Commandspawnmob()
-	{
-		super("spawnmob");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -31,7 +29,7 @@ public class Commandspawnmob extends EssentialsCommand
 			final Set<String> availableList = new HashSet<String>();
 			for (String mob : mobList)
 			{
-				if (user.isAuthorized("essentials.spawnmob." + mob.toLowerCase()))
+				if (SpawnmobPermissions.getPermission(mob).isAuthorized(user))
 				{
 					availableList.add(mob);
 				}
@@ -76,27 +74,23 @@ public class Commandspawnmob extends EssentialsCommand
 			throw new Exception(_("invalidMob"));
 		}
 
-		if (ess.getSettings().getProtectPreventSpawn(mob.getType().toString().toLowerCase(Locale.ENGLISH)))
-		{
-			throw new Exception(_("disabledToSpawnMob"));
-		}
-		if (!user.isAuthorized("essentials.spawnmob." + mob.name.toLowerCase()))
+		if (!SpawnmobPermissions.getPermission(mob.name).isAuthorized(user))
 		{
 			throw new Exception(_("noPermToSpawnMob"));
 		}
 
-		final Block block = Util.getTarget(user).getBlock();
+		final Block block = LocationUtil.getTarget(user).getBlock();
 		if (block == null)
 		{
 			throw new Exception(_("unableToSpawnMob"));
 		}
-		User otherUser = null;
+		IUser otherUser = null;
 		if (args.length >= 3)
 		{
-			otherUser = getPlayer(ess.getServer(), args, 2);
+			otherUser = getPlayer(args, 2);
 		}
 		final Location loc = (otherUser == null) ? block.getLocation() : otherUser.getLocation();
-		final Location sloc = Util.getSafeDestination(loc);
+		final Location sloc = LocationUtil.getSafeDestination(loc);
 		try
 		{
 			spawnedMob = mob.spawn(user, server, sloc);
@@ -115,11 +109,7 @@ public class Commandspawnmob extends EssentialsCommand
 				return;
 			}
 
-			if (ess.getSettings().getProtectPreventSpawn(mobMount.getType().toString().toLowerCase(Locale.ENGLISH)))
-			{
-				throw new Exception(_("disabledToSpawnMob"));
-			}
-			if (!user.isAuthorized("essentials.spawnmob." + mobMount.name.toLowerCase()))
+			if (!SpawnmobPermissions.getPermission(mobMount.name).isAuthorized(user))
 			{
 				throw new Exception(_("noPermToSpawnMob"));
 			}
@@ -144,7 +134,17 @@ public class Commandspawnmob extends EssentialsCommand
 		if (args.length >= 2)
 		{
 			int mobCount = Integer.parseInt(args[1]);
-			int serverLimit = ess.getSettings().getSpawnMobLimit();
+			int serverLimit = 1;
+			ISettings settings = ess.getSettings();
+			settings.acquireReadLock();
+			try
+			{
+				serverLimit = settings.getData().getCommands().getSpawnmob().getLimit();
+			}
+			finally
+			{
+				settings.unlock();
+			}
 			if (mobCount > serverLimit)
 			{
 				mobCount = serverLimit;
@@ -198,7 +198,7 @@ public class Commandspawnmob extends EssentialsCommand
 		}
 	}
 
-	private void changeMobData(final EntityType type, final Entity spawned, String data, final User user) throws Exception
+	private void changeMobData(final EntityType type, final Entity spawned, String data, final IUser user) throws Exception
 	{
 		data = data.toLowerCase(Locale.ENGLISH);
 
@@ -276,6 +276,21 @@ public class Commandspawnmob extends EssentialsCommand
 				{
 					((Villager)spawned).setProfession(prof);
 				}
+			}
+		}
+		if (type == EntityType.OCELOT)
+		{
+			if (data.contains("siamese"))
+			{
+				((Ocelot)spawned).setCatType(Ocelot.Type.SIAMESE_CAT);
+			}
+			if (data.contains("red"))
+			{
+				((Ocelot)spawned).setCatType(Ocelot.Type.RED_CAT);
+			}
+			if (data.contains("black"))
+			{
+				((Ocelot)spawned).setCatType(Ocelot.Type.BLACK_CAT);
 			}
 		}
 	}

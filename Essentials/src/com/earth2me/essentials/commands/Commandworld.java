@@ -1,24 +1,19 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.WorldPermissions;
 import java.util.List;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Commandworld extends EssentialsCommand
 {
-	public Commandworld()
-	{
-		super("world");
-	}
-
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		World world;
 
@@ -54,9 +49,11 @@ public class Commandworld extends EssentialsCommand
 			}
 		}
 
-		if (ess.getSettings().isWorldTeleportPermissions() && !user.isAuthorized("essentials.world." + world.getName()))
+
+		if (!WorldPermissions.getPermission(world.getName()).isAuthorized(user))
 		{
-			throw new Exception(_("noPerm", "essentials.world." + world.getName()));
+			user.sendMessage(_("invalidWorld")); //TODO: Make a "world teleport denied" translation
+			throw new NoChargeException();
 		}
 
 		double factor;
@@ -76,7 +73,7 @@ public class Commandworld extends EssentialsCommand
 		final Location loc = user.getLocation();
 		final Location target = new Location(world, loc.getBlockX() * factor + .5, loc.getBlockY(), loc.getBlockZ() * factor + .5);
 
-		final Trade charge = new Trade(this.getName(), ess);
+		final Trade charge = new Trade(commandName, ess);
 		charge.isAffordableFor(user);
 		user.getTeleport().teleport(target, charge, TeleportCause.COMMAND);
 		throw new NoChargeException();

@@ -1,15 +1,14 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.Console;
-import com.earth2me.essentials.EssentialsConf;
-import com.earth2me.essentials.IConf;
-import com.earth2me.essentials.IUser;
+import com.earth2me.essentials.api.IReload;
+import com.earth2me.essentials.api.IUser;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jivesoftware.smack.Roster.SubscriptionMode;
 import org.jivesoftware.smack.*;
@@ -18,10 +17,10 @@ import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.util.StringUtils;
 
 
-public class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IConf
+public class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IReload
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private final transient EssentialsConf config;
+	private transient YamlConfiguration config = null;
 	private transient XMPPConnection connection;
 	private transient ChatManager chatManager;
 	private final transient Map<String, Chat> chats = Collections.synchronizedMap(new HashMap<String, Chat>());
@@ -37,9 +36,8 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 	{
 		super();
 		this.parent = parent;
-		config = new EssentialsConf(new File(parent.getDataFolder(), "config.yml"));
-		config.setTemplateName("/config.yml", EssentialsXMPP.class);
-		reloadConfig();
+		// config.setTemplateName("/config.yml", EssentialsXMPP.class);
+		onReload();
 	}
 
 	public boolean sendMessage(final String address, final String message)
@@ -166,10 +164,10 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 	}
 
 	@Override
-	public final void reloadConfig()
+	public final void onReload()
 	{
 		LOGGER.removeHandler(this);
-		config.load();
+		config = YamlConfiguration.loadConfiguration(new File(parent.getDataFolder(), "config.yml"));
 		synchronized (chats)
 		{
 			disconnect();
@@ -355,7 +353,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 		{
 			try
 			{
-				parent.getServer().dispatchCommand(Console.getCommandSender(parent.getServer()), message.substring(1));
+				parent.getServer().dispatchCommand(parent.getServer().getConsoleSender(), message.substring(1));
 			}
 			catch (Exception ex)
 			{

@@ -17,7 +17,20 @@
  */
 package com.earth2me.essentials;
 
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.commands.EssentialsCommandHandler;
+import com.earth2me.essentials.utils.ExecuteTimer;
+import com.earth2me.essentials.economy.WorthHolder;
+import com.earth2me.essentials.economy.Economy;
+import com.earth2me.essentials.backup.Backup;
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.*;
+import com.earth2me.essentials.listener.*;
+import com.earth2me.essentials.economy.register.Methods;
+import com.earth2me.essentials.ranks.RanksStorage;
+import com.earth2me.essentials.settings.SettingsHolder;
+import com.earth2me.essentials.settings.SpawnsHolder;
+import com.earth2me.essentials.user.UserMap;
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.IJails;
 import com.earth2me.essentials.commands.EssentialsCommand;
@@ -36,32 +49,25 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.yaml.snakeyaml.error.YAMLException;
 
 
@@ -70,19 +76,24 @@ public class Essentials extends JavaPlugin implements IEssentials
 	public static final int BUKKIT_VERSION = 2149;
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient ISettings settings;
-	private final transient TNTExplodeListener tntListener = new TNTExplodeListener(this);
-	private transient Jails jails;
-	private transient Warps warps;
-	private transient Worth worth;
-	private transient List<IConf> confList;
-	private transient Backup backup;
-	private transient ItemDb itemDb;
+	private final transient TntExplodeListener tntListener = new TntExplodeListener(this);
+	private transient IJails jails;
+	private transient IKits kits;
+	private transient IWarps warps;
+	private transient IWorth worth;
+	private transient List<IReload> reloadList;
+	private transient IBackup backup;
+	private transient IItemDb itemDb;
+	private transient IRanks groups;
+	private transient SpawnsHolder spawns;
 	private transient final Methods paymentMethod = new Methods();
-	private transient PermissionsHandler permissionsHandler;
-	private transient AlternativeCommandsHandler alternativeCommandsHandler;
-	private transient UserMap userMap;
+	//private transient PermissionsHandler permissionsHandler;
+	private transient IUserMap userMap;
 	private transient ExecuteTimer execTimer;
 	private transient I18n i18n;
+	private transient ICommandHandler commandHandler;
+	private transient Economy economy;
+	public transient boolean testing;
 	private transient Metrics metrics;
 	private transient EssentialsTimer timer;
 	private transient List<String> vanishedPlayers = new ArrayList<String>();
@@ -95,6 +106,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 
 	public void setupForTesting(final Server server) throws IOException, InvalidDescriptionException
 	{
+		testing = true;
 		final File dataFolder = File.createTempFile("essentialstest", "");
 		if (!dataFolder.delete())
 		{
@@ -109,11 +121,11 @@ public class Essentials extends JavaPlugin implements IEssentials
 		LOGGER.log(Level.INFO, _("usingTempFolderForTesting"));
 		LOGGER.log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
-		settings = new Settings(this);
+		settings = new SettingsHolder(this);
 		i18n.updateLocale("en");
 		userMap = new UserMap(this);
-		permissionsHandler = new PermissionsHandler(this, false);
-		Economy.setEss(this);
+		//permissionsHandler = new PermissionsHandler(this);
+		economy = new Economy(this);
 	}
 
 	@Override
@@ -157,27 +169,37 @@ public class Essentials extends JavaPlugin implements IEssentials
 		execTimer.mark("BukkitCheck");
 		try
 		{
-			final EssentialsUpgrade upgrade = new EssentialsUpgrade(this);
-			upgrade.beforeSettings();
-			execTimer.mark("Upgrade");
-			confList = new ArrayList<IConf>();
-			settings = new Settings(this);
-			confList.add(settings);
+			//final EssentialsUpgrade upgrade = new EssentialsUpgrade(this);
+			//upgrade.beforeSettings();
+			//execTimer.mark("Upgrade");
+			reloadList = new ArrayList<IReload>();
+			settings = new SettingsHolder(this);
+			reloadList.add(settings);
 			execTimer.mark("Settings");
-			upgrade.afterSettings();
-			execTimer.mark("Upgrade2");
+			//upgrade.afterSettings();
+			//execTimer.mark("Upgrade2");
 			i18n.updateLocale(settings.getLocale());
 			userMap = new UserMap(this);
-			confList.add(userMap);
+			reloadList.add(userMap);
 			execTimer.mark("Init(Usermap)");
-			warps = new Warps(getServer(), this.getDataFolder());
-			confList.add(warps);
+			groups = new RanksStorage(this);
+			reloadList.add((RanksStorage)groups);
+			warps = new Warps(this);
+			reloadList.add(warps);
 			execTimer.mark("Init(Spawn/Warp)");
-			worth = new Worth(this.getDataFolder());
-			confList.add(worth);
+			worth = new WorthHolder(this);
+			reloadList.add(worth);
 			itemDb = new ItemDb(this);
-			confList.add(itemDb);
+			reloadList.add(itemDb);
 			execTimer.mark("Init(Worth/ItemDB)");
+			kits = new Kits(this);
+			reloadList.add(kits);
+			commandHandler = new EssentialsCommandHandler(Essentials.class.getClassLoader(), "com.earth2me.essentials.commands.Command", "essentials.", this);
+			reloadList.add(commandHandler);
+			economy = new Economy(this);
+			reloadList.add(economy);
+			spawns = new SpawnsHolder(this);
+			reloadList.add(spawns);
 			reload();
 		}
 		catch (YAMLException exception)
@@ -207,11 +229,10 @@ public class Essentials extends JavaPlugin implements IEssentials
 			return;
 		}
 		backup = new Backup(this);
-		permissionsHandler = new PermissionsHandler(this, settings.useBukkitPermissions());
-		alternativeCommandsHandler = new AlternativeCommandsHandler(this);
+		//permissionsHandler = new PermissionsHandler(this);
 		final EssentialsPluginListener serverListener = new EssentialsPluginListener(this);
 		pm.registerEvents(serverListener, this);
-		confList.add(serverListener);
+		reloadList.add(serverListener);
 
 		final EssentialsPlayerListener playerListener = new EssentialsPlayerListener(this);
 		pm.registerEvents(playerListener, this);
@@ -219,31 +240,17 @@ public class Essentials extends JavaPlugin implements IEssentials
 		final EssentialsBlockListener blockListener = new EssentialsBlockListener(this);
 		pm.registerEvents(blockListener, this);
 
-		final SignBlockListener signBlockListener = new SignBlockListener(this);
-		pm.registerEvents(signBlockListener, this);
-
-		final SignPlayerListener signPlayerListener = new SignPlayerListener(this);
-		pm.registerEvents(signPlayerListener, this);
-
-		final SignEntityListener signEntityListener = new SignEntityListener(this);
-		pm.registerEvents(signEntityListener, this);
-
 		final EssentialsEntityListener entityListener = new EssentialsEntityListener(this);
 		pm.registerEvents(entityListener, this);
 
-		final EssentialsWorldListener worldListener = new EssentialsWorldListener(this);
-		pm.registerEvents(worldListener, this);
-
-		//TODO: Check if this should be here, and not above before reload()
 		jails = new Jails(this);
-		confList.add(jails);
+		reloadList.add(jails);
 
 		pm.registerEvents(tntListener, this);
 
-		timer = new EssentialsTimer(this);
-		getScheduler().scheduleSyncRepeatingTask(this, timer, 100, 100);
 
-		Economy.setEss(this);
+		final EssentialsTimer timer = new EssentialsTimer(this);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, timer, 1, 100);
 		execTimer.mark("RegListeners");
 
 		final MetricsStarter metricsStarter = new MetricsStarter(this);
@@ -260,7 +267,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 		final String timeroutput = execTimer.end();
 		if (getSettings().isDebug())
 		{
-			LOGGER.log(Level.INFO, "Essentials load " + timeroutput);
+			LOGGER.log(Level.INFO, "Essentials load {0}", timeroutput);
 		}
 	}
 
@@ -275,7 +282,6 @@ public class Essentials extends JavaPlugin implements IEssentials
 			}
 		}
 		i18n.onDisable();
-		Economy.setEss(null);
 		Trade.closeLog();
 	}
 
@@ -284,10 +290,10 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		Trade.closeLog();
 
-		for (IConf iConf : confList)
+		for (IReload iReload : reloadList)
 		{
-			iConf.reloadConfig();
-			execTimer.mark("Reload(" + iConf.getClass().getSimpleName() + ")");
+			iReload.onReload();
+			execTimer.mark("Reload(" + iReload.getClass().getSimpleName() + ")");
 		}
 
 		i18n.updateLocale(settings.getLocale());
@@ -296,133 +302,8 @@ public class Essentials extends JavaPlugin implements IEssentials
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
 	{
-		return onCommandEssentials(sender, command, commandLabel, args, Essentials.class.getClassLoader(), "com.earth2me.essentials.commands.Command", "essentials.", null);
-	}
-
-	@Override
-	public boolean onCommandEssentials(final CommandSender sender, final Command command, final String commandLabel, final String[] args, final ClassLoader classLoader, final String commandPath, final String permissionPrefix, final IEssentialsModule module)
-	{
-		// Allow plugins to override the command via onCommand
-		if (!getSettings().isCommandOverridden(command.getName()) && (!commandLabel.startsWith("e") || commandLabel.equalsIgnoreCase(command.getName())))
-		{
-			final PluginCommand pc = alternativeCommandsHandler.getAlternative(commandLabel);
-			if (pc != null)
-			{
-				alternativeCommandsHandler.executed(commandLabel, pc.getLabel());
-				try
-				{
-					return pc.execute(sender, commandLabel, args);
-				}
-				catch (final Exception ex)
-				{
-					Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
-					sender.sendMessage(ChatColor.RED + "An internal error occurred while attempting to perform this command");
-					return true;
-				}
-			}
-		}
-
-		try
-		{
-			User user = null;
-			if (sender instanceof Player)
-			{
-				user = getUser(sender);
-				LOGGER.log(Level.INFO, String.format("[PLAYER_COMMAND] %s: /%s %s ", ((Player)sender).getName(), commandLabel, EssentialsCommand.getFinalArg(args, 0)));
-			}
-
-			// New mail notification
-			if (user != null && !getSettings().isCommandDisabled("mail") && !commandLabel.equals("mail") && user.isAuthorized("essentials.mail"))
-			{
-				final List<String> mail = user.getMails();
-				if (mail != null && !mail.isEmpty())
-				{
-					user.sendMessage(_("youHaveNewMail", mail.size()));
-				}
-			}
-
-			// Check for disabled commands
-			if (getSettings().isCommandDisabled(commandLabel))
-			{
-				return true;
-			}
-
-			IEssentialsCommand cmd;
-			try
-			{
-				cmd = (IEssentialsCommand)classLoader.loadClass(commandPath + command.getName()).newInstance();
-				cmd.setEssentials(this);
-				cmd.setEssentialsModule(module);
-			}
-			catch (Exception ex)
-			{
-				sender.sendMessage(_("commandNotLoaded", commandLabel));
-				LOGGER.log(Level.SEVERE, _("commandNotLoaded", commandLabel), ex);
-				return true;
-			}
-
-			// Check authorization
-			if (user != null && !user.isAuthorized(cmd, permissionPrefix))
-			{
-				LOGGER.log(Level.WARNING, _("deniedAccessCommand", user.getName()));
-				user.sendMessage(_("noAccessCommand"));
-				return true;
-			}
-
-			// Run the command
-			try
-			{
-				if (user == null)
-				{
-					cmd.run(getServer(), sender, commandLabel, command, args);
-				}
-				else
-				{
-					cmd.run(getServer(), user, commandLabel, command, args);
-				}
-				return true;
-			}
-			catch (NoChargeException ex)
-			{
-				return true;
-			}
-			catch (NotEnoughArgumentsException ex)
-			{
-				sender.sendMessage(command.getDescription());
-				sender.sendMessage(command.getUsage().replaceAll("<command>", commandLabel));
-				if (!ex.getMessage().isEmpty())
-				{
-					sender.sendMessage(ex.getMessage());
-				}
-				return true;
-			}
-			catch (Throwable ex)
-			{
-				showError(sender, ex, commandLabel);
-				return true;
-			}
-		}
-		catch (Throwable ex)
-		{
-			LOGGER.log(Level.SEVERE, _("commandFailed", commandLabel), ex);
-			return true;
-		}
-	}
-
-	@Override
-	public void showError(final CommandSender sender, final Throwable exception, final String commandLabel)
-	{
-		sender.sendMessage(_("errorWithMessage", exception.getMessage()));
-		if (getSettings().isDebug())
-		{
-			LOGGER.log(Level.WARNING, _("errorCallingCommand", commandLabel), exception);
-		}
-	}
-
-	@Override
-	public BukkitScheduler getScheduler()
-	{
-		return this.getServer().getScheduler();
+		return commandHandler.handleCommand(sender, command, commandLabel, args);
+		//return onCommandEssentials(sender, command, commandLabel, args, Essentials.class.getClassLoader(), "com.earth2me.essentials.commands.Command", "essentials.", null);
 	}
 
 	@Override
@@ -432,19 +313,25 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public Warps getWarps()
+	public IKits getKits()
+	{
+		return kits;
+	}
+
+	@Override
+	public IWarps getWarps()
 	{
 		return warps;
 	}
 
 	@Override
-	public Worth getWorth()
+	public IWorth getWorth()
 	{
 		return worth;
 	}
 
 	@Override
-	public Backup getBackup()
+	public IBackup getBackup()
 	{
 		return backup;
 	}
@@ -460,57 +347,15 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public User getUser(final Object base)
+	public IUser getUser(final Player player)
 	{
-		if (base instanceof Player)
-		{
-			return getUser((Player)base);
-		}
-		if (base instanceof String)
-		{
-			final User user = userMap.getUser((String)base);
-			if (user != null && user.getBase() instanceof OfflinePlayer)
-			{
-				((OfflinePlayer)user.getBase()).setName((String)base);
-			}
-			return user;
-		}
-		return null;
-	}
-
-	private <T extends Player> User getUser(final T base)
-	{
-		if (base == null)
-		{
-			return null;
-		}
-
-		if (base instanceof User)
-		{
-			return (User)base;
-		}
-		User user = userMap.getUser(base.getName());
-
-		if (user == null)
-		{
-			user = new User(base, this);
-		}
-		else
-		{
-			user.update(base);
-		}
-		return user;
+		return userMap.getUser(player);
 	}
 
 	@Override
-	public User getOfflineUser(final String name)
+	public IUser getUser(final String playerName)
 	{
-		final User user = userMap.getUser(name);
-		if (user != null && user.getBase() instanceof OfflinePlayer)
-		{
-			((OfflinePlayer)user.getBase()).setName(name);
-		}
-		return user;
+		return userMap.getUser(playerName);
 	}
 
 	@Override
@@ -528,9 +373,9 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public void addReloadListener(final IConf listener)
+	public void addReloadListener(final IReload listener)
 	{
-		confList.add(listener);
+		reloadList.add(listener);
 	}
 
 	@Override
@@ -554,8 +399,8 @@ public class Essentials extends JavaPlugin implements IEssentials
 
 		for (Player player : players)
 		{
-			final User user = getUser(player);
-			if (!user.isIgnoredPlayer(sender.getName()))
+			final IUser user = getUser(player);
+			if (!user.isIgnoringPlayer(sender.getName()))
 			{
 				player.sendMessage(message);
 			}
@@ -567,53 +412,44 @@ public class Essentials extends JavaPlugin implements IEssentials
 	@Override
 	public int scheduleAsyncDelayedTask(final Runnable run)
 	{
-		return this.getScheduler().scheduleAsyncDelayedTask(this, run);
+		return this.getServer().getScheduler().scheduleAsyncDelayedTask(this, run);
 	}
 
 	@Override
 	public int scheduleSyncDelayedTask(final Runnable run)
 	{
-		return this.getScheduler().scheduleSyncDelayedTask(this, run);
+		return this.getServer().getScheduler().scheduleSyncDelayedTask(this, run);
 	}
 
 	@Override
 	public int scheduleSyncDelayedTask(final Runnable run, final long delay)
 	{
-		return this.getScheduler().scheduleSyncDelayedTask(this, run, delay);
+		return this.getServer().getScheduler().scheduleSyncDelayedTask(this, run, delay);
 	}
 
 	@Override
 	public int scheduleSyncRepeatingTask(final Runnable run, final long delay, final long period)
 	{
-		return this.getScheduler().scheduleSyncRepeatingTask(this, run, delay, period);
+		return this.getServer().getScheduler().scheduleSyncRepeatingTask(this, run, delay, period);
 	}
 
 	@Override
-	public TNTExplodeListener getTNTListener()
+	public TntExplodeListener getTNTListener()
 	{
 		return tntListener;
 	}
 
+	/*
+	 * @Override public PermissionsHandler getPermissionsHandler() { return permissionsHandler; }
+	 */
 	@Override
-	public PermissionsHandler getPermissionsHandler()
-	{
-		return permissionsHandler;
-	}
-
-	@Override
-	public AlternativeCommandsHandler getAlternativeCommandsHandler()
-	{
-		return alternativeCommandsHandler;
-	}
-
-	@Override
-	public ItemDb getItemDb()
+	public IItemDb getItemDb()
 	{
 		return itemDb;
 	}
 
 	@Override
-	public UserMap getUserMap()
+	public IUserMap getUserMap()
 	{
 		return userMap;
 	}
@@ -625,58 +461,32 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public EssentialsTimer getTimer()
+	public IRanks getRanks()
 	{
-		return timer;
+		return groups;
 	}
 
 	@Override
-	public List<String> getVanishedPlayers()
+	public ICommandHandler getCommandHandler()
 	{
-		return vanishedPlayers;
+		return commandHandler;
 	}
 
-	private static class EssentialsWorldListener implements Listener, Runnable
+	@Override
+	public void setRanks(final IRanks groups)
 	{
-		private transient final IEssentials ess;
+		this.groups = groups;
+	}
 
-		public EssentialsWorldListener(final IEssentials ess)
-		{
-			this.ess = ess;
-		}
+	@Override
+	public void removeReloadListener(IReload groups)
+	{
+		this.reloadList.remove(groups);
+	}
 
-		@EventHandler(priority = EventPriority.LOW)
-		public void onWorldLoad(final WorldLoadEvent event)
-		{
-			ess.getJails().onReload();
-			ess.getWarps().reloadConfig();
-			for (IConf iConf : ((Essentials)ess).confList)
-			{
-				if (iConf instanceof IEssentialsModule)
-				{
-					iConf.reloadConfig();
-				}
-			}
-		}
-
-		@EventHandler(priority = EventPriority.LOW)
-		public void onWorldUnload(final WorldUnloadEvent event)
-		{
-			ess.getJails().onReload();
-			ess.getWarps().reloadConfig();
-			for (IConf iConf : ((Essentials)ess).confList)
-			{
-				if (iConf instanceof IEssentialsModule)
-				{
-					iConf.reloadConfig();
-				}
-			}
-		}
-
-		@Override
-		public void run()
-		{
-			ess.reload();
-		}
+	@Override
+	public IEconomy getEconomy()
+	{
+		return economy;
 	}
 }

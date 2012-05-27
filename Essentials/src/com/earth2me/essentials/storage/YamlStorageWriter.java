@@ -11,7 +11,6 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -218,6 +217,11 @@ public class YamlStorageWriter implements IStorageWriter
 				YAML.dumpAll(Collections.singletonList(data).iterator(), writer);
 			}
 		}
+		else if (data instanceof Enum)
+		{
+			writeMaterial(data.toString());
+			writer.println();
+		}
 		else if (data instanceof Material)
 		{
 			writeMaterial(data);
@@ -259,6 +263,10 @@ public class YamlStorageWriter implements IStorageWriter
 			{
 				writer.print(output);
 			}
+		}
+		else if (data instanceof Enum)
+		{
+			writeMaterial(data.toString());
 		}
 		else if (data instanceof Material)
 		{
@@ -320,7 +328,7 @@ public class YamlStorageWriter implements IStorageWriter
 		writer.println();
 		writeIndention(depth);
 		writer.print("world: ");
-		writeScalar(entry.getWorld().getName());
+		writeScalar(entry.getWorldName());
 		writeIndention(depth);
 		writer.print("x: ");
 		writeScalar(entry.getX());

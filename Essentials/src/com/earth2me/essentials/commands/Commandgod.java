@@ -1,47 +1,42 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import org.bukkit.Server;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandgod extends EssentialsCommand
 {
-	public Commandgod()
-	{
-		super("god");
-	}
-
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		godOtherPlayers(server, sender, args[0]);
+		godOtherPlayers(sender, args[0]);
 	}
 
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length > 0 && args[0].trim().length() > 2 && user.isAuthorized("essentials.god.others"))
+		if (args.length > 0 && !args[0].trim().isEmpty() && Permissions.GOD_OTHERS.isAuthorized(user))
 		{
-			godOtherPlayers(server, user, args[0]);
+			godOtherPlayers(user, args[0]);
 			return;
 		}
 
 		user.sendMessage(_("godMode", (user.toggleGodModeEnabled() ? _("enabled") : _("disabled"))));
 	}
 
-	private void godOtherPlayers(final Server server, final CommandSender sender, final String name)
+	private void godOtherPlayers(final CommandSender sender, final String name)
 	{
 		for (Player matchPlayer : server.matchPlayer(name))
 		{
-			final User player = ess.getUser(matchPlayer);
+			final IUser player = ess.getUser(matchPlayer);
 			if (player.isHidden())
 			{
 				continue;

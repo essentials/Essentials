@@ -1,20 +1,14 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
-import org.bukkit.Server;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.api.IUser;
 
 
 public class Commandback extends EssentialsCommand
 {
-	public Commandback()
-	{
-		super("back");
-	}
-
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (user.getWorld() != user.getLastLocation().getWorld() && ess.getSettings().isWorldTeleportPermissions()
 			&& !user.isAuthorized("essentials.world." + user.getLastLocation().getWorld().getName()))

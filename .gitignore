@@ -1,42 +1,32 @@
+# Eclipse stuff
+.classpath
+.project
+.settings
+
+# netbeans
+nbproject
+
+# we use maven!
+build.xml
+
+# maven
+target
+jars
+
+# vim
+.*.sw[a-p]
+
+# various other potential build files
+build
+bin
+dist
+manifest.mf
+
+# Mac filesystem dust
 .DS_Store
-/BuildAll/nbproject/private/
-/EssentialsProtect/nbproject/private/
-/EssentialsChat/nbproject/private/
-/EssentialsGroupBridge/nbproject/private/
-/EssentialsGeoIP/nbproject/private/
-/EssentialsSpawn/nbproject/private/
-/EssentialsXMPP/nbproject/private/
-/EssentialsGroupManager/nbproject/private/
-/BuildAll/build/
-/EssentialsGroupBridge/dist/
-/EssentialsGroupBridge/build/
-/EssentialsGeoIP/dist/
-/EssentialsGeoIP/build/
-/EssentialsGroupManager/build/
-/EssentialsGroupManager/dist/
-/BuildAll/dist/
-/EssentialsChat/build/
-/EssentialsChat/dist/
-/EssentialsSpawn/build/
-/EssentialsSpawn/dist/
-/EssentialsXMPP/dist/
-/EssentialsXMPP/build/
-/EssentialsProtect/dist/
-/EssentialsProtect/build/
-/EssentialsPermissionsCommands/nbproject/private/
-/EssentialsPermissionsCommands/build/
-/EssentialsPermissionsCommands/dist/
-/Essentials/nbproject/private/
-/Essentials/dist/
-/Essentials/build/
-/YamlAnnotations/
-/EssentialsUpdate/nbproject/private/
-/EssentialsRelease/
-/EssentialsUpdate/dist/
-/EssentialsUpdate/build/
-/WebPush/apikey.php
-/WebPush/nbproject/private
-/.idea
+
+# intellij
 *.iml
-/EssentialsGroupManager/bin
-/EssentialsGroupManager/.externalToolBuilders
+*.ipr
+*.iws
+.idea/

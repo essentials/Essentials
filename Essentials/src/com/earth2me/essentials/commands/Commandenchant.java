@@ -1,25 +1,23 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.Enchantments;
+import com.earth2me.essentials.bukkit.Enchantments;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import java.util.*;
-import org.bukkit.Server;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.EnchantPermissions;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 
 public class Commandenchant extends EssentialsCommand
 {
-	public Commandenchant()
-	{
-		super("enchant");
-	}
-
 	//TODO: Implement charge costs: final Trade charge = new Trade("enchant-" + enchantmentName, ess);
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		final ItemStack stack = user.getItemInHand();
 		if (stack == null)
@@ -32,7 +30,7 @@ public class Commandenchant extends EssentialsCommand
 			for (Map.Entry<String, Enchantment> entry : Enchantments.entrySet())
 			{
 				final String enchantmentName = entry.getValue().getName().toLowerCase(Locale.ENGLISH);
-				if (enchantmentslist.contains(enchantmentName) || user.isAuthorized("essentials.enchant." + enchantmentName))
+				if (enchantmentslist.contains(enchantmentName) || EnchantPermissions.getPermission(enchantmentName).isAuthorized(user))
 				{
 					enchantmentslist.add(entry.getKey());
 					//enchantmentslist.add(enchantmentName);
@@ -78,7 +76,7 @@ public class Commandenchant extends EssentialsCommand
 		}
 	}
 
-	public static Enchantment getEnchantment(final String name, final User user) throws Exception
+	public static Enchantment getEnchantment(final String name, final IUser user) throws Exception
 	{
 
 		final Enchantment enchantment = Enchantments.getByName(name);
@@ -87,7 +85,7 @@ public class Commandenchant extends EssentialsCommand
 			throw new Exception(_("enchantmentNotFound"));
 		}
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
-		if (user != null && !user.isAuthorized("essentials.enchant." + enchantmentName))
+		if (user != null && !EnchantPermissions.getPermission(enchantmentName).isAuthorized(user))
 		{
 			throw new Exception(_("enchantmentPerm", enchantmentName));
 		}

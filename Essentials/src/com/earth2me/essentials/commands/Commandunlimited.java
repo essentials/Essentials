@@ -1,35 +1,34 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
-import com.earth2me.essentials.User;
-import java.util.List;
+import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.permissions.UnlimitedItemPermissions;
 import java.util.Locale;
+import java.util.Set;
+import lombok.Cleanup;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.inventory.ItemStack;
 
 
 public class Commandunlimited extends EssentialsCommand
 {
-	public Commandunlimited()
-	{
-		super("unlimited");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		User target = user;
+		@Cleanup
+		IUser target = user;
 
-		if (args.length > 1 && user.isAuthorized("essentials.unlimited.others"))
+		if (args.length > 1 && Permissions.UNLIMITED_OTHERS.isAuthorized(user))
 		{
-			target = getPlayer(server, args, 1);
+			target = getPlayer(args, 1);
+			target.acquireReadLock();
 		}
 
 		if (args[0].equalsIgnoreCase("list"))
@@ -39,16 +38,12 @@ public class Commandunlimited extends EssentialsCommand
 		}
 		else if (args[0].equalsIgnoreCase("clear"))
 		{
-			final List<Integer> itemList = target.getUnlimited();
-
-			int index = 0;
-			while (itemList.size() > index)
+			//TODO: Fix this, the clear should always work, even when the player does not have permission.
+			final Set<Material> itemList = target.getData().getUnlimited();
+			for(Material mat : itemList)
 			{
-				final Integer item = itemList.get(index);
-				if (toggleUnlimited(user, target, item.toString()) == false)
-				{
-					index++;
-				}
+				toggleUnlimited(user, target, mat.name());
+				
 			}
 		}
 		else
@@ -57,49 +52,44 @@ public class Commandunlimited extends EssentialsCommand
 		}
 	}
 
-	private String getList(final User target)
+	private String getList(final IUser target)
 	{
 		final StringBuilder output = new StringBuilder();
 		output.append(_("unlimitedItems")).append(" ");
 		boolean first = true;
-		final List<Integer> items = target.getUnlimited();
+		final Set<Material> items = target.getData().getUnlimited();
 		if (items.isEmpty())
 		{
 			output.append(_("none"));
 		}
-		for (Integer integer : items)
+		for (Material mater : items)
 		{
 			if (!first)
 			{
 				output.append(", ");
 			}
 			first = false;
-			final String matname = Material.getMaterial(integer).toString().toLowerCase(Locale.ENGLISH).replace("_", "");
+			final String matname = mater.name().toLowerCase(Locale.ENGLISH).replace("_", "");
 			output.append(matname);
 		}
 
 		return output.toString();
 	}
 
-	private Boolean toggleUnlimited(final User user, final User target, final String item) throws Exception
+	private Boolean toggleUnlimited(final IUser user, final IUser target, final String item) throws Exception
 	{
 		final ItemStack stack = ess.getItemDb().get(item, 1);
 		stack.setAmount(Math.min(stack.getType().getMaxStackSize(), 2));
 
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
-		if (ess.getSettings().permissionBasedItemSpawn()
-			&& (!user.isAuthorized("essentials.unlimited.item-all")
-				&& !user.isAuthorized("essentials.unlimited.item-" + itemname)
-				&& !user.isAuthorized("essentials.unlimited.item-" + stack.getTypeId())
-				&& !((stack.getType() == Material.WATER_BUCKET || stack.getType() == Material.LAVA_BUCKET)
-					 && user.isAuthorized("essentials.unlimited.item-bucket"))))
+		if (!UnlimitedItemPermissions.getPermission(stack.getType()).isAuthorized(user))
 		{
 			throw new Exception(_("unlimitedItemPermission", itemname));
 		}
 
 		String message = "disableUnlimited";
 		Boolean enableUnlimited = false;
-		if (!target.hasUnlimited(stack))
+		if (!target.getData().hasUnlimited(stack.getType()))
 		{
 			message = "enableUnlimited";
 			enableUnlimited = true;
@@ -114,7 +104,8 @@ public class Commandunlimited extends EssentialsCommand
 			user.sendMessage(_(message, itemname, target.getDisplayName()));
 		}
 		target.sendMessage(_(message, itemname, target.getDisplayName()));
-		target.setUnlimited(stack, enableUnlimited);
+		target.acquireWriteLock();
+		target.getData().setUnlimited(stack.getType(), enableUnlimited);
 
 		return true;
 	}

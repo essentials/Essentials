@@ -1,9 +1,9 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,30 +11,26 @@ import org.bukkit.entity.Player;
 
 public class Commandnear extends EssentialsCommand
 {
-	public Commandnear()
-	{
-		super("near");
-	}
-
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		long radius = 200;
-		User otherUser = null;
+
+		IUser otherUser = null;
 
 		if (args.length > 0)
 		{
 			try
 			{
-				radius = Long.parseLong(args[0]);
+				otherUser = getPlayer(args, 0);
 			}
-			catch (NumberFormatException e)
+			catch (Exception ex)
 			{
 				try
 				{
-					otherUser = getPlayer(server, args, 0);
+					radius = Long.parseLong(args[0]);
 				}
-				catch (Exception ex)
+				catch (NumberFormatException e)
 				{
 				}
 			}
@@ -49,9 +45,9 @@ public class Commandnear extends EssentialsCommand
 				}
 			}
 		}
-		if (otherUser == null || user.isAuthorized("essentials.near.others"))
+		if (otherUser == null || Permissions.NEAR_OTHERS.isAuthorized(user))
 		{
-			user.sendMessage(_("nearbyPlayers", getLocal(server, otherUser == null ? user : otherUser, radius)));
+			user.sendMessage(_("nearbyPlayers", getLocal(otherUser == null ? user : otherUser, radius)));
 		}
 		else
 		{
@@ -60,13 +56,13 @@ public class Commandnear extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length == 0)
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final User otherUser = getPlayer(server, args, 0);
+		final IUser otherUser = getPlayer(args, 0);
 		long radius = 200;
 		if (args.length > 1)
 		{
@@ -78,10 +74,10 @@ public class Commandnear extends EssentialsCommand
 			{
 			}
 		}
-		sender.sendMessage(_("nearbyPlayers", getLocal(server, otherUser, radius)));
+		sender.sendMessage(_("nearbyPlayers", getLocal(otherUser, radius)));
 	}
 
-	private String getLocal(final Server server, final User user, final long radius)
+	private String getLocal(final IUser user, final long radius)
 	{
 		final Location loc = user.getLocation();
 		final World world = loc.getWorld();
@@ -90,7 +86,7 @@ public class Commandnear extends EssentialsCommand
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final User player = ess.getUser(onlinePlayer);
+			final IUser player = ess.getUser(onlinePlayer);
 			if (!player.equals(user) && !player.isHidden())
 			{
 				final Location playerLoc = player.getLocation();

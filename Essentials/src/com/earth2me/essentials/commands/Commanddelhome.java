@@ -1,28 +1,26 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.Locale;
-import org.bukkit.Server;
+import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commanddelhome extends EssentialsCommand
 {
-	public Commanddelhome()
-	{
-		super("delhome");
-	}
-
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		User user = ess.getUser(sender);
+		@Cleanup
+		IUser user = sender instanceof Player ? ess.getUser((Player)sender) : null;
 		String name;
 		String[] expandedArg;
 
@@ -37,9 +35,9 @@ public class Commanddelhome extends EssentialsCommand
 			expandedArg = args;
 		}
 
-		if (expandedArg.length > 1 && (user == null || user.isAuthorized("essentials.delhome.others")))
+		if (expandedArg.length > 1 && (user == null || Permissions.DELHOME_OTHERS.isAuthorized(user)))
 		{
-			user = getPlayer(server, expandedArg, 0, true);
+			user = getPlayer(expandedArg, 0, true);
 			name = expandedArg[1];
 		}
 		else if (user == null)
@@ -54,7 +52,8 @@ public class Commanddelhome extends EssentialsCommand
 		/*
 		 * if (name.equalsIgnoreCase("bed")) { throw new Exception("You cannot remove the vanilla home point"); }
 		 */
-		user.delHome(name.toLowerCase(Locale.ENGLISH));
+		user.acquireWriteLock();
+		user.getData().removeHome(name.toLowerCase(Locale.ENGLISH));
 		sender.sendMessage(_("deleteHome", name));
 	}
 }

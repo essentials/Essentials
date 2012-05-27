@@ -1,11 +1,11 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -13,14 +13,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class Commandbreak extends EssentialsCommand
 {
-	public Commandbreak()
-	{
-		super("break");
-	}
-
 	//TODO: Switch to use util class
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		final Block block = user.getTargetBlock(null, 20);
 		if (block == null)
@@ -31,7 +26,7 @@ public class Commandbreak extends EssentialsCommand
 		{
 			throw new NoChargeException();
 		}
-		if (block.getType() == Material.BEDROCK && !user.isAuthorized("essentials.break.bedrock"))
+		if (block.getType() == Material.BEDROCK && !Permissions.BREAK_BEDROCK.isAuthorized(user))
 		{
 			throw new Exception(_("noBreakBedrock"));
 		}

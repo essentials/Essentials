@@ -2,12 +2,12 @@
 name: EssentialsXMPP
 main: com.earth2me.essentials.xmpp.EssentialsXMPP
 # Note to developers: This next line cannot change, or the automatic versioning system will break.
-version: TeamCity
-website: http://ess.khhq.net/wiki/XMPP
+version: ${build.number}
+website: http://tiny.cc/EssentialsWiki
 description: Provides xmpp communication.
 authors:
   - snowleo
-depend: [Essentials]
+depend: [Essentials3]
 commands:
   setxmpp:
     description: set your xmpp address

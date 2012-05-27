@@ -20,33 +20,59 @@ public class EssentialsProtectWeatherListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onWeatherChange(final WeatherChangeEvent event)
 	{
-		if (!event.isCancelled()
-			&& prot.getSettingBool(ProtectConfig.disable_weather_storm)
-			&& event.toWeatherState())
+		final ProtectHolder settings = prot.getSettings();
+		settings.acquireReadLock();
+		try
 		{
-			event.setCancelled(true);
+			if (!event.isCancelled()
+				&& settings.getData().isDisableStorm()
+				&& event.toWeatherState())
+			{
+				event.setCancelled(true);
+			}
 		}
-
+		finally
+		{
+			settings.unlock();
+		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onLightningStrike(final LightningStrikeEvent event)
 	{
-		if (!event.isCancelled()
-			&& prot.getSettingBool(ProtectConfig.disable_weather_lightning))
+		final ProtectHolder settings = prot.getSettings();
+		settings.acquireReadLock();
+		try
 		{
-			event.setCancelled(true);
+			if (!event.isCancelled()
+				&& settings.getData().isDisableLighting())
+			{
+				event.setCancelled(true);
+			}
+		}
+		finally
+		{
+			settings.unlock();
 		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onThunderChange(final ThunderChangeEvent event)
 	{
-		if (!event.isCancelled()
-			&& prot.getSettingBool(ProtectConfig.disable_weather_thunder)
-			&& event.toThunderState())
+		final ProtectHolder settings = prot.getSettings();
+		settings.acquireReadLock();
+		try
 		{
-			event.setCancelled(true);
+			if (!event.isCancelled()
+				&& settings.getData().isDisableThunder()
+				&& event.toThunderState())
+			{
+				event.setCancelled(true);
+			}
+		}
+		finally
+		{
+			settings.unlock();
 		}
 	}
 }

@@ -1,22 +1,17 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.logging.Level;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 
 public class Commandhelpop extends EssentialsCommand
 {
-	public Commandhelpop()
-	{
-		super("helpop");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -27,8 +22,8 @@ public class Commandhelpop extends EssentialsCommand
 		logger.log(Level.INFO, message);
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final User player = ess.getUser(onlinePlayer);
-			if (!player.isAuthorized("essentials.helpop.receive"))
+			final IUser player = ess.getUser(onlinePlayer);
+			if (!Permissions.HELPOP_RECEIVE.isAuthorized(player))
 			{
 				continue;
 			}

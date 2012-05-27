@@ -1,20 +1,17 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
+import java.util.HashMap;
 import java.util.Locale;
-import org.bukkit.Server;
+import lombok.Cleanup;
 
 
 public class Commandsethome extends EssentialsCommand
 {
-	public Commandsethome()
-	{
-		super("sethome");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, String[] args) throws Exception
 	{
 		if (args.length > 0)
 		{
@@ -27,20 +24,25 @@ public class Commandsethome extends EssentialsCommand
 
 			if (args.length < 2)
 			{
-				if (user.isAuthorized("essentials.sethome.multiple"))
+				if (Permissions.SETHOME_MULTIPLE.isAuthorized(user))
 				{
 					if ("bed".equals(args[0].toLowerCase(Locale.ENGLISH)))
 					{
 						throw new NotEnoughArgumentsException();
 					}
-					if ((user.isAuthorized("essentials.sethome.multiple.unlimited")) || (user.getHomes().size() < ess.getSettings().getHomeLimit(user))
+					if ((user.getHomes().size() < ess.getRanks().getHomeLimit(user))
 						|| (user.getHomes().contains(args[0].toLowerCase(Locale.ENGLISH))))
 					{
-						user.setHome(args[0].toLowerCase(Locale.ENGLISH));
+						user.acquireWriteLock();
+						if (user.getData().getHomes() == null)
+						{
+							user.getData().setHomes(new HashMap<String, com.earth2me.essentials.storage.Location>());
+						}
+						user.getData().getHomes().put(args[0].toLowerCase(Locale.ENGLISH), new com.earth2me.essentials.storage.Location(user.getLocation()));
 					}
 					else
 					{
-						throw new Exception(_("maxHomes", ess.getSettings().getHomeLimit(user)));
+						throw new Exception(_("maxHomes", ess.getRanks().getHomeLimit(user)));
 					}
 
 				}
@@ -51,19 +53,16 @@ public class Commandsethome extends EssentialsCommand
 			}
 			else
 			{
-				if (user.isAuthorized("essentials.sethome.others"))
+				if (Permissions.SETHOME_OTHERS.isAuthorized(user))
 				{
-					User usersHome = ess.getUser(ess.getServer().getPlayer(args[0]));
-					if (usersHome == null)
-					{
-						usersHome = ess.getOfflineUser(args[0]);
-					}
+					@Cleanup
+					IUser usersHome = ess.getUser(ess.getServer().getPlayer(args[0]));
 					if (usersHome == null)
 					{
 						throw new Exception(_("playerNotFound"));
 					}
 					String name = args[1].toLowerCase(Locale.ENGLISH);
-					if (!user.isAuthorized("essentials.sethome.multiple"))
+					if (!Permissions.SETHOME_MULTIPLE.isAuthorized(user))
 					{
 						name = "home";
 					}
@@ -71,13 +70,24 @@ public class Commandsethome extends EssentialsCommand
 					{
 						throw new NotEnoughArgumentsException();
 					}
-					usersHome.setHome(name, user.getLocation());
+
+					usersHome.acquireWriteLock();
+					if (usersHome.getData().getHomes() == null)
+					{
+						usersHome.getData().setHomes(new HashMap<String, com.earth2me.essentials.storage.Location>());
+					}
+					usersHome.getData().getHomes().put(name, new com.earth2me.essentials.storage.Location(user.getLocation()));
 				}
 			}
 		}
 		else
 		{
-			user.setHome();
+			user.acquireWriteLock();
+			if (user.getData().getHomes() == null)
+			{
+				user.getData().setHomes(new HashMap<String, com.earth2me.essentials.storage.Location>());
+			}
+			user.getData().getHomes().put("home", new com.earth2me.essentials.storage.Location(user.getLocation()));
 		}
 		user.sendMessage(_("homeSet", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
 

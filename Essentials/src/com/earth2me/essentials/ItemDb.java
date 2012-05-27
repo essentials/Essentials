@@ -1,16 +1,22 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.api.IItemDb;
+import com.earth2me.essentials.storage.ManagedFile;
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IItemDb;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
+import lombok.Cleanup;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 
-public class ItemDb implements IConf, IItemDb
+public class ItemDb implements IItemDb
 {
 	private final transient IEssentials ess;
 
@@ -19,12 +25,12 @@ public class ItemDb implements IConf, IItemDb
 		this.ess = ess;
 		file = new ManagedFile("items.csv", ess);
 	}
-	private final transient Map<String, Integer> items = new HashMap<String, Integer>();
-	private final transient Map<String, Short> durabilities = new HashMap<String, Short>();
+	private final transient Map<String, Long> items = new HashMap<String, Long>();
 	private final transient ManagedFile file;
+	private static final Pattern SPLIT = Pattern.compile("[^a-zA-Z0-9]");
 
 	@Override
-	public void reloadConfig()
+	public void onReload()
 	{
 		final List<String> lines = file.getLines();
 
@@ -33,28 +39,52 @@ public class ItemDb implements IConf, IItemDb
 			return;
 		}
 
-		durabilities.clear();
 		items.clear();
 
 		for (String line : lines)
 		{
-			line = line.trim().toLowerCase(Locale.ENGLISH);
+			line = line.trim();
 			if (line.length() > 0 && line.charAt(0) == '#')
 			{
 				continue;
 			}
 
-			final String[] parts = line.split("[^a-z0-9]");
+			final String[] parts = SPLIT.split(line);
 			if (parts.length < 2)
 			{
 				continue;
 			}
 
-			final int numeric = Integer.parseInt(parts[1]);
+			final long numeric = Integer.parseInt(parts[1]);
 
-			durabilities.put(parts[0].toLowerCase(Locale.ENGLISH), parts.length > 2 && !parts[2].equals("0") ? Short.parseShort(parts[2]) : 0);
-			items.put(parts[0].toLowerCase(Locale.ENGLISH), numeric);
+			final long durability = parts.length > 2 && !(parts[2].length() == 1 && parts[2].charAt(0) == '0') ? Short.parseShort(parts[2]) : 0;
+			items.put(parts[0].toLowerCase(Locale.ENGLISH), numeric | (durability << 32));
 		}
+	}
+
+	public ItemStack get(final String id, final IUser user) throws Exception
+	{
+		final ItemStack stack = get(id.toLowerCase(Locale.ENGLISH));
+
+		@Cleanup
+		com.earth2me.essentials.api.ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+
+		final int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();
+
+		if (defaultStackSize > 0)
+		{
+			stack.setAmount(defaultStackSize);
+		}
+		else
+		{
+			final int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
+			if (oversizedStackSize > 0 && Permissions.OVERSIZEDSTACKS.isAuthorized(user))
+			{
+				stack.setAmount(oversizedStackSize);
+			}
+		}
+		return stack;
 	}
 
 	public ItemStack get(final String id, final int quantity) throws Exception
@@ -92,10 +122,11 @@ public class ItemDb implements IConf, IItemDb
 		{
 			if (items.containsKey(itemname))
 			{
-				itemid = items.get(itemname);
-				if (durabilities.containsKey(itemname) && metaData == 0)
+				long item = items.get(itemname);
+				itemid = (int)(item & 0xffffffffL);
+				if (metaData == 0)
 				{
-					metaData = durabilities.get(itemname);
+					metaData = (short)((item >> 32) & 0xffffL);
 				}
 			}
 			else if (Material.getMaterial(itemname) != null)

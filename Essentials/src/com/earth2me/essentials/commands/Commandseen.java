@@ -1,33 +1,30 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import org.bukkit.Location;
-import org.bukkit.Server;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.user.UserData.TimestampType;
+import com.earth2me.essentials.utils.DateUtil;
+import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 
 
 public class Commandseen extends EssentialsCommand
 {
-	public Commandseen()
-	{
-		super("seen");
-	}
-
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		seen(server, sender, args, true, true);
+		seen(sender,args,true);
 	}
-
+	
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		seen(server, user, args, user.isAuthorized("essentials.seen.banreason"), user.isAuthorized("essentials.seen.extra"));
+		seen(user,args,Permissions.SEEN_BANREASON.isAuthorized(user));
 	}
-
-	protected void seen(final Server server, final CommandSender sender, final String[] args, final boolean showBan, final boolean extra) throws Exception
+	
+	protected void seen (final CommandSender sender, final String[] args, final boolean show) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -35,26 +32,24 @@ public class Commandseen extends EssentialsCommand
 		}
 		try
 		{
-			User player = getPlayer(server, args, 0);
+			IUser u = getPlayer(args, 0);
 			player.setDisplayNick();
-			sender.sendMessage(_("seenOnline", player.getDisplayName(), Util.formatDateDiff(player.getLastLogin())));
-			if (extra)
-			{
-				sender.sendMessage(_("whoisIPAddress", player.getAddress().getAddress().toString()));
-			}
+			sender.sendMessage(_("seenOnline", u.getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
 		}
 		catch (NoSuchFieldException e)
 		{
-			User player = ess.getOfflineUser(args[0]);
-			if (player == null)
+			@Cleanup
+			IUser u = ess.getUser(args[0]);
+			u.acquireReadLock();
+			if (u == null)
 			{
 				throw new Exception(_("playerNotFound"));
 			}
 			player.setDisplayNick();
-			sender.sendMessage(_("seenOffline", player.getName(), Util.formatDateDiff(player.getLastLogout())));
-			if (player.isBanned())
+			sender.sendMessage(_("seenOffline", u.getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
+			if (u.isBanned())
 			{
-				sender.sendMessage(_("whoisBanned", showBan ? player.getBanReason() : _("true")));
+				sender.sendMessage(_("whoisBanned", show ? u.getData().getBan().getReason() : _("true")));
 			}
 			if (extra)
 			{

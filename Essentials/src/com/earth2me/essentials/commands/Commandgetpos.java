@@ -1,24 +1,19 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 
 public class Commandgetpos extends EssentialsCommand
 {
-	public Commandgetpos()
-	{
-		super("getpos");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length > 0 && user.isAuthorized("essentials.getpos.others"))
+		if (args.length > 0 && Permissions.GETPOS_OTHERS.isAuthorized(user))
 		{
-			final User otherUser = getPlayer(server, args, 0);
+			final IUser otherUser = getPlayer(args, 0);
 			if (!otherUser.isHidden() || user.isAuthorized("essentials.list.hidden"))
 			{
 				outputPosition(user, otherUser.getLocation(), user.getLocation());
@@ -30,13 +25,13 @@ public class Commandgetpos extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final User user = getPlayer(server, args, 0);
+		final IUser user = getPlayer(args, 0);
 		outputPosition(sender, user.getLocation(), null);
 	}
 

@@ -1,17 +1,12 @@
 package com.earth2me.essentials.storage;
 
-import java.beans.IntrospectionException;
+import com.earth2me.essentials.Essentials;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
@@ -215,6 +210,22 @@ public class BukkitConstructor extends Constructor
 				}
 				return new EnchantmentLevel(enchant, level);
 			}
+			if (node.getType().isEnum())
+			{
+				final String val = (String)constructScalar((ScalarNode)node);
+				if (val.isEmpty())
+				{
+					return null;
+				}
+				for (Object object : node.getType().getEnumConstants())
+				{
+					if (object.toString().equalsIgnoreCase(val))
+					{
+						return object;
+					}
+				}
+				return null;
+			}
 			return super.construct(node);
 		}
 	}
@@ -269,16 +280,12 @@ public class BukkitConstructor extends Constructor
 				{
 					return null;
 				}
-				final World world = Bukkit.getWorld(worldName);
-				if (world == null)
-				{
-					return null;
-				}
-				return new Location(world, x, y, z, yaw, pitch);
+				return new Location(worldName, x, y, z, yaw, pitch);
 			}
 			return super.construct(node);
 		}
 
+		@Override
 		protected Object constructJavaBean2ndStep(final MappingNode node, final Object object)
 		{
 			Map<Class<? extends Object>, TypeDescription> typeDefinitions;
@@ -287,7 +294,8 @@ public class BukkitConstructor extends Constructor
 				final Field typeDefField = Constructor.class.getDeclaredField("typeDefinitions");
 				typeDefField.setAccessible(true);
 				typeDefinitions = (Map<Class<? extends Object>, TypeDescription>)typeDefField.get((Constructor)BukkitConstructor.this);
-				if (typeDefinitions == null) {
+				if (typeDefinitions == null)
+				{
 					throw new NullPointerException();
 				}
 			}
@@ -411,7 +419,7 @@ public class BukkitConstructor extends Constructor
 	{
 		Class<?> clazz;
 		final String name = node.getTag().getClassName();
-		if (plugin == null)
+		if (plugin == null || (plugin instanceof Essentials && ((Essentials)plugin).testing))
 		{
 			clazz = super.getClassForNode(node);
 		}

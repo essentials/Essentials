@@ -1,10 +1,10 @@
 package com.earth2me.essentials.protect;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IEssentials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -28,65 +28,73 @@ public class EssentialsProtectPlayerListener implements Listener
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
 		// Do not return if cancelled, because the interact event has 2 cancelled states.
-		final User user = ess.getUser(event.getPlayer());
+		final Player user = event.getPlayer();
 
-		if (event.hasItem()
-			&& (event.getItem().getType() == Material.WATER_BUCKET
-				|| event.getItem().getType() == Material.LAVA_BUCKET)
-			&& prot.getSettingBool(ProtectConfig.disable_build) && !user.canBuild())
+		final ProtectHolder settings = prot.getSettings();
+		settings.acquireReadLock();
+		try
 		{
-			if (ess.getSettings().warnOnBuildDisallow())
+			if (event.hasItem()
+				&& (event.getItem().getType() == Material.WATER_BUCKET
+					|| event.getItem().getType() == Material.LAVA_BUCKET)
+				&& !Permissions.BUILD.isAuthorized(user))
 			{
-				user.sendMessage(_("buildAlert"));
-			}
-			event.setCancelled(true);
-			return;
-		}
-
-		if (prot.getSettingBool(ProtectConfig.disable_use) && !user.canBuild())
-		{
-			if (ess.getSettings().warnOnBuildDisallow())
-			{
-				user.sendMessage(_("buildAlert"));
-			}
-			event.setCancelled(true);
-			return;
-		}
-
-		final ItemStack item = event.getItem();
-		if (item != null
-			&& prot.checkProtectionItems(ProtectConfig.blacklist_usage, item.getTypeId())
-			&& !user.isAuthorized("essentials.protect.exemptusage"))
-		{
-			event.setCancelled(true);
-			return;
-		}
-
-		if (user.isAuthorized("essentials.protect.ownerinfo") && event.getAction() == Action.RIGHT_CLICK_BLOCK)
-		{
-			final StringBuilder stringBuilder = new StringBuilder();
-			boolean first = true;
-			final Block blockClicked = event.getClickedBlock();
-			for (String owner : prot.getStorage().getOwners(blockClicked))
-			{
-				if (!first)
+				if (settings.getData().isWarnOnBuildDisallow())
 				{
-					stringBuilder.append(", ");
+					user.sendMessage(_("buildAlert"));
 				}
-				first = false;
-				stringBuilder.append(owner);
+				event.setCancelled(true);
+				return;
 			}
-			final String ownerNames = stringBuilder.toString();
-			if (ownerNames != null && !ownerNames.isEmpty())
+
+			if (!Permissions.INTERACT.isAuthorized(user))
 			{
-				user.sendMessage(_("protectionOwner", ownerNames));
+				if (settings.getData().isWarnOnBuildDisallow())
+				{
+					user.sendMessage(_("buildAlert"));
+				}
+				event.setCancelled(true);
+				return;
+			}
+
+			final ItemStack item = event.getItem();
+			if (item != null
+				&& !ItemUsePermissions.getPermission(item.getType()).isAuthorized(user))
+			{
+				event.setCancelled(true);
+				return;
+			}
+
+			if (Permissions.OWNERINFO.isAuthorized(user) && event.getAction() == Action.RIGHT_CLICK_BLOCK)
+			{
+				final StringBuilder stringBuilder = new StringBuilder();
+				boolean first = true;
+				final Block blockClicked = event.getClickedBlock();
+				for (String owner : prot.getStorage().getOwners(blockClicked))
+				{
+					if (!first)
+					{
+						stringBuilder.append(", ");
+					}
+					first = false;
+					stringBuilder.append(owner);
+				}
+				final String ownerNames = stringBuilder.toString();
+				if (ownerNames != null && !ownerNames.isEmpty())
+				{
+					user.sendMessage(_("protectionOwner", ownerNames));
+				}
+			}
+			if (item != null
+				&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user)
+				&& settings.getData().getAlertOnUse().contains(item.getType()))
+			{
+				prot.getEssentialsConnect().alert(user, item.getType().toString(), _("alertUsed"));
 			}
 		}
-		if (item != null
-			&& !user.hasPermission("essentials.protect.alerts.notrigger")
-			&& prot.checkProtectionItems(ProtectConfig.alert_on_use, item.getTypeId()))
+		finally
 		{
-			prot.getEssentialsConnect().alert(user, item.getType().toString(), _("alertUsed"));
+			settings.unlock();
 		}
 	}
 }

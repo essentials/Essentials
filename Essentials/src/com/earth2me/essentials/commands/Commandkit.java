@@ -1,25 +1,39 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.*;
 import static com.earth2me.essentials.I18n._;
-import java.util.*;
-import org.bukkit.Server;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.KitPermissions;
+import com.earth2me.essentials.settings.Kit;
+import java.util.Collection;
+import java.util.Locale;
 import org.bukkit.command.CommandSender;
 
 
 public class Commandkit extends EssentialsCommand
 {
-	public Commandkit()
-	{
-		super("kit");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
-			listKits(user);
+			Collection<String> kitList = ess.getKits().getList();
+			if (kitList.isEmpty())
+			{
+				user.sendMessage(_("noKits"));
+			}
+			else
+			{
+				for (String kitName : kitList)
+				{
+					if (!KitPermissions.getPermission(kitName).isAuthorized(user))
+					{
+						kitList.remove(kitName);
+					}
+				}
+				user.sendMessage(_("kits", Util.joinList(kitList)));
+			}
 			throw new NoChargeException();
 		}
 		else if (args.length > 1 && user.isAuthorized("essentials.kit.others"))
@@ -47,11 +61,14 @@ public class Commandkit extends EssentialsCommand
 		{
 			final User userTo = getPlayer(server, args, 1, true);
 			final String kitName = args[0].toLowerCase(Locale.ENGLISH);
+			final Kit kit = ess.getKits().getKit(kitName);
 
-			final Map<String, Object> kit = ess.getSettings().getKit(kitName);
-			final List<String> items = Kit.getItems(userTo, kit);
-			Kit.expandItems(ess, userTo, items);
+			if (!KitPermissions.getPermission(kitName).isAuthorized(user))
+			{
+				throw new Exception(_("noKitPermission", "essentials.kit." + kitName));
+			}
 
+			//TODO: Check kit delay
 			sender.sendMessage(_("kitGive", kitName));
 		}
 	}

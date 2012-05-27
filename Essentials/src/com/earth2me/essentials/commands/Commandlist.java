@@ -1,33 +1,23 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.Util;
 import java.util.*;
-import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandlist extends EssentialsCommand
 {
-	public Commandlist()
-	{
-		super("list");
-	}
-
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		boolean showhidden = false;
-		if (sender instanceof Player)
-		{
-			if (ess.getUser(sender).isAuthorized("essentials.list.hidden"))
-			{
-				showhidden = true;
-			}
-		}
-		else
+		if (Permissions.LIST_HIDDEN.isAuthorized(sender))
 		{
 			showhidden = true;
 		}
@@ -51,21 +41,33 @@ public class Commandlist extends EssentialsCommand
 		}
 		sender.sendMessage(online);
 
-		if (ess.getSettings().getSortListByGroups())
+		boolean sortListByGroups = false;
+		ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		try
 		{
-			Map<String, List<User>> sort = new HashMap<String, List<User>>();
+			sortListByGroups = settings.getData().getCommands().getList().isSortByGroups();
+		}
+		finally
+		{
+			settings.unlock();
+		}
+
+		if (sortListByGroups)
+		{
+			Map<String, List<IUser>> sort = new HashMap<String, List<IUser>>();
 			for (Player OnlinePlayer : server.getOnlinePlayers())
 			{
-				final User player = ess.getUser(OnlinePlayer);
+				final IUser player = ess.getUser(OnlinePlayer);
 				if (player.isHidden() && !showhidden)
 				{
 					continue;
 				}
-				final String group = player.getGroup();
-				List<User> list = sort.get(group);
+				final String group = ess.getRanks().getMainGroup(player);
+				List<IUser> list = sort.get(group);
 				if (list == null)
 				{
-					list = new ArrayList<User>();
+					list = new ArrayList<IUser>();
 					sort.put(group, list);
 				}
 				list.add(player);
@@ -75,11 +77,11 @@ public class Commandlist extends EssentialsCommand
 			for (String group : groups)
 			{
 				final StringBuilder groupString = new StringBuilder();
-				groupString.append(_("listGroupTag", Util.replaceFormat(group)));
-				final List<User> users = sort.get(group);
+				groupString.append(_("listGroupTag",Util.replaceColor(group)));
+				final List<IUser> users = sort.get(group);
 				Collections.sort(users);
 				boolean first = true;
-				for (User user : users)
+				for (IUser user : users)
 				{
 					if (!first)
 					{
@@ -89,9 +91,17 @@ public class Commandlist extends EssentialsCommand
 					{
 						first = false;
 					}
-					if (user.isAfk())
+					user.acquireReadLock();
+					try
 					{
-						groupString.append(_("listAfkTag"));
+						if (user.getData().isAfk())
+						{
+							groupString.append(_("listAfkTag"));
+						}
+					}
+					finally
+					{
+						user.unlock();
 					}
 					if (user.isHidden())
 					{
@@ -106,10 +116,10 @@ public class Commandlist extends EssentialsCommand
 		}
 		else
 		{
-			final List<User> users = new ArrayList<User>();
+			final List<IUser> users = new ArrayList<IUser>();
 			for (Player OnlinePlayer : server.getOnlinePlayers())
 			{
-				final User player = ess.getUser(OnlinePlayer);
+				final IUser player = ess.getUser(OnlinePlayer);
 				if (player.isHidden() && !showhidden)
 				{
 					continue;
@@ -121,7 +131,7 @@ public class Commandlist extends EssentialsCommand
 			final StringBuilder onlineUsers = new StringBuilder();
 			onlineUsers.append(_("connectedPlayers"));
 			boolean first = true;
-			for (User user : users)
+			for (IUser user : users)
 			{
 				if (!first)
 				{
@@ -131,9 +141,17 @@ public class Commandlist extends EssentialsCommand
 				{
 					first = false;
 				}
-				if (user.isAfk())
+				user.acquireReadLock();
+				try
 				{
-					onlineUsers.append(_("listAfkTag"));
+					if (user.getData().isAfk())
+					{
+						onlineUsers.append(_("listAfkTag"));
+					}
+				}
+				finally
+				{
+					user.unlock();
 				}
 				if (user.isHidden())
 				{

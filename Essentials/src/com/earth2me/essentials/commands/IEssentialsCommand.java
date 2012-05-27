@@ -1,24 +1,22 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.IEssentials;
-import com.earth2me.essentials.IEssentialsModule;
-import com.earth2me.essentials.User;
-import org.bukkit.Server;
+import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IEssentialsModule;
+import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.api.IUser;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 
-public interface IEssentialsCommand
+public interface IEssentialsCommand extends IPermission
 {
-	String getName();
-
-	void run(Server server, User user, String commandLabel, Command cmd, String[] args)
+	void run(IUser user, Command cmd, String commandLabel, String[] args)
 			throws Exception;
 
-	void run(Server server, CommandSender sender, String commandLabel, Command cmd, String[] args)
+	void run(CommandSender sender, Command cmd, String commandLabel, String[] args)
 			throws Exception;
 
-	void setEssentials(IEssentials ess);
+	void init(IEssentials ess, String commandLabel);
 
 	void setEssentialsModule(IEssentialsModule module);
 }

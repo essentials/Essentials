@@ -6,10 +6,13 @@ import org.bukkit.event.HandlerList;
 
 public class InstallationFinishedEvent extends Event
 {
-	public InstallationFinishedEvent()
-	{
-		super();
-	}
+    private static final HandlerList handlers = new HandlerList();
+
+    @Override
+    public HandlerList getHandlers()
+    {
+        return handlers;
+    }
 
 	@Override
 	public HandlerList getHandlers()

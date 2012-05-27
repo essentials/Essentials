@@ -2,22 +2,18 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
-import org.bukkit.Server;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
+import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Commandtp extends EssentialsCommand
 {
-	public Commandtp()
-	{
-		super("tp");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		switch (args.length)
 		{
@@ -25,8 +21,10 @@ public class Commandtp extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 
 		case 1:
-			final User player = getPlayer(server, args, 0);
-			if (!player.isTeleportEnabled())
+			@Cleanup
+			final IUser player = getPlayer(args, 0);
+			player.acquireReadLock();
+			if (!player.getData().isTeleportEnabled())
 			{
 				throw new Exception(_("teleportDisabled", player.getDisplayName()));
 			}
@@ -36,19 +34,19 @@ public class Commandtp extends EssentialsCommand
 				throw new Exception(_("noPerm", "essentials.world." + player.getWorld().getName()));
 			}
 			user.sendMessage(_("teleporting"));
-			final Trade charge = new Trade(this.getName(), ess);
+			final Trade charge = new Trade(commandName, ess);
 			charge.isAffordableFor(user);
 			user.getTeleport().teleport(player, charge, TeleportCause.COMMAND);
 			throw new NoChargeException();
 
 		default:
-			if (!user.isAuthorized("essentials.tp.others"))
+			if (!Permissions.TPOHERE.isAuthorized(user))
 			{
-				throw new Exception(_("noPerm", "essentials.tp.others"));
+				throw new Exception(_("needTpohere"));
 			}
 			user.sendMessage(_("teleporting"));
-			final User target = getPlayer(server, args, 0);
-			final User toPlayer = getPlayer(server, args, 1);
+			final IUser target = getPlayer(args, 0);
+			final IUser toPlayer = getPlayer(args, 1);
 			if (!target.isTeleportEnabled())
 			{
 				throw new Exception(_("teleportDisabled", target.getDisplayName()));
@@ -69,7 +67,7 @@ public class Commandtp extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
@@ -77,8 +75,8 @@ public class Commandtp extends EssentialsCommand
 		}
 
 		sender.sendMessage(_("teleporting"));
-		final User target = getPlayer(server, args, 0);
-		final User toPlayer = getPlayer(server, args, 1);
+		final IUser target = getPlayer(args, 0);
+		final IUser toPlayer = getPlayer(args, 1);
 		target.getTeleport().now(toPlayer, false, TeleportCause.COMMAND);
 		target.sendMessage(_("teleportAtoB", Console.NAME, toPlayer.getDisplayName()));
 	}

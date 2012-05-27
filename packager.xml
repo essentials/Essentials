@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="collect">
+  <target name="collect">
+    <mkdir dir="jars"/>
+    <copy todir="jars">
+      <fileset dir=".">
+        <include name="**/Essentials/src/config.yml" />
+        <include name="**/target/classes/messages*.properties" />
+        <include name="**/target/classes/items.csv" />
+      </fileset>
+      <flattenmapper/>
+    </copy>
+  </target>
+</project>

@@ -1,26 +1,29 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
-import org.bukkit.Server;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Commandtpaccept extends EssentialsCommand
 {
-	public Commandtpaccept()
-	{
-		super("tpaccept");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
+		if (user.getTeleportRequester() == null)
+		{
+			throw new Exception(_("noPendingRequest"));
+		}
 
-		final User target = user.getTeleportRequest();
-
-		if (target == null || !target.isOnline())
+		final IUser target = user.getTeleportRequester();
+		if (target == null 
+			|| !target.isOnline()
+			|| (user.isTeleportRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
+			|| (!user.isTeleportRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}
@@ -44,14 +47,25 @@ public class Commandtpaccept extends EssentialsCommand
 			throw new Exception(_("noPendingRequest"));
 		}
 
-		long timeout = ess.getSettings().getTpaAcceptCancellation();
-		if (timeout != 0 && (System.currentTimeMillis() - user.getTeleportRequestTime()) / 1000 > timeout)
+		int tpaAcceptCancellation = 0;
+		ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		try
+		{
+			tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
+		}
+		finally
+		{
+			settings.unlock();
+		}
+
+		if (tpaAcceptCancellation != 0 && (System.currentTimeMillis() - user.getTeleportRequestTime()) / 1000 > tpaAcceptCancellation)
 		{
 			user.requestTeleport(null, false);
 			throw new Exception(_("requestTimedOut"));
 		}
 
-		final Trade charge = new Trade(this.getName(), ess);
+		final Trade charge = new Trade(commandName, ess);
 		if (user.isTpRequestHere())
 		{
 			charge.isAffordableFor(user);

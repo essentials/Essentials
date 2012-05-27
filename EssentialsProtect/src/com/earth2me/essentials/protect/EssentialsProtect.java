@@ -1,9 +1,6 @@
 package com.earth2me.essentials.protect;
 
 import com.earth2me.essentials.protect.data.IProtectedBlock;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Filter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -18,11 +15,12 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private static com.mchange.v2.log.MLogger C3P0logger;
-	private final transient Map<ProtectConfig, Boolean> settingsBoolean = new EnumMap<ProtectConfig, Boolean>(ProtectConfig.class);
-	private final transient Map<ProtectConfig, String> settingsString = new EnumMap<ProtectConfig, String>(ProtectConfig.class);
-	private final transient Map<ProtectConfig, List<Integer>> settingsList = new EnumMap<ProtectConfig, List<Integer>>(ProtectConfig.class);
+	//private final transient Map<ProtectConfig, Boolean> settingsBoolean = new EnumMap<ProtectConfig, Boolean>(ProtectConfig.class);
+	//private final transient Map<ProtectConfig, String> settingsString = new EnumMap<ProtectConfig, String>(ProtectConfig.class);
+	//private final transient Map<ProtectConfig, List<Integer>> settingsList = new EnumMap<ProtectConfig, List<Integer>>(ProtectConfig.class);
 	private transient IProtectedBlock storage = null;
 	private transient EssentialsConnect ess = null;
+	private transient ProtectHolder settings = null;
 
 	@Override
 	public void onLoad()
@@ -40,7 +38,7 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 	public void onEnable()
 	{
 		final PluginManager pm = this.getServer().getPluginManager();
-		final Plugin essPlugin = pm.getPlugin("Essentials");
+		final Plugin essPlugin = pm.getPlugin("Essentials3");
 		if (essPlugin == null || !essPlugin.isEnabled())
 		{
 			enableEmergencyMode(pm);
@@ -65,7 +63,7 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 	{
 		final EmergencyListener emListener = new EmergencyListener();
 		pm.registerEvents(emListener, this);
-		
+
 		for (Player player : getServer().getOnlinePlayers())
 		{
 			player.sendMessage("Essentials Protect is in emergency mode. Check your log for errors.");
@@ -73,12 +71,12 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 		LOGGER.log(Level.SEVERE, "Essentials not installed or failed to load. Essenials Protect is in emergency mode now.");
 	}
 
-	@Override
+	/*@Override
 	public boolean checkProtectionItems(final ProtectConfig list, final int id)
 	{
 		final List<Integer> itemList = settingsList.get(list);
 		return itemList != null && !itemList.isEmpty() && itemList.contains(id);
-	}
+	}*/
 
 	@Override
 	public IProtectedBlock getStorage()
@@ -97,7 +95,7 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 		return ess;
 	}
 	
-	public Map<ProtectConfig, Boolean> getSettingsBoolean()
+	/*public Map<ProtectConfig, Boolean> getSettingsBoolean()
 	{
 		return settingsBoolean;
 	}
@@ -124,7 +122,7 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 	{
 		final String str = settingsString.get(protectConfig);
 		return str == null ? protectConfig.getDefaultValueString() : str;
-	}
+	}*/
 
 	public void onDisable()
 	{
@@ -140,5 +138,15 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 		catch (InterruptedException ex)
 		{
 		}
+	}
+
+	public ProtectHolder getSettings()
+	{
+		return settings;
+	}
+
+	public void setSettings(final ProtectHolder settings)
+	{
+		this.settings = settings;
 	}
 }

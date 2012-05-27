@@ -52,7 +52,7 @@ public class NijikoPermissionsProxy extends PermissionHandler {
 
     @Override
     public void removeGroupInfo(String world, String group, String node) {
-    	plugin.getWorldsHolder().getWorldData(world).getPermissionsHandler().removeGroupInfo(group, node);
+        plugin.getWorldsHolder().getWorldData(world).getPermissionsHandler().removeGroupInfo(group, node);
     }
 
     @Override
@@ -67,17 +67,17 @@ public class NijikoPermissionsProxy extends PermissionHandler {
 
     @Override
     public void addUserInfo(String world, String user, String node, Object data) {
-    	plugin.getWorldsHolder().getWorldData(world).getPermissionsHandler().addUserInfo(user, node, data);
+        plugin.getWorldsHolder().getWorldData(world).getPermissionsHandler().addUserInfo(user, node, data);
     }
 
     @Override
     public void removeUserInfo(String world, String user, String node) {
-    	plugin.getWorldsHolder().getWorldData(world).getPermissionsHandler().removeUserInfo(user, node);
+        plugin.getWorldsHolder().getWorldData(world).getPermissionsHandler().removeUserInfo(user, node);
     }
 
     @Deprecated
     public void removeUserInfo(String user, String node) {
-    	plugin.getWorldsHolder().getDefaultWorld().getPermissionsHandler().removeUserInfo(user, node);
+        plugin.getWorldsHolder().getDefaultWorld().getPermissionsHandler().removeUserInfo(user, node);
     }
 
     @Deprecated
@@ -92,12 +92,12 @@ public class NijikoPermissionsProxy extends PermissionHandler {
 
     @Deprecated
     public void addGroupInfo(String group, String node, Object data) {
-    	plugin.getWorldsHolder().getDefaultWorld().getPermissionsHandler().addGroupInfo(group, node, data);
+        plugin.getWorldsHolder().getDefaultWorld().getPermissionsHandler().addGroupInfo(group, node, data);
     }
 
     @Deprecated
     public void removeGroupInfo(String group, String node) {
-    	plugin.getWorldsHolder().getDefaultWorld().getPermissionsHandler().removeGroupInfo(group, node);
+        plugin.getWorldsHolder().getDefaultWorld().getPermissionsHandler().removeGroupInfo(group, node);
     }
 
     @Deprecated
@@ -112,7 +112,7 @@ public class NijikoPermissionsProxy extends PermissionHandler {
 
     @Deprecated
     public void addUserInfo(String user, String node, Object data) {
-    	plugin.getWorldsHolder().getDefaultWorld().getPermissionsHandler().addUserInfo(user, node, data);
+        plugin.getWorldsHolder().getDefaultWorld().getPermissionsHandler().addUserInfo(user, node, data);
     }
 
     @Override
@@ -147,13 +147,13 @@ public class NijikoPermissionsProxy extends PermissionHandler {
 
     @Override
     public void reload() {
-    	plugin.getWorldsHolder().reloadAll();
+        plugin.getWorldsHolder().reloadAll();
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public boolean reload(String world) {
-    	plugin.getWorldsHolder().reloadWorld(world);
+        plugin.getWorldsHolder().reloadWorld(world);
         return true;
     }
 
@@ -521,10 +521,10 @@ public class NijikoPermissionsProxy extends PermissionHandler {
 
     @Override
     public boolean has(String world, String playerName, String permission) {
-    	if (permission == null || permission.isEmpty()) {
+        if (permission == null || permission.isEmpty()) {
             return false;
         }
-    	if (playerName == null || playerName.isEmpty()) {
+        if (playerName == null || playerName.isEmpty()) {
             GroupManager.logger.severe("A plugin is asking permission '" + permission + "' for a null player... Which plugin does that? Bastards!");
             return false;
         }
@@ -580,9 +580,8 @@ public class NijikoPermissionsProxy extends PermissionHandler {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-	//@Override
-	public Group getPrimaryGroupObject(String arg0, String arg1) {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
+    //@Override
+    public Group getPrimaryGroupObject(String arg0, String arg1) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

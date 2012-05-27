@@ -1,42 +1,37 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.List;
 import java.util.Locale;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Commandhome extends EssentialsCommand
 {
-	public Commandhome()
-	{
-		super("home");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		final Trade charge = new Trade(this.getName(), ess);
+		final Trade charge = new Trade(commandName, ess);
 		charge.isAffordableFor(user);
-		User player = user;
+		IUser player = user;
 		String homeName = "";
 		String[] nameParts;
 		if (args.length > 0)
 		{
 			nameParts = args[0].split(":");
-			if (nameParts[0].length() == args[0].length() || !user.isAuthorized("essentials.home.others"))
+			if (nameParts[0].length() == args[0].length() || !Permissions.HOME_OTHERS.isAuthorized(user))
 			{
 				homeName = nameParts[0];
 			}
 			else
 			{
-				player = getPlayer(server, nameParts, 0, true);
+				player = getPlayer(nameParts, 0, true);
 				if (nameParts.length > 1)
 				{
 					homeName = nameParts[1];

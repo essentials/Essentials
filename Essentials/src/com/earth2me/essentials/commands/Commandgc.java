@@ -9,13 +9,8 @@ import org.bukkit.command.CommandSender;
 
 public class Commandgc extends EssentialsCommand
 {
-	public Commandgc()
-	{
-		super("gc");
-	}
-
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		float tps = ess.getTimer().getAverageTPS();
 		ChatColor color;

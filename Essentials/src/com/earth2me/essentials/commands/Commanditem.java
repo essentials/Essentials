@@ -1,44 +1,38 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.ItemPermissions;
 import java.util.Locale;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 
 public class Commanditem extends EssentialsCommand
 {
-	public Commanditem()
-	{
-		super("item");
-	}
-
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final ItemStack stack = ess.getItemDb().get(args[0]);
+		final ItemStack stack = ess.getItemDb().get(args[0], user);
 
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
-		if (ess.getSettings().permissionBasedItemSpawn()
-			? (!user.isAuthorized("essentials.itemspawn.item-all")
-			   && !user.isAuthorized("essentials.itemspawn.item-" + itemname)
-			   && !user.isAuthorized("essentials.itemspawn.item-" + stack.getTypeId()))
-			: (!user.isAuthorized("essentials.itemspawn.exempt")
-			   && !user.canSpawnItem(stack.getTypeId())))
+		if (!ItemPermissions.getPermission(stack.getType()).isAuthorized(user))
 		{
 			throw new Exception(_("cantSpawnItem", itemname));
 		}
 		try
 		{
-			if (args.length > 1 && Integer.parseInt(args[1]) > 0)
+			stack.setAmount(Integer.parseInt(args[1]));
+		}
+		
+		if (args.length > 2)
+		{
+			for (int i = 2; i < args.length; i++)
 			{
 				stack.setAmount(Integer.parseInt(args[1]));
 			}
@@ -83,16 +77,9 @@ public class Commanditem extends EssentialsCommand
 			throw new Exception(_("cantSpawnItem", "Air"));
 		}
 
+		user.giveItems(stack, false);
+		
 		final String displayName = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');
-		user.sendMessage(_("itemSpawn", stack.getAmount(), displayName));
-		if (user.isAuthorized("essentials.oversizedstacks"))
-		{
-			InventoryWorkaround.addItem(user.getInventory(), true, ess.getSettings().getOversizedStackSize(), stack);
-		}
-		else
-		{
-			InventoryWorkaround.addItem(user.getInventory(), true, stack);
-		}
-		user.updateInventory();
+		user.sendMessage(_("itemSpawn", stack.getAmount(), displayName));	
 	}
 }

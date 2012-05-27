@@ -2,29 +2,24 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import org.bukkit.Server;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandkick extends EssentialsCommand
 {
-	public Commandkick()
-	{
-		super("kick");
-	}
-
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User user = getPlayer(server, args, 0);
-		if (sender instanceof Player && user.isAuthorized("essentials.kick.exempt"))
+		final IUser user = getPlayer(args, 0);
+		if (Permissions.KICK_EXEMPT.isAuthorized(user))
 		{
 			throw new Exception(_("kickExempt"));
 		}
@@ -34,8 +29,8 @@ public class Commandkick extends EssentialsCommand
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			User player = ess.getUser(onlinePlayer);
-			if (player.isAuthorized("essentials.kick.notify"))
+			final IUser player = ess.getUser(onlinePlayer);
+			if (Permissions.KICK_NOTIFY.isAuthorized(player))
 			{
 				onlinePlayer.sendMessage(_("playerKicked", senderName, user.getName(), kickReason));
 			}

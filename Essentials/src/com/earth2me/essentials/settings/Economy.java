@@ -1,5 +1,6 @@
 package com.earth2me.essentials.settings;
 
+import com.earth2me.essentials.economy.Worth;
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.MapValueType;
 import com.earth2me.essentials.storage.StorageObject;
@@ -37,7 +38,30 @@ public class Economy implements StorageObject
 	{
 		return Math.abs(maxMoney) > MAXMONEY ? MAXMONEY : Math.abs(maxMoney);
 	}
+	
+	@Comment(
+	{
+		"Set the minimum amount of money a player can have (must be above the negative of max-money).",
+		"Setting this to 0, will disable overdrafts/loans completely.  Users need 'essentials.eco.loan' perm to go below 0."
+	})
+	private double minMoney = -MAXMONEY;
+	public double getMinMoney()
+	{
+		return Math.abs(minMoney) > MAXMONEY ? -MAXMONEY : minMoney;
+	}
+	
 	@Comment("Enable this to log all interactions with trade/buy/sell signs and sell command")
 	private boolean logEnabled = false;
 	private Worth worth = new Worth();
+	private boolean tradeInStacks = false;
+
+	public double getCommandCost(String command)
+	{
+		if (commandCosts == null)
+		{
+			return 0;
+		}
+		Double price = commandCosts.get(command);
+		return price == null || Double.isNaN(price) || Double.isInfinite(price) ? 0 : price;
+	}
 }

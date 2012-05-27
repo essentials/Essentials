@@ -2,23 +2,18 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IReplyTo;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import org.bukkit.Server;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IReplyTo;
+import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandr extends EssentialsCommand
 {
-	public Commandr()
-	{
-		super("r");
-	}
-
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -31,8 +26,15 @@ public class Commandr extends EssentialsCommand
 
 		if (sender instanceof Player)
 		{
-			User user = ess.getUser(sender);
-			message = Util.formatMessage(user, "essentials.msg", message);			
+			IUser user = ess.getUser((Player)sender);
+			if (Permissions.MSG_COLOR.isAuthorized(user))
+			{
+				message = Util.replaceFormat(message);
+			}
+			else
+			{
+				message = Util.replaceFormat(message);
+			}
 			replyTo = user;
 			senderName = user.getDisplayName();
 		}
@@ -54,8 +56,8 @@ public class Commandr extends EssentialsCommand
 		sender.sendMessage(_("msgFormat", _("me"), targetName, message));
 		if (target instanceof Player)
 		{
-			User player = ess.getUser(target);
-			if (player.isIgnoredPlayer(sender instanceof Player ? ((Player)sender).getName() : Console.NAME))
+			IUser player = ess.getUser((Player)target);
+			if (player.isIgnoringPlayer(sender instanceof Player ? ((Player)sender).getName() : Console.NAME))
 			{
 				return;
 			}
@@ -73,5 +75,11 @@ public class Commandr extends EssentialsCommand
 				Console.getConsoleReplyTo().setReplyTo(sender);
 			}
 		}
+	}
+
+	@Override
+	public String getPermission()
+	{
+		return "essentials.msg";
 	}
 }

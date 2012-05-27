@@ -1,8 +1,13 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.utils.textreader.TextInput;
+import com.earth2me.essentials.utils.textreader.IText;
+import com.earth2me.essentials.utils.textreader.TextPager;
+import com.earth2me.essentials.utils.textreader.HelpInput;
+import com.earth2me.essentials.utils.textreader.KeywordReplacer;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.textreader.*;
 import java.util.Locale;
 import org.bukkit.Server;
@@ -11,13 +16,8 @@ import org.bukkit.command.CommandSender;
 
 public class Commandhelp extends EssentialsCommand
 {
-	public Commandhelp()
-	{
-		super("help");
-	}
-
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		IText output;
 		String pageStr = args.length > 0 ? args[0] : null;
@@ -52,7 +52,7 @@ public class Commandhelp extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		sender.sendMessage(_("helpConsole"));
 	}
