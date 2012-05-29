@@ -72,7 +72,7 @@ public class Trade
 	{
 		if (getMoney() != null
 			&& getMoney() > 0
-			&& !Permissions.ECO_LOAN.isAuthorized(user))
+			&& !Permissions.ECO_LOAN.isAuthorized(user)
 			&& !user.canAfford(getMoney()))
 		{
 			throw new ChargeException(_("notEnoughMoney"));
@@ -90,7 +90,7 @@ public class Trade
 
 		if (command != null && !command.isEmpty()
 			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user)
-			&& mon < settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command)
+			&& money < settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command)
 			&& 0 < settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command)
 			&& !Permissions.ECO_LOAN.isAuthorized(user))
 		{
@@ -217,13 +217,13 @@ public class Trade
 	{
 		double cost = 0d;
 		if (command != null && !command.isEmpty()
-			&& !user.isAuthorized("essentials.nocommandcost.all")
-			&& !user.isAuthorized("essentials.nocommandcost." + command))
+			&& !NoCommandCostPermissions.getPermission("all").isAuthorized(user)
+			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user))
 		{
-			cost = ess.getSettings().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
+			cost = ess.getSettings().getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
 			if (cost == 0.0 && fallbackCommand != null && !fallbackCommand.isEmpty())
 			{
-				cost = ess.getSettings().getCommandCost(fallbackCommand.charAt(0) == '/' ? fallbackCommand.substring(1) : fallbackCommand);
+				cost = ess.getSettings().getData().getEconomy().getCommandCost(fallbackCommand.charAt(0) == '/' ? fallbackCommand.substring(1) : fallbackCommand);
 			}
 		}
 		return cost;
