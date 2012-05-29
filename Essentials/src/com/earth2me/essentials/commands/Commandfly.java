@@ -1,9 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import java.util.Locale;
-import org.bukkit.GameMode;
+import com.earth2me.essentials.api.IUser;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,13 +9,8 @@ import org.bukkit.entity.Player;
 
 public class Commandfly extends EssentialsCommand
 {
-	public Commandfly()
-	{
-		super("fly");
-	}
-
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -28,8 +21,9 @@ public class Commandfly extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
+		//todo permissions
 		if (args.length > 0 && args[0].trim().length() > 2 && user.isAuthorized("essentials.fly.others"))
 		{
 			flyOtherPlayers(server, user, args[0]);
@@ -47,7 +41,7 @@ public class Commandfly extends EssentialsCommand
 	{
 		for (Player matchPlayer : server.matchPlayer(name))
 		{
-			final User player = ess.getUser(matchPlayer);
+			final IUser player = ess.getUser(matchPlayer);
 			if (player.isHidden())
 			{
 				continue;

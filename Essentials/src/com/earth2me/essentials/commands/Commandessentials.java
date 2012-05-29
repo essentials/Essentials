@@ -197,5 +197,4 @@ public class Commandessentials extends EssentialsCommand
 		{
 			sender.sendMessage("Unable to modify 'plugins/PluginMetrics/config.yml': " + ex.getMessage());
 		}
-	}
 }

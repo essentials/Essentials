@@ -8,6 +8,20 @@ import java.io.IOException;
 
 public class MoneyHolder extends AsyncStorageObjectHolder<Money>
 {
+
+	@Override
+	public void finishRead()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+	
+	
 	public MoneyHolder(IEssentials ess)
 	{
 		super(ess, Money.class);

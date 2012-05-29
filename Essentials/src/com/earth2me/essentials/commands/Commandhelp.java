@@ -1,16 +1,14 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.utils.textreader.TextInput;
-import com.earth2me.essentials.utils.textreader.IText;
-import com.earth2me.essentials.utils.textreader.TextPager;
-import com.earth2me.essentials.utils.textreader.HelpInput;
-import com.earth2me.essentials.utils.textreader.KeywordReplacer;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.textreader.*;
+import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.utils.textreader.HelpInput;
+import com.earth2me.essentials.utils.textreader.IText;
+import com.earth2me.essentials.utils.textreader.KeywordReplacer;
+import com.earth2me.essentials.utils.textreader.TextInput;
+import com.earth2me.essentials.utils.textreader.TextPager;
 import java.util.Locale;
-import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 

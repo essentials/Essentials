@@ -1,7 +1,7 @@
 package com.earth2me.essentials.metrics;
 
-import com.earth2me.essentials.IEssentials;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.IUser;
 import java.util.logging.Level;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ public class MetricsListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final User player = ess.getUser(event.getPlayer());
+		final IUser player = ess.getUser(event.getPlayer());
 		if (ess.getSettings().isMetricsEnabled() == false && (player.isAuthorized("essentials.essentials") || player.isAuthorized("bukkit.broadcast.admin")))
 		{
 			player.sendMessage("PluginMetrics collects minimal statistic data, starting in about 5 minutes.");

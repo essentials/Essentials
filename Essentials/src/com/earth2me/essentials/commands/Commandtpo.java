@@ -17,7 +17,7 @@ public class Commandtpo extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 
 		case 1:
-			final User player = getPlayer(server, args, 0, true);
+			final IUser player = getPlayer(args, 0, true);
 			if (!player.isOnline() || (player.isHidden() && !user.isAuthorized("essentials.teleport.hidden")))
 			{
 				throw new NoSuchFieldException(_("playerNotFound"));
@@ -37,8 +37,8 @@ public class Commandtpo extends EssentialsCommand
 				throw new Exception(_("noPerm", "essentials.tp.others"));
 			}
 			user.sendMessage(_("teleporting"));
-			final User target = getPlayer(server, args, 0, true);
-			final User toPlayer = getPlayer(server, args, 1, true);
+			final IUser target = getPlayer(args, 0, true);
+			final IUser toPlayer = getPlayer(args, 1, true);
 
 			if (!target.isOnline() || !toPlayer.isOnline()
 				|| ((target.isHidden() || toPlayer.isHidden()) && !user.isAuthorized("essentials.teleport.hidden")))

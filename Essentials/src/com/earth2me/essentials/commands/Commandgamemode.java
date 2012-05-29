@@ -19,7 +19,7 @@ public class Commandgamemode extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		gamemodeOtherPlayers(sender, args[0]);
+		gamemodeOtherPlayers(sender, args);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class Commandgamemode extends EssentialsCommand
 	{
 		if (args.length > 0 && !args[0].trim().isEmpty() && Permissions.GAMEMODE_OTHERS.isAuthorized(user))
 		{
-			gamemodeOtherPlayers(user, args[0]);
+			gamemodeOtherPlayers(user, args);
 			return;
 		}
 
@@ -35,7 +35,7 @@ public class Commandgamemode extends EssentialsCommand
 		user.sendMessage(_("gameMode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName()));
 	}
 
-	private void gamemodeOtherPlayers(final CommandSender sender, final String name)
+	private void gamemodeOtherPlayers(final CommandSender sender, final String args[])
 	{
 		for (Player matchPlayer : server.matchPlayer(args[0]))
 		{

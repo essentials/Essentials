@@ -25,25 +25,21 @@ public class Commanditem extends EssentialsCommand
 		{
 			throw new Exception(_("cantSpawnItem", itemname));
 		}
+
 		try
 		{
-			stack.setAmount(Integer.parseInt(args[1]));
-		}
-		
-		if (args.length > 2)
-		{
-			for (int i = 2; i < args.length; i++)
+			if (args.length > 1 && Integer.parseInt(args[1]) > 0)
 			{
 				stack.setAmount(Integer.parseInt(args[1]));
 			}
-			else if (ess.getSettings().getDefaultStackSize() > 0)
+			else if (ess.getSettings().getData().getGeneral().getDefaultStacksize() > 0)
 			{
-				stack.setAmount(ess.getSettings().getDefaultStackSize());
+				stack.setAmount(ess.getSettings().getData().getGeneral().getDefaultStacksize());
 			}
-			else if (ess.getSettings().getOversizedStackSize() > 0 && user.isAuthorized("essentials.oversizedstacks"))
+			else if (ess.getSettings().getData().getGeneral().getOversizedStacksize()> 0 && user.isAuthorized("essentials.oversizedstacks"))
 			{
-				stack.setAmount(ess.getSettings().getOversizedStackSize());
-			}
+				stack.setAmount(ess.getSettings().getData().getGeneral().getOversizedStacksize());
+			}	
 			if (args.length > 2)
 			{
 				for (int i = 2; i < args.length; i++)

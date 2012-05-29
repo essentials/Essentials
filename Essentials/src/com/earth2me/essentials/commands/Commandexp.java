@@ -1,26 +1,22 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.user.User;
+import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.craftbukkit.SetExpFix;
-import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandexp extends EssentialsCommand
 {
-	public Commandexp()
-	{
-		super("exp");
-	}
-
+	//todo - fix this
 	@Override
-	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length == 0)
+		if (args.length == 0 && sender instanceof Player)
 		{
-			showExp(user, user);
+			showExp((User)sender, (User)sender);
 		}
 		else if (args[0].equalsIgnoreCase("set") && user.isAuthorized("essentials.exp.set"))
 		{

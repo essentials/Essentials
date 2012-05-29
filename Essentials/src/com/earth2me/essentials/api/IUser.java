@@ -49,6 +49,8 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	void updateActivity(boolean broadcast);
 
 	void updateDisplayName();
+	
+	void setDisplayNick();
 
 	boolean checkJailTimeout(long currentTime);
 
@@ -107,4 +109,10 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	public void updateMoneyCache(double userMoney);
 
 	public boolean canAfford(double amount, boolean b);
+	
+	boolean isVanished();
+	
+	void resetInvulnerabilityAfterTeleport();
+	
+	void toggleVanished();
 }

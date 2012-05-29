@@ -3,6 +3,7 @@ package com.earth2me.essentials.utils;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.utils.gnu.inet.encoding.Punycode;
 import com.earth2me.essentials.utils.gnu.inet.encoding.PunycodeException;
@@ -178,7 +179,7 @@ public final class Util
 
 	public static String formatAsCurrency(final double value)
 	{
-		
+
 		String str = dFormat.format(value);
 		if (str.endsWith(".00"))
 		{
@@ -333,8 +334,95 @@ public final class Util
 		perm.recalculatePermissibles();
 		return perm;
 	}
-	private static transient final Pattern VANILLA_COLOR_PATTERN = Pattern.compile("\u00A7+[0-9A-FKa-fk]");
-	private static transient final Pattern EASY_COLOR_PATTERN = Pattern.compile("&([0-9a-fk])");
+	private static transient final Pattern URL_PATTERN = Pattern.compile("((?:(?:https?)://)?[\\w-_\\.]{2,})\\.([a-z]{2,3}(?:/\\S+)?)");
+	private static transient final Pattern VANILLA_PATTERN = Pattern.compile("\u00A7+[0-9A-FK-ORa-fk-or]");
+	private static transient final Pattern REPLACE_PATTERN = Pattern.compile("&([0-9a-fk-or])");
+	private static transient final Pattern VANILLA_COLOR_PATTERN = Pattern.compile("\u00A7+[0-9A-Fa-f]");
+	private static transient final Pattern VANILLA_MAGIC_PATTERN = Pattern.compile("\u00A7+[Kk]");
+	private static transient final Pattern VANILLA_FORMAT_PATTERN = Pattern.compile("\u00A7+[L-ORl-or]");
+	private static transient final Pattern REPLACE_COLOR_PATTERN = Pattern.compile("&([0-9a-f])");
+	private static transient final Pattern REPLACE_MAGIC_PATTERN = Pattern.compile("&(k)");
+	private static transient final Pattern REPLACE_FORMAT_PATTERN = Pattern.compile("&([l-or])");
+
+	public static String stripFormat(final String input)
+	{
+		if (input == null)
+		{
+			return null;
+		}
+		return VANILLA_PATTERN.matcher(input).replaceAll("");
+	}
+
+	public static String replaceFormat(final String input)
+	{
+		if (input == null)
+		{
+			return null;
+		}
+		return REPLACE_PATTERN.matcher(input).replaceAll("\u00a7$1");
+	}
+
+	public static String blockURL(final String input)
+	{
+		if (input == null)
+		{
+			return null;
+		}
+		String text = URL_PATTERN.matcher(input).replaceAll("$1 $2");
+		while (URL_PATTERN.matcher(text).find())
+		{
+			text = URL_PATTERN.matcher(text).replaceAll("$1 $2");
+		}
+		return text;
+	}
+
+	public static String formatString(final IUser user, final String permBase, final String input)
+	{
+		if (input == null)
+		{
+			return null;
+		}
+		String message;
+		if (user.isAuthorized(permBase + ".color"))
+		{
+			message = Util.replaceColor(input, REPLACE_COLOR_PATTERN);
+		}
+		else
+		{
+			message = Util.stripColor(input, VANILLA_COLOR_PATTERN);
+		}
+		if (user.isAuthorized(permBase + ".magic"))
+		{
+			message = Util.replaceColor(message, REPLACE_MAGIC_PATTERN);
+		}
+		else
+		{
+			message = Util.stripColor(message, VANILLA_MAGIC_PATTERN);
+		}
+		if (user.isAuthorized(permBase + ".format"))
+		{
+			message = Util.replaceColor(message, REPLACE_FORMAT_PATTERN);
+		}
+		else
+		{
+			message = Util.stripColor(message, VANILLA_FORMAT_PATTERN);
+		}
+		return message;
+	}
+
+	public static String formatMessage(final IUser user, final String permBase, final String input)
+	{
+		if (input == null)
+		{
+			return null;
+		}
+		String message = formatString(user, permBase, input);
+		if (!user.isAuthorized(permBase + ".url"))
+		{
+			message = Util.blockURL(message);
+		}
+		return message;
+	}
 
 	public static String stripColor(final String input)
 	{
@@ -346,13 +434,13 @@ public final class Util
 		return VANILLA_COLOR_PATTERN.matcher(input).replaceAll("");
 	}
 
-	public static String replaceColor(final String input)
+	private static String stripColor(final String input, final Pattern pattern)
 	{
-		if (input == null)
-		{
-			return null;
-		}
+		return pattern.matcher(input).replaceAll("");
+	}
 
-		return EASY_COLOR_PATTERN.matcher(input).replaceAll("\u00a7$1");
+	private static String replaceColor(final String input, final Pattern pattern)
+	{
+		return pattern.matcher(input).replaceAll("\u00a7$1");
 	}
 }

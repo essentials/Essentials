@@ -7,7 +7,9 @@ import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.KitPermissions;
 import com.earth2me.essentials.settings.Kit;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import org.bukkit.command.CommandSender;
 
 
@@ -38,7 +40,7 @@ public class Commandkit extends EssentialsCommand
 		}
 		else if (args.length > 1 && user.isAuthorized("essentials.kit.others"))
 		{
-			final User userTo = getPlayer(server, args, 1, true);
+			final IUser userTo = getPlayer(args, 1, true);
 			final String kitName = Util.sanitizeString(args[0].toLowerCase(Locale.ENGLISH));
 			giveKit(userTo, user, kitName);
 		}
@@ -50,7 +52,7 @@ public class Commandkit extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
@@ -59,14 +61,13 @@ public class Commandkit extends EssentialsCommand
 		}
 		else
 		{
-			final User userTo = getPlayer(server, args, 1, true);
+			final IUser userTo = getPlayer(args, 1, true);
 			final String kitName = args[0].toLowerCase(Locale.ENGLISH);
 			final Kit kit = ess.getKits().getKit(kitName);
+			final List<String> items = Kit.getItems(userTo, kit);
+			Kit.expandItems(ess,userTo,items);
 
-			if (!KitPermissions.getPermission(kitName).isAuthorized(user))
-			{
-				throw new Exception(_("noKitPermission", "essentials.kit." + kitName));
-			}
+		
 
 			//TODO: Check kit delay
 			sender.sendMessage(_("kitGive", kitName));
@@ -86,7 +87,7 @@ public class Commandkit extends EssentialsCommand
 		}
 	}
 
-	private void giveKit(User userTo, User userFrom, String kitName) throws Exception
+	private void giveKit(IUser userTo, IUser userFrom, String kitName) throws Exception
 	{
 		final Map<String, Object> kit = ess.getSettings().getKit(kitName);
 

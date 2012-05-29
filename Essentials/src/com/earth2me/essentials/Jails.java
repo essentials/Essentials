@@ -240,112 +240,114 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 			final Entity damager = event.getDamager();
 			if (damager.getType() == EntityType.PLAYER)
 			{
-				final User user = ess.getUser(damager);
-				if (user != null && user.isJailed())
+				final IUser user = ess.getUser(damager);
+				if (user != null && user.getData().isJailed())
 				{
 					event.setCancelled(true);
 				}
 			}
 		}
 
-	private class JailPlayerListener implements Listener
-	{
-		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-		public void onPlayerInteract(final PlayerInteractEvent event)
+
+		private class JailPlayerListener implements Listener
 		{
-			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
-			user.acquireReadLock();
-			if (user.getData().isJailed())
+			@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+			public void onPlayerInteract(final PlayerInteractEvent event)
 			{
-				event.setCancelled(true);
-			}
-		}
-
-		@EventHandler(priority = EventPriority.HIGHEST)
-		public void onPlayerRespawn(final PlayerRespawnEvent event)
-		{
-			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
-			user.acquireReadLock();
-			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
-			{
-				return;
-			}
-
-			try
-			{
-				event.setRespawnLocation(getJail(user.getData().getJail()));
-			}
-			catch (Exception ex)
-			{
-				if (ess.getSettings().isDebug())
+				@Cleanup
+				final IUser user = ess.getUser(event.getPlayer());
+				user.acquireReadLock();
+				if (user.getData().isJailed())
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
-				}
-				else
-				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					event.setCancelled(true);
 				}
 			}
-		}
 
-		@EventHandler(priority = EventPriority.HIGH)
-		public void onPlayerTeleport(final PlayerTeleportEvent event)
-		{
-			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
-			user.acquireReadLock();
-			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
+			@EventHandler(priority = EventPriority.HIGHEST)
+			public void onPlayerRespawn(final PlayerRespawnEvent event)
 			{
-				return;
-			}
-
-			try
-			{
-				event.setTo(getJail(user.getData().getJail()));
-			}
-			catch (Exception ex)
-			{
-				if (ess.getSettings().isDebug())
+				@Cleanup
+				final IUser user = ess.getUser(event.getPlayer());
+				user.acquireReadLock();
+				if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					return;
 				}
-				else
-				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
-				}
-			}
-			user.sendMessage(_("jailMessage"));
-		}
 
-		@EventHandler(priority = EventPriority.HIGHEST)
-		public void onPlayerJoin(final PlayerJoinEvent event)
-		{
-			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
-			user.acquireReadLock();
-			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
-			{
-				return;
-			}
-
-			try
-			{
-				sendToJail(user, user.getData().getJail());
-			}
-			catch (Exception ex)
-			{
-				if (ess.getSettings().isDebug())
+				try
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					event.setRespawnLocation(getJail(user.getData().getJail()));
 				}
-				else
+				catch (Exception ex)
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					if (ess.getSettings().isDebug())
+					{
+						LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					}
+					else
+					{
+						LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					}
 				}
 			}
-			user.sendMessage(_("jailMessage"));
+
+			@EventHandler(priority = EventPriority.HIGH)
+			public void onPlayerTeleport(final PlayerTeleportEvent event)
+			{
+				@Cleanup
+				final IUser user = ess.getUser(event.getPlayer());
+				user.acquireReadLock();
+				if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
+				{
+					return;
+				}
+
+				try
+				{
+					event.setTo(getJail(user.getData().getJail()));
+				}
+				catch (Exception ex)
+				{
+					if (ess.getSettings().isDebug())
+					{
+						LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					}
+					else
+					{
+						LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					}
+				}
+				user.sendMessage(_("jailMessage"));
+			}
+
+			@EventHandler(priority = EventPriority.HIGHEST)
+			public void onPlayerJoin(final PlayerJoinEvent event)
+			{
+				@Cleanup
+				final IUser user = ess.getUser(event.getPlayer());
+				user.acquireReadLock();
+				if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
+				{
+					return;
+				}
+
+				try
+				{
+					sendToJail(user, user.getData().getJail());
+				}
+				catch (Exception ex)
+				{
+					if (ess.getSettings().isDebug())
+					{
+						LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					}
+					else
+					{
+						LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					}
+				}
+				user.sendMessage(_("jailMessage"));
+			}
 		}
 	}
 }

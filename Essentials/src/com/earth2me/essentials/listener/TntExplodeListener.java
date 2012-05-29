@@ -1,7 +1,6 @@
 package com.earth2me.essentials.listener;
 
 import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.craftbukkit.FakeExplosion;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;

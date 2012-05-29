@@ -38,14 +38,14 @@ public class Commandtppos extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 4)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		User user = ess.getUser(server.getPlayer(args[0]));
+		IUser user = ess.getUser(server.getPlayer(args[0]));
 		final int x = Integer.parseInt(args[1]);
 		final int y = Integer.parseInt(args[2]);
 		final int z = Integer.parseInt(args[3]);

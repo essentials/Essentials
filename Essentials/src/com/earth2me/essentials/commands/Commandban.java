@@ -50,7 +50,7 @@ public class Commandban extends EssentialsCommand
 		else
 		{
 			banReason = _("defaultBanReason");
-			user.setBanReason("");
+			user.getData().getBan().setReason("");
 		}
 		
 		user.setBanned(true);

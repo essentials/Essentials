@@ -23,6 +23,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class Teleport implements Runnable, ITeleport
 {
+
 	private static final double MOVE_CONSTANT = 0.3;
 
 
@@ -292,7 +293,7 @@ public class Teleport implements Runnable, ITeleport
 			user.unlock();
 		}
 	}
-
+	
 	public void home(Location loc, Trade chargeFor) throws Exception
 	{
 		teleport(new Target(loc), chargeFor, TeleportCause.COMMAND);

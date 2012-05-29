@@ -14,6 +14,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class Kits extends AsyncStorageObjectHolder<com.earth2me.essentials.settings.Kits> implements IKits
 {
+
+	
 	public Kits(final IEssentials ess)
 	{
 		super(ess, com.earth2me.essentials.settings.Kits.class);
@@ -86,5 +88,17 @@ public class Kits extends AsyncStorageObjectHolder<com.earth2me.essentials.setti
 	public boolean isEmpty()
 	{
 		return getData().getKits().isEmpty();
+	}
+	
+	@Override
+	public void finishRead()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

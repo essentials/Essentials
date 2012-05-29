@@ -39,7 +39,7 @@ public class Commandspawner extends EssentialsCommand
 		{
 			throw new Exception(_("invalidMob"));
 		}
-		if (ess.getSettings().getProtectPreventSpawn(mob.getType().toString().toLowerCase(Locale.ENGLISH)))
+		if (ess.getSettings().getData().getGeneral().getPreventSpawn(mob.getType().toString().toLowerCase(Locale.ENGLISH)))
 		{
 			throw new Exception(_("disabledToSpawnMob"));
 		}

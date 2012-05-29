@@ -29,6 +29,19 @@ import org.bukkit.plugin.EventExecutor;
 
 public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IEssentialsModule
 {
+
+	@Override
+	public void finishRead()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+	
 	public SpawnsHolder(final IEssentials ess)
 	{
 		super(ess, Spawns.class);
