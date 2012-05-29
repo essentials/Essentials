@@ -352,13 +352,7 @@ public class EssentialsPlayerListener implements Listener
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract(final PlayerInteractEvent event)
-	{
-		final User user = ess.getUser(event.getPlayer());
-		if (user.isFrozen())
-		{
-			event.setCancelled(true);
-		}
-		
+	{	
 		switch (event.getAction())
 		{
 		case RIGHT_CLICK_BLOCK:
@@ -373,6 +367,11 @@ public class EssentialsPlayerListener implements Listener
 		case LEFT_CLICK_BLOCK:
 			if (event.getItem() != null && event.getItem().getTypeId() != AIR)
 			{
+				final User user = ess.getUser(event.getPlayer());
+				if (user.isFrozen())
+				{
+					event.setCancelled(true);
+				}
 				if (user.hasPowerTools() && user.arePowerToolsEnabled() && usePowertools(user, event.getItem().getTypeId()))
 				{
 					event.setCancelled(true);
