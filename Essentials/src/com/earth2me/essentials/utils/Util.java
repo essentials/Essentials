@@ -7,6 +7,7 @@ import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.api.InvalidNameException;
 import com.earth2me.essentials.utils.gnu.inet.encoding.Punycode;
 import com.earth2me.essentials.utils.gnu.inet.encoding.PunycodeException;
+import de.bananaco.bpermissions.imp.Permissions;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Collection;
@@ -383,7 +384,7 @@ public final class Util
 			return null;
 		}
 		String message;
-		if (user.isAuthorized(permBase + ".color"))
+		if (Permissions.hasPermission(user.getBase(), permBase + ".color"))
 		{
 			message = Util.replaceColor(input, REPLACE_COLOR_PATTERN);
 		}
@@ -391,7 +392,7 @@ public final class Util
 		{
 			message = Util.stripColor(input, VANILLA_COLOR_PATTERN);
 		}
-		if (user.isAuthorized(permBase + ".magic"))
+		if (Permissions.hasPermission(user.getBase(), permBase + ".magic"))
 		{
 			message = Util.replaceColor(message, REPLACE_MAGIC_PATTERN);
 		}
@@ -399,7 +400,7 @@ public final class Util
 		{
 			message = Util.stripColor(message, VANILLA_MAGIC_PATTERN);
 		}
-		if (user.isAuthorized(permBase + ".format"))
+		if (Permissions.hasPermission(user.getBase(), permBase + ".format"))
 		{
 			message = Util.replaceColor(message, REPLACE_FORMAT_PATTERN);
 		}
@@ -417,7 +418,7 @@ public final class Util
 			return null;
 		}
 		String message = formatString(user, permBase, input);
-		if (!user.isAuthorized(permBase + ".url"))
+		if (!Permissions.hasPermission(user.getBase(), permBase + ".url"))
 		{
 			message = Util.blockURL(message);
 		}
