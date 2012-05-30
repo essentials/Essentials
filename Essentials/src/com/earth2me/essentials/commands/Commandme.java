@@ -24,7 +24,7 @@ public class Commandme extends EssentialsCommand
 		String message = getFinalArg(args, 0);
 		if (Permissions.CHAT_COLOR.isAuthorized(user))
 		{
-			message = Util.replaceColor(message);
+			message = Util.replaceFormat(message);
 		}
 		else {
 			message = Util.stripColor(message);

@@ -1,8 +1,8 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.utils.Util;
 
 
 public class Commandping extends EssentialsCommand
@@ -16,7 +16,7 @@ public class Commandping extends EssentialsCommand
 		}
 		else
 		{
-			sender.sendMessage(Util.replaceFormat(getFinalArg(args, 0)));
+			user.sendMessage(Util.replaceFormat(getFinalArg(args, 0)));
 		}
 	}
 }

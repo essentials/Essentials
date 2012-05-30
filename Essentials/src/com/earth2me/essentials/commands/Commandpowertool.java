@@ -1,9 +1,9 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.utils.Util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -97,9 +97,9 @@ public class Commandpowertool extends EssentialsCommand
 			user.sendMessage(_("powerToolRemoveAll", itemName));
 		}
 
-		if (!user.arePowerToolsEnabled())
+		if (!user.getData().isPowerToolsEnabled())
 		{
-			user.setPowerToolsEnabled(true);
+			user.getData().setPowerToolsEnabled(true);
 			user.sendMessage(_("powerToolsEnabled"));
 		}
 		user.acquireWriteLock();

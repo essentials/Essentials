@@ -33,36 +33,10 @@ public class Commandsetworth extends EssentialsCommand
 
 		ess.getWorth().setPrice(stack, Double.parseDouble(price));
 		user.sendMessage(_("worthSet"));
-	}
+	}	
 
 	@Override
 	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
-	{
-		if (args.length < 1)
-		{
-			throw new NotEnoughArgumentsException();
-		}
-
-		ItemStack stack;
-		String price;
-
-		if (args.length == 1)
-		{
-			stack = user.getInventory().getItemInHand();
-			price = args[0];
-		}
-		else
-		{
-			stack = ess.getItemDb().get(args[0]);
-			price = args[1];
-		}
-
-		ess.getWorth().setPrice(stack, Double.parseDouble(price));
-		user.sendMessage(_("worthSet"));
-	}
-
-	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{

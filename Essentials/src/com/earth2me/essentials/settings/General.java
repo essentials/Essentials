@@ -82,6 +82,8 @@ public class General implements StorageObject
 	})
 	private boolean worldTeleportPermissions = false;
 		
+	private boolean worldHomePermissions = false;	
+		
     @Comment("Prevent creatures spawning")
 	private Map<String, Boolean> creatureSpawn = new HashMap<String, Boolean>();
 	

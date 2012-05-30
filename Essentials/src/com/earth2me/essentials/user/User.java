@@ -88,6 +88,7 @@ public class User extends UserBase implements IUser
 	@Getter
 	private transient boolean vanished;
 	@Getter
+	@Setter
     private boolean invSee = false;
 	private transient Location afkPosition;
 	private static final Logger logger = Bukkit.getLogger();

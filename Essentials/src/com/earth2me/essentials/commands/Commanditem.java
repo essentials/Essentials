@@ -3,6 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.ItemPermissions;
+import com.earth2me.essentials.permissions.Permissions;
 import java.util.Locale;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -36,7 +37,7 @@ public class Commanditem extends EssentialsCommand
 			{
 				stack.setAmount(ess.getSettings().getData().getGeneral().getDefaultStacksize());
 			}
-			else if (ess.getSettings().getData().getGeneral().getOversizedStacksize()> 0 && user.isAuthorized("essentials.oversizedstacks"))
+			else if (ess.getSettings().getData().getGeneral().getOversizedStacksize()> 0 && Permissions.OVERSIZEDSTACKS.isAuthorized(user))
 			{
 				stack.setAmount(ess.getSettings().getData().getGeneral().getOversizedStacksize());
 			}	

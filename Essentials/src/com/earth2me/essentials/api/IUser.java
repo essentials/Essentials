@@ -116,5 +116,8 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	
 	void toggleVanished();
 	
-	void update(final Player base);
+	boolean isInvSee();
+	
+	void setInvSee(boolean invsee);
+	
 }

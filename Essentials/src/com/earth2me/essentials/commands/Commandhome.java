@@ -4,7 +4,9 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.permissions.WorldPermissions;
 import com.earth2me.essentials.utils.Util;
+import de.bananaco.permissions.worlds.WorldPermissionSet;
 import java.util.List;
 import java.util.Locale;
 import org.bukkit.Location;
@@ -97,7 +99,7 @@ public class Commandhome extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		if (user.getWorld() != loc.getWorld() && ess.getSettings().getData().getGeneral().isWorldHomePermissions()
-			&& !user.isAuthorized("essentials.world." + loc.getWorld().getName()))
+			&& !WorldPermissions.getPermission(loc.getWorld().getName()).isAuthorized(user))
 		{
 			throw new Exception(_("noPerm", "essentials.world." + loc.getWorld().getName()));
 		}

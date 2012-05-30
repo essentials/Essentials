@@ -43,7 +43,7 @@ public class Commandtpall extends EssentialsCommand
 			ISettings settings = ess.getSettings();
 			settings.acquireReadLock();
 
-			if (user.getWorld() != player.getWorld() && ess.getSettings().getData().getGeneral().isWorldTeleportPermissions()
+			if (user.getWorld() != player.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
 				&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(user))
 			{
 				continue;

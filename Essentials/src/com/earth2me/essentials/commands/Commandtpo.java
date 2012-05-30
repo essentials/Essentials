@@ -53,7 +53,7 @@ public class Commandtpo extends EssentialsCommand
 				throw new NoSuchFieldException(_("playerNotFound"));
 			}
 			settings.acquireReadLock();
-			if (target.getWorld() != toPlayer.getWorld() && ess.getSettings().getData().getGeneral().isWorldTeleportPermissions()
+			if (target.getWorld() != toPlayer.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
 				&& !WorldPermissions.getPermission(toPlayer.getWorld().getName()).isAuthorized(user))
 			{
 				throw new Exception(_("noPerm", "essentials.world." + toPlayer.getWorld().getName()));

@@ -27,7 +27,7 @@ public class Commandtpahere extends EssentialsCommand
 		@Cleanup
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
-		if (user.getWorld() != player.getWorld() && ess.getSettings().getData().getGeneral().isWorldTeleportPermissions()
+		if (user.getWorld() != player.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
 			&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(user))
 		{
 			throw new Exception(_("noPerm", "essentials.world." + user.getWorld().getName()));
