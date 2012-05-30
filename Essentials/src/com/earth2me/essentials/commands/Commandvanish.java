@@ -2,6 +2,7 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.Permissions;
 import org.bukkit.entity.Player;
 
 
@@ -22,7 +23,7 @@ public class Commandvanish extends EssentialsCommand
 		{
 			for (Player p : server.getOnlinePlayers())
 			{
-				if (!ess.getUser(p).isAuthorized("essentials.vanish.see"))
+				if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(p))
 				{
 					p.hidePlayer(user);
 				}

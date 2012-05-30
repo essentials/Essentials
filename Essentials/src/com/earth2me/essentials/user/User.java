@@ -73,7 +73,7 @@ public class User extends UserBase implements IUser
 	@Getter
 	private transient IUser teleportRequester;
 	@Getter
-	private transient boolean teleportRequestHere;
+	private transient boolean tpRequestHere;
 	@Getter
 	private transient final ITeleport teleport;
 	@Getter
@@ -250,7 +250,7 @@ public class User extends UserBase implements IUser
 	{
 		teleportRequestTime = System.currentTimeMillis();
 		teleportRequester = player;
-		teleportRequestHere = here;
+		tpRequestHere = here;
 	}
 
 	public String getNick(boolean addprefixsuffix)

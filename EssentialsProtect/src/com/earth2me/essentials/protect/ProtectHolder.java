@@ -19,4 +19,16 @@ public class ProtectHolder extends AsyncStorageObjectHolder<Protect>
 	{
 		return new File(ess.getDataFolder(), "protect.yml");
 	}
+
+	@Override
+	public void finishRead()
+	{		
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

@@ -3,6 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.permissions.WorldPermissions;
 import lombok.Cleanup;
 
 
@@ -23,8 +24,11 @@ public class Commandtpahere extends EssentialsCommand
 		{
 			throw new Exception(_("teleportDisabled", player.getDisplayName()));
 		}
-		if (user.getWorld() != player.getWorld() && ess.getSettings().isWorldTeleportPermissions()
-			&& !user.isAuthorized("essentials.world." + user.getWorld().getName()))
+		@Cleanup
+		ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		if (user.getWorld() != player.getWorld() && ess.getSettings().getData().getGeneral().isWorldTeleportPermissions()
+			&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(user))
 		{
 			throw new Exception(_("noPerm", "essentials.world." + user.getWorld().getName()));
 		}
@@ -32,15 +36,8 @@ public class Commandtpahere extends EssentialsCommand
 		player.sendMessage(_("teleportHereRequest", user.getDisplayName()));
 		player.sendMessage(_("typeTpaccept"));
 		int tpaAcceptCancellation = 0;
-		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		try
 		{
 			tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
-		}
-		finally
-		{
-			settings.unlock();
 		}
 		if (tpaAcceptCancellation != 0)
 		{

@@ -56,6 +56,7 @@ public enum Permissions implements IPermission
 	REPAIR_ARMOR,
 	REPAIR_ENCHANTED,
 	SEEN_BANREASON,
+	SEEN_EXTRA,
 	SETHOME_MULTIPLE,
 	SETHOME_OTHERS,
 	SLEEPINGIGNORED,
@@ -63,6 +64,7 @@ public enum Permissions implements IPermission
 	SUDO_EXEMPT,
 	TELEPORT_COOLDOWN_BYPASS,
 	TELEPORT_HIDDEN,
+	TELEPORT_OTHERS,
 	TELEPORT_TIMER_BYPASS,
 	TEMPBAN_EXEMPT,
 	TEMPBAN_OFFLINE,
@@ -74,7 +76,8 @@ public enum Permissions implements IPermission
 	TPOHERE,
 	UNLIMITED_OTHERS,
 	WARP_LIST(PermissionDefault.TRUE),
-	WARP_OTHERS;
+	WARP_OTHERS,
+	VANISH_SEE_OTHERS;
 	private static final String base = "essentials.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;

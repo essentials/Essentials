@@ -2,9 +2,11 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.permissions.WorldPermissions;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -15,6 +17,9 @@ public class Commandtp extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
+		@Cleanup
+		ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
 		switch (args.length)
 		{
 		case 0:
@@ -28,8 +33,8 @@ public class Commandtp extends EssentialsCommand
 			{
 				throw new Exception(_("teleportDisabled", player.getDisplayName()));
 			}
-			if (user.getWorld() != player.getWorld() && ess.getSettings().isWorldTeleportPermissions()
-				&& !user.isAuthorized("essentials.world." + player.getWorld().getName()))
+			if (user.getWorld() != player.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
+				&& !WorldPermissions.getPermission(player.getWorld().getName()).isAuthorized(user))
 			{
 				throw new Exception(_("noPerm", "essentials.world." + player.getWorld().getName()));
 			}
@@ -45,18 +50,23 @@ public class Commandtp extends EssentialsCommand
 				throw new Exception(_("needTpohere"));
 			}
 			user.sendMessage(_("teleporting"));
+			@Cleanup
 			final IUser target = getPlayer(args, 0);
+			@Cleanup
 			final IUser toPlayer = getPlayer(args, 1);
-			if (!target.isTeleportEnabled())
+			target.acquireReadLock();
+			toPlayer.acquireReadLock();
+
+			if (!target.getData().isTeleportEnabled())
 			{
 				throw new Exception(_("teleportDisabled", target.getDisplayName()));
 			}
-			if (!toPlayer.isTeleportEnabled())
+			if (!toPlayer.getData().isTeleportEnabled())
 			{
 				throw new Exception(_("teleportDisabled", toPlayer.getDisplayName()));
 			}
-			if (target.getWorld() != toPlayer.getWorld() && ess.getSettings().isWorldTeleportPermissions()
-				&& !user.isAuthorized("essentials.world." + toPlayer.getWorld().getName()))
+			if (target.getWorld() != toPlayer.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
+				&& !WorldPermissions.getPermission(toPlayer.getWorld().getName()).isAuthorized(user))
 			{
 				throw new Exception(_("noPerm", "essentials.world." + toPlayer.getWorld().getName()));
 			}

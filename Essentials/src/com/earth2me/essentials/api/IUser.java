@@ -92,7 +92,7 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 
 	void requestTeleport(IUser user, boolean b);
 
-	boolean isTeleportRequestHere();
+	boolean isTpRequestHere();
 
 	IUser getTeleportRequester();
 
@@ -115,4 +115,6 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	void resetInvulnerabilityAfterTeleport();
 	
 	void toggleVanished();
+	
+	void update(final Player base);
 }
