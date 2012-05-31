@@ -97,13 +97,13 @@ public class Kits extends AsyncStorageObjectHolder<com.earth2me.essentials.setti
 	@Override
 	public void finishRead()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		
 	}
 	
 	public void checkTime(final IUser user, Kit kit) throws NoChargeException

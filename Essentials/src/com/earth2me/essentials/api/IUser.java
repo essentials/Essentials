@@ -120,4 +120,6 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	
 	void setInvSee(boolean invsee);
 	
+	void update(final Player base);
+	
 }

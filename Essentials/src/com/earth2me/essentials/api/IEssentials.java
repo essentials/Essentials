@@ -3,6 +3,7 @@ package com.earth2me.essentials.api;
 import com.earth2me.essentials.EssentialsTimer;
 import com.earth2me.essentials.economy.register.Methods;
 import com.earth2me.essentials.listener.TntExplodeListener;
+import com.earth2me.essentials.metrics.Metrics;
 import java.util.List;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -64,4 +65,8 @@ public interface IEssentials extends Plugin
 	List<String> getVanishedPlayers();
 	
 	EssentialsTimer getTimer();
+	
+	Metrics getMetrics();
+	
+	void setMetrics(Metrics metrics);
 }

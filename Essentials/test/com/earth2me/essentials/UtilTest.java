@@ -189,7 +189,7 @@ public class UtilTest extends TestCase
 			assertEquals("_-", Util.sanitizeFileName("../"));
 			assertEquals("_-", Util.sanitizeFileName("\""));
 			assertEquals("_-", Util.sanitizeFileName("<>?:*."));
-			assertEquals("a-0fa", Util.sanitizeFileName("a‰"));
+			assertEquals("a-0fa", Util.sanitizeFileName("a√§"));
 			
 		}
 		catch (InvalidNameException ex)

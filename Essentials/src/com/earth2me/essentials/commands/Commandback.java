@@ -13,7 +13,7 @@ public class Commandback extends EssentialsCommand
 	{
 		final String worldName = user.getData().getLastLocation().getWorldName();
 		if (user.getWorld() != user.getData().getLastLocation().getBukkitLocation().getWorld() && ess.getSettings().getData().getGeneral().isWorldTeleportPermissions()
-			&& WorldPermissions.getPermission(worldName))
+			&& WorldPermissions.getPermission(worldName).isAuthorized(user))
 		{
 			throw new Exception(_("noPerm", "essentials.world." + worldName));
 		}

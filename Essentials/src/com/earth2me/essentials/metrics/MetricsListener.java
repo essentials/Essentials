@@ -27,7 +27,7 @@ public class MetricsListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final IUser player = ess.getUser(event.getPlayer());
+		/*final IUser player = ess.getUser(event.getPlayer());
 		if (ess.getSettings().isMetricsEnabled() == false && (player.isAuthorized("essentials.essentials") || player.isAuthorized("bukkit.broadcast.admin")))
 		{
 			player.sendMessage("PluginMetrics collects minimal statistic data, starting in about 5 minutes.");
@@ -35,6 +35,6 @@ public class MetricsListener implements Listener
 			ess.getLogger().log(Level.INFO, "[Metrics] Admin join - Starting 5 minute opt-out period.");
 			ess.getSettings().setMetricsEnabled(true);
 			ess.getScheduler().scheduleAsyncDelayedTask(ess, starter, 5 * 1200);
-		}
+		}*/
 	}
 }

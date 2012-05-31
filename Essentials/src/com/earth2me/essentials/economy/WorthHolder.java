@@ -19,13 +19,13 @@ public class WorthHolder extends AsyncStorageObjectHolder<com.earth2me.essential
 	@Override
 	public void finishRead()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		
 	}
 	
 	

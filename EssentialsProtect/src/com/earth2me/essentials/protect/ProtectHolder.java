@@ -23,12 +23,12 @@ public class ProtectHolder extends AsyncStorageObjectHolder<Protect>
 	@Override
 	public void finishRead()
 	{		
-		throw new UnsupportedOperationException("Not supported yet.");
+		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		
 	}
 }
