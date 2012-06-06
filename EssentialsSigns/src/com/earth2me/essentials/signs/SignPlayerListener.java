@@ -22,26 +22,22 @@ public class SignPlayerListener implements Listener
 		this.plugin = plugin;
 	}
 
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
-		if (event.isCancelled())
+		if (plugin.getSettings().areSignsDisabled() || event.getAction() != Action.RIGHT_CLICK_BLOCK)
 		{
 			return;
 		}
-
 		final Block block = event.getClickedBlock();
 		if (block == null)
 		{
 			return;
 		}
+
 		final int mat = block.getTypeId();
 		if (mat == Material.SIGN_POST.getId() || mat == Material.WALL_SIGN.getId())
 		{
-			if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
-			{
-				return;
-			}
 			final Sign csign = (Sign)block.getState();
 			for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
 			{
@@ -62,7 +58,6 @@ public class SignPlayerListener implements Listener
 				{
 					event.setCancelled(true);
 					return;
-
 				}
 			}
 		}

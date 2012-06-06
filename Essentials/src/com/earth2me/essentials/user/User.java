@@ -1,15 +1,14 @@
 package com.earth2me.essentials.user;
 
-import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Teleport;
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
-import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.economy.register.Method;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.utils.DateUtil;
+import com.earth2me.essentials.utils.Util;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -30,11 +29,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class User extends UserBase implements IUser
 {
+
 	private CommandSender replyTo = null;
 	@Getter
 	private transient IUser teleportRequester;
 	@Getter
-	private transient boolean teleportRequestHere;
+	private transient boolean tpRequestHere;
 	@Getter
 	private transient final ITeleport teleport;
 	@Getter
@@ -46,6 +46,11 @@ public class User extends UserBase implements IUser
 	@Getter
 	@Setter
 	private boolean hidden = false;
+	@Getter
+	private transient boolean vanished;
+	@Getter
+	@Setter
+    private boolean invSee = false;
 	private transient Location afkPosition;
 	private static final Logger logger = Bukkit.getLogger();
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
@@ -56,12 +61,13 @@ public class User extends UserBase implements IUser
 		teleport = new Teleport(this, ess);
 	}
 
+	
 	public User(final OfflinePlayer offlinePlayer, final IEssentials ess)
 	{
 		super(offlinePlayer, ess);
 		teleport = new Teleport(this, ess);
-	}
-
+	}	
+	
 	public void example()
 	{
 		// Cleanup will call close at the end of the function
@@ -75,6 +81,22 @@ public class User extends UserBase implements IUser
 		// write lock allows only one thread to modify the data
 		user.acquireWriteLock();
 		user.getData().setMoney(10 + money);
+	}
+	
+	@Override
+	public void finishRead()
+	{
+	}
+
+	@Override
+	public void finishWrite()
+	{
+	}
+	
+	@Override
+	public void update(final Player base)
+	{
+		super.update(base);
 	}
 
 	@Override
@@ -197,7 +219,7 @@ public class User extends UserBase implements IUser
 	{
 		teleportRequestTime = System.currentTimeMillis();
 		teleportRequester = player;
-		teleportRequestHere = here;
+		tpRequestHere = here;
 	}
 
 	public String getNick(boolean addprefixsuffix)
@@ -408,6 +430,7 @@ public class User extends UserBase implements IUser
 	}
 
 	//Returns true if status expired during this check
+	@Override
 	public boolean checkBanTimeout(final long currentTime)
 	{
 		acquireReadLock();
@@ -428,6 +451,7 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public void updateActivity(final boolean broadcast)
 	{
 		acquireReadLock();
@@ -450,6 +474,7 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public void checkActivity()
 	{
 		@Cleanup
@@ -494,11 +519,13 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public Location getAfkPosition()
 	{
 		return afkPosition;
 	}
 
+	@Override
 	public boolean toggleGodModeEnabled()
 	{
 		if (!isGodModeEnabled())
@@ -508,6 +535,7 @@ public class User extends UserBase implements IUser
 		return super.toggleGodmode();
 	}
 
+	@Override
 	public boolean isGodModeEnabled()
 	{
 		acquireReadLock();
@@ -676,14 +704,57 @@ public class User extends UserBase implements IUser
 		}
 		return cost <= mon;
 	}
-	
+	@Override
 	public void updateMoneyCache(double userMoney) {
 		if (super.getMoney() != userMoney) {
 			super.setMoney(userMoney);
 		}
 	}
 
+	@Override
 	public boolean canAfford(double amount, boolean b) {
 		return true;
+	}	
+	private transient long teleportInvulnerabilityTimestamp = 0;
+	
+	public void enableInvulnerabilityAfterTeleport()
+	{
+		@Cleanup
+	    final ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		
+		final long time = settings.getData().getGeneral().getTeleportInvulnerability();
+		if (time > 0)
+		{
+			teleportInvulnerabilityTimestamp = System.currentTimeMillis() + time;
+		}
+	}
+
+	@Override
+	public void resetInvulnerabilityAfterTeleport()
+	{
+		if (teleportInvulnerabilityTimestamp != 0
+			&& teleportInvulnerabilityTimestamp < System.currentTimeMillis())
+		{
+			teleportInvulnerabilityTimestamp = 0;
+		}
+	}
+	public boolean hasInvulnerabilityAfterTeleport()
+	{
+		return teleportInvulnerabilityTimestamp != 0 && teleportInvulnerabilityTimestamp >= System.currentTimeMillis();
+	}
+	
+	@Override
+	public void toggleVanished()
+	{
+		vanished = !vanished;
+		if (vanished)
+		{
+			ess.getVanishedPlayers().add(getName());
+		}
+		else
+		{
+			ess.getVanishedPlayers().remove(getName());
+		}
 	}
 }

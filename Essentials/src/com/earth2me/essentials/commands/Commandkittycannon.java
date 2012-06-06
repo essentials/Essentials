@@ -1,7 +1,8 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.bukkit.Mob;
+
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.bukkit.Mob;
 import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.entity.Ocelot;

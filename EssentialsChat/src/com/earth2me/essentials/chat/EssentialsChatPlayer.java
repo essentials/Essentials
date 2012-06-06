@@ -9,6 +9,7 @@ import com.earth2me.essentials.api.IRanks;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.storage.Location;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -111,6 +112,7 @@ public abstract class EssentialsChatPlayer implements Listener
 
 	protected void handleLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
+		
 		long radius = 0;
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();

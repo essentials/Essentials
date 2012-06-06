@@ -1,8 +1,9 @@
 package com.earth2me.essentials.commands;
 
+import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.GivePermissions;
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.utils.Util;
 import java.util.Locale;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class Commandgive extends EssentialsCommand
 {
-	//TODO: move these messages to message file
 	@Override
 	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
@@ -33,14 +33,19 @@ public class Commandgive extends EssentialsCommand
 			throw new Exception(_("cantSpawnItem", itemname));
 		}
 
-		if (args.length > 2 && Integer.parseInt(args[2]) > 0)
+		if (args.length > 3 && Util.isInt(args[2]) && Util.isInt(args[3]))
+		{			
+			stack.setAmount(Integer.parseInt(args[2]));
+			stack.setDurability(Short.parseShort(args[3]));
+		}
+		else if (args.length > 2 && Integer.parseInt(args[2]) > 0)
 		{
 			stack.setAmount(Integer.parseInt(args[2]));
 		}		
 
 		if (args.length > 3)
 		{
-			for (int i = 3; i < args.length; i++)
+			for (int i = Util.isInt(args[3]) ? 4 : 3; i < args.length; i++)
 			{
 				final String[] split = args[i].split("[:+',;.]", 2);
 				if (split.length < 1)
@@ -68,6 +73,7 @@ public class Commandgive extends EssentialsCommand
 		
 		giveTo.giveItems(stack, false);
 
+		//TODO: TL this.
 		final String itemName = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');
 		sender.sendMessage(ChatColor.BLUE + "Giving " + stack.getAmount() + " of " + itemName + " to " + giveTo.getDisplayName() + ".");
 		

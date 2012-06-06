@@ -5,6 +5,7 @@ import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.Permissions;
 import java.util.List;
+import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -53,7 +54,7 @@ public class Commandmail extends EssentialsCommand
 			}
 			if (!u.isIgnoringPlayer(user.getName()))
 			{
-				final String mail = Util.sanitizeString(Util.stripColor(getFinalArg(args, 2)));
+				final String mail = Util.sanitizeString(Util.stripFormat(getFinalArg(args, 2)));
 				u.addMail(user.getName() + ": " + mail);
 			}
 			user.sendMessage(_("mailSent"));
@@ -65,7 +66,7 @@ public class Commandmail extends EssentialsCommand
 			{
 				throw new Exception(_("noPerm", "essentials.mail.sendall"));
 			}
-			ess.scheduleAsyncDelayedTask(new SendAll(user.getName() + ": " + Util.stripColor(getFinalArg(args, 1))));
+			ess.scheduleAsyncDelayedTask(new SendAll(user.getName() + ": " + Util.stripFormat(getFinalArg(args, 1))));
 			user.sendMessage(_("mailSent"));
 			return;
 		}

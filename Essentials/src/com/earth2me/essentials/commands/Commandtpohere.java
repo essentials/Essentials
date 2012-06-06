@@ -1,8 +1,11 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.permissions.WorldPermissions;
+import lombok.Cleanup;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -24,6 +27,16 @@ public class Commandtpohere extends EssentialsCommand
 		{
 			throw new NoSuchFieldException(_("playerNotFound"));
 		}
+		@Cleanup
+		ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		//todo - common method
+		if (user.getWorld() != player.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
+			&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(player))
+		{
+			throw new Exception(_("noPerm", "essentials.world." + user.getWorld().getName()));
+		}
+
 
 		// Verify permission
 		if (!player.isHidden() || Permissions.TELEPORT_HIDDEN.isAuthorized(user))

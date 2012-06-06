@@ -1,11 +1,12 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.permissions.Permissions;
-import org.bukkit.OfflinePlayer;
+import com.earth2me.essentials.permissions.WorldPermissions;
+import lombok.Cleanup;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -14,45 +15,30 @@ public class Commandtpaccept extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (user.getTeleportRequester() == null)
-		{
-			throw new Exception(_("noPendingRequest"));
-		}
-
 		final IUser target = user.getTeleportRequester();
-		if (target == null 
-			|| !target.isOnline()
-			|| (user.isTeleportRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
-			|| (!user.isTeleportRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
-		{
-			throw new Exception(_("noPendingRequest"));
-		}
-		
-		if (args.length > 0 && !target.getName().contains(args[0]))
-		{
-			throw new Exception(_("noPendingRequest"));
-		}
-
-		int tpaAcceptCancellation = 0;
+		@Cleanup
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
-		try
+		if (target == null || !target.isOnline()
+			|| (args.length > 0 && !target.getName().contains(args[0]))
+			|| (user.isTpRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
+			|| (!user.isTpRequestHere() && ((!Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target))
+											|| (user.getWorld() != target.getWorld()
+												&& settings.getData().getGeneral().isWorldTeleportPermissions()
+												&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(user)))))
 		{
-			tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
-		}
-		finally
-		{
-			settings.unlock();
+			throw new Exception(_("noPendingRequest"));
 		}
 
-		if (tpaAcceptCancellation != 0 && (System.currentTimeMillis() - user.getTeleportRequestTime()) / 1000 > tpaAcceptCancellation)
+		long timeout = settings.getData().getCommands().getTpa().getTimeout();
+		if (timeout != 0 && (System.currentTimeMillis() - user.getTeleportRequestTime()) / 1000 > timeout)
 		{
 			user.requestTeleport(null, false);
 			throw new Exception(_("requestTimedOut"));
 		}
 
-		final Trade charge = new Trade(commandName, ess);
-		if (user.isTeleportRequestHere())
+		final Trade charge = new Trade(this.commandName, ess);
+		if (user.isTpRequestHere())
 		{
 			charge.isAffordableFor(user);
 		}
@@ -63,7 +49,7 @@ public class Commandtpaccept extends EssentialsCommand
 		user.sendMessage(_("requestAccepted"));
 		target.sendMessage(_("requestAcceptedFrom", user.getDisplayName()));
 
-		if (user.isTeleportRequestHere())
+		if (user.isTpRequestHere())
 		{
 			user.getTeleport().teleport(target, charge, TeleportCause.COMMAND);
 		}

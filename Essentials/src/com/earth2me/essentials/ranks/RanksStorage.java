@@ -19,6 +19,18 @@ import lombok.Cleanup;
 
 public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRanks
 {
+
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
 	public RanksStorage(final IEssentials ess)
 	{
 		super(ess, Ranks.class);
@@ -143,7 +155,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	public MessageFormat getChatFormat(final IUser player)
 	{
 			String format = getRawChatFormat(player);
-			format = Util.replaceColor(format);
+			format = Util.replaceFormat(format);
 			format = format.replace("{DISPLAYNAME}", "%1$s");
 			format = format.replace("{GROUP}", "{0}");
 			format = format.replace("{MESSAGE}", "%2$s");

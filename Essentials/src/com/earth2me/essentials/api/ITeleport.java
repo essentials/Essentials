@@ -18,7 +18,7 @@ public interface ITeleport
 
 	void teleport(Entity entity, Trade chargeFor, TeleportCause cause) throws Exception;
 
-	void home(IUser player, String toLowerCase, Trade charge) throws Exception;
+	void home(Location loc, Trade chargeFor) throws Exception;
 
 	void respawn(Trade charge, TeleportCause teleportCause) throws Exception;
 

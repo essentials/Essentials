@@ -8,6 +8,20 @@ import java.io.IOException;
 
 public class MoneyHolder extends AsyncStorageObjectHolder<Money>
 {
+
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
+	
+	
 	public MoneyHolder(IEssentials ess)
 	{
 		super(ess, Money.class);

@@ -44,28 +44,29 @@ public class EssentialsLocalChatEventListener implements Listener
 			}
 			if (!user.equals(sender))
 			{
-				final Location playerLoc = user.getLocation();
-				if (playerLoc.getWorld() != world)
+				if (Permissions.CHAT_SPY.isAuthorized(user))
 				{
-					continue;
+					type = type.concat(_("chatTypeSpy"));
 				}
-				final double delta = playerLoc.distanceSquared(loc);
-
-				if (delta > event.getRadius())
+				else
 				{
-					if (Permissions.CHAT_SPY.isAuthorized(user))
+					final Location playerLoc = user.getLocation();
+					if (playerLoc.getWorld() != world)
 					{
-						type = type.concat(_("chatTypeSpy"));
+						continue;
 					}
-					else
+					final double delta = playerLoc.distanceSquared(loc);
+
+					if (delta > event.getRadius())
 					{
 						continue;
 					}
 				}
-			}
 
-			final String message = type.concat(String.format(event.getFormat(), sender.getDisplayName(), event.getMessage()));
-			user.sendMessage(message);
+				final String message = type.concat(String.format(event.getFormat(), sender.getDisplayName(), event.getMessage()));
+				user.sendMessage(message);
+			}
 		}
+	
 	}
 }

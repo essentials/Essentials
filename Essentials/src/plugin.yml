@@ -49,7 +49,7 @@ commands:
     aliases: [ebroadcast,bcast,ebcast]
   bigtree:
     description: Spawn a big tree where you are looking.
-    usage: /<command> <tree|redwood>
+    usage: /<command> <tree|redwood|jungle>
     aliases: [ebigtree]
   burn:
     description: Set a player on fire.
@@ -90,6 +90,11 @@ commands:
   essentials:
     description: Reloads essentials.
     usage: /<command>
+    aliases: [ess]
+  exp:
+    description: Give, set or look at a players exp.
+    usage: /<command> [show|set|give] [playername [amount]]
+    aliases: [eexp,xp]
   ext:
     description: Extinguish players.
     usage: /<command> [player]
@@ -98,6 +103,10 @@ commands:
     description: Satisfy the hunger.
     usage: /<command> [player]
     aliases: [efeed,eat,eeat]
+  fly:
+    description: Take off, and soar!
+    usage: /<command> [player]
+    aliases: [efly]
   itemdb:
     description: Searches for an item.
     usage: /<command> <item>
@@ -115,9 +124,9 @@ commands:
     usage: /<command> [player]
     aliases: [coords,egetpos,position,eposition,whereami,ewhereami]
   gc:
-    description: Reports garbage collection info; useful to developers.
+    description: Reports garbage collection and tick info; useful to developers.
     usage: /<command>
-    aliases: [mem,memory,egc,emem,ememory]
+    aliases: [elag,lag,mem,memory,egc,emem,ememory]
   give:
     description: Give a player an item.
     usage: /<command> <player> <item|numeric> [amount <enchantmentname[:level]> ...]
@@ -126,6 +135,10 @@ commands:
     description: Enables your godly powers.
     usage: /<command> [player]
     aliases: [tgm,godmode,egod,etgm,egodmode]
+  hat:
+    description: Get some cool new headgear
+    usage: /<command>
+    aliases: [ehat]
   heal:
     description: Heals you or the given player.
     usage: /<command> [player]
@@ -176,7 +189,7 @@ commands:
     aliases: [ekickall]
   kit:
     description: Obtains the specified kit or views all available kits.
-    usage: /<command> [kit]
+    usage: /<command> [kit] [player]
     aliases: [ekit,kits,ekits]
   kill:
     description: Kills specified player.
@@ -185,7 +198,10 @@ commands:
   killall:
     description: Kill all mobs in a world.
     usage: /<command> [mobType] [radius]
-    aliases: [ekillall,butcher,ebutcher]
+    aliases: [ekillall,butcher,ebutcher,mobkill,emobkill]
+  kittycannon:
+    description: Throw an exploding kitten at your opponent
+    usage: /<command>
   kittycannon:
     description: Throw an exploding kitten at your opponent
     usage: /<command>
@@ -199,7 +215,7 @@ commands:
     aliases: [strike,smite,thor,shock,elightning,estrike,esmite,ethor,eshock]
   mail:
     description: Manages inter-player, intra-server mail.
-    usage: /<command> [read|clear|send [to] [message]]
+    usage: /<command> [read|clear|send [to] [message]|sendall [message]]
     aliases: [email]
   me:
     description: Describes an action in the context of the player.
@@ -242,8 +258,8 @@ commands:
     usage: /<command>
     aliases: [pong,echo,echo,eping,epong]
   powertool:
-    description: Assigns a command to the item in hand, {player} will be replaced by the name of the player that you click.
-    usage: /<command> [l:|a:|r:|c:|d:][command] [arguments]
+    description: Assigns a command to the item in hand.
+    usage: /<command> [l:|a:|r:|c:|d:][command] [arguments] - {player} can be replaced by name of a clicked player.
     aliases: [pt,epowertool,ept]
   powertooltoggle:
     description: Enables or disables all current powertools
@@ -258,7 +274,7 @@ commands:
     usage: /<command> <message>
     aliases: [er,reply,ereply]
   realname:
-    description: Displays the username of a user based on nickname.
+    description: Displays the username of a user based on nick.
     usage: /<command> <nickname>
     aliases: [erealname]
   remove:
@@ -312,11 +328,11 @@ commands:
   spawner:
     description: Change the mob type of a spawner
     usage: /<command> <mob>
-    aliases: [espawner]
+    aliases: [espawner,changems,echangems]
   spawnmob:
     description: Spawns a mob.
     usage: /<command> <mob>[:data][,<mount>[:data]] [amount] [player]
-    aliases: [espawnmob]
+    aliases: [espawnmob,mob,emob]
   sudo:
     description: Make another user perform a command.
     usage: /<command> <player> <command [args]>
@@ -338,7 +354,7 @@ commands:
     usage: /<command> [day|night|dawn|17:30|4pm|4000ticks] [worldname|all]
     aliases: [etime, day, night]
   togglejail:
-    description: Prevents a player from interacting with the world and teleports him/her to the jail specified
+    description: Jails/Unjails a player and tp them to the jail specified.
     usage: /<command> <player> <jailname> [datediff]
     aliases: [tjail,jail,ejail,unjail,eunjail,etogglejail]
   top:
@@ -379,7 +395,7 @@ commands:
     aliases: [s,etphere]
   tpo:
     description: Teleport override for tptoggle.
-    usage: /<command> <player>
+    usage: /<command> <player> [otherplayer]
     aliases: [etpo]
   tpohere:
     description: Teleport here override for tptoggle.
@@ -395,7 +411,7 @@ commands:
     aliases: [etptoggle]
   tree:
     description: Spawn a tree where you are looking.
-    usage: /<command> <tree|birch|redwood>
+    usage: /<command> <tree|birch|redwood|redmushroom|brownmushroom|jungle|junglebush|swamp>
     aliases: [etree]
   unban:
     description: Unbans the specified player.
@@ -409,6 +425,10 @@ commands:
     description: Allows the unlimited placing of items.
     usage: /<command> <list|item|clear> [player]
     aliases: [eunlimited,ul,unl,eul,eunl]
+  vanish:
+    description: Hide yourself from other players.
+    usage: /<command>
+    aliases: [evanish]
   warp:
     description: List all warps or warp to the specified location.
     usage: /<command> <pagenumber|warp> [player]

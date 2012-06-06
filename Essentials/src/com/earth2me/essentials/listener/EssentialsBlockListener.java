@@ -25,7 +25,7 @@ public class EssentialsBlockListener implements Listener
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{
 		// Do not rely on getItemInHand();
-		// http://leaky.bukkit.org/issues/663
+		// http://leaky.bukkit.org/issues/663		
 		final ItemStack itemstack = Util.convertBlockToItem(event.getBlockPlaced());
 		if (itemstack == null)
 		{

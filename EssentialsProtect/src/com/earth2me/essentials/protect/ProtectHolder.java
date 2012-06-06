@@ -19,4 +19,16 @@ public class ProtectHolder extends AsyncStorageObjectHolder<Protect>
 	{
 		return new File(ess.getDataFolder(), "protect.yml");
 	}
+
+	@Override
+	public void finishRead()
+	{		
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
 }

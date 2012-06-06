@@ -260,7 +260,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final CreatureType creature = event.getCreatureType();
+		final EntityType creature = event.getEntityType();
 		if (creature == null)
 		{
 			return;

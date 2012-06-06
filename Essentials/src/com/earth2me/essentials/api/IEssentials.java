@@ -1,9 +1,11 @@
 package com.earth2me.essentials.api;
 
-import com.earth2me.essentials.listener.TntExplodeListener;
+import com.earth2me.essentials.EssentialsTimer;
 import com.earth2me.essentials.economy.register.Methods;
+import com.earth2me.essentials.listener.TntExplodeListener;
+import com.earth2me.essentials.metrics.Metrics;
+import java.util.List;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 
@@ -11,9 +13,7 @@ public interface IEssentials extends Plugin
 {
 	void addReloadListener(IReload listener);
 
-	IUser getUser(Player player);
-
-	IUser getUser(String playerName);
+	IUser getUser(final Object base);
 
 	int broadcastMessage(IUser sender, String message);
 
@@ -61,4 +61,12 @@ public interface IEssentials extends Plugin
 	void removeReloadListener(IReload groups);
 
 	IEconomy getEconomy();
+	
+	List<String> getVanishedPlayers();
+	
+	EssentialsTimer getTimer();
+	
+	Metrics getMetrics();
+	
+	void setMetrics(Metrics metrics);
 }

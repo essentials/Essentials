@@ -6,7 +6,6 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ITeleport;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.CooldownException;
 import com.earth2me.essentials.user.UserData.TimestampType;
@@ -24,6 +23,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class Teleport implements Runnable, ITeleport
 {
+
 	private static final double MOVE_CONSTANT = 0.3;
 
 
@@ -293,14 +293,9 @@ public class Teleport implements Runnable, ITeleport
 			user.unlock();
 		}
 	}
-
-	public void home(IUser user, String home, Trade chargeFor) throws Exception
+	
+	public void home(Location loc, Trade chargeFor) throws Exception
 	{
-		final Location loc = user.getHome(home);
-		if (loc == null)
-		{
-			throw new NotEnoughArgumentsException();
-		}
 		teleport(new Target(loc), chargeFor, TeleportCause.COMMAND);
 	}
 }

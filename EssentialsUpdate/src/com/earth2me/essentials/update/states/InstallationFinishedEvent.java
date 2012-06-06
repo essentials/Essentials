@@ -12,5 +12,5 @@ public class InstallationFinishedEvent extends Event
     public HandlerList getHandlers()
     {
         return handlers;
-    }
+    }	
 }

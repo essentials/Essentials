@@ -690,6 +690,18 @@ public class EssentialsUpgrade
 		doneFile.save();
 	}
 
+	private void warnMetrics()
+	{
+		if (doneFile.getBoolean("warnMetrics", false))
+		{
+			return;
+		}
+		//todo - metrics
+   //	ess.getSettings().setMetricsEnabled(false);
+		doneFile.setProperty("warnMetrics", true);
+		doneFile.save();
+	}
+
 	public void beforeSettings()
 	{
 		if (!ess.getDataFolder().exists())
@@ -713,5 +725,6 @@ public class EssentialsUpgrade
 		deleteOldItemsCsv();
 		updateSpawnsToNewSpawnsConfig();
 		updateJailsToNewJailsConfig();
+		warnMetrics();
 	}
 }

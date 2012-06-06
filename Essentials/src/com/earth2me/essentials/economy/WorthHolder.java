@@ -15,6 +15,20 @@ import org.bukkit.material.MaterialData;
 
 public class WorthHolder extends AsyncStorageObjectHolder<com.earth2me.essentials.economy.Worth> implements IWorth
 {
+
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
+	
+	
 	public WorthHolder(final IEssentials ess)
 	{
 		super(ess, com.earth2me.essentials.economy.Worth.class);

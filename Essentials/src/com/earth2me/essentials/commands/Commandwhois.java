@@ -7,6 +7,7 @@ import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.UserData;
 import com.earth2me.essentials.utils.DateUtil;
+import com.earth2me.essentials.craftbukkit.SetExpFix;
 import java.util.Locale;
 import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
@@ -49,7 +50,7 @@ public class Commandwhois extends EssentialsCommand
 				continue;
 			}
 			user.acquireReadLock();
-			final String nickName = Util.stripColor(user.getData().getNickname());
+			final String nickName = Util.stripFormat(user.getData().getNickname());
 			if (!whois.equalsIgnoreCase(nickName)
 				&& !whois.substring(prefixLength).equalsIgnoreCase(nickName)
 				&& !whois.equalsIgnoreCase(user.getName()))
@@ -57,8 +58,10 @@ public class Commandwhois extends EssentialsCommand
 				continue;
 			}
 			sender.sendMessage("");
+			user.setDisplayNick();
 			sender.sendMessage(_("whoisIs", user.getDisplayName(), user.getName()));
 			sender.sendMessage(_("whoisHealth", user.getHealth()));
+			sender.sendMessage(_("whoisExp", SetExpFix.getTotalExperience(user), user.getLevel()));
 			sender.sendMessage(_("whoisOP", (user.isOp() ? _("true") : _("false"))));
 			sender.sendMessage(_("whoisGod", (user.isGodModeEnabled() ? _("true") : _("false"))));
 			sender.sendMessage(_("whoisGamemode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH))));

@@ -27,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 public class Trade
 {
 	private final transient String command;
+	private final transient String fallbackCommand;
 	private final transient Double money;
 	private final transient ItemStack itemStack;
 	private final transient Integer exp;
@@ -34,27 +35,33 @@ public class Trade
 
 	public Trade(final String command, final IEssentials ess)
 	{
-		this(command, null, null, null, ess);
+		this(command, null, null, null, null, ess);
+	}
+
+	public Trade(final String command, final String fallback, final IEssentials ess)
+	{
+		this(command, fallback, null, null, null, ess);
 	}
 
 	public Trade(final double money, final IEssentials ess)
 	{
-		this(null, money, null, null, ess);
+		this(null, null, money, null, null, ess);
 	}
 
 	public Trade(final ItemStack items, final IEssentials ess)
 	{
-		this(null, null, items, null, ess);
+		this(null, null, null, items, null, ess);
 	}
 
 	public Trade(final int exp, final IEssentials ess)
 	{
-		this(null, null, null, exp, ess);
+		this(null, null, null, null, exp, ess);
 	}
 
-	private Trade(final String command, final Double money, final ItemStack item, final Integer exp, final IEssentials ess)
+	private Trade(final String command, final String fallback, final Double money, final ItemStack item, final Integer exp, final IEssentials ess)
 	{
 		this.command = command;
+		this.fallbackCommand = fallback;
 		this.money = money;
 		this.itemStack = item;
 		this.exp = exp;
@@ -63,11 +70,10 @@ public class Trade
 
 	public void isAffordableFor(final IUser user) throws ChargeException
 	{
-		final double mon = user.getMoney();
 		if (getMoney() != null
-			&& mon < getMoney()
 			&& getMoney() > 0
-			&& !Permissions.ECO_LOAN.isAuthorized(user))
+			&& !Permissions.ECO_LOAN.isAuthorized(user)
+			&& !user.canAfford(getMoney()))
 		{
 			throw new ChargeException(_("notEnoughMoney"));
 		}
@@ -84,7 +90,7 @@ public class Trade
 
 		if (command != null && !command.isEmpty()
 			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user)
-			&& mon < settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command)
+			&& money < settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command)
 			&& 0 < settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command)
 			&& !Permissions.ECO_LOAN.isAuthorized(user))
 		{
@@ -205,6 +211,22 @@ public class Trade
 	public Integer getExperience()
 	{
 		return exp;
+	}
+
+	public Double getCommandCost(final IUser user)
+	{
+		double cost = 0d;
+		if (command != null && !command.isEmpty()
+			&& !NoCommandCostPermissions.getPermission("all").isAuthorized(user)
+			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user))
+		{
+			cost = ess.getSettings().getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
+			if (cost == 0.0 && fallbackCommand != null && !fallbackCommand.isEmpty())
+			{
+				cost = ess.getSettings().getData().getEconomy().getCommandCost(fallbackCommand.charAt(0) == '/' ? fallbackCommand.substring(1) : fallbackCommand);
+			}
+		}
+		return cost;
 	}
 	private static FileWriter fw = null;
 
