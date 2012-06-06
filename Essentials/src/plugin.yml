@@ -202,9 +202,6 @@ commands:
   kittycannon:
     description: Throw an exploding kitten at your opponent
     usage: /<command>
-  kittycannon:
-    description: Throw an exploding kitten at your opponent
-    usage: /<command>
   list:
     description: List all online players.
     usage: /<command>
