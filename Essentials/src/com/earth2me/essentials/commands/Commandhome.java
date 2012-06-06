@@ -1,10 +1,12 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.economy.Trade;
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.permissions.WorldPermissions;
+import com.earth2me.essentials.utils.Util;
+import de.bananaco.permissions.worlds.WorldPermissionSet;
 import java.util.List;
 import java.util.Locale;
 import org.bukkit.Location;
@@ -49,7 +51,7 @@ public class Commandhome extends EssentialsCommand
 					throw new NoChargeException();
 				}
 			}
-			user.getTeleport().home(player, homeName.toLowerCase(Locale.ENGLISH), charge);
+			goHome(user, player, homeName.toLowerCase(Locale.ENGLISH), charge);
 		}
 		catch (NotEnoughArgumentsException e)
 		{
@@ -75,7 +77,7 @@ public class Commandhome extends EssentialsCommand
 			}
 			else if (homes.size() == 1 && player.equals(user))
 			{
-				user.getTeleport().home(player, homes.get(0), charge);
+				goHome(user, player, homes.get(0), charge);
 			}
 			else
 			{
@@ -87,5 +89,20 @@ public class Commandhome extends EssentialsCommand
 			}
 		}
 		throw new NoChargeException();
+	}
+
+	private void goHome(final IUser user, final IUser player, final String home, final Trade charge) throws Exception
+	{
+		final Location loc = player.getHome(home);
+		if (loc == null)
+		{
+			throw new NotEnoughArgumentsException();
+		}
+		if (user.getWorld() != loc.getWorld() && ess.getSettings().getData().getGeneral().isWorldHomePermissions()
+			&& !WorldPermissions.getPermission(loc.getWorld().getName()).isAuthorized(user))
+		{
+			throw new Exception(_("noPerm", "essentials.world." + loc.getWorld().getName()));
+		}
+		user.getTeleport().home(loc, charge);
 	}
 }

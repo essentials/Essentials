@@ -10,7 +10,7 @@ authors:
 commands:
   manuadd:
     description: Move a player to desired group.(Adds to the file if not exists)
-    usage: /<command> <player> <group>
+    usage: /<command> <player> <group> | optional [world]
     permissions: groupmanager.manuadd
   manudel:
     description: Remove any user specific configuration. Make him default group.
@@ -164,3 +164,8 @@ commands:
     description: Clear world selection. Next commands will work on your world.
     usage: /<command>
     permissions: groupmanager.manclear
+    
+Permissions:
+    groupmanager.op:
+        description: User is treated as an op when using the GroupManager commands.
+        default: false

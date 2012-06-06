@@ -17,20 +17,25 @@
  */
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.economy.Trade;
-import com.earth2me.essentials.commands.EssentialsCommandHandler;
-import com.earth2me.essentials.utils.ExecuteTimer;
-import com.earth2me.essentials.economy.WorthHolder;
-import com.earth2me.essentials.economy.Economy;
-import com.earth2me.essentials.backup.Backup;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.*;
-import com.earth2me.essentials.listener.*;
+import com.earth2me.essentials.backup.Backup;
+import com.earth2me.essentials.commands.EssentialsCommandHandler;
+import com.earth2me.essentials.economy.Economy;
+import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.economy.WorthHolder;
 import com.earth2me.essentials.economy.register.Methods;
+import com.earth2me.essentials.listener.*;
+import com.earth2me.essentials.metrics.Metrics;
+import com.earth2me.essentials.metrics.MetricsListener;
+import com.earth2me.essentials.metrics.MetricsStarter;
 import com.earth2me.essentials.ranks.RanksStorage;
 import com.earth2me.essentials.settings.SettingsHolder;
 import com.earth2me.essentials.settings.SpawnsHolder;
+import com.earth2me.essentials.user.IOfflinePlayer;
+import com.earth2me.essentials.user.User;
 import com.earth2me.essentials.user.UserMap;
+import com.earth2me.essentials.utils.ExecuteTimer;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,6 +45,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lombok.Getter;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -59,7 +65,7 @@ import org.yaml.snakeyaml.error.YAMLException;
 
 public class Essentials extends JavaPlugin implements IEssentials
 {
-	public static final int BUKKIT_VERSION = 2015;
+	public static final int BUKKIT_VERSION = 2149;
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient ISettings settings;
 	private final transient TntExplodeListener tntListener = new TntExplodeListener(this);
@@ -80,6 +86,11 @@ public class Essentials extends JavaPlugin implements IEssentials
 	private transient ICommandHandler commandHandler;
 	private transient Economy economy;
 	public transient boolean testing;
+	private transient Metrics metrics;
+	@Getter
+	private transient EssentialsTimer timer;
+	@Getter
+	private transient List<String> vanishedPlayers = new ArrayList<String>();
 
 	@Override
 	public ISettings getSettings()
@@ -123,7 +134,8 @@ public class Essentials extends JavaPlugin implements IEssentials
 		for (Plugin plugin : pm.getPlugins())
 		{
 			if (plugin.getDescription().getName().startsWith("Essentials")
-				&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion()))
+				&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion())
+				&& !plugin.getDescription().getName().equals("EssentialsAntiCheat"))
 			{
 				LOGGER.log(Level.WARNING, _("versionMismatch", plugin.getDescription().getName()));
 			}
@@ -134,8 +146,10 @@ public class Essentials extends JavaPlugin implements IEssentials
 			final int versionNumber = Integer.parseInt(versionMatch.group(1));
 			if (versionNumber < BUKKIT_VERSION && versionNumber > 100)
 			{
+				LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
 				LOGGER.log(Level.SEVERE, _("notRecommendedBukkit"));
 				LOGGER.log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
+				LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
 				this.setEnabled(false);
 				return;
 			}
@@ -232,6 +246,18 @@ public class Essentials extends JavaPlugin implements IEssentials
 		final EssentialsTimer timer = new EssentialsTimer(this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, timer, 1, 100);
 		execTimer.mark("RegListeners");
+
+		final MetricsStarter metricsStarter = new MetricsStarter(this);
+		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
+		{
+			getServer().getScheduler().scheduleAsyncDelayedTask(this, metricsStarter, 1);
+		}
+		else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
+		{
+			final MetricsListener metricsListener = new MetricsListener(this, metricsStarter);
+			pm.registerEvents(metricsListener, this);
+		}
+
 		final String timeroutput = execTimer.end();
 		if (getSettings().isDebug())
 		{
@@ -242,6 +268,13 @@ public class Essentials extends JavaPlugin implements IEssentials
 	@Override
 	public void onDisable()
 	{
+		for (Player p : getServer().getOnlinePlayers())
+		{
+			if (getUser(p).isVanished())
+			{
+				p.sendMessage(_("unvanishedReload"));
+			}
+		}
 		i18n.onDisable();
 		Trade.closeLog();
 	}
@@ -297,7 +330,61 @@ public class Essentials extends JavaPlugin implements IEssentials
 		return backup;
 	}
 
+	public Metrics getMetrics()
+	{
+		return metrics;
+	}
+
+	public void setMetrics(Metrics metrics)
+	{
+		this.metrics = metrics;
+	}
+	
 	@Override
+	public IUser getUser(final Object base)
+	{
+		if (base instanceof Player)
+		{
+			return getUser((Player)base);
+		}
+		if (base instanceof String)
+		{
+			final IUser user = userMap.getUser((String)base);
+			if (user != null && user.getBase() instanceof IOfflinePlayer)
+			{
+				((IOfflinePlayer)user.getBase()).setName((String)base);
+			}
+			return user;
+		}
+		return null;
+	}
+
+	private <T extends Player> IUser getUser(final T base)
+	{
+		if (base == null)
+		{
+			return null;
+		}
+
+		if (base instanceof IUser)
+		{
+			return (IUser)base;
+		}
+		IUser user = userMap.getUser(base.getName());
+
+		if (user == null)
+		{
+			user = new User(base, this);
+		}
+		else
+		{	
+			//todo - fix this
+			user.update(base);
+		}
+		return user;
+	}
+	
+	/*@Override
 	public IUser getUser(final Player player)
 	{
 		return userMap.getUser(player);
@@ -308,7 +395,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		return userMap.getUser(playerName);
 	}
-
+*/
 	@Override
 	public World getWorld(final String name)
 	{

@@ -8,6 +8,7 @@ import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.UserData.TimestampType;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -18,6 +19,8 @@ public class EssentialsTimer implements Runnable
 {
 	private final transient IEssentials ess;
 	private final transient Set<IUser> onlineUsers = new HashSet<IUser>();
+	private transient long lastPoll = System.currentTimeMillis();
+	private final transient LinkedList<Float> history = new LinkedList<Float>();
 
 	EssentialsTimer(final IEssentials ess)
 	{
@@ -28,6 +31,21 @@ public class EssentialsTimer implements Runnable
 	public void run()
 	{
 		final long currentTime = System.currentTimeMillis();
+		long timeSpent = (currentTime - lastPoll) / 1000;
+		if (timeSpent == 0)
+		{
+			timeSpent = 1;
+		}
+		if (history.size() > 10)
+		{
+			history.remove();
+		}
+		float tps = 100f / timeSpent;
+		if (tps <= 20)
+		{
+			history.add(tps);
+		}
+		lastPoll = currentTime;
 		for (Player player : ess.getServer().getOnlinePlayers())
 		{
 
@@ -77,6 +95,20 @@ public class EssentialsTimer implements Runnable
 			}
 			user.checkMuteTimeout(currentTime);
 			user.checkJailTimeout(currentTime);
+			user.resetInvulnerabilityAfterTeleport();
 		}
+	}
+
+	public float getAverageTPS()
+	{
+		float avg = 0;
+		for (Float f : history)
+		{
+			if (f != null)
+			{
+				avg += f;
+			}
+		}
+		return avg / history.size();
 	}
 }

@@ -13,7 +13,7 @@ public class UserData implements StorageObject
 {
 	public enum TimestampType
 	{
-		JAIL, MUTE, LASTHEAL, LASTTELEPORT, LOGIN, LOGOUT
+		JAIL, MUTE, LASTHEAL, LASTTELEPORT, LOGIN, LOGOUT, KIT
 	}
 	private String nickname;
 	private Double money;

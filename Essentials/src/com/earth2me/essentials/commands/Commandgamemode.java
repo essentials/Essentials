@@ -19,7 +19,7 @@ public class Commandgamemode extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		gamemodeOtherPlayers(sender, args[0]);
+		gamemodeOtherPlayers(sender, args);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class Commandgamemode extends EssentialsCommand
 	{
 		if (args.length > 0 && !args[0].trim().isEmpty() && Permissions.GAMEMODE_OTHERS.isAuthorized(user))
 		{
-			gamemodeOtherPlayers(user, args[0]);
+			gamemodeOtherPlayers(user, args);
 			return;
 		}
 
@@ -35,9 +35,9 @@ public class Commandgamemode extends EssentialsCommand
 		user.sendMessage(_("gameMode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName()));
 	}
 
-	private void gamemodeOtherPlayers(final CommandSender sender, final String name)
+	private void gamemodeOtherPlayers(final CommandSender sender, final String args[])
 	{
-		for (Player matchPlayer : server.matchPlayer(name))
+		for (Player matchPlayer : server.matchPlayer(args[0]))
 		{
 			final IUser player = ess.getUser(matchPlayer);
 			if (player.isHidden())
@@ -45,7 +45,21 @@ public class Commandgamemode extends EssentialsCommand
 				continue;
 			}
 
-			player.setGameMode(player.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
+			if (args.length > 1)
+			{
+				if (args[1].contains("creat") || args[1].equalsIgnoreCase("1"))
+				{
+					player.setGameMode(GameMode.CREATIVE);
+				}
+				else
+				{
+					player.setGameMode(GameMode.SURVIVAL);
+				}
+			}
+			else
+			{
+				player.setGameMode(player.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
+			}
 			sender.sendMessage(_("gameMode", _(player.getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getDisplayName()));
 		}
 	}

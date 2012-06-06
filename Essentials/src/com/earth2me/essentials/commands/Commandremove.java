@@ -40,7 +40,7 @@ public class Commandremove extends EssentialsCommand
 			}
 			catch (NumberFormatException e)
 			{
-				throw new Exception(_("numberRequired"));
+				throw new Exception(_("numberRequired"), e);
 			}
 		}
 
@@ -50,7 +50,7 @@ public class Commandremove extends EssentialsCommand
 		}
 		catch (IllegalArgumentException e)
 		{
-			throw new NotEnoughArgumentsException(); //TODO: translate and list types
+			throw new NotEnoughArgumentsException(e); //TODO: translate and list types
 		}
 
 		removeEntities(user, world, toRemove, radius);
@@ -77,7 +77,7 @@ public class Commandremove extends EssentialsCommand
 		}
 		catch (IllegalArgumentException e)
 		{
-			throw new NotEnoughArgumentsException(); //TODO: translate and list types
+			throw new NotEnoughArgumentsException(e); //TODO: translate and list types
 		}
 		removeEntities(sender, world, toRemove, 0);
 	}

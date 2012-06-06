@@ -50,6 +50,8 @@ public class Commandrepair extends EssentialsCommand
 		}
 		else if (args[0].equalsIgnoreCase("all"))
 		{
+			final Trade charge = new Trade("repair-all", ess);
+			charge.isAffordableFor(user);
 			final List<String> repaired = new ArrayList<String>();
 			repairItems(user.getInventory().getContents(), user, repaired);
 
@@ -66,6 +68,7 @@ public class Commandrepair extends EssentialsCommand
 			{
 				user.sendMessage(_("repair", Util.joinList(repaired)));
 			}
+			charge.charge(user);
 
 		}
 		else
@@ -99,7 +102,7 @@ public class Commandrepair extends EssentialsCommand
 				continue;
 			}
 			final String itemName = item.getType().toString().toLowerCase(Locale.ENGLISH);
-			final Trade charge = new Trade("repair-" + itemName.replace('_', '-'), ess);
+			final Trade charge = new Trade("repair-" + itemName.replace('_', '-'), "repair-item", ess);
 			try
 			{
 				charge.isAffordableFor(user);

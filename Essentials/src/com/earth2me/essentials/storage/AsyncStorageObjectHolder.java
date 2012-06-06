@@ -99,7 +99,11 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 	{
 		reader.schedule(instant);
 	}
-
+	
+	public abstract void finishRead();
+	
+	public abstract void finishWrite();
+	
 	public abstract File getStorageFile() throws IOException;
 
 
@@ -127,6 +131,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		public void onFinish()
 		{
 			unlock();
+			finishWrite();
 		}
 	}
 

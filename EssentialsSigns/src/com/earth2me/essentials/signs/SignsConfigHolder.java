@@ -12,6 +12,7 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 {
 	private final Plugin plugin;
 	private Set<EssentialsSign> enabledSigns = new HashSet<EssentialsSign>();
+	private boolean signsEnabled = false;
 
 	public SignsConfigHolder(final IEssentials ess, final Plugin plugin)
 	{
@@ -24,6 +25,11 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 			Map<String, Boolean> signs = getData().getSigns();
 			for (Map.Entry<String, Boolean> entry : signs.entrySet())
 			{
+				if(entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOR") || entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOUR"))
+				{
+					signsEnabled = true;
+					continue;
+				}
 				Signs sign = Signs.valueOf(entry.getKey().toUpperCase(Locale.ENGLISH));
 				if (sign != null && entry.getValue())
 				{
@@ -60,5 +66,22 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 	public Set<EssentialsSign> getEnabledSigns()
 	{
 		return enabledSigns;
+	}
+	
+	public boolean areSignsDisabled()
+	{
+		return !signsEnabled;
+	}
+
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
 	}
 }

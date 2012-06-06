@@ -40,6 +40,7 @@ public class KeywordReplacer implements IText
 			@Cleanup
 			final IUser user = ess.getUser((Player)sender);
 			user.acquireReadLock();
+			user.setDisplayNick();
 			displayName = user.getDisplayName();
 			userName = user.getName();
 			ipAddress = user.getAddress().getAddress().toString();

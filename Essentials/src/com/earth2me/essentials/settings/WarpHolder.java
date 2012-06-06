@@ -10,6 +10,19 @@ import java.io.IOException;
 
 public class WarpHolder extends AsyncStorageObjectHolder<Warp> implements IWarp
 {
+
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
+	
 	private final String name;
 
 	public WarpHolder(String name, IEssentials ess)

@@ -34,7 +34,7 @@ public class Commandmsg extends EssentialsCommand
 			}
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
-				message = Util.replaceColor(message);
+				message = Util.replaceFormat(message);
 			}
 			else
 			{
@@ -43,7 +43,7 @@ public class Commandmsg extends EssentialsCommand
 		}
 		else
 		{
-			message = Util.replaceColor(message);
+			message = Util.replaceFormat(message);
 		}
 
 		final String translatedMe = _("me");

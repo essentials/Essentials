@@ -29,10 +29,11 @@ public class Commandrealname extends EssentialsCommand
 			{
 				continue;
 			}
-			final String displayName = Util.stripColor(u.getDisplayName()).toLowerCase(Locale.ENGLISH);
+			u.setDisplayNick();
+			final String displayName = Util.stripFormat(u.getDisplayName()).toLowerCase(Locale.ENGLISH);
 			settings.acquireReadLock();
 			if (!whois.equals(displayName)
-				&& !displayName.equals(Util.stripColor(settings.getData().getChat().getNicknamePrefix()) + whois)
+				&& !displayName.equals(Util.stripFormat(settings.getData().getChat().getNicknamePrefix()) + whois)
 				&& !whois.equalsIgnoreCase(u.getName()))
 			{
 				continue;

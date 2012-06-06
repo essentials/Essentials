@@ -9,6 +9,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implements ISettings
 {
+
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
 	private final transient AtomicBoolean debug = new AtomicBoolean(false);
 	public SettingsHolder(final IEssentials ess)
 	{

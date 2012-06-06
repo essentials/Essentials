@@ -70,9 +70,11 @@ public class Commandnick extends EssentialsCommand
 	{
 		if (user == null || Permissions.NICK_COLOR.isAuthorized(user))
 		{
-			return nick.replace('&', '\u00a7').replaceAll("\u00a7+k", "");
-		} else {
-			return Util.stripColor(nick);
+			return Util.replaceFormat(nick);
+		}
+		else
+		{
+			return Util.formatString(user, "essentials.nick", nick);
 		}
 	}
 

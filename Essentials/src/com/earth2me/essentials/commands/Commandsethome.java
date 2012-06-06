@@ -26,7 +26,8 @@ public class Commandsethome extends EssentialsCommand
 			{
 				if (Permissions.SETHOME_MULTIPLE.isAuthorized(user))
 				{
-					if ("bed".equals(args[0].toLowerCase(Locale.ENGLISH))) {
+					if ("bed".equals(args[0].toLowerCase(Locale.ENGLISH)))
+					{
 						throw new NotEnoughArgumentsException();
 					}
 					if ((user.getHomes().size() < ess.getRanks().getHomeLimit(user))
@@ -65,7 +66,8 @@ public class Commandsethome extends EssentialsCommand
 					{
 						name = "home";
 					}
-					if ("bed".equals(name.toLowerCase(Locale.ENGLISH))) {
+					if ("bed".equals(name.toLowerCase(Locale.ENGLISH)))
+					{
 						throw new NotEnoughArgumentsException();
 					}
 
@@ -87,7 +89,7 @@ public class Commandsethome extends EssentialsCommand
 			}
 			user.getData().getHomes().put("home", new com.earth2me.essentials.storage.Location(user.getLocation()));
 		}
-		user.sendMessage(_("homeSet"));
+		user.sendMessage(_("homeSet", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
 
 	}
 }

@@ -28,6 +28,7 @@ public class Commandafk extends EssentialsCommand
 
 	private void toggleAfk(IUser user)
 	{
+		user.setDisplayNick();
 		if (!user.toggleAfk())
 		{
 			//user.sendMessage(_("markedAsNotAway"));

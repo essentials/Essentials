@@ -13,13 +13,16 @@ public class Commandgetpos extends EssentialsCommand
 	{
 		if (args.length > 0 && Permissions.GETPOS_OTHERS.isAuthorized(user))
 		{
+			//todo permissions
 			final IUser otherUser = getPlayer(args, 0);
-			outputPosition(user, otherUser.getLocation(), user.getLocation());
+			if (!otherUser.isHidden() || Permissions.LIST_HIDDEN.isAuthorized(user))
+			{
+				outputPosition(user, otherUser.getLocation(), user.getLocation());
+				return;
+			}
+
 		}
-		else
-		{
-			outputPosition(user, user.getLocation(), null);
-		}
+		outputPosition(user, user.getLocation(), null);
 	}
 
 	@Override

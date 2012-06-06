@@ -5,9 +5,11 @@ import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.permissions.Permissions;
+import com.earth2me.essentials.user.UserData.TimestampType;
 import java.util.List;
 import lombok.Cleanup;
 import org.bukkit.Material;
+import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -33,34 +35,59 @@ public class EssentialsEntityListener implements Listener
 	{
 		final Entity eAttack = event.getDamager();
 		final Entity eDefend = event.getEntity();
+
 		if (eDefend instanceof Player && eAttack instanceof Player)
 		{
 			@Cleanup
 			final IUser attacker = ess.getUser((Player)eAttack);
+			@Cleanup
+			final IUser defender = ess.getUser((Player)eDefend);
+			@Cleanup
+			ISettings settings = ess.getSettings();
+			settings.acquireReadLock();
 			attacker.acquireReadLock();
+			defender.acquireReadLock();
+
 			attacker.updateActivity(true);
+			if (settings.getData().getGeneral().getLoginAttackDelay() > 0 && !Permissions.PVPDELAY_EXEMPT.isAuthorized(attacker)
+				&& (System.currentTimeMillis() < (attacker.getTimestamp(TimestampType.LOGIN) + settings.getData().getGeneral().getLoginAttackDelay())))
+			{
+				event.setCancelled(true);
+			}
+			if (attacker.hasInvulnerabilityAfterTeleport() || defender.hasInvulnerabilityAfterTeleport())
+			{
+				event.setCancelled(true);
+			}
 			final ItemStack itemstack = attacker.getItemInHand();
 			final List<String> commandList = attacker.getData().getPowertool(itemstack.getType());
 			if (commandList != null && !commandList.isEmpty())
 			{
-				for (String command : commandList)
+				for (final String command : commandList)
 				{
 					if (command != null && !command.isEmpty())
 					{
-						attacker.getServer().dispatchCommand(attacker, command.replaceAll("\\{player\\}", ((Player)eDefend).getName()));
+						ess.scheduleSyncDelayedTask(
+								new Runnable()
+								{
+									@Override
+									public void run()
+									{
+										attacker.getServer().dispatchCommand(attacker.getBase(), command.replaceAll("\\{player\\}", defender.getName()));
+									}
+								});
 						event.setCancelled(true);
 						return;
 					}
 				}
 			}
 		}
-		else if (eDefend instanceof Animals && eAttack instanceof Player)
+		else if (eDefend instanceof Ageable && eAttack instanceof Player)
 		{
 			final Player player = (Player)eAttack;
 			final ItemStack hand = player.getItemInHand();
 			if (hand != null && hand.getType() == Material.MILK_BUCKET)
 			{
-				((Animals)eDefend).setBaby();
+				((Ageable)eDefend).setBaby();
 				hand.setType(Material.BUCKET);
 				player.setItemInHand(hand);
 				player.updateInventory();

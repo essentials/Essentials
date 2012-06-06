@@ -3,6 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -32,7 +33,7 @@ public class Commandsetworth extends EssentialsCommand
 
 		ess.getWorth().setPrice(stack, Double.parseDouble(price));
 		user.sendMessage(_("worthSet"));
-	}
+	}	
 
 	@Override
 	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception

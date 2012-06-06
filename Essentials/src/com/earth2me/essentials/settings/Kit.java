@@ -16,4 +16,5 @@ public class Kit implements StorageObject
 	@ListType(ItemStack.class)
 	private List<ItemStack> items = new ArrayList<ItemStack>();
 	private Double delay;
+	
 }
