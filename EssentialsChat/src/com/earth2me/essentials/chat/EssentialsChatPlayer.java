@@ -112,6 +112,7 @@ public abstract class EssentialsChatPlayer implements Listener
 
 	protected void handleLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
+		
 		long radius = 0;
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
@@ -142,26 +143,6 @@ public abstract class EssentialsChatPlayer implements Listener
 				event.setMessage(event.getMessage().substring(1));
 				event.setFormat(_(format.toString(), event.getFormat()));
 				return;
-			}
-			if (!onlineUser.equals(sender))
-			{
-				if (onlineUser.isAuthorized("essentials.chat.spy"))
-				{
-					type = type.concat(_("chatTypeSpy"));
-				}
-				else
-				{
-					final Location playerLoc = onlineUser.getLocation();
-					if (playerLoc.getWorld() != world)
-					{
-						continue;
-					}
-					final double delta = playerLoc.distanceSquared(loc);
-					if (delta > chatStore.getRadius())
-					{
-						continue;
-					}
-				}
 			}
 
 			final StringBuilder errorMsg = new StringBuilder();

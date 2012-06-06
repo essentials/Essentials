@@ -1,5 +1,6 @@
 package com.earth2me.essentials.signs;
 
+import com.earth2me.essentials.Kits;
 import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IEssentials;
@@ -58,11 +59,10 @@ public class SignKit extends EssentialsSign
 			final Trade charge = getTrade(sign, 3, ess);
 			charge.isAffordableFor(player);
 			try
-			{
-				final Kit kit = ess.getKits().getKit(kitName);				
-				Kit.checkTime(player, kitName, kit);
-				final List<String> items = Kit.getItems(player, kit);
-				Kit.expandItems(ess, player, items);
+			{;
+				final Kit kit = ess.getKits().getKit(kitName);			
+				ess.getKits().checkTime(player, kit);				
+				ess.getKits().sendKit(player,kit);
 				charge.charge(player);
 			}
 			catch (Exception ex)

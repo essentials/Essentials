@@ -25,7 +25,7 @@ public class SignPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
-		if (ess.getSettings().areSignsDisabled() || event.getAction() != Action.RIGHT_CLICK_BLOCK)
+		if (plugin.getSettings().areSignsDisabled() || event.getAction() != Action.RIGHT_CLICK_BLOCK)
 		{
 			return;
 		}

@@ -12,11 +12,5 @@ public class InstallationFinishedEvent extends Event
     public HandlerList getHandlers()
     {
         return handlers;
-    }
-
-	@Override
-	public HandlerList getHandlers()
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+    }	
 }

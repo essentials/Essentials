@@ -696,7 +696,8 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		ess.getSettings().setMetricsEnabled(false);
+		//todo - metrics
+   //	ess.getSettings().setMetricsEnabled(false);
 		doneFile.setProperty("warnMetrics", true);
 		doneFile.save();
 	}

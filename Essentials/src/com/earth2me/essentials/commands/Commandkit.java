@@ -90,16 +90,10 @@ public class Commandkit extends EssentialsCommand
 			throw new Exception(_("noKitPermission", "essentials.kit." + kitName));
 		}
 		final Kit kit = ess.getKits().getKit(kitName);
-
-
-
 		ess.getKits().checkTime(userFrom, kit);
-
 		final Trade charge = new Trade("kit-" + kitName, ess);
 		charge.isAffordableFor(userFrom);
-
 		ess.getKits().sendKit(userTo, kit);
-
 		charge.charge(userFrom);
 		userTo.sendMessage(_("kitGive", kitName));
 	}

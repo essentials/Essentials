@@ -24,4 +24,16 @@ public class ConfigHolder extends AsyncStorageObjectHolder<GeoIP>
 		return new File(geoip.getDataFolder(), "config.yml");
 	}
 
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
+
 }

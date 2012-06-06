@@ -739,6 +739,10 @@ public class User extends UserBase implements IUser
 			teleportInvulnerabilityTimestamp = 0;
 		}
 	}
+	public boolean hasInvulnerabilityAfterTeleport()
+	{
+		return teleportInvulnerabilityTimestamp != 0 && teleportInvulnerabilityTimestamp >= System.currentTimeMillis();
+	}
 	
 	@Override
 	public void toggleVanished()

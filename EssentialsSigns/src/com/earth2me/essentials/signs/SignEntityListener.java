@@ -48,7 +48,7 @@ public class SignEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onEntityChangeBlock(final EntityChangeBlockEvent event)
 	{
-		if (ess.getSettings().areSignsDisabled())
+		if (plugin.getSettings().areSignsDisabled())
 		{
 			return;
 		}

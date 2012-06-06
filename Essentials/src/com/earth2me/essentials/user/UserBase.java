@@ -113,14 +113,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	@Override
 	public Location getBedSpawnLocation()
 	{
-		if (isOnlineUser())
-		{
-			return base.getBedSpawnLocation();
-		}
-		else
-		{
-			return offlinePlayer.getBedSpawnLocation();
-		}
+		return base.getBedSpawnLocation();
 	}
 
 	@Override

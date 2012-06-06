@@ -120,6 +120,8 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	
 	void setInvSee(boolean invsee);
 	
+	boolean hasInvulnerabilityAfterTeleport();
+	
 	void update(final Player base);
 	
 }

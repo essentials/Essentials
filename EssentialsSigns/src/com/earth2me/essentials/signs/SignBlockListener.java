@@ -1,8 +1,9 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.api.IEssentials;
+import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.Util;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Material;
@@ -32,7 +33,9 @@ public class SignBlockListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockBreak(final BlockBreakEvent event)
 	{
-		if (ess.getSettings().areSignsDisabled())
+		ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		if (plugin.getSettings().areSignsDisabled())
 		{
 			return;
 		}
@@ -65,15 +68,7 @@ public class SignBlockListener implements Listener
 			LOGGER.log(Level.INFO, "Prevented that a block was broken next to a sign.");
 			return true;
 		}
-		for (EssentialsSign sign : ess.getSettings().enabledSigns())
-		{
-			if (sign.getBlocks().contains(block.getType())
-				&& !sign.onBlockBreak(block, player, ess))
-			{
-				LOGGER.log(Level.INFO, "A block was protected by a sign.");
-				return true;
-			}
-			for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
+		for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
 			{
 				if (sign.getBlocks().contains(block.getType())
 					&& !sign.onBlockBreak(block, player, ess))
@@ -81,19 +76,18 @@ public class SignBlockListener implements Listener
 					LOGGER.log(Level.INFO, "A block was protected by a sign.");
 					return true;
 				}
-			}
-		}
+			}		
 		return false;
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onSignChange(final SignChangeEvent event)
 	{
-		if (ess.getSettings().areSignsDisabled())
+		if (plugin.getSettings().areSignsDisabled())
 		{
 			return;
 		}
-		User user = ess.getUser(event.getPlayer());
+		IUser user = ess.getUser(event.getPlayer());
 
 		for (int i = 0; i < 4; i++)
 		{
@@ -120,7 +114,7 @@ public class SignBlockListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{
-		if (ess.getSettings().areSignsDisabled())
+		if (plugin.getSettings().areSignsDisabled())
 		{
 			return;
 		}
@@ -154,7 +148,7 @@ public class SignBlockListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockBurn(final BlockBurnEvent event)
 	{
-		if (ess.getSettings().areSignsDisabled())
+		if (plugin.getSettings().areSignsDisabled())
 		{
 			return;
 		}
@@ -182,7 +176,7 @@ public class SignBlockListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockIgnite(final BlockIgniteEvent event)
 	{
-		if (ess.getSettings().areSignsDisabled())
+		if (plugin.getSettings().areSignsDisabled())
 		{
 			return;
 		}

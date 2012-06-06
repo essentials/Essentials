@@ -34,6 +34,7 @@ public class Commandpowertool extends EssentialsCommand
 		}
 
 		final String itemName = itemStack.getType().toString().toLowerCase(Locale.ENGLISH).replaceAll("_", " ");
+		user.acquireReadLock();
 		List<String> powertools = user.getData().getPowertool(itemStack.getType());
 		if (command != null && !command.isEmpty())
 		{

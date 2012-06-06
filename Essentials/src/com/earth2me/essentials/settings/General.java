@@ -80,9 +80,9 @@ public class General implements StorageObject
 		"This applies to /world, /back, /tp[a|o][here|all], but not warps.",
 		"Give someone permission to teleport to a world with essentials.world.<worldname>"
 	})
-	private boolean worldTeleportPermissions = false;
-		
+	private boolean worldTeleportPermissions = false;		
 	private boolean worldHomePermissions = false;	
+	
 		
     @Comment("Prevent creatures spawning")
 	private Map<String, Boolean> creatureSpawn = new HashMap<String, Boolean>();
@@ -94,5 +94,13 @@ public class General implements StorageObject
 			return false;
 		}
 		return creatureSpawn.get(creatureName);		
+	}
+	
+	@Comment("Delay to wait before people can cause attack damage after logging in ")
+	private long loginAttackDelay = 0;
+	
+	public long getLoginAttackDelay()
+	{
+		return loginAttackDelay * 1000;
 	}
 }
