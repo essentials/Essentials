@@ -22,13 +22,18 @@ import lombok.Cleanup;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -433,6 +438,36 @@ public class EssentialsPlayerListener implements Listener
 		if (user.getData().isAfk())
 		{
 			event.setCancelled(true);
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onInventoryClickEvent(final InventoryClickEvent event)
+	{
+		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
+		{
+			final IUser user = ess.getUser(event.getWhoClicked());
+			final InventoryHolder invHolder = event.getView().getTopInventory().getHolder();
+			if (invHolder != null && invHolder instanceof HumanEntity)
+			{
+				final IUser invOwner = ess.getUser((HumanEntity)invHolder);
+				if (user.isInvSee() && (!Permissions.INVSEE_MODIFY.isAuthorized(user)
+										|| Permissions.INVSEE_PREVENT_MODIFY.isAuthorized(invOwner)
+										|| !invOwner.isOnline()))
+				{
+					event.setCancelled(true);
+				}
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onInventoryCloseEvent(final InventoryCloseEvent event)
+	{
+		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
+		{
+			final IUser user = ess.getUser(event.getPlayer());
+			user.setInvSee(false);
 		}
 	}
 }
