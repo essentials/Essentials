@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
+
 public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 {
 	private CommandSender replyTo = null;
@@ -26,6 +27,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	private transient Location afkPosition = null;
 	private boolean invSee = false;
 	private static final Logger logger = Logger.getLogger("Minecraft");
+	public boolean isFrozen;
 
 	User(final Player base, final IEssentials ess)
 	{
@@ -661,5 +663,17 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 			setHidden(false);
 			ess.getVanishedPlayers().remove(getName());
 		}
+	}
+	
+    public boolean checkFreezeTimeout(final long currentTime)
+	{
+		if (getFreezeTimeout() > 0 && getFreezeTimeout() < currentTime && isFrozen())
+		{
+			setFreezeTimeout(0);
+			sendMessage(_("canMoveAgain"));
+			setFrozen(false);
+			return true;
+		}
+		return false;
 	}
 }

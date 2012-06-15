@@ -438,3 +438,7 @@ commands:
     description: Calculates the worth of items in hand or as specified.
     usage: /<command> [item] [amount]
     aliases: [eworth,price,eprice]
+  freeze:
+    description: Freezes the specified player.
+    usage: /<command> [player]
+    aliases: [efreeze]
