@@ -151,6 +151,15 @@ public class EssentialsPlayerListener implements Listener
 		user.updateDisplayName();
 		user.getData().setIpAddress(user.getAddress().getAddress().getHostAddress());
 		user.updateActivity(false);
+
+		for (String p : ess.getVanishedPlayers())
+		{
+			if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(user))
+			{
+				user.hidePlayer(ess.getUser(p).getBase());
+			}
+		}
+
 		if (Permissions.SLEEPINGIGNORED.isAuthorized(user))
 		{
 			user.setSleepingIgnored(true);
@@ -385,7 +394,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			return false;
 		}
-		
+
 		final List<String> commandList = user.getData().getPowertool(is.getType());
 		if (commandList == null || commandList.isEmpty())
 		{
@@ -440,7 +449,7 @@ public class EssentialsPlayerListener implements Listener
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onInventoryClickEvent(final InventoryClickEvent event)
 	{
