@@ -29,7 +29,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class User extends UserBase implements IUser
 {
-
 	private CommandSender replyTo = null;
 	@Getter
 	private transient IUser teleportRequester;
@@ -50,7 +49,7 @@ public class User extends UserBase implements IUser
 	private transient boolean vanished;
 	@Getter
 	@Setter
-    private boolean invSee = false;
+	private boolean invSee = false;
 	private transient Location afkPosition;
 	private static final Logger logger = Bukkit.getLogger();
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
@@ -61,13 +60,12 @@ public class User extends UserBase implements IUser
 		teleport = new Teleport(this, ess);
 	}
 
-	
 	public User(final OfflinePlayer offlinePlayer, final IEssentials ess)
 	{
 		super(offlinePlayer, ess);
 		teleport = new Teleport(this, ess);
-	}	
-	
+	}
+
 	public void example()
 	{
 		// Cleanup will call close at the end of the function
@@ -82,7 +80,7 @@ public class User extends UserBase implements IUser
 		user.acquireWriteLock();
 		user.getData().setMoney(10 + money);
 	}
-	
+
 	@Override
 	public void finishRead()
 	{
@@ -92,7 +90,7 @@ public class User extends UserBase implements IUser
 	public void finishWrite()
 	{
 	}
-	
+
 	@Override
 	public void update(final Player base)
 	{
@@ -524,7 +522,7 @@ public class User extends UserBase implements IUser
 	public Location getAfkPosition()
 	{
 		return afkPosition;
-	}	
+	}
 
 	@Override
 	public boolean isGodModeEnabled()
@@ -674,8 +672,10 @@ public class User extends UserBase implements IUser
 				spew = true;
 			}
 		}
-		else {
-			if (!overfilled.isEmpty()) {
+		else
+		{
+			if (!overfilled.isEmpty())
+			{
 				throw new ChargeException("Inventory full");
 			}
 		}
@@ -695,25 +695,29 @@ public class User extends UserBase implements IUser
 		}
 		return cost <= mon;
 	}
+
 	@Override
-	public void updateMoneyCache(double userMoney) {
-		if (super.getMoney() != userMoney) {
+	public void updateMoneyCache(double userMoney)
+	{
+		if (super.getMoney() != userMoney)
+		{
 			super.setMoney(userMoney);
 		}
 	}
 
 	@Override
-	public boolean canAfford(double amount, boolean b) {
+	public boolean canAfford(double amount, boolean b)
+	{
 		return true;
-	}	
+	}
 	private transient long teleportInvulnerabilityTimestamp = 0;
-	
+
 	public void enableInvulnerabilityAfterTeleport()
 	{
 		@Cleanup
-	    final ISettings settings = ess.getSettings();
+		final ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
-		
+
 		final long time = settings.getData().getGeneral().getTeleportInvulnerability();
 		if (time > 0)
 		{
@@ -730,21 +734,36 @@ public class User extends UserBase implements IUser
 			teleportInvulnerabilityTimestamp = 0;
 		}
 	}
+
+	@Override
 	public boolean hasInvulnerabilityAfterTeleport()
 	{
 		return teleportInvulnerabilityTimestamp != 0 && teleportInvulnerabilityTimestamp >= System.currentTimeMillis();
 	}
-	
+
 	@Override
 	public void toggleVanished()
 	{
 		vanished = !vanished;
 		if (vanished)
 		{
+			for (Player p : ess.getServer().getOnlinePlayers())
+			{
+				if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(ess.getUser(p)))
+				{
+					p.hidePlayer(getBase());
+				}
+			}
+			setHidden(true);
 			ess.getVanishedPlayers().add(getName());
 		}
 		else
 		{
+			for (Player p : ess.getServer().getOnlinePlayers())
+			{
+				p.showPlayer(getBase());
+			}
+			setHidden(false);
 			ess.getVanishedPlayers().remove(getName());
 		}
 	}

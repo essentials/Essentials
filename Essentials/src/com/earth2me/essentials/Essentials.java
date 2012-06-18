@@ -270,8 +270,10 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		for (Player p : getServer().getOnlinePlayers())
 		{
-			if (getUser(p).isVanished())
+			IUser user = getUser(p);
+			if (user.isVanished())
 			{
+				user.toggleVanished();
 				p.sendMessage(_("unvanishedReload"));
 			}
 		}
@@ -339,7 +341,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		this.metrics = metrics;
 	}
-	
+
 	@Override
 	public IUser getUser(final Object base)
 	{
@@ -377,25 +379,25 @@ public class Essentials extends JavaPlugin implements IEssentials
 			user = new User(base, this);
 		}
 		else
-		{	
+		{
 			//todo - fix this
 			user.update(base);
 		}
 		return user;
 	}
-	
-	/*@Override
-	public IUser getUser(final Player player)
-	{
-		return userMap.getUser(player);
-	}
 
-	@Override
-	public IUser getUser(final String playerName)
-	{
-		return userMap.getUser(playerName);
-	}
-*/
+	/*@Override
+	 public IUser getUser(final Player player)
+	 {
+	 return userMap.getUser(player);
+	 }
+
+	 @Override
+	 public IUser getUser(final String playerName)
+	 {
+	 return userMap.getUser(playerName);
+	 }
+	 */
 	@Override
 	public World getWorld(final String name)
 	{

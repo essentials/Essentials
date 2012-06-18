@@ -131,6 +131,10 @@ public class EssentialsPlayerListener implements Listener
 		{
 			user.setGodModeEnabled(false);
 		}
+		if (user.isVanished())
+		{
+			user.toggleVanished();
+		}
 		if (user.getData().getInventory() != null)
 		{
 			user.getInventory().setContents(user.getData().getInventory().getBukkitInventory());
