@@ -30,10 +30,11 @@ public class Commanditemdb extends EssentialsCommand
 		}
 		sender.sendMessage(itemStack.getType().toString() + "- " + itemStack.getTypeId() + ":" + Integer.toString(itemStack.getData().getData()));
 
-		int maxuses = itemStack.getType().getMaxDurability();
-		int durability = ((itemStack.getType().getMaxDurability() + 1) - itemStack.getDurability());
+
 		if (itemStack.getType() != Material.AIR)
 		{
+			int maxuses = itemStack.getType().getMaxDurability();
+			int durability = ((maxuses + 1) - itemStack.getDurability());
 			if (maxuses != 0)
 			{
 				sender.sendMessage(_("durability", Integer.toString(durability)));
