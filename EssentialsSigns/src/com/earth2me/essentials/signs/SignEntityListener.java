@@ -24,6 +24,11 @@ public class SignEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW)
 	public void onEntityExplode(final EntityExplodeEvent event)
 	{
+		if (plugin.getSettings().areSignsDisabled())
+		{
+			return;
+		}
+		
 		for (Block block : event.blockList())
 		{
 			if (((block.getTypeId() == Material.WALL_SIGN.getId()
