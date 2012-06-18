@@ -7,7 +7,6 @@ import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.commands.NoChargeException;
 import com.earth2me.essentials.settings.Kit;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
-import com.earth2me.essentials.user.UserData;
 import com.earth2me.essentials.user.UserData.TimestampType;
 import com.earth2me.essentials.utils.DateUtil;
 import java.io.File;
@@ -18,8 +17,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class Kits extends AsyncStorageObjectHolder<com.earth2me.essentials.settings.Kits> implements IKits
 {
-
-	
 	public Kits(final IEssentials ess)
 	{
 		super(ess, com.earth2me.essentials.settings.Kits.class);
@@ -66,8 +63,8 @@ public class Kits extends AsyncStorageObjectHolder<com.earth2me.essentials.setti
 	@Override
 	public void sendKit(IUser user, Kit kit) throws Exception
 	{
-		final List<ItemStack> itemList = kit.getItems();		
-		user.giveItems(itemList, true);					
+		final List<ItemStack> itemList = kit.getItems();
+		user.giveItems(itemList, true);
 	}
 
 	@Override
@@ -93,42 +90,49 @@ public class Kits extends AsyncStorageObjectHolder<com.earth2me.essentials.setti
 	{
 		return getData().getKits().isEmpty();
 	}
-	
+
 	@Override
 	public void finishRead()
 	{
-		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		
 	}
-	
+
+	@Override
 	public void checkTime(final IUser user, Kit kit) throws NoChargeException
 	{
+		final Calendar time = new GregorianCalendar();
+		// Take the current time, and remove the delay from it.
 		final double delay = kit.getDelay();
-		final Calendar c = new GregorianCalendar();
-		c.add(Calendar.SECOND, -(int)delay);
-		c.add(Calendar.MILLISECOND, -(int)((delay * 1000.0) % 1000.0));
+		final Calendar earliestTime = new GregorianCalendar();
+		earliestTime.add(Calendar.SECOND, -(int)delay);
+		earliestTime.add(Calendar.MILLISECOND, -(int)((delay * 1000.0) % 1000.0));
 
-		final long mintime = c.getTimeInMillis();
+		// This value contains the most recent time a kit could have been used that would allow another use.
 
-		//todo multiple kit times
+		final long earliestLong = earliestTime.getTimeInMillis();
+
+		// When was the last kit used?
 		final Long lastTime = user.getTimestamp(TimestampType.KIT);
-		if (lastTime == null || lastTime < mintime)
+		if (lastTime == null || lastTime < earliestLong)
 		{
-			final Calendar now = new GregorianCalendar();
-			user.setTimestamp(TimestampType.KIT, now.getTimeInMillis());
+			user.setTimestamp(TimestampType.KIT, time.getTimeInMillis());
+		}
+		else if (lastTime > time.getTimeInMillis())
+		{
+			// This is to make sure time didn't get messed up on last kit use.
+			// If this happens, let's give the user the benifit of the doubt.
+			user.setTimestamp(TimestampType.KIT, time.getTimeInMillis());
 		}
 		else
 		{
-			final Calendar future = new GregorianCalendar();
-			future.setTimeInMillis(lastTime);
-			future.add(Calendar.SECOND, (int)delay);
-			future.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
-			user.sendMessage(_("kitTimed", DateUtil.formatDateDiff(future.getTimeInMillis())));
+			time.setTimeInMillis(lastTime);
+			time.add(Calendar.SECOND, (int)delay);
+			time.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
+			user.sendMessage(_("kitTimed", DateUtil.formatDateDiff(time.getTimeInMillis())));
 			throw new NoChargeException();
 		}
 	}
