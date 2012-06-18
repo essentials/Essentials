@@ -60,7 +60,11 @@ public class Commandessentials extends EssentialsCommand
 			}
 			disabledCommands.append(entry.getKey()).append(" => ").append(entry.getValue());
 		}
-		sender.sendMessage(disabledCommands.toString());
+		
+		if (disabledCommands.length() > 0) {
+			sender.sendMessage(_("blockList"));
+			sender.sendMessage(disabledCommands.toString());
+		}
 	}
 
 	private void run_debug(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
