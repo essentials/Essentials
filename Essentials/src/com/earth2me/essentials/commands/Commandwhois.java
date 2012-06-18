@@ -40,6 +40,7 @@ public class Commandwhois extends EssentialsCommand
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
 		final int prefixLength = Util.stripColor(settings.getData().getChat().getNicknamePrefix()).length();
+		boolean foundPlayer = false;
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			@Cleanup
@@ -57,6 +58,7 @@ public class Commandwhois extends EssentialsCommand
 			{
 				continue;
 			}
+			foundPlayer = true;
 			sender.sendMessage("");
 			user.setDisplayNick();
 			sender.sendMessage(_("whoisIs", user.getDisplayName(), user.getName()));
@@ -81,6 +83,10 @@ public class Commandwhois extends EssentialsCommand
 				&& Permissions.GEOIP_SHOW.isAuthorized(sender))
 			{
 				sender.sendMessage(_("whoisGeoLocation", location));
+			}
+			if (!foundPlayer)
+			{
+				throw new NoSuchFieldException(_("playerNotFound"));
 			}
 		}
 	}

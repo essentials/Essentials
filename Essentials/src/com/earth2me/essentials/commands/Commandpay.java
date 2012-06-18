@@ -16,14 +16,14 @@ public class Commandpay extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		if (args[0] == "")
+		if (args[0].trim().length() < 3)
 		{
 			throw new NotEnoughArgumentsException("You need to specify a player to pay.");
 		}
 
 		double amount = Double.parseDouble(args[1].replaceAll("[^0-9\\.]", ""));
 
-		Boolean foundUser = false;
+		boolean foundUser = false;
 		for (Player p : server.matchPlayer(args[0]))
 		{
 			IUser u = ess.getUser(p);
@@ -36,7 +36,7 @@ public class Commandpay extends EssentialsCommand
 			foundUser = true;
 		}
 
-		if (foundUser == false)
+		if (!foundUser)
 		{
 			throw new NoSuchFieldException(_("playerNotFound"));
 		}
