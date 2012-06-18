@@ -59,16 +59,25 @@ public class Commandwhois extends EssentialsCommand
 				continue;
 			}
 			foundPlayer = true;
-			sender.sendMessage("");
+			sender.sendMessage(_("whoisTop", user.getName()));
 			user.setDisplayNick();
 			sender.sendMessage(_("whoisIs", user.getDisplayName(), user.getName()));
 			sender.sendMessage(_("whoisHealth", user.getHealth()));
 			sender.sendMessage(_("whoisExp", SetExpFix.getTotalExperience(user), user.getLevel()));
-			sender.sendMessage(_("whoisOP", (user.isOp() ? _("true") : _("false"))));
-			sender.sendMessage(_("whoisGod", (user.isGodModeEnabled() ? _("true") : _("false"))));
-			sender.sendMessage(_("whoisGamemode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH))));
 			sender.sendMessage(_("whoisLocation", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
 			sender.sendMessage(_("whoisMoney", Util.displayCurrency(user.getMoney(), ess)));
+			sender.sendMessage(_("whoisIPAddress", user.getAddress().getAddress().toString()));
+			final String location = user.getData().getGeolocation();
+			if (location != null
+				&& Permissions.GEOIP_SHOW.isAuthorized(sender))
+			{
+				sender.sendMessage(_("whoisGeoLocation", location));
+			}
+			sender.sendMessage(_("whoisGamemode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH))));
+			sender.sendMessage(_("whoisGod", (user.isGodModeEnabled() ? _("true") : _("false"))));
+			sender.sendMessage(_("whoisOP", (user.isOp() ? _("true") : _("false"))));
+			sender.sendMessage(_("whoisFly", user.getAllowFlight() ? _("true") : _("false"), user.isFlying() ? _("flying") : _("notFlying")));
+			sender.sendMessage(_("whoisAFK", (user.getData().isAfk() ? _("true") : _("false"))));
 			sender.sendMessage(_("whoisJail", (user.getData().isJailed()
 											   ? user.getTimestamp(UserData.TimestampType.JAIL) > 0
 												 ? DateUtil.formatDateDiff(user.getTimestamp(UserData.TimestampType.JAIL))
@@ -79,16 +88,7 @@ public class Commandwhois extends EssentialsCommand
 												 ? DateUtil.formatDateDiff(user.getTimestamp(UserData.TimestampType.MUTE))
 												 : _("true")
 											   : _("false"))));
-			sender.sendMessage(user.getData().isAfk()
-							   ? _("whoisStatusAway")
-							   : _("whoisStatusAvailable"));
-			sender.sendMessage(_("whoisIPAddress", user.getAddress().getAddress().toString()));
-			final String location = user.getData().getGeolocation();
-			if (location != null
-				&& Permissions.GEOIP_SHOW.isAuthorized(sender))
-			{
-				sender.sendMessage(_("whoisGeoLocation", location));
-			}
+			
 			if (!foundPlayer)
 			{
 				throw new NoSuchFieldException(_("playerNotFound"));
