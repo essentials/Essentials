@@ -1,7 +1,6 @@
 package com.earth2me.essentials.protect;
 
 import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.craftbukkit.FakeExplosion;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -9,9 +8,9 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
-import org.bukkit.event.entity.*;
 
 
 public class EssentialsProtectEntityListener implements Listener
@@ -195,10 +194,9 @@ public class EssentialsProtectEntityListener implements Listener
 					 && (settings.getData().getPrevent().isCreeperExplosion()
 						 || settings.getData().getPrevent().isCreeperBlockdamage()
 						 || (maxHeight >= 0 && event.getLocation().getBlockY() > maxHeight)))
-			{
-				//Nicccccccccce plaaacccccccccce..
-				FakeExplosion.createExplosion(event, ess.getServer(), ess.getServer().getOnlinePlayers());
+			{	
 				event.setCancelled(true);
+				event.getLocation().getWorld().createExplosion(event.getLocation(), 0F);
 				return;
 			}
 			else if (event.getEntity() instanceof TNTPrimed

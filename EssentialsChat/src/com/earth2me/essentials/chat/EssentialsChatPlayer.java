@@ -1,15 +1,14 @@
 package com.earth2me.essentials.chat;
 
-import com.earth2me.essentials.api.ChargeException;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.economy.Trade;
-import com.earth2me.essentials.utils.Util;
+import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IRanks;
 import com.earth2me.essentials.api.ISettings;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.permissions.Permissions;
-import com.earth2me.essentials.storage.Location;
+import com.earth2me.essentials.utils.Util;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
