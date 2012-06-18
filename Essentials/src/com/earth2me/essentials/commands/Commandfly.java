@@ -18,16 +18,15 @@ public class Commandfly extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		flyOtherPlayers(server, sender, args[0]);
+		flyOtherPlayers(server, sender, args);
 	}
 
 	@Override
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		//todo permissions
 		if (args.length > 0 && args[0].trim().length() > 2 && Permissions.FLY_OTHERS.isAuthorized(user))
 		{
-			flyOtherPlayers(server, user, args[0]);
+			flyOtherPlayers(server, user, args);
 			return;
 		}
 		user.setAllowFlight(!user.getAllowFlight());
@@ -38,16 +37,31 @@ public class Commandfly extends EssentialsCommand
 		user.sendMessage(_("flyMode", _(user.getAllowFlight() ? "enabled" : "disabled"), user.getDisplayName()));
 	}
 
-	private void flyOtherPlayers(final Server server, final CommandSender sender, final String name)
+	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args)
 	{
-		for (Player matchPlayer : server.matchPlayer(name))
+		for (Player matchPlayer : server.matchPlayer(args[0]))
 		{
 			final IUser player = ess.getUser(matchPlayer);
 			if (player.isHidden())
 			{
 				continue;
 			}
-			player.setAllowFlight(!player.getAllowFlight());
+			if (args.length > 1)
+			{
+				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
+				{
+					player.setAllowFlight(true);
+				}
+				else
+				{
+					player.setAllowFlight(false);
+				}
+			}
+			else
+			{
+				player.setAllowFlight(!player.getAllowFlight());
+			}
+			
 			if (!player.getAllowFlight())
 			{
 				player.setFlying(false);
