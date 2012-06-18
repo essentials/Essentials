@@ -110,7 +110,7 @@ commands:
   itemdb:
     description: Searches for an item.
     usage: /<command> <item>
-    aliases: [eitemdb]
+    aliases: [eitemdb,itemno,eitemno,durability,dura,edura,edurability]
   fireball:
     description: Throw a fireball.
     usage: /<command> [small]
