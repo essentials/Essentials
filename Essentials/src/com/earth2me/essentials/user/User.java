@@ -523,17 +523,7 @@ public class User extends UserBase implements IUser
 	public Location getAfkPosition()
 	{
 		return afkPosition;
-	}
-
-	@Override
-	public boolean toggleGodModeEnabled()
-	{
-		if (!isGodModeEnabled())
-		{
-			setFoodLevel(20);
-		}
-		return super.toggleGodmode();
-	}
+	}	
 
 	@Override
 	public boolean isGodModeEnabled()

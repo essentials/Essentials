@@ -272,14 +272,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 
-	public boolean toggleGodmode()
+	public void setGodModeEnabled(boolean set)
 	{
 		acquireWriteLock();
 		try
 		{
-			boolean ret = !getData().isGodmode();
-			getData().setGodmode(ret);
-			return ret;
+			getData().setGodmode(set);
 		}
 		finally
 		{

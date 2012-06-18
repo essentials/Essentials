@@ -75,9 +75,7 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	void setIgnoredPlayer(String name, boolean set);
 
 	Location getAfkPosition();
-
-	boolean toggleGodModeEnabled();
-
+	
 	void dispose();
 
 	void updateCompass();
@@ -123,5 +121,7 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	boolean hasInvulnerabilityAfterTeleport();
 	
 	void update(final Player base);
+	
+	void setGodModeEnabled(boolean set);
 	
 }
