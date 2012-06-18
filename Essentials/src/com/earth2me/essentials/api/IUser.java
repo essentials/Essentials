@@ -84,7 +84,7 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 
 	void addMail(String string);
 
-	boolean toggleMuted();
+	void setMuted(boolean mute);
 
 	boolean toggleSocialSpy();
 

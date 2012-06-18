@@ -22,7 +22,7 @@ public class Commandmute extends EssentialsCommand
 
 		@Cleanup
 		final IUser player = getPlayer(args, 0, true);
-		player.acquireReadLock();
+		player.acquireReadLock(); 
 		if (!player.getData().isMuted() && Permissions.MUTE_EXEMPT.isAuthorized(player))
 		{
 			throw new Exception(_("muteExempt"));
@@ -30,11 +30,16 @@ public class Commandmute extends EssentialsCommand
 		long muteTimestamp = 0;
 		if (args.length > 1)
 		{
-			String time = getFinalArg(args, 1);
+			final String time = getFinalArg(args, 1);
 			muteTimestamp = DateUtil.parseDateDiff(time, true);
+			player.setMuted(true);
+		}
+		else
+		{
+			player.setMuted(!player.getData().isMuted());
 		}
 		player.setTimestamp(TimestampType.MUTE, muteTimestamp);
-		final boolean muted = player.toggleMuted();
+		final boolean muted = player.getData().isMuted();
 		sender.sendMessage(
 				muted
 				? (muteTimestamp > 0

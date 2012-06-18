@@ -129,7 +129,7 @@ public class EssentialsPlayerListener implements Listener
 		settings.acquireReadLock();
 		if (settings.getData().getCommands().getGod().isRemoveOnDisconnect() && user.isGodModeEnabled())
 		{
-			user.toggleGodModeEnabled();
+			user.setGodModeEnabled(false);
 		}
 		if (user.getData().getInventory() != null)
 		{

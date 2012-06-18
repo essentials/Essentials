@@ -408,6 +408,7 @@ public class User extends UserBase implements IUser
 	}
 
 	//Returns true if status expired during this check
+	@Override
 	public boolean checkMuteTimeout(final long currentTime)
 	{
 		acquireReadLock();

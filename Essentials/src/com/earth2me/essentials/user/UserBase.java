@@ -285,14 +285,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 
-	public boolean toggleMuted()
+	public void setMuted(boolean mute)
 	{
 		acquireWriteLock();
 		try
-		{
-			boolean ret = !getData().isMuted();
-			getData().setMuted(ret);
-			return ret;
+		{		
+			getData().setMuted(mute);		
 		}
 		finally
 		{
