@@ -74,6 +74,11 @@ public class Commandwhois extends EssentialsCommand
 												 ? DateUtil.formatDateDiff(user.getTimestamp(UserData.TimestampType.JAIL))
 												 : _("true")
 											   : _("false"))));
+			sender.sendMessage(_("whoisMute", (user.getData().isMuted()
+											   ? user.getTimestamp(UserData.TimestampType.MUTE) > 0
+												 ? DateUtil.formatDateDiff(user.getTimestamp(UserData.TimestampType.MUTE))
+												 : _("true")
+											   : _("false"))));
 			sender.sendMessage(user.getData().isAfk()
 							   ? _("whoisStatusAway")
 							   : _("whoisStatusAvailable"));
