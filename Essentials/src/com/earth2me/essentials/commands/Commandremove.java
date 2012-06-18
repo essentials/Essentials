@@ -124,7 +124,7 @@ public class Commandremove extends EssentialsCommand
 						removed++;
 					}
 				}
-				else if (toRemove == ToRemove.DROPS)
+				else if (toRemove == ToRemove.MINECARTS)
 				{
 					if (e instanceof Minecart)
 					{
