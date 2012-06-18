@@ -21,7 +21,7 @@ public class Commandexp extends EssentialsCommand
 		{
 			if (args.length == 3 && Permissions.EXP_SET_OTHERS.isAuthorized(user))
 			{
-				Boolean foundUser = false;
+				boolean foundUser = false;
 				for (Player matchPlayer : server.matchPlayer(args[1]))
 				{
 					IUser target = ess.getUser(matchPlayer);
@@ -40,7 +40,7 @@ public class Commandexp extends EssentialsCommand
 		{
 			if (args.length == 3 && Permissions.EXP_GIVE_OTHERS.isAuthorized(user))
 			{
-				Boolean foundUser = false;
+				boolean foundUser = false;
 				for (Player matchPlayer : server.matchPlayer(args[1]))
 				{
 					IUser target = ess.getUser(matchPlayer);

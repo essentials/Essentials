@@ -50,7 +50,7 @@ public class Commandptime extends EssentialsCommand
 		Long ticks;
 		// Parse the target time int ticks from args[0]
 		String timeParam = args[0];
-		Boolean relative = true;
+		boolean relative = true;
 		if (timeParam.startsWith("@"))
 		{
 			relative = false;
@@ -115,7 +115,7 @@ public class Commandptime extends EssentialsCommand
 	/**
 	 * Used to set the time and inform of the change
 	 */
-	private void setUsersTime(final CommandSender sender, final Collection<IUser> users, final Long ticks, Boolean relative)
+	private void setUsersTime(final CommandSender sender, final Collection<IUser> users, final Long ticks, boolean relative)
 	{
 		// Update the time
 		if (ticks == null)

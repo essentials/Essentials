@@ -76,7 +76,7 @@ public class Commandunlimited extends EssentialsCommand
 		return output.toString();
 	}
 
-	private Boolean toggleUnlimited(final IUser user, final IUser target, final String item) throws Exception
+	private boolean toggleUnlimited(final IUser user, final IUser target, final String item) throws Exception
 	{
 		final ItemStack stack = ess.getItemDb().get(item, 1);
 		stack.setAmount(Math.min(stack.getType().getMaxStackSize(), 2));
@@ -88,7 +88,7 @@ public class Commandunlimited extends EssentialsCommand
 		}
 
 		String message = "disableUnlimited";
-		Boolean enableUnlimited = false;
+		boolean enableUnlimited = false;
 		if (!target.getData().hasUnlimited(stack.getType()))
 		{
 			message = "enableUnlimited";
