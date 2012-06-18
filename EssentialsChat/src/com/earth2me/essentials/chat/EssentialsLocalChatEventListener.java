@@ -37,36 +37,35 @@ public class EssentialsLocalChatEventListener implements Listener
 		{
 			String type = _("chatTypeLocal");
 			final IUser user = ess.getUser(onlinePlayer);
-			//TODO: remove reference to op 
-			if (user.isIgnoringPlayer(sender.getName()) && !sender.isOp())
+			if (user.isIgnoringPlayer(ess.getUser(sender)))
 			{
 				continue;
 			}
 			if (!user.equals(sender))
 			{
-				if (Permissions.CHAT_SPY.isAuthorized(user))
+				boolean abort = false;
+				final Location playerLoc = user.getLocation();
+				if (playerLoc.getWorld() != world)
 				{
-					type = type.concat(_("chatTypeSpy"));
+					abort = true;
 				}
-				else
-				{
-					final Location playerLoc = user.getLocation();
-					if (playerLoc.getWorld() != world)
-					{
-						continue;
-					}
-					final double delta = playerLoc.distanceSquared(loc);
+				final double delta = playerLoc.distanceSquared(loc);
 
-					if (delta > event.getRadius())
-					{
-						continue;
-					}
+				if (delta > event.getRadius())
+				{
+					abort = true;
 				}
 
-				final String message = type.concat(String.format(event.getFormat(), sender.getDisplayName(), event.getMessage()));
-				user.sendMessage(message);
+				if (abort)
+				{
+					if (ChatPermissions.getPermission("spy").isAuthorized(user))
+					{
+						type = type.concat(_("chatTypeSpy"));
+					}
+				}
 			}
+			final String message = type.concat(String.format(event.getFormat(), sender.getDisplayName(), event.getMessage()));
+			user.sendMessage(message);
 		}
-	
 	}
 }

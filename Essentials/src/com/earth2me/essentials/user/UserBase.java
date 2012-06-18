@@ -3,7 +3,9 @@ package com.earth2me.essentials.user;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
+import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.api.InvalidNameException;
+import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import com.earth2me.essentials.storage.Location.WorldNotLoadedException;
 import java.io.File;
@@ -328,12 +330,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 
-	public boolean isIgnoringPlayer(final String name)
+	public boolean isIgnoringPlayer(final IUser user)
 	{
 		acquireReadLock();
 		try
 		{
-			return getData().getIgnore() == null ? false : getData().getIgnore().contains(name.toLowerCase(Locale.ENGLISH));
+			return getData().getIgnore() == null ? false : getData().getIgnore().contains(user.getName().toLowerCase(Locale.ENGLISH)) && Permissions.CHAT_IGNORE_EXEMPT.isAuthorized(user);
 		}
 		finally
 		{
@@ -341,7 +343,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 
-	public void setIgnoredPlayer(final String name, final boolean set)
+	public void setIgnoredPlayer(final IUser user, final boolean set)
 	{
 		acquireWriteLock();
 		try
@@ -352,11 +354,11 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 			}
 			if (set)
 			{
-				getData().getIgnore().add(name.toLowerCase(Locale.ENGLISH));
+				getData().getIgnore().add(user.getName().toLowerCase(Locale.ENGLISH));
 			}
 			else
 			{
-				getData().getIgnore().remove(name.toLowerCase(Locale.ENGLISH));
+				getData().getIgnore().remove(user.getName().toLowerCase(Locale.ENGLISH));
 			}
 		}
 		finally

@@ -32,7 +32,7 @@ public class Commandtpa extends EssentialsCommand
 		{
 			throw new Exception(_("noPerm", "essentials.world." + player.getWorld().getName()));
 		}
-		if (!player.isIgnoringPlayer(user.getName()))
+		if (!player.isIgnoringPlayer(user))
 		{
 			player.requestTeleport(user, false);
 			player.sendMessage(_("teleportRequest", user.getDisplayName()));

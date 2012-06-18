@@ -52,7 +52,7 @@ public class Commandmail extends EssentialsCommand
 			{
 				throw new Exception(_("playerNeverOnServer", args[1]));
 			}
-			if (!u.isIgnoringPlayer(user.getName()))
+			if (!u.isIgnoringPlayer(user))
 			{
 				final String mail = Util.sanitizeString(Util.stripFormat(getFinalArg(args, 2)));
 				u.addMail(user.getName() + ": " + mail);

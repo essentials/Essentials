@@ -86,7 +86,7 @@ public class Commandmsg extends EssentialsCommand
 		{
 			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getDisplayName(), message));
 			final IUser matchedUser = ess.getUser(matchedPlayer);
-			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(((Player)sender).getName()) || matchedUser.isHidden()))
+			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(ess.getUser(sender)) || matchedUser.isHidden()))
 			{
 				continue;
 			}

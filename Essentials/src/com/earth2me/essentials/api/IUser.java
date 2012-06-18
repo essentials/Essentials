@@ -70,9 +70,9 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 
 	boolean isGodModeEnabled();
 
-	boolean isIgnoringPlayer(String name);
+	boolean isIgnoringPlayer(IUser user);
 
-	void setIgnoredPlayer(String name, boolean set);
+	void setIgnoredPlayer(IUser user, boolean set);
 
 	Location getAfkPosition();
 	
@@ -123,5 +123,7 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	void update(final Player base);
 	
 	void setGodModeEnabled(boolean set);
+	
+	void setVanished(boolean set);
 	
 }

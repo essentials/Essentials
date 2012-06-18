@@ -741,11 +741,11 @@ public class User extends UserBase implements IUser
 		return teleportInvulnerabilityTimestamp != 0 && teleportInvulnerabilityTimestamp >= System.currentTimeMillis();
 	}
 
-	@Override
-	public void toggleVanished()
+	
+	public void setVanished(boolean set)
 	{
-		vanished = !vanished;
-		if (vanished)
+		vanished = set;
+		if (set)
 		{
 			for (Player p : ess.getServer().getOnlinePlayers())
 			{

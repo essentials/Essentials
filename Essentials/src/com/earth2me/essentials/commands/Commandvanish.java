@@ -2,8 +2,6 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.permissions.Permissions;
-import org.bukkit.entity.Player;
 
 
 public class Commandvanish extends EssentialsCommand
@@ -11,14 +9,29 @@ public class Commandvanish extends EssentialsCommand
 	@Override
 	protected void run(IUser user, String commandLabel, String[] args) throws Exception
 	{
-		user.toggleVanished();
-		if (user.isVanished())
+		if (args.length < 1)
 		{
-			user.sendMessage(_("unvanished"));
+			user.toggleVanished();
+			if (user.isVanished())
+			{
+				user.sendMessage(_("vanished"));
+			}
+			else
+			{
+				user.sendMessage(_("unvanished"));
+			}
 		}
 		else
 		{
-			user.sendMessage(_("unvanished"));
+			if (args[0].contains("on") || args[0].contains("ena") || args[0].equalsIgnoreCase("1"))
+			{
+				user.setVanished(true);
+			}
+			else
+			{
+				user.setVanished(false);
+			}
+			user.sendMessage(user.isVanished() ? _("vanished") : _("unvanished"));
 		}
-	}
+	}		
 }

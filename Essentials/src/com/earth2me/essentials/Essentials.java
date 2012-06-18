@@ -440,7 +440,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 		for (Player player : players)
 		{
 			final IUser user = getUser(player);
-			if (!user.isIgnoringPlayer(sender.getName()))
+			if (!user.isIgnoringPlayer(sender))
 			{
 				player.sendMessage(message);
 			}

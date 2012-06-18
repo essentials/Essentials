@@ -26,16 +26,16 @@ public class Commandignore extends EssentialsCommand
 		{
 			throw new Exception(_("playerNotFound"));
 		}
-		final String name = player.getName();
+		
 		user.acquireWriteLock();
-		if (user.isIgnoringPlayer(name))
+		if (user.isIgnoringPlayer(player))
 		{
-			user.setIgnoredPlayer(name, false);
+			user.setIgnoredPlayer(player, false);
 			user.sendMessage(_("unignorePlayer", player.getName()));
 		}
 		else
 		{
-			user.setIgnoredPlayer(name, true);
+			user.setIgnoredPlayer(player, true);
 			user.sendMessage(_("ignorePlayer", player.getName()));
 		}
 	}

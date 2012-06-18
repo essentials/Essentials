@@ -74,7 +74,7 @@ public class EssentialsPlayerListener implements Listener
 		while (it.hasNext())
 		{
 			final IUser player = ess.getUser(it.next());
-			if (player.isIgnoringPlayer(user.getName()))
+			if (player.isIgnoringPlayer(user))
 			{
 				it.remove();
 			}
@@ -147,6 +147,10 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
+		if (!event.getPlayer().isOnline())
+		{
+			return;
+		}
 		ess.getBackup().startTask();
 		@Cleanup
 		final IUser user = ess.getUser(event.getPlayer());
