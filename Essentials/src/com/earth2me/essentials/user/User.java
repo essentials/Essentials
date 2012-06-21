@@ -742,6 +742,7 @@ public class User extends UserBase implements IUser
 	}
 
 	
+	@Override
 	public void setVanished(boolean set)
 	{
 		vanished = set;
@@ -766,5 +767,19 @@ public class User extends UserBase implements IUser
 			setHidden(false);
 			ess.getVanishedPlayers().remove(getName());
 		}
+	}
+
+	@Override
+	public void setName(String name)
+	{
+		//todo
+		//throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void toggleVanished()
+	{
+		//todo
+		//throw new UnsupportedOperationException("Not supported yet.");
 	}
 }
