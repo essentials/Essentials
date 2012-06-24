@@ -40,3 +40,6 @@
 *.iml
 /EssentialsGroupManager/bin
 /EssentialsGroupManager/.externalToolBuilders
+/bin
+.*
+!.gitignore
