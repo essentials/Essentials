@@ -741,7 +741,6 @@ public class User extends UserBase implements IUser
 		return teleportInvulnerabilityTimestamp != 0 && teleportInvulnerabilityTimestamp >= System.currentTimeMillis();
 	}
 
-	
 	@Override
 	public void setVanished(boolean set)
 	{
@@ -779,7 +778,7 @@ public class User extends UserBase implements IUser
 	@Override
 	public void toggleVanished()
 	{
-		//todo
-		//throw new UnsupportedOperationException("Not supported yet.");
+		final boolean set = !vanished;
+		this.setVanished(set);
 	}
 }
