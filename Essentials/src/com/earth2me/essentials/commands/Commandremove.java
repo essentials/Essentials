@@ -8,7 +8,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 
-
+//Todo: Fix this up
 public class Commandremove extends EssentialsCommand
 {
 	private enum ToRemove

@@ -28,6 +28,7 @@ public class Commandmute extends EssentialsCommand
 			throw new Exception(_("muteExempt"));
 		}
 		long muteTimestamp = 0;
+
 		if (args.length > 1)
 		{
 			final String time = getFinalArg(args, 1);

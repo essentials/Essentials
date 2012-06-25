@@ -58,7 +58,8 @@ public class Commandkit extends EssentialsCommand
 	{
 		if (args.length < 2)
 		{
-			listKits(sender);
+			final String kitList = Kit.listKits(ess, null);
+			sender.sendMessage(kitList.length() > 0 ? _("kits", kitList) : _("noKits"));
 			throw new NoChargeException();
 		}
 		{
