@@ -243,7 +243,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 		pm.registerEvents(tntListener, this);
 
 
-		final EssentialsTimer timer = new EssentialsTimer(this);
+		timer = new EssentialsTimer(this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, timer, 1, 100);
 		execTimer.mark("RegListeners");
 
