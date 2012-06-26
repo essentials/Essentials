@@ -3,6 +3,7 @@ package com.earth2me.essentials.settings.protect;
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.ListType;
 import com.earth2me.essentials.storage.StorageObject;
+import com.sun.org.apache.xml.internal.security.Init;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
@@ -42,4 +43,11 @@ public class Protect implements StorageObject
 	private boolean disableThunder = false;
 	private boolean disableLighting = false;
 	private SignsAndRails signsAndRails = new SignsAndRails();
+	
+	public Protect()
+	{
+		alertOnPlacement.add(Material.LAVA);
+		alertOnUse.add(Material.LAVA_BUCKET);
+		alertOnBreak.add(Material.GLASS);
+	}
 }
