@@ -7,10 +7,8 @@ import com.earth2me.essentials.permissions.KitPermissions;
 import com.earth2me.essentials.settings.Kit;
 import com.earth2me.essentials.utils.Util;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import org.bukkit.command.CommandSender;
-import org.bukkit.inventory.ItemStack;
 
 
 public class Commandkit extends EssentialsCommand

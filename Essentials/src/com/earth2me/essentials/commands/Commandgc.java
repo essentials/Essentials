@@ -2,7 +2,6 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
