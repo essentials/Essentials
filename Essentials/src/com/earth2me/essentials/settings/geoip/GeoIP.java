@@ -10,6 +10,6 @@ import lombok.EqualsAndHashCode;
 public class GeoIP implements StorageObject
 {
 	private Database database = new Database();
-	boolean showOnWhois = true;
-	boolean showOnLogin = true;
+	private boolean showOnWhois = true;
+	private boolean showOnLogin = true;
 }
