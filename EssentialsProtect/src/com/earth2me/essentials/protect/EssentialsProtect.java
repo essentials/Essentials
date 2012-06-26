@@ -21,6 +21,7 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 	private transient IProtectedBlock storage = null;
 	private transient EssentialsConnect ess = null;
 	private transient ProtectHolder settings = null;
+	private transient com.mchange.v2.c3p0.management.ActiveManagementCoordinator temp; // leave this here for maven
 
 	@Override
 	public void onLoad()
