@@ -3,7 +3,6 @@ package com.earth2me.essentials.settings.protect;
 import com.earth2me.essentials.storage.Comment;
 import com.earth2me.essentials.storage.ListType;
 import com.earth2me.essentials.storage.StorageObject;
-import com.sun.org.apache.xml.internal.security.Init;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
