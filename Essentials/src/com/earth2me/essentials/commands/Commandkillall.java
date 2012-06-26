@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commandkillall extends EssentialsCommand
@@ -114,7 +115,7 @@ public class Commandkillall extends EssentialsCommand
 				{
 					if (entity instanceof Animals || entity instanceof NPC || entity instanceof Snowman || entity instanceof WaterMob)
 					{
-						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
+						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.<ItemStack> emptyList());
 						ess.getServer().getPluginManager().callEvent(event);
 						entity.remove();
 						numKills++;
@@ -124,7 +125,7 @@ public class Commandkillall extends EssentialsCommand
 				{
 					if (entity instanceof Monster || entity instanceof ComplexLivingEntity || entity instanceof Flying || entity instanceof Slime)
 					{
-						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
+						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.<ItemStack> emptyList());
 						ess.getServer().getPluginManager().callEvent(event);
 						entity.remove();
 						numKills++;
@@ -132,14 +133,14 @@ public class Commandkillall extends EssentialsCommand
 				}
 				else if (all)
 				{
-					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
+					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.<ItemStack> emptyList());
 					ess.getServer().getPluginManager().callEvent(event);
 					entity.remove();
 					numKills++;
 				}
 				else if (entityClass != null && entityClass.isAssignableFrom(entity.getClass()))
 				{
-					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
+					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.<ItemStack> emptyList());
 					ess.getServer().getPluginManager().callEvent(event);
 					entity.remove();
 					numKills++;
