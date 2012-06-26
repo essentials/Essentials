@@ -45,6 +45,7 @@ public enum Permissions implements IPermission
 	JOINFULLSERVER,
 	INVSEE_MODIFY,
 	INVSEE_PREVENT_MODIFY,
+	KEEPXP,
 	KICK_EXEMPT,
 	KICK_NOTIFY,
 	LIST_HIDDEN,
