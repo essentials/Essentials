@@ -85,9 +85,9 @@ public class TextInput implements IText
 						if (line.length() > 0 && line.charAt(0) == '#')
 						{
 							bookmarks.put(line.substring(1).toLowerCase(Locale.ENGLISH).replaceAll("&[0-9a-fk]", ""), lineNumber);
-							chapters.add(line.substring(1).replace('&', '�').replace("�", "&"));
+							chapters.add(line.substring(1).replace('&', '§').replace("§", "&"));
 						}
-						lines.add(line.replace('&', '�').replace("�", "&"));
+						lines.add(line.replace('&', '§').replace("§", "&"));
 						lineNumber++;
 					}
 				}
@@ -119,7 +119,9 @@ public class TextInput implements IText
 				}
 				finally
 				{
+                    if(output != null)
 					output.close();
+                    if(input != null)
 					input.close();
 				}
 				throw new FileNotFoundException("File " + filename + ".txt does not exist. Creating one for you.");
