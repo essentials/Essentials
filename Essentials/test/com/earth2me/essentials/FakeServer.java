@@ -6,8 +6,8 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
-import org.bukkit.World.Environment;
 import org.bukkit.*;
+import org.bukkit.World.Environment;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -16,9 +16,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.help.HelpMap;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.help.HelpMap;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -919,6 +916,12 @@ public class FakeServer implements Server
 
 	@Override
 	public int getWaterAnimalSpawnLimit()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean isPrimaryThread()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

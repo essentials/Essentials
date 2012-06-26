@@ -669,4 +669,10 @@ public class FakeWorld implements World
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
+
+	@Override
+	public Entity spawnEntity(Location loc, EntityType type)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }
