@@ -8,7 +8,7 @@ import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.Material;
-import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.EntityType;
 
 
 @Data
@@ -39,7 +39,7 @@ public class Prevent implements StorageObject
 		"permission essentials.protect.entitytarget.bypass disables this"
 	})
 	private boolean entitytarget = false;
-	@MapKeyType(CreatureType.class)
+	@MapKeyType(EntityType.class)
 	@MapValueType(Boolean.class)
-	private Map<CreatureType, Boolean> spawn = new HashMap<CreatureType, Boolean>();
+	private Map<EntityType, Boolean> spawn = new HashMap<EntityType, Boolean>();
 }

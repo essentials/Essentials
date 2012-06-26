@@ -187,10 +187,10 @@ public class UpdateCheck
 
 	private int getBukkitVersion()
 	{
-		final Matcher versionMatch = Pattern.compile("git-Bukkit-([0-9]+).([0-9]+).([0-9]+)-[0-9]+-[0-9a-z]+-b([0-9]+)jnks.*").matcher(plugin.getServer().getVersion());
-		if (versionMatch.matches())
+		final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(plugin.getServer().getVersion());
+        if (versionMatch.matches())
 		{
-			return Integer.parseInt(versionMatch.group(4));
+			return Integer.parseInt(versionMatch.group(1));
 		}
 		throw new NumberFormatException("Bukkit Version changed!");
 	}

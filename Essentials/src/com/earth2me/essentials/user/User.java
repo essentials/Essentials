@@ -212,14 +212,6 @@ public class User extends UserBase implements IUser
 			unlock();
 		}
 	}
-
-	public void requestTeleport(final User player, final boolean here)
-	{
-		teleportRequestTime = System.currentTimeMillis();
-		teleportRequester = player;
-		tpRequestHere = here;
-	}
-
 	public String getNick(boolean addprefixsuffix)
 	{
 		acquireReadLock();
@@ -583,9 +575,11 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void requestTeleport(IUser user, boolean b)
+	public void requestTeleport(IUser player, boolean here)
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+        teleportRequestTime = System.currentTimeMillis();
+        teleportRequester = player;
+        tpRequestHere = here;
 	}
 
 	@Override
