@@ -1,6 +1,5 @@
 package com.earth2me.essentials.protect;
 
-import com.earth2me.essentials.api.IEssentials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -16,22 +15,16 @@ import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 public class EssentialsProtectEntityListener implements Listener
 {
 	private final transient IProtect prot;
-	private final transient IEssentials ess;
 
 	public EssentialsProtectEntityListener(final IProtect prot)
 	{
 		super();
 		this.prot = prot;
-		this.ess = prot.getEssentialsConnect().getEssentials();
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityDamage(final EntityDamageEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final ProtectHolder settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
@@ -171,13 +164,9 @@ public class EssentialsProtectEntityListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityExplode(final EntityExplodeEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final ProtectHolder settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
@@ -194,7 +183,7 @@ public class EssentialsProtectEntityListener implements Listener
 					 && (settings.getData().getPrevent().isCreeperExplosion()
 						 || settings.getData().getPrevent().isCreeperBlockdamage()
 						 || (maxHeight >= 0 && event.getLocation().getBlockY() > maxHeight)))
-			{	
+			{
 				event.setCancelled(true);
 				event.getLocation().getWorld().createExplosion(event.getLocation(), 0F);
 				return;
@@ -247,14 +236,10 @@ public class EssentialsProtectEntityListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onCreatureSpawn(final CreatureSpawnEvent event)
 	{
-		if (event.getEntity() instanceof Player)
-		{
-			return;
-		}
-		if (event.isCancelled())
+		if (event.getEntity().getType() == EntityType.PLAYER)
 		{
 			return;
 		}
@@ -279,24 +264,22 @@ public class EssentialsProtectEntityListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityTarget(final EntityTargetEvent event)
 	{
-		if (event.isCancelled() || !(event.getTarget() instanceof Player))
+		if (event.getTarget().getType() == EntityType.PLAYER)
 		{
-			return;
-		}
-		final Player user = (Player)event.getTarget();
-		if ((event.getReason() == TargetReason.CLOSEST_PLAYER
-			 || event.getReason() == TargetReason.TARGET_ATTACKED_ENTITY
-			 || event.getReason() == TargetReason.PIG_ZOMBIE_TARGET
-			 || event.getReason() == TargetReason.RANDOM_TARGET
-			 || event.getReason() == TargetReason.TARGET_ATTACKED_OWNER
-			 || event.getReason() == TargetReason.OWNER_ATTACKED_TARGET)
-			&& Permissions.ENTITYTARGET.isAuthorized(user))
-		{
-			event.setCancelled(true);
-			return;
+			final Player user = (Player)event.getTarget();
+			if ((event.getReason() == TargetReason.CLOSEST_PLAYER
+				 || event.getReason() == TargetReason.TARGET_ATTACKED_ENTITY
+				 || event.getReason() == TargetReason.PIG_ZOMBIE_TARGET
+				 || event.getReason() == TargetReason.RANDOM_TARGET
+				 || event.getReason() == TargetReason.TARGET_ATTACKED_OWNER
+				 || event.getReason() == TargetReason.OWNER_ATTACKED_TARGET)
+				&& Permissions.ENTITYTARGET.isAuthorized(user))
+			{
+				event.setCancelled(true);
+			}
 		}
 	}
 
@@ -319,13 +302,9 @@ public class EssentialsProtectEntityListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityChangeBlock(final EntityChangeBlockEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final ProtectHolder settings = prot.getSettings();
 		settings.acquireReadLock();
 		try

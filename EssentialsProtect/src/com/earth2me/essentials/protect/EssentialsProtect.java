@@ -29,13 +29,14 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 		C3P0logger = com.mchange.v2.log.MLog.getLogger(com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.class);
 		C3P0logger.setFilter(new Filter()
 		{
-			public boolean isLoggable(LogRecord lr)
+			public boolean isLoggable(final LogRecord lr)
 			{
 				return lr.getLevel() != Level.INFO;
 			}
 		});
 	}
 
+	@Override
 	public void onEnable()
 	{
 		final PluginManager pm = this.getServer().getPluginManager();
@@ -73,12 +74,11 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 	}
 
 	/*@Override
-	public boolean checkProtectionItems(final ProtectConfig list, final int id)
-	{
-		final List<Integer> itemList = settingsList.get(list);
-		return itemList != null && !itemList.isEmpty() && itemList.contains(id);
-	}*/
-
+	 public boolean checkProtectionItems(final ProtectConfig list, final int id)
+	 {
+	 final List<Integer> itemList = settingsList.get(list);
+	 return itemList != null && !itemList.isEmpty() && itemList.contains(id);
+	 }*/
 	@Override
 	public IProtectedBlock getStorage()
 	{
@@ -86,45 +86,46 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 	}
 
 	@Override
-	public void setStorage(IProtectedBlock pb)
+	public void setStorage(final IProtectedBlock pb)
 	{
 		storage = pb;
 	}
 
+	@Override
 	public EssentialsConnect getEssentialsConnect()
 	{
 		return ess;
 	}
-	
+
 	/*public Map<ProtectConfig, Boolean> getSettingsBoolean()
-	{
-		return settingsBoolean;
-	}
+	 {
+	 return settingsBoolean;
+	 }
 
-	public Map<ProtectConfig, String> getSettingsString()
-	{
-		return settingsString;
-	}
+	 public Map<ProtectConfig, String> getSettingsString()
+	 {
+	 return settingsString;
+	 }
 
-	public Map<ProtectConfig, List<Integer>> getSettingsList()
-	{
-		return settingsList;
-	}
+	 public Map<ProtectConfig, List<Integer>> getSettingsList()
+	 {
+	 return settingsList;
+	 }
 
+	 @Override
+	 public boolean getSettingBool(final ProtectConfig protectConfig)
+	 {
+	 final Boolean bool = settingsBoolean.get(protectConfig);
+	 return bool == null ? protectConfig.getDefaultValueBoolean() : bool;
+	 }
+
+	 @Override
+	 public String getSettingString(final ProtectConfig protectConfig)
+	 {
+	 final String str = settingsString.get(protectConfig);
+	 return str == null ? protectConfig.getDefaultValueString() : str;
+	 }*/
 	@Override
-	public boolean getSettingBool(final ProtectConfig protectConfig)
-	{
-		final Boolean bool = settingsBoolean.get(protectConfig);
-		return bool == null ? protectConfig.getDefaultValueBoolean() : bool;
-	}
-
-	@Override
-	public String getSettingString(final ProtectConfig protectConfig)
-	{
-		final String str = settingsString.get(protectConfig);
-		return str == null ? protectConfig.getDefaultValueString() : str;
-	}*/
-
 	public void onDisable()
 	{
 		if (storage != null)
@@ -141,11 +142,13 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 		}
 	}
 
+	@Override
 	public ProtectHolder getSettings()
 	{
 		return settings;
 	}
 
+	@Override
 	public void setSettings(final ProtectHolder settings)
 	{
 		this.settings = settings;

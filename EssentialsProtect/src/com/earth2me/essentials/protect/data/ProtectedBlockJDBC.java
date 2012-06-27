@@ -34,12 +34,12 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 
 	protected abstract PreparedStatement getStatementAllBlocks(Connection conn) throws SQLException;
 
-	public ProtectedBlockJDBC(String driver, String url) throws PropertyVetoException
+	public ProtectedBlockJDBC(final String driver, final String url) throws PropertyVetoException
 	{
 		this(driver, url, null, null);
 	}
 
-	public ProtectedBlockJDBC(String driver, String url, String username, String password) throws PropertyVetoException
+	public ProtectedBlockJDBC(final String driver, final String url, final String username, final String password) throws PropertyVetoException
 	{
 		cpds = new ComboPooledDataSource();
 		cpds.setDriverClass(driver);
@@ -97,6 +97,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		}
 	}
 
+	@Override
 	public void clearProtections()
 	{
 		Connection conn = null;
@@ -138,7 +139,8 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		}
 	}
 
-	public void importProtections(List<OwnedBlock> blocks)
+	@Override
+	public void importProtections(final List<OwnedBlock> blocks)
 	{
 		for (OwnedBlock ownedBlock : blocks)
 		{
@@ -150,6 +152,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		}
 	}
 
+	@Override
 	public List<OwnedBlock> exportProtections()
 	{
 		Connection conn = null;
@@ -216,12 +219,13 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		}
 	}
 
-	public void protectBlock(Block block, String playerName)
+	@Override
+	public void protectBlock(final Block block, final String playerName)
 	{
 		protectBlock(block.getWorld().getName(), block.getX(), block.getY(), block.getZ(), playerName);
 	}
 
-	private void protectBlock(String world, int x, int y, int z, String playerName)
+	private void protectBlock(final String world, final int x, final int y, final int z, final String playerName)
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -262,7 +266,8 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		}
 	}
 
-	public boolean isProtected(Block block, String playerName)
+	@Override
+	public boolean isProtected(final Block block, final String playerName)
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -317,7 +322,8 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		}
 	}
 
-	public List<String> getOwners(Block block)
+	@Override
+	public List<String> getOwners(final Block block)
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -377,7 +383,8 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		}
 	}
 
-	public int unprotectBlock(Block block)
+	@Override
+	public int unprotectBlock(final Block block)
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -419,6 +426,7 @@ public abstract class ProtectedBlockJDBC implements IProtectedBlock
 		}
 	}
 
+	@Override
 	public void onPluginDeactivation()
 	{
 		cpds.close();

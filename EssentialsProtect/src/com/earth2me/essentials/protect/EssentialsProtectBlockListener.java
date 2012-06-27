@@ -1,7 +1,6 @@
 package com.earth2me.essentials.protect;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.protect.data.IProtectedBlock;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,22 +17,15 @@ import org.bukkit.event.block.*;
 public class EssentialsProtectBlockListener implements Listener
 {
 	final private transient IProtect prot;
-	final private transient IEssentials ess;
 
 	public EssentialsProtectBlockListener(final IProtect parent)
 	{
 		this.prot = parent;
-		this.ess = prot.getEssentialsConnect().getEssentials();
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
-
 		final Player user = event.getPlayer();
 		final ProtectHolder settings = prot.getSettings();
 		settings.acquireReadLock();
@@ -46,7 +38,6 @@ public class EssentialsProtectBlockListener implements Listener
 			}
 
 			final Block blockPlaced = event.getBlockPlaced();
-			final int id = blockPlaced.getTypeId();
 
 			if (!BlockPlacePermissions.getPermission(blockPlaced.getType()).isAuthorized(user))
 			{
@@ -54,8 +45,8 @@ public class EssentialsProtectBlockListener implements Listener
 				return;
 			}
 
-			if (!Permissions.ALERTS_NOTRIGGER.isAuthorized(user) &&
-				settings.getData().getAlertOnPlacement().contains(blockPlaced.getType()))
+			if (!Permissions.ALERTS_NOTRIGGER.isAuthorized(user)
+				&& settings.getData().getAlertOnPlacement().contains(blockPlaced.getType()))
 			{
 				prot.getEssentialsConnect().alert(user, blockPlaced.getType().toString(), _("alertPlaced"));
 			}
@@ -82,18 +73,18 @@ public class EssentialsProtectBlockListener implements Listener
 				}
 			}
 			/*if ((blockPlaced.getType() == Material.SIGN_POST || blockPlaced.getType() == Material.WALL_SIGN)
-				&& settings.getData().getSignsAndRails().isProtectSigns()
-				&& user.isAuthorized("essentials.protect"))
-			{
-				protect.add(blockPlaced);
-				if (settings.getData().getSignsAndRails().isBlockBelow()
-					&& event.getBlockAgainst().getType() != Material.SIGN_POST
-					&& event.getBlockAgainst().getType() != Material.WALL_SIGN
-					&& !isProtected(event.getBlockAgainst(), user, settings))
-				{
-					protect.add(event.getBlockAgainst());
-				}
-			}*/
+			 && settings.getData().getSignsAndRails().isProtectSigns()
+			 && user.isAuthorized("essentials.protect"))
+			 {
+			 protect.add(blockPlaced);
+			 if (settings.getData().getSignsAndRails().isBlockBelow()
+			 && event.getBlockAgainst().getType() != Material.SIGN_POST
+			 && event.getBlockAgainst().getType() != Material.WALL_SIGN
+			 && !isProtected(event.getBlockAgainst(), user, settings))
+			 {
+			 protect.add(event.getBlockAgainst());
+			 }
+			 }*/
 			for (Block block : protect)
 			{
 				prot.getStorage().protectBlock(block, user.getName());
@@ -105,13 +96,9 @@ public class EssentialsProtectBlockListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockIgnite(BlockIgniteEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final ProtectHolder settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
@@ -165,13 +152,9 @@ public class EssentialsProtectBlockListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockFromTo(final BlockFromToEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final ProtectHolder settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
@@ -214,13 +197,9 @@ public class EssentialsProtectBlockListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockBurn(final BlockBurnEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final ProtectHolder settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
@@ -260,13 +239,9 @@ public class EssentialsProtectBlockListener implements Listener
 		BlockFace.SELF
 	};
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockBreak(final BlockBreakEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final Player user = event.getPlayer();
 
 		if (!Permissions.BUILD.isAuthorized(user))
@@ -275,7 +250,6 @@ public class EssentialsProtectBlockListener implements Listener
 			return;
 		}
 		final Block block = event.getBlock();
-		final int typeId = block.getTypeId();
 
 		if (!BlockBreakPermissions.getPermission(block.getType()).isAuthorized(user))
 		{
@@ -366,13 +340,9 @@ public class EssentialsProtectBlockListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockPistonExtend(final BlockPistonExtendEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final ProtectHolder settings = prot.getSettings();
 		settings.acquireReadLock();
 		try
@@ -428,10 +398,10 @@ public class EssentialsProtectBlockListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockPistonRetract(final BlockPistonRetractEvent event)
 	{
-		if (event.isCancelled() || !event.isSticky())
+		if (!event.isSticky())
 		{
 			return;
 		}
@@ -482,7 +452,6 @@ public class EssentialsProtectBlockListener implements Listener
 				}
 			}
 		}
-
 		finally
 		{
 			settings.unlock();
@@ -499,31 +468,31 @@ public class EssentialsProtectBlockListener implements Listener
 				return prot.getStorage().isProtected(block, user.getName());
 			}
 
-				final Block up = block.getRelative(BlockFace.UP);
-				if (up != null && up.getType() == Material.SIGN_POST)
+			final Block up = block.getRelative(BlockFace.UP);
+			if (up != null && up.getType() == Material.SIGN_POST)
+			{
+				return prot.getStorage().isProtected(block, user.getName());
+			}
+			final BlockFace[] directions = new BlockFace[]
+			{
+				BlockFace.NORTH,
+				BlockFace.EAST,
+				BlockFace.SOUTH,
+				BlockFace.WEST
+			};
+			for (BlockFace blockFace : directions)
+			{
+				final Block signblock = block.getRelative(blockFace);
+				if (signblock.getType() == Material.WALL_SIGN)
 				{
-					return prot.getStorage().isProtected(block, user.getName());
-				}
-				final BlockFace[] directions = new BlockFace[]
-				{
-					BlockFace.NORTH,
-					BlockFace.EAST,
-					BlockFace.SOUTH,
-					BlockFace.WEST
-				};
-				for (BlockFace blockFace : directions)
-				{
-					final Block signblock = block.getRelative(blockFace);
-					if (signblock.getType() == Material.WALL_SIGN)
+					final org.bukkit.material.Sign signMat = (org.bukkit.material.Sign)signblock.getState().getData();
+					if (signMat != null && signMat.getFacing() == blockFace)
 					{
-						final org.bukkit.material.Sign signMat = (org.bukkit.material.Sign)signblock.getState().getData();
-						if (signMat != null && signMat.getFacing() == blockFace)
-						{
-							return prot.getStorage().isProtected(block, user.getName());
-						}
+						return prot.getStorage().isProtected(block, user.getName());
 					}
 				}
-			
+			}
+
 		}
 		if (settings.getData().getSignsAndRails().isProtectRails())
 		{

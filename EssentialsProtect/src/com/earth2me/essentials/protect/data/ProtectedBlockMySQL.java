@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 {
-	public ProtectedBlockMySQL(String url, String username, String password) throws PropertyVetoException
+	public ProtectedBlockMySQL(final String url, final String username, final String password) throws PropertyVetoException
 	{
 		super("com.mysql.jdbc.Driver", url, username, password);
 	}
@@ -24,7 +24,7 @@ public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 								+ ") ENGINE=MyISAM DEFAULT CHARSET=utf8";
 
 	@Override
-	protected PreparedStatement getStatementCreateTable(Connection conn) throws SQLException
+	protected PreparedStatement getStatementCreateTable(final Connection conn) throws SQLException
 	{
 		return conn.prepareStatement(QueryCreateTable);
 	}
@@ -40,7 +40,7 @@ public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 								+ "DROP PRIMARY KEY ;";
 
 	@Override
-	protected PreparedStatement getStatementUpdateFrom2_0Table(Connection conn) throws SQLException
+	protected PreparedStatement getStatementUpdateFrom2_0Table(final Connection conn) throws SQLException
 	{
 		PreparedStatement testPS = null;
 		ResultSet testRS = null;
@@ -86,7 +86,7 @@ public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 	private static final String QueryDeleteAll = "DELETE FROM EssentialsProtect;";
 
 	@Override
-	protected PreparedStatement getStatementDeleteAll(Connection conn) throws SQLException
+	protected PreparedStatement getStatementDeleteAll(final Connection conn) throws SQLException
 	{
 		return conn.prepareStatement(QueryDeleteAll);
 	}
@@ -94,9 +94,10 @@ public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 								"INSERT INTO EssentialsProtect (worldName, x, y, z, playerName) VALUES (?, ?, ?, ?, ?);";
 
 	@Override
-	protected PreparedStatement getStatementInsert(Connection conn, String world, int x, int y, int z, String playerName) throws SQLException
+	protected PreparedStatement getStatementInsert(final Connection conn, final String world, final int x, final int y, final int z,
+												   final String playerName) throws SQLException
 	{
-		PreparedStatement ps = conn.prepareStatement(QueryInsert);
+		final PreparedStatement ps = conn.prepareStatement(QueryInsert);
 		ps.setString(1, world);
 		ps.setInt(2, x);
 		ps.setInt(3, y);
@@ -109,9 +110,10 @@ public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 								+ "WHERE worldName = ? AND x = ? AND y = ? AND z = ? GROUP BY x;";
 
 	@Override
-	protected PreparedStatement getStatementPlayerCountByLocation(Connection conn, String world, int x, int y, int z, String playerName) throws SQLException
+	protected PreparedStatement getStatementPlayerCountByLocation(final Connection conn, final String world, final int x, final int y, final int z,
+																  final String playerName) throws SQLException
 	{
-		PreparedStatement ps = conn.prepareStatement(QueryCountByPlayer);
+		final PreparedStatement ps = conn.prepareStatement(QueryCountByPlayer);
 		ps.setString(1, playerName);
 		ps.setString(2, world);
 		ps.setInt(3, x);
@@ -123,9 +125,10 @@ public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 								"SELECT playerName FROM EssentialsProtect WHERE worldname = ? AND x = ? AND y = ? AND z = ?;";
 
 	@Override
-	protected PreparedStatement getStatementPlayersByLocation(Connection conn, String world, int x, int y, int z) throws SQLException
+	protected PreparedStatement getStatementPlayersByLocation(final Connection conn, final String world,
+															  final int x, final int y, final int z) throws SQLException
 	{
-		PreparedStatement ps = conn.prepareStatement(QueryPlayersByLocation);
+		final PreparedStatement ps = conn.prepareStatement(QueryPlayersByLocation);
 		ps.setString(1, world);
 		ps.setInt(2, x);
 		ps.setInt(3, y);
@@ -136,9 +139,10 @@ public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 								"DELETE FROM EssentialsProtect WHERE worldName = ? AND x = ? AND y = ? AND z = ?;";
 
 	@Override
-	protected PreparedStatement getStatementDeleteByLocation(Connection conn, String world, int x, int y, int z) throws SQLException
+	protected PreparedStatement getStatementDeleteByLocation(final Connection conn, final String world,
+															 final int x, final int y, final int z) throws SQLException
 	{
-		PreparedStatement ps = conn.prepareStatement(QueryDeleteByLocation);
+		final PreparedStatement ps = conn.prepareStatement(QueryDeleteByLocation);
 		ps.setString(1, world);
 		ps.setInt(2, x);
 		ps.setInt(3, y);
@@ -149,7 +153,7 @@ public class ProtectedBlockMySQL extends ProtectedBlockJDBC
 								"SELECT worldName, x, y, z, playerName FROM EssentialsProtect;";
 
 	@Override
-	protected PreparedStatement getStatementAllBlocks(Connection conn) throws SQLException
+	protected PreparedStatement getStatementAllBlocks(final Connection conn) throws SQLException
 	{
 		return conn.prepareStatement(QueryAllBlocks);
 	}

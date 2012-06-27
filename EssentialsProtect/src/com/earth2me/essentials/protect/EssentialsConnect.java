@@ -20,7 +20,7 @@ public class EssentialsConnect
 	private final transient IEssentials ess;
 	private final transient IProtect protect;
 
-	public EssentialsConnect(Plugin essPlugin, Plugin essProtect)
+	public EssentialsConnect(final Plugin essPlugin, final Plugin essProtect)
 	{
 		if (!essProtect.getDescription().getVersion().equals(essPlugin.getDescription().getVersion()))
 		{
@@ -29,13 +29,9 @@ public class EssentialsConnect
 		ess = (IEssentials)essPlugin;
 		protect = (IProtect)essProtect;
 		protect.setSettings(new ProtectHolder(ess));
-		ProtectReloader pr = new ProtectReloader();
+		final ProtectReloader pr = new ProtectReloader();
 		pr.onReload();
 		ess.addReloadListener(pr);
-	}
-
-	public void onDisable()
-	{
 	}
 
 	public IEssentials getEssentials()
@@ -84,7 +80,7 @@ public class EssentialsConnect
 			 * }
 			 */
 
-			ProtectHolder settings = protect.getSettings();
+			final ProtectHolder settings = protect.getSettings();
 			settings.acquireReadLock();
 			try
 			{
@@ -105,7 +101,7 @@ public class EssentialsConnect
 				else
 				{
 					try
-					{						
+					{
 						protect.setStorage(new ProtectedBlockSQLite("jdbc:sqlite:" + ess.getDataFolder() + "/EssentialsProtect.db"));
 					}
 					catch (PropertyVetoException ex)
@@ -114,9 +110,9 @@ public class EssentialsConnect
 					}
 				}
 				/*if (protect.getSettingBool(ProtectConfig.memstore))
-				{
-					protect.setStorage(new ProtectedBlockMemory(protect.getStorage(), protect));
-				}*/
+				 {
+				 protect.setStorage(new ProtectedBlockMemory(protect.getStorage(), protect));
+				 }*/
 
 			}
 			finally

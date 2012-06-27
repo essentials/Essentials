@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class ProtectHolder extends AsyncStorageObjectHolder<Protect>
 {
-	public ProtectHolder(IEssentials ess)
+	public ProtectHolder(final IEssentials ess)
 	{
 		super(ess, Protect.class);
 	}
@@ -22,13 +22,11 @@ public class ProtectHolder extends AsyncStorageObjectHolder<Protect>
 
 	@Override
 	public void finishRead()
-	{		
-		
+	{
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		
 	}
 }

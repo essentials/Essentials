@@ -1,13 +1,13 @@
 package com.earth2me.essentials.protect.data;
 
-import java.util.Map.Entry;
 import java.util.*;
+import java.util.Map.Entry;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
 
 
-public class ProtectedBlockMemory implements IProtectedBlock
+public final class ProtectedBlockMemory implements IProtectedBlock
 {
 	private final transient List<String> worlds = new ArrayList<String>();
 	private final transient List<String> playerNames = new ArrayList<String>();
@@ -123,12 +123,14 @@ public class ProtectedBlockMemory implements IProtectedBlock
 		importProtections(storage.exportProtections());
 	}
 
+	@Override
 	public void clearProtections()
 	{
 		blocks.clear();
 	}
 
-	public final void importProtections(final List<OwnedBlock> blocks)
+	@Override
+	public void importProtections(final List<OwnedBlock> blocks)
 	{
 		for (OwnedBlock ownedBlock : blocks)
 		{
@@ -141,6 +143,7 @@ public class ProtectedBlockMemory implements IProtectedBlock
 		}
 	}
 
+	@Override
 	public List<OwnedBlock> exportProtections()
 	{
 		final List<OwnedBlock> blockList = new ArrayList<OwnedBlock>(blocks.size());
@@ -160,12 +163,14 @@ public class ProtectedBlockMemory implements IProtectedBlock
 		return blockList;
 	}
 
+	@Override
 	public void protectBlock(final Block block, final String playerName)
 	{
 		final ProtectedLocation pl = new ProtectedLocation(block, getWorldId(block.getWorld()));
 		protectBlock(pl, playerName);
 		plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable()
 		{
+			@Override
 			public void run()
 			{
 				storage.protectBlock(block, playerName);
@@ -173,9 +178,9 @@ public class ProtectedBlockMemory implements IProtectedBlock
 		});
 	}
 
-	private final void protectBlock(ProtectedLocation pl, String playerName)
+	private void protectBlock(final ProtectedLocation pl, final String playerName)
 	{
-		int playerId = getPlayerId(playerName);
+		final int playerId = getPlayerId(playerName);
 		ProtectedBy pb = blocks.get(pl);
 		if (pb == null)
 		{
@@ -185,27 +190,31 @@ public class ProtectedBlockMemory implements IProtectedBlock
 		pb.add(playerId);
 	}
 
-	public boolean isProtected(Block block, String playerName)
+	@Override
+	public boolean isProtected(final Block block, final String playerName)
 	{
-		int playerId = getPlayerId(playerName);
-		ProtectedLocation pl = new ProtectedLocation(block, getWorldId(block.getWorld()));
-		ProtectedBy pb = blocks.get(pl);
+		final int playerId = getPlayerId(playerName);
+		final ProtectedLocation pl = new ProtectedLocation(block, getWorldId(block.getWorld()));
+		final ProtectedBy pb = blocks.get(pl);
 		return !pb.contains(playerId);
 	}
 
-	public List<String> getOwners(Block block)
+	@Override
+	public List<String> getOwners(final Block block)
 	{
 		ProtectedLocation pl = new ProtectedLocation(block, getWorldId(block.getWorld()));
 		ProtectedBy pb = blocks.get(pl);
 		return pb.getPlayers(playerNames);
 	}
 
+	@Override
 	public int unprotectBlock(final Block block)
 	{
-		ProtectedLocation pl = new ProtectedLocation(block, getWorldId(block.getWorld()));
-		ProtectedBy pb = blocks.remove(pl);
+		final ProtectedLocation pl = new ProtectedLocation(block, getWorldId(block.getWorld()));
+		final ProtectedBy pb = blocks.remove(pl);
 		plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable()
 		{
+			@Override
 			public void run()
 			{
 				storage.unprotectBlock(block);
@@ -214,7 +223,7 @@ public class ProtectedBlockMemory implements IProtectedBlock
 		return pb.size();
 	}
 
-	private int getPlayerId(String playername)
+	private int getPlayerId(final String playername)
 	{
 		int id = playerNames.indexOf(playername);
 		if (id < 0)
@@ -225,12 +234,12 @@ public class ProtectedBlockMemory implements IProtectedBlock
 		return id;
 	}
 
-	private int getWorldId(World world)
+	private int getWorldId(final World world)
 	{
 		return getWorldId(world.getName());
 	}
 
-	private int getWorldId(String name)
+	private int getWorldId(final String name)
 	{
 		int id = worlds.indexOf(name);
 		if (id < 0)
@@ -241,6 +250,7 @@ public class ProtectedBlockMemory implements IProtectedBlock
 		return id;
 	}
 
+	@Override
 	public void onPluginDeactivation()
 	{
 		storage.onPluginDeactivation();

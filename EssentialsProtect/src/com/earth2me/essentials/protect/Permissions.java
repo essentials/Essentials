@@ -1,7 +1,7 @@
 package com.earth2me.essentials.protect;
 
-import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IPermission;
+import com.earth2me.essentials.utils.Util;
 import java.util.Locale;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
@@ -74,7 +74,7 @@ public enum Permissions implements IPermission
 	}
 
 	@Override
-	public boolean isAuthorized(CommandSender sender)
+	public boolean isAuthorized(final CommandSender sender)
 	{
 		return sender.hasPermission(getBukkitPermission());
 	}

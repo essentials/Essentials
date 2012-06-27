@@ -8,26 +8,30 @@ import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.permissions.PermissionDefault;
 
-public class BlockBreakPermissions extends AbstractSuperpermsPermission{
-	private static Map<Material,IPermission> permissions = new EnumMap<Material, IPermission>(Material.class);
+
+public final class BlockBreakPermissions extends AbstractSuperpermsPermission
+{
+	private static Map<Material, IPermission> permissions = new EnumMap<Material, IPermission>(Material.class);
 	private static final String base = "essentials.protect.blockbreak.";
 	private final String permission;
-	
-	public static IPermission getPermission(Material mat)
+
+	public static IPermission getPermission(final Material mat)
 	{
 		IPermission perm = permissions.get(mat);
-		if (perm == null) {
+		if (perm == null)
+		{
 			perm = new BlockBreakPermissions(mat.toString().toLowerCase(Locale.ENGLISH));
 			permissions.put(mat, perm);
 		}
 		return perm;
 	}
 
-	private BlockBreakPermissions(String matName)
+	private BlockBreakPermissions(final String matName)
 	{
+		super();
 		this.permission = base + matName;
 	}
-	
+
 	@Override
 	public String getPermission()
 	{
@@ -40,4 +44,3 @@ public class BlockBreakPermissions extends AbstractSuperpermsPermission{
 		return PermissionDefault.TRUE;
 	}
 }
-
