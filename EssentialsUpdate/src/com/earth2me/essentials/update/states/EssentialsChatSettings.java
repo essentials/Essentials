@@ -7,7 +7,7 @@ public class EssentialsChatSettings extends AbstractYesNoState
 {
 	public EssentialsChatSettings(final StateMap states)
 	{
-		super(states, EssentialsSpawn.class);
+		super(states, null);
 	}
 
 	@Override

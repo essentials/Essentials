@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
-
+// TODO: This whole thing should make use of the conversations api
 public class UpdateProcess implements Listener
 {
 	private transient Player currentPlayer;

@@ -1,10 +1,10 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.ChargeException;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.economy.Trade;
+import com.earth2me.essentials.api.ChargeException;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
+import com.earth2me.essentials.economy.Trade;
 
 
 public class SignHeal extends EssentialsSign

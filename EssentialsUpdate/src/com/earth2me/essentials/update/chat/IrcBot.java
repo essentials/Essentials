@@ -35,7 +35,6 @@ public class IrcBot extends PircBot
 		try
 		{
 			connect(SERVER, PORT);
-			return;
 		}
 		catch (IOException ex)
 		{

@@ -61,6 +61,5 @@ public class ConfigCommand extends AbstractFileCommand implements Command
 				player.sendMessage(ex.getMessage());
 			}
 		}
-
 	}
 }

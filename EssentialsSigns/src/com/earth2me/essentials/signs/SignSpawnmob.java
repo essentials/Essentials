@@ -1,10 +1,10 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.api.ChargeException;
-import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.commands.Commandspawnmob;
+import com.earth2me.essentials.economy.Trade;
 
 
 public class SignSpawnmob extends EssentialsSign
@@ -22,14 +22,13 @@ public class SignSpawnmob extends EssentialsSign
 		return true;
 	}
 
-	
 	//TODO: This should call a method not a command
 	@Override
 	protected boolean onSignInteract(ISign sign, IUser player, String username, IEssentials ess) throws SignException, ChargeException
 	{
 		final Trade charge = getTrade(sign, 3, ess);
 		charge.isAffordableFor(player);
-		Commandspawnmob command = new Commandspawnmob();	
+		Commandspawnmob command = new Commandspawnmob();
 		command.init(ess, "spawnmob");
 		String[] args = new String[]
 		{

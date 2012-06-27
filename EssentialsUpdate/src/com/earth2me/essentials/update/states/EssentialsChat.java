@@ -11,7 +11,7 @@ public class EssentialsChat extends AbstractYesNoState
 {
 	public EssentialsChat(final StateMap states)
 	{
-		super(states, EssentialsChatSettings.class, EssentialsSpawn.class);
+		super(states, EssentialsChatSettings.class);
 	}
 
 	@Override

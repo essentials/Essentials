@@ -11,14 +11,14 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.jivesoftware.smack.Roster.SubscriptionMode;
 import org.jivesoftware.smack.*;
+import org.jivesoftware.smack.Roster.SubscriptionMode;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.util.StringUtils;
 
 
-public class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IReload
+public final class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IReload
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient YamlConfiguration config = null;
@@ -132,7 +132,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 		}
 	}
 
-	public final void disconnect()
+	public void disconnect()
 	{
 		if (loggerThread != null)
 		{
@@ -165,7 +165,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 	}
 
 	@Override
-	public final void onReload()
+	public void onReload()
 	{
 		LOGGER.removeHandler(this);
 		config = YamlConfiguration.loadConfiguration(new File(parent.getDataFolder(), "config.yml"));

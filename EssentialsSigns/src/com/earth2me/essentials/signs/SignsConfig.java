@@ -4,7 +4,9 @@ import com.earth2me.essentials.storage.StorageObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignsConfig implements StorageObject {
+
+public class SignsConfig implements StorageObject
+{
 	private Map<String, Boolean> signs = new HashMap<String, Boolean>();
 
 	public Map<String, Boolean> getSigns()
@@ -12,7 +14,7 @@ public class SignsConfig implements StorageObject {
 		return signs;
 	}
 
-	public void setSigns(Map<String, Boolean> signs)
+	public void setSigns(final Map<String, Boolean> signs)
 	{
 		this.signs = signs;
 	}

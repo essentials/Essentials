@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 
 public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 {
-	private final Plugin plugin;
+	private final transient Plugin plugin;
 	private Set<EssentialsSign> enabledSigns = new HashSet<EssentialsSign>();
 	private boolean signsEnabled = false;
 
@@ -22,15 +22,15 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 		acquireReadLock();
 		try
 		{
-			Map<String, Boolean> signs = getData().getSigns();
+			final Map<String, Boolean> signs = getData().getSigns();
 			for (Map.Entry<String, Boolean> entry : signs.entrySet())
 			{
-				if(entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOR") || entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOUR"))
+				if (entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOR") || entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOUR"))
 				{
 					signsEnabled = true;
 					continue;
 				}
-				Signs sign = Signs.valueOf(entry.getKey().toUpperCase(Locale.ENGLISH));
+				final Signs sign = Signs.valueOf(entry.getKey().toUpperCase(Locale.ENGLISH));
 				if (sign != null && entry.getValue())
 				{
 					enabledSigns.add(sign.getSign());
@@ -44,7 +44,7 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 		acquireWriteLock();
 		try
 		{
-			Map<String, Boolean> signs = new HashMap<String, Boolean>();
+			final Map<String, Boolean> signs = new HashMap<String, Boolean>();
 			for (Signs sign : Signs.values())
 			{
 				signs.put(sign.toString(), enabledSigns.contains(sign.getSign()));
@@ -67,7 +67,7 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 	{
 		return enabledSigns;
 	}
-	
+
 	public boolean areSignsDisabled()
 	{
 		return !signsEnabled;
@@ -76,12 +76,10 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 	@Override
 	public void finishRead()
 	{
-		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		
 	}
 }

@@ -28,7 +28,7 @@ public class SignEntityListener implements Listener
 		{
 			return;
 		}
-		
+
 		for (Block block : event.blockList())
 		{
 			if (((block.getTypeId() == Material.WALL_SIGN.getId()

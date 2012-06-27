@@ -39,7 +39,7 @@ public abstract class AbstractState
 
 	/**
 	 * Check if we already know the answer, so the user does not have to answer the question.
-	 * 
+	 *
 	 * @return true, if the answer could be guessed.
 	 */
 	public boolean guessAnswer()
@@ -49,12 +49,14 @@ public abstract class AbstractState
 
 	/**
 	 * Ask the user the question.
-	 * @param sender 
+	 *
+	 * @param sender
 	 */
 	public abstract void askQuestion(Player sender);
 
 	/**
 	 * React on the answer and set internal variables
+	 *
 	 * @param answer
 	 * @return true, if the answer could be recognized as a valid answer
 	 */
