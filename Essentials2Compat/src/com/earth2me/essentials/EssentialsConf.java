@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static net.ess3.I18n._;
 import com.google.common.io.Files;
 import java.io.*;
 import java.nio.ByteBuffer;

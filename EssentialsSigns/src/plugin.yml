@@ -1,6 +1,6 @@
 # This determines the command prefix when there are conflicts (/name:home, /name:help, etc.)
 name: EssentialsSigns
-main: com.earth2me.essentials.signs.EssentialsSignsPlugin
+main: net.ess3.signs.EssentialsSignsPlugin
 # Note to developers: This next line cannot change, or the automatic versioning system will break.
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
