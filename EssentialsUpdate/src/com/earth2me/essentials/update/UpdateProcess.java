@@ -123,7 +123,7 @@ public class UpdateProcess implements Listener
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
 		final Player player = event.getPlayer();
-		if (currentPlayer.getName().equals(player.getName()))
+		if (currentPlayer != null && currentPlayer.getName().equals(player.getName()))
 		{
 			currentPlayer = player;
 			player.sendMessage("You quit the game, while the installation wizard was running.");

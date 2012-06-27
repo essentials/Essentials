@@ -21,7 +21,7 @@ public class ConfigCommand extends AbstractFileCommand implements Command
 		BufferedReader page = null;
 		try
 		{
-			page = getPluginConfig("Essentials", "config.yml");
+			page = getPluginConfig("Essentials-3", "config.yml");
 			final StringBuilder input = new StringBuilder();
 			do
 			{

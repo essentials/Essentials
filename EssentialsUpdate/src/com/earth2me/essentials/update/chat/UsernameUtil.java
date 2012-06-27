@@ -104,7 +104,7 @@ public final class UsernameUtil
 
 	private static void addEssentialsVersion(final Server server, final StringBuilder nameBuilder)
 	{
-		final Plugin essentials = server.getPluginManager().getPlugin("Essentials");
+		final Plugin essentials = server.getPluginManager().getPlugin("Essentials-3");
 		if (essentials != null)
 		{
 			nameBuilder.append(" ESS");

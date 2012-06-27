@@ -31,7 +31,7 @@ public class UpdateCheck
 	private void checkForEssentials()
 	{
 		final PluginManager pluginManager = plugin.getServer().getPluginManager();
-		final Plugin essentials = pluginManager.getPlugin("Essentials");
+		final Plugin essentials = pluginManager.getPlugin("Essentials-3");
 		essentialsInstalled = essentials != null;
 		if (essentialsInstalled)
 		{
