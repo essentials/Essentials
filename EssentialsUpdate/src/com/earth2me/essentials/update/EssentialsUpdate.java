@@ -27,8 +27,6 @@ public class EssentialsUpdate extends JavaPlugin
 		updateProcess = new UpdateProcess(this, updateCheck);
 		updateProcess.registerEvents();
 
-		Bukkit.getLogger().log(Level.INFO, "EssentialsUpdate {0} loaded.", getDescription().getVersion());
-
 		if (updateCheck.isEssentialsInstalled())
 		{
 			updateCheck.scheduleUpdateTask();
