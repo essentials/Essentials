@@ -6,4 +6,4 @@ version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Shows the country or city of a user on login and /whois.
 authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits]
-depend: [Essentials3]
+depend: [Essentials-3]

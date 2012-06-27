@@ -6,4 +6,4 @@ version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides protection for various parts of the world.
 authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits]
-softdepend: [Essentials3]
+softdepend: [Essentials-3]
