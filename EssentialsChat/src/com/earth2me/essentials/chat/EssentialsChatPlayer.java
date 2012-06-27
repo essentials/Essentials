@@ -111,7 +111,7 @@ public abstract class EssentialsChatPlayer implements Listener
 
 	protected void handleLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
-		
+
 		long radius = 0;
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();

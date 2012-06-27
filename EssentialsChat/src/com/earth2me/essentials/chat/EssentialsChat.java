@@ -45,9 +45,4 @@ public class EssentialsChat extends JavaPlugin
 		final EssentialsLocalChatEventListener localChatListener = new EssentialsLocalChatEventListener(getServer(), ess);
 		pluginManager.registerEvents(localChatListener, this);
 	}
-
-	@Override
-	public void onDisable()
-	{
-	}
 }

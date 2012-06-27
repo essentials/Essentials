@@ -386,7 +386,6 @@ public class EssentialsUpgrade
 	 * ((Number)vals.get(4)).floatValue())); } } } } usersFile.renameTo(new File(usersFile.getAbsolutePath() + ".old"));
 	 * }
 	 */
-
 	private void convertWarps()
 	{
 		final File warpsFolder = new File(ess.getDataFolder(), "warps");
@@ -461,56 +460,56 @@ public class EssentialsUpgrade
 
 		}
 		/*final File warpFile = new File(ess.getDataFolder(), "warps.txt");
-		if (warpFile.exists())
-		{
-			try
-			{
-				final BufferedReader rx = new BufferedReader(new FileReader(warpFile));
-				try
-				{
-					for (String[] parts = new String[0]; rx.ready(); parts = rx.readLine().split(":"))
-					{
-						if (parts.length < 6)
-						{
-							continue;
-						}
-						final String name = parts[0];
-						final double x = Double.parseDouble(parts[1].trim());
-						final double y = Double.parseDouble(parts[2].trim());
-						final double z = Double.parseDouble(parts[3].trim());
-						final float yaw = Float.parseFloat(parts[4].trim());
-						final float pitch = Float.parseFloat(parts[5].trim());
-						if (name.isEmpty())
-						{
-							continue;
-						}
-						World w = null;
-						for (World world : ess.getServer().getWorlds())
-						{
-							if (world.getEnvironment() != World.Environment.NETHER)
-							{
-								w = world;
-								break;
-							}
-						}
-						final Location loc = new Location(name, x, y, z, yaw, pitch);
-						ess.getWarps().setWarp(name, loc);
-						if (!warpFile.renameTo(new File(ess.getDataFolder(), "warps.txt.old")))
-						{
-							throw new Exception(_("fileRenameError", "warps.txt"));
-						}
-					}
-				}
-				finally
-				{
-					rx.close();
-				}
-			}
-			catch (Exception ex)
-			{
-				LOGGER.log(Level.SEVERE, null, ex);
-			}
-		}*/
+		 if (warpFile.exists())
+		 {
+		 try
+		 {
+		 final BufferedReader rx = new BufferedReader(new FileReader(warpFile));
+		 try
+		 {
+		 for (String[] parts = new String[0]; rx.ready(); parts = rx.readLine().split(":"))
+		 {
+		 if (parts.length < 6)
+		 {
+		 continue;
+		 }
+		 final String name = parts[0];
+		 final double x = Double.parseDouble(parts[1].trim());
+		 final double y = Double.parseDouble(parts[2].trim());
+		 final double z = Double.parseDouble(parts[3].trim());
+		 final float yaw = Float.parseFloat(parts[4].trim());
+		 final float pitch = Float.parseFloat(parts[5].trim());
+		 if (name.isEmpty())
+		 {
+		 continue;
+		 }
+		 World w = null;
+		 for (World world : ess.getServer().getWorlds())
+		 {
+		 if (world.getEnvironment() != World.Environment.NETHER)
+		 {
+		 w = world;
+		 break;
+		 }
+		 }
+		 final Location loc = new Location(name, x, y, z, yaw, pitch);
+		 ess.getWarps().setWarp(name, loc);
+		 if (!warpFile.renameTo(new File(ess.getDataFolder(), "warps.txt.old")))
+		 {
+		 throw new Exception(_("fileRenameError", "warps.txt"));
+		 }
+		 }
+		 }
+		 finally
+		 {
+		 rx.close();
+		 }
+		 }
+		 catch (Exception ex)
+		 {
+		 LOGGER.log(Level.SEVERE, null, ex);
+		 }
+		 }*/
 	}
 
 	/*
@@ -532,7 +531,7 @@ public class EssentialsUpgrade
 	 * ess.getDataFolder().getParentFile().getParentFile(); final File worldDirectory = new File(bukkitDirectory, name);
 	 * if (worldDirectory.exists() && worldDirectory.isDirectory()) { return new FakeWorld(worldDirectory.getName(),
 	 * World.Environment.NORMAL); } return null;
-	}
+	 }
 	 */
 	public Location getFakeLocation(EssentialsConf config, String path)
 	{
@@ -697,7 +696,7 @@ public class EssentialsUpgrade
 			return;
 		}
 		//todo - metrics
-   //	ess.getSettings().setMetricsEnabled(false);
+		//	ess.getSettings().setMetricsEnabled(false);
 		doneFile.setProperty("warnMetrics", true);
 		doneFile.save();
 	}

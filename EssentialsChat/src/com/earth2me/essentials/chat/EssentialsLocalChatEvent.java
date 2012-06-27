@@ -98,6 +98,7 @@ public class EssentialsLocalChatEvent extends Event implements Cancellable
 		return parentEvent;
 	}
 
+	@Override
 	public HandlerList getHandlers()
 	{
 		return handlers;

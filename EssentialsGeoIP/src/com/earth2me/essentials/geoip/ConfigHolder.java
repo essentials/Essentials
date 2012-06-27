@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import org.bukkit.plugin.Plugin;
 
+
 public class ConfigHolder extends AsyncStorageObjectHolder<GeoIP>
 {
 	private final transient Plugin geoip;
@@ -27,13 +28,10 @@ public class ConfigHolder extends AsyncStorageObjectHolder<GeoIP>
 	@Override
 	public void finishRead()
 	{
-		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		
 	}
-
 }

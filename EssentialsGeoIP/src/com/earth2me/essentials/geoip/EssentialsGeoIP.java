@@ -9,15 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsGeoIP extends JavaPlugin
 {
-	public EssentialsGeoIP()
-	{
-	}
-
-	@Override
-	public void onDisable()
-	{
-	}
-
 	@Override
 	public void onEnable()
 	{
@@ -27,7 +18,8 @@ public class EssentialsGeoIP extends JavaPlugin
 		{
 			getLogger().log(Level.WARNING, _("versionMismatchAll"));
 		}
-		if (!ess.isEnabled()) {
+		if (!ess.isEnabled())
+		{
 			this.setEnabled(false);
 			return;
 		}
