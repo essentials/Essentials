@@ -1,4 +1,4 @@
-package com.ess3.update;
+package net.ess3.update;
 
 import net.ess3.update.Version.Type;
 import java.util.TreeSet;

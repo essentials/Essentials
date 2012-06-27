@@ -1,10 +1,9 @@
-package com.ess3.update;
+package net.ess3.update;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import junit.framework.TestCase;
-import net.ess3.update.PastieUpload;
 import org.junit.Test;
 
 
