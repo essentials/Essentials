@@ -37,7 +37,7 @@ public class Version implements Comparable<Version>
 
 	public Version(final String versionString)
 	{
-		final Matcher matcher = Pattern.compile("(Pre|Dev)?([0-9]+)[_\\.]([0-9]+)[_\\.]([0-9]+).*").matcher(versionString);
+		final Matcher matcher = Pattern.compile("(Pre|Dev)?([0-9]+)[_\\.-]([0-9]+)[_\\.-]([0-9]+).*").matcher(versionString);
 		if (!matcher.matches() || matcher.groupCount() < 4)
 		{
 			type = Type.DEVELOPER;
