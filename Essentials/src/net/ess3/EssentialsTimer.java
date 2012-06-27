@@ -1,5 +1,6 @@
 package net.ess3;
 
+import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -72,7 +73,7 @@ public class EssentialsTimer implements Runnable
 					final List<String> mail = user.getMails();
 					if (mail != null && !mail.isEmpty())
 					{
-						user.sendMessage(I18n._("youHaveNewMail", mail.size()));
+						user.sendMessage(_("youHaveNewMail", mail.size()));
 					}
 				}
 			}

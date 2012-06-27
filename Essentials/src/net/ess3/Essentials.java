@@ -17,6 +17,7 @@
  */
 package net.ess3;
 
+import static net.ess3.I18n._;
 import net.ess3.api.*;
 import net.ess3.backup.Backup;
 import net.ess3.commands.EssentialsCommandHandler;
@@ -111,7 +112,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 		}
 		i18n = new I18n(this);
 		i18n.onEnable();
-		LOGGER.log(Level.INFO, I18n._("usingTempFolderForTesting"));
+		LOGGER.log(Level.INFO, _("usingTempFolderForTesting"));
 		LOGGER.log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 		settings = new SettingsHolder(this);
@@ -136,7 +137,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 				&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion())
 				&& !plugin.getDescription().getName().equals("EssentialsAntiCheat"))
 			{
-				LOGGER.log(Level.WARNING, I18n._("versionMismatch", plugin.getDescription().getName()));
+				LOGGER.log(Level.WARNING, _("versionMismatch", plugin.getDescription().getName()));
 			}
 		}
 		final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
@@ -146,8 +147,8 @@ public class Essentials extends JavaPlugin implements IEssentials
 			if (versionNumber < BUKKIT_VERSION && versionNumber > 100)
 			{
 				LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
-				LOGGER.log(Level.SEVERE, I18n._("notRecommendedBukkit"));
-				LOGGER.log(Level.SEVERE, I18n._("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
+				LOGGER.log(Level.SEVERE, _("notRecommendedBukkit"));
+				LOGGER.log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
 				LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
 				this.setEnabled(false);
 				return;
@@ -155,7 +156,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 		}
 		else
 		{
-			LOGGER.log(Level.INFO, I18n._("bukkitFormatChanged"));
+			LOGGER.log(Level.INFO, _("bukkitFormatChanged"));
 			LOGGER.log(Level.INFO, getServer().getVersion());
 			LOGGER.log(Level.INFO, getServer().getBukkitVersion());
 		}
@@ -199,11 +200,11 @@ public class Essentials extends JavaPlugin implements IEssentials
 		{
 			if (pm.getPlugin("EssentialsUpdate") != null)
 			{
-				LOGGER.log(Level.SEVERE, I18n._("essentialsHelp2"));
+				LOGGER.log(Level.SEVERE, _("essentialsHelp2"));
 			}
 			else
 			{
-				LOGGER.log(Level.SEVERE, I18n._("essentialsHelp1"));
+				LOGGER.log(Level.SEVERE, _("essentialsHelp1"));
 			}
 			LOGGER.log(Level.SEVERE, exception.toString());
 			pm.registerEvents(new Listener()
@@ -273,7 +274,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 			if (user.isVanished())
 			{
 				user.toggleVanished();
-				p.sendMessage(I18n._("unvanishedReload"));
+				p.sendMessage(_("unvanishedReload"));
 			}
 		}
 		i18n.onDisable();
