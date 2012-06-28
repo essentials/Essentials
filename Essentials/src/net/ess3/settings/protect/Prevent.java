@@ -17,7 +17,7 @@ public class Prevent implements StorageObject
 {
 	@Comment("Which blocks should a piston not be able to push?")
 	@ListType(Material.class)
-	private Set<Material> pistonPush = new HashSet<Material>();	
+	private Set<Material> pistonPush = new HashSet<Material>();
 	private boolean lavaFlow = false;
 	private boolean waterFlow = false;
 	// private boolean waterbucketFlow = false; TODO: Test if this still works
@@ -42,10 +42,16 @@ public class Prevent implements StorageObject
 	@MapKeyType(EntityType.class)
 	@MapValueType(Boolean.class)
 	private Map<EntityType, Boolean> spawn = new HashMap<EntityType, Boolean>();
-	
+
 	public Prevent()
 	{
-		spawn.put(EntityType.PIG, false);
+		for (EntityType t : EntityType.values())
+		{
+			if (t.isAlive())
+			{
+				spawn.put(t, false);
+			}			
+		}
 		pistonPush.add(Material.GLASS);
 	}
 }
