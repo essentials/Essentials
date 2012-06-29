@@ -88,10 +88,9 @@ public class Trade
 		final ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
 
+		double money;
 		if (command != null && !command.isEmpty()
-			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user)
-			&& money < settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command)
-			&& 0 < settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command)
+			&& 0 < (money = getCommandCost(user))
 			&& !Permissions.ECO_LOAN.isAuthorized(user))
 		{
 			throw new ChargeException(_("notEnoughMoney"));
