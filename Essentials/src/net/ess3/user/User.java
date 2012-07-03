@@ -556,13 +556,7 @@ public class User extends UserBase implements IUser
 		{
 			// Ignore
 		}
-	}
-
-	@Override
-	public List<String> getHomes()
-	{
-		return super.getHomes();
-	}
+	}	
 
 	@Override
 	public int compareTo(final IUser t)
@@ -772,9 +766,5 @@ public class User extends UserBase implements IUser
 		this.setVanished(set);
 	}
 
-	@Override
-	public Location getHome(String name) throws Exception
-	{
-		return super.getHome(name);
-	}
+	
 }

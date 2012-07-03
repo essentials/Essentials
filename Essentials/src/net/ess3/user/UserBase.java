@@ -417,7 +417,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 			}
 			try
 			{
-				return getData().getHomes().get(Util.sanitizeFileName(name)).getBukkitLocation();
+				return getData().getHomes().get(Util.sanitizeKey(name)).getBukkitLocation();
 			}
 			catch (WorldNotLoadedException ex)
 			{
