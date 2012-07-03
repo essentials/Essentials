@@ -11,6 +11,8 @@ import net.ess3.storage.Location.WorldNotLoadedException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.Cleanup;
 import lombok.Delegate;
 import org.bukkit.Bukkit;
@@ -291,8 +293,8 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	{
 		acquireWriteLock();
 		try
-		{		
-			getData().setMuted(mute);		
+		{
+			getData().setMuted(mute);
 		}
 		finally
 		{
@@ -404,6 +406,30 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 
+	public Location getHome(String name) throws Exception
+	{
+		acquireReadLock();
+		try
+		{
+			if (getData().getHomes() == null)
+			{
+				return null;
+			}
+			try
+			{
+				return getData().getHomes().get(Util.sanitizeFileName(name)).getBukkitLocation();
+			}
+			catch (WorldNotLoadedException ex)
+			{
+				return null;
+			}
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
 	public Location getHome(Location loc)
 	{
 
@@ -449,6 +475,23 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 				}
 			}
 			return target;
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+	
+	public List<String> getHomes()
+	{
+		acquireReadLock();
+		try
+		{
+			if (getData().getHomes() == null)
+			{
+				return null;
+			}	
+			return new ArrayList<String>(getData().getHomes().keySet());
 		}
 		finally
 		{

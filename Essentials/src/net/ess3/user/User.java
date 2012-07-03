@@ -1,14 +1,5 @@
 package net.ess3.user;
 
-import net.ess3.Console;
-import static net.ess3.I18n._;
-import net.ess3.Teleport;
-import net.ess3.api.*;
-import net.ess3.craftbukkit.InventoryWorkaround;
-import net.ess3.economy.register.Method;
-import net.ess3.permissions.Permissions;
-import net.ess3.utils.DateUtil;
-import net.ess3.utils.Util;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -18,6 +9,15 @@ import java.util.logging.Logger;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
+import net.ess3.Console;
+import static net.ess3.I18n._;
+import net.ess3.Teleport;
+import net.ess3.api.*;
+import net.ess3.craftbukkit.InventoryWorkaround;
+import net.ess3.economy.register.Method;
+import net.ess3.permissions.Permissions;
+import net.ess3.utils.DateUtil;
+import net.ess3.utils.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -255,6 +255,7 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public void setDisplayNick()
 	{
 		String name = getNick(true);
@@ -366,6 +367,7 @@ public class User extends UserBase implements IUser
 	}
 
 	//Returns true if status expired during this check
+	@Override
 	public boolean checkJailTimeout(final long currentTime)
 	{
 		acquireReadLock();
@@ -534,13 +536,7 @@ public class User extends UserBase implements IUser
 			unlock();
 		}
 	}
-
-	@Override
-	public Location getHome(String name) throws Exception
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
+	
 	@Override
 	public void updateCompass()
 	{
@@ -565,7 +561,7 @@ public class User extends UserBase implements IUser
 	@Override
 	public List<String> getHomes()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		return super.getHomes();
 	}
 
 	@Override
@@ -774,5 +770,11 @@ public class User extends UserBase implements IUser
 	{
 		final boolean set = !vanished;
 		this.setVanished(set);
+	}
+
+	@Override
+	public Location getHome(String name) throws Exception
+	{
+		return super.getHome(name);
 	}
 }

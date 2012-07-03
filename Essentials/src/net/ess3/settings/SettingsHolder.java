@@ -63,6 +63,7 @@ public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implement
 		return debug.get();
 	}
 	
+	@Override
 	public void setDebug(final boolean set)
 	{
 		debug.set(set);
