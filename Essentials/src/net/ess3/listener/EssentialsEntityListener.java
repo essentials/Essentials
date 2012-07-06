@@ -134,7 +134,7 @@ public class EssentialsEntityListener implements Listener
 			event.setDeathMessage("");
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerDeathExpEvent(final PlayerDeathEvent event)
 	{
@@ -173,7 +173,7 @@ public class EssentialsEntityListener implements Listener
 			}
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onCreatureSpawn(final CreatureSpawnEvent event)
 	{
@@ -186,11 +186,11 @@ public class EssentialsEntityListener implements Listener
 		{
 			return;
 		}
-		final ISettings settings = ess.getSettings();		
+		final ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
 		try
 		{
-			final Boolean prevent = settings.getData().getGeneral().getPreventSpawn(creature);
+			final Boolean prevent = settings.getData().getWorldOptions(event.getLocation().getWorld().getName()).getPreventSpawn(creature);
 			if (prevent != null && prevent)
 			{
 				event.setCancelled(true);

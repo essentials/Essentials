@@ -1,6 +1,5 @@
 package net.ess3.protect;
 
-import net.ess3.api.ISettings;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -236,8 +235,6 @@ public class EssentialsProtectEntityListener implements Listener
 			settings.unlock();
 		}
 	}
-
-	
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityTarget(final EntityTargetEvent event)

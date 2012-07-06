@@ -42,7 +42,7 @@ public class Commandspawner extends EssentialsCommand
 		@Cleanup
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
-		if (settings.getData().getGeneral().getPreventSpawn(mob.getType().toString().toLowerCase(Locale.ENGLISH)))
+		if (settings.getData().getWorldOptions(user.getWorld().getName()).getPreventSpawn(mob.getType().toString().toLowerCase(Locale.ENGLISH)))
 		{
 			throw new Exception(_("disabledToSpawnMob"));
 		}
