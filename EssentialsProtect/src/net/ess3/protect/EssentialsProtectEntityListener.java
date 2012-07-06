@@ -1,5 +1,6 @@
 package net.ess3.protect;
 
+import net.ess3.api.ISettings;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -236,33 +237,7 @@ public class EssentialsProtectEntityListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onCreatureSpawn(final CreatureSpawnEvent event)
-	{
-		if (event.getEntity().getType() == EntityType.PLAYER)
-		{
-			return;
-		}
-		final EntityType creature = event.getEntityType();
-		if (creature == null)
-		{
-			return;
-		}
-		final ProtectHolder settings = prot.getSettings();
-		settings.acquireReadLock();
-		try
-		{
-			final Boolean prevent = settings.getData().getPrevent().getSpawn().get(creature);
-			if (prevent != null && prevent)
-			{
-				event.setCancelled(true);
-			}
-		}
-		finally
-		{
-			settings.unlock();
-		}
-	}
+	
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityTarget(final EntityTargetEvent event)

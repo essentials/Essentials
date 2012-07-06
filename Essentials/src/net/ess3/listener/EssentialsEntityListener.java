@@ -11,6 +11,7 @@ import lombok.Cleanup;
 import org.bukkit.Material;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -170,6 +171,34 @@ public class EssentialsEntityListener implements Listener
 			{
 				event.setCancelled(true);
 			}
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onCreatureSpawn(final CreatureSpawnEvent event)
+	{
+		if (event.getEntity().getType() == EntityType.PLAYER)
+		{
+			return;
+		}
+		final EntityType creature = event.getEntityType();
+		if (creature == null)
+		{
+			return;
+		}
+		final ISettings settings = ess.getSettings();		
+		settings.acquireReadLock();
+		try
+		{
+			final Boolean prevent = settings.getData().getGeneral().getPreventSpawn(creature);
+			if (prevent != null && prevent)
+			{
+				event.setCancelled(true);
+			}
+		}
+		finally
+		{
+			settings.unlock();
 		}
 	}
 }

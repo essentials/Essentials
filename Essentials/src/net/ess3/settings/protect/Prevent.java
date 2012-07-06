@@ -39,19 +39,9 @@ public class Prevent implements StorageObject
 		"permission essentials.protect.entitytarget.bypass disables this"
 	})
 	private boolean entitytarget = false;
-	@MapKeyType(EntityType.class)
-	@MapValueType(Boolean.class)
-	private Map<EntityType, Boolean> spawn = new HashMap<EntityType, Boolean>();
 
 	public Prevent()
 	{
-		for (EntityType t : EntityType.values())
-		{
-			if (t.isAlive())
-			{
-				spawn.put(t, false);
-			}			
-		}
 		pistonPush.add(Material.GLASS);
 	}
 }

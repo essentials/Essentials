@@ -925,4 +925,10 @@ public class FakeServer implements Server
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
+
+	@Override
+	public String getMotd()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

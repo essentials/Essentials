@@ -332,11 +332,13 @@ public class Essentials extends JavaPlugin implements IEssentials
 		return backup;
 	}
 
+	@Override
 	public Metrics getMetrics()
 	{
 		return metrics;
 	}
 
+	@Override
 	public void setMetrics(Metrics metrics)
 	{
 		this.metrics = metrics;
