@@ -35,6 +35,7 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 				{
 					enabledSigns.add(sign.getSign());
 				}
+                signsEnabled = true;
 			}
 		}
 		finally
