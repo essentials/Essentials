@@ -26,6 +26,7 @@ public class Commandheal extends EssentialsCommand
 		user.checkCooldown(TimestampType.LASTHEAL, ess.getRanks().getHealCooldown(user), true, Permissions.HEAL_COOLDOWN_BYPASS);
 
 		user.setHealth(20);
+		user.setFireTicks(0);
 		user.setFoodLevel(20);
 		user.sendMessage(_("heal"));
 	}
