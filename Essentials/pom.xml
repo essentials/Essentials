@@ -17,11 +17,11 @@
       <artifactId>BukkitPermissions</artifactId>
       <version>1.2</version>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>craftbukkit</artifactId>
       <version>${bukkit.version}</version>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>EssentialsGroupManager</artifactId>
