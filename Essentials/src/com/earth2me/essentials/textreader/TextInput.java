@@ -1,13 +1,14 @@
 package com.earth2me.essentials.textreader;
 
-import com.earth2me.essentials.IEssentials;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import java.io.*;
+import java.io.IOException;
 import java.lang.ref.SoftReference;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+
+import com.earth2me.essentials.IEssentials;
 
 
 public class TextInput implements IText

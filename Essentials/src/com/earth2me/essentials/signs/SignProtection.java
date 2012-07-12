@@ -1,18 +1,25 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.ChargeException;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import java.util.*;
+
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.inventory.ItemStack;
+
+import com.earth2me.essentials.ChargeException;
+import com.earth2me.essentials.IEssentials;
+import com.earth2me.essentials.Trade;
+import com.earth2me.essentials.User;
+import com.earth2me.essentials.Util;
 
 
 public class SignProtection extends EssentialsSign
@@ -26,19 +33,21 @@ public class SignProtection extends EssentialsSign
 		protectedBlocks.add(Material.BURNING_FURNACE);
 		protectedBlocks.add(Material.FURNACE);
 		protectedBlocks.add(Material.DISPENSER);
+		protectedBlocks.add(Material.SIGN);
+		protectedBlocks.add(Material.SIGN_POST);
 	}
 
 	@Override
 	protected boolean onSignCreate(final ISign sign, final User player, final String username, final IEssentials ess) throws SignException, ChargeException
 	{
-		sign.setLine(3, "ยง4" + username);
+		sign.setLine(3, "ง4" + username);
 		if (hasAdjacentBlock(sign.getBlock()))
 		{
 			final SignProtectionState state = isBlockProtected(sign.getBlock(), player, username, true);
 			if (state == SignProtectionState.NOSIGN || state == SignProtectionState.OWNER
 				|| player.isAuthorized("essentials.signs.protection.override"))
 			{
-				sign.setLine(3, "ยง1" + username);
+				sign.setLine(3, "ง1" + username);
 				return true;
 			}
 		}
@@ -143,25 +152,13 @@ public class SignProtection extends EssentialsSign
 		{
 			return SignProtectionState.NOT_ALLOWED;
 		}
-		if (user.isAuthorized("essentials.signs.protection.override"))
+		if (user.isAuthorized("essentials.signs.protection.override") || Util.stripFormat(sign.getLine(3)).equalsIgnoreCase(username))
 		{
 			return SignProtectionState.OWNER;
 		}
-		if (Util.stripFormat(sign.getLine(3)).equalsIgnoreCase(username))
+		if (Util.stripFormat(sign.toString().toLowerCase()).contains("(" + username.toLowerCase() + ")"))
 		{
-			return SignProtectionState.OWNER;
-		}
-		for (int i = 1; i <= 2; i++)
-		{
-			final String line = sign.getLine(i);
-			if (line.startsWith("(") && line.endsWith(")") && user.inGroup(line.substring(1, line.length() - 1)))
-			{
-				return SignProtectionState.ALLOWED;
-			}
-			else if (line.equalsIgnoreCase(username))
-			{
-				return SignProtectionState.ALLOWED;
-			}
+			return SignProtectionState.ALLOWED;
 		}
 		return SignProtectionState.NOT_ALLOWED;
 	}
@@ -212,24 +209,25 @@ public class SignProtection extends EssentialsSign
 		final Block[] faces = getAdjacentBlocks(block);
 		for (Block b : faces)
 		{
-			if (b.getType() == Material.SIGN_POST || b.getType() == Material.WALL_SIGN)
-			{
-				final Sign sign = (Sign)b.getState();
-				if (sign.getLine(0).equalsIgnoreCase("ยง1[Protection]"))
-				{
-					return true;
-				}
-			}
+			//TODO: Does this work well?
 			if (protectedBlocks.contains(b.getType()))
 			{
-				final Block[] faceChest = getAdjacentBlocks(b);
+				if (b.getType().name().toString().toLowerCase().contains("sign")) // This is so it covers all types of 'Sign'
+				{
+					final Sign sign = (Sign) b.getState();
+					if (sign.getLine(0).contains("[Protection]")) // This doesnt need to pull the first line does it? It would be faster to just use a ".toString()" Afaik.
+					{
+						return true;
+					}
+				}
 
+				final Block[] faceChest = getAdjacentBlocks(b);
 				for (Block a : faceChest)
 				{
 					if (a.getType() == Material.SIGN_POST || a.getType() == Material.WALL_SIGN)
 					{
 						final Sign sign = (Sign)a.getState();
-						if (sign.getLine(0).equalsIgnoreCase("ยง1[Protection]"))
+						if (sign.getLine(0).equalsIgnoreCase("ง1[Protection]"))
 						{
 							return true;
 						}
