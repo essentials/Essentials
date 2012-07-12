@@ -345,61 +345,17 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public IUser getUser(final Object base)
+	public IUser getUser(final Player player)
 	{
-		if (base instanceof Player)
-		{
-			return getUser((Player)base);
-		}
-		if (base instanceof String)
-		{
-			final IUser user = userMap.getUser((String)base);
-			if (user != null && user.getBase() instanceof IOfflinePlayer)
-			{
-				((IOfflinePlayer)user.getBase()).setName((String)base);
-			}
-			return user;
-		}
-		return null;
+		return userMap.getUser(player);
 	}
 
-	private <T extends Player> IUser getUser(final T base)
+	@Override
+	public IUser getUser(final String playerName)
 	{
-		if (base == null)
-		{
-			return null;
-		}
-
-		if (base instanceof IUser)
-		{
-			return (IUser)base;
-		}
-		IUser user = userMap.getUser(base.getName());
-
-		if (user == null)
-		{
-			user = new User(base, this);
-		}
-		else
-		{
-			//todo - fix this
-			user.update(base);
-		}
-		return user;
+		return userMap.getUser(playerName);
 	}
 
-	/*@Override
-	 public IUser getUser(final Player player)
-	 {
-	 return userMap.getUser(player);
-	 }
-
-	 @Override
-	 public IUser getUser(final String playerName)
-	 {
-	 return userMap.getUser(playerName);
-	 }
-	 */
 	@Override
 	public World getWorld(final String name)
 	{

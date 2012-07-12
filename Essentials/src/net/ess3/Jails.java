@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -240,7 +241,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			final Entity damager = event.getDamager();
 			if (damager.getType() == EntityType.PLAYER)
 			{
-				final IUser user = ess.getUser(damager);
+				final IUser user = ess.getUser((Player)damager);
 				if (user != null && user.getData().isJailed())
 				{
 					event.setCancelled(true);

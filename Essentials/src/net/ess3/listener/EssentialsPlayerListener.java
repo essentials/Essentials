@@ -22,7 +22,6 @@ import lombok.Cleanup;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -463,11 +462,11 @@ public class EssentialsPlayerListener implements Listener
 	{
 		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
 		{
-			final IUser user = ess.getUser(event.getWhoClicked());
+			final IUser user = ess.getUser((Player)event.getWhoClicked());
 			final InventoryHolder invHolder = event.getView().getTopInventory().getHolder();
-			if (invHolder != null && invHolder instanceof HumanEntity)
+			if (invHolder != null && invHolder instanceof Player)
 			{
-				final IUser invOwner = ess.getUser((HumanEntity)invHolder);
+				final IUser invOwner = ess.getUser((Player)invHolder);
 				if (user.isInvSee() && (!Permissions.INVSEE_MODIFY.isAuthorized(user)
 										|| Permissions.INVSEE_PREVENT_MODIFY.isAuthorized(invOwner)
 										|| !invOwner.isOnline()))
@@ -483,7 +482,7 @@ public class EssentialsPlayerListener implements Listener
 	{
 		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
 		{
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUser((Player)event.getPlayer());
 			user.setInvSee(false);
 		}
 	}

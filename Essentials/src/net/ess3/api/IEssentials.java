@@ -7,6 +7,7 @@ import net.ess3.metrics.Metrics;
 import java.util.List;
 
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 
@@ -14,7 +15,10 @@ public interface IEssentials extends Plugin
 {
 	void addReloadListener(IReload listener);
 
-	IUser getUser(final Object base);
+	//IUser getUser(final Object base);
+	IUser getUser(final Player player);
+	
+	IUser getUser(final String playerName);
 
 	int broadcastMessage(IUser sender, String message);
 
