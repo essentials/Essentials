@@ -53,7 +53,11 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 		config.acquireReadLock();
 		try
 		{
+			if (event.getPlayer().getAddress() == null || event.getPlayer().getAddress().getAddress() == null) {
+				return;
+			}
 			final InetAddress address = event.getPlayer().getAddress().getAddress();
+			
 			final StringBuilder builder = new StringBuilder();
 			if (config.getData().getDatabase().isShowCities())
 			{
