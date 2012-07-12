@@ -5,7 +5,6 @@ import java.util.Map;
 import static net.ess3.I18n._;
 import net.ess3.metrics.Metrics;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 
 
 public class Commandessentials extends EssentialsCommand
