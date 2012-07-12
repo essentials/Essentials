@@ -1,8 +1,10 @@
-Essentials Development Readme
+Essentials Development Readme - 3.0
 =============================
 
 The official repository is at:
 https://github.com/essentials/Essentials
+
+The master repository is not for production use. Use branch 2.9 for production use code.
 
 We use NetBeans 7 for development.
 
