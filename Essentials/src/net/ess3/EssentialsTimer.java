@@ -40,7 +40,7 @@ public class EssentialsTimer implements Runnable
 		{
 			history.remove();
 		}
-		float tps = 100f / timeSpent;
+		final float tps = 100f / timeSpent;
 		if (tps <= 20)
 		{
 			history.add(tps);
@@ -52,6 +52,9 @@ public class EssentialsTimer implements Runnable
 			try
 			{
 				final IUser user = ess.getUser(player);
+				if (user == null) {
+					continue;
+				}
 				onlineUsers.add(user);
 				user.setLastOnlineActivity(currentTime);
 				user.checkActivity();
@@ -68,7 +71,7 @@ public class EssentialsTimer implements Runnable
 					settings.unlock();
 				}
 				// New mail notification
-				if (user != null && !mailDisabled && Permissions.MAIL.isAuthorized(user) && !user.gotMailInfo())
+				if (!mailDisabled && Permissions.MAIL.isAuthorized(user) && !user.gotMailInfo())
 				{
 					final List<String> mail = user.getMails();
 					if (mail != null && !mail.isEmpty())
