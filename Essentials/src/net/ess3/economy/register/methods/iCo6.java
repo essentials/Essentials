@@ -1,10 +1,10 @@
 package net.ess3.economy.register.methods;
 
-import net.ess3.economy.register.Method;
 import com.iCo6.iConomy;
 import com.iCo6.system.Account;
 import com.iCo6.system.Accounts;
 import com.iCo6.system.Holdings;
+import net.ess3.economy.register.Method;
 import org.bukkit.plugin.Plugin;
 
 

@@ -1,9 +1,9 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import static net.ess3.I18n._;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;

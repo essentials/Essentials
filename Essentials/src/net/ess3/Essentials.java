@@ -17,6 +17,16 @@
  */
 package net.ess3;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import lombok.Getter;
 import static net.ess3.I18n._;
 import net.ess3.api.*;
 import net.ess3.backup.Backup;
@@ -32,20 +42,8 @@ import net.ess3.metrics.MetricsStarter;
 import net.ess3.ranks.RanksStorage;
 import net.ess3.settings.SettingsHolder;
 import net.ess3.settings.SpawnsHolder;
-import net.ess3.user.IOfflinePlayer;
-import net.ess3.user.User;
 import net.ess3.user.UserMap;
 import net.ess3.utils.ExecuteTimer;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import lombok.Getter;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.Command;

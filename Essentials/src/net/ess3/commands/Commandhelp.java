@@ -1,14 +1,10 @@
 package net.ess3.commands;
 
+import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.utils.Util;
-import net.ess3.utils.textreader.HelpInput;
-import net.ess3.utils.textreader.IText;
-import net.ess3.utils.textreader.KeywordReplacer;
-import net.ess3.utils.textreader.TextInput;
-import net.ess3.utils.textreader.TextPager;
-import java.util.Locale;
+import net.ess3.utils.textreader.*;
 import org.bukkit.command.CommandSender;
 
 

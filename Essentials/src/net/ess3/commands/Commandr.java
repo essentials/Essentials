@@ -2,10 +2,10 @@ package net.ess3.commands;
 
 import net.ess3.Console;
 import static net.ess3.I18n._;
-import net.ess3.utils.Util;
 import net.ess3.api.IReplyTo;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

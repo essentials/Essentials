@@ -1,7 +1,5 @@
 package net.ess3;
 
-import net.ess3.api.IEssentials;
-import net.ess3.api.II18n;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +10,8 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IEssentials;
+import net.ess3.api.II18n;
 
 
 public class I18n implements II18n

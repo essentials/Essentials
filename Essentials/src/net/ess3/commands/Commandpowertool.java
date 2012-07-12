@@ -1,12 +1,12 @@
 package net.ess3.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

@@ -1,13 +1,13 @@
 package net.ess3.commands;
 
+import lombok.Cleanup;
 import net.ess3.Console;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
-import net.ess3.economy.Trade;
 import net.ess3.api.IUser;
+import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.permissions.WorldPermissions;
-import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 

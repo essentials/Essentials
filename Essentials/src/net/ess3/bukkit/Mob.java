@@ -1,13 +1,9 @@
 package net.ess3.bukkit;
 
-import static net.ess3.I18n._;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static net.ess3.I18n._;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.EntityType;

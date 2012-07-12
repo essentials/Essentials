@@ -1,9 +1,9 @@
 package net.ess3.permissions;
 
-import net.ess3.api.IPermission;
 import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
+import net.ess3.api.IPermission;
 import org.bukkit.Material;
 import org.bukkit.permissions.PermissionDefault;
 

@@ -1,12 +1,11 @@
 package net.ess3.storage;
 
-import net.ess3.Essentials;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-
+import net.ess3.Essentials;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;

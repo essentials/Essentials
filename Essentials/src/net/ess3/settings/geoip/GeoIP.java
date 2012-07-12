@@ -1,8 +1,8 @@
 package net.ess3.settings.geoip;
 
-import net.ess3.storage.StorageObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.ess3.storage.StorageObject;
 
 
 @Data

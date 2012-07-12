@@ -1,13 +1,13 @@
 package net.ess3.user;
 
+import java.io.File;
+import java.util.Locale;
+import java.util.Set;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.api.IUserMap;
 import net.ess3.api.InvalidNameException;
 import net.ess3.storage.StorageObjectMap;
-import java.io.File;
-import java.util.Locale;
-import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

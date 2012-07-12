@@ -1,9 +1,9 @@
 package net.ess3.storage;
 
-import net.ess3.api.IReload;
-import net.ess3.api.InvalidNameException;
 import java.io.File;
 import java.util.Set;
+import net.ess3.api.IReload;
+import net.ess3.api.InvalidNameException;
 
 
 interface IStorageObjectMap<I> extends IReload

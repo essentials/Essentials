@@ -1,12 +1,5 @@
 package net.ess3.utils;
 
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.api.InvalidNameException;
-import net.ess3.utils.gnu.inet.encoding.Punycode;
-import net.ess3.utils.gnu.inet.encoding.PunycodeException;
 import de.bananaco.bpermissions.imp.Permissions;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -14,6 +7,13 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.regex.Pattern;
 import lombok.Cleanup;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
+import net.ess3.api.InvalidNameException;
+import net.ess3.utils.gnu.inet.encoding.Punycode;
+import net.ess3.utils.gnu.inet.encoding.PunycodeException;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

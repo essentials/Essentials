@@ -1,10 +1,10 @@
 package net.ess3.commands;
 
+import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.WorldPermissions;
-import lombok.Cleanup;
 
 
 public class Commandtpa extends EssentialsCommand

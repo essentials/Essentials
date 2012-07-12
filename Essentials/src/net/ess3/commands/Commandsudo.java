@@ -1,9 +1,8 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import static net.ess3.I18n._;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 

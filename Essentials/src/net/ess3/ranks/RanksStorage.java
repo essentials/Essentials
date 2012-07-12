@@ -1,12 +1,5 @@
 package net.ess3.ranks;
 
-import net.ess3.utils.Util;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IRanks;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.permissions.GroupsPermissions;
-import net.ess3.storage.AsyncStorageObjectHolder;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -15,6 +8,13 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import lombok.Cleanup;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IRanks;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
+import net.ess3.permissions.GroupsPermissions;
+import net.ess3.storage.AsyncStorageObjectHolder;
+import net.ess3.utils.Util;
 
 
 public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRanks

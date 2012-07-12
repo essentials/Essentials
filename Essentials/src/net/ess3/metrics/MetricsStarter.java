@@ -1,18 +1,15 @@
 package net.ess3.metrics;
 
+import com.nijikokun.bukkit.Permissions.Permissions;
+import java.util.Locale;
+import java.util.logging.Level;
+import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.economy.register.Method;
 import net.ess3.economy.register.methods.VaultEco;
 import net.ess3.metrics.Metrics.Graph;
 import net.ess3.metrics.Metrics.Plotter;
-//import com.earth2me.essentials.register.payment.Method;
-//import com.earth2me.essentials.register.payment.methods.VaultEco;
-import com.nijikokun.bukkit.Permissions.Permissions;
-import java.util.Locale;
-import java.util.logging.Level;
-
-import lombok.Cleanup;
 
 
 public class MetricsStarter implements Runnable

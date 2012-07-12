@@ -1,12 +1,12 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
-import net.ess3.economy.Trade;
-import net.ess3.utils.Util;
-import net.ess3.api.IUser;
-import net.ess3.craftbukkit.InventoryWorkaround;
 import java.util.Locale;
 import java.util.logging.Level;
+import static net.ess3.I18n._;
+import net.ess3.api.IUser;
+import net.ess3.craftbukkit.InventoryWorkaround;
+import net.ess3.economy.Trade;
+import net.ess3.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

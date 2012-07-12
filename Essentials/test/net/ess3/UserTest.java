@@ -1,9 +1,9 @@
 package net.ess3;
 
-import net.ess3.api.IUser;
-import net.ess3.user.User;
 import java.io.IOException;
 import junit.framework.TestCase;
+import net.ess3.api.IUser;
+import net.ess3.user.User;
 import org.bukkit.World.Environment;
 import org.bukkit.plugin.InvalidDescriptionException;
 

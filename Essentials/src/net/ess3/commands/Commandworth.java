@@ -1,9 +1,9 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
-import net.ess3.utils.Util;
-import net.ess3.api.IUser;
 import java.util.Locale;
+import static net.ess3.I18n._;
+import net.ess3.api.IUser;
+import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 

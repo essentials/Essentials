@@ -1,8 +1,8 @@
 package net.ess3.api;
 
+import java.util.Collection;
 import net.ess3.commands.NoChargeException;
 import net.ess3.settings.Kit;
-import java.util.Collection;
 
 
 public interface IKits extends IReload

@@ -1,7 +1,7 @@
 package net.ess3.listener;
 
-import net.ess3.api.IEssentials;
 import java.util.concurrent.atomic.AtomicBoolean;
+import net.ess3.api.IEssentials;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

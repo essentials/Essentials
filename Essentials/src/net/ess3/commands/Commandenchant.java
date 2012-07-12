@@ -1,14 +1,14 @@
 package net.ess3.commands;
 
-import net.ess3.bukkit.Enchantments;
-import static net.ess3.I18n._;
-import net.ess3.utils.Util;
-import net.ess3.api.IUser;
-import net.ess3.permissions.EnchantPermissions;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import static net.ess3.I18n._;
+import net.ess3.api.IUser;
+import net.ess3.bukkit.Enchantments;
+import net.ess3.permissions.EnchantPermissions;
+import net.ess3.utils.Util;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 

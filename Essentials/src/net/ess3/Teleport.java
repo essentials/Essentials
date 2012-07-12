@@ -1,5 +1,8 @@
 package net.ess3;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ITeleport;
@@ -10,9 +13,6 @@ import net.ess3.user.CooldownException;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.LocationUtil;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

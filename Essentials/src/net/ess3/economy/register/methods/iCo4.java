@@ -1,8 +1,8 @@
 package net.ess3.economy.register.methods;
 
-import net.ess3.economy.register.Method;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.coelho.iConomy.system.Account;
+import net.ess3.economy.register.Method;
 import org.bukkit.plugin.Plugin;
 
 

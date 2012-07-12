@@ -1,5 +1,8 @@
 package net.ess3;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IKits;
@@ -9,9 +12,6 @@ import net.ess3.settings.Kit;
 import net.ess3.storage.AsyncStorageObjectHolder;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
 import org.bukkit.inventory.ItemStack;
 
 

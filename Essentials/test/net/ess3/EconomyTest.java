@@ -1,10 +1,10 @@
 package net.ess3;
 
+import java.io.IOException;
+import junit.framework.TestCase;
 import net.ess3.api.NoLoanPermittedException;
 import net.ess3.api.UserDoesNotExistException;
 import net.ess3.user.User;
-import java.io.IOException;
-import junit.framework.TestCase;
 import org.bukkit.World.Environment;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.junit.Test;

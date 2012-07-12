@@ -1,14 +1,14 @@
 package net.ess3.listener;
 
+import java.util.logging.Level;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IReload;
 import net.ess3.api.ISettings;
-import net.ess3.ranks.GMGroups;
-import net.ess3.ranks.VaultGroups;
 import net.ess3.economy.register.Methods;
-import net.ess3.settings.General;
+import net.ess3.ranks.GMGroups;
 import net.ess3.ranks.RanksStorage;
-import java.util.logging.Level;
+import net.ess3.ranks.VaultGroups;
+import net.ess3.settings.General;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

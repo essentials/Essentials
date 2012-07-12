@@ -1,11 +1,10 @@
 package net.ess3.api;
 
+import java.util.List;
 import net.ess3.EssentialsTimer;
 import net.ess3.economy.register.Methods;
 import net.ess3.listener.TntExplodeListener;
 import net.ess3.metrics.Metrics;
-import java.util.List;
-
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

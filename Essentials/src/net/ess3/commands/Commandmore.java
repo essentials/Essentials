@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
+import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.ItemPermissions;
 import net.ess3.permissions.Permissions;
-import java.util.Locale;
 import org.bukkit.inventory.ItemStack;
 
 

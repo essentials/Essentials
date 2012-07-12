@@ -1,11 +1,11 @@
 package net.ess3.ranks;
 
-import net.ess3.storage.Comment;
-import net.ess3.storage.MapValueType;
-import net.ess3.storage.StorageObject;
 import java.util.LinkedHashMap;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.ess3.storage.Comment;
+import net.ess3.storage.MapValueType;
+import net.ess3.storage.StorageObject;
 
 
 @Data

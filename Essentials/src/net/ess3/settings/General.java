@@ -1,11 +1,11 @@
 package net.ess3.settings;
 
-import net.ess3.storage.Comment;
-import net.ess3.storage.StorageObject;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.ess3.storage.Comment;
+import net.ess3.storage.StorageObject;
 import org.bukkit.entity.EntityType;
 
 

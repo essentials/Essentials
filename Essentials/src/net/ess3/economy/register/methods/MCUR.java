@@ -1,8 +1,8 @@
 package net.ess3.economy.register.methods;
 
-import net.ess3.economy.register.Method;
 import me.ashtheking.currency.Currency;
 import me.ashtheking.currency.CurrencyList;
+import net.ess3.economy.register.Method;
 import org.bukkit.plugin.Plugin;
 
 

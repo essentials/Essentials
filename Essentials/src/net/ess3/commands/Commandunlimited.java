@@ -1,13 +1,13 @@
 package net.ess3.commands;
 
+import java.util.Locale;
+import java.util.Set;
+import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.permissions.Permissions;
 import net.ess3.permissions.UnlimitedItemPermissions;
-import java.util.Locale;
-import java.util.Set;
-import lombok.Cleanup;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

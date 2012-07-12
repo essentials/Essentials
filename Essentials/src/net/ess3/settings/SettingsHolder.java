@@ -1,10 +1,10 @@
 package net.ess3.settings;
 
+import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.storage.AsyncStorageObjectHolder;
-import java.io.File;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implements ISettings

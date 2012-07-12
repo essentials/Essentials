@@ -1,11 +1,11 @@
 package net.ess3.economy.register.methods;
 
-import net.ess3.economy.register.Method;
 import com.iConomy.iConomy;
 import com.iConomy.system.Account;
 import com.iConomy.system.BankAccount;
 import com.iConomy.system.Holdings;
 import com.iConomy.util.Constants;
+import net.ess3.economy.register.Method;
 import org.bukkit.plugin.Plugin;
 
 

@@ -1,6 +1,10 @@
 package net.ess3.user;
 
-import net.ess3.utils.Util;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import lombok.Cleanup;
+import lombok.Delegate;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -8,13 +12,7 @@ import net.ess3.api.InvalidNameException;
 import net.ess3.permissions.Permissions;
 import net.ess3.storage.AsyncStorageObjectHolder;
 import net.ess3.storage.Location.WorldNotLoadedException;
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import lombok.Cleanup;
-import lombok.Delegate;
+import net.ess3.utils.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;

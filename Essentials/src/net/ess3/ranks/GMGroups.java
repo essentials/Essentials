@@ -1,12 +1,12 @@
 package net.ess3.ranks;
 
-import net.ess3.utils.Util;
+import java.text.MessageFormat;
+import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import java.text.MessageFormat;
-import lombok.Cleanup;
+import net.ess3.utils.Util;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.plugin.Plugin;

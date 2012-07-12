@@ -1,8 +1,8 @@
 package net.ess3.listener;
 
-import net.ess3.utils.Util;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
+import net.ess3.utils.Util;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
