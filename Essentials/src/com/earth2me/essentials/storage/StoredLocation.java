@@ -1,6 +1,6 @@
 package com.earth2me.essentials.storage;
 
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import com.earth2me.essentials.api.server.Location;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
@@ -55,7 +55,7 @@ public class StoredLocation
 		Location loc = location == null ? null : location.get();
 		if (loc == null)
 		{
-			IWorld world = null;
+			World world = null;
 			if (worldUID != null)
 			{
 				world = Bukkit.getWorld(worldUID);

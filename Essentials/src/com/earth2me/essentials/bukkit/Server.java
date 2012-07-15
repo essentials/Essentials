@@ -1,10 +1,10 @@
 package com.earth2me.essentials.bukkit;
 
 import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.api.server.IServer;
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import java.util.*;
 import lombok.Delegate;
 import lombok.Getter;
@@ -29,33 +29,33 @@ public class Server implements IServer, Listener
 
 		org.bukkit.entity.Player[] getOnlinePlayers();
 		
-		CommandSender getConsoleSender();
+		BukkitCommandSender getConsoleSender();
 	}
 	@Delegate(excludes = Excludes.class)
 	private final org.bukkit.Server server;
 	@Getter
-	private List<IWorld> worlds;
-	private Map<String, IWorld> worldsMap;
+	private List<World> worlds;
+	private Map<String, World> worldsMap;
 	@Getter
 	private Collection<Player> onlinePlayers;
 	private Map<org.bukkit.entity.Player, Player> onlinePlayersMap;
 	@Getter
-	private ICommandSender consoleSender;
+	private CommandSender consoleSender;
 
 	public Server(final org.bukkit.Server server)
 	{
 		this.server = server;
-		consoleSender = new CommandSender(server.getConsoleSender());
+		consoleSender = new BukkitCommandSender(server.getConsoleSender());
 		updateWorlds();
 	}
 	
 	private void updateWorlds()
 	{
-		final ArrayList<IWorld> lworlds = new ArrayList<IWorld>(server.getWorlds().size());
-		final HashMap<String, IWorld> lworldsMap = new HashMap<String, IWorld>();
+		final ArrayList<World> lworlds = new ArrayList<World>(server.getWorlds().size());
+		final HashMap<String, World> lworldsMap = new HashMap<String, World>();
 		for (org.bukkit.World world : server.getWorlds())
 		{
-			final World w = new World(world);
+			final BukkitWorld w = new BukkitWorld(world);
 			lworlds.add(w);
 			lworldsMap.put(world.getName(), w);
 			lworldsMap.put(world.getName().toLowerCase(Locale.ENGLISH), w);
@@ -97,9 +97,9 @@ public class Server implements IServer, Listener
 	}
 
 	@Override
-	public IWorld getWorld(final String name)
+	public World getWorld(final String name)
 	{
-		final IWorld world = worldsMap.get(name);
+		final World world = worldsMap.get(name);
 		if (world == null)
 		{
 			return worldsMap.get(name.toLowerCase(Locale.ENGLISH));
@@ -108,9 +108,9 @@ public class Server implements IServer, Listener
 	}
 	
 	@Override
-	public void dispatchCommand(final ICommandSender sender, final String command)
+	public void dispatchCommand(final CommandSender sender, final String command)
 	{
-		server.dispatchCommand(((CommandSender)sender).getCommandSender(), command);
+		server.dispatchCommand(((BukkitCommandSender)sender).getCommandSender(), command);
 	}
 	
 	@Override

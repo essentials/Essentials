@@ -1,6 +1,6 @@
 package com.earth2me.essentials.bukkit;
 
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import com.earth2me.essentials.api.server.Location;
 import lombok.Delegate;
 import lombok.Getter;
@@ -25,9 +25,9 @@ public class BukkitLocation extends Location
 		}
 
 		@Override
-		public Location create(IWorld world, double x, double y, double z, double yaw, double pitch)
+		public Location create(World world, double x, double y, double z, double yaw, double pitch)
 		{
-			return new BukkitLocation(new org.bukkit.Location(((World)world).getBukkitWorld(), x, y, z, (float)yaw, (float)pitch));
+			return new BukkitLocation(new org.bukkit.Location(((BukkitWorld)world).getBukkitWorld(), x, y, z, (float)yaw, (float)pitch));
 		}
 	}
 
@@ -49,9 +49,9 @@ public class BukkitLocation extends Location
 	}
 
 	@Override
-	public IWorld getWorld()
+	public World getWorld()
 	{
-		return new World(bukkitLocation.getWorld());
+		return new BukkitWorld(bukkitLocation.getWorld());
 	}
 	
 	@Override

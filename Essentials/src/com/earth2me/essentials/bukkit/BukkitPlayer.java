@@ -8,7 +8,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.LivingEntity;
 
 
-public class BukkitPlayer extends CommandSender implements Player
+public class BukkitPlayer extends BukkitCommandSender implements Player
 {
 	private interface Excludes
 	{
@@ -92,7 +92,7 @@ public class BukkitPlayer extends CommandSender implements Player
 	}
 
 	@Override
-	public IWorld getWorld()
+	public World getWorld()
 	{
 		return server.getWorld(onlinePlayer.getWorld().getName());
 	}

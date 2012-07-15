@@ -22,7 +22,7 @@ import com.earth2me.essentials.api.*;
 import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.api.server.IPlugin;
 import com.earth2me.essentials.api.server.IServer;
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import com.earth2me.essentials.backup.Backup;
 import com.earth2me.essentials.commands.EssentialsCommandHandler;
 import com.earth2me.essentials.economy.Economy;
@@ -43,7 +43,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import org.bukkit.Server;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -278,7 +277,7 @@ public class Essentials implements IEssentials
 	}
 
 	@Override
-	public IWorld getWorld(final String name)
+	public World getWorld(final String name)
 	{
 		if (name.matches("[0-9]+"))
 		{

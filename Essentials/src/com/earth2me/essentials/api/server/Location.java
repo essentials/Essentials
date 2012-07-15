@@ -5,7 +5,7 @@ public abstract class Location
 {
 	public interface LocationFactory {
 		Location create(String worldName, double x, double y, double z, double yaw, double pitch);
-		Location create(IWorld world, double x, double y, double z, double yaw, double pitch);
+		Location create(World world, double x, double y, double z, double yaw, double pitch);
 	}
 	private static LocationFactory factory;
 	
@@ -21,11 +21,11 @@ public abstract class Location
 		return factory.create(worldName, x, y, z, yaw, pitch);
 	}
 	
-	public static Location create(IWorld world, double x, double y, double z) {
+	public static Location create(World world, double x, double y, double z) {
 		return factory.create(world, x, y, z, 0, 0);
 	}
 	
-	public static Location create(IWorld world, double x, double y, double z, double yaw, double pitch) {
+	public static Location create(World world, double x, double y, double z, double yaw, double pitch) {
 		return factory.create(world, x, y, z, yaw, pitch);
 	}
 	
@@ -46,7 +46,7 @@ public abstract class Location
 
 	public abstract int getBlockZ();
 	
-	public abstract IWorld getWorld();
+	public abstract World getWorld();
 	
 	public abstract double distanceSquared(Location location);
 }

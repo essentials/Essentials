@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface IServer
 {
-	List<IWorld> getWorlds();
+	List<World> getWorlds();
 
-	IWorld getWorld(String name);
+	World getWorld(String name);
 
 	int broadcastMessage(String message);
 
 	Collection<Player> getOnlinePlayers();
 	
-	ICommandSender getConsoleSender();
+	CommandSender getConsoleSender();
 	
-	void dispatchCommand(ICommandSender sender, String command);
+	void dispatchCommand(CommandSender sender, String command);
 	
 	void banIP(String ip);
 	

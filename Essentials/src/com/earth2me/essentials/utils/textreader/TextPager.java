@@ -1,7 +1,7 @@
 package com.earth2me.essentials.utils.textreader;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class TextPager
 		this.onePage = onePage;
 	}
 
-	public void showPage(final String pageStr, final String chapterPageStr, final String commandName, final ICommandSender sender)
+	public void showPage(final String pageStr, final String chapterPageStr, final String commandName, final CommandSender sender)
 	{
 		List<String> lines = text.getLines();
 		List<String> chapters = text.getChapters();

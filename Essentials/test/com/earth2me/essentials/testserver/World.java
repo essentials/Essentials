@@ -1,10 +1,10 @@
 package com.earth2me.essentials.testserver;
 
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import com.earth2me.essentials.api.server.Location;
 import org.bukkit.TreeType;
 
-public class World implements IWorld {
+public class World implements World {
 
 	@Override
 	public String getName()

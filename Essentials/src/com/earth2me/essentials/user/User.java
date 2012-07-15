@@ -21,7 +21,7 @@ import lombok.Setter;
 
 public class User extends UserBase implements IUser
 {
-	private ICommandSender replyTo = null;
+	private CommandSender replyTo = null;
 	@Getter
 	private transient IUser teleportRequester;
 	@Getter
@@ -89,7 +89,7 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void giveMoney(final double value, final ICommandSender initiator)
+	public void giveMoney(final double value, final CommandSender initiator)
 	{
 
 		if (value == 0)
@@ -139,7 +139,7 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void takeMoney(final double value, final ICommandSender initiator)
+	public void takeMoney(final double value, final CommandSender initiator)
 	{
 		if (value == 0)
 		{
@@ -556,13 +556,13 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void setReplyTo(ICommandSender user)
+	public void setReplyTo(CommandSender user)
 	{
 		replyTo = user;
 	}
 
 	@Override
-	public ICommandSender getReplyTo()
+	public CommandSender getReplyTo()
 	{
 		return replyTo;
 	}

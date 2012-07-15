@@ -2,8 +2,8 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.api.server.ICommandSender;
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.CommandSender;
+import com.earth2me.essentials.api.server.World;
 
 
 public class Commandweather extends EssentialsCommand
@@ -18,7 +18,7 @@ public class Commandweather extends EssentialsCommand
 		}
 
 		final boolean isStorm = args[0].equalsIgnoreCase("storm");
-		final IWorld world = user.getWorld();
+		final World world = user.getWorld();
 		if (args.length > 1)
 		{
 
@@ -39,7 +39,7 @@ public class Commandweather extends EssentialsCommand
 
 	//TODO: Translate these
 	@Override
-	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2) //running from console means inserting a world arg before other args
 		{
@@ -47,7 +47,7 @@ public class Commandweather extends EssentialsCommand
 		}
 
 		final boolean isStorm = args[1].equalsIgnoreCase("storm");
-		final IWorld world = server.getWorld(args[0]);
+		final World world = server.getWorld(args[0]);
 		if (world == null)
 		{
 			throw new Exception("World named " + args[0] + " not found!");

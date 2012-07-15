@@ -84,11 +84,11 @@ public class EssentialsPlugin extends JavaPlugin
 	@Override
 	public boolean onCommand(final org.bukkit.command.CommandSender sender, final Command command, final String label, final String[] args)
 	{
-		ICommandSender commandSender;
+		CommandSender commandSender;
 		if (sender instanceof org.bukkit.entity.Player) {
 			commandSender = ((Server)ess.getServer()).getPlayer((org.bukkit.entity.Player)sender);
 		} else {
-			commandSender = new CommandSender(sender);
+			commandSender = new BukkitCommandSender(sender);
 		}
 		return ess.getCommandHandler().handleCommand(commandSender, command, label, args);
 	}

@@ -3,7 +3,7 @@ package com.earth2me.essentials.utils.textreader;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.api.InvalidNameException;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.utils.Util;
 import java.io.*;
@@ -20,7 +20,7 @@ public class TextInput implements IText
 	private final transient long lastChange;
 	private final static HashMap<String, SoftReference<TextInput>> cache = new HashMap<String, SoftReference<TextInput>>();
 
-	public TextInput(final ICommandSender sender, final String filename, final boolean createFile, final IEssentials ess) throws IOException
+	public TextInput(final CommandSender sender, final String filename, final boolean createFile, final IEssentials ess) throws IOException
 	{
 
 		File file = null;

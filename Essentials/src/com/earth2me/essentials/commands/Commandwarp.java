@@ -5,7 +5,7 @@ import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
 import com.earth2me.essentials.api.IWarps;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.permissions.WarpPermissions;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class Commandwarp extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2 || args[0].matches("[0-9]+"))
 		{
@@ -69,7 +69,7 @@ public class Commandwarp extends EssentialsCommand
 	}
 
 	//TODO: Use one of the new text classes, like /help ?
-	private void warpList(final ICommandSender sender, final String[] args) throws Exception
+	private void warpList(final CommandSender sender, final String[] args) throws Exception
 	{
 		final IWarps warps = ess.getWarps();
 		if (warps.isEmpty())

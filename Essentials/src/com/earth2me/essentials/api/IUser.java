@@ -1,6 +1,6 @@
 package com.earth2me.essentials.api;
 
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.api.server.ItemStack;
 import com.earth2me.essentials.api.server.Location;
@@ -18,11 +18,11 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 
 	void takeMoney(double value);
 
-	void takeMoney(double value, ICommandSender initiator);
+	void takeMoney(double value, CommandSender initiator);
 
 	void giveMoney(double value);
 
-	void giveMoney(double value, ICommandSender initiator);
+	void giveMoney(double value, CommandSender initiator);
 
 	void giveItems(ItemStack itemStack, Boolean canSpew) throws ChargeException;
 

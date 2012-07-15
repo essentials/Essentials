@@ -1,13 +1,13 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.api.IReplyTo;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 
 
 public final class Console implements IReplyTo
 {
 	private static Console instance = new Console();
-	private ICommandSender replyTo;
+	private CommandSender replyTo;
 	public final static String NAME = "Console";
 
 	private Console()
@@ -15,13 +15,13 @@ public final class Console implements IReplyTo
 	}
 
 	@Override
-	public void setReplyTo(final ICommandSender user)
+	public void setReplyTo(final CommandSender user)
 	{
 		replyTo = user;
 	}
 
 	@Override
-	public ICommandSender getReplyTo()
+	public CommandSender getReplyTo()
 	{
 		return replyTo;
 	}

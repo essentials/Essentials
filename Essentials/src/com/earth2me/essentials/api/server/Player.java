@@ -3,7 +3,7 @@ package com.earth2me.essentials.api.server;
 import com.earth2me.essentials.api.IUser;
 
 
-public interface Player extends ICommandSender
+public interface Player extends CommandSender
 {
 	IUser getUser();
 
@@ -17,7 +17,7 @@ public interface Player extends ICommandSender
 
 	void kickPlayer(String reason);
 
-	IWorld getWorld();
+	World getWorld();
 
 	Location getLocation();
 

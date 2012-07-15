@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.Player;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class Commandessentials extends EssentialsCommand
 	private final transient Map<Player, Block> noteBlocks = new HashMap<Player, Block>();
 
 	@Override
-	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length == 0)
 		{
@@ -42,7 +42,7 @@ public class Commandessentials extends EssentialsCommand
 		}
 	}
 
-	private void run_disabled(final ICommandSender sender, final String[] args) throws Exception
+	private void run_disabled(final CommandSender sender, final String[] args) throws Exception
 	{
 		sender.sendMessage("Essentials " + ess.getPlugin().getVersion());
 		sender.sendMessage("/<command> <reload/debug>");
@@ -59,19 +59,19 @@ public class Commandessentials extends EssentialsCommand
 		sender.sendMessage(disabledCommands.toString());
 	}
 
-	private void run_debug(final ICommandSender sender, final String[] args) throws Exception
+	private void run_debug(final CommandSender sender, final String[] args) throws Exception
 	{
 		ess.getSettings().setDebug(!ess.getSettings().isDebug());
 		sender.sendMessage("Essentials " + ess.getPlugin().getVersion() + " debug mode " + (ess.getSettings().isDebug() ? "enabled" : "disabled"));
 	}
 
-	private void run_reload(final ICommandSender sender, final String[] args) throws Exception
+	private void run_reload(final CommandSender sender, final String[] args) throws Exception
 	{
 		ess.reload();
 		sender.sendMessage(_("essentialsReload", ess.getPlugin().getVersion()));
 	}
 
-	private void run_nya(final ICommandSender sender, final String[] args) throws Exception
+	private void run_nya(final CommandSender sender, final String[] args) throws Exception
 	{
 		final Map<String, Byte> noteMap = new HashMap<String, Byte>();
 		noteMap.put("1F#", (byte)0x0);
@@ -162,7 +162,7 @@ public class Commandessentials extends EssentialsCommand
 		noteBlocks.clear();
 	}
 	
-	private void run_moo(final ICommandSender sender, final String args[])
+	private void run_moo(final CommandSender sender, final String args[])
 	{
 		if(sender == ess.getServer().getConsoleSender())
 			sender.sendMessage(new String[]{"         (__)", "         (oo)", "   /------\\/", "  / |    ||", " *  /\\---/\\", "    ~~   ~~", "....\"Have you mooed today?\"..." } );

@@ -3,7 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.economy.Trade;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import com.earth2me.essentials.api.server.Location;
 import com.earth2me.essentials.permissions.WorldPermissions;
 import java.util.List;
@@ -15,15 +15,15 @@ public class Commandworld extends EssentialsCommand
 	@Override
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		IWorld world;
+		World world;
 
 		if (args.length < 1)
 		{
-			IWorld nether = null;
+			World nether = null;
 
-			final List<IWorld> worlds = server.getWorlds();
+			final List<World> worlds = server.getWorlds();
 
-			for (IWorld world2 : worlds)
+			for (World world2 : worlds)
 			{
 				if (world2.getEnvironment() == World.Environment.NETHER)
 				{

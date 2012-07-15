@@ -1,9 +1,9 @@
 package com.earth2me.essentials.testserver;
 
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.api.server.IServer;
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -17,15 +17,15 @@ public class Server implements IServer {
 	
 
 	@Override
-	public List<IWorld> getWorlds()
+	public List<World> getWorlds()
 	{
-		return Collections.<IWorld>singletonList(new World());
+		return Collections.<World>singletonList(new World());
 	}
 
 	@Override
-	public IWorld getWorld(final String name)
+	public World getWorld(final String name)
 	{
-		final IWorld world = getWorlds().get(0); 
+		final World world = getWorlds().get(0); 
 		if (name.equals(world.getName())) {
 			return world;
 		} else {
@@ -51,13 +51,13 @@ public class Server implements IServer {
 	}
 
 	@Override
-	public ICommandSender getConsoleSender()
+	public CommandSender getConsoleSender()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
-	public void dispatchCommand(ICommandSender sender, String command)
+	public void dispatchCommand(CommandSender sender, String command)
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

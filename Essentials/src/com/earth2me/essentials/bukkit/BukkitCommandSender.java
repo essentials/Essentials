@@ -1,18 +1,18 @@
 package com.earth2me.essentials.bukkit;
 
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.Permission;
 import lombok.Delegate;
 import lombok.Getter;
 
 
-public class CommandSender implements ICommandSender
+public class BukkitCommandSender implements CommandSender
 {
 	@Delegate
 	@Getter
 	private org.bukkit.command.CommandSender commandSender;
 
-	public CommandSender(org.bukkit.command.CommandSender commandSender)
+	public BukkitCommandSender(org.bukkit.command.CommandSender commandSender)
 	{
 		this.commandSender = commandSender;
 	}

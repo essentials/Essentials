@@ -3,7 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.utils.textreader.ArrayListInput;
 import com.earth2me.essentials.utils.textreader.TextPager;
 import java.text.DateFormat;
@@ -22,7 +22,7 @@ public class Commandbalancetop extends EssentialsCommand
 	private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
 	@Override
-	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		int page = 0;
 		boolean force = false;
@@ -72,7 +72,7 @@ public class Commandbalancetop extends EssentialsCommand
 
 	}
 
-	private static void outputCache(final ICommandSender sender, int page)
+	private static void outputCache(final CommandSender sender, int page)
 	{
 		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(cacheage);
@@ -147,11 +147,11 @@ public class Commandbalancetop extends EssentialsCommand
 
 	private class Viewer implements Runnable
 	{
-		private final transient ICommandSender sender;
+		private final transient CommandSender sender;
 		private final transient int page;
 		private final transient boolean force;
 
-		public Viewer(final ICommandSender sender, final int page, final boolean force)
+		public Viewer(final CommandSender sender, final int page, final boolean force)
 		{
 			this.sender = sender;
 			this.page = page;

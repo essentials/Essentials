@@ -4,7 +4,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IEssentialsModule;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.IServer;
 import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.economy.Trade;
@@ -94,16 +94,16 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		run((ICommandSender)user, commandLabel, args);
+		run((CommandSender)user, commandLabel, args);
 	}
 
 	@Override
-	public final void run(final ICommandSender sender, final Command cmd, final String commandLabel, final String[] args) throws Exception
+	public final void run(final CommandSender sender, final Command cmd, final String commandLabel, final String[] args) throws Exception
 	{
 		run(sender, commandLabel, args);
 	}
 
-	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		throw new Exception(_("onlyPlayers", commandName));
 	}

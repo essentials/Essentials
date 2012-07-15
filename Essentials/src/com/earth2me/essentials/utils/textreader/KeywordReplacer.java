@@ -2,9 +2,9 @@ package com.earth2me.essentials.utils.textreader;
 
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.Player;
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import com.earth2me.essentials.utils.DescParseTickFormat;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class KeywordReplacer implements IText
 	private final transient List<String> replaced;
 	private final transient IEssentials ess;
 	
-	public KeywordReplacer(final IText input, final ICommandSender sender, final IEssentials ess)
+	public KeywordReplacer(final IText input, final CommandSender sender, final IEssentials ess)
 	{
 		this.input = input;
 		this.replaced = new ArrayList<String>(this.input.getLines().size());
@@ -29,7 +29,7 @@ public class KeywordReplacer implements IText
 		replaceKeywords(sender);
 	}
 	
-	private void replaceKeywords(final ICommandSender sender)
+	private void replaceKeywords(final CommandSender sender)
 	{
 		String displayName, ipAddress, balance, mails, world;
 		String worlds, online, unique, playerlist, date, time;
@@ -68,7 +68,7 @@ public class KeywordReplacer implements IText
 		unique = Integer.toString(ess.getUserMap().getUniqueUsers());
 
 		final StringBuilder worldsBuilder = new StringBuilder();
-		for (IWorld w : ess.getServer().getWorlds())
+		for (World w : ess.getServer().getWorlds())
 		{
 			if (worldsBuilder.length() > 0)
 			{

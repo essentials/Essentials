@@ -1,20 +1,21 @@
 package com.earth2me.essentials.bukkit;
 
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import com.earth2me.essentials.api.server.ItemStack;
 import com.earth2me.essentials.api.server.Location;
 import lombok.Delegate;
 import lombok.Getter;
 import org.bukkit.TreeType;
 
-public class World implements IWorld {
+public class BukkitWorld implements World {
 	@Delegate
 	@Getter
 	private final org.bukkit.World bukkitWorld;
 
-	public World(final org.bukkit.World world)
+	public BukkitWorld(final org.bukkit.World world)
 	{
 		this.bukkitWorld = world;
+		world.getT
 	}
 
 	@Override

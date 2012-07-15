@@ -1,11 +1,11 @@
 package com.earth2me.essentials.api;
 
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 
 
 public interface IReplyTo
 {
-	void setReplyTo(ICommandSender user);
+	void setReplyTo(CommandSender user);
 
-	ICommandSender getReplyTo();
+	CommandSender getReplyTo();
 }

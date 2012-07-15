@@ -2,7 +2,7 @@ package com.earth2me.essentials.permissions;
 
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IPermission;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.Permission;
 import java.util.Locale;
 
@@ -116,7 +116,7 @@ public enum Permissions implements IPermission
 	}
 
 	@Override
-	public boolean isAuthorized(ICommandSender sender)
+	public boolean isAuthorized(CommandSender sender)
 	{
 		return sender.hasPermission(getPermission());
 	}

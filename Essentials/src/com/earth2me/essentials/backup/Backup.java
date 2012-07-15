@@ -4,23 +4,18 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IBackup;
 import com.earth2me.essentials.api.IEssentials;
 import com.earth2me.essentials.api.ISettings;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.api.server.IServer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Cleanup;
-import org.bukkit.Bukkit;
-import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 
 public class Backup implements Runnable, IBackup
 {
-	private static final Logger LOGGER = Bukkit.getLogger();
 	private transient final IServer server;
 	private transient final IEssentials ess;
 	private transient final AtomicBoolean running = new AtomicBoolean(false);
@@ -70,8 +65,8 @@ public class Backup implements Runnable, IBackup
 		{
 			return;
 		}
-		LOGGER.log(Level.INFO, _("backupStarted"));
-		final ICommandSender consoleSender = server.getConsoleSender();
+		ess.getLogger().log(Level.INFO, _("backupStarted"));
+		final CommandSender consoleSender = server.getConsoleSender();
 		server.dispatchCommand(consoleSender, "save-all");
 		server.dispatchCommand(consoleSender, "save-off");
 
@@ -107,7 +102,7 @@ public class Backup implements Runnable, IBackup
 						line = reader.readLine();
 						if (line != null)
 						{
-							LOGGER.log(Level.INFO, line);
+							ess.getLogger().log(Level.INFO, line);
 						}
 					}
 					while (line != null);
@@ -119,11 +114,11 @@ public class Backup implements Runnable, IBackup
 			}
 			catch (InterruptedException ex)
 			{
-				LOGGER.log(Level.SEVERE, null, ex);
+				ess.getLogger().log(Level.SEVERE, null, ex);
 			}
 			catch (IOException ex)
 			{
-				LOGGER.log(Level.SEVERE, null, ex);
+				ess.getLogger().log(Level.SEVERE, null, ex);
 			}
 			finally
 			{
@@ -149,7 +144,7 @@ public class Backup implements Runnable, IBackup
 			}
 
 			active.set(false);
-			LOGGER.log(Level.INFO, _("backupFinished"));
+			ess.getLogger().log(Level.INFO, _("backupFinished"));
 		}
 	}
 }

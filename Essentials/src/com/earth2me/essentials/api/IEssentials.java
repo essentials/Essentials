@@ -3,7 +3,7 @@ package com.earth2me.essentials.api;
 import com.earth2me.essentials.api.server.Player;
 import com.earth2me.essentials.api.server.IPlugin;
 import com.earth2me.essentials.api.server.IServer;
-import com.earth2me.essentials.api.server.IWorld;
+import com.earth2me.essentials.api.server.World;
 import com.earth2me.essentials.economy.register.Methods;
 import com.earth2me.essentials.listener.TntExplodeListener;
 import java.util.logging.Logger;
@@ -39,7 +39,7 @@ public interface IEssentials extends IComponent
 
 	ICommandHandler getCommandHandler();
 
-	IWorld getWorld(String name);
+	World getWorld(String name);
 
 	Methods getPaymentMethod();
 

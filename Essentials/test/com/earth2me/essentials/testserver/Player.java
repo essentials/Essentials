@@ -42,7 +42,7 @@ public class Player implements Player {
 	}
 
 	@Override
-	public IWorld getWorld()
+	public World getWorld()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

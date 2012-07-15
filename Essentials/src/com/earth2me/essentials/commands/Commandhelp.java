@@ -8,7 +8,7 @@ import com.earth2me.essentials.utils.textreader.KeywordReplacer;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.utils.Util;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import org.bukkit.command.CommandSender;
 
 
@@ -44,7 +44,7 @@ public class Commandhelp extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		sender.sendMessage(_("helpConsole"));
 	}

@@ -2,7 +2,7 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.api.server.ICommandSender;
+import com.earth2me.essentials.api.server.CommandSender;
 import com.earth2me.essentials.permissions.Permissions;
 import com.earth2me.essentials.user.UserData.TimestampType;
 import java.util.List;
@@ -31,7 +31,7 @@ public class Commandheal extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final ICommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -41,7 +41,7 @@ public class Commandheal extends EssentialsCommand
 		healOtherPlayers(sender, args[0]);
 	}
 
-	private void healOtherPlayers(final ICommandSender sender, final String name)
+	private void healOtherPlayers(final CommandSender sender, final String name)
 	{
 		final List<Player> players = server.matchPlayer(name);
 		if (players.isEmpty())

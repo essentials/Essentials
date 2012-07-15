@@ -1,6 +1,6 @@
 package com.earth2me.essentials.api.server;
 
-public interface ICommandSender {
+public interface CommandSender {
 	boolean isPlayer();
 
 	void sendMessage(String message);
