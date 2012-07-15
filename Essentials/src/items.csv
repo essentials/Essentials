@@ -1,4 +1,4 @@
-#version: ${build.number}
+#version: teamcity
 #If you change this file, it will not be automatically updated after the next release,
 #item,id,metadata
 stone,1,0
@@ -7,7 +7,14 @@ smoothstone,1,0
 rock,1,0
 grass,2,0
 greendirt,2,0
+greenearth,2,0
+greenland,2,0
+gdirt,2,0
+gearth,2,0
+gland,2,0
 dirt,3,0
+earth,3,0
+land,3,0
 cobblestone,4,0
 cstone,4,0
 cobble,4,0
@@ -1460,6 +1467,14 @@ obsidian,49,0
 obsi,49,0
 obby,49,0
 torch,50,0
+burningstick,50,0
+burnstick,50,0
+coalonstick,50,0
+coalonastick,50,0
+charcoalonstick,50,0
+charcoalonastick,50,0
+ccoalonstick,50,0
+ccoalonastick,50,0
 fire,51,0
 flame,51,0
 flames,51,0
@@ -1688,6 +1703,10 @@ snowcovering,78,0
 snowcover,78,0
 scover,78,0
 ice,79,0
+frozenwater,79,0
+waterfrozen,79,0
+freezewater,79,0
+waterfreeze,79,0
 snowblock,80,0
 blocksnow,80,0
 sblock,80,0
@@ -2277,6 +2296,8 @@ diamondaxe,279,0
 crystalaxe,279,0
 daxe,279,0
 stick,280,0
+twig,280,0
+branch,280,0
 bowl,281,0
 mushroomsoup,282,0
 mrsoup,282,0
@@ -2574,6 +2595,7 @@ redsdust,331,0
 reddust,331,0
 rsdust,331,0
 rdust,331,0
+snow,332,0
 snowball,332,0
 snball,332,0
 boat,333,0
@@ -2758,12 +2780,16 @@ greencactusdye,351,2
 greencolour,351,2
 greencolor,351,2
 greendye,351,2
+cocoabeans,351,3
+cocoabean,351,3
 cocobeans,351,3
 cocobean,351,3
 cbeans,351,3
 cbean,351,3
 beans,351,3
 bean,351,3
+browncocoabeans,351,3
+browncocoabean,351,3
 browncocobeans,351,3
 browncocobean,351,3
 browncbeans,351,3
@@ -2771,12 +2797,16 @@ browncbean,351,3
 brownbeans,351,3
 brownbean,351,3
 brownb,351,3
+cocoabeanscolour,351,3
+cocoabeancolour,351,3
 cocobeanscolour,351,3
 cocobeancolour,351,3
 cbeanscolour,351,3
 cbeancolour,351,3
 beanscolour,351,3
 beancolour,351,3
+browncocoabeanscolour,351,3
+browncocoabeancolour,351,3
 browncocobeanscolour,351,3
 browncocobeancolour,351,3
 browncbeanscolour,351,3
@@ -2784,12 +2814,16 @@ browncbeancolour,351,3
 brownbeanscolour,351,3
 brownbeancolour,351,3
 brownbcolour,351,3
+cocoabeanscolor,351,3
+cocoabeancolor,351,3
 cocobeanscolor,351,3
 cocobeancolor,351,3
 cbeanscolor,351,3
 cbeancolor,351,3
 beanscolor,351,3
 beancolor,351,3
+browncocoabeanscolor,351,3
+browncocoabeancolor,351,3
 browncocobeanscolor,351,3
 browncocobeancolor,351,3
 browncbeanscolor,351,3
@@ -2797,12 +2831,16 @@ browncbeancolor,351,3
 brownbeanscolor,351,3
 brownbeancolor,351,3
 brownbcolor,351,3
+cocoabeansdye,351,3
+cocoabeandye,351,3
 cocobeansdye,351,3
 cocobeandye,351,3
 cbeansdye,351,3
 cbeandye,351,3
 beansdye,351,3
 beandye,351,3
+browncocoabeansdye,351,3
+browncocoabeandye,351,3
 browncocobeansdye,351,3
 browncocobeandye,351,3
 browncbeansdye,351,3
