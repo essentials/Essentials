@@ -1,7 +1,7 @@
 package com.earth2me.essentials.chat;
 
-import com.earth2me.essentials.api.IPermission;
-import com.earth2me.essentials.permissions.BasePermission;
+import net.ess3.api.IPermission;
+import net.ess3.permissions.BasePermission;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

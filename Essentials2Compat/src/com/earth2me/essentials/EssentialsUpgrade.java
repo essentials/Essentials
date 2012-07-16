@@ -1,12 +1,13 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.economy.WorthHolder;
-import com.earth2me.essentials.storage.ManagedFile;
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.settings.Spawns;
-import com.earth2me.essentials.storage.StoredLocation;
-import com.earth2me.essentials.storage.YamlStorageWriter;
+import net.ess3.Warps;
+import net.ess3.economy.WorthHolder;
+import net.ess3.storage.ManagedFile;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.settings.Spawns;
+import net.ess3.storage.StoredLocation;
+import net.ess3.storage.YamlStorageWriter;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.DigestInputStream;
@@ -659,7 +660,7 @@ public class EssentialsUpgrade
 				config.load();
 				if (!config.hasProperty("jails"))
 				{
-					final com.earth2me.essentials.settings.Jails jails = new com.earth2me.essentials.settings.Jails();
+					final net.ess3.settings.Jails jails = new net.ess3.settings.Jails();
 					Set<String> keys = config.getKeys(false);
 					for (String jailName : keys)
 					{

@@ -1,6 +1,6 @@
 package com.earth2me.essentials.chat.listenerlevel;
 
-import com.earth2me.essentials.api.IEssentials;
+import net.ess3.api.IEssentials;
 import com.earth2me.essentials.chat.ChatStore;
 import com.earth2me.essentials.chat.EssentialsChatPlayer;
 import java.util.Map;

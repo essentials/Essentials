@@ -1,8 +1,8 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.commands.EssentialsCommand;
-import com.earth2me.essentials.commands.NotEnoughArgumentsException;
+import net.ess3.api.IUser;
+import net.ess3.commands.EssentialsCommand;
+import net.ess3.commands.NotEnoughArgumentsException;
 
 
 public class Commandsetxmpp extends EssentialsCommand

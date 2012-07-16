@@ -1,11 +1,11 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.ChargeException;
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.economy.Trade;
-import com.earth2me.essentials.utils.Util;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import net.ess3.api.ChargeException;
+import static net.ess3.I18n._;
+import net.ess3.economy.Trade;
+import net.ess3.utils.Util;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
 import org.bukkit.inventory.ItemStack;
 
 //TODO: Sell Enchantment on Trade signs?

@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static net.ess3.I18n._;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Locale;

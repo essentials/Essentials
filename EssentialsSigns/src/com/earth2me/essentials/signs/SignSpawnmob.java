@@ -1,10 +1,10 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.ChargeException;
-import com.earth2me.essentials.economy.Trade;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.commands.Commandspawnmob;
+import net.ess3.api.ChargeException;
+import net.ess3.economy.Trade;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.commands.Commandspawnmob;
 
 
 public class SignSpawnmob extends EssentialsSign

@@ -1,7 +1,7 @@
 package com.earth2me.essentials.protect;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

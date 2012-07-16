@@ -1,9 +1,9 @@
 package com.earth2me.essentials.chat;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.permissions.Permissions;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.Server;

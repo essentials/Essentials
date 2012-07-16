@@ -1,8 +1,8 @@
 package com.earth2me.essentials.geoip;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.settings.geoip.GeoIP;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import net.ess3.api.IEssentials;
+import net.ess3.settings.geoip.GeoIP;
+import net.ess3.storage.AsyncStorageObjectHolder;
 import java.io.File;
 import java.io.IOException;
 import org.bukkit.plugin.Plugin;

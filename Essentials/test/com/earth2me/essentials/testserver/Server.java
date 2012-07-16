@@ -1,9 +1,9 @@
 package com.earth2me.essentials.testserver;
 
-import com.earth2me.essentials.api.server.CommandSender;
-import com.earth2me.essentials.api.server.Player;
-import com.earth2me.essentials.api.server.IServer;
-import com.earth2me.essentials.api.server.World;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
+import net.ess3.api.server.IServer;
+import net.ess3.api.server.World;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;

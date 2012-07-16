@@ -1,6 +1,6 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.api.IReload;
+import net.ess3.api.IReload;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;

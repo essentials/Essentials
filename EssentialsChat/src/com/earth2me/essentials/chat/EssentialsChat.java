@@ -1,7 +1,7 @@
 package com.earth2me.essentials.chat;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
 import com.earth2me.essentials.chat.listenerlevel.EssentialsChatPlayerListenerHighest;
 import com.earth2me.essentials.chat.listenerlevel.EssentialsChatPlayerListenerLowest;
 import com.earth2me.essentials.chat.listenerlevel.EssentialsChatPlayerListenerNormal;

@@ -1,6 +1,6 @@
 package com.earth2me.essentials.testserver;
 
-import com.earth2me.essentials.api.server.IPlugin;
+import net.ess3.api.server.IPlugin;
 import java.io.File;
 import java.io.InputStream;
 

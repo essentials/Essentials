@@ -1,6 +1,6 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.storage.StorageObject;
+import net.ess3.storage.StorageObject;
 import java.util.HashMap;
 import java.util.Map;
 

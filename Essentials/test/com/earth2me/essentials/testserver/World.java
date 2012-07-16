@@ -1,7 +1,6 @@
 package com.earth2me.essentials.testserver;
 
-import com.earth2me.essentials.api.server.World;
-import com.earth2me.essentials.api.server.Location;
+import net.ess3.api.server.Location;
 import org.bukkit.TreeType;
 
 public class World implements World {

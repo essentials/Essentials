@@ -1,7 +1,7 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

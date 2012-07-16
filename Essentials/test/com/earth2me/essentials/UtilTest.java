@@ -1,16 +1,13 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.api.InvalidNameException;
-import com.earth2me.essentials.utils.DateUtil;
-import com.earth2me.essentials.utils.Util;
-import java.io.IOException;
+import net.ess3.api.InvalidNameException;
+import net.ess3.utils.DateUtil;
+import net.ess3.utils.Util;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import junit.framework.TestCase;
-import org.bukkit.World.Environment;
-import org.bukkit.plugin.InvalidDescriptionException;
 
 
 public class UtilTest extends EssentialsTest

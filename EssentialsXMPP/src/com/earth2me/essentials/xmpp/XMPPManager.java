@@ -1,7 +1,7 @@
 package com.earth2me.essentials.xmpp;
 
-import com.earth2me.essentials.api.IReload;
-import com.earth2me.essentials.api.IUser;
+import net.ess3.api.IReload;
+import net.ess3.api.IUser;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Handler;

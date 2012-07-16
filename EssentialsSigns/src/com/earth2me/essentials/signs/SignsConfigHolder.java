@@ -1,7 +1,7 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import net.ess3.api.IEssentials;
+import net.ess3.storage.AsyncStorageObjectHolder;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;

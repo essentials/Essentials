@@ -1,10 +1,10 @@
 package com.earth2me.essentials.geoip;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IReload;
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.permissions.Permissions;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IReload;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 import com.maxmind.geoip.regionName;

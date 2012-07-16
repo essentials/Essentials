@@ -4,6 +4,7 @@ import com.earth2me.essentials.testserver.Plugin;
 import com.earth2me.essentials.testserver.Server;
 import java.util.logging.Logger;
 import junit.framework.TestCase;
+import net.ess3.Essentials;
 
 public abstract class EssentialsTest extends TestCase {
 	protected final transient Server server;

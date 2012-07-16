@@ -1,8 +1,8 @@
 package com.earth2me.essentials.protect;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.settings.protect.Protect;
-import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
+import net.ess3.api.IEssentials;
+import net.ess3.settings.protect.Protect;
+import net.ess3.storage.AsyncStorageObjectHolder;
 import java.io.File;
 import java.io.IOException;
 

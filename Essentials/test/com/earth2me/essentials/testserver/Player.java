@@ -1,7 +1,7 @@
 package com.earth2me.essentials.testserver;
 
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.api.server.*;
+import net.ess3.api.IUser;
+import net.ess3.api.server.*;
 
 public class Player implements Player {
 

@@ -1,13 +1,11 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.economy.Trade;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
+import static net.ess3.I18n._;
+import net.ess3.economy.Trade;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.craftbukkit.InventoryWorkaround;
 import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 

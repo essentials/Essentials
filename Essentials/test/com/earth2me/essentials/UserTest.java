@@ -1,11 +1,6 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.user.User;
-import java.io.IOException;
-import junit.framework.TestCase;
-import org.bukkit.World.Environment;
-import org.bukkit.plugin.InvalidDescriptionException;
+import net.ess3.api.IUser;
 
 
 public class UserTest extends EssentialsTest

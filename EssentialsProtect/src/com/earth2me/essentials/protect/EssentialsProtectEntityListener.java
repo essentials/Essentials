@@ -1,7 +1,7 @@
 package com.earth2me.essentials.protect;
 
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.craftbukkit.FakeExplosion;
+import net.ess3.api.IEssentials;
+import net.ess3.craftbukkit.FakeExplosion;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

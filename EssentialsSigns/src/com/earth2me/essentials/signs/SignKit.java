@@ -1,11 +1,11 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.api.ChargeException;
-import com.earth2me.essentials.economy.Trade;
-import com.earth2me.essentials.api.IEssentials;
-import com.earth2me.essentials.api.IUser;
-import com.earth2me.essentials.permissions.KitPermissions;
-import com.earth2me.essentials.settings.Kit;
+import net.ess3.api.ChargeException;
+import net.ess3.economy.Trade;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.permissions.KitPermissions;
+import net.ess3.settings.Kit;
 import java.util.Locale;
 
 
