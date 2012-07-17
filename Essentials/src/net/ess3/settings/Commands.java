@@ -1,13 +1,13 @@
 package net.ess3.settings;
 
-import net.ess3.settings.commands.*;
-import net.ess3.storage.Comment;
-import net.ess3.storage.ListType;
-import net.ess3.storage.StorageObject;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.ess3.settings.commands.*;
+import net.ess3.storage.Comment;
+import net.ess3.storage.ListType;
+import net.ess3.storage.StorageObject;
 
 
 @Data

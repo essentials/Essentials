@@ -1,7 +1,7 @@
 package net.ess3.economy.register.methods;
 
-import net.ess3.economy.register.Method;
 import cosine.boseconomy.BOSEconomy;
+import net.ess3.economy.register.Method;
 import org.bukkit.plugin.Plugin;
 
 
@@ -9,9 +9,8 @@ import org.bukkit.plugin.Plugin;
  * BOSEconomy 7 Implementation of Method
  *
  * @author Acrobot
- * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun)
- * @copyright (c) 2011
- * @license AOL license <http://aol.nexua.org>
+ * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun) @copyright (c) 2011 @license AOL license
+ * <http://aol.nexua.org>
  */
 public class BOSE7 implements Method
 {
@@ -27,6 +26,12 @@ public class BOSE7 implements Method
 	public String getName()
 	{
 		return "BOSEconomy";
+	}
+
+	@Override
+	public String getLongName()
+	{
+		return getName();
 	}
 
 	@Override

@@ -3,12 +3,10 @@ package net.ess3.settings.protect;
 import net.ess3.storage.*;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.Material;
-import org.bukkit.entity.CreatureType;
 
 
 @Data
@@ -39,7 +37,9 @@ public class Prevent implements StorageObject
 		"permission essentials.protect.entitytarget.bypass disables this"
 	})
 	private boolean entitytarget = false;
-	@MapKeyType(CreatureType.class)
-	@MapValueType(Boolean.class)
-	private Map<CreatureType, Boolean> spawn = new HashMap<CreatureType, Boolean>();
+
+	public Prevent()
+	{
+		pistonPush.add(Material.GLASS);
+	}
 }

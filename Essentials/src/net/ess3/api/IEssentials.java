@@ -6,13 +6,16 @@ import net.ess3.api.server.World;
 import net.ess3.economy.register.Methods;
 import net.ess3.listener.TntExplodeListener;
 import java.util.logging.Logger;
+import java.util.List;
+import net.ess3.EssentialsTimer;
+import net.ess3.economy.register.Methods;
+import net.ess3.listener.TntExplodeListener;
+import net.ess3.metrics.Metrics;
 
 
 public interface IEssentials extends IComponent
 {
 	void addReloadListener(IReload listener);
-
-	IUser getUser(String playerName);
 
 	int broadcastMessage(IUser sender, String message);
 
@@ -61,4 +64,12 @@ public interface IEssentials extends IComponent
 	Logger getLogger();
 
 	IPlugin getPlugin();
+	
+	List<String> getVanishedPlayers();
+	
+	EssentialsTimer getTimer();
+	
+	Metrics getMetrics();
+	
+	void setMetrics(Metrics metrics);
 }

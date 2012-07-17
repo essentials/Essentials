@@ -147,3 +147,40 @@ v 1.9:
 	- Prevent adding inheritances and info nodes to globalgroups. These are permissions collections, not player groups.
 	- Prevent promoting players to, and demoting to GlobalGroups.
 	- Make 'manload' reload the config correctly.
+	- Minor optimization when checking bukkit permissions.
+	- Better reporting when a users.yml is failing to load.
+	- Expanded '/manuadd'to accept an optional variable for the world (eg '/manuadd <player> <group> <world>').
+	- Removed some debug spam.
+	- Don't remove an attachment on a player leaving as Bukkit never forgets it. This fixes non mirrored permissions being messed up if a player relogs.
+	- Treat all world names as lower case for file handling (please check in your worlds folder. You should have no folders with upper case letters from now).
+	- Auto rename all case sensitive world folders to lower case (if possible).
+	- Update GlobalGroups.yml for new/changed Towny permission nodes.
+	- Stop attempting to push empty permissions when players edit the yml's incorrectly.
+	- Catch errors caused by bad indentation in yml's.
+	- Force remove player attachments on disconnect, and tidyup during player join in case of any errors. Fixes a bug of losing permissions.
+	- Added a new permission node 'groupmanager.op'. This will cause players with this node to be treated as op's when
+	  using GroupManager commands (they will still require each commands permission node to use them).
+	- Prevent Null entries in group inheritance from throwing errors.
+v 2.0:
+	- Fix GM reporting of permission inheritance to retain the correct order. Lower inheritance groups can no longer negate a higher groups permissions.
+	- Fix an error I caused trying to modify an unmodifiable list when parsing '*' permissions.
+	- Don't throw errors when attempting to remove permission attachments (bukkit will have already removed it).
+	- Remove all permission attachments when performing a manload or restart.
+	- Expand 'manwhois' to also list a users subgroups.
+	- Fix a concurrent modification error when removing all attachments.
+	- Better handling of errors in user and group yml's.
+	- Added missing confirmation message on '/manload'.
+	- Stop the error on shutdown if GM failed to load at startup.
+	- GroupManager will now generate it's own log (in the GM folder) to keep things tidy, but also to account of those players unable to find/access their server.log.
+	- Startup errors will now lock out ALL commands other than '/manload'
+	- Fix 'manuadd' to use the default or selected world (via 'manselect'), if the world is not specified in the command.
+	- Expand GlobalGroups.yml and groups.yml to cover the VanishNoPacket plugin. Demonstrating how to negate and add nodes when using the '*' permission with inheritance.
+	- Fix silly nested throw/catch statements. Errors are now correctly generated when reading yml's.
+	- Unregister the worldsHolder as a service on a reload/shutdown instead of the whole plugin.
+	- Update all code formatting to use tabs for indentation.
+	- Stop using our own deprecated methods as we tell others to do.
+	- Finally remove all deprecated methods.
+	- Re-initialize the WorldsHolder on a reload, as un-registering and re-registering a new holder means all plugins have to check for the new service on every quiery.
+	- Prevent null perms getting past the GlobalGroups loader.
+	- Fix forgetting sub groups on a manload.
+	- Allow 'manucheckp' to notify when superperms reports false but it is really negated.

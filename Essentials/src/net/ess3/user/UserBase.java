@@ -180,14 +180,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 
-	public boolean toggleGodmode()
+	public void setGodModeEnabled(boolean set)
 	{
 		acquireWriteLock();
 		try
 		{
-			boolean ret = !getData().isGodmode();
-			getData().setGodmode(ret);
-			return ret;
+			getData().setGodmode(set);
 		}
 		finally
 		{
@@ -195,14 +193,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 
-	public boolean toggleMuted()
+	public void setMuted(boolean mute)
 	{
 		acquireWriteLock();
 		try
 		{
-			boolean ret = !getData().isMuted();
-			getData().setMuted(ret);
-			return ret;
+			getData().setMuted(mute);
 		}
 		finally
 		{
@@ -240,12 +236,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 
-	public boolean isIgnoringPlayer(final String name)
+	public boolean isIgnoringPlayer(final IUser user)
 	{
 		acquireReadLock();
 		try
 		{
-			return getData().getIgnore() == null ? false : getData().getIgnore().contains(name.toLowerCase(Locale.ENGLISH));
+			return getData().getIgnore() == null ? false : getData().getIgnore().contains(user.getName().toLowerCase(Locale.ENGLISH)) && Permissions.CHAT_IGNORE_EXEMPT.isAuthorized(user);
 		}
 		finally
 		{
@@ -253,7 +249,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 
-	public void setIgnoredPlayer(final String name, final boolean set)
+	public void setIgnoredPlayer(final IUser user, final boolean set)
 	{
 		acquireWriteLock();
 		try
@@ -264,11 +260,11 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 			}
 			if (set)
 			{
-				getData().getIgnore().add(name.toLowerCase(Locale.ENGLISH));
+				getData().getIgnore().add(user.getName().toLowerCase(Locale.ENGLISH));
 			}
 			else
 			{
-				getData().getIgnore().remove(name.toLowerCase(Locale.ENGLISH));
+				getData().getIgnore().remove(user.getName().toLowerCase(Locale.ENGLISH));
 			}
 		}
 		finally
@@ -306,6 +302,30 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 			else
 			{
 				return new ArrayList<String>(getData().getMails());
+			}
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+
+	public Location getHome(String name) throws Exception
+	{
+		acquireReadLock();
+		try
+		{
+			if (getData().getHomes() == null)
+			{
+				return null;
+			}
+			try
+			{
+				return getData().getHomes().get(Util.sanitizeKey(name)).getBukkitLocation();
+			}
+			catch (WorldNotLoadedException ex)
+			{
+				return null;
 			}
 		}
 		finally
@@ -359,6 +379,23 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 				}
 			}
 			return target;
+		}
+		finally
+		{
+			unlock();
+		}
+	}
+	
+	public List<String> getHomes()
+	{
+		acquireReadLock();
+		try
+		{
+			if (getData().getHomes() == null)
+			{
+				return null;
+			}	
+			return new ArrayList<String>(getData().getHomes().keySet());
 		}
 		finally
 		{

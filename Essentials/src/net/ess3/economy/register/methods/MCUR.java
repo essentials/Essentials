@@ -1,17 +1,15 @@
 package net.ess3.economy.register.methods;
 
-import net.ess3.economy.register.Method;
 import me.ashtheking.currency.Currency;
 import me.ashtheking.currency.CurrencyList;
+import net.ess3.economy.register.Method;
 import org.bukkit.plugin.Plugin;
 
 
 /**
  * MultiCurrency Method implementation.
  *
- * @author Acrobot
- * @copyright (c) 2011
- * @license AOL license <http://aol.nexua.org>
+ * @author Acrobot @copyright (c) 2011 @license AOL license <http://aol.nexua.org>
  */
 public class MCUR implements Method
 {
@@ -27,6 +25,12 @@ public class MCUR implements Method
 	public String getName()
 	{
 		return "MultiCurrency";
+	}
+
+	@Override
+	public String getLongName()
+	{
+		return getName();
 	}
 
 	@Override

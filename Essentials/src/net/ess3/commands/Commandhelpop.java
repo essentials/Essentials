@@ -1,9 +1,5 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
-import net.ess3.utils.Util;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
 import java.util.logging.Level;
 
 
@@ -16,8 +12,8 @@ public class Commandhelpop extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-
-		final String message = _("helpOp", user.getDisplayName(), Util.stripColor(getFinalArg(args, 0)));
+		user.setDisplayNick();
+		final String message = _("helpOp", user.getDisplayName(), Util.stripFormat(getFinalArg(args, 0)));
 		logger.log(Level.INFO, message);
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{

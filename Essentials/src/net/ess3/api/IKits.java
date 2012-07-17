@@ -1,7 +1,8 @@
 package net.ess3.api;
 
-import net.ess3.settings.Kit;
 import java.util.Collection;
+import net.ess3.commands.NoChargeException;
+import net.ess3.settings.Kit;
 
 
 public interface IKits extends IReload
@@ -15,4 +16,6 @@ public interface IKits extends IReload
 	Collection<String> getList() throws Exception;
 
 	boolean isEmpty();
+	
+	void checkTime(final IUser user, Kit kit) throws NoChargeException;
 }

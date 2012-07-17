@@ -10,6 +10,8 @@ public interface IJails extends IReload
 
 	Collection<String> getList() throws Exception;
 
+	int getCount();
+
 	void removeJail(String jail) throws Exception;
 
 	void sendToJail(IUser user, String jail) throws Exception;

@@ -1,5 +1,9 @@
 package net.ess3.commands;
 
+//TODO - replace alll the bukkit imports
+import static net.ess3.I18n._;
+import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,5 +30,16 @@ public class Commanditemdb extends EssentialsCommand
 			itemStack = ess.getItemDb().get(args[0]);
 		}
 		sender.sendMessage(itemStack.getType().toString() + "- " + itemStack.getTypeId() + ":" + Integer.toString(itemStack.getData().getData()));
+
+
+		if (itemStack.getType() != Material.AIR)
+		{
+			int maxuses = itemStack.getType().getMaxDurability();
+			int durability = ((maxuses + 1) - itemStack.getDurability());
+			if (maxuses != 0)
+			{
+				sender.sendMessage(_("durability", Integer.toString(durability)));
+			}
+		}
 	}
 }

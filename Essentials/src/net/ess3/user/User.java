@@ -25,7 +25,7 @@ public class User extends UserBase implements IUser
 	@Getter
 	private transient IUser teleportRequester;
 	@Getter
-	private transient boolean teleportRequestHere;
+	private transient boolean tpRequestHere;
 	@Getter
 	private transient final ITeleport teleport;
 	@Getter
@@ -37,6 +37,11 @@ public class User extends UserBase implements IUser
 	@Getter
 	@Setter
 	private boolean hidden = false;
+	@Getter
+	private transient boolean vanished;
+	@Getter
+	@Setter
+	private boolean invSee = false;
 	private transient Location afkPosition;
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
 
@@ -59,6 +64,22 @@ public class User extends UserBase implements IUser
 		// write lock allows only one thread to modify the data
 		user.acquireWriteLock();
 		user.getData().setMoney(10 + money);
+	}
+
+	@Override
+	public void finishRead()
+	{
+	}
+
+	@Override
+	public void finishWrite()
+	{
+	}
+
+	@Override
+	public void update(final Player base)
+	{
+		super.update(base);
 	}
 
 	@Override
@@ -176,14 +197,6 @@ public class User extends UserBase implements IUser
 			unlock();
 		}
 	}
-
-	public void requestTeleport(final User player, final boolean here)
-	{
-		teleportRequestTime = System.currentTimeMillis();
-		teleportRequester = player;
-		teleportRequestHere = here;
-	}
-
 	public String getNick(boolean addprefixsuffix)
 	{
 		acquireReadLock();
@@ -227,6 +240,7 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public void setDisplayNick()
 	{
 		String name = getNick(true);
@@ -338,6 +352,7 @@ public class User extends UserBase implements IUser
 	}
 
 	//Returns true if status expired during this check
+	@Override
 	public boolean checkJailTimeout(final long currentTime)
 	{
 		acquireReadLock();
@@ -370,6 +385,7 @@ public class User extends UserBase implements IUser
 	}
 
 	//Returns true if status expired during this check
+	@Override
 	public boolean checkMuteTimeout(final long currentTime)
 	{
 		acquireReadLock();
@@ -392,6 +408,7 @@ public class User extends UserBase implements IUser
 	}
 
 	//Returns true if status expired during this check
+	@Override
 	public boolean checkBanTimeout(final long currentTime)
 	{
 		acquireReadLock();
@@ -412,6 +429,7 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public void updateActivity(final boolean broadcast)
 	{
 		acquireReadLock();
@@ -434,6 +452,7 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public void checkActivity()
 	{
 		@Cleanup
@@ -478,20 +497,13 @@ public class User extends UserBase implements IUser
 		}
 	}
 
+	@Override
 	public Location getAfkPosition()
 	{
 		return afkPosition;
 	}
 
-	public boolean toggleGodModeEnabled()
-	{
-		if (!isGodModeEnabled())
-		{
-			setFoodLevel(20);
-		}
-		return super.toggleGodmode();
-	}
-
+	@Override
 	public boolean isGodModeEnabled()
 	{
 		acquireReadLock();
@@ -509,13 +521,7 @@ public class User extends UserBase implements IUser
 			unlock();
 		}
 	}
-
-	@Override
-	public Location getHome(String name) throws Exception
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
+	
 	@Override
 	public void updateCompass()
 	{
@@ -535,13 +541,7 @@ public class User extends UserBase implements IUser
 		{
 			// Ignore
 		}
-	}
-
-	@Override
-	public List<String> getHomes()
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+	}	
 
 	@Override
 	public int compareTo(final IUser t)
@@ -550,9 +550,11 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void requestTeleport(IUser user, boolean b)
+	public void requestTeleport(IUser player, boolean here)
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+        teleportRequestTime = System.currentTimeMillis();
+        teleportRequester = player;
+        tpRequestHere = here;
 	}
 
 	@Override
@@ -639,8 +641,10 @@ public class User extends UserBase implements IUser
 				spew = true;
 			}
 		}
-		else {
-			if (!overfilled.isEmpty()) {
+		else
+		{
+			if (!overfilled.isEmpty())
+			{
 				throw new ChargeException("Inventory full");
 			}
 		}
@@ -660,14 +664,92 @@ public class User extends UserBase implements IUser
 		}
 		return cost <= mon;
 	}
-	
-	public void updateMoneyCache(double userMoney) {
-		if (super.getMoney() != userMoney) {
+
+	@Override
+	public void updateMoneyCache(double userMoney)
+	{
+		if (super.getMoney() != userMoney)
+		{
 			super.setMoney(userMoney);
 		}
 	}
 
-	public boolean canAfford(double amount, boolean b) {
+	@Override
+	public boolean canAfford(double amount, boolean b)
+	{
 		return true;
 	}
+	private transient long teleportInvulnerabilityTimestamp = 0;
+
+	public void enableInvulnerabilityAfterTeleport()
+	{
+		@Cleanup
+		final ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+
+		final long time = settings.getData().getGeneral().getTeleportInvulnerability();
+		if (time > 0)
+		{
+			teleportInvulnerabilityTimestamp = System.currentTimeMillis() + time;
+		}
+	}
+
+	@Override
+	public void resetInvulnerabilityAfterTeleport()
+	{
+		if (teleportInvulnerabilityTimestamp != 0
+			&& teleportInvulnerabilityTimestamp < System.currentTimeMillis())
+		{
+			teleportInvulnerabilityTimestamp = 0;
+		}
+	}
+
+	@Override
+	public boolean hasInvulnerabilityAfterTeleport()
+	{
+		return teleportInvulnerabilityTimestamp != 0 && teleportInvulnerabilityTimestamp >= System.currentTimeMillis();
+	}
+
+	@Override
+	public void setVanished(boolean set)
+	{
+		vanished = set;
+		if (set)
+		{
+			for (Player p : ess.getServer().getOnlinePlayers())
+			{
+				if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(ess.getUser(p)))
+				{
+					p.hidePlayer(getBase());
+				}
+			}
+			setHidden(true);
+			ess.getVanishedPlayers().add(getName());
+		}
+		else
+		{
+			for (Player p : ess.getServer().getOnlinePlayers())
+			{
+				p.showPlayer(getBase());
+			}
+			setHidden(false);
+			ess.getVanishedPlayers().remove(getName());
+		}
+	}
+
+	@Override
+	public void setName(String name)
+	{
+		//todo
+		//throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void toggleVanished()
+	{
+		final boolean set = !vanished;
+		this.setVanished(set);
+	}
+
+	
 }

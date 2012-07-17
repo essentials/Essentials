@@ -2,6 +2,7 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.utils.Util;
 
 
 public class Commandsetjail extends EssentialsCommand
@@ -14,7 +15,7 @@ public class Commandsetjail extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		ess.getJails().setJail(args[0], user.getLocation());
-		user.sendMessage(_("jailSet", args[0]));
+		user.sendMessage(_("jailSet", Util.sanitizeString(args[0])));
 
 	}
 }

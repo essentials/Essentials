@@ -31,7 +31,7 @@ public class Commandsetworth extends EssentialsCommand
 
 		ess.getWorth().setPrice(stack, Double.parseDouble(price));
 		user.sendMessage(_("worthSet"));
-	}
+	}	
 
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception

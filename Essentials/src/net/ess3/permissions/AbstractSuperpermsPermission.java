@@ -1,8 +1,10 @@
 package net.ess3.permissions;
 
 import net.ess3.api.IPermission;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Permission;
+import net.ess3.utils.Util;
+import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 
 
 public abstract class AbstractSuperpermsPermission implements IPermission
@@ -10,7 +12,7 @@ public abstract class AbstractSuperpermsPermission implements IPermission
 	protected Permission bukkitPerm;
 
 	@Override
-	public Permission getPermission()
+	public Permission getBukkitPermission()
 	{
 		if (bukkitPerm != null)
 		{
@@ -18,7 +20,7 @@ public abstract class AbstractSuperpermsPermission implements IPermission
 		}
 		else
 		{
-			return Permission.create(getPermissionName(), getPermissionDefault());
+			return Util.registerPermission(getPermission(), getPermissionDefault());
 		}
 	}
 
@@ -27,14 +29,14 @@ public abstract class AbstractSuperpermsPermission implements IPermission
 	 * @return 
 	 */
 	@Override
-	public Permission.Default getPermissionDefault()
+	public PermissionDefault getPermissionDefault()
 	{
-		return Permission.Default.OP;
+		return PermissionDefault.OP;
 	}
 
 	@Override
 	public boolean isAuthorized(final CommandSender sender)
 	{
-		return sender.hasPermission(getPermission());
+		return sender.hasPermission(getBukkitPermission());
 	}
 }

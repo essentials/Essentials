@@ -1,10 +1,10 @@
 # This determines the command prefix when there are conflicts (/name:home, /name:help, etc.)
 name: EssentialsChat
-main: com.earth2me.essentials.chat.EssentialsChat
+main: net.ess3.chat.EssentialsChat
 # Note to developers: This next line cannot change, or the automatic versioning system will break.
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides chat control features for Essentials.  Requires Permissions.
 authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits, md_5, Okamosy]
-depend: [Essentials3]
+depend: [Essentials-3]
 #softdepend: [Factions]

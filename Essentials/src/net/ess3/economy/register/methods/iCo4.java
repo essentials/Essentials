@@ -1,17 +1,16 @@
 package net.ess3.economy.register.methods;
 
-import net.ess3.economy.register.Method;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.coelho.iConomy.system.Account;
+import net.ess3.economy.register.Method;
 import org.bukkit.plugin.Plugin;
 
 
 /**
  * iConomy 4 Implementation of Method
  *
- * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun)
- * @copyright (c) 2011
- * @license AOL license <http://aol.nexua.org>
+ * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun) @copyright (c) 2011 @license AOL license
+ * <http://aol.nexua.org>
  */
 public class iCo4 implements Method
 {
@@ -27,6 +26,12 @@ public class iCo4 implements Method
 	public String getName()
 	{
 		return "iConomy";
+	}
+
+	@Override
+	public String getLongName()
+	{
+		return getName();
 	}
 
 	@Override

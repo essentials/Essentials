@@ -1,11 +1,11 @@
 package net.ess3.economy;
 
-import net.ess3.utils.Util;
-import net.ess3.api.*;
-import net.ess3.permissions.Permissions;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import net.ess3.api.*;
+import net.ess3.permissions.Permissions;
+import net.ess3.utils.Util;
 
 
 public class Economy implements IEconomy

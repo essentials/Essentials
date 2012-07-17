@@ -1,14 +1,26 @@
 package net.ess3.settings;
 
+import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.storage.AsyncStorageObjectHolder;
-import java.io.File;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implements ISettings
 {
+
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
 	private final transient AtomicBoolean debug = new AtomicBoolean(false);
 	public SettingsHolder(final IEssentials ess)
 	{
@@ -51,6 +63,7 @@ public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implement
 		return debug.get();
 	}
 	
+	@Override
 	public void setDebug(final boolean set)
 	{
 		debug.set(set);

@@ -1,7 +1,5 @@
 package net.ess3;
 
-import net.ess3.api.IEssentials;
-import net.ess3.api.II18n;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +10,8 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IEssentials;
+import net.ess3.api.II18n;
 
 
 public class I18n implements II18n
@@ -116,6 +116,7 @@ public class I18n implements II18n
 		{
 			currentLocale = new Locale(parts[0], parts[1], parts[2]);
 		}
+		ResourceBundle.clearCache();
 		Logger.getLogger("Minecraft").log(Level.INFO, String.format("Using locale %s", currentLocale.toString()));
 		customBundle = ResourceBundle.getBundle(MESSAGES, currentLocale, new FileResClassLoader(I18n.class.getClassLoader(), ess));
 		localeBundle = ResourceBundle.getBundle(MESSAGES, currentLocale);

@@ -1,9 +1,10 @@
 package net.ess3.commands;
 
+import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import lombok.Cleanup;
+import net.ess3.permissions.WorldPermissions;
 import org.bukkit.entity.Player;
 
 
@@ -42,22 +43,21 @@ public class Commandtpaall extends EssentialsCommand
 			{
 				continue;
 			}
+			@Cleanup
+			ISettings settings = ess.getSettings();
+			settings.acquireReadLock();
+			if (user.getWorld() != player.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
+				&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(user))
+			{
+				continue;
+			}
 			try
 			{
 				player.requestTeleport(user, true);
 				player.sendMessage(_("teleportHereRequest", user.getDisplayName()));
 				player.sendMessage(_("typeTpaccept"));
 				int tpaAcceptCancellation = 0;
-				ISettings settings = ess.getSettings();
-				settings.acquireReadLock();
-				try
-				{
-					tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
-				}
-				finally
-				{
-					settings.unlock();
-				}
+				tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
 				if (tpaAcceptCancellation != 0)
 				{
 					player.sendMessage(_("teleportRequestTimeoutInfo", tpaAcceptCancellation));

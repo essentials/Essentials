@@ -1,11 +1,11 @@
 package net.ess3.settings;
 
-import net.ess3.storage.ListType;
-import net.ess3.storage.StorageObject;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.ess3.storage.ListType;
+import net.ess3.storage.StorageObject;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -16,4 +16,5 @@ public class Kit implements StorageObject
 	@ListType(ItemStack.class)
 	private List<ItemStack> items = new ArrayList<ItemStack>();
 	private Double delay;
+	
 }

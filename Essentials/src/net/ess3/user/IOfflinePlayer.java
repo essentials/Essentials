@@ -14,4 +14,6 @@ public interface IOfflinePlayer
 	void setBanned(boolean bln);
 	
 	boolean hasPermission(Permission perm);
+	
+	void setName(final String name);
 }

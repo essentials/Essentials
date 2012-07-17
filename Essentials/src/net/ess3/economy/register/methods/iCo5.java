@@ -1,20 +1,19 @@
 package net.ess3.economy.register.methods;
 
-import net.ess3.economy.register.Method;
 import com.iConomy.iConomy;
 import com.iConomy.system.Account;
 import com.iConomy.system.BankAccount;
 import com.iConomy.system.Holdings;
 import com.iConomy.util.Constants;
+import net.ess3.economy.register.Method;
 import org.bukkit.plugin.Plugin;
 
 
 /**
  * iConomy 5 Implementation of Method
  *
- * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun)
- * @copyright (c) 2011
- * @license AOL license <http://aol.nexua.org>
+ * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun) @copyright (c) 2011 @license AOL license
+ * <http://aol.nexua.org>
  */
 public class iCo5 implements Method
 {
@@ -30,6 +29,12 @@ public class iCo5 implements Method
 	public String getName()
 	{
 		return "iConomy";
+	}
+
+	@Override
+	public String getLongName()
+	{
+		return getName();
 	}
 
 	@Override

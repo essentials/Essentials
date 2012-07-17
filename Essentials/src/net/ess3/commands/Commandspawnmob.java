@@ -1,22 +1,24 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
-import net.ess3.bukkit.Mob;
-import net.ess3.bukkit.Mob.MobException;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.permissions.SpawnmobPermissions;
-import net.ess3.utils.LocationUtil;
-import net.ess3.utils.Util;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
+import static net.ess3.I18n._;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
+import net.ess3.bukkit.Mob;
+import net.ess3.bukkit.Mob.MobException;
+import net.ess3.permissions.SpawnmobPermissions;
+import net.ess3.utils.LocationUtil;
+import net.ess3.utils.Util;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.*;
-
+import org.bukkit.material.Colorable;
+//TODO - Bukkit cleanup
 
 public class Commandspawnmob extends EssentialsCommand
 {
@@ -97,7 +99,7 @@ public class Commandspawnmob extends EssentialsCommand
 		}
 		catch (MobException e)
 		{
-			throw new Exception(_("unableToSpawnMob"));
+			throw new Exception(_("unableToSpawnMob"), e);
 		}
 
 		if (mountType != null)
@@ -119,7 +121,7 @@ public class Commandspawnmob extends EssentialsCommand
 			}
 			catch (MobException e)
 			{
-				throw new Exception(_("unableToSpawnMob"));
+				throw new Exception(_("unableToSpawnMob"), e);
 			}
 			spawnedMob.setPassenger(spawnedMount);
 		}
@@ -164,7 +166,7 @@ public class Commandspawnmob extends EssentialsCommand
 						}
 						catch (MobException e)
 						{
-							throw new Exception(_("unableToSpawnMob"));
+							throw new Exception(_("unableToSpawnMob"), e);
 						}
 						spawnedMob.setPassenger(spawnedMount);
 					}
@@ -201,7 +203,8 @@ public class Commandspawnmob extends EssentialsCommand
 	private void changeMobData(final EntityType type, final Entity spawned, String data, final IUser user) throws Exception
 	{
 		data = data.toLowerCase(Locale.ENGLISH);
-		if (type == EntityType.SLIME || type == EntityType.MAGMA_CUBE)
+
+		if (spawned instanceof Slime)
 		{
 			try
 			{
@@ -212,32 +215,24 @@ public class Commandspawnmob extends EssentialsCommand
 				throw new Exception(_("slimeMalformedSize"), e);
 			}
 		}
-		if ((type == EntityType.SHEEP
-			 || type == EntityType.COW
-			 || type == EntityType.MUSHROOM_COW
-			 || type == EntityType.CHICKEN
-			 || type == EntityType.PIG
-			 || type == EntityType.VILLAGER
-			 || type == EntityType.OCELOT
-			 || type == EntityType.WOLF)
-			&& data.contains("baby"))
+		if (spawned instanceof Ageable && data.contains("baby"))
 		{
-			((Animals)spawned).setBaby();
+			((Ageable)spawned).setBaby();
 			return;
 		}
-		if (type == EntityType.SHEEP)
+		if (spawned instanceof Colorable)
 		{
 			final String color = data.toUpperCase(Locale.ENGLISH).replace("BABY", "");
 			try
 			{
 				if (color.equals("RANDOM"))
 				{
-					Random rand = new Random();
-					((Sheep)spawned).setColor(DyeColor.values()[rand.nextInt(DyeColor.values().length)]);
+					final Random rand = new Random();
+					((Colorable)spawned).setColor(DyeColor.values()[rand.nextInt(DyeColor.values().length)]);
 				}
 				else
 				{
-					((Sheep)spawned).setColor(DyeColor.valueOf(color));
+					((Colorable)spawned).setColor(DyeColor.valueOf(color));
 				}
 			}
 			catch (Exception e)
@@ -245,9 +240,7 @@ public class Commandspawnmob extends EssentialsCommand
 				throw new Exception(_("sheepMalformedColor"), e);
 			}
 		}
-		if ((type == EntityType.WOLF
-			 || type == EntityType.OCELOT)
-			&& data.contains("tamed"))
+		if (spawned instanceof Tameable && data.contains("tamed"))
 		{
 			final Tameable tameable = ((Tameable)spawned);
 			tameable.setTamed(true);
@@ -261,6 +254,31 @@ public class Commandspawnmob extends EssentialsCommand
 		if (type == EntityType.CREEPER && data.contains("powered"))
 		{
 			((Creeper)spawned).setPowered(true);
+		}
+		if (type == EntityType.OCELOT)
+		{
+			if (data.contains("siamese"))
+			{
+				((Ocelot)spawned).setCatType(Ocelot.Type.SIAMESE_CAT);
+			}
+			else if (data.contains("red"))
+			{
+				((Ocelot)spawned).setCatType(Ocelot.Type.RED_CAT);
+			}
+			else if (data.contains("black"))
+			{
+				((Ocelot)spawned).setCatType(Ocelot.Type.BLACK_CAT);
+			}
+		}
+		if (type == EntityType.VILLAGER)
+		{
+			for (Profession prof : Villager.Profession.values())
+			{
+				if (data.contains(prof.toString().toLowerCase(Locale.ENGLISH)))
+				{
+					((Villager)spawned).setProfession(prof);
+				}
+			}
 		}
 		if (type == EntityType.OCELOT)
 		{

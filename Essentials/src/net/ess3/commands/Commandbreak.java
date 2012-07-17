@@ -27,6 +27,8 @@ public class Commandbreak extends EssentialsCommand
 		{
 			throw new Exception(_("noBreakBedrock"));
 		}
+		//final List<ItemStack> list = (List<ItemStack>)block.getDrops();		
+		//final BlockBreakEvent event = new BlockBreakEvent(block, user.getBase(), list);
 		final BlockBreakEvent event = new BlockBreakEvent(block, user.getBase());
 		server.getPluginManager().callEvent(event);
 		if (event.isCancelled())

@@ -1,13 +1,11 @@
 package net.ess3.commands;
 
-import net.ess3.utils.textreader.TextInput;
-import net.ess3.utils.textreader.IText;
-import net.ess3.utils.textreader.TextPager;
-import net.ess3.utils.textreader.HelpInput;
-import net.ess3.utils.textreader.KeywordReplacer;
+import java.util.Locale;
 import static net.ess3.I18n._;
-import net.ess3.utils.Util;
 import net.ess3.api.IUser;
+import net.ess3.utils.Util;
+import net.ess3.utils.textreader.*;
+
 
 
 public class Commandhelp extends EssentialsCommand
@@ -18,6 +16,7 @@ public class Commandhelp extends EssentialsCommand
 		IText output;
 		String pageStr = args.length > 0 ? args[0] : null;
 		String chapterPageStr = args.length > 1 ? args[1] : null;
+		String command = commandLabel;
 		final IText input = new TextInput(user, "help", false, ess);
 
 		if (input.getLines().isEmpty())
@@ -28,7 +27,12 @@ public class Commandhelp extends EssentialsCommand
 			}
 			else
 			{
-				output = new HelpInput(user, pageStr, ess);
+				if (pageStr.length() > 26)
+				{
+					pageStr = pageStr.substring(0, 25);
+				}
+				output = new HelpInput(user, pageStr.toLowerCase(Locale.ENGLISH), ess);
+				command = command.concat(" ").concat(pageStr);
 				pageStr = chapterPageStr;
 			}
 			chapterPageStr = null;
@@ -38,7 +42,7 @@ public class Commandhelp extends EssentialsCommand
 			output = new KeywordReplacer(input, user, ess);
 		}
 		final TextPager pager = new TextPager(output);
-		pager.showPage(pageStr, chapterPageStr, commandLabel, user);
+		pager.showPage(pageStr, chapterPageStr, command, user);
 	}
 
 	@Override

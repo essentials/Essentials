@@ -1,12 +1,13 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
-import net.ess3.economy.Trade;
-import net.ess3.utils.Util;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
 import java.util.List;
 import java.util.Locale;
+import static net.ess3.I18n._;
+import net.ess3.api.IUser;
+import net.ess3.economy.Trade;
+import net.ess3.permissions.Permissions;
+import net.ess3.permissions.WorldPermissions;
+import net.ess3.utils.Util;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -49,7 +50,7 @@ public class Commandhome extends EssentialsCommand
 					throw new NoChargeException();
 				}
 			}
-			user.getTeleport().home(player, homeName.toLowerCase(Locale.ENGLISH), charge);
+			goHome(user, player, homeName.toLowerCase(Locale.ENGLISH), charge);
 		}
 		catch (NotEnoughArgumentsException e)
 		{
@@ -75,7 +76,7 @@ public class Commandhome extends EssentialsCommand
 			}
 			else if (homes.size() == 1 && player.equals(user))
 			{
-				user.getTeleport().home(player, homes.get(0), charge);
+				goHome(user, player, homes.get(0), charge);
 			}
 			else
 			{
@@ -87,5 +88,20 @@ public class Commandhome extends EssentialsCommand
 			}
 		}
 		throw new NoChargeException();
+	}
+
+	private void goHome(final IUser user, final IUser player, final String home, final Trade charge) throws Exception
+	{
+		final Location loc = player.getHome(home);
+		if (loc == null)
+		{
+			throw new NotEnoughArgumentsException();
+		}
+		if (user.getWorld() != loc.getWorld() && ess.getSettings().getData().getGeneral().isWorldHomePermissions()
+			&& !WorldPermissions.getPermission(loc.getWorld().getName()).isAuthorized(user))
+		{
+			throw new Exception(_("noPerm", "essentials.world." + loc.getWorld().getName()));
+		}
+		user.getTeleport().home(loc, charge);
 	}
 }

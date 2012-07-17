@@ -1,7 +1,5 @@
 package net.ess3.storage;
 
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.DigestInputStream;
@@ -12,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
 
 

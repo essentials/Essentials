@@ -1,9 +1,9 @@
 # This determines the command prefix when there are conflicts (/name:home, /name:help, etc.)
 name: EssentialsProtect
-main: com.earth2me.essentials.protect.EssentialsProtect
+main: net.ess3.protect.EssentialsProtect
 # Note to developers: This next line cannot change, or the automatic versioning system will break.
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides protection for various parts of the world.
 authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits]
-softdepend: [Essentials3]
+softdepend: [Essentials-3]

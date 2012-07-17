@@ -5,6 +5,8 @@ import static net.ess3.I18n._;
 import net.ess3.bukkit.Mob;
 import java.util.Collections;
 import java.util.Locale;
+import static net.ess3.I18n._;
+import net.ess3.bukkit.Mob;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.*;
@@ -43,7 +45,7 @@ public class Commandkillall extends EssentialsCommand
 				}
 				catch (NumberFormatException e)
 				{
-					throw new Exception(_("numberRequired"));
+					throw new Exception(_("numberRequired"), e);
 				}
 			}
 		}
@@ -99,6 +101,13 @@ public class Commandkillall extends EssentialsCommand
 				if (entity instanceof Wolf)
 				{
 					if (((Wolf)entity).isTamed())
+					{
+						continue;
+					}
+				}
+				if(entity instanceof Ocelot)
+				{
+					if (((Ocelot)entity).isTamed())
 					{
 						continue;
 					}

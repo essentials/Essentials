@@ -40,16 +40,17 @@ public class KeywordReplacer implements IText
 			@Cleanup
 			final IUser user = ((Player)sender).getUser();
 			user.acquireReadLock();
+			user.setDisplayNick();
 			displayName = user.getDisplayName();
 			userName = user.getName();
-			ipAddress = user.getAddress().getAddress().toString();
-			address = user.getAddress().toString();
+			ipAddress = user.getAddress() == null || user.getAddress().getAddress() == null ? "" : user.getAddress().getAddress().toString();
+			address = user.getAddress() == null ? "" : user.getAddress().toString();
 			balance = Double.toString(user.getMoney());
 			mails = Integer.toString(user.getData().getMails() == null ? 0 : user.getData().getMails().size());
-			world = user.getLocation().getWorld().getName();
-			worldTime12 = DescParseTickFormat.format12(user.getWorld().getTime());
-			worldTime24 = DescParseTickFormat.format24(user.getWorld().getTime());
-			worldDate = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(DescParseTickFormat.ticksToDate(user.getWorld().getFullTime()));
+			world = user.getLocation() == null || user.getLocation().getWorld() == null ? "" : user.getLocation().getWorld().getName();
+			worldTime12 = DescParseTickFormat.format12(user.getWorld() == null ? 0 : user.getWorld().getTime());
+			worldTime24 = DescParseTickFormat.format24(user.getWorld() == null ? 0 : user.getWorld().getTime());
+			worldDate = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(DescParseTickFormat.ticksToDate(user.getWorld() == null ? 0 : user.getWorld().getFullTime()));
 		}
 		else
 		{

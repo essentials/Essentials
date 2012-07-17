@@ -1,8 +1,11 @@
 package net.ess3.commands;
 
+import lombok.Cleanup;
 import static net.ess3.I18n._;
+import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.permissions.WorldPermissions;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -24,6 +27,16 @@ public class Commandtpohere extends EssentialsCommand
 		{
 			throw new NoSuchFieldException(_("playerNotFound"));
 		}
+		@Cleanup
+		ISettings settings = ess.getSettings();
+		settings.acquireReadLock();
+		//todo - common method
+		if (user.getWorld() != player.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
+			&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(player))
+		{
+			throw new Exception(_("noPerm", "essentials.world." + user.getWorld().getName()));
+		}
+
 
 		// Verify permission
 		if (!player.isHidden() || Permissions.TELEPORT_HIDDEN.isAuthorized(user))

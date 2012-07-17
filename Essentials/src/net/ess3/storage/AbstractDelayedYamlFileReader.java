@@ -1,17 +1,19 @@
 package net.ess3.storage;
 
-import net.ess3.api.IEssentials;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
+import net.ess3.Essentials;
+import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
 
 
 public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> implements Runnable
 {
+	
 	private final transient Class<T> clazz;
 	private final transient IEssentials ess;
 	private final transient ReentrantLock lock = new ReentrantLock();
@@ -39,10 +41,11 @@ public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> imp
 	@Override
 	public void run()
 	{
+		File file = null;
 		lock.lock();
 		try
 		{
-			final File file = onStart();
+			file = onStart();
 			try
 			{
 				final FileReader reader = new FileReader(file);
@@ -79,7 +82,11 @@ public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> imp
 		}
 		catch (IOException ex)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "File could not be opened: " + ex.getMessage(), ex);
+			onException(ex);
+			if (plugin.getSettings() == null || plugin.getSettings().isDebug())
+			{
+				Bukkit.getLogger().log(Level.INFO, "File not found: " + file.toString());
+			}
 		}
 		finally
 		{

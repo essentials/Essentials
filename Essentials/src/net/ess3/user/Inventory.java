@@ -1,12 +1,12 @@
 package net.ess3.user;
 
-import net.ess3.storage.MapKeyType;
-import net.ess3.storage.MapValueType;
-import net.ess3.storage.StorageObject;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.ess3.storage.MapKeyType;
+import net.ess3.storage.MapValueType;
+import net.ess3.storage.StorageObject;
 import org.bukkit.inventory.ItemStack;
 
 

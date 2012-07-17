@@ -1,11 +1,5 @@
 package net.ess3.utils.textreader;
 
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
-import net.ess3.api.InvalidNameException;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
-import net.ess3.utils.Util;
 import java.io.*;
 import java.lang.ref.SoftReference;
 import java.util.*;
@@ -83,10 +77,10 @@ public class TextInput implements IText
 						}
 						if (line.length() > 0 && line.charAt(0) == '#')
 						{
-							bookmarks.put(line.substring(1).toLowerCase(Locale.ENGLISH).replaceAll("&[0-9a-f]", ""), lineNumber);
-							chapters.add(line.substring(1).replace('&', '�').replace("�", "&"));
+							bookmarks.put(line.substring(1).toLowerCase(Locale.ENGLISH).replaceAll("&[0-9a-fk]", ""), lineNumber);
+							chapters.add(line.substring(1).replace('&', '§').replace("§§", "&"));
 						}
-						lines.add(line.replace('&', '�').replace("�", "&"));
+						lines.add(line.replace('&', '§').replace("§§", "&"));
 						lineNumber++;
 					}
 				}
@@ -118,7 +112,9 @@ public class TextInput implements IText
 				}
 				finally
 				{
+                    if(output != null)
 					output.close();
+                    if(input != null)
 					input.close();
 				}
 				throw new FileNotFoundException("File " + filename + ".txt does not exist. Creating one for you.");

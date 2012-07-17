@@ -17,7 +17,7 @@ public class Commandmsg extends EssentialsCommand
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length < 2 || args[0].trim().isEmpty() || args[1].trim().isEmpty())
+		if (args.length < 2 || args[0].trim().length() < 3 || args[1].trim().isEmpty())
 		{
 			throw new NotEnoughArgumentsException();
 		}
@@ -34,7 +34,7 @@ public class Commandmsg extends EssentialsCommand
 			}
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
-				message = Util.replaceColor(message);
+				message = Util.replaceFormat(message);
 			}
 			else
 			{
@@ -43,7 +43,7 @@ public class Commandmsg extends EssentialsCommand
 		}
 		else
 		{
-			message = Util.replaceColor(message);
+			message = Util.replaceFormat(message);
 		}
 
 		final String translatedMe = _("me");
@@ -86,7 +86,7 @@ public class Commandmsg extends EssentialsCommand
 		{
 			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getDisplayName(), message));
 			final IUser matchedUser = ess.getUser(matchedPlayer);
-			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(((Player)sender).getName()) || matchedUser.isHidden()))
+			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(ess.getUser((Player)sender)) || matchedUser.isHidden()))
 			{
 				continue;
 			}

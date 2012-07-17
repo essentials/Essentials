@@ -49,6 +49,8 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	void updateActivity(boolean broadcast);
 
 	void updateDisplayName();
+	
+	void setDisplayNick();
 
 	boolean checkJailTimeout(long currentTime);
 
@@ -68,14 +70,12 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 
 	boolean isGodModeEnabled();
 
-	boolean isIgnoringPlayer(String name);
+	boolean isIgnoringPlayer(IUser user);
 
-	void setIgnoredPlayer(String name, boolean set);
+	void setIgnoredPlayer(IUser user, boolean set);
 
 	Location getAfkPosition();
-
-	boolean toggleGodModeEnabled();
-
+	
 	void dispose();
 
 	void updateCompass();
@@ -84,13 +84,13 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 
 	void addMail(String string);
 
-	boolean toggleMuted();
+	void setMuted(boolean mute);
 
 	boolean toggleSocialSpy();
 
 	void requestTeleport(IUser user, boolean b);
 
-	boolean isTeleportRequestHere();
+	boolean isTpRequestHere();
 
 	IUser getTeleportRequester();
 
@@ -107,4 +107,23 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	public void updateMoneyCache(double userMoney);
 
 	public boolean canAfford(double amount, boolean b);
+	
+	boolean isVanished();
+	
+	void resetInvulnerabilityAfterTeleport();
+	
+	void toggleVanished();
+	
+	boolean isInvSee();
+	
+	void setInvSee(boolean invsee);
+	
+	boolean hasInvulnerabilityAfterTeleport();
+	
+	void update(final Player base);
+	
+	void setGodModeEnabled(boolean set);
+	
+	void setVanished(boolean set);
+	
 }

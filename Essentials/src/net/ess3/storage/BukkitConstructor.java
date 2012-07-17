@@ -1,8 +1,5 @@
 package net.ess3.storage;
 
-import net.ess3.Essentials;
-import net.ess3.api.server.IPlugin;
-import net.ess3.api.server.Material;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;

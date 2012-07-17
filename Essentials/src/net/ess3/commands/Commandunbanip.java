@@ -1,8 +1,8 @@
 package net.ess3.commands;
 
+import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import lombok.Cleanup;
 
 
 public class Commandunbanip extends EssentialsCommand

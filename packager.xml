@@ -4,7 +4,6 @@
     <mkdir dir="jars"/>
     <copy todir="jars">
       <fileset dir=".">
-        <!-- include name="**/target/Essentials*.jar"/ -->
         <include name="**/Essentials/src/config.yml" />
         <include name="**/target/classes/messages*.properties" />
         <include name="**/target/classes/items.csv" />

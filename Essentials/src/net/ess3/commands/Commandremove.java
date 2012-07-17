@@ -1,14 +1,13 @@
 package net.ess3.commands;
 
+import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-
-import java.util.Locale;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.*;
 
-
+//Todo: Fix this up
 public class Commandremove extends EssentialsCommand
 {
 	private enum ToRemove
@@ -40,7 +39,7 @@ public class Commandremove extends EssentialsCommand
 			}
 			catch (NumberFormatException e)
 			{
-				throw new Exception(_("numberRequired"));
+				throw new Exception(_("numberRequired"), e);
 			}
 		}
 
@@ -50,7 +49,7 @@ public class Commandremove extends EssentialsCommand
 		}
 		catch (IllegalArgumentException e)
 		{
-			throw new NotEnoughArgumentsException(); //TODO: translate and list types
+			throw new NotEnoughArgumentsException(e); //TODO: translate and list types
 		}
 
 		removeEntities(user, world, toRemove, radius);
@@ -77,7 +76,7 @@ public class Commandremove extends EssentialsCommand
 		}
 		catch (IllegalArgumentException e)
 		{
-			throw new NotEnoughArgumentsException(); //TODO: translate and list types
+			throw new NotEnoughArgumentsException(e); //TODO: translate and list types
 		}
 		removeEntities(sender, world, toRemove, 0);
 	}
@@ -124,7 +123,7 @@ public class Commandremove extends EssentialsCommand
 						removed++;
 					}
 				}
-				else if (toRemove == ToRemove.DROPS)
+				else if (toRemove == ToRemove.MINECARTS)
 				{
 					if (e instanceof Minecart)
 					{

@@ -1,8 +1,9 @@
 package net.ess3.commands;
 
-import net.ess3.bukkit.Mob;
-import net.ess3.api.IUser;
+
 import java.util.Random;
+import net.ess3.api.IUser;
+import net.ess3.bukkit.Mob;
 import org.bukkit.Location;
 import org.bukkit.entity.Ocelot;
 

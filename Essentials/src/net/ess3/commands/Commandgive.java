@@ -1,10 +1,10 @@
 package net.ess3.commands;
 
+import java.util.Locale;
+import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.GivePermissions;
-import static net.ess3.I18n._;
-
-import java.util.Locale;
+import net.ess3.utils.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class Commandgive extends EssentialsCommand
 {
-	//TODO: move these messages to message file
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
@@ -33,14 +32,19 @@ public class Commandgive extends EssentialsCommand
 			throw new Exception(_("cantSpawnItem", itemname));
 		}
 
-		if (args.length > 2 && Integer.parseInt(args[2]) > 0)
+		if (args.length > 3 && Util.isInt(args[2]) && Util.isInt(args[3]))
+		{			
+			stack.setAmount(Integer.parseInt(args[2]));
+			stack.setDurability(Short.parseShort(args[3]));
+		}
+		else if (args.length > 2 && Integer.parseInt(args[2]) > 0)
 		{
 			stack.setAmount(Integer.parseInt(args[2]));
 		}		
 
 		if (args.length > 3)
 		{
-			for (int i = 3; i < args.length; i++)
+			for (int i = Util.isInt(args[3]) ? 4 : 3; i < args.length; i++)
 			{
 				final String[] split = args[i].split("[:+',;.]", 2);
 				if (split.length < 1)
@@ -68,6 +72,7 @@ public class Commandgive extends EssentialsCommand
 		
 		giveTo.giveItems(stack, false);
 
+		//TODO: TL this.
 		final String itemName = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');
 		sender.sendMessage(ChatColor.BLUE + "Giving " + stack.getAmount() + " of " + itemName + " to " + giveTo.getDisplayName() + ".");
 		

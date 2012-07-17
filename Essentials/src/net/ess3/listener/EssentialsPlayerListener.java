@@ -1,16 +1,5 @@
 package net.ess3.listener;
 
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
-import net.ess3.utils.textreader.IText;
-import net.ess3.utils.textreader.KeywordReplacer;
-import net.ess3.utils.textreader.TextInput;
-import net.ess3.utils.textreader.TextPager;
-import net.ess3.user.UserData.TimestampType;
-import net.ess3.utils.LocationUtil;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -19,6 +8,17 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Cleanup;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
+import net.ess3.user.UserData.TimestampType;
+import net.ess3.utils.LocationUtil;
+import net.ess3.utils.textreader.IText;
+import net.ess3.utils.textreader.KeywordReplacer;
+import net.ess3.utils.textreader.TextInput;
+import net.ess3.utils.textreader.TextPager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -26,9 +26,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -69,7 +73,7 @@ public class EssentialsPlayerListener implements Listener
 		while (it.hasNext())
 		{
 			final IUser player = ess.getUser(it.next());
-			if (player.isIgnoringPlayer(user.getName()))
+			if (player.isIgnoringPlayer(user))
 			{
 				it.remove();
 			}
@@ -124,7 +128,11 @@ public class EssentialsPlayerListener implements Listener
 		settings.acquireReadLock();
 		if (settings.getData().getCommands().getGod().isRemoveOnDisconnect() && user.isGodModeEnabled())
 		{
-			user.toggleGodModeEnabled();
+			user.setGodModeEnabled(false);
+		}
+		if (user.isVanished())
+		{
+			user.toggleVanished();
 		}
 		if (user.getData().getInventory() != null)
 		{
@@ -138,6 +146,10 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
+		if (!event.getPlayer().isOnline())
+		{
+			return;
+		}
 		ess.getBackup().startTask();
 		@Cleanup
 		final IUser user = ess.getUser(event.getPlayer());
@@ -146,6 +158,15 @@ public class EssentialsPlayerListener implements Listener
 		user.updateDisplayName();
 		user.getData().setIpAddress(user.getAddress().getAddress().getHostAddress());
 		user.updateActivity(false);
+
+		for (String p : ess.getVanishedPlayers())
+		{
+			if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(user))
+			{
+				user.hidePlayer(ess.getUser(p).getBase());
+			}
+		}
+
 		if (Permissions.SLEEPINGIGNORED.isAuthorized(user))
 		{
 			user.setSleepingIgnored(true);
@@ -380,7 +401,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			return false;
 		}
-		
+
 		final List<String> commandList = user.getData().getPowertool(is.getType());
 		if (commandList == null || commandList.isEmpty())
 		{
@@ -433,6 +454,36 @@ public class EssentialsPlayerListener implements Listener
 		if (user.getData().isAfk())
 		{
 			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onInventoryClickEvent(final InventoryClickEvent event)
+	{
+		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
+		{
+			final IUser user = ess.getUser((Player)event.getWhoClicked());
+			final InventoryHolder invHolder = event.getView().getTopInventory().getHolder();
+			if (invHolder != null && invHolder instanceof Player)
+			{
+				final IUser invOwner = ess.getUser((Player)invHolder);
+				if (user.isInvSee() && (!Permissions.INVSEE_MODIFY.isAuthorized(user)
+										|| Permissions.INVSEE_PREVENT_MODIFY.isAuthorized(invOwner)
+										|| !invOwner.isOnline()))
+				{
+					event.setCancelled(true);
+				}
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onInventoryCloseEvent(final InventoryCloseEvent event)
+	{
+		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
+		{
+			final IUser user = ess.getUser((Player)event.getPlayer());
+			user.setInvSee(false);
 		}
 	}
 }

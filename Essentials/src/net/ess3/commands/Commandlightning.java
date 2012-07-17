@@ -31,7 +31,7 @@ public class Commandlightning extends EssentialsCommand
 			throw new Exception(_("playerNotFound"));
 		}
 
-		int power = 1;
+		int power = 5;
 		if (args.length > 1)
 		{
 			try
@@ -46,18 +46,10 @@ public class Commandlightning extends EssentialsCommand
 		for (Player matchPlayer : server.matchPlayer(args[0]))
 		{
 			sender.sendMessage(_("lightningUse", matchPlayer.getDisplayName()));
-			if (power <= 0)
-			{
-				matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
-			}
-			else
-			{
-				LightningStrike strike = matchPlayer.getWorld().strikeLightning(matchPlayer.getLocation());
-				matchPlayer.damage(power - 1, strike);
-			}
+			final LightningStrike strike = matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
 			if (!ess.getUser(matchPlayer).isGodModeEnabled())
 			{
-				matchPlayer.setHealth(matchPlayer.getHealth() < 5 ? 0 : matchPlayer.getHealth() - 5);
+				matchPlayer.damage(power, strike);
 			}
 			@Cleanup
 			final ISettings settings = ess.getSettings();

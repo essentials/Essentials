@@ -10,9 +10,9 @@ public class Commandsuicide extends EssentialsCommand
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		ess.getPlugin().callSuicideEvent(user.getBase());
-		user.damage(1000);
-		user.setHealth(0);
+		user.damage(Short.MAX_VALUE);
 		user.sendMessage(_("suicideMessage"));
+		user.setDisplayNick();
 		ess.broadcastMessage(user,_("suicideSuccess", user.getDisplayName()));		
 	}
 }

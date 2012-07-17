@@ -33,6 +33,10 @@ nickname-prefix: '~'
 # Disable this if you have any other plugin, that modifies the displayname of a user.
 change-displayname: true
 
+# When this option is enabled, the (tab) player list will be updated with the displayname.
+# The value of change-displayname (above) has to be true.
+#change-playerlist: true
+
 # Adds the prefix and suffix to the displayname of the player, so it will be displayed in messages and lists.
 # The prefix/suffix can be set using Permissions, Group Manager or PermissionsEx.
 # The value of change-displayname (above) has to be true.
@@ -45,6 +49,10 @@ teleport-cooldown: 0
 
 # The delay, in seconds, before a user actually teleports.  If the user moves or gets attacked in this timeframe, the teleport never occurs.
 teleport-delay: 0
+
+# The delay, in seconds, a player can't be attacked by other players after he has been teleported by a command
+# This will also prevent that the player can attack other players
+teleport-invulnerability: 2
 
 # The delay, in seconds, required between /heal attempts
 heal-cooldown: 60
@@ -97,9 +105,16 @@ player-commands:
   - back
   - back.ondeath
   - balance
+  - balance.others
+  - balancetop
+  - chat.color
+  - chat.format
+  - chat.shout
+  - chat.question
   - clearinventory
   - compass
   - depth
+  - delhome
   - getpos
   - geoip.show
   - help
@@ -108,20 +123,26 @@ player-commands:
   - home.others
   - ignore
   - info
+  - itemdb
   - kit
+  - kit.tools
   - list
   - mail
   - mail.send
   - me
   - motd
   - msg
+  - msg.color
   - nick
+  - near
   - pay
   - ping
   - powertool
+  - powertooltoggle
   - protect
   - r
   - rules
+  - realname
   - seen
   - sell
   - sethome
@@ -133,8 +154,11 @@ player-commands:
   - signs.use.balance
   - signs.use.buy
   - signs.use.disposal
+  - signs.use.enchant
   - signs.use.free
+  - signs.use.gamemode  
   - signs.use.heal
+  - signs.use.kit
   - signs.use.mail
   - signs.use.protection
   - signs.use.sell
@@ -144,6 +168,7 @@ player-commands:
   - signs.use.weather
   - spawn
   - suicide
+  - time
   - tpa
   - tpaccept
   - tpahere
@@ -156,14 +181,22 @@ player-commands:
 
 # Note: All items MUST be followed by a quantity!
 # All kit names should be lower case, and will be treated as lower in permissions/costs.
-# Times are measured in seconds.
+# Syntax: - itemID[:DataValue] Amount [Enchantment:Level]..
+# 'delay' refers to the cooldown between how often you can use each kit, measured in seconds.
 kits:
   dtools:
     delay: 10
     items:
-      - 277 1
+      - 277 1 efficiency:1
       - 278 1
-      - 279 1
+      - 279:780 1
+  tools:
+    delay: 10
+    items:
+      - 272 1
+      - 273 1 
+      - 274 1
+      - 275 1
   tools:
     delay: 10
     items:
@@ -175,9 +208,11 @@ kits:
 # Essentials Sign Control
 # See http://ess.khhq.net/wiki/Sign_Tutorial for instructions on how to use these.
 # To enable signs, remove # symbol. To disable all signs, comment/remove each sign.
+# Essentials Colored sign support will be enabled when any sign types are enabled.
 # We recommend not enabling chest protection signs if you don't intend to use them, (or are using LWC/Lockette).
 
 enabledSigns:
+  #- color
   #- balance
   #- buy  
   #- sell
@@ -194,12 +229,19 @@ enabledSigns:
   #- time
   #- weather
   #- protection
+  
+  
+# How many times per second can Essentials signs be interacted with.
+# Values should be between 1-20, 20 being virtually no lag protection.s
+# Lower numbers will reduce the possiblity of lag, but may annoy players.
+sign-use-per-second: 4
 
 # Backup runs a command while saving is disabled
 backup:
   # Interval in minutes
-  interval: 60
-  # Add a command that backups your data, e.g.
+  interval: 30
+  # Unless you add a valid backup command or script here, this feature will be useless.
+  # Use 'save-all' to simply force regular world saving without backup.
   #command: 'rdiff-backup World1 backups/World1'
 
 # Set this true to enable permission per warp.
@@ -241,7 +283,12 @@ freeze-afk-players: false
 
 # When the player is afk, should he be able to pickup items?
 # Enable this, when you don't want people idling in mob traps.
-disable-item-pickup-while-afk: true
+disable-item-pickup-while-afk: false
+
+# Should we automatically remove afk status when the player moves?
+# Player will be removed from afk on chat/command reguardless of this setting.
+# Disable this to reduce server lag.
+cancel-afk-on-move: true
 
 # You can disable the death messages of minecraft here
 death-messages: true
@@ -250,7 +297,8 @@ death-messages: true
 no-god-in-worlds:
 #  - world_nether
 
-# Set to true to enable per-world permissions for teleporting with /world
+# Set to true to enable per-world permissions for teleporting between worlds with essentials commands
+# This applies to /world, /back, /tp[a|o][here|all], but not warps.
 # Give someone permission to teleport to a world with essentials.world.<worldname>
 world-teleport-permissions: false
 
@@ -280,6 +328,9 @@ tpa-accept-cancellation: 0
 #Cancels a request made by tpa / tpc on world change to prevent cross world tp
 cancel-tp-requests-on-world-change: false
 
+#Delay to wait before people can cause attack damage after logging in 
+login-attack-delay: 5
+
 ############################################################
 # +------------------------------------------------------+ #
 # |                   EssentialsHome                     | #
@@ -291,6 +342,11 @@ spawn-if-no-home: true
 
 # Allows people to set their bed at daytime
 update-bed-at-daytime: true
+
+# Set to true to enable per-world permissions for using homes to teleport between worlds
+# This applies to the /home only.
+# Give someone permission to teleport to a world with essentials.world.<worldname>
+world-home-permissions: false
 
 # Allow players to have multiple homes.
 # Players need essentials.sethome.multiple before they can have more than 1 home, default to 'default' below.
@@ -394,6 +450,8 @@ protect:
   # Database settings for sign/rail protection
 
   # mysql or sqlite
+  # We strongly recommend against using mysql here, unless you have a good reason.
+  # Sqlite seems to be faster in almost all cases, and in some cases mysql can be much slower.
   datatype: 'sqlite'
 
   # If you specified MySQL above, you MUST enter the appropriate details here.
@@ -450,30 +508,31 @@ protect:
     entitytarget: false
     # Prevent the spawning of creatures
     spawn:
-      chicken: false
-      cow: false
       creeper: false
-      ghast: false
-      giant: false
-      monster: false
-      pig: false
-      pig_zombie: false
-      sheep: false
       skeleton: false
-      slime: false
       spider: false
-      squid: false
+      giant: false
       zombie: false
-      wolf: false
-      cave_spider: false
+      slime: false
+      ghast: false
+      pig_zombie: false
       enderman: false
+      cave_spider: false
       silverfish: false
-      ender_dragon: false
-      villager: false
       blaze: false
-      mushroom_cow: false
       magma_cube: false
+      ender_dragon: false
+      pig: false
+      sheep: false
+      cow: false      
+      chicken: false
+      squid: false
+      wolf: false
+      mushroom_cow: false
       snowman: false
+      ocelot: false
+      iron_golem: false
+      villager: false
 
   # Maximum height the creeper should explode. -1 allows them to explode everywhere.
   # Set prevent.creeper-explosion to true, if you want to disable creeper explosions.

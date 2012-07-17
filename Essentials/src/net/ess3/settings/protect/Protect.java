@@ -1,12 +1,12 @@
 package net.ess3.settings.protect;
 
-import net.ess3.storage.Comment;
-import net.ess3.storage.ListType;
-import net.ess3.storage.StorageObject;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.ess3.storage.Comment;
+import net.ess3.storage.ListType;
+import net.ess3.storage.StorageObject;
 import org.bukkit.Material;
 
 
@@ -42,4 +42,11 @@ public class Protect implements StorageObject
 	private boolean disableThunder = false;
 	private boolean disableLighting = false;
 	private SignsAndRails signsAndRails = new SignsAndRails();
+	
+	public Protect()
+	{
+		alertOnPlacement.add(Material.LAVA);
+		alertOnUse.add(Material.LAVA_BUCKET);
+		alertOnBreak.add(Material.GLASS);
+	}
 }

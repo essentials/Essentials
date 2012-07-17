@@ -1,8 +1,8 @@
 package net.ess3.listener;
 
-import net.ess3.utils.Util;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
+import net.ess3.utils.Util;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,11 +21,11 @@ public class EssentialsBlockListener implements Listener
 		this.ess = ess;
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{
 		// Do not rely on getItemInHand();
-		// http://leaky.bukkit.org/issues/663
+		// http://leaky.bukkit.org/issues/663		
 		final ItemStack itemstack = Util.convertBlockToItem(event.getBlockPlaced());
 		if (itemstack == null)
 		{

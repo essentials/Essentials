@@ -1,12 +1,12 @@
 package net.ess3.storage;
 
-import net.ess3.api.IEssentials;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
+import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
 
 
@@ -99,7 +99,11 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 	{
 		reader.schedule(instant);
 	}
-
+	
+	public abstract void finishRead();
+	
+	public abstract void finishWrite();
+	
 	public abstract File getStorageFile() throws IOException;
 
 
@@ -127,6 +131,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		public void onFinish()
 		{
 			unlock();
+			finishWrite();
 		}
 	}
 

@@ -1,16 +1,15 @@
 package net.ess3.economy.register.methods;
 
-import net.ess3.economy.register.Method;
 import cosine.boseconomy.BOSEconomy;
+import net.ess3.economy.register.Method;
 import org.bukkit.plugin.Plugin;
 
 
 /**
  * BOSEconomy 6 Implementation of Method
  *
- * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun)
- * @copyright (c) 2011
- * @license AOL license <http://aol.nexua.org>
+ * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun) @copyright (c) 2011 @license AOL license
+ * <http://aol.nexua.org>
  */
 @SuppressWarnings("deprecation")
 public class BOSE6 implements Method
@@ -27,6 +26,12 @@ public class BOSE6 implements Method
 	public String getName()
 	{
 		return "BOSEconomy";
+	}
+
+	@Override
+	public String getLongName()
+	{
+		return getName();
 	}
 
 	@Override

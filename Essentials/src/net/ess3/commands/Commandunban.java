@@ -1,8 +1,8 @@
 package net.ess3.commands;
 
+import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import lombok.Cleanup;
 
 
 public class Commandunban extends EssentialsCommand
@@ -26,7 +26,7 @@ public class Commandunban extends EssentialsCommand
 		}
 		catch (NoSuchFieldException e)
 		{
-			throw new Exception(_("playerNotFound"));
+			throw new Exception(_("playerNotFound"), e);
 		}
 	}
 }

@@ -21,6 +21,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class Teleport implements Runnable, ITeleport
 {
+
 	private static final double MOVE_CONSTANT = 0.3;
 
 
@@ -134,6 +135,7 @@ public class Teleport implements Runnable, ITeleport
 		this.ess = ess;
 	}
 
+	@Override
 	public void respawn(final Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		final Location bed = user.getBedSpawnLocation();
@@ -141,6 +143,7 @@ public class Teleport implements Runnable, ITeleport
 		teleport(new Target(respawnLoc), chargeFor, cause);
 	}
 
+	@Override
 	public void warp(String warp, Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		final Location loc = ess.getWarps().getWarp(warp);
@@ -191,6 +194,7 @@ public class Teleport implements Runnable, ITeleport
 		teleport(new Target(loc), chargeFor, TeleportCause.PLUGIN);
 	}
 
+	@Override
 	public void teleport(Location loc, Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		teleport(new Target(loc), chargeFor, cause);
@@ -203,14 +207,14 @@ public class Teleport implements Runnable, ITeleport
 
 	private void teleport(Target target, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		double delay = ess.getRanks().getTeleportDelay(user);
+		double tDelay = ess.getRanks().getTeleportDelay(user);
 
 		if (chargeFor != null)
 		{
 			chargeFor.isAffordableFor(user);
 		}
 		cooldown(true);
-		if (delay <= 0 || Permissions.TELEPORT_TIMER_BYPASS.isAuthorized(user))
+		if (tDelay <= 0 || Permissions.TELEPORT_TIMER_BYPASS.isAuthorized(user))
 		{
 			cooldown(false);
 			now(target, cause);
@@ -223,10 +227,10 @@ public class Teleport implements Runnable, ITeleport
 
 		cancel();
 		Calendar c = new GregorianCalendar();
-		c.add(Calendar.SECOND, (int)delay);
-		c.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
+		c.add(Calendar.SECOND, (int)tDelay);
+		c.add(Calendar.MILLISECOND, (int)((tDelay * 1000.0) % 1000.0));
 		user.sendMessage(_("dontMoveMessage", DateUtil.formatDateDiff(c.getTimeInMillis())));
-		initTimer((long)(delay * 1000.0), target, chargeFor, cause);
+		initTimer((long)(tDelay * 1000.0), target, chargeFor, cause);
 
 		teleTimer = ess.getPlugin().scheduleSyncRepeatingTask(this, 10, 10);
 	}
@@ -238,6 +242,7 @@ public class Teleport implements Runnable, ITeleport
 		user.getBase().teleport(LocationUtil.getSafeDestination(target.getLocation()), cause);
 	}
 
+	@Override
 	public void now(Location loc, boolean cooldown, TeleportCause cause) throws Exception
 	{
 		if (cooldown)
@@ -263,6 +268,7 @@ public class Teleport implements Runnable, ITeleport
 		now(new Target(entity), cause);
 	}
 
+	@Override
 	public void back(Trade chargeFor) throws Exception
 	{
 		user.acquireReadLock();
@@ -276,6 +282,7 @@ public class Teleport implements Runnable, ITeleport
 		}
 	}
 
+	@Override
 	public void back() throws Exception
 	{
 		user.acquireReadLock();
@@ -288,14 +295,10 @@ public class Teleport implements Runnable, ITeleport
 			user.unlock();
 		}
 	}
-
-	public void home(IUser user, String home, Trade chargeFor) throws Exception
+	
+	@Override
+	public void home(Location loc, Trade chargeFor) throws Exception
 	{
-		final Location loc = user.getHome(home);
-		if (loc == null)
-		{
-			throw new NotEnoughArgumentsException();
-		}
 		teleport(new Target(loc), chargeFor, TeleportCause.COMMAND);
 	}
 }

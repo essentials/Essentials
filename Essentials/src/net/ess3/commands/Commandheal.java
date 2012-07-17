@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
+import java.util.List;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
-import java.util.List;
 import org.bukkit.entity.Player;
 
 
@@ -26,6 +26,7 @@ public class Commandheal extends EssentialsCommand
 		user.checkCooldown(TimestampType.LASTHEAL, ess.getRanks().getHealCooldown(user), true, Permissions.HEAL_COOLDOWN_BYPASS);
 
 		user.setHealth(20);
+		user.setFireTicks(0);
 		user.setFoodLevel(20);
 		user.sendMessage(_("heal"));
 	}

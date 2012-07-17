@@ -41,6 +41,24 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
+import lombok.Getter;
+import static net.ess3.I18n._;
+import net.ess3.api.*;
+import net.ess3.backup.Backup;
+import net.ess3.commands.EssentialsCommandHandler;
+import net.ess3.economy.Economy;
+import net.ess3.economy.Trade;
+import net.ess3.economy.WorthHolder;
+import net.ess3.economy.register.Methods;
+import net.ess3.listener.*;
+import net.ess3.metrics.Metrics;
+import net.ess3.metrics.MetricsListener;
+import net.ess3.metrics.MetricsStarter;
+import net.ess3.ranks.RanksStorage;
+import net.ess3.settings.SettingsHolder;
+import net.ess3.settings.SpawnsHolder;
+import net.ess3.user.UserMap;
+import net.ess3.utils.ExecuteTimer;
 import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -78,6 +96,11 @@ public class Essentials implements IEssentials
 	@Getter
 	private final IPlugin plugin;
 	public static boolean testing;
+	private transient Metrics metrics;
+	@Getter
+	private transient EssentialsTimer timer;
+	@Getter
+	private transient List<String> vanishedPlayers = new ArrayList<String>();
 
 	public Essentials(final IServer server, final Logger logger, final IPlugin plugin)
 	{
@@ -208,9 +231,21 @@ public class Essentials implements IEssentials
 		pm.registerEvents(tntListener, this);
 
 
-		final EssentialsTimer timer = new EssentialsTimer(this);
+		timer = new EssentialsTimer(this);
 		getPlugin().scheduleSyncRepeatingTask(timer, 1, 100);
 		execTimer.mark("RegListeners");
+
+		final MetricsStarter metricsStarter = new MetricsStarter(this);
+		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
+		{
+			getServer().getScheduler().scheduleAsyncDelayedTask(this, metricsStarter, 1);
+		}
+		else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
+		{
+			final MetricsListener metricsListener = new MetricsListener(this, metricsStarter);
+			pm.registerEvents(metricsListener, this);
+		}
+
 		final String timeroutput = execTimer.end();
 		if (getSettings().isDebug())
 		{
@@ -221,6 +256,15 @@ public class Essentials implements IEssentials
 	@Override
 	public void onDisable()
 	{
+		for (Player p : getServer().getOnlinePlayers())
+		{
+			IUser user = getUser(p);
+			if (user.isVanished())
+			{
+				user.toggleVanished();
+				p.sendMessage(_("unvanishedReload"));
+			}
+		}
 		i18n.onDisable();
 		Trade.closeLog();
 	}
@@ -270,6 +314,24 @@ public class Essentials implements IEssentials
 	}
 
 	@Override
+	public Metrics getMetrics()
+	{
+		return metrics;
+	}
+
+	@Override
+	public void setMetrics(Metrics metrics)
+	{
+		this.metrics = metrics;
+	}
+
+	@Override
+	public IUser getUser(final Player player)
+	{
+		return userMap.getUser(player);
+	}
+
+	@Override
 	public IUser getUser(final String playerName)
 	{
 		return userMap.getUser(playerName);
@@ -315,7 +377,7 @@ public class Essentials implements IEssentials
 		for (Player player : getServer().getOnlinePlayers())
 		{
 			final IUser user = player.getUser();
-			if (!user.isIgnoringPlayer(sender.getName()))
+			if (!user.isIgnoringPlayer(sender))
 			{
 				player.sendMessage(message);
 			}

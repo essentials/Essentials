@@ -1,8 +1,7 @@
 package net.ess3.listener;
 
-import net.ess3.api.IEssentials;
-import net.ess3.craftbukkit.FakeExplosion;
 import java.util.concurrent.atomic.AtomicBoolean;
+import net.ess3.api.IEssentials;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,8 +46,12 @@ public class TntExplodeListener implements Listener, Runnable
 		{
 			return;
 		}
-		FakeExplosion.createExplosion(event, ess.getServer(), ess.getServer().getOnlinePlayers());
+		if (event.blockList().size() < 1)
+		{
+			return;
+		}
 		event.setCancelled(true);
+		event.getLocation().getWorld().createExplosion(event.getLocation(), 0F);
 	}
 
 	@Override

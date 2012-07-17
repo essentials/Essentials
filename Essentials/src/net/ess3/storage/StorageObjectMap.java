@@ -1,8 +1,5 @@
 package net.ess3.storage;
 
-import net.ess3.api.IEssentials;
-import net.ess3.api.InvalidNameException;
-import net.ess3.utils.Util;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -15,6 +12,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
+import net.ess3.api.IEssentials;
+import net.ess3.api.InvalidNameException;
+import net.ess3.utils.Util;
 
 
 public abstract class StorageObjectMap<I> extends CacheLoader<String, I> implements IStorageObjectMap<I>

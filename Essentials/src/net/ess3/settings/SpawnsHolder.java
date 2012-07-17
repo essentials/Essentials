@@ -1,21 +1,21 @@
 package net.ess3.settings;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Level;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IEssentialsModule;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.storage.AsyncStorageObjectHolder;
-import net.ess3.storage.StoredLocation.WorldNotLoadedException;
+import net.ess3.storage.Location.WorldNotLoadedException;
 import net.ess3.utils.textreader.IText;
 import net.ess3.utils.textreader.KeywordReplacer;
 import net.ess3.utils.textreader.SimpleTextInput;
 import net.ess3.utils.textreader.SimpleTextPager;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.logging.Level;
 import org.bukkit.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventException;
@@ -29,6 +29,19 @@ import org.bukkit.plugin.EventExecutor;
 
 public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IEssentialsModule
 {
+
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
+	
 	public SpawnsHolder(final IEssentials ess)
 	{
 		super(ess, Spawns.class);
@@ -167,7 +180,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		acquireReadLock();
 		try
 		{
-			return getData().getNewPlayerAnnouncement().replace('&', '�').replace("��", "&").replace("{PLAYER}", user.getDisplayName()).replace("{DISPLAYNAME}", user.getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getAddress().toString());
+			return getData().getNewPlayerAnnouncement().replace('&', '§').replace("§§", "&").replace("{PLAYER}", user.getDisplayName()).replace("{DISPLAYNAME}", user.getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getAddress().toString());
 		}
 		finally
 		{

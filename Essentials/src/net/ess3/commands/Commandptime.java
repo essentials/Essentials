@@ -1,10 +1,11 @@
 package net.ess3.commands;
 
-import net.ess3.utils.DescParseTickFormat;
+import java.util.*;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import java.util.*;
+import net.ess3.utils.DescParseTickFormat;
+//TODO - Remove bukkit
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -49,7 +50,7 @@ public class Commandptime extends EssentialsCommand
 		Long ticks;
 		// Parse the target time int ticks from args[0]
 		String timeParam = args[0];
-		Boolean relative = true;
+		boolean relative = true;
 		if (timeParam.startsWith("@"))
 		{
 			relative = false;
@@ -73,7 +74,7 @@ public class Commandptime extends EssentialsCommand
 			}
 			catch (NumberFormatException e)
 			{
-				throw new NotEnoughArgumentsException();
+				throw new NotEnoughArgumentsException(e);
 			}
 		}
 
@@ -114,7 +115,7 @@ public class Commandptime extends EssentialsCommand
 	/**
 	 * Used to set the time and inform of the change
 	 */
-	private void setUsersTime(final CommandSender sender, final Collection<IUser> users, final Long ticks, Boolean relative)
+	private void setUsersTime(final CommandSender sender, final Collection<IUser> users, final Long ticks, boolean relative)
 	{
 		// Update the time
 		if (ticks == null)

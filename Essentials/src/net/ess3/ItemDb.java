@@ -1,19 +1,21 @@
 package net.ess3;
 
-import net.ess3.storage.ManagedFile;
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IItemDb;
-import net.ess3.api.IUser;
 import net.ess3.api.server.ItemStack;
 import net.ess3.api.server.Material;
-import net.ess3.permissions.Permissions;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 import lombok.Cleanup;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IItemDb;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
+import net.ess3.storage.ManagedFile;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 
 public class ItemDb implements IItemDb

@@ -74,7 +74,7 @@ public class Commandlist extends EssentialsCommand
 			for (String group : groups)
 			{
 				final StringBuilder groupString = new StringBuilder();
-				groupString.append(_("listGroupTag",Util.replaceColor(group)));
+				groupString.append(_("listGroupTag",Util.replaceFormat(group)));
 				final List<IUser> users = sort.get(group);
 				Collections.sort(users);
 				boolean first = true;
@@ -104,6 +104,7 @@ public class Commandlist extends EssentialsCommand
 					{
 						groupString.append(_("listHiddenTag"));
 					}
+					user.setDisplayNick();
 					groupString.append(user.getDisplayName());
 					groupString.append("§f");
 				}
@@ -153,6 +154,7 @@ public class Commandlist extends EssentialsCommand
 				{
 					onlineUsers.append(_("listHiddenTag"));
 				}
+				user.setDisplayNick();
 				onlineUsers.append(user.getDisplayName());
 				onlineUsers.append("§f");
 			}

@@ -1,12 +1,13 @@
 package net.ess3.commands;
 
+import java.util.Locale;
+import lombok.Cleanup;
 import static net.ess3.I18n._;
-import net.ess3.utils.Util;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import java.util.Locale;
-import lombok.Cleanup;
+import net.ess3.utils.Util;
+//TODO - Remove bukkit
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -69,9 +70,11 @@ public class Commandnick extends EssentialsCommand
 	{
 		if (user == null || Permissions.NICK_COLOR.isAuthorized(user))
 		{
-			return nick.replace('&', '\u00a7').replaceAll("\u00a7+k", "");
-		} else {
-			return Util.stripColor(nick);
+			return Util.replaceFormat(nick);
+		}
+		else
+		{
+			return Util.formatString(user, "essentials.nick", nick);
 		}
 	}
 

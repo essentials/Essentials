@@ -1,8 +1,8 @@
 package net.ess3.utils;
 
-import static net.ess3.I18n._;
 import java.util.HashSet;
 import java.util.Set;
+import static net.ess3.I18n._;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

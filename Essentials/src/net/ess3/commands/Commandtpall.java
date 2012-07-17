@@ -1,7 +1,11 @@
 package net.ess3.commands;
 
+import lombok.Cleanup;
 import static net.ess3.I18n._;
+import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
+import net.ess3.permissions.WorldPermissions;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -35,6 +39,15 @@ public class Commandtpall extends EssentialsCommand
 			{
 				continue;
 			}
+			@Cleanup
+			ISettings settings = ess.getSettings();
+			settings.acquireReadLock();
+
+			if (user.getWorld() != player.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
+				&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(user))
+			{
+				continue;
+			}
 			try
 			{
 				player.getTeleport().now(user, false, TeleportCause.COMMAND);
@@ -43,6 +56,7 @@ public class Commandtpall extends EssentialsCommand
 			{
 				ess.getCommandHandler().showCommandError(sender, commandName, ex);
 			}
+
 		}
 	}
 }

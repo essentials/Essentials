@@ -1,7 +1,5 @@
 package net.ess3.utils.textreader;
 
-import static net.ess3.I18n._;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -49,7 +47,23 @@ public class TextPager
 			final int pages = lines.size() / 9 + (lines.size() % 9 > 0 ? 1 : 0);
 			if (!onePage)
 			{
-				sender.sendMessage(_("infoPages", page, pages));
+				StringBuilder content = new StringBuilder();
+				final String[] title = commandName.split(" ", 2);
+				if (title.length > 1)
+				{
+					content.append(I18n.capitalCase(title[0])).append(": ");
+					content.append(title[1]);
+				}
+				else if (chapterPageStr != null)
+				{
+					content.append(I18n.capitalCase(commandName)).append(": ");
+					content.append(chapterPageStr);
+				}
+				else
+				{
+					content.append(I18n.capitalCase(commandName));
+				}
+				sender.sendMessage(_("infoPages", page, pages, content));
 			}
 			for (int i = start; i < lines.size() && i < start + (onePage ? 20 : 9); i++)
 			{
@@ -116,7 +130,7 @@ public class TextPager
 				if (!onePage)
 				{
 
-					sender.sendMessage(_("infoPages", page, pages));
+					sender.sendMessage(_("infoPages", page, pages, I18n.capitalCase(commandName)));
 				}
 				for (int i = start; i < end && i < start + (onePage ? 20 : 9); i++)
 				{

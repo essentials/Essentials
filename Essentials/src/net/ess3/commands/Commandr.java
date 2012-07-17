@@ -6,6 +6,7 @@ import net.ess3.utils.Util;
 import net.ess3.api.IReplyTo;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+//TODO - Remove bukkit
 import org.bukkit.entity.Player;
 
 
@@ -28,18 +29,18 @@ public class Commandr extends EssentialsCommand
 			IUser user = ess.getUser((Player)sender);
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
-				message = Util.replaceColor(message);
+				message = Util.replaceFormat(message);
 			}
 			else
 			{
-				message = Util.stripColor(message);
+				message = Util.replaceFormat(message);
 			}
 			replyTo = user;
 			senderName = user.getDisplayName();
 		}
 		else
 		{
-			message = Util.replaceColor(message);
+			message = Util.replaceFormat(message);
 			replyTo = Console.getConsoleReplyTo();
 			senderName = Console.NAME;
 		}
@@ -56,7 +57,7 @@ public class Commandr extends EssentialsCommand
 		if (target instanceof Player)
 		{
 			IUser player = ess.getUser((Player)target);
-			if (player.isIgnoringPlayer(sender instanceof Player ? ((Player)sender).getName() : Console.NAME))
+			if (sender instanceof Player && player.isIgnoringPlayer(ess.getUser((Player)sender)))
 			{
 				return;
 			}
