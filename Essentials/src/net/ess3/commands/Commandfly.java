@@ -4,8 +4,9 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Player;
-import net.ess3.bukkit.Server;
+import net.ess3.api.IServer
 import net.ess3.permissions.Permissions;
+
 
 
 

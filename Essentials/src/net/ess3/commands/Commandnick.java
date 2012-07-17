@@ -7,7 +7,7 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Player;
-import net.ess3.bukkit.Server;
+import net.ess3.api.IServer
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
 
