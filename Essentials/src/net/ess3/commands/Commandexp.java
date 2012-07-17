@@ -100,12 +100,28 @@ public class Commandexp extends EssentialsCommand
 		}
 	}
 
-	private void expMatch(final CommandSender sender, final String match, final String amount, final boolean toggle) throws NotEnoughArgumentsException
+	private void expMatch(final CommandSender sender, final String match, String amount, final boolean toggle) throws NotEnoughArgumentsException
 	{
 		boolean foundUser = false;
 		for (Player matchPlayer : server.matchPlayer(match))
 		{
 			final IUser target = ess.getUser(matchPlayer);
+			if (amount.startsWith("l")) {
+				amount = amount.substring(1);
+				int neededLevel = Integer.parseInt(amount);
+				int expToLevel = 0;
+				if (toggle)
+				{
+					neededLevel += target.getLevel();
+					expToLevel = (int)Math.round((1.75 *(neededLevel * neededLevel)) + (5.00 * neededLevel));	
+				}
+				if (!toggle)
+				{
+					expToLevel = (int)Math.round((1.75 *(neededLevel * neededLevel)) + (5.00 * neededLevel));
+				}
+				SetExpFix.setTotalExperience(target, 0);
+				amount = Integer.toString(expToLevel);		
+			}
 			setExp(sender, target, amount, toggle);
 			foundUser = true;
 		}
