@@ -27,7 +27,7 @@ public class Commandpay extends EssentialsCommand
 		boolean foundUser = false;
 		for (Player p : server.matchPlayer(args[0]))
 		{
-			IUser u = ess.getUser(p);
+			IUser u = player.getUser(p);
 			if (u.isHidden())
 			{
 				continue;

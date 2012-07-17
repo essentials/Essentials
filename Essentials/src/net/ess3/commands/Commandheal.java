@@ -53,7 +53,7 @@ public class Commandheal extends EssentialsCommand
 		}
 		for (Player p : players)
 		{
-			if (ess.getUser(p).isHidden())
+			if (player.getUser(p).isHidden())
 			{
 				continue;
 			}

@@ -53,7 +53,7 @@ public class Commandgive extends EssentialsCommand
 				{
 					continue;
 				}
-				final Enchantment enchantment = Commandenchant.getEnchantment(split[0], sender instanceof Player ? ess.getUser((Player)sender) : null);
+				final Enchantment enchantment = Commandenchant.getEnchantment(split[0], sender instanceof Player ? player.getUser((Player)sender) : null);
 				int level;
 				if (split.length > 1)
 				{

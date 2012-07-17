@@ -56,7 +56,7 @@ public class Commandsethome extends EssentialsCommand
 				if (Permissions.SETHOME_OTHERS.isAuthorized(user))
 				{
 					@Cleanup
-					IUser usersHome = ess.getUser(ess.getServer().getPlayer(args[0]));
+					IUser usersHome = player.getUser(ess.getServer().getPlayer(args[0]));
 					if (usersHome == null)
 					{
 						throw new Exception(_("playerNotFound"));

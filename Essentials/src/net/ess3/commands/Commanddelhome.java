@@ -20,7 +20,7 @@ public class Commanddelhome extends EssentialsCommand
 		}
 
 		@Cleanup
-		IUser user = sender instanceof Player ? ess.getUser((Player)sender) : null;
+		IUser user = sender instanceof Player ? player.getUser((Player)sender) : null;
 		String name;
 		String[] expandedArg;
 

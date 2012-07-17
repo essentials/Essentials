@@ -86,7 +86,7 @@ public class Commandnear extends EssentialsCommand
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final IUser player = ess.getUser(onlinePlayer);
+			final IUser player = player.getUser(onlinePlayer);
 			if (!player.equals(user) && !player.isHidden())
 			{
 				final Location playerLoc = player.getLocation();

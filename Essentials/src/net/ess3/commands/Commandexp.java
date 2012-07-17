@@ -91,7 +91,7 @@ public class Commandexp extends EssentialsCommand
 		for (Player matchPlayer : server.matchPlayer(match))
 		{
 			foundUser = true;
-			final IUser target = ess.getUser(matchPlayer);
+			final IUser target = player.getUser(matchPlayer);
 			showExp(sender, target);
 		}
 		if (!foundUser)
@@ -105,7 +105,7 @@ public class Commandexp extends EssentialsCommand
 		boolean foundUser = false;
 		for (Player matchPlayer : server.matchPlayer(match))
 		{
-			final IUser target = ess.getUser(matchPlayer);
+			final IUser target = player.getUser(matchPlayer);
 			setExp(sender, target, amount, toggle);
 			foundUser = true;
 		}

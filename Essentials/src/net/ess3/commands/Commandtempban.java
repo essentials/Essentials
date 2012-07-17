@@ -51,7 +51,7 @@ public class Commandtempban extends EssentialsCommand
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final IUser player = ess.getUser(onlinePlayer);
+			final IUser player = player.getUser(onlinePlayer);
 			if (Permissions.BAN_NOTIFY.isAuthorized(player))
 			{
 				onlinePlayer.sendMessage(_("playerBanned", senderName, user.getName(), banReason));

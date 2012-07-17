@@ -20,7 +20,7 @@ public class Commandlightning extends EssentialsCommand
 		IUser user = null;
 		if (sender instanceof Player)
 		{
-			user = ess.getUser(((Player)sender));
+			user = player.getUser(((Player)sender));
 		}
 		if ((args.length < 1 || !Permissions.LIGHTNING_OTHERS.isAuthorized(user)) && user != null)
 		{
@@ -49,7 +49,7 @@ public class Commandlightning extends EssentialsCommand
 		{
 			sender.sendMessage(_("lightningUse", matchPlayer.getDisplayName()));
 			final LightningStrike strike = matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
-			if (!ess.getUser(matchPlayer).isGodModeEnabled())
+			if (!player.getUser(matchPlayer).isGodModeEnabled())
 			{
 				matchPlayer.damage(power, strike);
 			}

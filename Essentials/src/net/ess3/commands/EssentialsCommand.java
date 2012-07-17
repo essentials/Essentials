@@ -53,7 +53,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		{
 			throw new NoSuchFieldException(_("playerNotFound"));
 		}
-		final IUser user = ess.getUser(args[pos]);
+		final IUser user = player.getUser(args[pos]);
 		if (user != null)
 		{
 			if (!getOffline && (!user.isOnline() || user.isHidden()))

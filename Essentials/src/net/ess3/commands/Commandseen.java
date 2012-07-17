@@ -37,7 +37,7 @@ public class Commandseen extends EssentialsCommand
 		catch (NoSuchFieldException e)
 		{
 			@Cleanup
-			IUser u = ess.getUser(args[0]);
+			IUser u = player.getUser(args[0]);
 			u.acquireReadLock();
 			if (u == null)
 			{

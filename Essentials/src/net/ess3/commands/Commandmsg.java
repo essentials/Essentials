@@ -27,7 +27,7 @@ public class Commandmsg extends EssentialsCommand
 		if (sender instanceof Player)
 		{
 			@Cleanup
-			IUser user = ess.getUser((Player)sender);
+			IUser user = player.getUser((Player)sender);
 			user.acquireReadLock();
 			if (user.getData().isMuted())
 			{
@@ -49,7 +49,7 @@ public class Commandmsg extends EssentialsCommand
 
 		final String translatedMe = _("me");
 
-		final IReplyTo replyTo = sender instanceof Player ? ess.getUser((Player)sender) : Console.getConsoleReplyTo();
+		final IReplyTo replyTo = sender instanceof Player ? player.getUser((Player)sender) : Console.getConsoleReplyTo();
 		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
 
 		if (args[0].equalsIgnoreCase(Console.NAME))
@@ -72,7 +72,7 @@ public class Commandmsg extends EssentialsCommand
 		int i = 0;
 		for (Player matchedPlayer : matchedPlayers)
 		{
-			final IUser u = ess.getUser(matchedPlayer);
+			final IUser u = player.getUser(matchedPlayer);
 			if (u.isHidden())
 			{
 				i++;
@@ -86,14 +86,14 @@ public class Commandmsg extends EssentialsCommand
 		for (Player matchedPlayer : matchedPlayers)
 		{
 			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getDisplayName(), message));
-			final IUser matchedUser = ess.getUser(matchedPlayer);
-			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(ess.getUser((Player)sender)) || matchedUser.isHidden()))
+			final IUser matchedUser = player.getUser(matchedPlayer);
+			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(player.getUser((Player)sender)) || matchedUser.isHidden()))
 			{
 				continue;
 			}
 			matchedPlayer.sendMessage(_("msgFormat", senderName, translatedMe, message));
-			replyTo.setReplyTo(ess.getUser(matchedPlayer));
-			ess.getUser(matchedPlayer).setReplyTo(sender);
+			replyTo.setReplyTo(player.getUser(matchedPlayer));
+			player.getUser(matchedPlayer).setReplyTo(sender);
 		}
 	}
 }
