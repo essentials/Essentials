@@ -1,8 +1,9 @@
 package net.ess3.commands;
 
 import net.ess3.api.IUser;
+import net.ess3.api.server.Location;
 import net.ess3.utils.LocationUtil;
-import org.bukkit.Location;
+
 import org.bukkit.entity.TNTPrimed;
 
 

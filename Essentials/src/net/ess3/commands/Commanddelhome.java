@@ -6,7 +6,7 @@ import net.ess3.permissions.Permissions;
 import java.util.Locale;
 import lombok.Cleanup;
 import net.ess3.api.server.CommandSender;
-import org.bukkit.entity.Player;
+import net.ess3.api.server.Player;
 
 
 public class Commanddelhome extends EssentialsCommand

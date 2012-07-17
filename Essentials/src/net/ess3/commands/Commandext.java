@@ -3,7 +3,7 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
-import org.bukkit.entity.Player;
+import net.ess3.api.server.Player;
 
 
 public class Commandext extends EssentialsCommand

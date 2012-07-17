@@ -6,8 +6,9 @@ import net.ess3.api.server.Player;
 import java.util.HashMap;
 import java.util.Map;
 import net.ess3.api.server.CommandSender;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.ess3.api.server.Location;
+import net.ess3.api.server.Material;
+//TODO: remove bukkit
 import org.bukkit.block.Block;
 
 
