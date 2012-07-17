@@ -115,7 +115,7 @@ public class Commandexp extends EssentialsCommand
 					neededLevel += target.getLevel();
 					expToLevel = (int)Math.round((1.75 *(neededLevel * neededLevel)) + (5.00 * neededLevel));	
 				}
-				if (toggle == false)
+				if (!toggle)
 				{
 					expToLevel = (int)Math.round((1.75 *(neededLevel * neededLevel)) + (5.00 * neededLevel));
 				}
