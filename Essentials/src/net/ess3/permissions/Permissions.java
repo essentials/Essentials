@@ -1,6 +1,9 @@
 package net.ess3.permissions;
 
 import java.util.Locale;
+import net.ess3.api.IPermission;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Permission;
 
 
 public enum Permissions implements IPermission
@@ -106,6 +109,8 @@ public enum Permissions implements IPermission
 		return permission;
 	}
 
+	
+	
 	@Override
 	public Permission getPermission()
 	{
@@ -119,11 +124,13 @@ public enum Permissions implements IPermission
 		}
 	}
 
+
 	@Override
 	public Permission.Default getPermissionDefault()
 	{
 		return this.defaultPerm;
 	}
+
 
 	@Override
 	public boolean isAuthorized(CommandSender sender)
@@ -131,3 +138,4 @@ public enum Permissions implements IPermission
 		return sender.hasPermission(getPermission());
 	}
 }
+

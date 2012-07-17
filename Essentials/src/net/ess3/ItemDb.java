@@ -14,8 +14,6 @@ import net.ess3.api.IItemDb;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.storage.ManagedFile;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 
 public class ItemDb implements IItemDb
