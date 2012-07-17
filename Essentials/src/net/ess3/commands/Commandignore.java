@@ -20,7 +20,7 @@ public class Commandignore extends EssentialsCommand
 		}
 		catch (NoSuchFieldException ex)
 		{
-			player = player.getUser(args[0]);
+			player = ess.getUser(args[0]);
 		}
 		if (player == null)
 		{

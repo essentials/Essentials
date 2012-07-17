@@ -35,7 +35,7 @@ public class Commandfeed extends EssentialsCommand
 		}
 		for (Player player : players)
 		{
-			if (player.getUser(player).isHidden())
+			if (ess.getUser(player).isHidden())
 			{
 				continue;
 			}

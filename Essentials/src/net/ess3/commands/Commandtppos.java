@@ -2,9 +2,9 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Location;
 import net.ess3.economy.Trade;
+//TODO: remove bukkit
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -45,7 +45,7 @@ public class Commandtppos extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		IUser user = player.getUser(server.getPlayer(args[0]));
+		IUser user = ess.getUser(server.getPlayer(args[0]));
 		final int x = Integer.parseInt(args[1]);
 		final int y = Integer.parseInt(args[2]);
 		final int z = Integer.parseInt(args[3]);

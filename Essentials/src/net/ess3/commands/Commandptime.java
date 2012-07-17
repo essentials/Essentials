@@ -41,7 +41,7 @@ public class Commandptime extends EssentialsCommand
 			return;
 		}
 
-		IUser user = sender instanceof Player ? Player.getUser((Player)sender) : null;
+		IUser user = sender instanceof Player ? ess.getUser((Player)sender) : null;
 		if ((!users.contains(user) || users.size() > 1) && user != null && !Permissions.PTIME_OTHERS.isAuthorized(user))
 		{
 			user.sendMessage(_("pTimeOthersPermission"));
@@ -183,12 +183,12 @@ public class Commandptime extends EssentialsCommand
 		// If there is no selector we want the sender itself. Or all users if sender isn't a user.
 		if (selector == null)
 		{
-			final IUser user = sender instanceof Player ? Player.getUser((Player)sender) : null;
+			final IUser user = sender instanceof Player ? ess.getUser((Player)sender) : null;
 			if (user == null)
 			{
 				for (Player player : server.getOnlinePlayers())
 				{
-					users.add(Player.getUser(player));
+					users.add(ess.getUser(player));
 				}
 			}
 			else
@@ -203,7 +203,7 @@ public class Commandptime extends EssentialsCommand
 		final List<Player> matchedPlayers = server.matchPlayer(selector);
 		if (!matchedPlayers.isEmpty())
 		{
-			user = Player.getUser(matchedPlayers.get(0));
+			user = ess.getUser(matchedPlayers.get(0));
 		}
 
 		if (user != null)
@@ -215,7 +215,7 @@ public class Commandptime extends EssentialsCommand
 		{
 			for (Player player : server.getOnlinePlayers())
 			{
-				users.add(player.getUser(player));
+				users.add(ess.getUser(player));
 			}
 		}
 		// We failed to understand the world target...

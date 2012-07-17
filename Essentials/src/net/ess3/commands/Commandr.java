@@ -26,7 +26,7 @@ public class Commandr extends EssentialsCommand
 
 		if (sender instanceof Player)
 		{
-			IUser user = Player.getUser((Player)sender);
+			IUser user = ess.getUser((Player)sender);
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
 				message = Util.replaceFormat(message);
@@ -56,8 +56,8 @@ public class Commandr extends EssentialsCommand
 		sender.sendMessage(_("msgFormat", _("me"), targetName, message));
 		if (target instanceof Player)
 		{
-			IUser player = player.getUser((Player)target);
-			if (sender instanceof Player && player.isIgnoringPlayer(player.getUser((Player)sender)))
+			IUser player = ess.getUser((Player)target);
+			if (sender instanceof Player && player.isIgnoringPlayer(ess.getUser((Player)sender)))
 			{
 				return;
 			}
@@ -68,7 +68,7 @@ public class Commandr extends EssentialsCommand
 		{
 			if (target instanceof Player)
 			{
-				player.getUser((Player)target).setReplyTo(sender);
+				ess.getUser((Player)target).setReplyTo(sender);
 			}
 			else
 			{

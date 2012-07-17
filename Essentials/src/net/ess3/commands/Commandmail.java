@@ -42,11 +42,11 @@ public class Commandmail extends EssentialsCommand
 			IUser u;
 			if (player != null)
 			{
-				u = player.getUser(player);
+				u = ess.getUser(player);
 			}
 			else
 			{
-				u = player.getUser(args[1]);
+				u = ess.getUser(args[1]);
 			}
 			if (u == null)
 			{
@@ -97,11 +97,11 @@ public class Commandmail extends EssentialsCommand
 			IUser u;
 			if (player != null)
 			{
-				u = player.getUser(player);
+				u = ess.getUser(player);
 			}
 			else
 			{
-				u = player.getUser(args[1]);
+				u = ess.getUser(args[1]);
 			}
 			if (u == null)
 			{
@@ -122,11 +122,11 @@ public class Commandmail extends EssentialsCommand
 			IUser u;
 			if (player != null)
 			{
-				u = player.getUser(player);
+				u = ess.getUser(player);
 			}
 			else
 			{
-				u = player.getUser(args[0]);
+				u = ess.getUser(args[0]);
 			}
 			if (u == null)
 			{

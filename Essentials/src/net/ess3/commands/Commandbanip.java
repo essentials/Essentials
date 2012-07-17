@@ -4,7 +4,6 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import lombok.Cleanup;
 import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 
 
 public class Commandbanip extends EssentialsCommand
@@ -18,7 +17,7 @@ public class Commandbanip extends EssentialsCommand
 		}
 
 		@Cleanup
-		final IUser player = player.getUser(args[0]);
+		final IUser player = ess.getUser(args[0]);
 		player.acquireReadLock();
 
 		if (player == null)

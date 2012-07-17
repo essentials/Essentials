@@ -20,7 +20,7 @@ public class Commandtpall extends EssentialsCommand
 		{
 			if (sender instanceof Player)
 			{
-				teleportAllPlayers(sender, player.getUser((Player)sender));
+				teleportAllPlayers(sender, ess.getUser((Player)sender));
 				return;
 			}
 			throw new NotEnoughArgumentsException();
@@ -35,7 +35,7 @@ public class Commandtpall extends EssentialsCommand
 		sender.sendMessage(_("teleportAll"));
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final IUser player = player.getUser(onlinePlayer);
+			final IUser player = ess.getUser(onlinePlayer);
 			if (user == player)
 			{
 				continue;
