@@ -5,9 +5,9 @@ import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.ess3.storage.Comment;
-import net.ess3.storage.Location;
 import net.ess3.storage.MapValueType;
 import net.ess3.storage.StorageObject;
+import net.ess3.storage.StoredLocation;
 
 
 @Data

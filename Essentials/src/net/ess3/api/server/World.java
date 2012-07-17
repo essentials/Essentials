@@ -23,4 +23,6 @@ public interface World {
 	void setWeatherDuration(int i);
 	
 	long getTime();
+
+	void setSpawnLocation(int blockX, int blockY, int blockZ);	
 }

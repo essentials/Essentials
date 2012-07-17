@@ -1,13 +1,13 @@
 package net.ess3.api;
 
+import java.util.List;
 import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 import net.ess3.api.server.ItemStack;
 import net.ess3.api.server.Location;
+import net.ess3.api.server.Player;
 import net.ess3.storage.IStorageObjectHolder;
 import net.ess3.user.CooldownException;
 import net.ess3.user.UserData;
-import java.util.List;
 
 
 public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, IReplyTo, Comparable<IUser>
