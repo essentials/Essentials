@@ -6,6 +6,7 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.ItemPermissions;
 import net.ess3.permissions.Permissions;
 import java.util.Locale;
+import net.ess3.api.server.ItemStack;
 
 
 public class Commandmore extends EssentialsCommand

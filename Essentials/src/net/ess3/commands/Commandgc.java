@@ -2,9 +2,11 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 //TODO - Remove bukkit refs
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.World;
 import org.bukkit.ChatColor;
-import org.bukkit.World;
-import org.bukkit.command.CommandSender;
+
+
 
 
 public class Commandgc extends EssentialsCommand

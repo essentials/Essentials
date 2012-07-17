@@ -1,8 +1,10 @@
 package net.ess3.commands;
 
 import net.ess3.api.IUser;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Location;
 import net.ess3.permissions.Permissions;
-import org.bukkit.Location;
+
 
 
 public class Commandgetpos extends EssentialsCommand

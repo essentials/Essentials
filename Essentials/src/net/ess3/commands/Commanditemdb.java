@@ -2,10 +2,12 @@ package net.ess3.commands;
 
 //TODO - replace alll the bukkit imports
 import static net.ess3.I18n._;
-import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.ItemStack;
+import net.ess3.api.server.Material;
+import net.ess3.api.server.Player;
+
 
 
 public class Commanditemdb extends EssentialsCommand

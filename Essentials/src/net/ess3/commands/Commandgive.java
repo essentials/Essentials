@@ -3,12 +3,14 @@ package net.ess3.commands;
 import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
 import net.ess3.permissions.GivePermissions;
 import net.ess3.utils.Util;
+//TODO: remove bukkit imports
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 

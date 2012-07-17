@@ -6,8 +6,8 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
+import net.ess3.api.server.CommandSender;
 import lombok.Cleanup;
-
 
 public class Commandseen extends EssentialsCommand
 {

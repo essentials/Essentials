@@ -6,6 +6,8 @@ import static net.ess3.I18n._;
 
 import java.util.Locale;
 import lombok.Cleanup;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
 
 
 public class Commandeco extends EssentialsCommand

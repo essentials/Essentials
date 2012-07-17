@@ -5,6 +5,7 @@ import net.ess3.economy.Trade;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+//TODO: remove bukkit
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 

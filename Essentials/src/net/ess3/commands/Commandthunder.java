@@ -2,7 +2,7 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import org.bukkit.World;
+import net.ess3.api.server.World;
 
 
 public class Commandthunder extends EssentialsCommand

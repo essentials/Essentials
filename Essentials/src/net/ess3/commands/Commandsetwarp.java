@@ -3,9 +3,10 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.IWarps;
+import net.ess3.api.server.Location;
 import net.ess3.permissions.WarpPermissions;
-//TODO - Remove bukkit
-import org.bukkit.Location;
+
+
 
 
 public class Commandsetwarp extends EssentialsCommand

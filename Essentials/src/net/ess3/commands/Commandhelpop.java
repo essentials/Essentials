@@ -1,6 +1,9 @@
 package net.ess3.commands;
 
 import java.util.logging.Level;
+import net.ess3.api.IUser;
+import net.ess3.api.server.Player;
+import net.ess3.permissions.Permissions;
 
 
 public class Commandhelpop extends EssentialsCommand

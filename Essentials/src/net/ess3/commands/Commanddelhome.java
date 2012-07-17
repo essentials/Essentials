@@ -5,6 +5,7 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import java.util.Locale;
 import lombok.Cleanup;
+import net.ess3.api.server.CommandSender;
 import org.bukkit.entity.Player;
 
 

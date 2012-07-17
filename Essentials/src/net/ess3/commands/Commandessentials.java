@@ -5,6 +5,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.server.Player;
 import java.util.HashMap;
 import java.util.Map;
+import net.ess3.api.server.CommandSender;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

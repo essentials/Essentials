@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import static net.ess3.I18n._;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Location;
+import net.ess3.api.server.Player;
+import net.ess3.api.server.World;
 import org.bukkit.entity.TNTPrimed;
 
 

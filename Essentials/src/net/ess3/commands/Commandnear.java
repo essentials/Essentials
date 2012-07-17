@@ -2,10 +2,11 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Location;
+import net.ess3.api.server.Player;
+import net.ess3.api.server.World;
 import net.ess3.permissions.Permissions;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 
 public class Commandnear extends EssentialsCommand

@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.api.server.ItemStack;
+import net.ess3.api.server.Material;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
-//TODO remove bukkit
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 
 public class Commandpowertool extends EssentialsCommand

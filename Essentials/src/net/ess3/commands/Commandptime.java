@@ -3,11 +3,12 @@ package net.ess3.commands;
 import java.util.*;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
+import net.ess3.api.server.World;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.DescParseTickFormat;
-//TODO - Remove bukkit
-import org.bukkit.World;
-import org.bukkit.entity.Player;
+
 
 
 public class Commandptime extends EssentialsCommand

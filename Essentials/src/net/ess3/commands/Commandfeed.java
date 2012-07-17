@@ -25,6 +25,7 @@ public class Commandfeed extends EssentialsCommand
 	}
 
 	private void feedOtherPlayers(final ICommandSender sender, final String name)
+			// shouldn't this be CommandSender? ^
 	{
 		final List<Player> players = server.matchPlayer(name);
 		if (players.isEmpty())

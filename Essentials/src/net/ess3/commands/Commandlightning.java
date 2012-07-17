@@ -5,8 +5,10 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import lombok.Cleanup;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
+//TODO: remove this
 import org.bukkit.entity.LightningStrike;
-import org.bukkit.entity.Player;
 
 
 public class Commandlightning extends EssentialsCommand

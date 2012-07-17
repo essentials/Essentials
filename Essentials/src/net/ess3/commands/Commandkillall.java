@@ -6,9 +6,11 @@ import net.ess3.bukkit.Mob;
 import java.util.Collections;
 import java.util.Locale;
 import static net.ess3.I18n._;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.World;
 import net.ess3.bukkit.Mob;
+//TODO: remove these
 import org.bukkit.Chunk;
-import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDeathEvent;
 

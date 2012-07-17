@@ -1,5 +1,6 @@
 package net.ess3.commands;
 
+import net.ess3.api.server.CommandSender;
 import net.ess3.utils.Util;
 
 

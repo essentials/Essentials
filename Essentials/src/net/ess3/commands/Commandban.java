@@ -6,6 +6,7 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.Ban;
 import lombok.Cleanup;
+import net.ess3.api.server.CommandSender;
 
 
 public class Commandban extends EssentialsCommand

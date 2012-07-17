@@ -1,5 +1,6 @@
 package net.ess3.commands;
 
+import net.ess3.api.server.CommandSender;
 import net.ess3.utils.textreader.IText;
 import net.ess3.utils.textreader.KeywordReplacer;
 import net.ess3.utils.textreader.TextInput;

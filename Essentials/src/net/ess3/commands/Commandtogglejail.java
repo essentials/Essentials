@@ -7,6 +7,7 @@ import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
 import lombok.Cleanup;
+import net.ess3.api.server.CommandSender;
 
 
 public class Commandtogglejail extends EssentialsCommand

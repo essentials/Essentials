@@ -8,8 +8,9 @@ import net.ess3.permissions.SpawnerPermissions;
 import net.ess3.utils.LocationUtil;
 import net.ess3.utils.Util;
 import java.util.Locale;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.ess3.api.server.Location;
+import net.ess3.api.server.Material;
+//TODO: remove bukkit
 import org.bukkit.block.CreatureSpawner;
 
 

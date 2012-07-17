@@ -2,14 +2,15 @@ package net.ess3.commands;
 
 import net.ess3.Console;
 import static net.ess3.I18n._;
-
 import net.ess3.utils.Util;
 import net.ess3.api.IReplyTo;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import java.util.List;
 import lombok.Cleanup;
-import org.bukkit.entity.Player;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
+
 
 
 public class Commandmsg extends EssentialsCommand

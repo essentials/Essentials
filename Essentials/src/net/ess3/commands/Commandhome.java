@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.api.server.Location;
+import net.ess3.api.server.Material;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.permissions.WorldPermissions;
 import net.ess3.utils.Util;
-import org.bukkit.Location;
-import org.bukkit.Material;
+//TODO: remove this
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 

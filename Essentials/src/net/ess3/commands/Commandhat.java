@@ -3,9 +3,11 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
+//TODO: remove bukkit imports
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+
 
 
 public class Commandhat extends EssentialsCommand
