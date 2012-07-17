@@ -2,10 +2,9 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.api.server.Permission;
 import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
-//TODO: remove bukkit
-import org.bukkit.permissions.PermissionDefault;
 
 
 public class Commandafk extends EssentialsCommand
@@ -50,8 +49,8 @@ public class Commandafk extends EssentialsCommand
 	}
 	
 	@Override
-	public PermissionDefault getPermissionDefault()
+	public Permission.Default getPermissionDefault()
 	{
-		return PermissionDefault.TRUE;
+		return Permission.Default.TRUE;
 	}
 }
