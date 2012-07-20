@@ -1,10 +1,12 @@
 package net.ess3.commands;
 
+import java.util.List;
+import java.util.Set;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
-import java.util.List;
+import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Player;
+import net.ess3.permissions.Permissions;
 
 
 public class Commandfeed extends EssentialsCommand
@@ -24,21 +26,16 @@ public class Commandfeed extends EssentialsCommand
 		}
 	}
 
-	private void feedOtherPlayers(final ICommandSender sender, final String name)
-			// shouldn't this be CommandSender? ^
+	private void feedOtherPlayers(final CommandSender sender, final String name)
 	{
-		final List<Player> players = server.matchPlayer(name);
-		if (players.isEmpty())
+		final Set<IUser> users = ess.getUserMap().matchUsers(name, false, true);
+		if (users.isEmpty())
 		{
 			sender.sendMessage(_("playerNotFound"));
 			return;
 		}
-		for (Player player : players)
-		{
-			if (ess.getUser(player).isHidden())
-			{
-				continue;
-			}
+		for (Player player : users)
+		{			
 			player.setFoodLevel(20);
 			player.setSaturation(10);
 			sender.sendMessage(_("feedOther", player.getDisplayName()));

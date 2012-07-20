@@ -122,7 +122,7 @@ public class Commandtime extends EssentialsCommand
 		// If there is no selector we want the world the user is currently in. Or all worlds if it isn't a user.
 		if (selector == null)
 		{
-			final IUser user = sender instanceof Player ? ess.getUser((Player)sender) : null;
+			final IUser user = sender instanceof Player ? ess.getUserMap().getUser((Player)sender) : null;
 			if (user == null)
 			{
 				worlds.addAll(server.getWorlds());

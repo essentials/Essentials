@@ -7,6 +7,7 @@ import net.ess3.permissions.Permissions;
 import net.ess3.user.Ban;
 import lombok.Cleanup;
 import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
 
 
 public class Commandban extends EssentialsCommand
@@ -55,7 +56,7 @@ public class Commandban extends EssentialsCommand
 		
 		user.setBanned(true);
 		user.kickPlayer(banReason);
-		for (IPlayer onlinePlayer : server.getOnlinePlayers())
+		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			final IUser player = onlinePlayer.getUser();
 			if (Permissions.BAN_NOTIFY.isAuthorized(player))

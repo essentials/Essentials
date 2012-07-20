@@ -45,7 +45,7 @@ public class Commandtppos extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		IUser user = ess.getUser(server.getPlayer(args[0]));
+		IUser user = ess.getUserMap().getUser(server.getPlayer(args[0]));
 		final int x = Integer.parseInt(args[1]);
 		final int y = Integer.parseInt(args[2]);
 		final int z = Integer.parseInt(args[3]);

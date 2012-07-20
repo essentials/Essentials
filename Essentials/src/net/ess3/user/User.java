@@ -718,7 +718,7 @@ public class User extends UserBase implements IUser
 		{
 			for (Player p : ess.getServer().getOnlinePlayers())
 			{
-				if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(ess.getUser(p)))
+				if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(ess.getUserMap().getUser(p)))
 				{
 					p.hidePlayer(getBase());
 				}

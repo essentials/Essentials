@@ -3,6 +3,9 @@ package net.ess3.utils.textreader;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import net.ess3.I18n;
+import static net.ess3.I18n._;
+import net.ess3.api.server.CommandSender;
 
 
 public class TextPager

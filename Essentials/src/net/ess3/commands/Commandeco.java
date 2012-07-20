@@ -35,7 +35,7 @@ public class Commandeco extends EssentialsCommand
 		{
 			for (String sUser : ess.getUserMap().getAllUniqueUsers())
 			{
-				final IUser player = ess.getUser(sUser);
+				final IUser player = ess.getUserMap().getUser(sUser);
 				switch (cmd)
 				{
 				case GIVE:

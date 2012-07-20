@@ -17,7 +17,7 @@ public class Commandbanip extends EssentialsCommand
 		}
 
 		@Cleanup
-		final IUser player = ess.getUser(args[0]);
+		final IUser player = ess.getUserMap().getUser(args[0]);
 		player.acquireReadLock();
 
 		if (player == null)

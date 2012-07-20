@@ -7,7 +7,7 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Player;
-import net.ess3.api.IServer
+import net.ess3.api.server.IServer;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
 
@@ -78,13 +78,13 @@ public class Commandnick extends EssentialsCommand
 		}
 	}
 
-	private void resetAllNicknames(final Server server)
+	private void resetAllNicknames(final IServer server)
 	{
 		for (Player player : server.getOnlinePlayers())
 		{
 			try
 			{
-				setNickname(ess.getUser(player), "off");
+				setNickname(ess.getUserMap().getUser(player), "off");
 			}
 			catch (Exception ex)
 			{

@@ -24,7 +24,7 @@ public class Commandrealname extends EssentialsCommand
 		final String whois = args[0].toLowerCase(Locale.ENGLISH);
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final IUser u = ess.getUser(onlinePlayer);
+			final IUser u = ess.getUserMap().getUser(onlinePlayer);
 			if (u.isHidden())
 			{
 				continue;

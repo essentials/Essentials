@@ -48,7 +48,7 @@ public class EssentialsConnect
 		LOGGER.log(Level.WARNING, warnMessage);
 		for (Player p : ess.getServer().getOnlinePlayers())
 		{
-			final IUser alertUser = ess.getUser(p);
+			final IUser alertUser = ess.getUserMap().getUser(p);
 			if (Permissions.ALERTS.isAuthorized(alertUser))
 			{
 				alertUser.sendMessage(warnMessage);

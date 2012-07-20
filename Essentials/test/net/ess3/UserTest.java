@@ -17,7 +17,7 @@ public class UserTest extends EssentialsTest
 		super(testName);
 		
 		server.addPlayer("testPlayer1");
-		base1 = ess.getUser("testPlayer1");
+		base1 = ess.getUserMap().getUser("testPlayer1");
 	}
 
 	private void should(String what)
@@ -28,16 +28,16 @@ public class UserTest extends EssentialsTest
 	/*public void testUpdate()
 	{
 		OfflinePlayer base1alt = server.createPlayer(base1.getName(), ess);
-		assertEquals(base1alt, ess.getUser(base1alt).getBase());
+		assertEquals(base1alt, ess.getUserMap().getUser(base1alt).getBase());
 	}
 
 	public void testHome()
 	{
-		IUser user = ess.getUser(base1);
+		IUser user = ess.getUserMap().getUser(base1);
 		Location loc = base1.getLocation();
 		user.setHome();
 		OfflinePlayer base2 = server.createPlayer(base1.getName(), ess);
-		IUser user2 = ess.getUser(base2);
+		IUser user2 = ess.getUserMap().getUser(base2);
 
 		Location home = user2.getHome(loc);
 		assertNotNull(home);
@@ -52,7 +52,7 @@ public class UserTest extends EssentialsTest
 	/*public void testMoney()
 	{
 		should("properly set, take, give, and get money");
-		IUser user = ess.getUser(base1);
+		IUser user = ess.getUserMap().getUser(base1);
 		double i;
 		user.setMoney(i = 100.5);
 		user.takeMoney(50);
@@ -65,7 +65,7 @@ public class UserTest extends EssentialsTest
 	/*public void testGetGroup()
 	{
 		should("return the default group");
-		IUser user = ess.getUser(base1);
+		IUser user = ess.getUserMap().getUser(base1);
 		//assertEquals(user.getGroup(), "default");
 	}*/
 	

@@ -224,7 +224,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 		public void onPlayerRespawn(final PlayerRespawnEvent event)
 		{
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
 			boolean respawnAtHome = false;
 			final ISettings settings = ess.getSettings();
@@ -264,7 +264,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 		public void onPlayerJoin(final PlayerJoinEvent event)
 		{
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
 			if (user.hasPlayedBefore())
 			{

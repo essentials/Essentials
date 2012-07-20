@@ -123,7 +123,7 @@ public class StorageTest extends EssentialsTest
 		OfflinePlayer base1 = server.createPlayer("testPlayer1", ess);
 		server.addPlayer(base1);
 		ext.mark("fake user created");
-		UserData user = (UserData)ess.getUser(base1);
+		UserData user = (UserData)ess.getUserMap().getUser(base1);
 		ext.mark("load empty user");
 		for (int j = 0; j < 1; j++)
 		{

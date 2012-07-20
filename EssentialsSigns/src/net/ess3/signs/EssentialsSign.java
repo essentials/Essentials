@@ -35,7 +35,7 @@ public class EssentialsSign
 	public final boolean onSignCreate(final SignChangeEvent event, final IEssentials ess)
 	{
 		final ISign sign = new EventSign(event);
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		if (!SignsPermissions.getCreatePermission(signName).isAuthorized(user))
 		{
 			// Return true, so other plugins can use the same sign title, just hope
@@ -82,7 +82,7 @@ public class EssentialsSign
 	public final boolean onSignInteract(final Block block, final Player player, final IEssentials ess)
 	{
 		final ISign sign = new BlockSign(block);
-		final IUser user = ess.getUser(player);
+		final IUser user = ess.getUserMap().getUser(player);
 		try
 		{
 			return SignsPermissions.getUsePermission(signName).isAuthorized(user)
@@ -103,7 +103,7 @@ public class EssentialsSign
 	public final boolean onSignBreak(final Block block, final Player player, final IEssentials ess)
 	{
 		final ISign sign = new BlockSign(block);
-		final IUser user = ess.getUser(player);
+		final IUser user = ess.getUserMap().getUser(player);
 		try
 		{
 			return SignsPermissions.getBreakPermission(signName).isAuthorized(user)
@@ -133,7 +133,7 @@ public class EssentialsSign
 	
 	public final boolean onBlockPlace(final Block block, final Player player, final IEssentials ess)
 	{
-		final IUser user = ess.getUser(player);
+		final IUser user = ess.getUserMap().getUser(player);
 		try
 		{
 			return onBlockPlace(block, user, getUsername(user), ess);
@@ -151,7 +151,7 @@ public class EssentialsSign
 	
 	public final boolean onBlockInteract(final Block block, final Player player, final IEssentials ess)
 	{
-		final IUser user = ess.getUser(player);
+		final IUser user = ess.getUserMap().getUser(player);
 		try
 		{
 			return onBlockInteract(block, user, getUsername(user), ess);
@@ -169,7 +169,7 @@ public class EssentialsSign
 	
 	public final boolean onBlockBreak(final Block block, final Player player, final IEssentials ess)
 	{
-		final IUser user = ess.getUser(player);
+		final IUser user = ess.getUserMap().getUser(player);
 		try
 		{
 			return onBlockBreak(block, user, getUsername(user), ess);

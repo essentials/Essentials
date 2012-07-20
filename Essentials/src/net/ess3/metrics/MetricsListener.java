@@ -24,7 +24,7 @@ public class MetricsListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		/*final IUser player = ess.getUser(event.getPlayer());
+		/*final IUser player = ess.getUserMap().getUser(event.getPlayer());
 		if (ess.getSettings().isMetricsEnabled() == false && (player.isAuthorized("essentials.essentials") || player.isAuthorized("bukkit.broadcast.admin")))
 		{
 			player.sendMessage("PluginMetrics collects minimal statistic data, starting in about 5 minutes.");

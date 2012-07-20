@@ -87,7 +87,7 @@ public class SignBlockListener implements Listener
 		{
 			return;
 		}
-		IUser user = ess.getUser(event.getPlayer());
+		IUser user = ess.getUserMap().getUser(event.getPlayer());
 
 		for (int i = 0; i < 4; i++)
 		{

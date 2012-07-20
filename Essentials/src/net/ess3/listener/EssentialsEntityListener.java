@@ -44,9 +44,9 @@ public class EssentialsEntityListener implements Listener
 		if (eDefend instanceof Player && eAttack instanceof Player)
 		{
 			@Cleanup
-			final IUser attacker = ess.getUser((Player)eAttack);
+			final IUser attacker = ess.getUserMap().getUser((Player)eAttack);
 			@Cleanup
-			final IUser defender = ess.getUser((Player)eDefend);
+			final IUser defender = ess.getUserMap().getUser((Player)eDefend);
 			@Cleanup
 			ISettings settings = ess.getSettings();
 			settings.acquireReadLock();
@@ -104,7 +104,7 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onEntityDamage(final EntityDamageEvent event)
 	{
-		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isGodModeEnabled())
+		if (event.getEntity() instanceof Player && ess.getUserMap().getUser((Player)event.getEntity()).isGodModeEnabled())
 		{
 			final Player player = (Player)event.getEntity();
 			player.setFireTicks(0);
@@ -116,7 +116,7 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onEntityCombust(final EntityCombustEvent event)
 	{
-		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isGodModeEnabled())
+		if (event.getEntity() instanceof Player && ess.getUserMap().getUser((Player)event.getEntity()).isGodModeEnabled())
 		{
 			event.setCancelled(true);
 		}
@@ -125,7 +125,7 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerDeathEvent(final PlayerDeathEvent event)
 	{
-		final IUser user = ess.getUser((Player)event.getEntity());
+		final IUser user = ess.getUserMap().getUser((Player)event.getEntity());
 		@Cleanup
 		final ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
@@ -143,7 +143,7 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerDeathExpEvent(final PlayerDeathEvent event)
 	{
-		final IUser user = ess.getUser(event.getEntity());
+		final IUser user = ess.getUserMap().getUser(event.getEntity());
 		if (Permissions.KEEPXP.isAuthorized(user))
 		{
 			event.setKeepLevel(true);
@@ -154,7 +154,7 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onFoodLevelChange(final FoodLevelChangeEvent event)
 	{
-		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isGodModeEnabled())
+		if (event.getEntity() instanceof Player && ess.getUserMap().getUser((Player)event.getEntity()).isGodModeEnabled())
 		{
 			event.setCancelled(true);
 		}
@@ -170,7 +170,7 @@ public class EssentialsEntityListener implements Listener
 			final ISettings settings = ess.getSettings();
 			settings.acquireReadLock();
 			@Cleanup
-			final IUser user = ess.getUser((Player)event.getEntity());
+			final IUser user = ess.getUserMap().getUser((Player)event.getEntity());
 			user.acquireReadLock();
 			if (user.getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers())
 			{

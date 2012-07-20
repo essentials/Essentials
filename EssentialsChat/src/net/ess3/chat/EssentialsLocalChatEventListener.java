@@ -35,8 +35,8 @@ public class EssentialsLocalChatEventListener implements Listener
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			String type = _("chatTypeLocal");
-			final IUser user = ess.getUser(onlinePlayer);
-			if (user.isIgnoringPlayer(ess.getUser(sender)))
+			final IUser user = ess.getUserMap().getUser(onlinePlayer);
+			if (user.isIgnoringPlayer(ess.getUserMap().getUser(sender)))
 			{
 				continue;
 			}

@@ -71,7 +71,7 @@ public abstract class EssentialsChatPlayer implements Listener
 	{
 		if (sender instanceof Player)
 		{
-			charge.charge(ess.getUser((Player)sender));
+			charge.charge(ess.getUserMap().getUser((Player)sender));
 		}
 	}
 

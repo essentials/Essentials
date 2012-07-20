@@ -164,7 +164,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		public void onBlockBreak(final BlockBreakEvent event)
 		{
 			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -176,7 +176,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		public void onBlockPlace(final BlockPlaceEvent event)
 		{
 			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -188,7 +188,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		public void onBlockDamage(final BlockDamageEvent event)
 		{
 			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -204,7 +204,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		public void onPlayerInteract(final PlayerInteractEvent event)
 		{
 			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
@@ -216,7 +216,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		public void onPlayerRespawn(final PlayerRespawnEvent event)
 		{
 			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
@@ -244,7 +244,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		public void onPlayerTeleport(final PlayerTeleportEvent event)
 		{
 			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
@@ -273,7 +273,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		public void onPlayerJoin(final PlayerJoinEvent event)
 		{
 			@Cleanup
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{

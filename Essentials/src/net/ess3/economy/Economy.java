@@ -90,7 +90,7 @@ public class Economy implements IEconomy
 	@Override
 	public double getMoney(String name) throws UserDoesNotExistException
 	{
-		IUser user = ess.getUser(name);
+		IUser user = ess.getUserMap().getUser(name);
 		if (user == null)
 		{
 			return getNPCBalance(name);
@@ -101,7 +101,7 @@ public class Economy implements IEconomy
 	@Override
 	public void setMoney(String name, double balance) throws NoLoanPermittedException, UserDoesNotExistException
 	{
-		IUser user = ess.getUser(name);
+		IUser user = ess.getUserMap().getUser(name);
 		if (user == null)
 		{
 			setNPCBalance(name, balance, true);
@@ -143,7 +143,7 @@ public class Economy implements IEconomy
 	@Override
 	public boolean isNPC(String name) throws UserDoesNotExistException
 	{
-		boolean result = ess.getUser(name) == null;
+		boolean result = ess.getUserMap().getUser(name) == null;
 		if (result)
 		{
 			getNPCBalance(name);

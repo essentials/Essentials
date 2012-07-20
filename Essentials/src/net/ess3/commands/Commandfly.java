@@ -4,7 +4,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Player;
-import net.ess3.api.IServer
+import net.ess3.api.server.IServer;
 import net.ess3.permissions.Permissions;
 
 
@@ -39,36 +39,31 @@ public class Commandfly extends EssentialsCommand
 		user.sendMessage(_("flyMode", _(user.getAllowFlight() ? "enabled" : "disabled"), user.getDisplayName()));
 	}
 
-	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args)
+	private void flyOtherPlayers(final IServer server, final CommandSender sender, final String[] args)
 	{
-		for (Player matchPlayer : server.matchPlayer(args[0]))
-		{
-			final IUser player = ess.getUser(matchPlayer);
-			if (player.isHidden())
-			{
-				continue;
-			}
+		for (Player matchPlayer : ess.getUserMap().matchUsers(args[0],true,true))
+		{	
 			if (args.length > 1)
 			{
 				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
 				{
-					player.setAllowFlight(true);
+					matchPlayer.setAllowFlight(true);
 				}
 				else
 				{
-					player.setAllowFlight(false);
+					matchPlayer.setAllowFlight(false);
 				}
 			}
 			else
 			{
-				player.setAllowFlight(!player.getAllowFlight());
+				matchPlayer.setAllowFlight(!matchPlayer.getAllowFlight());
 			}
 			
-			if (!player.getAllowFlight())
+			if (!matchPlayer.getAllowFlight())
 			{
-				player.setFlying(false);
+				matchPlayer.setFlying(false);
 			}
-			sender.sendMessage(_("flyMode", _(player.getAllowFlight() ? "enabled" : "disabled"), player.getDisplayName()));
+			sender.sendMessage(_("flyMode", _(matchPlayer.getAllowFlight() ? "enabled" : "disabled"), matchPlayer.getDisplayName()));
 		}
 	}
 }

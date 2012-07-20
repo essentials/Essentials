@@ -2,8 +2,6 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.Permission;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
 
 
@@ -14,7 +12,7 @@ public class Commandafk extends EssentialsCommand
 	{
 		if (args.length > 0 && Permissions.AFK_OTHERS.isAuthorized(user))
 		{
-			IUser afkUser = ess.getUser((Player)ess.getServer().matchPlayer(args[0]));
+			IUser afkUser = ess.getUserMap().getUser(args[0]);
 			if (afkUser != null)
 			{
 				toggleAfk(afkUser);
@@ -46,11 +44,5 @@ public class Commandafk extends EssentialsCommand
 				ess.broadcastMessage(user, _("userIsAway", user.getDisplayName()));
 			}
 		}
-	}
-	
-	@Override
-	public Permission.Default getPermissionDefault()
-	{
-		return Permission.Default.TRUE;
-	}
+	}	
 }

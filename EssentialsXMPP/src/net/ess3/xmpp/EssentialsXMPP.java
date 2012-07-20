@@ -92,7 +92,7 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	public IUser getUserByAddress(final String address)
 	{
 		String username = instance.users.getUserByAddress(address);
-		return username == null ? null : ess.getUser(username);
+		return username == null ? null : ess.getUserMap().getUser(username);
 	}
 
 	@Override

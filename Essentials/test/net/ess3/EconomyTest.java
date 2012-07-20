@@ -24,7 +24,7 @@ public class EconomyTest extends EssentialsTest
 		assertFalse("NPC does not exists", ess.getEconomy().playerExists(NPCNAME));
 		assertTrue("Create NPC", ess.getEconomy().createNPC(NPCNAME));
 		assertTrue("NPC exists", ess.getEconomy().playerExists(NPCNAME));
-		assertNull("NPC can not be accessed", ess.getUser(NPCNAME));
+		assertNull("NPC can not be accessed", ess.getUserMap().getUser(NPCNAME));
 		try
 		{
 			ess.getEconomy().removeNPC(NPCNAME);

@@ -38,7 +38,7 @@ public class Commandgod extends EssentialsCommand
 	{
 		for (Player matchPlayer : server.matchPlayer(args[0]))
 		{
-			final IUser player = ess.getUser(matchPlayer);
+			final IUser player = ess.getUserMap().getUser(matchPlayer);
 			if (player.isHidden())
 			{
 				continue;

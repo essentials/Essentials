@@ -52,7 +52,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerRespawn(final PlayerRespawnEvent event)
 	{
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.updateCompass();
 		user.updateDisplayName();
 	}
@@ -61,7 +61,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerChat(final PlayerChatEvent event)
 	{
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireReadLock();
 		if (user.getData().isMuted())
 		{
@@ -72,7 +72,7 @@ public class EssentialsPlayerListener implements Listener
 		final Iterator<Player> it = event.getRecipients().iterator();
 		while (it.hasNext())
 		{
-			final IUser player = ess.getUser(it.next());
+			final IUser player = ess.getUserMap().getUser(it.next());
 			if (player.isIgnoringPlayer(user))
 			{
 				it.remove();
@@ -86,7 +86,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerMove(final PlayerMoveEvent event)
 	{
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireReadLock();
 		@Cleanup
 		final ISettings settings = ess.getSettings();
@@ -121,7 +121,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireReadLock();
 		@Cleanup
 		final ISettings settings = ess.getSettings();
@@ -152,7 +152,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 		ess.getBackup().startTask();
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireWriteLock();
 
 		user.updateDisplayName();
@@ -163,7 +163,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(user))
 			{
-				user.hidePlayer(ess.getUser(p).getBase());
+				user.hidePlayer(ess.getUserMap().getUser(p).getBase());
 			}
 		}
 
@@ -225,7 +225,7 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireWriteLock();
 		user.getData().setNpc(false);
 
@@ -261,7 +261,7 @@ public class EssentialsPlayerListener implements Listener
 		//There is TeleportCause.COMMMAND but plugins have to actively pass the cause in on their teleports.
 		if ((event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND) && settings.getData().getCommands().getBack().isRegisterBackInListener())
 		{
-			final IUser user = ess.getUser(event.getPlayer());
+			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 			user.setLastLocation();
 		}
 
@@ -271,7 +271,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerEggThrow(final PlayerEggThrowEvent event)
 	{
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireReadLock();
 		final ItemStack hand = new ItemStack(Material.EGG, 1);
 		if (user.getData().hasUnlimited(hand.getType()))
@@ -285,7 +285,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event)
 	{
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireReadLock();
 		if (user.getData().hasUnlimited(event.getBucket()))
 		{
@@ -304,7 +304,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event)
 	{
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		final String cmd = event.getMessage().toLowerCase(Locale.ENGLISH).split(" ")[0].replace("/", "").toLowerCase(Locale.ENGLISH);
 		final List<String> commands = Arrays.asList("msg", "r", "mail", "m", "t", "emsg", "tell", "er", "reply", "ereply", "email");
 		if (commands.contains(cmd))
@@ -312,7 +312,7 @@ public class EssentialsPlayerListener implements Listener
 			for (Player player : ess.getServer().getOnlinePlayers())
 			{
 				@Cleanup
-				IUser spyer = ess.getUser(player);
+				IUser spyer = ess.getUserMap().getUser(player);
 				spyer.acquireReadLock();
 				if (spyer.getData().isSocialspy() && !user.equals(spyer))
 				{
@@ -333,7 +333,7 @@ public class EssentialsPlayerListener implements Listener
 		final ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireReadLock();
 		if (settings.getData().getChat().getChangeDisplayname())
 		{
@@ -360,7 +360,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireReadLock();
 		user.updateActivity(true);
 		switch (event.getAction())
@@ -449,7 +449,7 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 		@Cleanup
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		user.acquireReadLock();
 		if (user.getData().isAfk())
 		{
@@ -462,11 +462,11 @@ public class EssentialsPlayerListener implements Listener
 	{
 		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
 		{
-			final IUser user = ess.getUser((Player)event.getWhoClicked());
+			final IUser user = ess.getUserMap().getUser((Player)event.getWhoClicked());
 			final InventoryHolder invHolder = event.getView().getTopInventory().getHolder();
 			if (invHolder != null && invHolder instanceof Player)
 			{
-				final IUser invOwner = ess.getUser((Player)invHolder);
+				final IUser invOwner = ess.getUserMap().getUser((Player)invHolder);
 				if (user.isInvSee() && (!Permissions.INVSEE_MODIFY.isAuthorized(user)
 										|| Permissions.INVSEE_PREVENT_MODIFY.isAuthorized(invOwner)
 										|| !invOwner.isOnline()))
@@ -482,7 +482,7 @@ public class EssentialsPlayerListener implements Listener
 	{
 		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
 		{
-			final IUser user = ess.getUser((Player)event.getPlayer());
+			final IUser user = ess.getUserMap().getUser((Player)event.getPlayer());
 			user.setInvSee(false);
 		}
 	}

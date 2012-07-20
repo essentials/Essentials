@@ -18,7 +18,7 @@ public class Commandtpaall extends EssentialsCommand
 		{
 			if (sender instanceof Player)
 			{
-				teleportAAllPlayers(sender, ess.getUser((Player)sender));
+				teleportAAllPlayers(sender, ess.getUserMap().getUser((Player)sender));
 				return;
 			}
 			throw new NotEnoughArgumentsException();
@@ -34,7 +34,7 @@ public class Commandtpaall extends EssentialsCommand
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			@Cleanup
-			final IUser player = ess.getUser(onlinePlayer);
+			final IUser player = ess.getUserMap().getUser(onlinePlayer);
 			player.acquireReadLock();
 			if (user == player)
 			{

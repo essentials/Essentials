@@ -45,7 +45,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final IUser u = ess.getUser(event.getPlayer());
+		final IUser u = ess.getUserMap().getUser(event.getPlayer());
 		if (Permissions.GEOIP_HIDE.isAuthorized(u))
 		{
 			return;
@@ -97,7 +97,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 			{
 				for (Player player : event.getPlayer().getServer().getOnlinePlayers())
 				{
-					final IUser user = ess.getUser(player);
+					final IUser user = ess.getUserMap().getUser(player);
 					if (Permissions.GEOIP_SHOW.isAuthorized(user))
 					{
 						user.sendMessage(_("geoipJoinFormat", user.getDisplayName(), builder.toString()));

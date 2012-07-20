@@ -102,7 +102,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 			IUser user = null;
 			if (sender instanceof Player)
 			{
-				user = ess.getUser((Player)sender);
+				user = ess.getUserMap().getUser((Player)sender);
 				LOGGER.log(Level.INFO, String.format("[PLAYER_COMMAND] %s: /%s %s ", ((Player)sender).getName(), commandLabel, EssentialsCommand.getFinalArg(args, 0)));
 			}
 

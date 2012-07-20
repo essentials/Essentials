@@ -20,7 +20,7 @@ public class Commandlightning extends EssentialsCommand
 		IUser user = null;
 		if (sender instanceof Player)
 		{
-			user = ess.getUser(((Player)sender));
+			user = ess.getUserMap().getUser(((Player)sender));
 		}
 		if ((args.length < 1 || !Permissions.LIGHTNING_OTHERS.isAuthorized(user)) && user != null)
 		{
@@ -28,7 +28,7 @@ public class Commandlightning extends EssentialsCommand
 			return;
 		}
 
-		if (server.matchPlayer(args[0]).isEmpty())
+		if (ess.getUserMap().matchUsers(args[0], false, true).isEmpty())
 		{
 			throw new Exception(_("playerNotFound"));
 		}
@@ -45,11 +45,11 @@ public class Commandlightning extends EssentialsCommand
 			}
 		}
 
-		for (Player matchPlayer : server.matchPlayer(args[0]))
+		for (Player matchPlayer : ess.getUserMap().matchUsers(args[0], false, true))
 		{
 			sender.sendMessage(_("lightningUse", matchPlayer.getDisplayName()));
 			final LightningStrike strike = matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
-			if (!ess.getUser(matchPlayer).isGodModeEnabled())
+			if (!ess.getUserMap().getUser(matchPlayer).isGodModeEnabled())
 			{
 				matchPlayer.damage(power, strike);
 			}

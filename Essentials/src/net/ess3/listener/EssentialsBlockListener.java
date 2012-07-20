@@ -31,7 +31,7 @@ public class EssentialsBlockListener implements Listener
 		{
 			return;
 		}
-		final IUser user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		final boolean unlimitedForUser = user.getData().hasUnlimited(itemstack.getType());
 		if (unlimitedForUser && user.getGameMode() == GameMode.SURVIVAL)
 		{
