@@ -1,8 +1,5 @@
-<<<<<<< HEAD:EssentialsSigns/src/com/earth2me/essentials/signs/EssentialsSign.java
-package com.earth2me.essentials.signs;
-=======
 package net.ess3.signs;
->>>>>>> master:EssentialsSigns/src/net/ess3/signs/EssentialsSign.java
+
 
 import net.ess3.api.ChargeException;
 import static net.ess3.I18n._;
