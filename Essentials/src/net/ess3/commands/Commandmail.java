@@ -1,12 +1,12 @@
 package net.ess3.commands;
 
+import java.util.List;
 import static net.ess3.I18n._;
-import net.ess3.utils.Util;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
-import net.ess3.permissions.Permissions;
-import java.util.List;
 import net.ess3.api.server.Player;
+import net.ess3.permissions.Permissions;
+import net.ess3.utils.Util;
 
 
 public class Commandmail extends EssentialsCommand
@@ -41,11 +41,11 @@ public class Commandmail extends EssentialsCommand
 			IUser u;
 			if (player != null)
 			{
-				u = ess.getUserMap().getUser(player);
+				u = player.getUser();
 			}
 			else
 			{
-				u = ess.getUserMap().getUser(args[1]);
+				u = ess.getUserMap().matchUser(args[1], true, false);
 			}
 			if (u == null)
 			{
@@ -96,11 +96,11 @@ public class Commandmail extends EssentialsCommand
 			IUser u;
 			if (player != null)
 			{
-				u = ess.getUserMap().getUser(player);
+				u = player.getUser();
 			}
 			else
 			{
-				u = ess.getUserMap().getUser(args[1]);
+				u = ess.getUserMap().matchUser(args[1], true, false);
 			}
 			if (u == null)
 			{
@@ -121,11 +121,11 @@ public class Commandmail extends EssentialsCommand
 			IUser u;
 			if (player != null)
 			{
-				u = ess.getUserMap().getUser(player);
+				u = player.getUser();
 			}
 			else
 			{
-				u = ess.getUserMap().getUser(args[0]);
+				u = ess.getUserMap().matchUser(args[0], true, false);
 			}
 			if (u == null)
 			{
