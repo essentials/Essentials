@@ -2,9 +2,10 @@ package net.ess3.api.server;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 
-public interface IPlugin
+public interface Plugin
 {
 	int scheduleAsyncDelayedTask(final Runnable run);
 
@@ -13,6 +14,8 @@ public interface IPlugin
 	int scheduleSyncDelayedTask(final Runnable run, final long delay);
 
 	int scheduleSyncRepeatingTask(final Runnable run, final long delay, final long period);
+	
+	int scheduleAsyncRepeatingTask(final Runnable run, final long delay, final long period);
 
 	File getRootFolder();
 	
@@ -29,4 +32,6 @@ public interface IPlugin
 	Location callRespawnEvent(Player player, Location loc, boolean bedSpawn);
 	
 	void callSuicideEvent(Player player);
+	
+	Logger getLogger();
 }

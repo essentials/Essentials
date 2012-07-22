@@ -30,11 +30,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.logging.Level;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
+import net.ess3.api.server.Plugin;
 
 
 /**
@@ -193,7 +189,7 @@ public class Metrics
 			}
 
 			// Begin hitting the server with glorious data
-			taskId = plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable()
+			taskId = plugin.scheduleAsyncRepeatingTask(new Runnable()
 			{
 				private boolean firstPost = true;
 
@@ -207,7 +203,7 @@ public class Metrics
 							// Disable Task, if it is running and the server owner decided to opt-out
 							if (isOptOut() && taskId > 0)
 							{
-								plugin.getServer().getScheduler().cancelTask(taskId);
+								plugin.cancelTask(taskId);
 								taskId = -1;
 							}
 						}
@@ -223,7 +219,7 @@ public class Metrics
 					}
 					catch (IOException e)
 					{
-						Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
+						plugin.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
 					}
 				}
 			}, 0, PING_INTERVAL * 1200);
@@ -246,12 +242,12 @@ public class Metrics
 			}
 			catch (IOException ex)
 			{
-				Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
+				plugin.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
 				return true;
 			}
 			catch (InvalidConfigurationException ex)
 			{
-				Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
+				plugin.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
 				return true;
 			}
 			return configuration.getBoolean("opt-out", false);
@@ -304,7 +300,7 @@ public class Metrics
 			// Disable Task, if it is running
 			if (taskId >= 0)
 			{
-				this.plugin.getServer().getScheduler().cancelTask(taskId);
+				this.plugin.cancelTask(taskId);
 				taskId = -1;
 			}
 		}
@@ -323,7 +319,7 @@ public class Metrics
 		data.append(encode("guid")).append('=').append(encode(guid));
 		encodeDataPair(data, "version", description.getVersion());
 		encodeDataPair(data, "server", Bukkit.getVersion());
-		encodeDataPair(data, "players", Integer.toString(Bukkit.getServer().getOnlinePlayers().length));
+		encodeDataPair(data, "players", Integer.toString(plugin.getServer().getOnlinePlayers().length));
 		encodeDataPair(data, "revision", String.valueOf(REVISION));
 
 		// If we're pinging, append it

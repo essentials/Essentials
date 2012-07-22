@@ -1,16 +1,16 @@
-package com.earth2me.essentials.testserver;
+package net.ess3.testserver;
 
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.IServer;
-import net.ess3.api.server.World;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
+import net.ess3.api.server.Server;
+import net.ess3.api.server.World;
 
-public class Server implements IServer {
+public class TestServer implements Server {
 
-	public Server()
+	public TestServer()
 	{
 	}
 	
@@ -19,7 +19,7 @@ public class Server implements IServer {
 	@Override
 	public List<World> getWorlds()
 	{
-		return Collections.<World>singletonList(new World());
+		return Collections.<World>singletonList(new TestWorld());
 	}
 
 	@Override

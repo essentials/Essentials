@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
+import net.ess3.Essentials;
+import net.ess3.api.server.ItemStack;
+import net.ess3.api.server.Material;
+import net.ess3.api.server.Plugin;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -18,9 +21,9 @@ import org.yaml.snakeyaml.nodes.*;
 public class BukkitConstructor extends Constructor
 {
 	private final transient Pattern NUMPATTERN = Pattern.compile("\\d+");
-	private final transient IPlugin plugin;
+	private final transient Plugin plugin;
 
-	public BukkitConstructor(final Class clazz, final IPlugin plugin)
+	public BukkitConstructor(final Class clazz, final Plugin plugin)
 	{
 		super(clazz);
 		this.plugin = plugin;
@@ -41,11 +44,11 @@ public class BukkitConstructor extends Constructor
 				if (NUMPATTERN.matcher(val).matches())
 				{
 					final int typeId = Integer.parseInt(val);
-					mat = Material.getMaterial(typeId);
+					mat = Material.get(typeId);
 				}
 				else
 				{
-					mat = Material.matchMaterial(val);
+					mat = Material.match(val);
 				}
 				return mat;
 			}
@@ -103,11 +106,11 @@ public class BukkitConstructor extends Constructor
 				if (NUMPATTERN.matcher(split2[0]).matches())
 				{
 					final int typeId = Integer.parseInt(split2[0]);
-					mat = Material.getMaterial(typeId);
+					mat = Material.get(typeId);
 				}
 				else
 				{
-					mat = Material.matchMaterial(split2[0]);
+					mat = Material.match(split2[0]);
 				}
 				if (mat == null)
 				{
@@ -123,7 +126,7 @@ public class BukkitConstructor extends Constructor
 				{
 					size = Integer.parseInt(split1[1]);
 				}
-				final ItemStack stack = new ItemStack(mat, size, data);
+				final ItemStack stack = ItemStack.create(mat, size, data);
 				if (split1.length > 2)
 				{
 					for (int i = 2; i < split1.length; i++)

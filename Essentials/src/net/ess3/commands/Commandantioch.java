@@ -6,7 +6,7 @@ import net.ess3.utils.LocationUtil;
 
 import org.bukkit.entity.TNTPrimed;
 
-
+//TODO: Remove this?
 public class Commandantioch extends EssentialsCommand
 {
 	@Override

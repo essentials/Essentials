@@ -45,4 +45,10 @@ public class Inventory implements IInventory {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
+	@Override
+	public Map<Integer, ItemStack> addItem(ItemStack itemStack)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
 }

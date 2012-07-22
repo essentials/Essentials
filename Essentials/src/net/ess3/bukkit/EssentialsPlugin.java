@@ -30,10 +30,10 @@ public class EssentialsPlugin extends JavaPlugin
 	public void onEnable()
 	{
 
-		Server server = new Server(getServer());
+		BukkitServer server = new BukkitServer(getServer());
 		final PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(server, this);
-		ess = new Essentials(server, getLogger(), new Plugin(this));
+		ess = new Essentials(server, getLogger(), new BukkitPlugin(this));
 		if (VersionCheck.checkVersion(this))
 		{
 			try
@@ -86,7 +86,7 @@ public class EssentialsPlugin extends JavaPlugin
 	{
 		CommandSender commandSender;
 		if (sender instanceof org.bukkit.entity.Player) {
-			commandSender = ((Server)ess.getServer()).getPlayer((org.bukkit.entity.Player)sender);
+			commandSender = ((BukkitServer)ess.getServer()).getPlayer((org.bukkit.entity.Player)sender);
 		} else {
 			commandSender = new BukkitCommandSender(sender);
 		}

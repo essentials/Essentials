@@ -1,9 +1,12 @@
 package net.ess3.bukkit;
 
-import net.ess3.api.IUser;
-import net.ess3.api.server.*;
 import lombok.Delegate;
 import lombok.Getter;
+import net.ess3.api.IUser;
+import net.ess3.api.server.IInventory;
+import net.ess3.api.server.Location;
+import net.ess3.api.server.Player;
+import net.ess3.api.server.World;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.LivingEntity;
 
@@ -46,9 +49,9 @@ public class BukkitPlayer extends BukkitCommandSender implements Player
 	})
 	@Getter
 	private transient OfflinePlayer safePlayer;
-	private final transient IServer server;
+	private final transient BukkitServer server;
 
-	public BukkitPlayer(final OfflinePlayer player, final IServer server)
+	public BukkitPlayer(final OfflinePlayer player, final BukkitServer server)
 	{
 		super(player.getPlayer());
 		this.server = server;
@@ -157,10 +160,10 @@ public class BukkitPlayer extends BukkitCommandSender implements Player
 		}
 	}
 
-	private int getExpToLevel()
+	/*private int getExpToLevel()
 	{		
 		return getExpToLevel(onlinePlayer.getLevel());
-	}
+	}*/
 	
 	private static int getExpToLevel(final int level)
 	{		

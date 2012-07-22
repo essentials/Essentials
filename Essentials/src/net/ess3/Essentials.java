@@ -18,8 +18,8 @@
 package net.ess3;
 
 import net.ess3.api.server.Player;
-import net.ess3.api.server.IPlugin;
-import net.ess3.api.server.IServer;
+import net.ess3.api.server.Plugin;
+import net.ess3.api.server.Server;
 import net.ess3.api.server.World;
 import java.io.File;
 import java.io.IOException;
@@ -76,11 +76,11 @@ public class Essentials implements IEssentials
 	private transient ICommandHandler commandHandler;
 	private transient Economy economy;
 	@Getter
-	private final IServer server;
+	private final Server server;
 	@Getter
 	private final Logger logger;
 	@Getter
-	private final IPlugin plugin;
+	private final Plugin plugin;
 	public static boolean testing;
 	private transient Metrics metrics;
 	@Getter
@@ -88,7 +88,7 @@ public class Essentials implements IEssentials
 	@Getter
 	private transient List<String> vanishedPlayers = new ArrayList<String>();
 
-	public Essentials(final IServer server, final Logger logger, final IPlugin plugin)
+	public Essentials(final Server server, final Logger logger, final Plugin plugin)
 	{
 		this.server = server;
 		this.logger = logger;

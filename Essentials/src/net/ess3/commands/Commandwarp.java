@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 //TODO: remove bukkit
+import net.ess3.api.server.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -36,7 +37,7 @@ public class Commandwarp extends EssentialsCommand
 			IUser otherUser = null;
 			if (args.length == 2 && Permissions.WARP_OTHERS.isAuthorized(user))
 			{
-				otherUser = ess.getUserMap().getUser(server.getPlayer(args[1]));
+				otherUser = ess.getUserMap().matchUser(args[1],Permissions.WARP_HIDDEN.isAuthorized(user), true);
 				if (otherUser == null)
 				{
 					throw new Exception(_("playerNotFound"));
@@ -57,7 +58,7 @@ public class Commandwarp extends EssentialsCommand
 			warpList(sender, args);
 			throw new NoChargeException();
 		}
-		IUser otherUser = ess.getUserMap().getUser(server.getPlayer(args[1]));
+		IUser otherUser = ess.getUserMap().matchUser(args[1],Permissions.WARP_HIDDEN.isAuthorized(sender), true);
 		if (otherUser == null)
 		{
 			throw new Exception(_("playerNotFound"));

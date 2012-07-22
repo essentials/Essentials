@@ -5,7 +5,7 @@ import net.ess3.api.IBackup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.IServer;
+import net.ess3.api.server.Server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +16,7 @@ import lombok.Cleanup;
 
 public class Backup implements Runnable, IBackup
 {
-	private transient final IServer server;
+	private transient final Server server;
 	private transient final IEssentials ess;
 	private transient final AtomicBoolean running = new AtomicBoolean(false);
 	private transient int taskId = -1;

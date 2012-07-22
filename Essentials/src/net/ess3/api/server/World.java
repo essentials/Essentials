@@ -24,5 +24,5 @@ public interface World {
 	
 	long getTime();
 
-	void setSpawnLocation(int blockX, int blockY, int blockZ);	
+	boolean setSpawnLocation(int blockX, int blockY, int blockZ);	
 }

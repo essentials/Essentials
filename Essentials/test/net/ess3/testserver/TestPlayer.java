@@ -1,9 +1,9 @@
-package com.earth2me.essentials.testserver;
+package net.ess3.testserver;
 
 import net.ess3.api.IUser;
 import net.ess3.api.server.*;
 
-public class Player implements Player {
+public class TestPlayer implements Player {
 
 	@Override
 	public IUser getUser()
@@ -42,7 +42,7 @@ public class Player implements Player {
 	}
 
 	@Override
-	public World getWorld()
+	public TestWorld getWorld()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
@@ -145,6 +145,54 @@ public class Player implements Player {
 
 	@Override
 	public void sendMessage(String[] string)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setTotalExperience(int exp)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public int getTotalExperience()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setDisplayName(String name)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setPlayerListName(String name)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setSleepingIgnored(boolean b)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean isBanned()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setCompassTarget(Location loc)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void damage(int value)
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

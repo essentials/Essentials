@@ -6,6 +6,7 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
+import net.ess3.bukkit.BukkitPlayer;
 import net.ess3.utils.Util;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
@@ -24,7 +25,7 @@ public class GMGroups implements IRanks {
 	@Override
 	public double getHealCooldown(IUser player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(((BukkitPlayer)player.getBase()).getPlayer());
 		if (handler == null)
 		{
 			return 0;
@@ -35,7 +36,7 @@ public class GMGroups implements IRanks {
 	@Override
 	public double getTeleportCooldown(IUser player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(((BukkitPlayer)player.getBase()).getPlayer());
 		if (handler == null)
 		{
 			return 0;
@@ -46,7 +47,7 @@ public class GMGroups implements IRanks {
 	@Override
 	public double getTeleportDelay(IUser player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(((BukkitPlayer)player.getBase()).getPlayer());
 		if (handler == null)
 		{
 			return 0;
@@ -57,7 +58,7 @@ public class GMGroups implements IRanks {
 	@Override
 	public String getPrefix(IUser player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(((BukkitPlayer)player.getBase()).getPlayer());
 		if (handler == null)
 		{
 			return null;
@@ -68,7 +69,7 @@ public class GMGroups implements IRanks {
 	@Override
 	public String getSuffix(IUser player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(((BukkitPlayer)player.getBase()).getPlayer());
 		if (handler == null)
 		{
 			return null;
@@ -79,7 +80,7 @@ public class GMGroups implements IRanks {
 	@Override
 	public int getHomeLimit(IUser player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(((BukkitPlayer)player.getBase()).getPlayer());
 		if (handler == null)
 		{
 			return 0;
@@ -104,7 +105,7 @@ public class GMGroups implements IRanks {
 	
 	private String getRawChatFormat(final IUser player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(((BukkitPlayer)player.getBase()).getPlayer());
 		if (handler != null)
 		{
 			String chatformat = handler.getPermissionString(player.getName(), "chatformat");
@@ -122,7 +123,7 @@ public class GMGroups implements IRanks {
 	@Override
 	public String getMainGroup(IUser player)
 	{
-		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
+		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(((BukkitPlayer)player.getBase()).getPlayer());
 		if (handler == null)
 		{
 			return null;
@@ -133,7 +134,7 @@ public class GMGroups implements IRanks {
 	@Override
 	public boolean inGroup(IUser player, String groupname)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getBase());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(((BukkitPlayer)player.getBase()).getPlayer());
 		if (handler == null)
 		{
 			return false;

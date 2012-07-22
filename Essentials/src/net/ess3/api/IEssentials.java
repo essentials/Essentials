@@ -1,7 +1,7 @@
 package net.ess3.api;
 
-import net.ess3.api.server.IPlugin;
-import net.ess3.api.server.IServer;
+import net.ess3.api.server.Plugin;
+import net.ess3.api.server.Server;
 import net.ess3.api.server.World;
 import net.ess3.economy.register.Methods;
 import net.ess3.listener.TntExplodeListener;
@@ -59,11 +59,11 @@ public interface IEssentials extends IComponent
 
 	IEconomy getEconomy();
 
-	IServer getServer();
+	Server getServer();
 
 	Logger getLogger();
 
-	IPlugin getPlugin();
+	Plugin getPlugin();
 	
 	List<String> getVanishedPlayers();
 	

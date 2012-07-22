@@ -6,6 +6,7 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
+import net.ess3.bukkit.BukkitPlayer;
 import net.ess3.utils.Util;
 import net.milkbowl.vault.chat.Chat;
 
@@ -23,42 +24,42 @@ public class VaultGroups implements IRanks
 	public double getHealCooldown(IUser player)
 	{
 		Chat chat = ess.getServer().getServiceProvider(Chat.class);
-		return chat.getPlayerInfoDouble(player.getBase(), "healcooldown", 0);
+		return chat.getPlayerInfoDouble(((BukkitPlayer)player.getBase()).getPlayer(), "healcooldown", 0);
 	}
 
 	@Override
 	public double getTeleportCooldown(IUser player)
 	{
 		Chat chat = ess.getServer().getServiceProvider(Chat.class);
-		return chat.getPlayerInfoDouble(player.getBase(), "teleportcooldown", 0);
+		return chat.getPlayerInfoDouble(((BukkitPlayer)player.getBase()).getPlayer(), "teleportcooldown", 0);
 	}
 
 	@Override
 	public double getTeleportDelay(IUser player)
 	{
 		Chat chat = ess.getServer().getServiceProvider(Chat.class);
-		return chat.getPlayerInfoDouble(player.getBase(), "teleportdelay", 0);
+		return chat.getPlayerInfoDouble(((BukkitPlayer)player.getBase()).getPlayer(), "teleportdelay", 0);
 	}
 
 	@Override
 	public String getPrefix(IUser player)
 	{
 		Chat chat = ess.getServer().getServiceProvider(Chat.class);
-		return chat.getPlayerPrefix(player.getBase());
+		return chat.getPlayerPrefix(((BukkitPlayer)player.getBase()).getPlayer());
 	}
 
 	@Override
 	public String getSuffix(IUser player)
 	{
 		Chat chat = ess.getServer().getServiceProvider(Chat.class);
-		return chat.getPlayerSuffix(player.getBase());
+		return chat.getPlayerSuffix(((BukkitPlayer)player.getBase()).getPlayer());
 	}
 
 	@Override
 	public int getHomeLimit(IUser player)
 	{
 		Chat chat = ess.getServer().getServiceProvider(Chat.class);
-		return chat.getPlayerInfoInteger(player.getBase(), "homes", 0);
+		return chat.getPlayerInfoInteger(((BukkitPlayer)player.getBase()).getPlayer(), "homes", 0);
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class VaultGroups implements IRanks
 	private String getRawChatFormat(final IUser player)
 	{
 		Chat chat = ess.getServer().getServiceProvider(Chat.class);
-		String chatformat = chat.getPlayerInfoString(player.getBase(), "chatformat", "");
+		String chatformat = chat.getPlayerInfoString(((BukkitPlayer)player.getBase()).getPlayer(), "chatformat", "");
 		if (chatformat != null && !chatformat.isEmpty())
 		{
 			return chatformat;
@@ -95,14 +96,14 @@ public class VaultGroups implements IRanks
 	public String getMainGroup(IUser player)
 	{
 		Chat chat = ess.getServer().getServiceProvider(Chat.class);
-		return chat.getPrimaryGroup(player.getBase());
+		return chat.getPrimaryGroup(((BukkitPlayer)player.getBase()).getPlayer());
 	}
 
 	@Override
 	public boolean inGroup(IUser player, String groupname)
 	{
 		Chat chat = ess.getServer().getServiceProvider(Chat.class);
-		for (String group : chat.getPlayerGroups(player.getBase()))
+		for (String group : chat.getPlayerGroups(((BukkitPlayer)player.getBase()).getPlayer()))
 		{
 			if (group.equalsIgnoreCase(groupname))
 			{

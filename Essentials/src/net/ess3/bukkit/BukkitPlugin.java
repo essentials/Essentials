@@ -1,7 +1,7 @@
 package net.ess3.bukkit;
 
 import net.ess3.api.server.Player;
-import net.ess3.api.server.IPlugin;
+import net.ess3.api.server.Plugin;
 import net.ess3.api.server.Location;
 import java.io.File;
 import lombok.Delegate;
@@ -10,12 +10,12 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 
-public class Plugin implements IPlugin
+public class BukkitPlugin implements Plugin
 {
 	@Delegate
 	private final org.bukkit.plugin.Plugin plugin;
 
-	public Plugin(final org.bukkit.plugin.Plugin plugin)
+	public BukkitPlugin(final org.bukkit.plugin.Plugin plugin)
 	{
 		this.plugin = plugin;
 	}
@@ -42,6 +42,12 @@ public class Plugin implements IPlugin
 	public int scheduleSyncRepeatingTask(final Runnable run, final long delay, final long period)
 	{
 		return plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, run, delay, period);
+	}
+	
+	@Override
+	public int scheduleAsyncRepeatingTask(final Runnable run, final long delay, final long period)
+	{
+		return plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, run, delay, period);
 	}
 	
 	@Override

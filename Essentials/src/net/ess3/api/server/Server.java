@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 
-public interface IServer
+public interface Server
 {
 	List<World> getWorlds();
 

@@ -85,6 +85,7 @@ public enum Permissions implements IPermission
 	TPOHERE,
 	UNLIMITED_OTHERS,
 	WARP_LIST(Permission.Default.TRUE),
+	WARP_HIDDEN,
 	WARP_OTHERS,
 	VANISH_SEE_OTHERS;
 	private static final String base = "essentials.";

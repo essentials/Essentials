@@ -1,10 +1,10 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-import net.ess3.utils.Util;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
 import net.ess3.permissions.Permissions;
+import net.ess3.utils.Util;
 
 
 public class Commandbalance extends EssentialsCommand
@@ -16,7 +16,7 @@ public class Commandbalance extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		sender.sendMessage(_("balance", Util.displayCurrency(getPlayer(args, 0, true).getMoney(), ess)));
+		sender.sendMessage(_("balance", Util.displayCurrency(ess.getUserMap().matchUser(args[0], true, false).getMoney(), ess)));
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class Commandbalance extends EssentialsCommand
 		final double bal = (args.length < 1
 							|| !Permissions.BALANCE_OTHERS.isAuthorized(user)
 							? user
-							: getPlayer(args, 0, true)).getMoney();
+							: ess.getUserMap().matchUser(args[0], true, false)).getMoney();
 		user.sendMessage(_("balance", Util.displayCurrency(bal, ess)));
 	}
 }

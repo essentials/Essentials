@@ -1,10 +1,13 @@
-package com.earth2me.essentials.testserver;
+package net.ess3.testserver;
 
-import net.ess3.api.server.IPlugin;
 import java.io.File;
 import java.io.InputStream;
+import java.util.logging.Logger;
+import net.ess3.api.server.Location;
+import net.ess3.api.server.Player;
+import net.ess3.api.server.Plugin;
 
-public class Plugin implements IPlugin {
+public class TestPlugin implements Plugin {
 
 	@Override
 	public int scheduleAsyncDelayedTask(Runnable run)
@@ -62,6 +65,30 @@ public class Plugin implements IPlugin {
 
 	@Override
 	public InputStream getResource(String string)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public int scheduleAsyncRepeatingTask(Runnable run, long delay, long period)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Location callRespawnEvent(Player player, Location loc, boolean bedSpawn)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void callSuicideEvent(Player player)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Logger getLogger()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

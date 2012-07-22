@@ -5,13 +5,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.*;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
+import net.ess3.api.server.Plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.PluginCommandYamlParser;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 
 public class EssentialsCommandHandler implements ICommandHandler
@@ -63,6 +64,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 		{
 			settings.unlock();
 		}
+		// TODO: Move this stuff to bukkit workarounds
 		// Allow plugins to override the command via onCommand
 		if (!overridden && (!commandLabel.startsWith("e") || commandLabel.equalsIgnoreCase(command.getName())))
 		{
@@ -102,7 +104,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 			IUser user = null;
 			if (sender instanceof Player)
 			{
-				user = ess.getUserMap().getUser((Player)sender);
+				user = ((Player)sender).getUser();
 				LOGGER.log(Level.INFO, String.format("[PLAYER_COMMAND] %s: /%s %s ", ((Player)sender).getName(), commandLabel, EssentialsCommand.getFinalArg(args, 0)));
 			}
 
@@ -202,6 +204,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 	{
 	}
 
+	//TODO: Move this stuff to bukkit workarounds
 	public final void addPlugin(final Plugin plugin)
 	{
 		if (plugin.getDescription().getMain().contains("com.earth2me.essentials"))

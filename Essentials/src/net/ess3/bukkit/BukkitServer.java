@@ -1,13 +1,13 @@
 package net.ess3.bukkit;
 
-import net.ess3.api.IEssentials;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.IServer;
-import net.ess3.api.server.World;
 import java.util.*;
 import lombok.Delegate;
 import lombok.Getter;
+import net.ess3.api.IEssentials;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Player;
+import net.ess3.api.server.Server;
+import net.ess3.api.server.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,7 +18,7 @@ import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 
-public class Server implements IServer, Listener
+public class BukkitServer implements Server, Listener
 {
 	private IEssentials ess;
 	private interface Excludes
@@ -38,11 +38,11 @@ public class Server implements IServer, Listener
 	private Map<String, World> worldsMap;
 	@Getter
 	private Collection<Player> onlinePlayers;
-	private Map<org.bukkit.entity.Player, Player> onlinePlayersMap;
+	private Map<String, Player> onlinePlayersMap;
 	@Getter
 	private CommandSender consoleSender;
 
-	public Server(final org.bukkit.Server server)
+	public BukkitServer(final org.bukkit.Server server)
 	{
 		this.server = server;
 		consoleSender = new BukkitCommandSender(server.getConsoleSender());
@@ -79,9 +79,9 @@ public class Server implements IServer, Listener
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public synchronized void onPlayerLoginEvent(final PlayerLoginEvent event)
 	{
-		final HashMap<org.bukkit.entity.Player, Player> oplayersMap = new HashMap<org.bukkit.entity.Player, Player>(onlinePlayersMap);
+		final HashMap<String, Player> oplayersMap = new HashMap<String, Player>(onlinePlayersMap);
 		BukkitPlayer p = new BukkitPlayer(event.getPlayer(), this);
-		oplayersMap.put(event.getPlayer(), p);
+		oplayersMap.put(event.getPlayer().getName(), p);
 		onlinePlayersMap = Collections.unmodifiableMap(oplayersMap);
 		onlinePlayers = Collections.unmodifiableCollection(oplayersMap.values());
 	}
@@ -90,8 +90,8 @@ public class Server implements IServer, Listener
 	public synchronized void onPlayerQuitEvent(final PlayerQuitEvent event)
 	{
 		final ArrayList<Player> oplayers = new ArrayList<Player>(onlinePlayers);
-		final HashMap<org.bukkit.entity.Player, Player> oplayersMap = new HashMap<org.bukkit.entity.Player, Player>(onlinePlayersMap);
-		oplayersMap.remove(event.getPlayer());
+		final HashMap<String, Player> oplayersMap = new HashMap<String, Player>(onlinePlayersMap);
+		oplayersMap.remove(event.getPlayer().getName());
 		onlinePlayersMap = Collections.unmodifiableMap(oplayersMap);
 		onlinePlayers = Collections.unmodifiableCollection(oplayersMap.values());
 	}

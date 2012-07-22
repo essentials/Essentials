@@ -1,10 +1,10 @@
 package net.ess3.user;
 
-import net.ess3.api.server.Material;
-import net.ess3.storage.*;
 import java.util.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.ess3.api.server.Material;
+import net.ess3.storage.*;
 
 
 

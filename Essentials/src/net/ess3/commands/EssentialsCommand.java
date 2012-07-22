@@ -5,7 +5,7 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.IEssentialsModule;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.IServer;
+import net.ess3.api.server.Server;
 import net.ess3.api.server.Player;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.AbstractSuperpermsPermission;
@@ -19,7 +19,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	protected transient String commandName;
 	protected transient IEssentials ess;
 	protected transient IEssentialsModule module;
-	protected transient IServer server;
+	protected transient Server server;
 	protected transient Logger logger;
 	private transient String permission;
 
@@ -38,7 +38,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		this.module = module;
 	}
 
-	protected IUser getPlayer(final String[] args, final int pos) throws NoSuchFieldException, NotEnoughArgumentsException
+	/*protected IUser getPlayer(final String[] args, final int pos) throws NoSuchFieldException, NotEnoughArgumentsException
 	{
 		return getPlayer(args, pos, false);
 	}
@@ -81,7 +81,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 			}
 		}
 		throw new NoSuchFieldException(_("playerNotFound"));
-	}
+	}*/
 
 	@Override
 	public final void run(final IUser user, final Command cmd, final String commandLabel, final String[] args) throws Exception

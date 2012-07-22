@@ -1,9 +1,9 @@
 package net.ess3.bukkit;
 
-import net.ess3.api.server.Permission;
 import java.util.regex.Pattern;
 import lombok.Delegate;
 import lombok.Getter;
+import net.ess3.api.server.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;

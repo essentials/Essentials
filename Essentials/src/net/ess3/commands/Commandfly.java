@@ -4,7 +4,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Player;
-import net.ess3.api.server.IServer;
+import net.ess3.api.server.Server;
 import net.ess3.permissions.Permissions;
 
 
@@ -39,7 +39,7 @@ public class Commandfly extends EssentialsCommand
 		user.sendMessage(_("flyMode", _(user.getAllowFlight() ? "enabled" : "disabled"), user.getDisplayName()));
 	}
 
-	private void flyOtherPlayers(final IServer server, final CommandSender sender, final String[] args)
+	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args)
 	{
 		for (Player matchPlayer : ess.getUserMap().matchUsers(args[0],true,true))
 		{	
