@@ -88,7 +88,7 @@ public class Commandeco extends EssentialsCommand
 		}
 		else
 		{
-			final IUser player = ess.getUserMap().matchUser(args[0], true, true);
+			final IUser player = ess.getUserMap().matchUser(args[1], true, true);
 			switch (cmd)
 			{
 			case GIVE:
