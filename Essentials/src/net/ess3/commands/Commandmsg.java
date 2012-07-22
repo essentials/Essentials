@@ -62,7 +62,7 @@ public class Commandmsg extends EssentialsCommand
 			return;
 		}
 
-		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
+		final List<Player> matchedPlayers = ess.getUserMap().matchUser(args[0], false, false);
 
 		if (matchedPlayers.isEmpty())
 		{

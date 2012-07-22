@@ -18,7 +18,7 @@ public class Commandkick extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final IUser user = getPlayer(args, 0);
+		final IUser user = ess.getUserMap().matchUser(args[0], false, false);
 		if (Permissions.KICK_EXEMPT.isAuthorized(user))
 		{
 			throw new Exception(_("kickExempt"));

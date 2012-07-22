@@ -19,7 +19,7 @@ public class Commandunban extends EssentialsCommand
 		try
 		{
 			@Cleanup
-			final IUser player = getPlayer(args, 0, true);
+			final IUser player = ess.getUserMap().matchUser(args[0], false, true);
 			player.acquireWriteLock();
 			player.getData().setBan(null);
 			player.setBanned(false);

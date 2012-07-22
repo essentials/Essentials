@@ -31,7 +31,7 @@ public class Commandseen extends EssentialsCommand
 		}
 		try
 		{
-			IUser u = getPlayer(args, 0);
+			IUser u = ess.getUserMap().matchUser(args[0], false, false);
 			sender.sendMessage(_("seenOnline", u.getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
 		}
 		catch (NoSuchFieldException e)

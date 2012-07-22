@@ -18,7 +18,7 @@ public class Commandtpa extends EssentialsCommand
 		}
 
 		@Cleanup
-		IUser player = getPlayer(args, 0);
+		IUser player = ess.getUserMap().matchUser(args[0], false, false);
 		player.acquireReadLock();
 		if (!player.getData().isTeleportEnabled())
 		{

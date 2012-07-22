@@ -20,7 +20,7 @@ public class Commandmute extends EssentialsCommand
 		}
 
 		@Cleanup
-		final IUser player = getPlayer(args, 0, true);
+		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
 		player.acquireReadLock(); 
 		if (!player.getData().isMuted() && Permissions.MUTE_EXEMPT.isAuthorized(player))
 		{

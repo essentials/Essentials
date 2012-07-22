@@ -28,7 +28,7 @@ public class Commandtp extends EssentialsCommand
 
 		case 1:
 			@Cleanup
-			final IUser player = getPlayer(args, 0);
+			final IUser player = ess.getUserMap().matchUser(args[0], false, false);
 			player.acquireReadLock();
 			if (!player.getData().isTeleportEnabled())
 			{
@@ -52,9 +52,9 @@ public class Commandtp extends EssentialsCommand
 			}
 			user.sendMessage(_("teleporting"));
 			@Cleanup
-			final IUser target = getPlayer(args, 0);
+			final IUser target = ess.getUserMap().matchUser(args[0], false, false);
 			@Cleanup
-			final IUser toPlayer = getPlayer(args, 1);
+			final IUser toPlayer = ess.getUserMap().matchUser(args[1], false, false);
 			target.acquireReadLock();
 			toPlayer.acquireReadLock();
 

@@ -21,7 +21,7 @@ public class Commandinvsee extends EssentialsCommand
 		IUser invUser = user;
 		if (args.length == 1)
 		{
-			invUser = getPlayer(args, 0);
+			invUser = ess.getUserMap().matchUser(args[0], false, false);
 		}
 		user.acquireWriteLock();
 		if (invUser == user && user.getData().getInventory() != null)

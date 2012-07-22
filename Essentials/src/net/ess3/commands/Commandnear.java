@@ -22,7 +22,7 @@ public class Commandnear extends EssentialsCommand
 		{
 			try
 			{
-				otherUser = getPlayer(args, 0);
+				otherUser = ess.getUserMap().matchUser(args[0], false, false);
 			}
 			catch (Exception ex)
 			{
@@ -62,7 +62,7 @@ public class Commandnear extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final IUser otherUser = getPlayer(args, 0);
+		final IUser otherUser = ess.getUserMap().matchUser(args[0], false, false);
 		long radius = 200;
 		if (args.length > 1)
 		{

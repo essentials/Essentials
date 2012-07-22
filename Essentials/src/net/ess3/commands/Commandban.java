@@ -20,7 +20,7 @@ public class Commandban extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		@Cleanup
-		final IUser user = getPlayer(args, 0, true);
+		final IUser user = ess.getUserMap().matchUser(args[0], false, true);
 		if (!user.isOnline())
 		{
 			if (sender instanceof Player && Permissions.BAN_OFFLINE.isAuthorized(user))

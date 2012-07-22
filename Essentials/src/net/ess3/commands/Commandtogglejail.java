@@ -21,7 +21,7 @@ public class Commandtogglejail extends EssentialsCommand
 		}
 
 		@Cleanup
-		final IUser player = getPlayer(args, 0, true);
+		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
 		player.acquireReadLock();
 
 		if (args.length >= 2 && !player.getData().isJailed())

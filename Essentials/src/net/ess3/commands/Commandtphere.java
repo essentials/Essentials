@@ -14,7 +14,7 @@ public class Commandtphere extends EssentialsCommand
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		@Cleanup
-		final IUser player = getPlayer(args, 0);
+		final IUser player = ess.getUserMap().matchUser(args[0], false, false);
 		player.acquireReadLock();
 		if (!player.getData().isTeleportEnabled())
 		{

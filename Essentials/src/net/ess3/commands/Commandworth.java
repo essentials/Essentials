@@ -5,6 +5,7 @@ import net.ess3.utils.Util;
 import net.ess3.api.IUser;
 import net.ess3.api.server.ItemStack;
 import java.util.Locale;
+import net.ess3.api.server.CommandSender;
 
 
 public class Commandworth extends EssentialsCommand

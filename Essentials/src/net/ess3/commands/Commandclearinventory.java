@@ -34,7 +34,7 @@ public class Commandclearinventory extends EssentialsCommand
 			}
 			else
 			{
-				Player p = server.getPlayer(args[0]);
+				Player p = ess.getUserMap().matchUser(args[0], false, false);
 				if (p != null)
 				{
 					p.getInventory().clear();

@@ -16,7 +16,7 @@ public class Commandignore extends EssentialsCommand
 		IUser player;
 		try
 		{
-			player = getPlayer(args, 0);
+			player = ess.getUserMap().matchUser(args[0], false, false);
 		}
 		catch (NoSuchFieldException ex)
 		{

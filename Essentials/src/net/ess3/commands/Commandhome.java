@@ -33,7 +33,7 @@ public class Commandhome extends EssentialsCommand
 			}
 			else
 			{
-				player = getPlayer(nameParts, 0, true);
+				player = ess.getUserMap().matchUser(nameParts[0], false, true);
 				if (nameParts.length > 1)
 				{
 					homeName = nameParts[1];

@@ -37,7 +37,7 @@ public class Commanddelhome extends EssentialsCommand
 
 		if (expandedArg.length > 1 && (user == null || Permissions.DELHOME_OTHERS.isAuthorized(user)))
 		{
-			user = getPlayer(expandedArg, 0, true);
+			user = ess.getUserMap().matchUser(expandedArg[1], false, true);
 			name = expandedArg[1];
 		}
 		else if (user == null)

@@ -18,7 +18,7 @@ public class Commandtpo extends EssentialsCommand
 		}
 
 		//Just basically the old tp command
-		final IUser player = getPlayer(args, 0, true);
+		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
 		// Check if user is offline
 		if (!player.isOnline())
 		{

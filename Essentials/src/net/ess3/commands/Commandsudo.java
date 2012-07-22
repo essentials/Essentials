@@ -16,7 +16,7 @@ public class Commandsudo extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final IUser user = getPlayer(args, 0, false);
+		final IUser user = ess.getUserMap().matchUser(args[0], false, false);
 		final String command = args[1];
 		final String[] arguments = new String[args.length - 2];
 		if (arguments.length > 0)
