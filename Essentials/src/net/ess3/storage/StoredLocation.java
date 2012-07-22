@@ -1,16 +1,14 @@
 package net.ess3.storage;
 
-import net.ess3.api.server.World;
-import net.ess3.api.server.Location;
 import java.lang.ref.WeakReference;
-import java.util.UUID;
+import net.ess3.api.server.Location;
+import net.ess3.api.server.World;
 
 
 public class StoredLocation
 {
 	private WeakReference<Location> location;
 	private final String worldname;
-	private UUID worldUID = null;
 	private final double x;
 	private final double y;
 	private final double z;
@@ -21,7 +19,6 @@ public class StoredLocation
 	{
 		location = new WeakReference<Location>(loc);
 		worldname = loc.getWorld().getName();
-		worldUID = loc.getWorld().getUID();
 		x = loc.getX();
 		y = loc.getY();
 		z = loc.getZ();
@@ -55,20 +52,7 @@ public class StoredLocation
 		Location loc = location == null ? null : location.get();
 		if (loc == null)
 		{
-			World world = null;
-			if (worldUID != null)
-			{
-				world = Bukkit.getWorld(worldUID);
-			}
-			if (world == null)
-			{
-				world = Bukkit.getWorld(worldname);
-			}
-			if (world == null)
-			{
-				throw new WorldNotLoadedException(worldname);
-			}
-			loc = Location.create(world, getX(), getY(), getZ(), getYaw(), getPitch());
+			loc = Location.create(worldname, getX(), getY(), getZ(), getYaw(), getPitch());
 			location = new WeakReference<Location>(loc);
 		}
 		return loc;
