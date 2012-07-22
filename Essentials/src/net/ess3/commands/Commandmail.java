@@ -37,7 +37,7 @@ public class Commandmail extends EssentialsCommand
 				throw new Exception(_("noPerm", "essentials.mail.send"));
 			}
 
-			Player player = ess.getUserMap().matchUser(args[1], true, false);
+			Player player = ess.getUserMap().matchUser(args[1], true, true);
 			IUser u;
 			if (player != null)
 			{
@@ -45,7 +45,7 @@ public class Commandmail extends EssentialsCommand
 			}
 			else
 			{
-				u = ess.getUserMap().matchUser(args[1], true, false);
+				u = ess.getUserMap().matchUser(args[1], true, true);
 			}
 			if (u == null)
 			{
@@ -92,7 +92,7 @@ public class Commandmail extends EssentialsCommand
 		}
 		else if (args.length >= 3 && "send".equalsIgnoreCase(args[0]))
 		{
-			Player player = ess.getUserMap().matchUser(args[1], true, false);
+			Player player = ess.getUserMap().matchUser(args[1], true, true);
 			IUser u;
 			if (player != null)
 			{
@@ -100,7 +100,7 @@ public class Commandmail extends EssentialsCommand
 			}
 			else
 			{
-				u = ess.getUserMap().matchUser(args[1], true, false);
+				u = ess.getUserMap().matchUser(args[1], true, true);
 			}
 			if (u == null)
 			{
@@ -117,7 +117,7 @@ public class Commandmail extends EssentialsCommand
 		else if (args.length >= 2)
 		{
 			//allow sending from console without "send" argument, since it's the only thing the console can do
-			Player player = ess.getUserMap().matchUser(args[0], true, false);
+			Player player = ess.getUserMap().matchUser(args[0], true, true);
 			IUser u;
 			if (player != null)
 			{
@@ -125,7 +125,7 @@ public class Commandmail extends EssentialsCommand
 			}
 			else
 			{
-				u = ess.getUserMap().matchUser(args[0], true, false);
+				u = ess.getUserMap().matchUser(args[0], true, true);
 			}
 			if (u == null)
 			{

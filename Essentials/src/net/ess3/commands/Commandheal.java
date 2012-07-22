@@ -45,7 +45,7 @@ public class Commandheal extends EssentialsCommand
 
 	private void healOtherPlayers(final CommandSender sender, final String name)
 	{
-		final Set<IUser> users = ess.getUserMap().matchUsers(name, false, true);
+		final Set<IUser> users = ess.getUserMap().matchUsers(name, false, false);
 		if (users.isEmpty())
 		{
 			sender.sendMessage(_("playerNotFound"));

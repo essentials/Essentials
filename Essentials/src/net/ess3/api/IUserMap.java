@@ -22,7 +22,7 @@ public interface IUserMap extends IReload
 
 	File getUserFile(final String name) throws InvalidNameException;
 	
-	IUser matchUser(final String name, final boolean includeHidden, final boolean onlineOnly) throws TooManyMatchesException;
+	IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline) throws TooManyMatchesException;
 	
-	Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean onlineOnly);
+	Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline);
 }

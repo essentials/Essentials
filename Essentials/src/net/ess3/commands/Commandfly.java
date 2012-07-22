@@ -41,7 +41,7 @@ public class Commandfly extends EssentialsCommand
 
 	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args)
 	{
-		for (Player matchPlayer : ess.getUserMap().matchUsers(args[0],true,true))
+		for (Player matchPlayer : ess.getUserMap().matchUsers(args[0],false,false))
 		{	
 			if (args.length > 1)
 			{

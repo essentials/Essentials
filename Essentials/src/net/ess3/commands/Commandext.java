@@ -34,7 +34,7 @@ public class Commandext extends EssentialsCommand
 
 	private void extinguishPlayers(final CommandSender sender, final String name) throws Exception
 	{
-		for (Player matchPlayer : ess.getUserMap().matchUsers(name, true, false))
+		for (Player matchPlayer : ess.getUserMap().matchUsers(name, false, false))
 		{
 			matchPlayer.setFireTicks(0);
 			sender.sendMessage(_("extinguishOthers", matchPlayer.getDisplayName()));

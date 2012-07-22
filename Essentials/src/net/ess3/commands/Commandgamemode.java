@@ -37,7 +37,7 @@ public class Commandgamemode extends EssentialsCommand
 
 	private void gamemodeOtherPlayers(final CommandSender sender, final String args[])
 	{
-		for (Player player : ess.getUserMap().matchUsers(args[0], false, true))
+		for (Player player : ess.getUserMap().matchUsers(args[0], false, false))
 		{		
 			if (args.length > 1)
 			{

@@ -15,7 +15,7 @@ public class Commandburn extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		for (Player p : ess.getUserMap().matchUsers(args[0], false, true))
+		for (Player p : ess.getUserMap().matchUsers(args[0], false, false))
 		{
 			p.setFireTicks(Integer.parseInt(args[1]) * 20);
 			sender.sendMessage(_("burnMsg", p.getDisplayName(), Integer.parseInt(args[1])));

@@ -16,7 +16,7 @@ public class Commandbalance extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		sender.sendMessage(_("balance", Util.displayCurrency(ess.getUserMap().matchUser(args[0], true, false).getMoney(), ess)));
+		sender.sendMessage(_("balance", Util.displayCurrency(ess.getUserMap().matchUser(args[0], true, true).getMoney(), ess)));
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class Commandbalance extends EssentialsCommand
 		final double bal = (args.length < 1
 							|| !Permissions.BALANCE_OTHERS.isAuthorized(user)
 							? user
-							: ess.getUserMap().matchUser(args[0], true, false)).getMoney();
+							: ess.getUserMap().matchUser(args[0], true, true)).getMoney();
 		user.sendMessage(_("balance", Util.displayCurrency(bal, ess)));
 	}
 }
