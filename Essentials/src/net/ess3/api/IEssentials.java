@@ -1,15 +1,12 @@
 package net.ess3.api;
 
+import java.util.List;
+import java.util.logging.Logger;
+import net.ess3.EssentialsTimer;
 import net.ess3.api.server.Plugin;
 import net.ess3.api.server.Server;
 import net.ess3.api.server.World;
 import net.ess3.economy.register.Methods;
-import net.ess3.listener.TntExplodeListener;
-import java.util.logging.Logger;
-import java.util.List;
-import net.ess3.EssentialsTimer;
-import net.ess3.economy.register.Methods;
-import net.ess3.listener.TntExplodeListener;
 import net.ess3.metrics.Metrics;
 
 
@@ -51,7 +48,6 @@ public interface IEssentials extends IComponent
 	//int scheduleSyncRepeatingTask(Runnable run, long delay, long period);
 	//IPermissionsHandler getPermissionsHandler();
 	//void reload();
-	TntExplodeListener getTNTListener();
 
 	void setRanks(IRanks groups);
 

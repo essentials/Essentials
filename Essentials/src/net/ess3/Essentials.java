@@ -45,7 +45,6 @@ import net.ess3.settings.SettingsHolder;
 import net.ess3.settings.SpawnsHolder;
 import net.ess3.user.UserMap;
 import net.ess3.utils.ExecuteTimer;
-import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -57,7 +56,6 @@ import org.yaml.snakeyaml.error.YAMLException;
 public class Essentials implements IEssentials
 {
 	private transient ISettings settings;
-	private final transient TntExplodeListener tntListener = new TntExplodeListener(this);
 	private transient IJails jails;
 	private transient IKits kits;
 	private transient IWarps warps;
@@ -214,8 +212,6 @@ public class Essentials implements IEssentials
 		jails = new Jails(this);
 		reloadList.add(jails);
 
-		pm.registerEvents(tntListener, this);
-
 
 		timer = new EssentialsTimer(this);
 		getPlugin().scheduleSyncRepeatingTask(timer, 1, 100);
@@ -370,12 +366,6 @@ public class Essentials implements IEssentials
 		}
 
 		return getServer().getOnlinePlayers().size();
-	}
-
-	@Override
-	public TntExplodeListener getTNTListener()
-	{
-		return tntListener;
 	}
 
 	/*
