@@ -34,4 +34,6 @@ public abstract class Material {
 	public abstract int getMaxDurability();
 
 	protected abstract Material matchMaterial(String string);
+
+	public abstract ItemStack convertToItem(ItemStack is);
 }

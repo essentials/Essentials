@@ -7,8 +7,8 @@ import net.ess3.api.server.IInventory;
 import net.ess3.api.server.Location;
 import net.ess3.api.server.Player;
 import net.ess3.api.server.World;
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.LivingEntity;
 
 
 public class BukkitPlayer extends BukkitCommandSender implements Player
@@ -33,7 +33,7 @@ public class BukkitPlayer extends BukkitCommandSender implements Player
 	}
 	@Delegate(types =
 	{
-		org.bukkit.entity.Player.class, LivingEntity.class
+		org.bukkit.entity.Player.class, org.bukkit.entity.LivingEntity.class
 	}, excludes =
 	{
 		OfflinePlayer.class, org.bukkit.command.CommandSender.class, Excludes.class
@@ -50,6 +50,7 @@ public class BukkitPlayer extends BukkitCommandSender implements Player
 	@Getter
 	private transient OfflinePlayer safePlayer;
 	private final transient BukkitServer server;
+	private transient IUser user = null;
 
 	public BukkitPlayer(final OfflinePlayer player, final BukkitServer server)
 	{
@@ -85,7 +86,7 @@ public class BukkitPlayer extends BukkitCommandSender implements Player
 	@Override
 	public IUser getUser()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		return user;
 	}
 
 	@Override
@@ -201,5 +202,12 @@ public class BukkitPlayer extends BukkitCommandSender implements Player
 	public void setCompassTarget(final Location loc)
 	{
 		onlinePlayer.setCompassTarget(((BukkitLocation)loc).getBukkitLocation());
+	}
+	
+	
+	@Override
+	public boolean isInSurvivalMode()
+	{
+		return onlinePlayer.getGameMode() == GameMode.SURVIVAL;
 	}
 }

@@ -58,4 +58,6 @@ public interface Player extends CommandSender
 	void setCompassTarget(Location loc);
 	
 	void damage(int value);
+	
+	boolean isInSurvivalMode();
 }

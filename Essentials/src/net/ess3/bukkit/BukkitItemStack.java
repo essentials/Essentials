@@ -53,6 +53,18 @@ public class BukkitItemStack extends net.ess3.api.server.ItemStack
 	{
 		return Material.get(itemStack.getTypeId());
 	}
+	
+	@Override
+	public void setType(Material type)
+	{
+		itemStack.setTypeId(type.getId());
+	}
+	
+	@Override
+	public void setType(int id)
+	{
+		itemStack.setTypeId(id);
+	}
 
 	@Override
 	public boolean isAir()

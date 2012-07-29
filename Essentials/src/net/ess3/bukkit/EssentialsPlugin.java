@@ -1,9 +1,9 @@
 package net.ess3.bukkit;
 
+import java.util.logging.Level;
 import net.ess3.Essentials;
 import static net.ess3.I18n._;
 import net.ess3.api.server.*;
-import java.util.logging.Level;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +33,7 @@ public class EssentialsPlugin extends JavaPlugin
 		BukkitServer server = new BukkitServer(getServer());
 		final PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(server, this);
-		ess = new Essentials(server, getLogger(), new BukkitPlugin(this));
+		ess = new Essentials(server, getLogger(), new BukkitPlugin(this, server));
 		if (VersionCheck.checkVersion(this))
 		{
 			try

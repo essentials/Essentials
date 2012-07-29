@@ -30,6 +30,8 @@ public class BukkitServer implements Server, Listener
 		org.bukkit.entity.Player[] getOnlinePlayers();
 		
 		BukkitCommandSender getConsoleSender();
+		
+		org.bukkit.entity.Player getPlayer(String name);
 	}
 	@Delegate(excludes = Excludes.class)
 	private final org.bukkit.Server server;
@@ -81,6 +83,7 @@ public class BukkitServer implements Server, Listener
 	{
 		final HashMap<String, Player> oplayersMap = new HashMap<String, Player>(onlinePlayersMap);
 		BukkitPlayer p = new BukkitPlayer(event.getPlayer(), this);
+		
 		oplayersMap.put(event.getPlayer().getName(), p);
 		onlinePlayersMap = Collections.unmodifiableMap(oplayersMap);
 		onlinePlayers = Collections.unmodifiableCollection(oplayersMap.values());
@@ -121,6 +124,11 @@ public class BukkitServer implements Server, Listener
 	}
 	
 	public Player getPlayer(final org.bukkit.entity.Player player) {
-		return onlinePlayersMap.get(player);
+		return onlinePlayersMap.get(player.getName());
+	}
+	
+	@Override
+	public Player getPlayer(final String playerName) {
+		return onlinePlayersMap.get(playerName);
 	}
 }

@@ -750,6 +750,4 @@ public class User extends UserBase implements IUser
 		final boolean set = !vanished;
 		this.setVanished(set);
 	}
-
-	
 }

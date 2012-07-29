@@ -34,4 +34,6 @@ public interface Plugin
 	void callSuicideEvent(Player player);
 	
 	Logger getLogger();
+	
+	Server getServer();
 }

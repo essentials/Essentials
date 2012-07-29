@@ -26,12 +26,18 @@ public abstract class ItemStack implements Cloneable
 	}
 
 	public abstract Material getType();
+	
+	public abstract void setType(Material mat);
+	
+	public abstract void setType(int id);
 
 	public abstract int getAmount();
 
 	public abstract void setAmount(int value);
 	
-	public abstract short getDurability(); 
+	public abstract short getDurability();
+	
+	public abstract void setDurability(short value);
 
 	public abstract int getMaxStackSize();
 

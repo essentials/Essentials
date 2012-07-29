@@ -2,16 +2,15 @@ package net.ess3.listener;
 
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
-import net.ess3.utils.Util;
-import org.bukkit.GameMode;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.ItemStack;
+import net.ess3.api.ondemand.OnDemand;
+import net.ess3.api.server.Block;
+import net.ess3.api.server.ItemStack;
+import net.ess3.api.server.events.EventListener;
+import net.ess3.api.server.events.EventPriority;
+import net.ess3.api.server.events.EventType;
 
 
-public class EssentialsBlockListener implements Listener
+public class EssentialsBlockListener extends EventListener
 {
 	private final transient IEssentials ess;
 
@@ -19,21 +18,20 @@ public class EssentialsBlockListener implements Listener
 	{
 		super();
 		this.ess = ess;
+		register(EventType.PLACE_BLOCK, EventPriority.LOW, true);
 	}
 
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-	public void onBlockPlace(final BlockPlaceEvent event)
+	@Override
+	public boolean onBlockPlace(final Block placedBlock, final OnDemand<IUser> user)
 	{
-		// Do not rely on getItemInHand();
-		// http://leaky.bukkit.org/issues/663		
-		final ItemStack itemstack = Util.convertBlockToItem(event.getBlockPlaced());
-		if (itemstack == null)
+		final ItemStack itemstack = placedBlock.convertToItem();
+		if (placedBlock == null)
 		{
-			return;
+			return true;
 		}
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		final boolean unlimitedForUser = user.getData().hasUnlimited(itemstack.getType());
-		if (unlimitedForUser && user.getGameMode() == GameMode.SURVIVAL)
+
+		final boolean unlimitedForUser = user.get().getData().hasUnlimited(itemstack.getType());
+		if (unlimitedForUser && user.get().isInSurvivalMode())
 		{
 			ess.getPlugin().scheduleSyncDelayedTask(
 					new Runnable()
@@ -41,10 +39,11 @@ public class EssentialsBlockListener implements Listener
 						@Override
 						public void run()
 						{
-							user.getInventory().addItem(itemstack);
-							user.updateInventory();
+							user.get().getInventory().addItem(itemstack);
+							user.get().updateInventory();
 						}
 					});
 		}
+		return true;
 	}
 }

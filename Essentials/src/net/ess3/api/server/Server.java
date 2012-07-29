@@ -25,4 +25,6 @@ public interface Server
 	String getVersion();
 
 	public void unbanIP(String string);
+	
+	public Player getPlayer(String name);
 }
