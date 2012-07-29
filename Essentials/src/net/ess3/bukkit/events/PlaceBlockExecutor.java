@@ -26,6 +26,7 @@ public class PlaceBlockExecutor extends BaseEventExecutor
 		org.bukkit.block.Block bukkitBlock = ((BlockPlaceEvent)event).getBlockPlaced();
 		Block block = BukkitBlockFactory.convert(bukkitBlock);
 		String playername = ((BlockPlaceEvent)event).getPlayer().getName();
-		listener.onBlockPlace(block, new UserOnDemand(playername, server));
+		boolean success = listener.onBlockPlace(block, new UserOnDemand(playername, server));
+		((BlockPlaceEvent)event).setCancelled(!success);
 	}
 }
