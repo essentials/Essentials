@@ -19,9 +19,9 @@ groups:
     - g:essentials_default
     - g:towny_default
     info:
-      prefix: '&e'
-      build: false
-      suffix: ''
+      prefix: '&eMember&e'
+      build: true
+      suffix: '&eMember&e'
   Builder:
     default: false
     permissions: []
@@ -30,9 +30,9 @@ groups:
     - g:essentials_builder
     - g:towny_builder
     info:
-      prefix: '&2'
+      prefix: '&2Builder&2'
       build: true
-      suffix: ''
+      suffix: '%2Builder&2'
   Moderator:
     default: false
     permissions: []
@@ -44,9 +44,9 @@ groups:
     - g:towny_moderator
     - g:vanish_moderator
     info:
-      prefix: '&5'
+      prefix: '&5Moderator&5'
       build: true
-      suffix: ''
+      suffix: '&5Moderator&5'
   Admin:
     default: false
     permissions: []
@@ -58,9 +58,9 @@ groups:
     - g:towny_admin
     - g:vanish_admin
     info:
-      prefix: '&c'
+      prefix: '&cAdmin&c'
       build: true
-      suffix: ''
+      suffix: '&cAdmin&c'
   Owner:
     default: false
     permissions:
@@ -69,6 +69,6 @@ groups:
     inheritance:
     - admin
     info:
-      prefix: '&4'
+      prefix: '$4Owner&4'
       build: true
-      suffix: ''
+      suffix: '&4Owner&4'
