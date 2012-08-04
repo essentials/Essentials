@@ -35,8 +35,19 @@ public class Commandgc extends EssentialsCommand
 
 		for (World w : server.getWorlds())
 		{
+			String worldType = "World";
+			switch (w.getEnvironment())
+			{
+			case World.Environment.NETHER:
+				worldType = "Nether";
+				break;
+			case World.Environment.THE_END:
+				worldType = "The End";
+				break;
+			}
+
 			sender.sendMessage(
-					(w.getEnvironment() == World.Environment.NETHER ? "Nether" : "World") + " \"" + w.getName() + "\": "
+					worldType + " \"" + w.getName() + "\": "
 					+ w.getLoadedChunks().length + _("gcchunks")
 					+ w.getEntities().size() + _("gcentities"));
 		}
