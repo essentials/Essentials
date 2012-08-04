@@ -38,10 +38,10 @@ public class Commandgc extends EssentialsCommand
 			String worldType = "World";
 			switch (w.getEnvironment())
 			{
-			case World.Environment.NETHER:
+			case NETHER:
 				worldType = "Nether";
 				break;
-			case World.Environment.THE_END:
+			case THE_END:
 				worldType = "The End";
 				break;
 			}
