@@ -212,24 +212,24 @@ kits:
 # We recommend not enabling chest protection signs if you don't intend to use them, (or are using LWC/Lockette).
 
 enabledSigns:
-  #- color
   #- balance
-  #- buy  
-  #- sell
-  #- trade
-  #- free
-  #- disposal
-  #- warp
-  #- kit
-  #- mail
-  #- enchant
-  #- gamemode
-  #- heal
-  #- spawnmob
-  #- time
-  #- weather
-  #- protection
-  
+	#- buy
+	#- disposal
+	#- enchant
+	#- free
+	#- gamemode
+	#- heal
+  #- info
+	#- kit
+	#- mail
+	#- protection
+  #- repair
+	#- sell
+	#- spawnmob
+	#- time
+	#- trade
+	#- warp
+	#- weather 
   
 # How many times per second can Essentials signs be interacted with.
 # Values should be between 1-20, 20 being virtually no lag protection.s
