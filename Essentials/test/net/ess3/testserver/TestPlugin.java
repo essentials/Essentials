@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import net.ess3.api.server.Location;
 import net.ess3.api.server.Player;
 import net.ess3.api.server.Plugin;
+import net.ess3.api.server.Server;
 
 public class TestPlugin implements Plugin {
 
@@ -89,6 +90,12 @@ public class TestPlugin implements Plugin {
 
 	@Override
 	public Logger getLogger()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Server getServer()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

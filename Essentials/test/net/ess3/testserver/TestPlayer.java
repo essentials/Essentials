@@ -197,4 +197,10 @@ public class TestPlayer implements Player {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
+	@Override
+	public boolean isInSurvivalMode()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
 }

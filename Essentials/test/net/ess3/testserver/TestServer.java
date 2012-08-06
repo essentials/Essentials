@@ -86,4 +86,10 @@ public class TestServer implements Server {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
+	@Override
+	public Player getPlayer(String name)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
 }

@@ -1,9 +1,9 @@
 package net.ess3.bukkit;
 
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Permission;
 import lombok.Delegate;
 import lombok.Getter;
+import net.ess3.api.server.CommandSender;
+import net.ess3.api.server.Permission;
 
 
 public class BukkitCommandSender implements CommandSender
@@ -29,6 +29,7 @@ public class BukkitCommandSender implements CommandSender
 		return commandSender.isOp();
 	}
 	
+	@Override
 	public boolean hasPermission(Permission permission)
 	{
 		if (commandSender == null) {
@@ -36,5 +37,17 @@ public class BukkitCommandSender implements CommandSender
 		} else {
 			return commandSender.hasPermission(((BukkitPermission)permission).getBukkitPermission());
 		}
+	}
+
+	@Override
+	public void sendMessage(String message)
+	{
+		commandSender.sendMessage(message);
+	}
+
+	@Override
+	public void sendMessage(String[] string)
+	{
+		commandSender.sendMessage(string);
 	}
 }
