@@ -166,6 +166,8 @@ player-commands:
   - signs.use.trade
   - signs.use.warp
   - signs.use.weather
+  - signs.use.info
+  - signs.use.repair
   - spawn
   - suicide
   - time
