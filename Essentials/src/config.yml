@@ -214,6 +214,7 @@ kits:
 enabledSigns:
   #- balance
 	#- buy
+  #- color
 	#- disposal
 	#- enchant
 	#- free
