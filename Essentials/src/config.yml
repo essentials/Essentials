@@ -196,7 +196,7 @@ kits:
     delay: 10
     items:
       - 272 1
-      - 273 1 
+      - 273 1
       - 274 1
       - 275 1
 
@@ -209,7 +209,7 @@ kits:
 enabledSigns:
   #- color
   #- balance
-  #- buy  
+  #- buy
   #- sell
   #- trade
   #- free
