@@ -18,7 +18,7 @@ public class Block {
 
 	public ItemStack convertToItem()
 	{
-		final ItemStack is = ItemStack.create(this.getType(), 1, this.getDurability());
-		return this.getType().convertToItem(is);
+		final ItemStack is = ItemStack.create(this.stack.getType(), 1, this.stack.getDurability());
+		return this.stack.getType().convertToItem(is);
 	}
 }

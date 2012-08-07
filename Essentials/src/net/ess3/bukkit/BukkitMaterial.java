@@ -18,6 +18,18 @@ public class BukkitMaterial extends Material
 		}
 	}
 
+	@Override
+	public int getId()
+	{
+		return this.material.getId();
+	}
+
+	@Override
+	public int getMaxStackSize()
+	{
+		return this.material.getMaxStackSize();
+	}
+
 	private interface Excludes {
 		short getMaxDurability();
 	}
