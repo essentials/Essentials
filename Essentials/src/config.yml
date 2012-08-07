@@ -514,7 +514,7 @@ protect:
       ender_dragon: false
       pig: false
       sheep: false
-      cow: false      
+      cow: false
       chicken: false
       squid: false
       wolf: false
