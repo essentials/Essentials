@@ -197,13 +197,6 @@ kits:
       - 273 1 
       - 274 1
       - 275 1
-  tools:
-    delay: 10
-    items:
-      - 272 1
-      - 273 1
-      - 274 1
-      - 275 1
 
 # Essentials Sign Control
 # See http://ess.khhq.net/wiki/Sign_Tutorial for instructions on how to use these.
@@ -213,24 +206,24 @@ kits:
 
 enabledSigns:
   #- balance
-	#- buy
+  #- buy
   #- color
-	#- disposal
-	#- enchant
-	#- free
-	#- gamemode
-	#- heal
+  #- disposal
+  #- enchant
+  #- free
+  #- gamemode
+  #- heal
   #- info
-	#- kit
-	#- mail
-	#- protection
+  #- kit
+  #- mail
+  #- protection
   #- repair
-	#- sell
-	#- spawnmob
-	#- time
-	#- trade
-	#- warp
-	#- weather 
+  #- sell
+  #- spawnmob
+  #- time
+  #- trade
+  #- warp
+  #- weather 
   
 # How many times per second can Essentials signs be interacted with.
 # Values should be between 1-20, 20 being virtually no lag protection.s
