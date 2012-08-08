@@ -1,26 +1,26 @@
 ############################################################
 # +------------------------------------------------------+ #
-# |                       Notes                          | #
+# | Notes | #
 # +------------------------------------------------------+ #
 ############################################################
 
 # If you want to use special characters in this document, such as accented letters, you MUST save the file as UTF-8, not ANSI.
 # If you receive an error when Essentials loads, ensure that:
-#   - No tabs are present: YAML only allows spaces
-#   - Indents are correct: YAML hierarchy is based entirely on indentation
-#   - You have "escaped" all apostrophes in your text: If you want to write "don't", for example, write "don''t" instead (note the doubled apostrphe)
-#   - List items are prefixed with a hyphen and indented:
-#       lists:
-#         - look like this
-#       not:
-#       - like this
-#   - Text with symbols is enclosed in single or double quotation marks
-#   - CraftBukkit and Permissions have been updated: CraftBukkit and Essentials almost always line up, but sometimes other plugins fall behind CraftBukkit's multiple daily updates
-#   - You have saved the document as UTF-8, NOT the default, ANSI
+# - No tabs are present: YAML only allows spaces
+# - Indents are correct: YAML hierarchy is based entirely on indentation
+# - You have "escaped" all apostrophes in your text: If you want to write "don't", for example, write "don''t" instead (note the doubled apostrphe)
+# - List items are prefixed with a hyphen and indented:
+# lists:
+# - look like this
+# not:
+# - like this
+# - Text with symbols is enclosed in single or double quotation marks
+# - CraftBukkit and Permissions have been updated: CraftBukkit and Essentials almost always line up, but sometimes other plugins fall behind CraftBukkit's multiple daily updates
+# - You have saved the document as UTF-8, NOT the default, ANSI
 
 ############################################################
 # +------------------------------------------------------+ #
-# |                 Essentials (Global)                  | #
+# | Essentials (Global) | #
 # +------------------------------------------------------+ #
 ############################################################
 
@@ -47,7 +47,7 @@ change-displayname: true
 # The delay, in seconds, required between /home, /tp, etc.
 teleport-cooldown: 0
 
-# The delay, in seconds, before a user actually teleports.  If the user moves or gets attacked in this timeframe, the teleport never occurs.
+# The delay, in seconds, before a user actually teleports. If the user moves or gets attacked in this timeframe, the teleport never occurs.
 teleport-delay: 0
 
 # The delay, in seconds, a player can't be attacked by other players after he has been teleported by a command
@@ -64,12 +64,12 @@ item-spawn-blacklist:
 # Set this to true if you want permission based item spawn rules
 # Note: The blacklist above will be ignored then.
 # Permissions:
-#  - essentials.itemspawn.item-all
-#  - essentials.itemspawn.item-[itemname]
-#  - essentials.itemspawn.item-[itemid]
-#  - essentials.give.item-all
-#  - essentials.give.item-[itemname]
-#  - essentials.give.item-[itemid]
+# - essentials.itemspawn.item-all
+# - essentials.itemspawn.item-[itemname]
+# - essentials.itemspawn.item-[itemid]
+# - essentials.give.item-all
+# - essentials.give.item-[itemname]
+# - essentials.give.item-[itemid]
 permission-based-item-spawn: false
 
 # Mob limit on spawnmob
@@ -81,13 +81,13 @@ warn-on-smite: true
 # motd and rules are now configured in the files motd.txt and rules.txt
 
 # When a command conflicts with another plugin, by default, Essentials will try to force the OTHER plugin to take
-# priority.  If a command is in this list, Essentials will try to give ITSELF priority.  This does not always work:
-# usually whichever plugin was updated most recently wins out.  However, the full name of the command will always work.
+# priority. If a command is in this list, Essentials will try to give ITSELF priority. This does not always work:
+# usually whichever plugin was updated most recently wins out. However, the full name of the command will always work.
 # For example, if WorldGuard and Essentials are both enabled, and WorldGuard takes control over /god, /essentials:god
-# will still map to Essentials, whereas it might normally get forced upon WorldGuard.  Commands prefixed with an "e",
+# will still map to Essentials, whereas it might normally get forced upon WorldGuard. Commands prefixed with an "e",
 # such as /egod, will always grant Essentials priority.
-# We should try to take priority over /god.  If this doesn't work, use
-# /essentials:god or /egod.  If god is set using WorldGuard, use /ungod to remove then use whichever you see fit.
+# We should try to take priority over /god. If this doesn't work, use
+# /essentials:god or /egod. If god is set using WorldGuard, use /ungod to remove then use whichever you see fit.
 overridden-commands:
   - god
 
@@ -156,11 +156,13 @@ player-commands:
   - signs.use.disposal
   - signs.use.enchant
   - signs.use.free
-  - signs.use.gamemode  
+  - signs.use.gamemode
   - signs.use.heal
+  - signs.use.info
   - signs.use.kit
   - signs.use.mail
   - signs.use.protection
+  - signs.use.repair
   - signs.use.sell
   - signs.use.time
   - signs.use.trade
@@ -194,13 +196,6 @@ kits:
     delay: 10
     items:
       - 272 1
-      - 273 1 
-      - 274 1
-      - 275 1
-  tools:
-    delay: 10
-    items:
-      - 272 1
       - 273 1
       - 274 1
       - 275 1
@@ -212,25 +207,26 @@ kits:
 # We recommend not enabling chest protection signs if you don't intend to use them, (or are using LWC/Lockette).
 
 enabledSigns:
-  #- balance
-	#- buy
   #- color
-	#- disposal
-	#- enchant
-	#- free
-	#- gamemode
-	#- heal
+  #- balance
+  #- buy
+  #- sell
+  #- trade
+  #- free
+  #- disposal
+  #- warp
+  #- kit
+  #- mail
+  #- enchant
+  #- gamemode
+  #- heal
   #- info
-	#- kit
-	#- mail
-	#- protection
+  #- spawnmob
   #- repair
-	#- sell
-	#- spawnmob
-	#- time
-	#- trade
-	#- warp
-	#- weather 
+  #- time
+  #- weather
+  #- protection
+  
   
 # How many times per second can Essentials signs be interacted with.
 # Values should be between 1-20, 20 being virtually no lag protection.s
@@ -287,7 +283,7 @@ freeze-afk-players: false
 disable-item-pickup-while-afk: false
 
 # Should we automatically remove afk status when the player moves?
-# Player will be removed from afk on chat/command regardless of this setting.
+# Player will be removed from afk on chat/command reguardless of this setting.
 # Disable this to reduce server lag.
 cancel-afk-on-move: true
 
@@ -296,7 +292,7 @@ death-messages: true
 
 # Add worlds to this list, if you want to automatically disable god mode there
 no-god-in-worlds:
-#  - world_nether
+# - world_nether
 
 # Set to true to enable per-world permissions for teleporting between worlds with essentials commands
 # This applies to /world, /back, /tp[a|o][here|all], but not warps.
@@ -322,19 +318,12 @@ repair-enchanted: true
 #If you set this to true any plugin that uses teleport will have the previous location registered.
 register-back-in-listener: false
 
-#Set timeout in seconds for players to accept tpa before request is cancelled.
-#Set to 0 for no timeout
-tpa-accept-cancellation: 0
-
-#Cancels a request made by tpa / tpc on world change to prevent cross world tp
-cancel-tp-requests-on-world-change: false
-
-#Delay to wait before people can cause attack damage after logging in 
+#Delay to wait before people can cause attack damage after logging in
 login-attack-delay: 5
 
 ############################################################
 # +------------------------------------------------------+ #
-# |                   EssentialsHome                     | #
+# | EssentialsHome | #
 # +------------------------------------------------------+ #
 ############################################################
 
@@ -353,7 +342,7 @@ world-home-permissions: false
 # Players need essentials.sethome.multiple before they can have more than 1 home, default to 'default' below.
 # Define different amounts of multiple homes for different permissions, e.g. essentials.sethome.multiple.vip
 # People with essentials.sethome.multiple.unlimited are not limited by these numbers.
-sethome-multiple:  
+sethome-multiple:
   default: 3
   # essentials.sethome.multiple.vip
   vip: 5
@@ -366,11 +355,11 @@ tpa-accept-cancellation: 0
 
 ############################################################
 # +------------------------------------------------------+ #
-# |                   EssentialsEco                      | #
+# | EssentialsEco | #
 # +------------------------------------------------------+ #
 ############################################################
 
-# Defines the balance with which new players begin.  Defaults to 0.
+# Defines the balance with which new players begin. Defaults to 0.
 starting-balance: 0
 
 # worth-# defines the value of an item when it is sold to the server via /sell.
@@ -391,7 +380,7 @@ currency-symbol: '$'
 max-money: 10000000000000
 
 # Set the minimum amount of money a player can have (must be above the negative of max-money).
-# Setting this to 0, will disable overdrafts/loans completely.  Users need 'essentials.eco.loan' perm to go below 0.
+# Setting this to 0, will disable overdrafts/loans completely. Users need 'essentials.eco.loan' perm to go below 0.
 min-money: -10000
 
 # Enable this to log all interactions with trade/buy/sell signs and sell command
@@ -399,28 +388,28 @@ economy-log-enabled: false
 
 ############################################################
 # +------------------------------------------------------+ #
-# |                   EssentialsHelp                     | #
+# | EssentialsHelp | #
 # +------------------------------------------------------+ #
 ############################################################
 
 # Show other plugins commands in help
 non-ess-in-help: true
 
-# Hide plugins which don't give a permission
+# Hide plugins which do not give a permission
 # You can override a true value here for a single plugin by adding a permission to a user/group.
 # The individual permission is: essentials.help.<plugin>, anyone with essentials.* or '*' will see all help this setting reguardless.
-# You can use negative permissions to remove access to just a single plugins help if the following is enabled.
+# You can use negitive permissions to remove access to just a single plugins help if the following is enabled.
 hide-permissionless-help: true
 
 ############################################################
 # +------------------------------------------------------+ #
-# |                   EssentialsChat                     | #
+# | EssentialsChat | #
 # +------------------------------------------------------+ #
 ############################################################
 
 chat:
 
-  # If EssentialsChat is installed, this will define how far a player's voice travels, in blocks.  Set to 0 to make all chat global.
+  # If EssentialsChat is installed, this will define how far a player's voice travels, in blocks. Set to 0 to make all chat global.
   # Note that users with the "essentials.chat.spy" permission will hear everything, regardless of this setting.
   # Users with essentials.chat.shout can override this by prefixing text with an exclamation mark (!)
   # Or with essentials.chat.question can override this by prefixing text with a question mark (?)
@@ -430,20 +419,20 @@ chat:
   # Chat formatting can be done in two ways, you can either define a standard format for all chat
   # Or you can give a group specific chat format, to give some extra variation.
   # If set to the default chat format which "should" be compatible with ichat.
-  # For more information of chat formatting, check out the wiki: http://ess.khhq.net/wiki/Chat_Formatting  
+  # For more information of chat formatting, check out the wiki: http://ess.khhq.net/wiki/Chat_Formatting
 
   format: '<{DISPLAYNAME}> {MESSAGE}'
   #format: '&7[{GROUP}]&f {DISPLAYNAME}&7:&f {MESSAGE}'
 
   group-formats:
-  #  Default: '{WORLDNAME} {DISPLAYNAME}&7:&f {MESSAGE}'
-  #  Admins: '{WORLDNAME} &c[{GROUP}]&f {DISPLAYNAME}&7:&c {MESSAGE}'
+  # Default: '{WORLDNAME} {DISPLAYNAME}&7:&f {MESSAGE}'
+  # Admins: '{WORLDNAME} &c[{GROUP}]&f {DISPLAYNAME}&7:&c {MESSAGE}'
 
   # If you are using group formats make sure to remove the '#' to allow the setting to be read.
 
 ############################################################
 # +------------------------------------------------------+ #
-# |                 EssentialsProtect                    | #
+# | EssentialsProtect | #
 # +------------------------------------------------------+ #
 ############################################################
 
@@ -467,7 +456,7 @@ protect:
   alert:
     on-placement: 10,11,46,327
     on-use: 327
-    on-break: 
+    on-break:
 
   blacklist:
 
@@ -525,7 +514,7 @@ protect:
       ender_dragon: false
       pig: false
       sheep: false
-      cow: false      
+      cow: false
       chicken: false
       squid: false
       wolf: false
@@ -573,7 +562,7 @@ protect:
     drown: false
     suffocate: false
 
-    # Should damage via lava be disabled?  Items that fall into lava will still burn to a crisp. ;)
+    # Should damage via lava be disabled? Items that fall into lava will still burn to a crisp. ;)
     lavadmg: false
 
     # Should arrow damage be disabled
@@ -582,7 +571,7 @@ protect:
     # This will disable damage from touching cacti.
     contactdmg: false
 
-    # Burn, baby, burn!  Should fire damage be disabled?
+    # Burn, baby, burn! Should fire damage be disabled?
     firedmg: false
 
     # Should the damage after hit by a lightning be disabled?
@@ -607,7 +596,7 @@ protect:
 
 ############################################################
 # +------------------------------------------------------+ #
-# |            Essentials Spawn / New Players            | #
+# | Essentials Spawn / New Players | #
 # +------------------------------------------------------+ #
 ############################################################
 
