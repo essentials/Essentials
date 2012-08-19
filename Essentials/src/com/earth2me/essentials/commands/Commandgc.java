@@ -35,10 +35,12 @@ public class Commandgc extends EssentialsCommand
 		sender.sendMessage(_("gcmax", (Runtime.getRuntime().maxMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gctotal", (Runtime.getRuntime().totalMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gcfree", (Runtime.getRuntime().freeMemory() / 1024 / 1024)));
-
+		
+		
+		String worldType;
 		for (World w : server.getWorlds())
 		{
-			String worldType = "World";
+			worldType = "World";
 			switch (w.getEnvironment())
 			{
 			case NETHER:
