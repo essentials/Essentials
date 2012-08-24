@@ -221,7 +221,7 @@ commands:
   more:
     description: Fills the item stack in hand to maximum size.
     usage: /<command>
-    aliases: [emore]
+    aliases: [emore,moar]
   motd:
     description: Views the Message Of The Day.
     usage: /<command>
