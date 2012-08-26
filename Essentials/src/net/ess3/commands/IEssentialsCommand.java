@@ -4,8 +4,8 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.IEssentialsModule;
 import net.ess3.api.IPermission;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 
 
 public interface IEssentialsCommand extends IPermission

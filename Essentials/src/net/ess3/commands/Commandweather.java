@@ -2,8 +2,8 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.World;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 
 
 public class Commandweather extends EssentialsCommand
@@ -18,7 +18,7 @@ public class Commandweather extends EssentialsCommand
 		}
 
 		final boolean isStorm = args[0].equalsIgnoreCase("storm");
-		final World world = user.getWorld();
+		final World world = user.getPlayer().getWorld();
 		if (args.length > 1)
 		{
 

@@ -32,7 +32,7 @@ public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> imp
 		}
 		else
 		{
-			ess.getPlugin().scheduleAsyncDelayedTask(this);
+			ess.getPlugin().getServer().getScheduler().scheduleAsyncDelayedTask(ess.getPlugin(), this);
 		}
 	}
 

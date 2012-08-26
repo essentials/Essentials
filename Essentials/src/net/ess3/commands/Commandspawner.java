@@ -1,7 +1,7 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-import net.ess3.bukkit.Mob;
+import net.ess3.bukkit.LivingEntities;
 import net.ess3.economy.Trade;
 import net.ess3.api.IUser;
 import net.ess3.permissions.SpawnerPermissions;
@@ -21,7 +21,7 @@ public class Commandspawner extends EssentialsCommand
 	{
 		if (args.length < 1 || args[0].length() < 2)
 		{
-			throw new NotEnoughArgumentsException(_("mobsAvailable", Util.joinList(Mob.getMobList())));
+			throw new NotEnoughArgumentsException(_("mobsAvailable", Util.joinList(LivingEntities.getMobList())));
 		}
 
 		final Location target = LocationUtil.getTarget(user);
@@ -34,8 +34,8 @@ public class Commandspawner extends EssentialsCommand
 		{
 			String name = args[0];
 
-			Mob mob = null;
-			mob = Mob.fromName(name);
+			LivingEntities mob = null;
+			mob = LivingEntities.fromName(name);
 			if (mob == null)
 			{
 				user.sendMessage(_("invalidMob"));

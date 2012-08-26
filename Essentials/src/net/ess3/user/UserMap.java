@@ -9,9 +9,9 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.api.IUserMap;
 import net.ess3.api.InvalidNameException;
-import net.ess3.api.server.Player;
 import net.ess3.storage.StorageObjectMap;
 import net.ess3.utils.Util;
+import org.bukkit.entity.Player;
 
 
 public class UserMap extends StorageObjectMap<IUser> implements IUserMap
@@ -36,19 +36,28 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	@Override
 	public IUser load(final String name) throws Exception
 	{
-		for (Player player : ess.getServer().getOnlinePlayers())
+		String lowercaseName = name.toLowerCase(Locale.ENGLISH);
+		if (!lowercaseName.equals(name))
 		{
-			if (player.getName().equalsIgnoreCase(name))
+			IUser user = getUser(lowercaseName);
+			if (user == null)
 			{
-				keys.add(name.toLowerCase(Locale.ENGLISH));
-				return new User(player, ess);
+				throw new Exception("User not found!");
 			}
+			else
+			{
+				return user;
+			}
+		}
+		Player player = ess.getServer().getPlayerExact(name);
+		if (player != null) {
+			return new User(ess.getServer().getOfflinePlayer(player.getName()), ess);
 		}
 		final File userFile = getUserFile(name);
 		if (userFile.exists())
 		{
 			keys.add(name.toLowerCase(Locale.ENGLISH));
-			return new User(Bukkit.getOfflinePlayer(name), ess);
+			return new User(ess.getServer().getOfflinePlayer(name), ess);
 		}
 		throw new Exception("User not found!");
 	}
@@ -80,36 +89,27 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	@Override
 	public IUser getUser(final Player player)
 	{
-		if (player instanceof IUser)
-		{
-			return (IUser)player;
-		}
-		IUser user = getUser(player.getName());
-
+		IUser user = getObject(player.getName());
 		if (user == null)
 		{
 			user = new User(player, ess);
-		}
-		else
-		{
-			((User)user).update(player);
 		}
 		return user;
 	}
 	
 	@Override
-	public IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline) throws TooManyMatchesException
+	public IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline) throws TooManyMatchesException, PlayerNotFoundException
 	{
 		final Set<IUser> users = matchUsers(name, includeHidden, includeOffline);
-		if (users == null || users.isEmpty())
+		if (users.isEmpty())
 		{
-			return null;
+			throw new PlayerNotFoundException();
 		}
 		else
 		{
 			if (users.size() > 1)
 			{
-				throw new TooManyMatchesException();
+				throw new TooManyMatchesException(users);
 			}
 			else
 			{
@@ -147,7 +147,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 			for (Player player : ess.getServer().getOnlinePlayers())
 			{
 				if (player.getName().equalsIgnoreCase(searchString)
-					&& (includeHidden || (includeOffline && player.getUser().isHidden())))
+					&& (includeHidden || (includeOffline && getUser(player).isHidden())))
 				{
 					match = player;
 					break;
@@ -157,49 +157,50 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 			{
 				if (multimatching || multisearch)
 				{
-					result.add(match.getUser());
+					result.add(getUser(match));
 				}
 				else
 				{
-					return Collections.singleton(match.getUser());
+					return Collections.singleton(getUser(match));
 				}
 			}
 			for (Player player : ess.getServer().getOnlinePlayers())
 			{
-				final String nickname = player.getUser().getData().getNickname();
+				final String nickname = getUser(player).getData().getNickname();
 				if (nickname != null && !nickname.isEmpty()
 					&& nickname.equalsIgnoreCase(searchString)
-					&& (includeHidden || (includeOffline && player.getUser().isHidden())))
+					&& (includeHidden || (includeOffline && getUser(player).isHidden())))
 				{
 					if (multimatching || multisearch)
 					{
-						result.add(player.getUser());
+						result.add(getUser(player));
 					}
 					else
 					{
-						return Collections.singleton(player.getUser());
+						return Collections.singleton(getUser(player));
 					}
 				}
 			}
 			if (includeOffline)
 			{
+				IUser matchu = null;
 				for (String playerName : getAllUniqueUsers())
 				{
 					if (playerName.equals(searchString))
 					{
-						match = getUser(playerName);
+						matchu = getUser(playerName);
 						break;
 					}
 				}
-				if (match != null)
+				if (matchu != null)
 				{
 					if (multimatching || multisearch)
 					{
-						result.add(match.getUser());
+						result.add(matchu);
 					}
 					else
 					{
-						return Collections.singleton(match.getUser());
+						return Collections.singleton(matchu);
 					}
 				}
 			}
@@ -208,17 +209,17 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 				for (Player player : ess.getServer().getOnlinePlayers())
 				{
 					if (player.getName().toLowerCase(Locale.ENGLISH).startsWith(searchString)
-						&& (includeHidden || (includeOffline && player.getUser().isHidden())))
+						&& (includeHidden || (includeOffline && getUser(player).isHidden())))
 					{
-						result.add(player.getUser());
+						result.add(getUser(player));
 						break;
 					}
-					final String nickname = player.getUser().getData().getNickname();
+					final String nickname = getUser(player).getData().getNickname();
 					if (nickname != null && !nickname.isEmpty()
 						&& nickname.toLowerCase(Locale.ENGLISH).startsWith(searchString)
-						&& (includeHidden || (includeOffline && player.getUser().isHidden())))
+						&& (includeHidden || (includeOffline && getUser(player).isHidden())))
 					{
-						result.add(player.getUser());
+						result.add(getUser(player));
 						break;
 					}
 				}

@@ -1,8 +1,8 @@
 package net.ess3.storage;
 
 import java.lang.ref.WeakReference;
-import net.ess3.api.server.Location;
-import net.ess3.api.server.World;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 
 public class StoredLocation
@@ -52,7 +52,7 @@ public class StoredLocation
 		Location loc = location == null ? null : location.get();
 		if (loc == null)
 		{
-			loc = Location.create(worldname, getX(), getY(), getZ(), getYaw(), getPitch());
+			loc = new Location(Bukkit.getWorld(worldname), getX(), getY(), getZ(), getYaw(), getPitch());
 			location = new WeakReference<Location>(loc);
 		}
 		return loc;

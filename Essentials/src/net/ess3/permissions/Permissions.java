@@ -1,9 +1,11 @@
 package net.ess3.permissions;
 
+import net.ess3.bukkit.PermissionFactory;
 import java.util.Locale;
 import net.ess3.api.IPermission;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Permission;
+import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 
 
 public enum Permissions implements IPermission
@@ -22,7 +24,7 @@ public enum Permissions implements IPermission
 	CHAT_SPY,
 	CLEARINVENTORY_OTHERS,
 	DELHOME_OTHERS,
-	ECO_LOAN(Permission.Default.FALSE),
+	ECO_LOAN(PermissionDefault.FALSE),
 	EXP_GIVE,
 	EXP_GIVE_OTHERS,
 	EXP_SET,
@@ -31,8 +33,8 @@ public enum Permissions implements IPermission
 	FEED_OTHERS,
 	FLY_OTHERS,
 	GAMEMODE_OTHERS,
-	GEOIP_HIDE(Permission.Default.FALSE),
-	GEOIP_SHOW(Permission.Default.TRUE),
+	GEOIP_HIDE(PermissionDefault.FALSE),
+	GEOIP_SHOW(PermissionDefault.TRUE),
 	GETPOS_OTHERS,
 	GOD_OTHERS,
 	HEAL_COOLDOWN_BYPASS,
@@ -58,7 +60,7 @@ public enum Permissions implements IPermission
 	NICK_COLOR,
 	NICK_OTHERS,
 	NOGOD_OVERRIDE,
-	OVERSIZEDSTACKS(Permission.Default.FALSE),
+	OVERSIZEDSTACKS(PermissionDefault.FALSE),
 	POWERTOOL_APPEND,
 	PTIME_OTHERS,
 	PVPDELAY_EXEMPT,
@@ -84,21 +86,21 @@ public enum Permissions implements IPermission
 	TPAHERE,
 	TPOHERE,
 	UNLIMITED_OTHERS,
-	WARP_LIST(Permission.Default.TRUE),
+	WARP_LIST(PermissionDefault.TRUE),
 	WARP_HIDDEN,
 	WARP_OTHERS,
 	VANISH_SEE_OTHERS;
 	private static final String base = "essentials.";
 	private final String permission;
-	private final Permission.Default defaultPerm;
+	private final PermissionDefault defaultPerm;
 	private transient Permission bukkitPerm = null;
 
 	private Permissions()
 	{
-		this(Permission.Default.OP);
+		this(PermissionDefault.OP);
 	}
 
-	private Permissions(final Permission.Default defaultPerm)
+	private Permissions(final PermissionDefault defaultPerm)
 	{
 		permission = base + toString().toLowerCase(Locale.ENGLISH).replace('_', '.');
 		this.defaultPerm = defaultPerm;
@@ -121,13 +123,13 @@ public enum Permissions implements IPermission
 		}
 		else
 		{
-			return Permission.create(getPermissionName(), getPermissionDefault());
+			return PermissionFactory.registerPermission(getPermissionName(), getPermissionDefault());
 		}
 	}
 
 
 	@Override
-	public Permission.Default getPermissionDefault()
+	public PermissionDefault getPermissionDefault()
 	{
 		return this.defaultPerm;
 	}

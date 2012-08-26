@@ -2,9 +2,6 @@ package net.ess3.utils.textreader;
 
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.World;
 import net.ess3.utils.DescParseTickFormat;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -12,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import lombok.Cleanup;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 
@@ -35,7 +35,7 @@ public class KeywordReplacer implements IText
 		String worlds, online, unique, playerlist, date, time;
 		String worldTime12, worldTime24, worldDate, plugins;
 		String userName, address, version;
-		if (sender.isPlayer())
+		if (sender instanceof Player)
 		{
 			@Cleanup
 			final IUser user = ((Player)sender).getUser();

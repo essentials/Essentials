@@ -290,7 +290,7 @@ public class EssentialsPlayerListener implements Listener
 		if (user.getData().hasUnlimited(event.getBucket()))
 		{
 			event.getItemStack().setType(event.getBucket());
-			ess.scheduleSyncDelayedTask(new Runnable()
+			ess.getPlugin().scheduleSyncDelayedTask(new Runnable()
 			{
 				@Override
 				public void run()
@@ -424,7 +424,7 @@ public class EssentialsPlayerListener implements Listener
 			else
 			{
 				used = true;
-				ess.scheduleSyncDelayedTask(
+				ess.getPlugin().scheduleSyncDelayedTask(
 						new Runnable()
 						{
 							@Override

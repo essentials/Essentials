@@ -1,10 +1,9 @@
 package net.ess3.user;
 
-import net.ess3.Console;
+import java.lang.ref.WeakReference;
 import static net.ess3.I18n._;
 import net.ess3.Teleport;
 import net.ess3.api.*;
-import net.ess3.api.server.*;
 import net.ess3.economy.register.Method;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.DateUtil;
@@ -17,6 +16,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
+import net.ess3.Console;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 
 public class User extends UserBase implements IUser
@@ -44,11 +49,41 @@ public class User extends UserBase implements IUser
 	private boolean invSee = false;
 	private transient Location afkPosition;
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
+	private WeakReference<Player> playerCache;
 
-	public User(final Player base, final IEssentials ess)
+	public User(final OfflinePlayer base, final IEssentials ess)
 	{
 		super(base, ess);
 		teleport = new Teleport(this, ess);
+	}
+
+	@Override
+	public void setPlayerCache(final Player player)
+	{
+		playerCache = new WeakReference<Player>(player);
+	}
+
+	private void destroyPlayerCache()
+	{
+		playerCache = null;
+	}
+
+	@Override
+	public void close()
+	{
+		super.close();
+		destroyPlayerCache();
+	}
+
+	@Override
+	public Player getPlayer()
+	{
+		Player player = playerCache == null ? null : playerCache.get();
+		if (player == null)
+		{
+			player = super.getPlayer();
+		}
+		return player;
 	}
 
 	public void example()
@@ -74,12 +109,6 @@ public class User extends UserBase implements IUser
 	@Override
 	public void finishWrite()
 	{
-	}
-
-	@Override
-	public void update(final Player base)
-	{
-		super.update(base);
 	}
 
 	@Override
@@ -124,7 +153,7 @@ public class User extends UserBase implements IUser
 			sendMessage(_("addedToAccount", Util.displayCurrency(value, ess)));
 			if (initiator != null)
 			{
-				initiator.sendMessage(_("addedToOthersAccount", Util.displayCurrency(value, ess), this.getDisplayName()));
+				initiator.sendMessage(_("addedToOthersAccount", Util.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
 			}
 		}
 		finally
@@ -144,8 +173,8 @@ public class User extends UserBase implements IUser
 		{
 			setMoney(getMoney() - value);
 			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("moneySentTo", Util.displayCurrency(value, ess), reciever.getDisplayName()));
-			reciever.sendMessage(_("moneyRecievedFrom", Util.displayCurrency(value, ess), getDisplayName()));
+			sendMessage(_("moneySentTo", Util.displayCurrency(value, ess), reciever.getPlayer().getDisplayName()));
+			reciever.sendMessage(_("moneyRecievedFrom", Util.displayCurrency(value, ess), getPlayer().getDisplayName()));
 		}
 		else
 		{
@@ -170,18 +199,18 @@ public class User extends UserBase implements IUser
 		sendMessage(_("takenFromAccount", Util.displayCurrency(value, ess)));
 		if (initiator != null)
 		{
-			initiator.sendMessage(_("takenFromOthersAccount", Util.displayCurrency(value, ess), this.getDisplayName()));
+			initiator.sendMessage(_("takenFromOthersAccount", Util.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
 		}
 	}
 
 	public void setHome()
 	{
-		setHome("home", getLocation());
+		setHome("home", getPlayer().getLocation());
 	}
 
 	public void setHome(final String name)
 	{
-		setHome(name, getLocation());
+		setHome(name, getPlayer().getLocation());
 	}
 
 	@Override
@@ -190,13 +219,14 @@ public class User extends UserBase implements IUser
 		acquireWriteLock();
 		try
 		{
-			getData().setLastLocation(new net.ess3.storage.StoredLocation(getLocation()));
+			getData().setLastLocation(new net.ess3.storage.StoredLocation(getPlayer().getLocation()));
 		}
 		finally
 		{
 			unlock();
 		}
 	}
+
 	public String getNick(boolean addprefixsuffix)
 	{
 		acquireReadLock();
@@ -228,7 +258,7 @@ public class User extends UserBase implements IUser
 			{
 				displayname = displayname.replace("{SUFFIX}", groups.getSuffix(this));
 			}
-			displayname = displayname.replace("{WORLDNAME}", this.getWorld().getName());
+			displayname = displayname.replace("{WORLDNAME}", this.getPlayer().getWorld().getName());
 			displayname = displayname.replace('&', '\u00a7');
 			displayname = displayname.concat("\u00a7f");
 
@@ -244,7 +274,7 @@ public class User extends UserBase implements IUser
 	public void setDisplayNick()
 	{
 		String name = getNick(true);
-		setDisplayName(name);
+		getPlayer().setDisplayName(name);
 		if (name.length() > 16)
 		{
 			name = getNick(false);
@@ -255,18 +285,12 @@ public class User extends UserBase implements IUser
 		}
 		try
 		{
-			setPlayerListName(name);
+			getPlayer().setPlayerListName(name);
 		}
 		catch (IllegalArgumentException e)
 		{
 			ess.getLogger().info("Playerlist for " + name + " was not updated. Use a shorter displayname prefix.");
 		}
-	}
-
-	@Override
-	public String getDisplayName()
-	{
-		return super.getDisplayName() == null ? super.getName() : super.getDisplayName();
 	}
 
 	@Override
@@ -330,10 +354,10 @@ public class User extends UserBase implements IUser
 		acquireWriteLock();
 		try
 		{
-			this.setSleepingIgnored(Permissions.SLEEPINGIGNORED.isAuthorized(this) ? true : set);
+			this.getPlayer().setSleepingIgnored(Permissions.SLEEPINGIGNORED.isAuthorized(this) ? true : set);
 			if (set && !getData().isAfk())
 			{
-				afkPosition = getLocation();
+				afkPosition = getPlayer().getLocation();
 			}
 			getData().setAfk(set);
 		}
@@ -347,7 +371,7 @@ public class User extends UserBase implements IUser
 	public boolean toggleAfk()
 	{
 		final boolean now = super.toggleAfk();
-		this.setSleepingIgnored(Permissions.SLEEPINGIGNORED.isAuthorized(this) ? true : now);
+		this.getPlayer().setSleepingIgnored(Permissions.SLEEPINGIGNORED.isAuthorized(this) ? true : now);
 		return now;
 	}
 
@@ -441,7 +465,7 @@ public class User extends UserBase implements IUser
 				getData().setAfk(false);
 				if (broadcast && !hidden)
 				{
-					ess.broadcastMessage(this, _("userIsNotAway", getDisplayName()));
+					ess.broadcastMessage(this, _("userIsNotAway", getPlayer().getDisplayName()));
 				}
 			}
 			lastActivity = System.currentTimeMillis();
@@ -466,13 +490,12 @@ public class User extends UserBase implements IUser
 		{
 			final String kickReason = _("autoAfkKickReason", autoafkkick / 60.0);
 			lastActivity = 0;
-			kickPlayer(kickReason);
+			getPlayer().kickPlayer(kickReason);
 
 
-			for (IPlayer player : ess.getServer().getOnlinePlayers())
+			for (Player player : ess.getServer().getOnlinePlayers())
 			{
-				final IUser user = player.getUser();
-				if (Permissions.KICK_NOTIFY.isAuthorized(user))
+				if (Permissions.KICK_NOTIFY.isAuthorized(player))
 				{
 					player.sendMessage(_("playerKicked", Console.NAME, getName(), kickReason));
 				}
@@ -487,7 +510,7 @@ public class User extends UserBase implements IUser
 				setAfk(true);
 				if (!hidden)
 				{
-					ess.broadcastMessage(this, _("userIsAway", getDisplayName()));
+					ess.broadcastMessage(this, _("userIsAway", getPlayer().getDisplayName()));
 				}
 			}
 		}
@@ -513,7 +536,7 @@ public class User extends UserBase implements IUser
 			final ISettings settings = ess.getSettings();
 			settings.acquireReadLock();
 			return (getData().isGodmode()
-					&& !settings.getData().getWorldOptions(getLocation().getWorld().getName()).isGodmode())
+					&& !settings.getData().getWorldOptions(getPlayer().getLocation().getWorld().getName()).isGodmode())
 				   || (getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers());
 		}
 		finally
@@ -521,40 +544,40 @@ public class User extends UserBase implements IUser
 			unlock();
 		}
 	}
-	
+
 	@Override
 	public void updateCompass()
 	{
 		try
 		{
-			Location loc = getHome(getLocation());
+			Location loc = getHome(getPlayer().getLocation());
 			if (loc == null)
 			{
 				loc = getBedSpawnLocation();
 			}
 			if (loc != null)
 			{
-				setCompassTarget(loc);
+				getPlayer().setCompassTarget(loc);
 			}
 		}
 		catch (Exception ex)
 		{
 			// Ignore
 		}
-	}	
+	}
 
 	@Override
 	public int compareTo(final IUser t)
 	{
-		return Util.stripColor(this.getDisplayName()).compareTo(Util.stripColor(t.getDisplayName()));
+		return Util.stripColor(this.getPlayer().getDisplayName()).compareTo(Util.stripColor(t.getPlayer().getDisplayName()));
 	}
 
 	@Override
 	public void requestTeleport(IUser player, boolean here)
 	{
-        teleportRequestTime = System.currentTimeMillis();
-        teleportRequester = player;
-        tpRequestHere = here;
+		teleportRequestTime = System.currentTimeMillis();
+		teleportRequester = player;
+		tpRequestHere = here;
 	}
 
 	@Override
@@ -589,7 +612,7 @@ public class User extends UserBase implements IUser
 		{
 			sendMessage(_("InvFull"));
 		}
-		updateInventory();
+		getPlayer().updateInventory();
 	}
 
 	@Override
@@ -607,14 +630,14 @@ public class User extends UserBase implements IUser
 		{
 			sendMessage(_("InvFull"));
 		}
-		updateInventory();
+		getPlayer().updateInventory();
 	}
 
 	private boolean giveItemStack(ItemStack itemStack, Boolean canSpew) throws ChargeException
 	{
 		boolean spew = false;
 
-		if (itemStack == null || itemStack.isAir())
+		if (itemStack == null || itemStack.getTypeId() == 0)
 		{
 			return spew;
 		}
@@ -627,17 +650,17 @@ public class User extends UserBase implements IUser
 			settings.acquireReadLock();
 			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
 
-			overfilled = getInventory().addItem(true, oversizedStackSize, itemStack);
+			overfilled = getPlayer().getInventory().addItem(true, oversizedStackSize, itemStack);
 		}
 		else
 		{
-			overfilled = getInventory().addItem(true, itemStack);
+			overfilled = getPlayer().getInventory().addItem(true, itemStack);
 		}
 		if (canSpew)
 		{
 			for (ItemStack overflowStack : overfilled.values())
 			{
-				getWorld().dropItemNaturally(getLocation(), overflowStack);
+				getPlayer().getWorld().dropItemNaturally(getPlayer().getLocation(), overflowStack);
 				spew = true;
 			}
 		}
@@ -720,7 +743,7 @@ public class User extends UserBase implements IUser
 			{
 				if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(ess.getUserMap().getUser(p)))
 				{
-					p.hidePlayer(getBase());
+					p.hidePlayer(getPlayer());
 				}
 			}
 			setHidden(true);
@@ -730,18 +753,11 @@ public class User extends UserBase implements IUser
 		{
 			for (Player p : ess.getServer().getOnlinePlayers())
 			{
-				p.showPlayer(getBase());
+				p.showPlayer(getPlayer());
 			}
 			setHidden(false);
 			ess.getVanishedPlayers().remove(getName());
 		}
-	}
-
-	@Override
-	public void setName(String name)
-	{
-		//todo
-		//throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override

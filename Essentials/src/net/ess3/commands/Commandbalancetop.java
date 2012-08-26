@@ -9,7 +9,7 @@ import java.text.DateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import net.ess3.api.server.CommandSender;
+import org.bukkit.command.CommandSender;
 
 
 public class Commandbalancetop extends EssentialsCommand
@@ -111,7 +111,7 @@ public class Commandbalancetop extends EssentialsCommand
 							final double userMoney = user.getMoney();
 							user.updateMoneyCache(userMoney);
 							totalMoney += userMoney;
-							balances.put(user.getDisplayName(), userMoney);
+							balances.put(user.getPlayer().getDisplayName(), userMoney);
 						}
 					}
 

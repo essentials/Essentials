@@ -2,9 +2,9 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.Location;
 import net.ess3.utils.LocationUtil;
 //TODO: remove bukkit
+import org.bukkit.Location;
 import org.bukkit.TreeType;
 
 
@@ -31,9 +31,9 @@ public class Commandbigtree extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final Location loc = LocationUtil.getTarget(user);
+		final Location loc = LocationUtil.getTarget(user.getPlayer());
 		final Location safeLocation = LocationUtil.getSafeDestination(loc);
-		final boolean success = user.getWorld().generateTree(safeLocation, tree);
+		final boolean success = user.getPlayer().getWorld().generateTree(safeLocation, tree);
 		if (success)
 		{
 			user.sendMessage(_("bigTreeSuccess"));

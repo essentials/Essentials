@@ -1,17 +1,16 @@
 package net.ess3.permissions;
 
-import net.ess3.api.IPermission;
-import net.ess3.api.server.Material;
-import net.ess3.api.server.Permission;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Locale;
-import java.util.Map;
+import net.ess3.api.IPermission;
+import org.bukkit.Material;
+import org.bukkit.permissions.PermissionDefault;
 
 
 
 public class ItemPermissions
 {
-	private static Map<Material, IPermission> permissions = new HashMap<Material, IPermission>();
+	private static EnumMap<Material, IPermission> permissions = new EnumMap<Material, IPermission>(Material.class);
 
 	public static IPermission getPermission(final Material mat)
 	{
@@ -21,9 +20,9 @@ public class ItemPermissions
 			perm = new BasePermission("essentials.itemspawn.item-", mat.toString().toLowerCase(Locale.ENGLISH).replace("_", ""))
 			{
 				@Override
-				public Permission.Default getPermissionDefault()
+				public PermissionDefault getPermissionDefault()
 				{
-					return Permission.Default.TRUE;
+					return PermissionDefault.TRUE;
 				}
 			};
 			permissions.put(mat, perm);

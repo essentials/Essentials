@@ -3,9 +3,9 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 import net.ess3.utils.Util;
 import net.ess3.api.IUser;
-import net.ess3.api.server.ItemStack;
 import java.util.Locale;
-import net.ess3.api.server.CommandSender;
+import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commandworth extends EssentialsCommand
@@ -14,7 +14,7 @@ public class Commandworth extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		ItemStack iStack = user.getItemInHand();
+		ItemStack iStack = user.getPlayer().getItemInHand();
 		int amount = iStack.getAmount();
 
 		if (args.length > 0)

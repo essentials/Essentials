@@ -1,8 +1,8 @@
 package net.ess3.api;
 
-import net.ess3.api.server.Location;
 import java.io.File;
 import java.util.Collection;
+import org.bukkit.Location;
 
 
 public interface IWarps extends IReload

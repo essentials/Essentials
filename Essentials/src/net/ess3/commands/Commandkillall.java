@@ -2,13 +2,13 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 
-import net.ess3.bukkit.Mob;
+import net.ess3.bukkit.LivingEntities;
 import java.util.Collections;
 import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.World;
-import net.ess3.bukkit.Mob;
+import net.ess3.bukkit.LivingEntities;
 //TODO: remove these
 import org.bukkit.Chunk;
 import org.bukkit.entity.*;
@@ -78,11 +78,11 @@ public class Commandkillall extends EssentialsCommand
 		Class<? extends Entity> entityClass = null;
 		if (!animals && !monster && !all)
 		{
-			if (Mob.fromName(killType) == null)
+			if (LivingEntities.fromName(killType) == null)
 			{
 				throw new Exception(_("invalidMob"));
 			}
-			entityClass = Mob.fromName(killType).getType().getEntityClass();
+			entityClass = LivingEntities.fromName(killType).getType().getEntityClass();
 		}
 		int numKills = 0;
 		for (Chunk chunk : world.getLoadedChunks())

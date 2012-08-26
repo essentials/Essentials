@@ -17,10 +17,7 @@
  */
 package net.ess3;
 
-import net.ess3.api.server.Player;
-import net.ess3.api.server.Plugin;
-import net.ess3.api.server.Server;
-import net.ess3.api.server.World;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,11 +42,15 @@ import net.ess3.settings.SettingsHolder;
 import net.ess3.settings.SpawnsHolder;
 import net.ess3.user.UserMap;
 import net.ess3.utils.ExecuteTimer;
+import org.bukkit.Server;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.Plugin;
 import org.yaml.snakeyaml.error.YAMLException;
 
 
@@ -78,7 +79,7 @@ public class Essentials implements IEssentials
 	@Getter
 	private final Logger logger;
 	@Getter
-	private final Plugin plugin;
+	private final IPlugin plugin;
 	public static boolean testing;
 	private transient Metrics metrics;
 	@Getter
@@ -191,7 +192,7 @@ public class Essentials implements IEssentials
 			{
 				player.sendMessage("Essentials failed to load, read the log file.");
 			}
-			this.setEnabled(false);
+			this.getPlugin().setEnabled(false);
 			return;
 		}
 		backup = new Backup(this);
@@ -220,7 +221,7 @@ public class Essentials implements IEssentials
 		final MetricsStarter metricsStarter = new MetricsStarter(this);
 		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
 		{
-			getServer().getScheduler().scheduleAsyncDelayedTask(this, metricsStarter, 1);
+			getServer().getScheduler().scheduleAsyncDelayedTask(this.getPlugin(), metricsStarter, 1);
 		}
 		else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
 		{
@@ -308,18 +309,6 @@ public class Essentials implements IEssentials
 	}
 
 	@Override
-	public IUser getUser(final Player player)
-	{
-		return userMap.getUser(player);
-	}
-
-	@Override
-	public IUser getUser(final String playerName)
-	{
-		return userMap.getUser(playerName);
-	}
-
-	@Override
 	public World getWorld(final String name)
 	{
 		if (name.matches("[0-9]+"))
@@ -365,7 +354,7 @@ public class Essentials implements IEssentials
 			}
 		}
 
-		return getServer().getOnlinePlayers().size();
+		return getServer().getOnlinePlayers().length;
 	}
 
 	/*

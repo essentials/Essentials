@@ -7,12 +7,12 @@ import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IKits;
 import net.ess3.api.IUser;
-import net.ess3.api.server.ItemStack;
 import net.ess3.commands.NoChargeException;
 import net.ess3.settings.Kit;
 import net.ess3.storage.AsyncStorageObjectHolder;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Kits extends AsyncStorageObjectHolder<net.ess3.settings.Kits> implements IKits

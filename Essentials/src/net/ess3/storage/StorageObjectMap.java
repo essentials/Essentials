@@ -80,7 +80,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	{
 		try
 		{
-			return (I)cache.get(name.toLowerCase(Locale.ENGLISH));
+			return (I)cache.get(name);
 		}
 		catch (ExecutionException ex)
 		{

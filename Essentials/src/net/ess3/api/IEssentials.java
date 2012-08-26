@@ -3,11 +3,11 @@ package net.ess3.api;
 import java.util.List;
 import java.util.logging.Logger;
 import net.ess3.EssentialsTimer;
-import net.ess3.api.server.Plugin;
-import net.ess3.api.server.Server;
-import net.ess3.api.server.World;
 import net.ess3.economy.register.Methods;
 import net.ess3.metrics.Metrics;
+import org.bukkit.Server;
+import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 
 
 public interface IEssentials extends IComponent
@@ -59,7 +59,7 @@ public interface IEssentials extends IComponent
 
 	Logger getLogger();
 
-	Plugin getPlugin();
+	IPlugin getPlugin();
 	
 	List<String> getVanishedPlayers();
 	

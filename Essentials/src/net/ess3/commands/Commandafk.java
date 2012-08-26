@@ -32,7 +32,7 @@ public class Commandafk extends EssentialsCommand
 			//user.sendMessage(_("markedAsNotAway"));
 			if (!user.isHidden())
 			{
-				ess.broadcastMessage(user, _("userIsNotAway", user.getDisplayName()));
+				ess.broadcastMessage(user, _("userIsNotAway", user.getPlayer().getDisplayName()));
 			}
 			user.updateActivity(false);
 		}
@@ -41,7 +41,7 @@ public class Commandafk extends EssentialsCommand
 			//user.sendMessage(_("markedAsAway"));
 			if (!user.isHidden())
 			{
-				ess.broadcastMessage(user, _("userIsAway", user.getDisplayName()));
+				ess.broadcastMessage(user, _("userIsAway", user.getPlayer().getDisplayName()));
 			}
 		}
 	}	

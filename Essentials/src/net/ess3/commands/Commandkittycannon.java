@@ -4,7 +4,7 @@ package net.ess3.commands;
 import java.util.Random;
 import net.ess3.api.IUser;
 import net.ess3.api.server.Location;
-import net.ess3.bukkit.Mob;
+import net.ess3.bukkit.LivingEntities;
 //TODO: remove this
 import org.bukkit.entity.Ocelot;
 
@@ -16,7 +16,7 @@ public class Commandkittycannon extends EssentialsCommand
 	@Override
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		final Mob cat = Mob.OCELOT;
+		final LivingEntities cat = LivingEntities.OCELOT;
 		final Ocelot ocelot = (Ocelot)cat.spawn(user, server, user.getEyeLocation());
 		if (ocelot == null)
 		{

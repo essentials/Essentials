@@ -1,6 +1,5 @@
 package net.ess3.economy;
 
-import net.ess3.api.server.ItemStack;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,6 +9,7 @@ import net.ess3.api.IWorth;
 import net.ess3.storage.AsyncStorageObjectHolder;
 import net.ess3.storage.EnchantmentLevel;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 

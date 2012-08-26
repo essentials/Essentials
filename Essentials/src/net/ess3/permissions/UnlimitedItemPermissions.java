@@ -1,14 +1,13 @@
 package net.ess3.permissions;
 
-import net.ess3.api.IPermission;
-import net.ess3.api.server.Material;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Locale;
-import java.util.Map;
+import net.ess3.api.IPermission;
+import org.bukkit.Material;
 
 public class UnlimitedItemPermissions
 {
-	private static Map<Material, IPermission> permissions = new HashMap<Material, IPermission>();
+	private static EnumMap<Material, IPermission> permissions = new EnumMap<Material, IPermission>(Material.class);
 
 	public static IPermission getPermission(final Material mat)
 	{

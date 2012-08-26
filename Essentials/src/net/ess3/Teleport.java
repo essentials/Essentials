@@ -1,21 +1,20 @@
 package net.ess3;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ITeleport;
 import net.ess3.api.IUser;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.Location;
-import net.ess3.commands.NotEnoughArgumentsException;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.CooldownException;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.LocationUtil;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.logging.Logger;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -24,11 +23,10 @@ public class Teleport implements Runnable, ITeleport
 
 	private static final double MOVE_CONSTANT = 0.3;
 
-
 	private static class Target
 	{
 		private final Location location;
-		private final Player entity;
+		private final Entity entity;
 
 		public Target(Location location)
 		{
@@ -36,7 +34,7 @@ public class Teleport implements Runnable, ITeleport
 			this.entity = null;
 		}
 
-		public Target(Player entity)
+		public Target(Entity entity)
 		{
 			this.entity = entity;
 			this.location = null;
@@ -200,7 +198,7 @@ public class Teleport implements Runnable, ITeleport
 		teleport(new Target(loc), chargeFor, cause);
 	}
 
-	public void teleport(Player entity, Trade chargeFor, TeleportCause cause) throws Exception
+	public void teleport(Entity entity, Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		teleport(new Target(entity), chargeFor, cause);
 	}
@@ -239,7 +237,7 @@ public class Teleport implements Runnable, ITeleport
 	{
 		cancel();
 		user.setLastLocation();
-		user.getBase().teleport(LocationUtil.getSafeDestination(target.getLocation()), cause);
+		user.getPlayer().teleport(LocationUtil.getSafeDestination(target.getLocation()), cause);
 	}
 
 	@Override
@@ -259,7 +257,7 @@ public class Teleport implements Runnable, ITeleport
 		now(new Target(loc), cause);
 	}
 
-	public void now(Player entity, boolean cooldown, TeleportCause cause) throws Exception
+	public void now(Entity entity, boolean cooldown, TeleportCause cause) throws Exception
 	{
 		if (cooldown)
 		{

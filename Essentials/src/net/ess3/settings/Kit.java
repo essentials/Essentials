@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import net.ess3.api.server.ItemStack;
 import net.ess3.storage.ListType;
 import net.ess3.storage.StorageObject;
+import org.bukkit.inventory.ItemStack;
 
 
 @Data

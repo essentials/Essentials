@@ -1,7 +1,5 @@
 package net.ess3.commands;
 
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 import java.util.Locale;
 import lombok.Cleanup;
 import static net.ess3.I18n._;
@@ -12,6 +10,8 @@ import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.Util;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 
@@ -25,7 +25,7 @@ public class Commandwhois extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		boolean showhidden = false;
-		if (sender instanceof Player)
+		if (sender instanceof IUser)
 		{
 			if (Permissions.LIST_HIDDEN.isAuthorized(sender))
 			{
@@ -45,7 +45,7 @@ public class Commandwhois extends EssentialsCommand
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			@Cleanup
-			final IUser user = onlinePlayer.getUser();
+			final IUser user = ess.getUserMap().getUser(onlinePlayer);
 
 			if (user.isHidden() && !showhidden)
 			{
@@ -62,22 +62,22 @@ public class Commandwhois extends EssentialsCommand
 			foundPlayer = true;
 			sender.sendMessage(_("whoisTop", user.getName()));
 			user.setDisplayNick();
-			sender.sendMessage(_("whoisIs", user.getDisplayName(), user.getName()));
-			sender.sendMessage(_("whoisHealth", user.getHealth()));
-			sender.sendMessage(_("whoisExp", SetExpFix.getTotalExperience(user), user.getLevel()));
-			sender.sendMessage(_("whoisLocation", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
+			sender.sendMessage(_("whoisIs", user.getPlayer().getDisplayName(), user.getName()));
+			sender.sendMessage(_("whoisHealth", user.getPlayer().getHealth()));
+			sender.sendMessage(_("whoisExp", SetExpFix.getTotalExperience(user.getPlayer()), user.getPlayer().getLevel()));
+			sender.sendMessage(_("whoisLocation", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(), user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
 			sender.sendMessage(_("whoisMoney", Util.displayCurrency(user.getMoney(), ess)));
-			sender.sendMessage(_("whoisIPAddress", user.getAddress().getAddress().toString()));
+			sender.sendMessage(_("whoisIPAddress", user.getPlayer().getAddress().getAddress().toString()));
 			final String location = user.getData().getGeolocation();
 			if (location != null
 				&& Permissions.GEOIP_SHOW.isAuthorized(sender))
 			{
 				sender.sendMessage(_("whoisGeoLocation", location));
 			}
-			sender.sendMessage(_("whoisGamemode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH))));
+			sender.sendMessage(_("whoisGamemode", _(user.getPlayer().getGameMode().toString().toLowerCase(Locale.ENGLISH))));
 			sender.sendMessage(_("whoisGod", (user.isGodModeEnabled() ? _("true") : _("false"))));
 			sender.sendMessage(_("whoisOP", (user.isOp() ? _("true") : _("false"))));
-			sender.sendMessage(_("whoisFly", user.getAllowFlight() ? _("true") : _("false"), user.isFlying() ? _("flying") : _("notFlying")));
+			sender.sendMessage(_("whoisFly", user.getPlayer().getAllowFlight() ? _("true") : _("false"), user.getPlayer().isFlying() ? _("flying") : _("notFlying")));
 			sender.sendMessage(_("whoisAFK", (user.getData().isAfk() ? _("true") : _("false"))));
 			sender.sendMessage(_("whoisJail", (user.getData().isJailed()
 											   ? user.getTimestamp(UserData.TimestampType.JAIL) > 0

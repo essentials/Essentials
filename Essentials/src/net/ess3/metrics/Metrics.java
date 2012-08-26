@@ -30,7 +30,11 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.logging.Level;
-import net.ess3.api.server.Plugin;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 
 /**
@@ -189,7 +193,7 @@ public class Metrics
 			}
 
 			// Begin hitting the server with glorious data
-			taskId = plugin.scheduleAsyncRepeatingTask(new Runnable()
+			taskId = plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable()
 			{
 				private boolean firstPost = true;
 
@@ -203,7 +207,7 @@ public class Metrics
 							// Disable Task, if it is running and the server owner decided to opt-out
 							if (isOptOut() && taskId > 0)
 							{
-								plugin.cancelTask(taskId);
+								plugin.getServer().getScheduler().cancelTask(taskId);
 								taskId = -1;
 							}
 						}
@@ -300,7 +304,7 @@ public class Metrics
 			// Disable Task, if it is running
 			if (taskId >= 0)
 			{
-				this.plugin.cancelTask(taskId);
+				this.plugin.getServer().getScheduler().cancelTask(taskId);
 				taskId = -1;
 			}
 		}

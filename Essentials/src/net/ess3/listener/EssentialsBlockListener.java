@@ -1,37 +1,44 @@
 package net.ess3.listener;
 
+import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
-import net.ess3.api.ondemand.OnDemand;
-import net.ess3.api.server.Block;
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.events.EventListener;
-import net.ess3.api.server.events.EventPriority;
-import net.ess3.api.server.events.EventType;
+import net.ess3.bukkit.BukkitMaterial;
+import org.bukkit.GameMode;
+import org.bukkit.block.Block;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.ItemStack;
 
 
-public class EssentialsBlockListener extends EventListener
+
+public class EssentialsBlockListener implements Listener
 {
 	private final transient IEssentials ess;
 
 	public EssentialsBlockListener(final IEssentials ess)
 	{
-		super();
 		this.ess = ess;
-		register(EventType.PLACE_BLOCK, EventPriority.LOW, true);
 	}
 
-	@Override
-	public boolean onBlockPlace(final Block placedBlock, final OnDemand<IUser> user)
+	@EventHandler(priority = EventPriority.LOW,ignoreCancelled=true)
+	public void onBlockPlace(final BlockPlaceEvent event)
 	{
-		final ItemStack itemstack = placedBlock.convertToItem();
-		if (placedBlock == null)
+		final Block block = event.getBlockPlaced();
+		final ItemStack itemstack = BukkitMaterial.convertBlockToItem(block.getType(), block.getData());
+		if (itemstack == null)
 		{
-			return true;
+			return;
 		}
+		
+		@Cleanup
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		user.acquireReadLock();
 
-		final boolean unlimitedForUser = user.get().getData().hasUnlimited(itemstack.getType());
-		if (unlimitedForUser && user.get().isInSurvivalMode())
+		final boolean unlimitedForUser = user.getData().hasUnlimited(itemstack.getType());
+		if (unlimitedForUser && user.getPlayer().getGameMode() != GameMode.CREATIVE)
 		{
 			ess.getPlugin().scheduleSyncDelayedTask(
 					new Runnable()
@@ -39,11 +46,10 @@ public class EssentialsBlockListener extends EventListener
 						@Override
 						public void run()
 						{
-							user.get().getInventory().addItem(itemstack);
-							user.get().updateInventory();
+							user.getPlayer().getInventory().addItem(itemstack);
+							user.getPlayer().updateInventory();
 						}
 					});
 		}
-		return true;
 	}
 }

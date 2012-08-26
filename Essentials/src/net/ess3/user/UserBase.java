@@ -1,53 +1,150 @@
 package net.ess3.user;
 
-import net.ess3.utils.Util;
-import net.ess3.api.IEssentials;
-import net.ess3.api.ISettings;
-import net.ess3.api.InvalidNameException;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.Location;
-import net.ess3.storage.AsyncStorageObjectHolder;
-import net.ess3.storage.IStorageObjectHolder;
-import net.ess3.storage.StoredLocation.WorldNotLoadedException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import lombok.Cleanup;
 import lombok.Delegate;
+import net.ess3.api.IEssentials;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
+import net.ess3.api.InvalidNameException;
+import net.ess3.permissions.Permissions;
+import net.ess3.storage.AsyncStorageObjectHolder;
+import net.ess3.storage.IStorageObjectHolder;
+import net.ess3.storage.StoredLocation.WorldNotLoadedException;
+import net.ess3.utils.Util;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.plugin.Plugin;
 
 
-public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implements Player, IStorageObjectHolder<UserData>
+public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implements OfflinePlayer, CommandSender, IStorageObjectHolder<UserData>
 {
 	@Delegate
-	protected Player base;
+	protected final OfflinePlayer offlinePlayer;
 
-	public UserBase(final Player base, final IEssentials ess)
+	public UserBase(final OfflinePlayer base, final IEssentials ess)
 	{
 		super(ess, UserData.class);
-		this.base = base;
+		this.offlinePlayer = base;
 		onReload();
 	}
-
-	public final Player getBase()
+	
+	@Override
+	public void sendMessage(String string)
 	{
-		return base;
+		Player player = offlinePlayer.getPlayer();
+		if (player != null) {
+			player.sendMessage(string);
+		}
 	}
 
-	public final Player setBase(final Player base)
+	@Override
+	public void sendMessage(String[] strings)
 	{
-		return this.base = base;
+		Player player = offlinePlayer.getPlayer();
+		if (player != null) {
+			player.sendMessage(strings);
+		}
 	}
 
-	public void update(final Player base)
+	@Override
+	public Server getServer()
 	{
-		setBase(base);
+		return ess.getServer();
 	}
 
-
-
-	public void dispose()
+	@Override
+	public boolean isPermissionSet(String string)
 	{
-		this.base = null;
+		Player player = offlinePlayer.getPlayer();
+		if (player != null) {
+			return player.isPermissionSet(string);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPermissionSet(Permission prmsn)
+	{
+		Player player = offlinePlayer.getPlayer();
+		if (player != null) {
+			return player.isPermissionSet(prmsn);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean hasPermission(String string)
+	{
+		Player player = offlinePlayer.getPlayer();
+		if (player != null) {
+			return player.hasPermission(string);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean hasPermission(Permission prmsn)
+	{
+		Player player = offlinePlayer.getPlayer();
+		if (player != null) {
+			return player.hasPermission(prmsn);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public PermissionAttachment addAttachment(Plugin plugin, String string, boolean bln)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public PermissionAttachment addAttachment(Plugin plugin)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public PermissionAttachment addAttachment(Plugin plugin, String string, boolean bln, int i)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public PermissionAttachment addAttachment(Plugin plugin, int i)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void removeAttachment(PermissionAttachment pa)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void recalculatePermissions()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Set<PermissionAttachmentInfo> getEffectivePermissions()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
@@ -321,7 +418,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 			}
 			try
 			{
-				return getData().getHomes().get(Util.sanitizeKey(name)).getBukkitLocation();
+				return getData().getHomes().get(Util.sanitizeKey(name)).getStoredLocation();
 			}
 			catch (WorldNotLoadedException ex)
 			{

@@ -1,10 +1,10 @@
 package net.ess3.storage;
 
-import net.ess3.api.server.Plugin;
 import java.io.Reader;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
+import net.ess3.api.IPlugin;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -15,9 +15,9 @@ public class YamlStorageReader implements IStorageReader
 	private transient static final Map<Class, Yaml> PREPARED_YAMLS = Collections.synchronizedMap(new HashMap<Class, Yaml>());
 	private transient static final Map<Class, ReentrantLock> LOCKS = new HashMap<Class, ReentrantLock>();
 	private transient final Reader reader;
-	private transient final Plugin plugin;
+	private transient final IPlugin plugin;
 
-	public YamlStorageReader(final Reader reader, final Plugin plugin)
+	public YamlStorageReader(final Reader reader, final IPlugin plugin)
 	{
 		this.reader = reader;
 		this.plugin = plugin;

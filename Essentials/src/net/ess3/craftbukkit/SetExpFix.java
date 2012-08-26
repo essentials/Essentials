@@ -1,11 +1,13 @@
 package net.ess3.craftbukkit;
 
+import org.bukkit.entity.Player;
+
 
 public class SetExpFix
 {
 	//This method is used to update both the recorded total experience and displayed total experience.
 	//We reset both types to prevent issues.
-	public static void setTotalExperience(final IPlayer player, final int exp)
+	public static void setTotalExperience(final Player player, final int exp)
 	{
 		if (exp < 0)
 		{
@@ -37,7 +39,7 @@ public class SetExpFix
 		}
 	}
 
-	private static int getExpToLevel(final IPlayer player)
+	private static int getExpToLevel(final Player player)
 	{		
 		return getExpToLevel(player.getLevel());
 	}
@@ -49,7 +51,7 @@ public class SetExpFix
 	
 	//This method is required because the bukkit player.getTotalExperience() method, shows exp that has been 'spent'.
 	//Without this people would be able to use exp and then still sell it.
-	public static int getTotalExperience(final IPlayer player)
+	public static int getTotalExperience(final Player player)
 	{
 		int exp = (int)Math.round(getExpToLevel(player) * player.getExp());
 		int currentLevel = player.getLevel();

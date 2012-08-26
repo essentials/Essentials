@@ -1,19 +1,18 @@
 package net.ess3.api;
 
 import java.util.List;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.Location;
-import net.ess3.api.server.Player;
 import net.ess3.storage.IStorageObjectHolder;
 import net.ess3.user.CooldownException;
 import net.ess3.user.UserData;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 
-public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, IReplyTo, Comparable<IUser>
+public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolder<UserData>, IReload, IReplyTo, Comparable<IUser>
 {
-	Player getBase();
-
 	double getMoney();
 
 	void takeMoney(double value);
@@ -49,7 +48,7 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	void updateActivity(boolean broadcast);
 
 	void updateDisplayName();
-	
+
 	void setDisplayNick();
 
 	boolean checkJailTimeout(long currentTime);
@@ -75,8 +74,6 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	void setIgnoredPlayer(IUser user, boolean set);
 
 	Location getAfkPosition();
-	
-	void dispose();
 
 	void updateCompass();
 
@@ -107,23 +104,22 @@ public interface IUser extends Player, IStorageObjectHolder<UserData>, IReload, 
 	public void updateMoneyCache(double userMoney);
 
 	public boolean canAfford(double amount, boolean b);
-	
+
 	boolean isVanished();
-	
+
 	void resetInvulnerabilityAfterTeleport();
-	
+
 	void toggleVanished();
-	
+
 	boolean isInvSee();
-	
+
 	void setInvSee(boolean invsee);
-	
+
 	boolean hasInvulnerabilityAfterTeleport();
-	
-	void update(final Player base);
-	
+
 	void setGodModeEnabled(boolean set);
-	
+
 	void setVanished(boolean set);
 	
+	void setPlayerCache(Player player);
 }

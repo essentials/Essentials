@@ -1,10 +1,10 @@
 package net.ess3.permissions;
 
 import net.ess3.api.IPermission;
-import net.ess3.api.server.Permission;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import org.bukkit.permissions.PermissionDefault;
 
 
 public class WarpPermissions
@@ -19,9 +19,9 @@ public class WarpPermissions
 			perm = new BasePermission("essentials.warp.", warpName.toLowerCase(Locale.ENGLISH))
 			{
 				@Override
-				public Permission.Default getPermissionDefault()
+				public PermissionDefault getPermissionDefault()
 				{
-					return Permission.Default.TRUE;
+					return PermissionDefault.TRUE;
 				}
 			};
 			permissions.put(warpName, perm);

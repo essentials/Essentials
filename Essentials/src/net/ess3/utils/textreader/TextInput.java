@@ -4,6 +4,12 @@ import java.io.*;
 import java.lang.ref.SoftReference;
 import java.util.*;
 import java.util.logging.Level;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.api.InvalidNameException;
+import net.ess3.utils.Util;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class TextInput implements IText
@@ -18,11 +24,11 @@ public class TextInput implements IText
 	{
 
 		File file = null;
-		if (sender.isPlayer())
+		if (sender instanceof Player)
 		{
 			try
 			{
-				final IUser user = ((Player)sender).getUser();
+				final IUser user = ess.getUserMap().getUser((Player)sender);
 				file = new File(ess.getPlugin().getDataFolder(), filename + "_" + Util.sanitizeFileName(user.getName()) + ".txt");
 				if (!file.exists())
 				{

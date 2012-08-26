@@ -2,53 +2,33 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
 import net.ess3.permissions.Permissions;
 import java.util.List;
-import net.ess3.api.server.Player;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandclearinventory extends EssentialsCommand
 {
-	//TODO: Cleanup
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length > 0 && Permissions.CLEARINVENTORY_OTHERS.isAuthorized(user))
 		{
-			//TODO: Fix fringe user match case.
-			if (args[0].length() >= 3)
+			IUser p = ess.getUserMap().matchUser(args[0], false, false);
+			if (p != null)
 			{
-				List<Player> online = server.matchPlayer(args[0]);
-
-				if (!online.isEmpty())
-				{
-					for (Player p : online)
-					{
-						p.getInventory().clear();
-						user.sendMessage(_("inventoryClearedOthers", p.getDisplayName()));
-					}
-					return;
-				}
-				throw new Exception(_("playerNotFound"));
+				p.getPlayer().getInventory().clear();
+				user.sendMessage(_("inventoryClearedOthers", p.getPlayer().getDisplayName()));
 			}
 			else
 			{
-				Player p = ess.getUserMap().matchUser(args[0], false, false);
-				if (p != null)
-				{
-					p.getInventory().clear();
-					user.sendMessage(_("inventoryClearedOthers", p.getDisplayName()));
-				}
-				else
-				{
-					throw new Exception(_("playerNotFound"));
-				}
+				throw new Exception(_("playerNotFound"));
 			}
 		}
 		else
 		{
-			user.getInventory().clear();
+			user.getPlayer().getInventory().clear();
 			user.sendMessage(_("inventoryCleared"));
 		}
 	}

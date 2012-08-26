@@ -1,125 +1,57 @@
 package net.ess3.bukkit;
 
-import java.util.EnumMap;
-import lombok.Delegate;
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.Material;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 
-public class BukkitMaterial extends Material
+public class BukkitMaterial
 {
-	private static EnumMap<org.bukkit.Material, BukkitMaterial> materials = new EnumMap<org.bukkit.Material, BukkitMaterial>(org.bukkit.Material.class);
-
-	static
+	public static ItemStack convertBlockToItem(Material mat, short data)
 	{
-		for (org.bukkit.Material material : org.bukkit.Material.values())
-		{
-			materials.put(material, new BukkitMaterial(material));
-		}
-	}
-
-	@Override
-	public int getId()
-	{
-		return this.material.getId();
-	}
-
-	@Override
-	public int getMaxStackSize()
-	{
-		return this.material.getMaxStackSize();
-	}
-
-	private interface Excludes {
-		short getMaxDurability();
-	}
-	@Delegate(excludes={Excludes.class})
-	private final org.bukkit.Material material;
-
-	private BukkitMaterial(final org.bukkit.Material material)
-	{
-		this.material = material;
-	}
-
-	@Override
-	protected Material getMaterialByName(final String name)
-	{
-		final org.bukkit.Material mat = org.bukkit.Material.getMaterial(name);
-		return materials.get(mat);
-	}
-
-	@Override
-	protected Material getMaterialById(final int id)
-	{
-		final org.bukkit.Material mat = org.bukkit.Material.getMaterial(id);
-		return materials.get(mat);
-	}
-
-	@Override
-	protected Material matchMaterial(String string)
-	{
-		final org.bukkit.Material mat = org.bukkit.Material.matchMaterial(string);
-		return materials.get(mat);
-	}
-
-	@Override
-	public String getName()
-	{
-		return this.material.toString();
-	}
-
-	@Override
-	public int getMaxDurability()
-	{
-		return (short)this.material.getMaxDurability();
-	}
-	
-	@Override
-	public ItemStack convertToItem(ItemStack is)
-	{
-		switch (org.bukkit.Material.getMaterial(is.getType().getId()))
+		final ItemStack is = new ItemStack(mat, 1, data);
+		switch (is.getType())
 		{
 		case WOODEN_DOOR:
-			is.setType(org.bukkit.Material.WOOD_DOOR.getId());
+			is.setType(org.bukkit.Material.WOOD_DOOR);
 			is.setDurability((short)0);
 			break;
 		case IRON_DOOR_BLOCK:
-			is.setType(org.bukkit.Material.IRON_DOOR.getId());
+			is.setType(org.bukkit.Material.IRON_DOOR);
 			is.setDurability((short)0);
 			break;
 		case SIGN_POST:
 		case WALL_SIGN:
-			is.setType(org.bukkit.Material.SIGN.getId());
+			is.setType(org.bukkit.Material.SIGN);
 			is.setDurability((short)0);
 			break;
 		case CROPS:
-			is.setType(org.bukkit.Material.SEEDS.getId());
+			is.setType(org.bukkit.Material.SEEDS);
 			is.setDurability((short)0);
 			break;
 		case CAKE_BLOCK:
-			is.setType(org.bukkit.Material.CAKE.getId());
+			is.setType(org.bukkit.Material.CAKE);
 			is.setDurability((short)0);
 			break;
 		case BED_BLOCK:
-			is.setType(org.bukkit.Material.BED.getId());
+			is.setType(org.bukkit.Material.BED);
 			is.setDurability((short)0);
 			break;
 		case REDSTONE_WIRE:
-			is.setType(org.bukkit.Material.REDSTONE.getId());
+			is.setType(org.bukkit.Material.REDSTONE);
 			is.setDurability((short)0);
 			break;
 		case REDSTONE_TORCH_OFF:
 		case REDSTONE_TORCH_ON:
-			is.setType(org.bukkit.Material.REDSTONE_TORCH_ON.getId());
+			is.setType(org.bukkit.Material.REDSTONE_TORCH_ON);
 			is.setDurability((short)0);
 			break;
 		case DIODE_BLOCK_OFF:
 		case DIODE_BLOCK_ON:
-			is.setType(org.bukkit.Material.DIODE.getId());
+			is.setType(org.bukkit.Material.DIODE);
 			is.setDurability((short)0);
 			break;
 		case DOUBLE_STEP:
-			is.setType(org.bukkit.Material.STEP.getId());
+			is.setType(org.bukkit.Material.STEP);
 			break;
 		case TORCH:
 		case RAILS:
@@ -147,10 +79,10 @@ public class BukkitMaterial extends Material
 		case FIRE:
 			return null;
 		case PUMPKIN_STEM:
-			is.setType(org.bukkit.Material.PUMPKIN_SEEDS.getId());
+			is.setType(org.bukkit.Material.PUMPKIN_SEEDS);
 			break;
 		case MELON_STEM:
-			is.setType(org.bukkit.Material.MELON_SEEDS.getId());
+			is.setType(org.bukkit.Material.MELON_SEEDS);
 			break;
 		}
 		return is;

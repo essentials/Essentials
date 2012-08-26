@@ -63,7 +63,7 @@ public class EssentialsEntityListener implements Listener
 			{
 				event.setCancelled(true);
 			}
-			final ItemStack itemstack = attacker.getItemInHand();
+			final ItemStack itemstack = ((Player)eAttack).getItemInHand();
 			final List<String> commandList = attacker.getData().getPowertool(itemstack.getType());
 			if (commandList != null && !commandList.isEmpty())
 			{
@@ -71,13 +71,13 @@ public class EssentialsEntityListener implements Listener
 				{
 					if (command != null && !command.isEmpty())
 					{
-						ess.scheduleSyncDelayedTask(
+						ess.getPlugin().scheduleSyncDelayedTask(
 								new Runnable()
 								{
 									@Override
 									public void run()
 									{
-										attacker.getServer().dispatchCommand(attacker.getBase(), command.replaceAll("\\{player\\}", defender.getName()));
+										attacker.getServer().dispatchCommand(((Player)eAttack), command.replaceAll("\\{player\\}", defender.getName()));
 									}
 								});
 						event.setCancelled(true);

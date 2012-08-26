@@ -1,7 +1,9 @@
 package net.ess3.api;
 
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Permission;
+import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
+
 
 
 public interface IPermission
@@ -12,5 +14,5 @@ public interface IPermission
 
 	Permission getPermission();
 
-	Permission.Default  getPermissionDefault();
+	PermissionDefault  getPermissionDefault();
 }

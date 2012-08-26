@@ -1,6 +1,7 @@
 package net.ess3.api;
 
-import net.ess3.api.server.ItemStack;
+import org.bukkit.inventory.ItemStack;
+
 
 
 public interface IItemDb extends IReload

@@ -1,7 +1,5 @@
 package net.ess3;
 
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.Material;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -14,6 +12,8 @@ import net.ess3.api.IItemDb;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.storage.ManagedFile;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 
 public class ItemDb implements IItemDb
@@ -129,9 +129,9 @@ public class ItemDb implements IItemDb
 					metaData = (short)((item >> 32) & 0xffffL);
 				}
 			}
-			else if (Material.get(itemname) != null)
+			else if (Material.matchMaterial(itemname) != null)
 			{
-				itemid = Material.get(itemname).getId();
+				itemid = Material.matchMaterial(itemname).getId();
 				metaData = 0;
 			}
 			else
@@ -140,12 +140,12 @@ public class ItemDb implements IItemDb
 			}
 		}
 
-		final Material mat = Material.get(itemid);
+		final Material mat = Material.getMaterial(itemid);
 		if (mat == null)
 		{
 			throw new Exception(_("unknownItemId", itemid));
 		}
-		final ItemStack retval = ItemStack.create(mat, mat.getMaxStackSize(), metaData);
+		final ItemStack retval = new ItemStack(mat, mat.getMaxStackSize(), metaData);
 		return retval;
 	}
 }

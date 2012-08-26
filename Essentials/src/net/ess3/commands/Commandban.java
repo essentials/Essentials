@@ -6,8 +6,8 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.Ban;
 import lombok.Cleanup;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandban extends EssentialsCommand
@@ -55,13 +55,12 @@ public class Commandban extends EssentialsCommand
 		}
 		
 		user.setBanned(true);
-		user.kickPlayer(banReason);
-		for (Player onlinePlayer : server.getOnlinePlayers())
+		user.getPlayer().kickPlayer(banReason);
+		for (Player player : server.getOnlinePlayers())
 		{
-			final IUser player = onlinePlayer.getUser();
 			if (Permissions.BAN_NOTIFY.isAuthorized(player))
 			{
-				onlinePlayer.sendMessage(_("playerBanned", senderName, user.getName(), banReason));
+				player.sendMessage(_("playerBanned", senderName, user.getName(), banReason));
 			}
 		}
 	}

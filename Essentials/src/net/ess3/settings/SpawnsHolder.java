@@ -11,7 +11,7 @@ import net.ess3.api.IEssentialsModule;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.storage.AsyncStorageObjectHolder;
-import net.ess3.storage.Location.WorldNotLoadedException;
+import net.ess3.storage.StoredLocation.WorldNotLoadedException;
 import net.ess3.utils.textreader.IText;
 import net.ess3.utils.textreader.KeywordReplacer;
 import net.ess3.utils.textreader.SimpleTextInput;
@@ -187,6 +187,8 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 			unlock();
 		}
 	}
+	
+	//TODO: Why is this stuff here in the settings folder?
 
 	private void registerListeners()
 	{
@@ -198,7 +200,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 			{
 				((SpawnPlayerListener)ll).onPlayerRespawn((PlayerRespawnEvent)event);
 			}
-		}, ess);
+		}, ess.getPlugin());
 		ess.getServer().getPluginManager().registerEvent(PlayerJoinEvent.class, playerListener, getRespawnPriority(), new EventExecutor()
 		{
 			@Override
@@ -206,7 +208,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 			{
 				((SpawnPlayerListener)ll).onPlayerJoin((PlayerJoinEvent)event);
 			}
-		}, ess);
+		}, ess.getPlugin());
 	}
 
 

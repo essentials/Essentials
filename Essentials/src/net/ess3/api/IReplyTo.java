@@ -1,6 +1,7 @@
 package net.ess3.api;
 
-import net.ess3.api.server.CommandSender;
+import org.bukkit.command.CommandSender;
+
 
 
 public interface IReplyTo

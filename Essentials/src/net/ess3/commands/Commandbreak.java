@@ -2,8 +2,8 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.Material;
 import net.ess3.permissions.Permissions;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 
@@ -14,7 +14,7 @@ public class Commandbreak extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		final Block block = user.getTargetBlock(null, 20);
+		final Block block = user.getPlayer().getTargetBlock(null, 20);
 		if (block == null)
 		{
 			throw new NoChargeException();
@@ -29,7 +29,7 @@ public class Commandbreak extends EssentialsCommand
 		}
 		//final List<ItemStack> list = (List<ItemStack>)block.getDrops();		
 		//final BlockBreakEvent event = new BlockBreakEvent(block, user.getBase(), list);
-		final BlockBreakEvent event = new BlockBreakEvent(block, user.getBase());
+		final BlockBreakEvent event = new BlockBreakEvent(block, user.getPlayer());
 		server.getPluginManager().callEvent(event);
 		if (event.isCancelled())
 		{

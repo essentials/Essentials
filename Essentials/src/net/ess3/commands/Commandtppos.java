@@ -2,10 +2,9 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Location;
 import net.ess3.economy.Trade;
-//TODO: remove bukkit
+import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -22,7 +21,7 @@ public class Commandtppos extends EssentialsCommand
 		final int x = Integer.parseInt(args[0]);
 		final int y = Integer.parseInt(args[1]);
 		final int z = Integer.parseInt(args[2]);
-		final Location location = new Location(user.getWorld(), x, y, z);
+		final Location location = new Location(user.getPlayer().getWorld(), x, y, z);
 		if (args.length > 3)
 		{
 			location.setYaw((Float.parseFloat(args[3]) + 180 + 360) % 360);
@@ -50,7 +49,7 @@ public class Commandtppos extends EssentialsCommand
 		final int x = Integer.parseInt(args[1]);
 		final int y = Integer.parseInt(args[2]);
 		final int z = Integer.parseInt(args[3]);
-		final Location location = new Location(user.getWorld(), x, y, z);
+		final Location location = new Location(user.getPlayer().getWorld(), x, y, z);
 		if (args.length > 4)
 		{
 			location.setYaw((Float.parseFloat(args[4]) + 180 + 360) % 360);

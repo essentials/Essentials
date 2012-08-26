@@ -3,11 +3,11 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 import net.ess3.economy.Trade;
 import net.ess3.api.IUser;
-import net.ess3.api.server.World;
-import net.ess3.api.server.Location;
 import net.ess3.permissions.WorldPermissions;
 import java.util.List;
 //TODO: remove bukkit
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -36,7 +36,7 @@ public class Commandworld extends EssentialsCommand
 			{
 				return;
 			}
-			world = user.getWorld() == nether ? worlds.get(0) : nether;
+			world = user.getPlayer().getWorld() == nether ? worlds.get(0) : nether;
 		}
 		else
 		{
@@ -58,11 +58,11 @@ public class Commandworld extends EssentialsCommand
 		}
 
 		double factor;
-		if (user.getWorld().getEnvironment() == World.Environment.NETHER && world.getEnvironment() == World.Environment.NORMAL)
+		if (user.getPlayer().getWorld().getEnvironment() == World.Environment.NETHER && world.getEnvironment() == World.Environment.NORMAL)
 		{
 			factor = 8.0;
 		}
-		else if (user.getWorld().getEnvironment() == World.Environment.NORMAL && world.getEnvironment() == World.Environment.NETHER)
+		else if (user.getPlayer().getWorld().getEnvironment() == World.Environment.NORMAL && world.getEnvironment() == World.Environment.NETHER)
 		{
 			factor = 1.0 / 8.0;
 		}
@@ -71,8 +71,8 @@ public class Commandworld extends EssentialsCommand
 			factor = 1.0;
 		}
 
-		final Location loc = user.getLocation();
-		final Location target = Location.create(world, loc.getBlockX() * factor + .5, loc.getBlockY(), loc.getBlockZ() * factor + .5);
+		final Location loc = user.getPlayer().getLocation();
+		final Location target = new Location(world, loc.getBlockX() * factor + .5, loc.getBlockY(), loc.getBlockZ() * factor + .5);
 
 		final Trade charge = new Trade(commandName, ess);
 		charge.isAffordableFor(user);

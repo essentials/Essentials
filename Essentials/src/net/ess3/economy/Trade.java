@@ -1,10 +1,7 @@
 package net.ess3.economy;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -15,10 +12,10 @@ import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.Location;
 import net.ess3.permissions.NoCommandCostPermissions;
 import net.ess3.permissions.Permissions;
+import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 
 
 
@@ -129,13 +126,13 @@ public class Trade
 					{
 						final ItemStack stack = dropStack.clone();
 						stack.setAmount(maxStackSize);
-						itemStacks[i] = user.getWorld().dropItem(loc, stack);
+						itemStacks[i] = user.getWorld().dropItem(loc, stack).getItemStack();
 					}
 					if (leftover > 0)
 					{
 						final ItemStack stack = dropStack.clone();
 						stack.setAmount(leftover);
-						itemStacks[stacks] = user.getWorld().dropItem(loc, stack);
+						itemStacks[stacks] = user.getWorld().dropItem(loc, stack).getItemStack();
 					}
 				}
 			}
@@ -143,7 +140,7 @@ public class Trade
 			{
 				success = user.getInventory().addAllItems(true, getItemStack());
 			}
-			user.updateInventory();
+			user.getPlayer().updateInventory();
 		}
 		if (getExperience() != null)
 		{

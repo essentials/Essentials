@@ -8,8 +8,8 @@ import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.api.server.Location;
-import net.ess3.bukkit.Mob;
-import net.ess3.bukkit.Mob.MobException;
+import net.ess3.bukkit.LivingEntities;
+import net.ess3.bukkit.LivingEntities.MobException;
 import net.ess3.permissions.SpawnmobPermissions;
 import net.ess3.utils.LocationUtil;
 import net.ess3.utils.Util;
@@ -27,7 +27,7 @@ public class Commandspawnmob extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			final Set<String> mobList = Mob.getMobList();
+			final Set<String> mobList = LivingEntities.getMobList();
 			final Set<String> availableList = new HashSet<String>();
 			for (String mob : mobList)
 			{
@@ -66,11 +66,11 @@ public class Commandspawnmob extends EssentialsCommand
 
 
 		Entity spawnedMob = null;
-		Mob mob = null;
+		LivingEntities mob = null;
 		Entity spawnedMount = null;
-		Mob mobMount = null;
+		LivingEntities mobMount = null;
 
-		mob = Mob.fromName(mobType);
+		mob = LivingEntities.fromName(mobType);
 		if (mob == null)
 		{
 			throw new Exception(_("invalidMob"));
@@ -104,7 +104,7 @@ public class Commandspawnmob extends EssentialsCommand
 
 		if (mountType != null)
 		{
-			mobMount = Mob.fromName(mountType);
+			mobMount = LivingEntities.fromName(mountType);
 			if (mobMount == null)
 			{
 				user.sendMessage(_("invalidMob"));

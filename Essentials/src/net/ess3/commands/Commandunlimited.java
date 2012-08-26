@@ -2,13 +2,13 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.Material;
 import net.ess3.permissions.Permissions;
 import net.ess3.permissions.UnlimitedItemPermissions;
 import java.util.Locale;
 import java.util.Set;
 import lombok.Cleanup;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commandunlimited extends EssentialsCommand
@@ -41,7 +41,7 @@ public class Commandunlimited extends EssentialsCommand
 			final Set<Material> itemList = target.getData().getUnlimited();
 			for(Material mat : itemList)
 			{
-				toggleUnlimited(user, target, mat.getName());
+				toggleUnlimited(user, target, mat.toString());
 				
 			}
 		}
@@ -68,7 +68,7 @@ public class Commandunlimited extends EssentialsCommand
 				output.append(", ");
 			}
 			first = false;
-			final String matname = mater.getName().toLowerCase(Locale.ENGLISH).replace("_", "");
+			final String matname = mater.toString().toLowerCase(Locale.ENGLISH).replace("_", "");
 			output.append(matname);
 		}
 
@@ -100,9 +100,9 @@ public class Commandunlimited extends EssentialsCommand
 
 		if (user != target)
 		{
-			user.sendMessage(_(message, itemname, target.getDisplayName()));
+			user.sendMessage(_(message, itemname, target.getPlayer().getDisplayName()));
 		}
-		target.sendMessage(_(message, itemname, target.getDisplayName()));
+		target.sendMessage(_(message, itemname, target.getPlayer().getDisplayName()));
 		target.acquireWriteLock();
 		target.getData().setUnlimited(stack.getType(), enableUnlimited);
 

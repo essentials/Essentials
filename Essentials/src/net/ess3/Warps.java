@@ -1,16 +1,16 @@
 package net.ess3;
 
+import java.io.File;
+import java.util.*;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IWarp;
 import net.ess3.api.IWarps;
 import net.ess3.api.InvalidNameException;
-import net.ess3.api.server.Location;
 import net.ess3.commands.WarpNotFoundException;
 import net.ess3.settings.WarpHolder;
 import net.ess3.storage.StorageObjectMap;
-import java.io.File;
-import java.util.*;
+import org.bukkit.Location;
 
 
 public class Warps extends StorageObjectMap<IWarp> implements IWarps

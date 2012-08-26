@@ -5,14 +5,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.*;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.Plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.PluginCommandYamlParser;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 
 public class EssentialsCommandHandler implements ICommandHandler
@@ -101,13 +101,6 @@ public class EssentialsCommandHandler implements ICommandHandler
 
 		try
 		{
-			IUser user = null;
-			if (sender instanceof Player)
-			{
-				user = ((Player)sender).getUser();
-				LOGGER.log(Level.INFO, String.format("[PLAYER_COMMAND] %s: /%s %s ", ((Player)sender).getName(), commandLabel, EssentialsCommand.getFinalArg(args, 0)));
-			}
-
 			// Check for disabled commands
 			if (disabled)
 			{
@@ -136,9 +129,16 @@ public class EssentialsCommandHandler implements ICommandHandler
 			// Check authorization
 			if (sender != null && !cmd.isAuthorized(sender))
 			{
-				LOGGER.log(Level.WARNING, _("deniedAccessCommand", user.getName()));
-				user.sendMessage(_("noAccessCommand"));
+				LOGGER.log(Level.WARNING, _("deniedAccessCommand", sender.getName()));
+				sender.sendMessage(_("noAccessCommand"));
 				return true;
+			}
+			
+			IUser user = null;
+			if (sender instanceof Player)
+			{
+				user = ess.getUserMap().getUser((Player)sender);
+				LOGGER.log(Level.INFO, String.format("[PLAYER_COMMAND] %s: /%s %s ", ((Player)sender).getName(), commandLabel, EssentialsCommand.getFinalArg(args, 0)));
 			}
 
 			// Run the command
@@ -151,6 +151,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 				else
 				{
 					user.acquireReadLock();
+					user.setPlayerCache((Player)sender);
 					try
 					{
 						cmd.run(user, command, commandLabel, args);
