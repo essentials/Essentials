@@ -3,10 +3,10 @@ package net.ess3.commands;
 import java.util.Collections;
 import java.util.Locale;
 import static net.ess3.I18n._;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.World;
 import net.ess3.bukkit.LivingEntities;
 import org.bukkit.Chunk;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDeathEvent;
 
@@ -78,7 +78,7 @@ public class Commandkillall extends EssentialsCommand
 			{
 				throw new Exception(_("invalidMob"));
 			}
-			entityClass = LivingEntities.fromName(killType).getType().getEntityClass();
+			entityClass = LivingEntities.fromName(killType).getEntityClass();
 		}
 		int numKills = 0;
 		for (Chunk chunk : world.getLoadedChunks())

@@ -3,6 +3,7 @@ package net.ess3.xmpp;
 import net.ess3.Console;
 import net.ess3.commands.EssentialsCommand;
 import net.ess3.commands.NotEnoughArgumentsException;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
@@ -24,7 +25,7 @@ public class Commandxmpp extends EssentialsCommand
 		else
 		{
 			final String message = getFinalArg(args, 1);
-			final String senderName = sender instanceof Player ? ess.getUserMap().getUser((Player)sender).getDisplayName() : Console.NAME;
+			final String senderName = isUser(sender) ? getPlayer(sender).getDisplayName() : Console.NAME;
 			sender.sendMessage("[" + senderName + ">" + address + "] " + message);
 			if (!EssentialsXMPP.getInstance().sendMessage(address, "[" + senderName + "] " + message))
 			{

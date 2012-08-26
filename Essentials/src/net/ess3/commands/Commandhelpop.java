@@ -3,9 +3,9 @@ package net.ess3.commands;
 import java.util.logging.Level;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
+import org.bukkit.entity.Player;
 
 
 public class Commandhelpop extends EssentialsCommand
@@ -18,11 +18,10 @@ public class Commandhelpop extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		user.setDisplayNick();
-		final String message = _("helpOp", user.getDisplayName(), Util.stripFormat(getFinalArg(args, 0)));
+		final String message = _("helpOp", user.getPlayer().getDisplayName(), Util.stripFormat(getFinalArg(args, 0)));
 		logger.log(Level.INFO, message);
-		for (Player onlinePlayer : server.getOnlinePlayers())
+		for (Player player : server.getOnlinePlayers())
 		{
-			final IUser player = onlinePlayer.getUser();
 			if (!Permissions.HELPOP_RECEIVE.isAuthorized(player))
 			{
 				continue;

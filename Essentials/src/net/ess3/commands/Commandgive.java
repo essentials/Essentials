@@ -3,14 +3,12 @@ package net.ess3.commands;
 import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.Material;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.GivePermissions;
 import net.ess3.utils.Util;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commandgive extends EssentialsCommand
@@ -22,8 +20,8 @@ public class Commandgive extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		
-		final IUser giveTo = getPlayer(args, 0);
+
+		final IUser giveTo = ess.getUserMap().matchUser(args[0], false, false);
 
 		final ItemStack stack = ess.getItemDb().get(args[1], giveTo);
 
@@ -34,14 +32,14 @@ public class Commandgive extends EssentialsCommand
 		}
 
 		if (args.length > 3 && Util.isInt(args[2]) && Util.isInt(args[3]))
-		{			
+		{
 			stack.setAmount(Integer.parseInt(args[2]));
 			stack.setDurability(Short.parseShort(args[3]));
 		}
 		else if (args.length > 2 && Integer.parseInt(args[2]) > 0)
 		{
 			stack.setAmount(Integer.parseInt(args[2]));
-		}		
+		}
 
 		if (args.length > 3)
 		{
@@ -52,7 +50,7 @@ public class Commandgive extends EssentialsCommand
 				{
 					continue;
 				}
-				final Enchantment enchantment = Commandenchant.getEnchantment(split[0], sender instanceof Player ? ess.getUserMap().getUser((Player)sender) : null);
+				final Enchantment enchantment = Commandenchant.getEnchantment(split[0], sender instanceof IUser ? (IUser)sender : null);
 				int level;
 				if (split.length > 1)
 				{
@@ -66,16 +64,16 @@ public class Commandgive extends EssentialsCommand
 			}
 		}
 
-		if (stack.getType() == Material.AIR)
+		if (stack.getTypeId() == 0)
 		{
 			throw new Exception(_("cantSpawnItem", "Air"));
 		}
-		
+
 		giveTo.giveItems(stack, false);
 
 		//TODO: TL this.
 		final String itemName = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');
-		sender.sendMessage(ChatColor.BLUE + "Giving " + stack.getAmount() + " of " + itemName + " to " + giveTo.getDisplayName() + ".");
-		
+		sender.sendMessage(ChatColor.BLUE + "Giving " + stack.getAmount() + " of " + itemName + " to " + giveTo.getPlayer().getDisplayName() + ".");
+
 	}
 }

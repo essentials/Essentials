@@ -33,7 +33,7 @@ public final class BlockBreakPermissions extends AbstractSuperpermsPermission
 	}
 
 	@Override
-	public String getPermission()
+	public String getPermissionName()
 	{
 		return this.permission;
 	}

@@ -63,7 +63,7 @@ public class Commandenchant extends EssentialsCommand
 		{
 			stack.addEnchantment(enchantment, level);
 		}
-		user.getInventory().setxItemInHand(stack);
+		user.getInventory().setItemInHand(stack);
 		user.updateInventory();
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
 		if (level == 0)

@@ -17,7 +17,6 @@
  */
 package net.ess3;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,7 +86,7 @@ public class Essentials implements IEssentials
 	@Getter
 	private transient List<String> vanishedPlayers = new ArrayList<String>();
 
-	public Essentials(final Server server, final Logger logger, final Plugin plugin)
+	public Essentials(final Server server, final Logger logger, final IPlugin plugin)
 	{
 		this.server = server;
 		this.logger = logger;
@@ -132,83 +131,44 @@ public class Essentials implements IEssentials
 		execTimer.start();
 
 		execTimer.mark("I18n1");
-		
+
 		execTimer.mark("BukkitCheck");
-		try
-		{
-			//final EssentialsUpgrade upgrade = new EssentialsUpgrade(this);
-			//upgrade.beforeSettings();
-			//execTimer.mark("Upgrade");
-			reloadList = new ArrayList<IReload>();
-			settings = new SettingsHolder(this);
-			reloadList.add(settings);
-			execTimer.mark("Settings");
-			//upgrade.afterSettings();
-			//execTimer.mark("Upgrade2");
-			i18n.updateLocale(settings.getLocale());
-			userMap = new UserMap(this);
-			reloadList.add(userMap);
-			execTimer.mark("Init(Usermap)");
-			groups = new RanksStorage(this);
-			reloadList.add((RanksStorage)groups);
-			warps = new Warps(this);
-			reloadList.add(warps);
-			execTimer.mark("Init(Spawn/Warp)");
-			worth = new WorthHolder(this);
-			reloadList.add(worth);
-			itemDb = new ItemDb(this);
-			reloadList.add(itemDb);
-			execTimer.mark("Init(Worth/ItemDB)");
-			kits = new Kits(this);
-			reloadList.add(kits);
-			commandHandler = new EssentialsCommandHandler(Essentials.class.getClassLoader(), "net.ess3.commands.Command", "essentials.", this);
-			reloadList.add(commandHandler);
-			economy = new Economy(this);
-			reloadList.add(economy);
-			spawns = new SpawnsHolder(this);
-			reloadList.add(spawns);
-			onReload();
-		}
-		catch (YAMLException exception)
-		{
-			if (pm.getPlugin("EssentialsUpdate") != null)
-			{
-				logger.log(Level.SEVERE, I18n._("essentialsHelp2"));
-			}
-			else
-			{
-				logger.log(Level.SEVERE, I18n._("essentialsHelp1"));
-			}
-			logger.log(Level.SEVERE, exception.toString());
-			pm.registerEvents(new Listener()
-			{
-				@EventHandler(priority = EventPriority.LOW)
-				public void onPlayerJoin(final PlayerJoinEvent event)
-				{
-					event.getPlayer().sendMessage("Essentials failed to load, read the log file.");
-				}
-			}, this);
-			for (Player player : getServer().getOnlinePlayers())
-			{
-				player.sendMessage("Essentials failed to load, read the log file.");
-			}
-			this.getPlugin().setEnabled(false);
-			return;
-		}
+
+		//final EssentialsUpgrade upgrade = new EssentialsUpgrade(this);
+		//upgrade.beforeSettings();
+		//execTimer.mark("Upgrade");
+		reloadList = new ArrayList<IReload>();
+		settings = new SettingsHolder(this);
+		reloadList.add(settings);
+		execTimer.mark("Settings");
+		//upgrade.afterSettings();
+		//execTimer.mark("Upgrade2");
+		i18n.updateLocale(settings.getLocale());
+		userMap = new UserMap(this);
+		reloadList.add(userMap);
+		execTimer.mark("Init(Usermap)");
+		groups = new RanksStorage(this);
+		reloadList.add((RanksStorage)groups);
+		warps = new Warps(this);
+		reloadList.add(warps);
+		execTimer.mark("Init(Spawn/Warp)");
+		worth = new WorthHolder(this);
+		reloadList.add(worth);
+		itemDb = new ItemDb(this);
+		reloadList.add(itemDb);
+		execTimer.mark("Init(Worth/ItemDB)");
+		kits = new Kits(this);
+		reloadList.add(kits);
+		commandHandler = new EssentialsCommandHandler(Essentials.class.getClassLoader(), "net.ess3.commands.Command", "essentials.", this);
+		reloadList.add(commandHandler);
+		economy = new Economy(this);
+		reloadList.add(economy);
+		spawns = new SpawnsHolder(this);
+		reloadList.add(spawns);
+		onReload();
+
 		backup = new Backup(this);
 		//permissionsHandler = new PermissionsHandler(this);
-		final EssentialsPluginListener serverListener = new EssentialsPluginListener(this);
-		pm.registerEvents(serverListener, this);
-		reloadList.add(serverListener);
-
-		final EssentialsPlayerListener playerListener = new EssentialsPlayerListener(this);
-		pm.registerEvents(playerListener, this);
-
-		final EssentialsBlockListener blockListener = new EssentialsBlockListener(this);
-		pm.registerEvents(blockListener, this);
-
-		final EssentialsEntityListener entityListener = new EssentialsEntityListener(this);
-		pm.registerEvents(entityListener, this);
 
 		jails = new Jails(this);
 		reloadList.add(jails);
@@ -217,17 +177,6 @@ public class Essentials implements IEssentials
 		timer = new EssentialsTimer(this);
 		getPlugin().scheduleSyncRepeatingTask(timer, 1, 100);
 		execTimer.mark("RegListeners");
-
-		final MetricsStarter metricsStarter = new MetricsStarter(this);
-		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
-		{
-			getServer().getScheduler().scheduleAsyncDelayedTask(this.getPlugin(), metricsStarter, 1);
-		}
-		else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
-		{
-			final MetricsListener metricsListener = new MetricsListener(this, metricsStarter);
-			pm.registerEvents(metricsListener, this);
-		}
 
 		final String timeroutput = execTimer.end();
 		if (getSettings().isDebug())
@@ -241,7 +190,7 @@ public class Essentials implements IEssentials
 	{
 		for (Player p : getServer().getOnlinePlayers())
 		{
-			IUser user = getUser(p);
+			IUser user = getUserMap().getUser(p);
 			if (user.isVanished())
 			{
 				user.toggleVanished();
@@ -347,7 +296,7 @@ public class Essentials implements IEssentials
 		}
 		for (Player player : getServer().getOnlinePlayers())
 		{
-			final IUser user = player.getUser();
+			final IUser user = getUserMap().getUser(player);
 			if (!user.isIgnoringPlayer(sender))
 			{
 				player.sendMessage(message);
@@ -371,7 +320,7 @@ public class Essentials implements IEssentials
 	{
 		return userMap;
 	}
-	
+
 	@Override
 	public IRanks getRanks()
 	{

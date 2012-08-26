@@ -16,8 +16,8 @@ public class Commandfireball extends EssentialsCommand
 		{
 			small = true;
 		}
-		final Vector direction = user.getEyeLocation().getDirection().multiply(2);
-		final Fireball fireball = user.getWorld().spawn(user.getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), small ? SmallFireball.class : Fireball.class);
-		fireball.setShooter(user.getBase());
+		final Vector direction = user.getPlayer().getEyeLocation().getDirection().multiply(2);
+		final Fireball fireball = user.getPlayer().getWorld().spawn(user.getPlayer().getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), small ? SmallFireball.class : Fireball.class);
+		fireball.setShooter(user.getPlayer());
 	}
 }

@@ -3,8 +3,8 @@ package net.ess3.commands;
 
 import java.util.Random;
 import net.ess3.api.IUser;
-import net.ess3.api.server.Location;
-import net.ess3.bukkit.LivingEntities;
+import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ocelot;
 
 
@@ -15,8 +15,8 @@ public class Commandkittycannon extends EssentialsCommand
 	@Override
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		final LivingEntities cat = LivingEntities.OCELOT;
-		final Ocelot ocelot = (Ocelot)cat.spawn(user, server, user.getEyeLocation());
+		final EntityType cat = EntityType.OCELOT;
+		final Ocelot ocelot = (Ocelot)user.getPlayer().getWorld().spawn(user.getPlayer().getEyeLocation(), cat.getEntityClass());
 		if (ocelot == null)
 		{
 			return;
@@ -24,7 +24,7 @@ public class Commandkittycannon extends EssentialsCommand
 		final int i = random.nextInt(Ocelot.Type.values().length);
 		ocelot.setCatType(Ocelot.Type.values()[i]);
 		ocelot.setTamed(true);
-		ocelot.setVelocity(user.getEyeLocation().getDirection().multiply(2));
+		ocelot.setVelocity(user.getPlayer().getEyeLocation().getDirection().multiply(2));
 		ess.getPlugin().scheduleSyncDelayedTask(new Runnable()
 		{
 			@Override

@@ -2,9 +2,8 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
+import org.bukkit.command.CommandSender;
 
 
 
@@ -36,9 +35,8 @@ public class Commandgod extends EssentialsCommand
 
 	private void godOtherPlayers(final CommandSender sender, final String[] args)
 	{
-		for (Player matchPlayer : server.matchPlayer(args[0]))
+		for (IUser player : ess.getUserMap().matchUsers(args[0], false, true))
 		{
-			final IUser player = ess.getUserMap().getUser(matchPlayer);
 			if (player.isHidden())
 			{
 				continue;
@@ -62,7 +60,7 @@ public class Commandgod extends EssentialsCommand
 
 			final boolean enabled = player.isGodModeEnabled();
 			player.sendMessage(_("godMode", (enabled ? _("enabled") : _("disabled"))));
-			sender.sendMessage(_("godMode", _(enabled ? "godEnabledFor" : "godDisabledFor", matchPlayer.getDisplayName())));
+			sender.sendMessage(_("godMode", _(enabled ? "godEnabledFor" : "godDisabledFor", player.getName())));
 		}
 	}
 }

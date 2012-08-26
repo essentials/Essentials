@@ -32,6 +32,6 @@ public class Commandme extends EssentialsCommand
 		
 
 		user.setDisplayNick();
-		ess.broadcastMessage(user, _("action", user.getDisplayName(), message));
+		ess.broadcastMessage(user, _("action", user.getPlayer().getDisplayName(), message));
 	}
 }

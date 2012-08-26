@@ -4,6 +4,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,12 +19,13 @@ public class EssentialsSignsPlugin extends JavaPlugin implements ISignsPlugin
 	public void onEnable()
 	{
 		final PluginManager pluginManager = getServer().getPluginManager();
-		final IEssentials ess = (IEssentials)pluginManager.getPlugin("Essentials-3");
-		if (!this.getDescription().getVersion().equals(ess.getDescription().getVersion()))
+		final IPlugin plugin = (IPlugin)pluginManager.getPlugin("Essentials-3");
+		final IEssentials ess = (IEssentials)plugin.getEssentials();
+		if (!this.getDescription().getVersion().equals(plugin.getDescription().getVersion()))
 		{
 			LOGGER.log(Level.WARNING, _("versionMismatchAll"));
 		}
-		if (!ess.isEnabled())
+		if (!plugin.isEnabled())
 		{
 			this.setEnabled(false);
 			return;

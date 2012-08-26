@@ -3,10 +3,10 @@ package net.ess3.commands;
 import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
+import org.bukkit.command.CommandSender;
 
 public class Commandmute extends EssentialsCommand
 {
@@ -42,9 +42,9 @@ public class Commandmute extends EssentialsCommand
 		sender.sendMessage(
 				muted
 				? (muteTimestamp > 0
-				   ? _("mutedPlayerFor", player.getDisplayName(), DateUtil.formatDateDiff(muteTimestamp))
-				   : _("mutedPlayer", player.getDisplayName()))
-				: _("unmutedPlayer", player.getDisplayName()));
+				   ? _("mutedPlayerFor", player.getPlayer().getDisplayName(), DateUtil.formatDateDiff(muteTimestamp))
+				   : _("mutedPlayer", player.getPlayer().getDisplayName()))
+				: _("unmutedPlayer", player.getPlayer().getDisplayName()));
 		player.sendMessage(
 				muted
 				? (muteTimestamp > 0

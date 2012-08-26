@@ -5,6 +5,7 @@ import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
+import org.bukkit.World;
 
 
 public class SignTime extends EssentialsSign
@@ -38,17 +39,18 @@ public class SignTime extends EssentialsSign
 		final Trade charge = getTrade(sign, 2, ess);
 		charge.isAffordableFor(player);
 		final String timeString = sign.getLine(1);
-		long time = player.getWorld().getTime();
+		final World world = player.getPlayer().getWorld();
+		long time = world.getTime();
 		time -= time % 24000;
 		if ("§2Day".equalsIgnoreCase(timeString))
 		{
-			player.getWorld().setTime(time + 24000);
+			world.setTime(time + 24000);
 			charge.charge(player);
 			return true;
 		}
 		if ("§2Night".equalsIgnoreCase(timeString))
 		{
-			player.getWorld().setTime(time + 37700);
+			world.setTime(time + 37700);
 			charge.charge(player);
 			return true;
 		}

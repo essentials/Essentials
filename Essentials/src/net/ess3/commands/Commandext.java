@@ -2,8 +2,7 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
+import org.bukkit.command.CommandSender;
 
 
 public class Commandext extends EssentialsCommand
@@ -24,7 +23,7 @@ public class Commandext extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			user.setFireTicks(0);
+			user.getPlayer().setFireTicks(0);
 			user.sendMessage(_("extinguish"));
 			return;
 		}
@@ -34,10 +33,10 @@ public class Commandext extends EssentialsCommand
 
 	private void extinguishPlayers(final CommandSender sender, final String name) throws Exception
 	{
-		for (Player matchPlayer : ess.getUserMap().matchUsers(name, false, false))
+		for (IUser matchPlayer : ess.getUserMap().matchUsers(name, false, false))
 		{
-			matchPlayer.setFireTicks(0);
-			sender.sendMessage(_("extinguishOthers", matchPlayer.getDisplayName()));
+			matchPlayer.getPlayer().setFireTicks(0);
+			sender.sendMessage(_("extinguishOthers", matchPlayer.getPlayer().getDisplayName()));
 		}
 	}
 }

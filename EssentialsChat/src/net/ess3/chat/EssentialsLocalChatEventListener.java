@@ -43,7 +43,7 @@ public class EssentialsLocalChatEventListener implements Listener
 			if (!user.equals(sender))
 			{
 				boolean abort = false;
-				final Location playerLoc = user.getLocation();
+				final Location playerLoc = user.getPlayer().getLocation();
 				if (playerLoc.getWorld() != world)
 				{
 					abort = true;

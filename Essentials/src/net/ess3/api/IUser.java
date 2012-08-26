@@ -120,6 +120,22 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 	void setGodModeEnabled(boolean set);
 
 	void setVanished(boolean set);
-	
+
+	/**
+	 * Since the Player object should not be stored for a long time, this method should be called again with a null
+	 * value or the close() method should be called.
+	 *
+	 * @param player
+	 */
 	void setPlayerCache(Player player);
+
+	/**
+	 * If this is not cached using the setPlayerCache method, this call is slow and should not be called often.
+	 *
+	 * It iterates over all players, that are online and does a equal check on their names.
+	 *
+	 * @return
+	 */
+	@Override
+	Player getPlayer();
 }

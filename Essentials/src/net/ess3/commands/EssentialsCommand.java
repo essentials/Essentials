@@ -10,6 +10,7 @@ import net.ess3.permissions.AbstractSuperpermsPermission;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public abstract class EssentialsCommand extends AbstractSuperpermsPermission implements IEssentialsCommand
@@ -124,5 +125,40 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	public String getPermissionName()
 	{
 		return permission;
+	}
+	
+	protected boolean isUser(CommandSender sender) {
+		return sender instanceof IUser;
+	}
+	
+	/**
+	 * Converts a CommandSender object to an User.
+	 * 
+	 * @param sender
+	 * @return 
+	 * @throws IllegalArgumentException if the object is neither a superclass of IUser or Player
+	 */
+	protected IUser getUser(CommandSender sender) {
+		if (sender instanceof IUser) {
+			return (IUser)sender;
+		}
+		if (sender instanceof Player) {
+			return ess.getUserMap().getUser((Player)sender);
+		}
+		throw new IllegalArgumentException();
+	}
+	
+	/**
+	 * Converts a CommandSender object to an User.
+	 * 
+	 * @param sender
+	 * @return 
+	 * @throws IllegalArgumentException if the object is not a superclass of IUser
+	 */
+	protected Player getPlayer(CommandSender sender) {
+		if (sender instanceof IUser) {
+			return ((IUser)sender).getPlayer();
+		}
+		throw new IllegalArgumentException();
 	}
 }

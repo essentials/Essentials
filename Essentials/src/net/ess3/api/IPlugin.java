@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public interface IPlugin extends Plugin {
+	IEssentials getEssentials();
+	
 	int scheduleAsyncDelayedTask(final Runnable run);
 
 	int scheduleSyncDelayedTask(final Runnable run);

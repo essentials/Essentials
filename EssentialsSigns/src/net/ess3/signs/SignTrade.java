@@ -75,16 +75,17 @@ public class SignTrade extends EssentialsSign
 	private Trade rechargeSign(final ISign sign, final IEssentials ess, final IUser player) throws SignException, ChargeException
 	{
 		final Trade trade = getTrade(sign, 2, false, false, ess);
-		if (trade.getItemStack() != null && player.getItemInHand() != null
-			&& trade.getItemStack().getTypeId() == player.getItemInHand().getTypeId()
-			&& trade.getItemStack().getDurability() == player.getItemInHand().getDurability()
-			&& trade.getItemStack().getEnchantments().equals(player.getItemInHand().getEnchantments()))
+		ItemStack itemInHand = player.getPlayer().getItemInHand();
+		if (trade.getItemStack() != null && itemInHand != null
+			&& trade.getItemStack().getTypeId() == itemInHand.getTypeId()
+			&& trade.getItemStack().getDurability() == itemInHand.getDurability()
+			&& trade.getItemStack().getEnchantments().equals(itemInHand.getEnchantments()))
 		{
-			int amount = player.getItemInHand().getAmount();
+			int amount = itemInHand.getAmount();
 			amount -= amount % trade.getItemStack().getAmount();
 			if (amount > 0)
 			{
-				final ItemStack stack = player.getItemInHand().clone();
+				final ItemStack stack = itemInHand.clone();
 				stack.setAmount(amount);
 				final Trade store = new Trade(stack, ess);
 				addAmount(sign, 2, store, ess);

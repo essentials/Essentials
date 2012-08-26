@@ -5,11 +5,11 @@ import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.Server;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandnick extends EssentialsCommand
@@ -108,7 +108,7 @@ public class Commandnick extends EssentialsCommand
 		{
 			for (Player p : server.getOnlinePlayers())
 			{
-				if (target.getBase() == p)
+				if (target.getPlayer().equals(p))
 				{
 					continue;
 				}
@@ -123,7 +123,7 @@ public class Commandnick extends EssentialsCommand
 
 			target.getData().setNickname(nick);
 			target.updateDisplayName();
-			target.sendMessage(_("nickSet", target.getDisplayName() + "§7."));
+			target.sendMessage(_("nickSet", target.getPlayer().getDisplayName() + "§7."));
 		}
 	}
 }

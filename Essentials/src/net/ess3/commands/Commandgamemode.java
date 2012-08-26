@@ -3,10 +3,9 @@ package net.ess3.commands;
 import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
-// TODO: net.ess3 gamemode
+import org.bukkit.GameMode;
+import org.bukkit.command.CommandSender;
 
 
 public class Commandgamemode extends EssentialsCommand
@@ -31,30 +30,30 @@ public class Commandgamemode extends EssentialsCommand
 			return;
 		}
 
-		user.setGameMode(user.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
-		user.sendMessage(_("gameMode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName()));
+		user.getPlayer().setGameMode(user.getPlayer().getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
+		user.sendMessage(_("gameMode", _(user.getPlayer().getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getPlayer().getDisplayName()));
 	}
 
 	private void gamemodeOtherPlayers(final CommandSender sender, final String args[])
 	{
-		for (Player player : ess.getUserMap().matchUsers(args[0], false, false))
+		for (IUser player : ess.getUserMap().matchUsers(args[0], false, false))
 		{		
 			if (args.length > 1)
 			{
 				if (args[1].contains("creat") || args[1].equalsIgnoreCase("1"))
 				{
-					player.setGameMode(GameMode.CREATIVE);
+					player.getPlayer().setGameMode(GameMode.CREATIVE);
 				}
 				else
 				{
-					player.setGameMode(GameMode.SURVIVAL);
+					player.getPlayer().setGameMode(GameMode.SURVIVAL);
 				}
 			}
 			else
 			{
-				player.setGameMode(player.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
+				player.getPlayer().setGameMode(player.getPlayer().getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
 			}
-			sender.sendMessage(_("gameMode", _(player.getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getDisplayName()));
+			sender.sendMessage(_("gameMode", _(player.getPlayer().getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getPlayer().getDisplayName()));
 		}
 	}
 }

@@ -4,9 +4,9 @@ import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.api.server.ItemStack;
 import net.ess3.permissions.ItemPermissions;
 import net.ess3.permissions.Permissions;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commandmore extends EssentialsCommand
@@ -14,7 +14,7 @@ public class Commandmore extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		final ItemStack stack = user.getItemInHand();
+		final ItemStack stack = user.getPlayer().getItemInHand();
 		if (stack == null)
 		{
 			throw new Exception(_("cantSpawnItem", "Air"));
@@ -51,6 +51,6 @@ public class Commandmore extends EssentialsCommand
 		{
 			stack.setAmount(defaultStackSize > 0 ? defaultStackSize : stack.getMaxStackSize());
 		}
-		user.updateInventory();
+		user.getPlayer().updateInventory();
 	}
 }

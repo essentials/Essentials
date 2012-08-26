@@ -4,7 +4,14 @@ import java.io.File;
 import java.util.logging.Level;
 import net.ess3.Essentials;
 import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
 import net.ess3.api.IPlugin;
+import net.ess3.listener.EssentialsBlockListener;
+import net.ess3.listener.EssentialsEntityListener;
+import net.ess3.listener.EssentialsPlayerListener;
+import net.ess3.listener.EssentialsPluginListener;
+import net.ess3.metrics.MetricsListener;
+import net.ess3.metrics.MetricsStarter;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -60,11 +67,38 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 					player.sendMessage("Essentials failed to load, read the log file.");
 				}
 				this.setEnabled(false);
+				return;
 			}
 		}
 		else
 		{
 			this.setEnabled(false);
+			return;
+		}
+		
+		final EssentialsPluginListener serverListener = new EssentialsPluginListener(ess);
+		pm.registerEvents(serverListener, this);
+		ess.addReloadListener(serverListener);
+
+		final EssentialsPlayerListener playerListener = new EssentialsPlayerListener(ess);
+		pm.registerEvents(playerListener, this);
+
+		final EssentialsBlockListener blockListener = new EssentialsBlockListener(ess);
+		pm.registerEvents(blockListener, this);
+
+		final EssentialsEntityListener entityListener = new EssentialsEntityListener(ess);
+		pm.registerEvents(entityListener, this);
+
+		
+		final MetricsStarter metricsStarter = new MetricsStarter(ess);
+		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
+		{
+			getServer().getScheduler().scheduleAsyncDelayedTask(this, metricsStarter, 1);
+		}
+		else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
+		{
+			final MetricsListener metricsListener = new MetricsListener(ess, metricsStarter);
+			pm.registerEvents(metricsListener, this);
 		}
 	}
 
@@ -151,5 +185,11 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	{
 		EntityDamageEvent ede = new EntityDamageEvent(player, EntityDamageEvent.DamageCause.SUICIDE, 1000);
 		getServer().getPluginManager().callEvent(ede);
+	}
+
+	@Override
+	public IEssentials getEssentials()
+	{
+		return ess;
 	}
 }

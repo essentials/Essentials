@@ -4,10 +4,10 @@ import java.util.*;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class Commandlist extends EssentialsCommand
 {
@@ -22,7 +22,7 @@ public class Commandlist extends EssentialsCommand
 		int playerHidden = 0;
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			if (onlinePlayer.getUser().isHidden())
+			if (ess.getUserMap().getUser(onlinePlayer).isHidden())
 			{
 				playerHidden++;
 			}
@@ -31,11 +31,11 @@ public class Commandlist extends EssentialsCommand
 		String online;
 		if (showhidden && playerHidden > 0)
 		{
-			online = _("listAmountHidden", server.getOnlinePlayers().size() - playerHidden, playerHidden, server.getMaxPlayers());
+			online = _("listAmountHidden", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
 		}
 		else
 		{
-			online = _("listAmount", server.getOnlinePlayers().size() - playerHidden, server.getMaxPlayers());
+			online = _("listAmount", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
 		}
 		sender.sendMessage(online);
 
@@ -56,7 +56,7 @@ public class Commandlist extends EssentialsCommand
 			Map<String, List<IUser>> sort = new HashMap<String, List<IUser>>();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				final IUser player = onlinePlayer.getUser();
+				final IUser player = getUser(onlinePlayer);
 				if (player.isHidden() && !showhidden)
 				{
 					continue;
@@ -106,7 +106,7 @@ public class Commandlist extends EssentialsCommand
 						groupString.append(_("listHiddenTag"));
 					}
 					user.setDisplayNick();
-					groupString.append(user.getDisplayName());
+					groupString.append(user.getPlayer().getDisplayName());
 					groupString.append("§f");
 				}
 				sender.sendMessage(groupString.toString());
@@ -117,7 +117,7 @@ public class Commandlist extends EssentialsCommand
 			final List<IUser> users = new ArrayList<IUser>();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				final IUser player =onlinePlayer.getUser();
+				final IUser player = getUser(onlinePlayer);
 				if (player.isHidden() && !showhidden)
 				{
 					continue;
@@ -156,7 +156,7 @@ public class Commandlist extends EssentialsCommand
 					onlineUsers.append(_("listHiddenTag"));
 				}
 				user.setDisplayNick();
-				onlineUsers.append(user.getDisplayName());
+				onlineUsers.append(user.getPlayer().getDisplayName());
 				onlineUsers.append("§f");
 			}
 			sender.sendMessage(onlineUsers.toString());

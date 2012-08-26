@@ -83,7 +83,7 @@ public abstract class EssentialsChatPlayer implements Listener
 			event.setMessage(Util.stripColor(event.getMessage()));
 		}
 		String group = ess.getRanks().getMainGroup(user);
-		String world = user.getWorld().getName();
+		String world = user.getPlayer().getWorld().getName();
 
 		IRanks groupSettings = ess.getRanks();
 		event.setFormat(groupSettings.getChatFormat(user).format(new Object[]

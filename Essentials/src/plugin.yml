@@ -1,6 +1,6 @@
 # This determines the command prefix when there are conflicts (/name:home, /name:help, etc.)
 name: Essentials-3
-main: net.ess3.Essentials
+main: net.ess3.bukkit.BukkitPlugin
 # Note to developers: This next line cannot change, or the automatic versioning system will break.
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki

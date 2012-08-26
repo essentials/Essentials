@@ -46,7 +46,7 @@ public class EssentialsTimer implements Runnable
 
 			try
 			{
-				final IUser user = player.getUser();
+				final IUser user = ess.getUserMap().getUser(player);
 				if (user == null) {
 					continue;
 				}

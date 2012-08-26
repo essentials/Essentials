@@ -13,19 +13,7 @@ public class Commandignore extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		IUser player;
-		try
-		{
-			player = ess.getUserMap().matchUser(args[0], false, false);
-		}
-		catch (NoSuchFieldException ex)
-		{
-			player = ess.getUserMap().getUser(args[0]);
-		}
-		if (player == null)
-		{
-			throw new Exception(_("playerNotFound"));
-		}
+		IUser player = ess.getUserMap().matchUser(args[0], false, false);
 		
 		user.acquireWriteLock();
 		if (user.isIgnoringPlayer(player))

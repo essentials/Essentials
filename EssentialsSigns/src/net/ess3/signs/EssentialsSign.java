@@ -297,7 +297,7 @@ public class EssentialsSign
 			return new Trade(amount, ess);
 		}
 		final ItemStack item = getItemStack(sign.getLine(itemIndex), 1, ess);
-		final int amount = Math.min(getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * player.getInventory().getSize());
+		final int amount = Math.min(getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * player.getPlayer().getInventory().getSize());
 		if (item.getTypeId() == 0 || amount < 1)
 		{
 			throw new SignException(_("moreThanZero"));

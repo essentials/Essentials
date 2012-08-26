@@ -3,8 +3,8 @@ package net.ess3.commands;
 import java.util.Arrays;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.ItemStack;
 import net.ess3.user.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 
 
@@ -46,7 +46,7 @@ public class Commandinvsee extends EssentialsCommand
 			throw new Exception(_("invBigger"));
 		}
 		user.getInventory().setContents(invUserStack);
-		user.sendMessage(_("invSee", invUser.getDisplayName()));
+		user.sendMessage(_("invSee", invUser.getPlayer().getDisplayName()));
 		user.sendMessage(_("invSeeHelp"));
 		throw new NoChargeException();
 	}

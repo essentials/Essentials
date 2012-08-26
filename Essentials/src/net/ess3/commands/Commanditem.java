@@ -3,9 +3,9 @@ package net.ess3.commands;
 import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.Enchantment;
-import net.ess3.api.server.ItemStack;
 import net.ess3.permissions.ItemPermissions;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commanditem extends EssentialsCommand
@@ -53,7 +53,7 @@ public class Commanditem extends EssentialsCommand
 			}
 		}
 
-		if (stack.isAir())
+		if (stack.getTypeId() == 0)
 		{
 			throw new Exception(_("cantSpawnItem", "Air"));
 		}

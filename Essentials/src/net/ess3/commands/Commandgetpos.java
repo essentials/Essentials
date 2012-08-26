@@ -1,9 +1,9 @@
 package net.ess3.commands;
 
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Location;
 import net.ess3.permissions.Permissions;
+import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 
 
 
@@ -18,12 +18,12 @@ public class Commandgetpos extends EssentialsCommand
 			final IUser otherUser = ess.getUserMap().matchUser(args[0], false, false);
 			if (!otherUser.isHidden() || Permissions.LIST_HIDDEN.isAuthorized(user))
 			{
-				outputPosition(user, otherUser.getLocation(), user.getLocation());
+				outputPosition(user, otherUser.getPlayer().getLocation(), user.getPlayer().getLocation());
 				return;
 			}
 
 		}
-		outputPosition(user, user.getLocation(), null);
+		outputPosition(user, user.getPlayer().getLocation(), null);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class Commandgetpos extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		final IUser user = ess.getUserMap().matchUser(args[0], false, false);
-		outputPosition(sender, user.getLocation(), null);
+		outputPosition(sender, user.getPlayer().getLocation(), null);
 	}
 
 	//TODO: Translate

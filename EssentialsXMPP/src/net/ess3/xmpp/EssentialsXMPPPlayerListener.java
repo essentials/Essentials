@@ -23,22 +23,19 @@ class EssentialsXMPPPlayerListener implements Listener
 	@EventHandler(priority= EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		sendMessageToSpyUsers("Player " + user.getDisplayName() + " joined the game");
+		sendMessageToSpyUsers("Player " + event.getPlayer().getDisplayName() + " joined the game");
 	}
 
 	@EventHandler(priority= EventPriority.MONITOR)
 	public void onPlayerChat(final PlayerChatEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		sendMessageToSpyUsers(String.format(event.getFormat(), user.getDisplayName(), event.getMessage()));
+		sendMessageToSpyUsers(String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage()));
 	}
 
 	@EventHandler(priority= EventPriority.MONITOR)
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		sendMessageToSpyUsers("Player " + user.getDisplayName() + " left the game");
+		sendMessageToSpyUsers("Player " + event.getPlayer().getDisplayName() + " left the game");
 	}
 
 	private void sendMessageToSpyUsers(final String message)

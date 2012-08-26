@@ -1,8 +1,9 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
+import net.ess3.api.IUser;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandkickall extends EssentialsCommand
@@ -12,7 +13,7 @@ public class Commandkickall extends EssentialsCommand
 	{
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			if (sender.isPlayer() && onlinePlayer.getName().equalsIgnoreCase(((Player)sender).getName()))
+			if (sender instanceof IUser && onlinePlayer.getName().equalsIgnoreCase(((Player)sender).getName()))
 			{
 				continue;
 			}

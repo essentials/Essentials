@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,12 +36,13 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 		instance = this;
 
 		final PluginManager pluginManager = getServer().getPluginManager();
-		ess = (IEssentials)pluginManager.getPlugin("Essentials-3");
-		if (!this.getDescription().getVersion().equals(ess.getDescription().getVersion()))
+		final IPlugin plugin = (IPlugin)pluginManager.getPlugin("Essentials-3");
+		ess = plugin.getEssentials();
+		if (!this.getDescription().getVersion().equals(plugin.getDescription().getVersion()))
 		{
 			LOGGER.log(Level.WARNING, _("versionMismatchAll"));
 		}
-		if (!ess.isEnabled())
+		if (!plugin.isEnabled())
 		{
 			this.setEnabled(false);
 			return;
@@ -76,7 +77,7 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	}
 
 	@Override
-	public void setAddress(final Player user, final String address)
+	public void setAddress(final CommandSender user, final String address)
 	{
 		final String username = user.getName().toLowerCase(Locale.ENGLISH);
 		instance.users.setAddress(username, address);
@@ -96,7 +97,7 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	}
 
 	@Override
-	public boolean toggleSpy(final Player user)
+	public boolean toggleSpy(final CommandSender user)
 	{
 		final String username = user.getName().toLowerCase(Locale.ENGLISH);
 		final boolean spy = !instance.users.isSpy(username);
@@ -105,13 +106,13 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	}
 
 	@Override
-	public String getAddress(final Player user)
+	public String getAddress(final CommandSender user)
 	{
 		return instance.users.getAddress(user.getName());
 	}
 
 	@Override
-	public boolean sendMessage(final Player user, final String message)
+	public boolean sendMessage(final CommandSender user, final String message)
 	{
 		return instance.xmpp.sendMessage(instance.users.getAddress(user.getName()), message);
 	}

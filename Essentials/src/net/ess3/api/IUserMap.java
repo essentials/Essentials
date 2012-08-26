@@ -23,7 +23,17 @@ public interface IUserMap extends IReload
 
 	File getUserFile(final String name) throws InvalidNameException;
 	
+	/**
+	 * This method never returns null.
+	 * 
+	 * @param name
+	 * @param includeHidden
+	 * @param includeOffline
+	 * @return 
+	 * @throws TooManyMatchesException if more than one player is found matching the name
+	 * @throws PlayerNotFoundException if the player matching the name is not found
+	 */
 	IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline) throws TooManyMatchesException, PlayerNotFoundException;
 	
-	Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline) throws PlayerNotFoundException;
+	Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline);
 }

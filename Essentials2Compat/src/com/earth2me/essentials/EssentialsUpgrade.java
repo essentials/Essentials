@@ -31,11 +31,11 @@ public class EssentialsUpgrade
 	EssentialsUpgrade(final IEssentials essentials)
 	{
 		ess = essentials;
-		if (!ess.getDataFolder().exists())
+		if (!ess.getPlugin().getDataFolder().exists())
 		{
-			ess.getDataFolder().mkdirs();
+			ess.getPlugin().getDataFolder().mkdirs();
 		}
-		doneFile = new EssentialsConf(new File(ess.getDataFolder(), "upgrades-done.yml"));
+		doneFile = new EssentialsConf(new File(ess.getPlugin().getDataFolder(), "upgrades-done.yml"));
 		doneFile.load();
 	}
 
@@ -47,7 +47,7 @@ public class EssentialsUpgrade
 		}
 		try
 		{
-			final File configFile = new File(ess.getDataFolder(), "config.yml");
+			final File configFile = new File(ess.getPlugin().getDataFolder(), "config.yml");
 			if (!configFile.exists())
 			{
 				return;
@@ -87,12 +87,12 @@ public class EssentialsUpgrade
 		}
 		try
 		{
-			final File file = new File(ess.getDataFolder(), name + ".txt");
+			final File file = new File(ess.getPlugin().getDataFolder(), name + ".txt");
 			if (file.exists())
 			{
 				return;
 			}
-			final File configFile = new File(ess.getDataFolder(), "config.yml");
+			final File configFile = new File(ess.getPlugin().getDataFolder(), "config.yml");
 			if (!configFile.exists())
 			{
 				return;
@@ -127,7 +127,7 @@ public class EssentialsUpgrade
 	{
 		boolean needUpdate = false;
 		final BufferedReader bReader = new BufferedReader(new FileReader(file));
-		final File tempFile = File.createTempFile("essentialsupgrade", ".tmp.yml", ess.getDataFolder());
+		final File tempFile = File.createTempFile("essentialsupgrade", ".tmp.yml", ess.getPlugin().getDataFolder());
 		final BufferedWriter bWriter = new BufferedWriter(new FileWriter(tempFile));
 		do
 		{
@@ -188,7 +188,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File userdataFolder = new File(ess.getDataFolder(), "userdata");
+		final File userdataFolder = new File(ess.getPlugin().getDataFolder(), "userdata");
 		if (!userdataFolder.exists() || !userdataFolder.isDirectory())
 		{
 			return;
@@ -251,7 +251,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File userdataFolder = new File(ess.getDataFolder(), "userdata");
+		final File userdataFolder = new File(ess.getPlugin().getDataFolder(), "userdata");
 		if (!userdataFolder.exists() || !userdataFolder.isDirectory())
 		{
 			return;
@@ -304,7 +304,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File userdataFolder = new File(ess.getDataFolder(), "userdata");
+		final File userdataFolder = new File(ess.getPlugin().getDataFolder(), "userdata");
 		if (!userdataFolder.exists() || !userdataFolder.isDirectory())
 		{
 			return;
@@ -389,7 +389,7 @@ public class EssentialsUpgrade
 	 */
 	private void convertWarps()
 	{
-		final File warpsFolder = new File(ess.getDataFolder(), "warps");
+		final File warpsFolder = new File(ess.getPlugin().getDataFolder(), "warps");
 		if (!warpsFolder.exists())
 		{
 			warpsFolder.mkdirs();
@@ -555,7 +555,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File file = new File(ess.getDataFolder(), "items.csv");
+		final File file = new File(ess.getPlugin().getDataFolder(), "items.csv");
 		if (file.exists())
 		{
 			try
@@ -602,7 +602,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File configFile = new File(ess.getDataFolder(), "spawn.yml");
+		final File configFile = new File(ess.getPlugin().getDataFolder(), "spawn.yml");
 		if (configFile.exists())
 		{
 
@@ -619,7 +619,7 @@ public class EssentialsUpgrade
 						StoredLocation loc = getFakeLocation(config, group);
 						spawns.getSpawns().put(group.toLowerCase(Locale.ENGLISH), loc);
 					}
-					if (!configFile.renameTo(new File(ess.getDataFolder(), "spawn.yml.old")))
+					if (!configFile.renameTo(new File(ess.getPlugin().getDataFolder(), "spawn.yml.old")))
 					{
 						throw new Exception(_("fileRenameError", "spawn.yml"));
 					}
@@ -649,7 +649,7 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		final File configFile = new File(ess.getDataFolder(), "jail.yml");
+		final File configFile = new File(ess.getPlugin().getDataFolder(), "jail.yml");
 		if (configFile.exists())
 		{
 
@@ -666,7 +666,7 @@ public class EssentialsUpgrade
 						StoredLocation loc = getFakeLocation(config, jailName);
 						jails.getJails().put(jailName.toLowerCase(Locale.ENGLISH), loc);
 					}
-					if (!configFile.renameTo(new File(ess.getDataFolder(), "jail.yml.old")))
+					if (!configFile.renameTo(new File(ess.getPlugin().getDataFolder(), "jail.yml.old")))
 					{
 						throw new Exception(_("fileRenameError", "jail.yml"));
 					}
@@ -704,9 +704,9 @@ public class EssentialsUpgrade
 
 	public void beforeSettings()
 	{
-		if (!ess.getDataFolder().exists())
+		if (!ess.getPlugin().getDataFolder().exists())
 		{
-			ess.getDataFolder().mkdirs();
+			ess.getPlugin().getDataFolder().mkdirs();
 		}
 		moveWorthValuesToWorthYml();
 		moveMotdRulesToFile("motd");

@@ -4,6 +4,7 @@ import net.ess3.commands.EssentialsCommand;
 import net.ess3.commands.NotEnoughArgumentsException;
 import java.util.List;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 

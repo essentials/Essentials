@@ -2,9 +2,10 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.Material;
 import net.ess3.craftbukkit.InventoryWorkaround;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 
 
@@ -15,7 +16,7 @@ public class Commandhat extends EssentialsCommand
 	{
 		if (args.length > 0 && (args[0].contains("rem") || args[0].contains("off") || args[0].equalsIgnoreCase("0")))
 		{
-			final PlayerInventory inv = user.getInventory();
+			final PlayerInventory inv = user.getPlayer().getInventory();
 			final ItemStack head = inv.getHelmet();
 			if (head == null || head.getType() == Material.AIR)
 			{
@@ -25,18 +26,18 @@ public class Commandhat extends EssentialsCommand
 			{
 				final ItemStack air = new ItemStack(Material.AIR);
 				inv.setHelmet(air);
-				InventoryWorkaround.addItem(user.getInventory(), true, head);
+				InventoryWorkaround.addItem(user.getPlayer().getInventory(), true, head);
 				user.sendMessage(_("hatRemoved"));
 			}
 		}
 		else
 		{
-			if (user.getItemInHand().getType() != Material.AIR)
+			if (user.getPlayer().getItemInHand().getType() != Material.AIR)
 			{
-				final ItemStack hand = user.getItemInHand();
+				final ItemStack hand = user.getPlayer().getItemInHand();
 				if (hand.getType().getMaxDurability() == 0)
 				{
-					final PlayerInventory inv = user.getInventory();
+					final PlayerInventory inv = user.getPlayer().getInventory();
 					final ItemStack head = inv.getHelmet();
 					inv.removeItem(hand);
 					inv.setHelmet(hand);

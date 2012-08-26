@@ -1,15 +1,15 @@
 package net.ess3.commands;
 
 import java.util.List;
+import java.util.Set;
 import lombok.Cleanup;
 import net.ess3.Console;
 import static net.ess3.I18n._;
 import net.ess3.api.IReplyTo;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
+import org.bukkit.command.CommandSender;
 
 
 
@@ -24,10 +24,10 @@ public class Commandmsg extends EssentialsCommand
 		}
 
 		String message = getFinalArg(args, 1);
-		if (sender instanceof Player)
+		if (isUser(sender))
 		{
 			@Cleanup
-			IUser user = ess.getUserMap().getUser((Player)sender);
+			IUser user = getUser(sender);
 			user.acquireReadLock();
 			if (user.getData().isMuted())
 			{
@@ -49,8 +49,8 @@ public class Commandmsg extends EssentialsCommand
 
 		final String translatedMe = _("me");
 
-		final IReplyTo replyTo = sender instanceof Player ? ess.getUserMap().getUser((Player)sender) : Console.getConsoleReplyTo();
-		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
+		final IReplyTo replyTo = isUser(sender) ? getUser(sender) : Console.getConsoleReplyTo();
+		final String senderName = isUser(sender) ? getPlayer(sender).getDisplayName() : Console.NAME;
 
 		if (args[0].equalsIgnoreCase(Console.NAME))
 		{
@@ -62,7 +62,7 @@ public class Commandmsg extends EssentialsCommand
 			return;
 		}
 
-		final List<Player> matchedPlayers = ess.getUserMap().matchUser(args[0], false, false);
+		final Set<IUser> matchedPlayers = ess.getUserMap().matchUsers(args[0], true, false);
 
 		if (matchedPlayers.isEmpty())
 		{
@@ -70,9 +70,8 @@ public class Commandmsg extends EssentialsCommand
 		}
 
 		int i = 0;
-		for (Player matchedPlayer : matchedPlayers)
+		for (IUser u : matchedPlayers)
 		{
-			final IUser u = ess.getUserMap().getUser(matchedPlayer);
 			if (u.isHidden())
 			{
 				i++;
@@ -83,17 +82,16 @@ public class Commandmsg extends EssentialsCommand
 			throw new Exception(_("playerNotFound"));
 		}
 
-		for (Player matchedPlayer : matchedPlayers)
+		for (IUser matchedPlayer : matchedPlayers)
 		{
-			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getDisplayName(), message));
-			final IUser matchedUser = ess.getUserMap().getUser(matchedPlayer);
-			if (sender instanceof Player && (matchedUser.isIgnoringPlayer(ess.getUserMap().getUser((Player)sender)) || matchedUser.isHidden()))
+			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getPlayer().getDisplayName(), message));
+			if (isUser(sender) && (matchedPlayer.isIgnoringPlayer(getUser(sender)) || matchedPlayer.isHidden()))
 			{
 				continue;
 			}
 			matchedPlayer.sendMessage(_("msgFormat", senderName, translatedMe, message));
-			replyTo.setReplyTo(ess.getUserMap().getUser(matchedPlayer));
-			ess.getUserMap().getUser(matchedPlayer).setReplyTo(sender);
+			replyTo.setReplyTo(matchedPlayer);
+			matchedPlayer.setReplyTo(sender);
 		}
 	}
 }

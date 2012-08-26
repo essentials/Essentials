@@ -3,10 +3,9 @@ package net.ess3.commands;
 import java.util.List;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
+import org.bukkit.command.CommandSender;
 
 
 public class Commandmail extends EssentialsCommand
@@ -37,16 +36,7 @@ public class Commandmail extends EssentialsCommand
 				throw new Exception(_("noPerm", "essentials.mail.send"));
 			}
 
-			Player player = ess.getUserMap().matchUser(args[1], true, true);
-			IUser u;
-			if (player != null)
-			{
-				u = player.getUser();
-			}
-			else
-			{
-				u = ess.getUserMap().matchUser(args[1], true, true);
-			}
+			IUser u = ess.getUserMap().matchUser(args[1], true, true);
 			if (u == null)
 			{
 				throw new Exception(_("playerNeverOnServer", args[1]));
@@ -92,20 +82,7 @@ public class Commandmail extends EssentialsCommand
 		}
 		else if (args.length >= 3 && "send".equalsIgnoreCase(args[0]))
 		{
-			Player player = ess.getUserMap().matchUser(args[1], true, true);
-			IUser u;
-			if (player != null)
-			{
-				u = player.getUser();
-			}
-			else
-			{
-				u = ess.getUserMap().matchUser(args[1], true, true);
-			}
-			if (u == null)
-			{
-				throw new Exception(_("playerNeverOnServer", args[1]));
-			}
+			IUser u = ess.getUserMap().matchUser(args[1], true, true);
 			u.addMail("Server: " + getFinalArg(args, 2));
 			sender.sendMessage(_("mailSent"));
 			return;
@@ -117,20 +94,7 @@ public class Commandmail extends EssentialsCommand
 		else if (args.length >= 2)
 		{
 			//allow sending from console without "send" argument, since it's the only thing the console can do
-			Player player = ess.getUserMap().matchUser(args[0], true, true);
-			IUser u;
-			if (player != null)
-			{
-				u = player.getUser();
-			}
-			else
-			{
-				u = ess.getUserMap().matchUser(args[0], true, true);
-			}
-			if (u == null)
-			{
-				throw new Exception(_("playerNeverOnServer", args[0]));
-			}
+			IUser u = ess.getUserMap().matchUser(args[0], true, true);
 			u.addMail("Server: " + getFinalArg(args, 1));
 			sender.sendMessage(_("mailSent"));
 			return;

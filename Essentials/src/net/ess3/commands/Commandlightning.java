@@ -4,9 +4,8 @@ import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LightningStrike;
 
 
@@ -17,13 +16,13 @@ public class Commandlightning extends EssentialsCommand
 	{
 
 		IUser user = null;
-		if (sender instanceof Player)
+		if (isUser(sender))
 		{
-			user = ess.getUserMap().getUser(((Player)sender));
+			user = getUser(sender);
 		}
 		if ((args.length < 1 || !Permissions.LIGHTNING_OTHERS.isAuthorized(user)) && user != null)
 		{
-			user.getWorld().strikeLightning(user.getTargetBlock(null, 600).getLocation());
+			user.getPlayer().getWorld().strikeLightning(user.getPlayer().getTargetBlock(null, 600).getLocation());
 			return;
 		}
 
@@ -44,13 +43,13 @@ public class Commandlightning extends EssentialsCommand
 			}
 		}
 
-		for (Player matchPlayer : ess.getUserMap().matchUsers(args[0], false, false))
+		for (IUser matchPlayer : ess.getUserMap().matchUsers(args[0], false, false))
 		{
-			sender.sendMessage(_("lightningUse", matchPlayer.getDisplayName()));
-			final LightningStrike strike = matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
-			if (!ess.getUserMap().getUser(matchPlayer).isGodModeEnabled())
+			sender.sendMessage(_("lightningUse", matchPlayer.getPlayer().getDisplayName()));
+			final LightningStrike strike = matchPlayer.getPlayer().getWorld().strikeLightningEffect(matchPlayer.getPlayer().getLocation());
+			if (!matchPlayer.isGodModeEnabled())
 			{
-				matchPlayer.damage(power, strike);
+				matchPlayer.getPlayer().damage(power, strike);
 			}
 			@Cleanup
 			final ISettings settings = ess.getSettings();

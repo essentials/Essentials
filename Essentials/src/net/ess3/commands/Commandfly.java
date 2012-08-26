@@ -2,10 +2,9 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.Server;
 import net.ess3.permissions.Permissions;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 
 
 
@@ -31,39 +30,39 @@ public class Commandfly extends EssentialsCommand
 			flyOtherPlayers(server, user, args);
 			return;
 		}
-		user.setAllowFlight(!user.getAllowFlight());
-		if (!user.getAllowFlight())
+		user.getPlayer().setAllowFlight(!user.getPlayer().getAllowFlight());
+		if (!user.getPlayer().getAllowFlight())
 		{
-			user.setFlying(false);
+			user.getPlayer().setFlying(false);
 		}
-		user.sendMessage(_("flyMode", _(user.getAllowFlight() ? "enabled" : "disabled"), user.getDisplayName()));
+		user.sendMessage(_("flyMode", _(user.getPlayer().getAllowFlight() ? "enabled" : "disabled"), user.getPlayer().getDisplayName()));
 	}
 
 	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args)
 	{
-		for (Player matchPlayer : ess.getUserMap().matchUsers(args[0],false,false))
+		for (IUser matchPlayer : ess.getUserMap().matchUsers(args[0],false,false))
 		{	
 			if (args.length > 1)
 			{
 				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
 				{
-					matchPlayer.setAllowFlight(true);
+					matchPlayer.getPlayer().setAllowFlight(true);
 				}
 				else
 				{
-					matchPlayer.setAllowFlight(false);
+					matchPlayer.getPlayer().setAllowFlight(false);
 				}
 			}
 			else
 			{
-				matchPlayer.setAllowFlight(!matchPlayer.getAllowFlight());
+				matchPlayer.getPlayer().setAllowFlight(!matchPlayer.getPlayer().getAllowFlight());
 			}
 			
-			if (!matchPlayer.getAllowFlight())
+			if (!matchPlayer.getPlayer().getAllowFlight())
 			{
-				matchPlayer.setFlying(false);
+				matchPlayer.getPlayer().setFlying(false);
 			}
-			sender.sendMessage(_("flyMode", _(matchPlayer.getAllowFlight() ? "enabled" : "disabled"), matchPlayer.getDisplayName()));
+			sender.sendMessage(_("flyMode", _(matchPlayer.getPlayer().getAllowFlight() ? "enabled" : "disabled"), matchPlayer.getPlayer().getDisplayName()));
 		}
 	}
 }

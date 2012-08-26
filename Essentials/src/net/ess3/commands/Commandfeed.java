@@ -3,9 +3,8 @@ package net.ess3.commands;
 import java.util.Set;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
 import net.ess3.permissions.Permissions;
+import org.bukkit.command.CommandSender;
 
 
 public class Commandfeed extends EssentialsCommand
@@ -19,8 +18,8 @@ public class Commandfeed extends EssentialsCommand
 		}
 		else
 		{
-			user.setFoodLevel(20);
-			user.setSaturation(10);
+			user.getPlayer().setFoodLevel(20);
+			user.getPlayer().setSaturation(10);
 			user.sendMessage(_("feed"));
 		}
 	}
@@ -33,11 +32,11 @@ public class Commandfeed extends EssentialsCommand
 			sender.sendMessage(_("playerNotFound"));
 			return;
 		}
-		for (Player player : users)
+		for (IUser player : users)
 		{			
-			player.setFoodLevel(20);
-			player.setSaturation(10);
-			sender.sendMessage(_("feedOther", player.getDisplayName()));
+			player.getPlayer().setFoodLevel(20);
+			player.getPlayer().setSaturation(10);
+			sender.sendMessage(_("feedOther", player.getPlayer().getDisplayName()));
 		}
 	}
 }

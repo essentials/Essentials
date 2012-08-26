@@ -2,11 +2,11 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Location;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.World;
 import net.ess3.permissions.Permissions;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandnear extends EssentialsCommand
@@ -79,17 +79,17 @@ public class Commandnear extends EssentialsCommand
 
 	private String getLocal(final IUser user, final long radius)
 	{
-		final Location loc = user.getLocation();
+		final Location loc = user.getPlayer().getLocation();
 		final World world = loc.getWorld();
 		final StringBuilder output = new StringBuilder();
 		final long radiusSquared = radius * radius;
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final IUser player = ess.getUserMap().getUser(onlinePlayer);
+			final IUser player = getUser(onlinePlayer);
 			if (!player.equals(user) && !player.isHidden())
 			{
-				final Location playerLoc = player.getLocation();
+				final Location playerLoc = onlinePlayer.getLocation();
 				if (playerLoc.getWorld() != world)
 				{
 					continue;
@@ -102,7 +102,7 @@ public class Commandnear extends EssentialsCommand
 					{
 						output.append(", ");
 					}
-					output.append(player.getDisplayName()).append("§f(§4").append((long)Math.sqrt(delta)).append("m§f)");
+					output.append(onlinePlayer.getDisplayName()).append("§f(§4").append((long)Math.sqrt(delta)).append("m§f)");
 				}
 			}
 		}
