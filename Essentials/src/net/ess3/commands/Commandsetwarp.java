@@ -3,8 +3,8 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.IWarps;
-import net.ess3.api.server.Location;
 import net.ess3.permissions.WarpPermissions;
+import org.bukkit.Location;
 
 
 

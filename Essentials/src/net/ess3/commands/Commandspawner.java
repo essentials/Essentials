@@ -3,13 +3,13 @@ package net.ess3.commands;
 import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.api.server.Location;
-import net.ess3.api.server.Material;
 import net.ess3.bukkit.LivingEntities;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.SpawnerPermissions;
 import net.ess3.utils.LocationUtil;
 import net.ess3.utils.Util;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
 
 

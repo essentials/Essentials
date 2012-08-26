@@ -6,11 +6,11 @@ import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IUser;
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.Material;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commandrepair extends EssentialsCommand
