@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
-import net.ess3.Essentials;
 import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
 

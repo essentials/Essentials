@@ -7,7 +7,6 @@ import net.ess3.api.server.Location;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.settings.SpawnsHolder;
-//TODO: remove bukkit
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 

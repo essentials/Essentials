@@ -7,7 +7,6 @@ import static net.ess3.I18n._;
 import net.ess3.api.IPlugin;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

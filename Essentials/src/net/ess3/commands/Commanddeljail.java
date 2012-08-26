@@ -1,7 +1,7 @@
 package net.ess3.commands;
 
-import net.ess3.api.server.CommandSender;
 import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
 
 
 public class Commanddeljail extends EssentialsCommand

@@ -10,7 +10,6 @@ import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.permissions.WorldPermissions;
 import net.ess3.utils.Util;
-//TODO: remove this
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 

@@ -15,8 +15,8 @@ import net.ess3.utils.LocationUtil;
 import net.ess3.utils.Util;
 import org.bukkit.DyeColor;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.material.Colorable;
 //TODO - Bukkit cleanup
 

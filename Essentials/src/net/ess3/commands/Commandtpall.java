@@ -7,7 +7,6 @@ import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Player;
 import net.ess3.permissions.WorldPermissions;
-//TODO: remove bukkit
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 

@@ -9,7 +9,6 @@ import net.ess3.api.server.Material;
 import net.ess3.api.server.Player;
 import net.ess3.permissions.GivePermissions;
 import net.ess3.utils.Util;
-//TODO: remove bukkit imports
 import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 

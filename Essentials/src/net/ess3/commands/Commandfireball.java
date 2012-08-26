@@ -1,7 +1,6 @@
 package net.ess3.commands;
 
 import net.ess3.api.IUser;
-//TODO: remove bukkit
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.util.Vector;

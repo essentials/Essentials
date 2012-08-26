@@ -1,10 +1,10 @@
 package net.ess3.commands;
 
+import java.util.Arrays;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.user.Inventory;
-import java.util.Arrays;
 import net.ess3.api.server.ItemStack;
+import net.ess3.user.Inventory;
 
 
 

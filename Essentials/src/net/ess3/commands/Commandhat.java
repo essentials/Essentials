@@ -5,8 +5,6 @@ import net.ess3.api.IUser;
 import net.ess3.api.server.ItemStack;
 import net.ess3.api.server.Material;
 import net.ess3.craftbukkit.InventoryWorkaround;
-//TODO: not sure if this is correct
-import net.ess3.api.server.IInventory;
 
 
 

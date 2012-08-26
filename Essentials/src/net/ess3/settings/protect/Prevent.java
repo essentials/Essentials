@@ -1,11 +1,10 @@
 package net.ess3.settings.protect;
 
-import net.ess3.storage.*;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.ess3.storage.*;
 import org.bukkit.Material;
 
 

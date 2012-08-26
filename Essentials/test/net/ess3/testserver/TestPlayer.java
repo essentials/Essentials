@@ -1,7 +1,6 @@
 package net.ess3.testserver;
 
 import net.ess3.api.IUser;
-import net.ess3.api.server.*;
 
 public class TestPlayer implements Player {
 

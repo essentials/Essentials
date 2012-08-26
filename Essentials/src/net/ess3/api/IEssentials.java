@@ -7,7 +7,6 @@ import net.ess3.economy.register.Methods;
 import net.ess3.metrics.Metrics;
 import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.plugin.Plugin;
 
 
 public interface IEssentials extends IComponent

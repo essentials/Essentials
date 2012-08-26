@@ -6,7 +6,6 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.permissions.WorldPermissions;
-//TODO: remove buikkit
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -42,7 +41,7 @@ public class Commandtpohere extends EssentialsCommand
 		// Verify permission
 		if (!player.isHidden() || Permissions.TELEPORT_HIDDEN.isAuthorized(user))
 		{
-			player.getTeleport().now(user, false, TeleportCause.COMMAND);
+			player.getTeleport().now(user.getPlayer(), false, TeleportCause.COMMAND);
 			user.sendMessage(_("teleporting"));
 		}
 		else

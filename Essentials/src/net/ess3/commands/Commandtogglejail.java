@@ -1,13 +1,12 @@
 package net.ess3.commands;
 
+import lombok.Cleanup;
 import static net.ess3.I18n._;
-
 import net.ess3.api.IUser;
+import net.ess3.api.server.CommandSender;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
-import lombok.Cleanup;
-import net.ess3.api.server.CommandSender;
 
 
 public class Commandtogglejail extends EssentialsCommand

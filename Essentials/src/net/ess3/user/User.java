@@ -1,13 +1,6 @@
 package net.ess3.user;
 
 import java.lang.ref.WeakReference;
-import static net.ess3.I18n._;
-import net.ess3.Teleport;
-import net.ess3.api.*;
-import net.ess3.economy.register.Method;
-import net.ess3.permissions.Permissions;
-import net.ess3.utils.DateUtil;
-import net.ess3.utils.Util;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -17,6 +10,13 @@ import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
 import net.ess3.Console;
+import static net.ess3.I18n._;
+import net.ess3.Teleport;
+import net.ess3.api.*;
+import net.ess3.economy.register.Method;
+import net.ess3.permissions.Permissions;
+import net.ess3.utils.DateUtil;
+import net.ess3.utils.Util;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;

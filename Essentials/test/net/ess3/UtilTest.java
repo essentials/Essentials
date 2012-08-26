@@ -1,13 +1,12 @@
 package net.ess3;
 
-import net.ess3.api.InvalidNameException;
-import net.ess3.utils.DateUtil;
-import net.ess3.utils.Util;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.InvalidNameException;
+import net.ess3.utils.DateUtil;
+import net.ess3.utils.Util;
 
 
 public class UtilTest extends EssentialsTest

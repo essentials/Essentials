@@ -1,9 +1,9 @@
 package net.ess3.api;
 
-import net.ess3.user.TooManyMatchesException;
 import java.io.File;
 import java.util.Set;
 import net.ess3.user.PlayerNotFoundException;
+import net.ess3.user.TooManyMatchesException;
 import org.bukkit.entity.Player;
 
 

@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
+import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.server.Enchantment;
 import net.ess3.api.server.ItemStack;
 import net.ess3.permissions.ItemPermissions;
-import java.util.Locale;
 
 
 public class Commanditem extends EssentialsCommand

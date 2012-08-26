@@ -1,11 +1,10 @@
 package net.ess3.commands;
 
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import static net.ess3.I18n._;
-
 import java.util.Locale;
 import lombok.Cleanup;
+import static net.ess3.I18n._;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
 import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Player;
 

@@ -1,11 +1,10 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
-import net.ess3.economy.Trade;
-import net.ess3.api.IUser;
-import net.ess3.permissions.WorldPermissions;
 import java.util.List;
-//TODO: remove bukkit
+import static net.ess3.I18n._;
+import net.ess3.api.IUser;
+import net.ess3.economy.Trade;
+import net.ess3.permissions.WorldPermissions;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;

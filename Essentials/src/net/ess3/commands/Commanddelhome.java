@@ -1,10 +1,11 @@
 package net.ess3.commands;
 
+import java.util.Locale;
+import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import java.util.Locale;
-import lombok.Cleanup;
+import org.bukkit.command.CommandSender;
 
 
 public class Commanddelhome extends EssentialsCommand
@@ -18,7 +19,7 @@ public class Commanddelhome extends EssentialsCommand
 		}
 
 		@Cleanup
-		IUser user = sender instanceof Player ? ess.getUserMap().getUser((Player)sender) : null;
+		IUser user = sender instanceof IUser ? (IUser)sender : null;
 		String name;
 		String[] expandedArg;
 

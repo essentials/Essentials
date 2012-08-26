@@ -1,14 +1,12 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
-
-import net.ess3.api.server.Player;
 import java.util.HashMap;
 import java.util.Map;
+import static net.ess3.I18n._;
 import net.ess3.api.server.CommandSender;
 import net.ess3.api.server.Location;
 import net.ess3.api.server.Material;
-//TODO: remove bukkit
+import net.ess3.api.server.Player;
 import org.bukkit.block.Block;
 
 

@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
+import lombok.Cleanup;
 import net.ess3.Console;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.Ban;
-import lombok.Cleanup;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

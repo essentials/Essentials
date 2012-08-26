@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
-import net.ess3.Essentials;
 import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
 

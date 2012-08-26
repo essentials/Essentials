@@ -5,7 +5,6 @@ import java.util.Random;
 import net.ess3.api.IUser;
 import net.ess3.api.server.Location;
 import net.ess3.bukkit.LivingEntities;
-//TODO: remove this
 import org.bukkit.entity.Ocelot;
 
 
