@@ -26,17 +26,17 @@ public class Commandinvsee extends EssentialsCommand
 		user.acquireWriteLock();
 		if (invUser == user && user.getData().getInventory() != null)
 		{
-			invUser.getInventory().setContents(user.getData().getInventory().getBukkitInventory());
+			invUser.getPlayer().getInventory().setContents(user.getData().getInventory().getBukkitInventory());
 			user.getData().setInventory(null);
 			user.sendMessage(_("invRestored"));
 			throw new NoChargeException();
 		}
 		if (user.getData().getInventory() == null)
 		{
-			user.getData().setInventory(new Inventory(user.getInventory().getContents()));
+			user.getData().setInventory(new Inventory(user.getPlayer().getInventory().getContents()));
 		}
-		ItemStack[] invUserStack = invUser.getInventory().getContents();
-		final int userStackLength = user.getInventory().getContents().length;
+		ItemStack[] invUserStack = invUser.getPlayer().getInventory().getContents();
+		final int userStackLength = user.getPlayer().getInventory().getContents().length;
 		if (invUserStack.length < userStackLength)
 		{
 			invUserStack = Arrays.copyOf(invUserStack, userStackLength);
@@ -45,7 +45,7 @@ public class Commandinvsee extends EssentialsCommand
 		{
 			throw new Exception(_("invBigger"));
 		}
-		user.getInventory().setContents(invUserStack);
+		user.getPlayer().getInventory().setContents(invUserStack);
 		user.sendMessage(_("invSee", invUser.getPlayer().getDisplayName()));
 		user.sendMessage(_("invSeeHelp"));
 		throw new NoChargeException();

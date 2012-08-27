@@ -16,7 +16,7 @@ public class Commandtpdeny extends EssentialsCommand
 		}
 
 		user.sendMessage(_("requestDenied"));
-		player.sendMessage(_("requestDeniedFrom", user.getDisplayName()));
+		player.sendMessage(_("requestDeniedFrom", user.getPlayer().getDisplayName()));
 		user.requestTeleport(null, false);
 	}
 }

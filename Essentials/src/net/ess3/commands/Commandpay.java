@@ -25,10 +25,10 @@ public class Commandpay extends EssentialsCommand
 		double amount = Double.parseDouble(args[1].replaceAll("[^0-9\\.]", ""));
 
 		boolean foundUser = false;
-		for (Player p : ess.getUserMap().matchUsers(args[0], false, true))
+		for (IUser u : ess.getUserMap().matchUsers(args[0], false, true))
 		{
-			user.payUser(p.getUser(), amount);
-			Trade.log("Command", "Pay", "Player", user.getName(), new Trade(amount, ess), p.getName(), new Trade(amount, ess), user.getLocation(), ess);
+			user.payUser(u, amount);
+			Trade.log("Command", "Pay", "Player", user.getName(), new Trade(amount, ess), u.getName(), new Trade(amount, ess), user.getPlayer().getLocation(), ess);
 			foundUser = true;
 		}
 

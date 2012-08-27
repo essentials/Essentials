@@ -61,7 +61,7 @@ public class Commandeco extends EssentialsCommand
 		{
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				final IUser player = onlinePlayer.getUser();
+				final IUser player = ess.getUserMap().getUser(onlinePlayer);
 				switch (cmd)
 				{
 				case GIVE:

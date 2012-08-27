@@ -42,8 +42,8 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		final PluginManager pluginManager = ess.getServer().getPluginManager();
 		final JailBlockListener blockListener = new JailBlockListener();
 		final JailPlayerListener playerListener = new JailPlayerListener();
-		pluginManager.registerEvents(blockListener, ess);
-		pluginManager.registerEvents(playerListener, ess);
+		pluginManager.registerEvents(blockListener, ess.getPlugin());
+		pluginManager.registerEvents(playerListener, ess.getPlugin());
 	}
 
 	@Override
@@ -155,6 +155,24 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		{
 			unlock();
 		}
+	}
+
+	@Override
+	public void finishRead()
+	{
+		
+	}
+
+	@Override
+	public void finishWrite()
+	{
+		
+	}
+
+	@Override
+	public int getCount()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 

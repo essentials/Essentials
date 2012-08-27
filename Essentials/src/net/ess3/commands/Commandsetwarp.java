@@ -24,7 +24,7 @@ public class Commandsetwarp extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final Location loc = user.getLocation();
+		final Location loc = user.getPlayer().getLocation();
 		final IWarps warps = ess.getWarps();
 		Location warpLoc = null;
 

@@ -1,7 +1,10 @@
 package net.ess3.economy;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -12,11 +15,11 @@ import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
+import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.permissions.NoCommandCostPermissions;
 import net.ess3.permissions.Permissions;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
-
 
 
 public class Trade
@@ -74,7 +77,7 @@ public class Trade
 		}
 
 		if (getItemStack() != null
-			&& !user.getInventory().containsItem(true, true, itemStack))
+			&& InventoryWorkaround.containsItem(user.getPlayer().getInventory(), true, true, itemStack))
 		{
 			throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 		}
@@ -92,7 +95,7 @@ public class Trade
 		}
 
 		if (exp != null && exp > 0
-			&& user.getTotalExperience() < exp)
+			&& user.getPlayer().getTotalExperience() < exp)
 		{
 			throw new ChargeException(_("notEnoughExperience"));
 		}
@@ -114,8 +117,8 @@ public class Trade
 		{
 			if (dropItems)
 			{
-				final Map<Integer, ItemStack> leftOver = user.getInventory().addItem(true, getItemStack());
-				final Location loc = user.getLocation();
+				final Map<Integer, ItemStack> leftOver = InventoryWorkaround.addItem(user.getPlayer().getInventory(), true, getItemStack());
+				final Location loc = user.getPlayer().getLocation();
 				for (ItemStack dropStack : leftOver.values())
 				{
 					final int maxStackSize = dropStack.getType().getMaxStackSize();
@@ -126,25 +129,25 @@ public class Trade
 					{
 						final ItemStack stack = dropStack.clone();
 						stack.setAmount(maxStackSize);
-						itemStacks[i] = user.getWorld().dropItem(loc, stack).getItemStack();
+						itemStacks[i] = user.getPlayer().getWorld().dropItem(loc, stack).getItemStack();
 					}
 					if (leftover > 0)
 					{
 						final ItemStack stack = dropStack.clone();
 						stack.setAmount(leftover);
-						itemStacks[stacks] = user.getWorld().dropItem(loc, stack).getItemStack();
+						itemStacks[stacks] = user.getPlayer().getWorld().dropItem(loc, stack).getItemStack();
 					}
 				}
 			}
 			else
 			{
-				success = user.getInventory().addAllItems(true, getItemStack());
+				success = InventoryWorkaround.addAllItems(user.getPlayer().getInventory(), true, getItemStack());
 			}
 			user.getPlayer().updateInventory();
 		}
 		if (getExperience() != null)
 		{
-			user.setTotalExperience(user.getTotalExperience() + getExperience());
+			user.getPlayer().setTotalExperience(user.getPlayer().getTotalExperience() + getExperience());
 		}
 		return success;
 	}
@@ -161,12 +164,12 @@ public class Trade
 		}
 		if (getItemStack() != null)
 		{
-			if (!user.getInventory().containsItem(true, true, itemStack))
+			if (!InventoryWorkaround.containsItem(user.getPlayer().getInventory(), true, true, itemStack))
 			{
 				throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 			}
-			user.getInventory().removeItem(true, true, getItemStack());
-			user.updateInventory();
+			InventoryWorkaround.removeItem(user.getPlayer().getInventory() , true, true, getItemStack());
+			user.getPlayer().updateInventory();
 		}
 		if (command != null && !command.isEmpty()
 			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user))
@@ -183,12 +186,12 @@ public class Trade
 		}
 		if (getExperience() != null)
 		{
-			final int experience = user.getTotalExperience();
+			final int experience = user.getPlayer().getTotalExperience();
 			if (experience < getExperience() && getExperience() > 0)
 			{
 				throw new ChargeException(_("notEnoughExperience"));
 			}
-			user.setTotalExperience(experience - getExperience());
+			user.getPlayer().setTotalExperience(experience - getExperience());
 		}
 	}
 

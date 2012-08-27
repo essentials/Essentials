@@ -45,7 +45,7 @@ public class Commandtempban extends EssentialsCommand
 		user.getData().getBan().setReason(banReason);
 		user.getData().getBan().setTimeout(banTimestamp);
 		user.setBanned(true);
-		user.kickPlayer(banReason);
+		user.getPlayer().kickPlayer(banReason);
 		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
 
 		for (Player onlinePlayer : server.getOnlinePlayers())

@@ -19,7 +19,7 @@ public class Commandenchant extends EssentialsCommand
 	@Override
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		final ItemStack stack = user.getItemInHand();
+		final ItemStack stack = user.getPlayer().getItemInHand();
 		if (stack == null)
 		{
 			throw new Exception(_("nothingInHand"));
@@ -63,8 +63,8 @@ public class Commandenchant extends EssentialsCommand
 		{
 			stack.addEnchantment(enchantment, level);
 		}
-		user.getInventory().setItemInHand(stack);
-		user.updateInventory();
+		user.getPlayer().getInventory().setItemInHand(stack);
+		user.getPlayer().updateInventory();
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
 		if (level == 0)
 		{

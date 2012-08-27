@@ -11,7 +11,7 @@ public class Commandsetspawn extends EssentialsCommand
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		final String group = args.length > 0 ? getFinalArg(args, 0) : "default";
-		((SpawnsHolder)module).setSpawn(user.getLocation(), group);
+		((SpawnsHolder)module).setSpawn(user.getPlayer().getLocation(), group);
 		user.sendMessage(_("spawnSet", group));
 	}
 }

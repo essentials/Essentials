@@ -22,20 +22,20 @@ public class Commandtpa extends EssentialsCommand
 		player.acquireReadLock();
 		if (!player.getData().isTeleportEnabled())
 		{
-			throw new Exception(_("teleportDisabled", player.getDisplayName()));
+			throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
 		}
 		@Cleanup
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
-		if (user.getWorld() != player.getWorld() && ess.getSettings().getData().getGeneral().isWorldTeleportPermissions()
-			&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(user))
+		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && ess.getSettings().getData().getGeneral().isWorldTeleportPermissions()
+			&& !WorldPermissions.getPermission(user.getPlayer().getWorld().getName()).isAuthorized(user))
 		{
-			throw new Exception(_("noPerm", "essentials.world." + player.getWorld().getName()));
+			throw new Exception(_("noPerm", "essentials.world." + player.getPlayer().getWorld().getName()));
 		}
 		if (!player.isIgnoringPlayer(user))
 		{
 			player.requestTeleport(user, false);
-			player.sendMessage(_("teleportRequest", user.getDisplayName()));
+			player.sendMessage(_("teleportRequest", user.getPlayer().getDisplayName()));
 			player.sendMessage(_("typeTpaccept"));
 			player.sendMessage(_("typeTpdeny"));
 			int tpaAcceptCancellation = 0;
@@ -45,6 +45,6 @@ public class Commandtpa extends EssentialsCommand
 				player.sendMessage(_("teleportRequestTimeoutInfo", tpaAcceptCancellation));
 			}
 		}
-		user.sendMessage(_("requestSent", player.getDisplayName()));
+		user.sendMessage(_("requestSent", player.getPlayer().getDisplayName()));
 	}
 }

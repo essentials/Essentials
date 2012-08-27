@@ -46,7 +46,7 @@ public interface IEssentials extends IComponent
 	//int scheduleSyncDelayedTask(Runnable run, long delay);
 	//int scheduleSyncRepeatingTask(Runnable run, long delay, long period);
 	//IPermissionsHandler getPermissionsHandler();
-	//void reload();
+	void reload();
 
 	void setRanks(IRanks groups);
 

@@ -129,7 +129,7 @@ public class Commandtime extends EssentialsCommand
 			}
 			else
 			{
-				worlds.add(user.getWorld());
+				worlds.add(user.getPlayer().getWorld());
 			}
 			return worlds;
 		}

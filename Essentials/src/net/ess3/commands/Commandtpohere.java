@@ -31,10 +31,10 @@ public class Commandtpohere extends EssentialsCommand
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
 		//todo - common method
-		if (user.getWorld() != player.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
-			&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(player))
+		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
+			&& !WorldPermissions.getPermission(user.getPlayer().getWorld().getName()).isAuthorized(player))
 		{
-			throw new Exception(_("noPerm", "essentials.world." + user.getWorld().getName()));
+			throw new Exception(_("noPerm", "essentials.world." + user.getPlayer().getWorld().getName()));
 		}
 
 

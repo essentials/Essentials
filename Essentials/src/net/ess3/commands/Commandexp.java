@@ -114,9 +114,9 @@ public class Commandexp extends EssentialsCommand
 
 	private void showExp(final CommandSender sender, final IUser target)
 	{
-		final int totalExp = SetExpFix.getTotalExperience(target);
-		final int expLeft = (int)Util.roundDouble(((((3.5 * target.getLevel()) + 6.7) - (totalExp - ((1.75 * (target.getLevel() * target.getLevel())) + (5.00 * target.getLevel())))) + 1));
-		sender.sendMessage(_("exp", target.getDisplayName(), SetExpFix.getTotalExperience(target), target.getLevel(), expLeft));
+		final int totalExp = SetExpFix.getTotalExperience(target.getPlayer());
+		final int expLeft = (int)Util.roundDouble(((((3.5 * target.getPlayer().getLevel()) + 6.7) - (totalExp - ((1.75 * (target.getPlayer().getLevel() * target.getPlayer().getLevel())) + (5.00 * target.getPlayer().getLevel())))) + 1));
+		sender.sendMessage(_("exp", target.getPlayer().getDisplayName(), SetExpFix.getTotalExperience(target.getPlayer()), target.getPlayer().getLevel(), expLeft));
 	}
 
 	private void setExp(final CommandSender sender, final IUser target, final String strAmount, final boolean give)
@@ -124,13 +124,13 @@ public class Commandexp extends EssentialsCommand
 		Long amount = Long.parseLong(strAmount);
 		if (give)
 		{
-			amount += SetExpFix.getTotalExperience(target);
+			amount += SetExpFix.getTotalExperience(target.getPlayer());
 		}
 		if (amount > Integer.MAX_VALUE)
 		{
 			amount = (long)Integer.MAX_VALUE;
 		}
-		SetExpFix.setTotalExperience(target, amount.intValue());
-		sender.sendMessage(_("expSet", target.getDisplayName(), amount));
+		SetExpFix.setTotalExperience(target.getPlayer(), amount.intValue());
+		sender.sendMessage(_("expSet", target.getPlayer().getDisplayName(), amount));
 	}
 }
