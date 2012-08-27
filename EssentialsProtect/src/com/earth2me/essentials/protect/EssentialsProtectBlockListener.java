@@ -372,7 +372,7 @@ public class EssentialsProtectBlockListener implements Listener
 				final Block up = block.getRelative(BlockFace.UP);
 				if (up != null)
 				{
-					final Material upType = block.getType();
+					final Material upType = up.getType();
 					if(upType == Material.RAILS || upType == Material.POWERED_RAIL || upType == Material.DETECTOR_RAIL)
 						return prot.getStorage().isProtected(up, user.getName());
 				}
