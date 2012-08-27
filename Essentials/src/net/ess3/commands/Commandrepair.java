@@ -25,7 +25,7 @@ public class Commandrepair extends EssentialsCommand
 
 		if (args[0].equalsIgnoreCase("hand"))
 		{
-			final ItemStack item = user.getItemInHand();
+			final ItemStack item = user.getPlayer().getItemInHand();
 			if (item == null)
 			{
 				throw new Exception(_("repairInvalidType"));
@@ -53,11 +53,11 @@ public class Commandrepair extends EssentialsCommand
 			final Trade charge = new Trade("repair-all", ess);
 			charge.isAffordableFor(user);
 			final List<String> repaired = new ArrayList<String>();
-			repairItems(user.getInventory().getContents(), user, repaired);
+			repairItems(user.getPlayer().getInventory().getContents(), user, repaired);
 
 			if (Permissions.REPAIR_ARMOR.isAuthorized(user))
 			{
-				repairItems(user.getInventory().getArmorContents(), user, repaired);
+				repairItems(user.getPlayer().getInventory().getArmorContents(), user, repaired);
 			}
 
 			if (repaired.isEmpty())

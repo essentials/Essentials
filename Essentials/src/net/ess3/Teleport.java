@@ -70,10 +70,10 @@ public class Teleport implements Runnable, ITeleport
 	{
 		this.started = System.currentTimeMillis();
 		this.delay = delay;
-		this.health = user.getHealth();
-		this.initX = Math.round(user.getLocation().getX() * MOVE_CONSTANT);
-		this.initY = Math.round(user.getLocation().getY() * MOVE_CONSTANT);
-		this.initZ = Math.round(user.getLocation().getZ() * MOVE_CONSTANT);
+		this.health = user.getPlayer().getHealth();
+		this.initX = Math.round(user.getPlayer().getLocation().getX() * MOVE_CONSTANT);
+		this.initY = Math.round(user.getPlayer().getLocation().getY() * MOVE_CONSTANT);
+		this.initZ = Math.round(user.getPlayer().getLocation().getZ() * MOVE_CONSTANT);
 		this.teleportTarget = target;
 		this.chargeFor = chargeFor;
 		this.cause = cause;
@@ -83,21 +83,21 @@ public class Teleport implements Runnable, ITeleport
 	public void run()
 	{
 
-		if (user == null || !user.isOnline() || user.getLocation() == null)
+		if (user == null || !user.isOnline() || user.getPlayer().getLocation() == null)
 		{
 			cancel();
 			return;
 		}
-		if (Math.round(user.getLocation().getX() * MOVE_CONSTANT) != initX
-			|| Math.round(user.getLocation().getY() * MOVE_CONSTANT) != initY
-			|| Math.round(user.getLocation().getZ() * MOVE_CONSTANT) != initZ
-			|| user.getHealth() < health)
+		if (Math.round(user.getPlayer().getLocation().getX() * MOVE_CONSTANT) != initX
+			|| Math.round(user.getPlayer().getLocation().getY() * MOVE_CONSTANT) != initY
+			|| Math.round(user.getPlayer().getLocation().getZ() * MOVE_CONSTANT) != initZ
+			|| user.getPlayer().getHealth() < health)
 		{	// user moved, cancel teleport
 			cancel(true);
 			return;
 		}
 
-		health = user.getHealth();  // in case user healed, then later gets injured
+		health = user.getPlayer().getHealth();  // in case user healed, then later gets injured
 
 		long now = System.currentTimeMillis();
 		if (now > started + delay)
@@ -137,7 +137,7 @@ public class Teleport implements Runnable, ITeleport
 	public void respawn(final Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		final Location bed = user.getBedSpawnLocation();
-		final Location respawnLoc = ess.getPlugin().callRespawnEvent(user, bed == null ? user.getWorld().getSpawnLocation() : bed, bed != null);
+		final Location respawnLoc = ess.getPlugin().callRespawnEvent(user.getPlayer(), bed == null ? user.getPlayer().getWorld().getSpawnLocation() : bed, bed != null);
 		teleport(new Target(respawnLoc), chargeFor, cause);
 	}
 

@@ -30,7 +30,7 @@ public class Commandrealname extends EssentialsCommand
 				continue;
 			}
 			u.setDisplayNick();
-			final String displayName = Util.stripFormat(u.getDisplayName()).toLowerCase(Locale.ENGLISH);
+			final String displayName = Util.stripFormat(u.getPlayer().getDisplayName()).toLowerCase(Locale.ENGLISH);
 			settings.acquireReadLock();
 			if (!whois.equals(displayName)
 				&& !displayName.equals(Util.stripFormat(settings.getData().getChat().getNicknamePrefix()) + whois)
@@ -38,7 +38,7 @@ public class Commandrealname extends EssentialsCommand
 			{
 				continue;
 			}
-			sender.sendMessage(u.getDisplayName() + " " + _("is") + " " + u.getName());
+			sender.sendMessage(u.getPlayer().getDisplayName() + " " + _("is") + " " + u.getName());
 		}
 	}
 }

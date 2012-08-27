@@ -47,15 +47,15 @@ public class Commandtpaall extends EssentialsCommand
 			@Cleanup
 			ISettings settings = ess.getSettings();
 			settings.acquireReadLock();
-			if (user.getWorld() != player.getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
-				&& !WorldPermissions.getPermission(user.getWorld().getName()).isAuthorized(user))
+			if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
+				&& !WorldPermissions.getPermission(user.getPlayer().getWorld().getName()).isAuthorized(user))
 			{
 				continue;
 			}
 			try
 			{
 				player.requestTeleport(user, true);
-				player.sendMessage(_("teleportHereRequest", user.getDisplayName()));
+				player.sendMessage(_("teleportHereRequest", user.getPlayer().getDisplayName()));
 				player.sendMessage(_("typeTpaccept"));
 				int tpaAcceptCancellation = 0;
 				tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();

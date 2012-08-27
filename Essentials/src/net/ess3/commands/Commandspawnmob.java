@@ -244,7 +244,7 @@ public class Commandspawnmob extends EssentialsCommand
 		{
 			final Tameable tameable = ((Tameable)spawned);
 			tameable.setTamed(true);
-			tameable.setOwner(user.getBase());
+			tameable.setOwner(user.getPlayer());
 		}
 		if (type == EntityType.WOLF
 			&& data.contains("angry"))
@@ -279,21 +279,6 @@ public class Commandspawnmob extends EssentialsCommand
 					((Villager)spawned).setProfession(prof);
 				}
 			}
-		}
-		if (type == EntityType.OCELOT)
-		{
-			if (data.contains("siamese"))
-			{
-				((Ocelot)spawned).setCatType(Ocelot.Type.SIAMESE_CAT);
-			}
-			if (data.contains("red"))
-			{
-				((Ocelot)spawned).setCatType(Ocelot.Type.RED_CAT);
-			}
-			if (data.contains("black"))
-			{
-				((Ocelot)spawned).setCatType(Ocelot.Type.BLACK_CAT);
-			}
-		}
+		}		
 	}
 }

@@ -38,7 +38,7 @@ public class Commandsethome extends EssentialsCommand
 						{
 							user.getData().setHomes(new HashMap<String, net.ess3.storage.StoredLocation>());
 						}
-						user.getData().getHomes().put(args[0].toLowerCase(Locale.ENGLISH), new net.ess3.storage.StoredLocation(user.getLocation()));
+						user.getData().getHomes().put(args[0].toLowerCase(Locale.ENGLISH), new net.ess3.storage.StoredLocation(user.getPlayer().getLocation()));
 					}
 					else
 					{
@@ -76,7 +76,7 @@ public class Commandsethome extends EssentialsCommand
 					{
 						usersHome.getData().setHomes(new HashMap<String, net.ess3.storage.StoredLocation>());
 					}
-					usersHome.getData().getHomes().put(name, new net.ess3.storage.StoredLocation(user.getLocation()));
+					usersHome.getData().getHomes().put(name, new net.ess3.storage.StoredLocation(user.getPlayer().getLocation()));
 				}
 			}
 		}
@@ -87,9 +87,9 @@ public class Commandsethome extends EssentialsCommand
 			{
 				user.getData().setHomes(new HashMap<String, net.ess3.storage.StoredLocation>());
 			}
-			user.getData().getHomes().put("home", new net.ess3.storage.StoredLocation(user.getLocation()));
+			user.getData().getHomes().put("home", new net.ess3.storage.StoredLocation(user.getPlayer().getLocation()));
 		}
-		user.sendMessage(_("homeSet", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
+		user.sendMessage(_("homeSet", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(), user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
 
 	}
 }

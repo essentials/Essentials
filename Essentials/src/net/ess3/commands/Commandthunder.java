@@ -15,7 +15,7 @@ public class Commandthunder extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final World world = user.getWorld();
+		final World world = user.getPlayer().getWorld();
 		final boolean setThunder = args[0].equalsIgnoreCase("true");
 		if (args.length > 1)
 		{

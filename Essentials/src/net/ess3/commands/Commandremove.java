@@ -29,7 +29,7 @@ public class Commandremove extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		ToRemove toRemove;
-		final World world = user.getWorld();
+		final World world = user.getPlayer().getWorld();
 		int radius = 0;
 
 		if (args.length < 2)

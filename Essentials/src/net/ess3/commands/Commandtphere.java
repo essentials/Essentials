@@ -17,9 +17,9 @@ public class Commandtphere extends EssentialsCommand
 		player.acquireReadLock();
 		if (!player.getData().isTeleportEnabled())
 		{
-			throw new Exception(_("teleportDisabled", player.getDisplayName()));
+			throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
 		}
-		player.getTeleport().teleport(user, new Trade(commandName, ess), TeleportCause.COMMAND);
+		player.getTeleport().teleport(user.getPlayer(), new Trade(commandName, ess), TeleportCause.COMMAND);
 		user.sendMessage(_("teleporting"));
 		player.sendMessage(_("teleporting"));
 		throw new NoChargeException();

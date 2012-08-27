@@ -27,7 +27,7 @@ public class Commandpowertool extends EssentialsCommand
 			return;
 		}
 
-		final ItemStack itemStack = user.getItemInHand();
+		final ItemStack itemStack = user.getPlayer().getItemInHand();
 		if (itemStack == null || itemStack.getType() == Material.AIR)
 		{
 			throw new Exception(_("powerToolAir"));

@@ -1,9 +1,9 @@
 package net.ess3.testserver;
 
 import java.util.UUID;
-import net.ess3.api.server.ItemStack;
-import net.ess3.api.server.Location;
-import net.ess3.api.server.World;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.TreeType;
 
 public class TestWorld implements World {

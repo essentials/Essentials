@@ -350,4 +350,10 @@ public class Essentials implements IEssentials
 	{
 		return economy;
 	}
+	
+	@Override
+	public void reload()
+	{
+		//do something
+	}
 }

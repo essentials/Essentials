@@ -3,10 +3,11 @@ package net.ess3.testserver;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import net.ess3.api.server.CommandSender;
-import net.ess3.api.server.Player;
-import net.ess3.api.server.Server;
-import net.ess3.api.server.World;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.Server;
+import org.bukkit.World;
+import org.bukkit.command.ConsoleCommandSender;
 
 public class TestServer implements Server {
 
@@ -45,31 +46,25 @@ public class TestServer implements Server {
 	}
 
 	@Override
-	public Collection<Player> getOnlinePlayers()
+	public Player[] getOnlinePlayers()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
-	public CommandSender getConsoleSender()
+	public ConsoleCommandSender getConsoleSender()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
-	public void dispatchCommand(CommandSender sender, String command)
+	public boolean dispatchCommand(CommandSender sender, String command)
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
 	public void banIP(String ip)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public <T> T getServiceProvider(Class<T> clazz)
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

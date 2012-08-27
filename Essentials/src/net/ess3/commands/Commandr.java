@@ -36,7 +36,7 @@ public class Commandr extends EssentialsCommand
 				message = Util.replaceFormat(message);
 			}
 			replyTo = user;
-			senderName = user.getDisplayName();
+			senderName = user.getPlayer().getDisplayName();
 		}
 		else
 		{

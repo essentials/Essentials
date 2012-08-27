@@ -23,7 +23,7 @@ public class Commandspawn extends EssentialsCommand
 			respawn(otherUser, null);
 			if (!otherUser.equals(user))
 			{
-				otherUser.sendMessage(_("teleportAtoB", user.getDisplayName(), "spawn"));
+				otherUser.sendMessage(_("teleportAtoB", user.getPlayer().getDisplayName(), "spawn"));
 				user.sendMessage(_("teleporting"));
 			}
 		}
@@ -42,7 +42,7 @@ public class Commandspawn extends EssentialsCommand
 		}
 		final IUser user = ess.getUserMap().matchUser(args[0], false, false);
 		respawn(user, null);
-		user.sendMessage(_("teleportAtoB", user.getDisplayName(), "spawn"));
+		user.sendMessage(_("teleportAtoB", user.getPlayer().getDisplayName(), "spawn"));
 		sender.sendMessage(_("teleporting"));
 	}
 

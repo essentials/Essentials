@@ -4,6 +4,7 @@ import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.user.PlayerNotFoundException;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
 import org.bukkit.command.CommandSender;
@@ -31,9 +32,9 @@ public class Commandseen extends EssentialsCommand
 		try
 		{
 			IUser u = ess.getUserMap().matchUser(args[0], false, false);
-			sender.sendMessage(_("seenOnline", u.getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
+			sender.sendMessage(_("seenOnline", u.getPlayer().getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
 		}
-		catch (NoSuchFieldException e)
+		catch (PlayerNotFoundException e)
 		{
 			@Cleanup
 			IUser u = ess.getUserMap().getUser(args[0]);
@@ -42,7 +43,7 @@ public class Commandseen extends EssentialsCommand
 			{
 				throw new Exception(_("playerNotFound"));
 			}
-			sender.sendMessage(_("seenOffline", u.getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
+			sender.sendMessage(_("seenOffline", u.getPlayer().getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
 			if (u.isBanned())
 			{
 				sender.sendMessage(_("whoisBanned", show ? u.getData().getBan().getReason() : _("true")));
