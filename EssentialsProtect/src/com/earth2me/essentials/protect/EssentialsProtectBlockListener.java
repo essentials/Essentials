@@ -355,7 +355,8 @@ public class EssentialsProtectBlockListener implements Listener
 						final org.bukkit.material.Sign signMat = (org.bukkit.material.Sign)signblock.getState().getData();
 						if (signMat != null && signMat.getFacing() == blockFace)
 						{
-							return prot.getStorage().isProtected(signblock, user.getName());
+							if(prot.getStorage().isProtected(signblock, user.getName()))
+								return true;
 						}
 					}
 				}
