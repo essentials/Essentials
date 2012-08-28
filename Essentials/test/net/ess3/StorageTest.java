@@ -1,13 +1,13 @@
 package net.ess3;
 
 import java.io.*;
-import net.ess3.api.server.Location;
 import net.ess3.settings.Settings;
 import net.ess3.storage.ObjectLoadException;
 import net.ess3.storage.StorageObject;
 import net.ess3.storage.YamlStorageReader;
 import net.ess3.storage.YamlStorageWriter;
 import net.ess3.utils.ExecuteTimer;
+import org.bukkit.Location;
 import org.junit.Test;
 
 
@@ -75,7 +75,7 @@ public class StorageTest extends EssentialsTest
 
 			for (int j = 0; j < 10000; j++)
 			{
-				userdata.getHomes().put("home", new net.ess3.storage.StoredLocation(Location.create(world, j, j, j)));
+				userdata.getHomes().put("home", new net.ess3.storage.StoredLocation(new Location(world, j, j, j)));
 			}
 			ext.mark("change home 10000 times");
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();

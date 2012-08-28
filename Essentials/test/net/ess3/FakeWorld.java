@@ -675,4 +675,28 @@ public class FakeWorld implements World
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
+
+	@Override
+	public boolean isChunkInUse(int i, int i1)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public FallingBlock spawnFallingBlock(Location lctn, Material mtrl, byte b) throws IllegalArgumentException
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public FallingBlock spawnFallingBlock(Location lctn, int i, byte b) throws IllegalArgumentException
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void playSound(Location lctn, Sound sound, float f, float f1)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

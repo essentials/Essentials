@@ -38,19 +38,19 @@ public class KeywordReplacer implements IText
 		if (sender instanceof Player)
 		{
 			@Cleanup
-			final IUser user = ((Player)sender).getUser();
+			final IUser user = ess.getUserMap().getUser((Player)sender);
 			user.acquireReadLock();
 			user.setDisplayNick();
-			displayName = user.getDisplayName();
-			userName = user.getName();
-			ipAddress = user.getAddress() == null || user.getAddress().getAddress() == null ? "" : user.getAddress().getAddress().toString();
-			address = user.getAddress() == null ? "" : user.getAddress().toString();
+			displayName = user.getPlayer().getDisplayName();
+			userName = user.getPlayer().getName();
+			ipAddress = user.getPlayer().getAddress() == null || user.getPlayer().getAddress().getAddress() == null ? "" : user.getPlayer().getAddress().getAddress().toString();
+			address = user.getPlayer().getAddress() == null ? "" : user.getPlayer().getAddress().toString();
 			balance = Double.toString(user.getMoney());
 			mails = Integer.toString(user.getData().getMails() == null ? 0 : user.getData().getMails().size());
-			world = user.getLocation() == null || user.getLocation().getWorld() == null ? "" : user.getLocation().getWorld().getName();
-			worldTime12 = DescParseTickFormat.format12(user.getWorld() == null ? 0 : user.getWorld().getTime());
-			worldTime24 = DescParseTickFormat.format24(user.getWorld() == null ? 0 : user.getWorld().getTime());
-			worldDate = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(DescParseTickFormat.ticksToDate(user.getWorld() == null ? 0 : user.getWorld().getFullTime()));
+			world = user.getPlayer().getLocation() == null || user.getPlayer().getLocation().getWorld() == null ? "" : user.getPlayer().getLocation().getWorld().getName();
+			worldTime12 = DescParseTickFormat.format12(user.getPlayer().getWorld() == null ? 0 : user.getPlayer().getWorld().getTime());
+			worldTime24 = DescParseTickFormat.format24(user.getPlayer().getWorld() == null ? 0 : user.getPlayer().getWorld().getTime());
+			worldDate = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(DescParseTickFormat.ticksToDate(user.getPlayer().getWorld() == null ? 0 : user.getPlayer().getWorld().getFullTime()));
 		}
 		else
 		{
@@ -60,12 +60,12 @@ public class KeywordReplacer implements IText
 		int playerHidden = 0;
 		for (Player p : ess.getServer().getOnlinePlayers())
 		{
-			if (p.getUser().isHidden())
+			if (ess.getUserMap().getUser(p).isHidden())
 			{
 				playerHidden++;
 			}
 		}
-		online = Integer.toString(ess.getServer().getOnlinePlayers().size() - playerHidden);
+		online = Integer.toString(ess.getServer().getOnlinePlayers().length - playerHidden);
 		unique = Integer.toString(ess.getUserMap().getUniqueUsers());
 
 		final StringBuilder worldsBuilder = new StringBuilder();
@@ -82,7 +82,7 @@ public class KeywordReplacer implements IText
 		final StringBuilder playerlistBuilder = new StringBuilder();
 		for (Player p : ess.getServer().getOnlinePlayers())
 		{
-			if (p.getUser().isHidden())
+			if (ess.getUserMap().getUser(p).isHidden())
 			{
 				continue;
 			}

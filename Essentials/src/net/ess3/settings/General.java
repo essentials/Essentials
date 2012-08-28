@@ -1,29 +1,15 @@
 package net.ess3.settings;
 
-import java.util.HashMap;
-import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.ess3.storage.Comment;
 import net.ess3.storage.StorageObject;
-import org.bukkit.entity.EntityType;
 
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class General implements StorageObject
 {
-	public General()
-	{
-		//Populate creature spawn values
-		for (EntityType t : EntityType.values())
-		{
-			if (t.isAlive())
-			{
-				creatureSpawn.put(t, false);
-			}
-		}
-	}
 	@Comment("Backup runs a command while saving is disabled")
 	private Backup backup = new Backup();
 	@Comment("You can disable the death messages of minecraft.")
@@ -92,21 +78,4 @@ public class General implements StorageObject
 		return loginAttackDelay * 1000;
 	}
 	public boolean metricsEnabled = true;
-//todo remove this
-	@Comment("Prevent creatures spawning")
-	private Map<EntityType, Boolean> creatureSpawn = new HashMap<EntityType, Boolean>();
-
-	public boolean getPreventSpawn(String creatureName)
-	{
-		return getPreventSpawn(EntityType.fromName(creatureName));
-	}
-
-	public boolean getPreventSpawn(EntityType creature)
-	{
-		if (creatureSpawn == null)
-		{
-			return false;
-		}
-		return creatureSpawn.get(creature);
-	}
 }

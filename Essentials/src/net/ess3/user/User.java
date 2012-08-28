@@ -13,6 +13,7 @@ import net.ess3.Console;
 import static net.ess3.I18n._;
 import net.ess3.Teleport;
 import net.ess3.api.*;
+import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.economy.register.Method;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.DateUtil;
@@ -650,11 +651,11 @@ public class User extends UserBase implements IUser
 			settings.acquireReadLock();
 			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
 
-			overfilled = getPlayer().getInventory().addItem(true, oversizedStackSize, itemStack);
+			overfilled = InventoryWorkaround.addItem(getPlayer().getInventory(), true, oversizedStackSize, itemStack);
 		}
 		else
 		{
-			overfilled = getPlayer().getInventory().addItem(true, itemStack);
+			overfilled = InventoryWorkaround.addItem(getPlayer().getInventory(), true, itemStack);
 		}
 		if (canSpew)
 		{

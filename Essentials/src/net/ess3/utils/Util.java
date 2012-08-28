@@ -339,7 +339,7 @@ public final class Util
 			return null;
 		}
 		String message;
-		if (Permissions.hasPermission(user.getBase(), permBase + ".color"))
+		if (Permissions.hasPermission(user.getPlayer(), permBase + ".color"))
 		{
 			message = Util.replaceColor(input, REPLACE_COLOR_PATTERN);
 		}
@@ -347,7 +347,7 @@ public final class Util
 		{
 			message = Util.stripColor(input, VANILLA_COLOR_PATTERN);
 		}
-		if (Permissions.hasPermission(user.getBase(), permBase + ".magic"))
+		if (Permissions.hasPermission(user.getPlayer(), permBase + ".magic"))
 		{
 			message = Util.replaceColor(message, REPLACE_MAGIC_PATTERN);
 		}
@@ -355,7 +355,7 @@ public final class Util
 		{
 			message = Util.stripColor(message, VANILLA_MAGIC_PATTERN);
 		}
-		if (Permissions.hasPermission(user.getBase(), permBase + ".format"))
+		if (Permissions.hasPermission(user.getPlayer(), permBase + ".format"))
 		{
 			message = Util.replaceColor(message, REPLACE_FORMAT_PATTERN);
 		}
@@ -373,7 +373,7 @@ public final class Util
 			return null;
 		}
 		String message = formatString(user, permBase, input);
-		if (!Permissions.hasPermission(user.getBase(), permBase + ".url"))
+		if (!Permissions.hasPermission(user.getPlayer(), permBase + ".url"))
 		{
 			message = Util.blockURL(message);
 		}

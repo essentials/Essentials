@@ -5,6 +5,7 @@ import java.util.Set;
 import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.permissions.Permissions;
 import net.ess3.permissions.UnlimitedItemPermissions;
 import org.bukkit.Material;
@@ -39,10 +40,10 @@ public class Commandunlimited extends EssentialsCommand
 		{
 			//TODO: Fix this, the clear should always work, even when the player does not have permission.
 			final Set<Material> itemList = target.getData().getUnlimited();
-			for(Material mat : itemList)
+			for (Material mat : itemList)
 			{
 				toggleUnlimited(user, target, mat.toString());
-				
+
 			}
 		}
 		else
@@ -92,9 +93,9 @@ public class Commandunlimited extends EssentialsCommand
 		{
 			message = "enableUnlimited";
 			enableUnlimited = true;
-			if (!target.getInventory().containsItem(true, true, stack))
+			if (!InventoryWorkaround.containsItem(target.getPlayer().getInventory(), true, true, stack))
 			{
-				target.getInventory().addItem(stack);
+				InventoryWorkaround.addItem(target.getPlayer().getInventory(), false, stack);
 			}
 		}
 

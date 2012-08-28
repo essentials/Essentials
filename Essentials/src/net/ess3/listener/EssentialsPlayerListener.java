@@ -136,11 +136,11 @@ public class EssentialsPlayerListener implements Listener
 		}
 		if (user.getData().getInventory() != null)
 		{
-			user.getInventory().setContents(user.getData().getInventory().getBukkitInventory());
+			user.getPlayer().getInventory().setContents(user.getData().getInventory().getBukkitInventory());
 			user.getData().setInventory(null);
 		}
 		user.updateActivity(false);
-		user.dispose();
+		//user.getPlayer().dispose();
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -156,20 +156,20 @@ public class EssentialsPlayerListener implements Listener
 		user.acquireWriteLock();
 
 		user.updateDisplayName();
-		user.getData().setIpAddress(user.getAddress().getAddress().getHostAddress());
+		user.getData().setIpAddress(user.getPlayer().getAddress().getAddress().getHostAddress());
 		user.updateActivity(false);
 
 		for (String p : ess.getVanishedPlayers())
 		{
 			if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(user))
 			{
-				user.hidePlayer(ess.getUserMap().getUser(p).getBase());
+				user.getPlayer().hidePlayer(ess.getUserMap().getUser(p).getPlayer());
 			}
 		}
 
 		if (Permissions.SLEEPINGIGNORED.isAuthorized(user))
 		{
-			user.setSleepingIgnored(true);
+			user.getPlayer().setSleepingIgnored(true);
 		}
 
 		@Cleanup
@@ -276,8 +276,8 @@ public class EssentialsPlayerListener implements Listener
 		final ItemStack hand = new ItemStack(Material.EGG, 1);
 		if (user.getData().hasUnlimited(hand.getType()))
 		{
-			user.getInventory().addItem(hand);
-			user.updateInventory();
+			user.getPlayer().getInventory().addItem(hand);
+			user.getPlayer().updateInventory();
 		}
 	}
 
@@ -295,7 +295,7 @@ public class EssentialsPlayerListener implements Listener
 				@Override
 				public void run()
 				{
-					user.updateInventory();
+					user.getPlayer().updateInventory();
 				}
 			});
 		}
@@ -316,7 +316,7 @@ public class EssentialsPlayerListener implements Listener
 				spyer.acquireReadLock();
 				if (spyer.getData().isSocialspy() && !user.equals(spyer))
 				{
-					player.sendMessage(user.getDisplayName() + " : " + event.getMessage());
+					player.sendMessage(user.getPlayer().getDisplayName() + " : " + event.getMessage());
 				}
 			}
 		}
@@ -395,7 +395,7 @@ public class EssentialsPlayerListener implements Listener
 
 	private boolean usePowertools(final IUser user)
 	{
-		final ItemStack is = user.getItemInHand();
+		final ItemStack is = user.getPlayer().getItemInHand();
 		int id;
 		if (is == null || (id = is.getTypeId()) == 0)
 		{
@@ -419,7 +419,7 @@ public class EssentialsPlayerListener implements Listener
 			else if (command.startsWith("c:"))
 			{
 				used = true;
-				user.chat(command.substring(2));
+				user.getPlayer().chat(command.substring(2));
 			}
 			else
 			{
@@ -430,7 +430,7 @@ public class EssentialsPlayerListener implements Listener
 							@Override
 							public void run()
 							{
-								user.getServer().dispatchCommand(user.getBase(), command);
+								user.getServer().dispatchCommand(user.getPlayer(), command);
 							}
 						});
 			}

@@ -180,7 +180,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		acquireReadLock();
 		try
 		{
-			return getData().getNewPlayerAnnouncement().replace('&', '§').replace("§§", "&").replace("{PLAYER}", user.getDisplayName()).replace("{DISPLAYNAME}", user.getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getAddress().toString());
+			return getData().getNewPlayerAnnouncement().replace('&', '§').replace("§§", "&").replace("{PLAYER}", user.getPlayer().getDisplayName()).replace("{DISPLAYNAME}", user.getPlayer().getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getPlayer().getAddress().toString());
 		}
 		finally
 		{
@@ -249,7 +249,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 				}
 				else
 				{
-					home = user.getHome(user.getLocation());
+					home = user.getHome(user.getPlayer().getLocation());
 				}
 				if (home != null)
 				{
@@ -299,7 +299,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 			@Override
 			public void run()
 			{
-				if (user.getBase() instanceof OfflinePlayer)
+				if (user.getPlayer() instanceof OfflinePlayer)
 				{
 					return;
 				}

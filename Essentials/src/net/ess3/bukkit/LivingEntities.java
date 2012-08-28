@@ -6,8 +6,13 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import static net.ess3.I18n._;
+import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 
 public class LivingEntities
@@ -44,4 +49,10 @@ public class LivingEntities
 	public static String getName(int count, EntityType type) {
 		return count == 1? _(entityI18n.get(type)):_(entityI18nPlural.get(type));
 	}
+	
+	public static class MobException extends Exception
+	{
+		private static final long serialVersionUID = 1L;
+	}
+
 }

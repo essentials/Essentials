@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 import org.bukkit.*;
+import org.bukkit.Warning.WarningState;
 import org.bukkit.World.Environment;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -928,6 +929,12 @@ public class FakeServer implements Server
 
 	@Override
 	public String getMotd()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public WarningState getWarningState()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

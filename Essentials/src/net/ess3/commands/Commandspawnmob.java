@@ -27,7 +27,7 @@ public class Commandspawnmob extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			final Set<String> mobList = LivingEntities.getMobList();
+			final Set<String> mobList = LivingEntities.getLivingEntityList();
 			final Set<String> availableList = new HashSet<String>();
 			for (String mob : mobList)
 			{
@@ -66,9 +66,9 @@ public class Commandspawnmob extends EssentialsCommand
 
 
 		Entity spawnedMob = null;
-		LivingEntities mob = null;
+		EntityType mob = null;
 		Entity spawnedMount = null;
-		LivingEntities mobMount = null;
+		EntityType mobMount = null;
 
 		mob = LivingEntities.fromName(mobType);
 		if (mob == null)
@@ -76,12 +76,12 @@ public class Commandspawnmob extends EssentialsCommand
 			throw new Exception(_("invalidMob"));
 		}
 
-		if (!SpawnmobPermissions.getPermission(mob.name).isAuthorized(user))
+		if (!SpawnmobPermissions.getPermission(mob.getName()).isAuthorized(user))
 		{
 			throw new Exception(_("noPermToSpawnMob"));
 		}
 
-		final Block block = LocationUtil.getTarget(user).getBlock();
+		final Block block = LocationUtil.getTarget(user.getPlayer()).getBlock();
 		if (block == null)
 		{
 			throw new Exception(_("unableToSpawnMob"));
@@ -89,15 +89,15 @@ public class Commandspawnmob extends EssentialsCommand
 		IUser otherUser = null;
 		if (args.length >= 3)
 		{
-			otherUser = getPlayer(args, 2);
+			otherUser = ess.getUserMap().getUser(args[2]);
 		}
-		final Location loc = (otherUser == null) ? block.getLocation() : otherUser.getLocation();
+		final Location loc = (otherUser == null) ? block.getLocation() : otherUser.getPlayer().getLocation();
 		final Location sloc = LocationUtil.getSafeDestination(loc);
 		try
 		{
-			spawnedMob = mob.spawn(user, server, sloc);
+			spawnedMob = user.getPlayer().getWorld().spawn(sloc, (Class<? extends LivingEntity>)mob.getEntityClass());
 		}
-		catch (MobException e)
+		catch (Exception e)
 		{
 			throw new Exception(_("unableToSpawnMob"), e);
 		}
@@ -111,15 +111,15 @@ public class Commandspawnmob extends EssentialsCommand
 				return;
 			}
 
-			if (!SpawnmobPermissions.getPermission(mobMount.name).isAuthorized(user))
+			if (!SpawnmobPermissions.getPermission(mobMount.getName()).isAuthorized(user))
 			{
 				throw new Exception(_("noPermToSpawnMob"));
 			}
 			try
 			{
-				spawnedMount = mobMount.spawn(user, server, loc);
+				spawnedMount = user.getPlayer().getWorld().spawn(loc, (Class<? extends LivingEntity>)mobMount.getEntityClass());
 			}
-			catch (MobException e)
+			catch (Exception e)
 			{
 				throw new Exception(_("unableToSpawnMob"), e);
 			}
@@ -127,11 +127,11 @@ public class Commandspawnmob extends EssentialsCommand
 		}
 		if (mobData != null)
 		{
-			changeMobData(mob.getType(), spawnedMob, mobData, user);
+			changeMobData(mob, spawnedMob, mobData, user);
 		}
 		if (spawnedMount != null && mountData != null)
 		{
-			changeMobData(mobMount.getType(), spawnedMount, mountData, user);
+			changeMobData(mobMount, spawnedMount, mountData, user);
 		}
 		if (args.length >= 2)
 		{
@@ -157,14 +157,14 @@ public class Commandspawnmob extends EssentialsCommand
 			{
 				for (int i = 1; i < mobCount; i++)
 				{
-					spawnedMob = mob.spawn(user, server, loc);
+					spawnedMob = user.getPlayer().getWorld().spawn(sloc, (Class<? extends LivingEntity>)mob.getEntityClass());
 					if (mobMount != null)
 					{
 						try
 						{
-							spawnedMount = mobMount.spawn(user, server, loc);
+							spawnedMount = user.getPlayer().getWorld().spawn(loc, (Class<? extends LivingEntity>)mobMount.getEntityClass());
 						}
-						catch (MobException e)
+						catch (Exception e)
 						{
 							throw new Exception(_("unableToSpawnMob"), e);
 						}
@@ -172,14 +172,14 @@ public class Commandspawnmob extends EssentialsCommand
 					}
 					if (mobData != null)
 					{
-						changeMobData(mob.getType(), spawnedMob, mobData, user);
+						changeMobData(mob, spawnedMob, mobData, user);
 					}
 					if (spawnedMount != null && mountData != null)
 					{
-						changeMobData(mobMount.getType(), spawnedMount, mountData, user);
+						changeMobData(mobMount, spawnedMount, mountData, user);
 					}
 				}
-				user.sendMessage(mobCount + " " + mob.name.toLowerCase(Locale.ENGLISH) + mob.suffix + " " + _("spawned"));
+				user.sendMessage(mobCount + " " + mob.getName().toLowerCase(Locale.ENGLISH) + " " + _("spawned"));
 			}
 			catch (MobException e1)
 			{
@@ -196,7 +196,7 @@ public class Commandspawnmob extends EssentialsCommand
 		}
 		else
 		{
-			user.sendMessage(mob.name + " " + _("spawned"));
+			user.sendMessage(mob.getName() + " " + _("spawned"));
 		}
 	}
 

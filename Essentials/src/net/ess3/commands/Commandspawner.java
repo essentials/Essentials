@@ -11,6 +11,7 @@ import net.ess3.utils.Util;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.EntityType;
 
 
 public class Commandspawner extends EssentialsCommand
@@ -20,10 +21,10 @@ public class Commandspawner extends EssentialsCommand
 	{
 		if (args.length < 1 || args[0].length() < 2)
 		{
-			throw new NotEnoughArgumentsException(_("mobsAvailable", Util.joinList(LivingEntities.getMobList())));
+			throw new NotEnoughArgumentsException(_("mobsAvailable", Util.joinList(LivingEntities.getLivingEntityList())));
 		}
 
-		final Location target = LocationUtil.getTarget(user);
+		final Location target = LocationUtil.getTarget(user.getPlayer());
 		if (target == null || target.getBlock().getType() != Material.MOB_SPAWNER)
 		{
 			throw new Exception(_("mobSpawnTarget"));
@@ -33,22 +34,22 @@ public class Commandspawner extends EssentialsCommand
 		{
 			String name = args[0];
 
-			LivingEntities mob = null;
+			EntityType mob = null;
 			mob = LivingEntities.fromName(name);
 			if (mob == null)
 			{
 				user.sendMessage(_("invalidMob"));
 				return;
 			}
-			if (!SpawnerPermissions.getPermission(mob.name).isAuthorized(user))
+			if (!SpawnerPermissions.getPermission(mob.getName()).isAuthorized(user))
 			{
 				throw new Exception(_("unableToSpawnMob"));
 			}
-			final Trade charge = new Trade("spawner-" + mob.name.toLowerCase(Locale.ENGLISH), ess);
+			final Trade charge = new Trade("spawner-" + mob.getName().toLowerCase(Locale.ENGLISH), ess);
 			charge.isAffordableFor(user);
-			((CreatureSpawner)target.getBlock().getState()).setSpawnedType(mob.getType());
+			((CreatureSpawner)target.getBlock().getState()).setSpawnedType(mob);
 			charge.charge(user);
-			user.sendMessage(_("setSpawner", mob.name));
+			user.sendMessage(_("setSpawner", mob.getName()));
 		}
 		catch (Throwable ex)
 		{

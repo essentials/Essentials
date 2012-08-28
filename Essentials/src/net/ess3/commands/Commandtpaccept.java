@@ -21,8 +21,8 @@ public class Commandtpaccept extends EssentialsCommand
 		final IUser target = user.getTeleportRequester();
 		if (target == null 
 			|| !target.isOnline()
-			|| (user.isTeleportRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
-			|| (!user.isTeleportRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
+			|| (user.isTpRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
+			|| (!user.isTpRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}
@@ -51,7 +51,7 @@ public class Commandtpaccept extends EssentialsCommand
 		}
 
 		final Trade charge = new Trade(commandName, ess);
-		if (user.isTeleportRequestHere())
+		if (user.isTpRequestHere())
 		{
 			charge.isAffordableFor(user);
 		}
@@ -62,13 +62,13 @@ public class Commandtpaccept extends EssentialsCommand
 		user.sendMessage(_("requestAccepted"));
 		target.sendMessage(_("requestAcceptedFrom", user.getPlayer().getDisplayName()));
 
-		if (user.isTeleportRequestHere())
+		if (user.isTpRequestHere())
 		{
-			user.getTeleport().teleport(target, charge, TeleportCause.COMMAND);
+			user.getTeleport().teleport(target.getPlayer(), charge, TeleportCause.COMMAND);
 		}
 		else
 		{
-			target.getTeleport().teleport(user, charge, TeleportCause.COMMAND);
+			target.getTeleport().teleport(user.getPlayer(), charge, TeleportCause.COMMAND);
 		}
 		user.requestTeleport(null, false);
 	}
