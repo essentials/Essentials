@@ -14,5 +14,5 @@ public interface IPermission
 
 	Permission getPermission();
 
-	PermissionDefault  getPermissionDefault();
+	PermissionDefault getPermissionDefault();
 }

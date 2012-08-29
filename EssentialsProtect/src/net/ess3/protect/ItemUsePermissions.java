@@ -1,10 +1,10 @@
 package net.ess3.protect;
 
-import net.ess3.api.IPermission;
-import net.ess3.permissions.AbstractSuperpermsPermission;
 import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
+import net.ess3.api.IPermission;
+import net.ess3.permissions.AbstractSuperpermsPermission;
 import org.bukkit.Material;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -32,7 +32,7 @@ public class ItemUsePermissions extends AbstractSuperpermsPermission
 	}
 
 	@Override
-	public String getPermission()
+	public String getPermissionName()
 	{
 		return this.permission;
 	}

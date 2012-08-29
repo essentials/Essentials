@@ -1,8 +1,8 @@
 package net.ess3.protect;
 
+import java.util.Locale;
 import net.ess3.api.IPermission;
 import net.ess3.utils.Util;
-import java.util.Locale;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -49,13 +49,13 @@ public enum Permissions implements IPermission
 	}
 
 	@Override
-	public String getPermission()
+	public String getPermissionName()
 	{
 		return permission;
 	}
 
 	@Override
-	public Permission getBukkitPermission()
+	public Permission getPermission()
 	{
 		if (bukkitPerm != null)
 		{
@@ -63,7 +63,7 @@ public enum Permissions implements IPermission
 		}
 		else
 		{
-			return Util.registerPermission(getPermission(), getPermissionDefault());
+			return Util.registerPermission(getPermissionName(), getPermissionDefault());
 		}
 	}
 
@@ -76,6 +76,6 @@ public enum Permissions implements IPermission
 	@Override
 	public boolean isAuthorized(final CommandSender sender)
 	{
-		return sender.hasPermission(getBukkitPermission());
+		return sender.hasPermission(getPermission());
 	}
 }

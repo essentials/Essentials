@@ -32,10 +32,7 @@ import net.ess3.economy.Economy;
 import net.ess3.economy.Trade;
 import net.ess3.economy.WorthHolder;
 import net.ess3.economy.register.Methods;
-import net.ess3.listener.*;
 import net.ess3.metrics.Metrics;
-import net.ess3.metrics.MetricsListener;
-import net.ess3.metrics.MetricsStarter;
 import net.ess3.ranks.RanksStorage;
 import net.ess3.settings.SettingsHolder;
 import net.ess3.settings.SpawnsHolder;
@@ -44,13 +41,7 @@ import net.ess3.utils.ExecuteTimer;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.InvalidDescriptionException;
-import org.bukkit.plugin.Plugin;
-import org.yaml.snakeyaml.error.YAMLException;
 
 
 public class Essentials implements IEssentials

@@ -102,7 +102,7 @@ public class EssentialsConnect
 				{
 					try
 					{
-						protect.setStorage(new ProtectedBlockSQLite("jdbc:sqlite:" + ess.getDataFolder() + "/EssentialsProtect.db"));
+						protect.setStorage(new ProtectedBlockSQLite("jdbc:sqlite:" + ess.getPlugin().getDataFolder() + "/EssentialsProtect.db"));
 					}
 					catch (PropertyVetoException ex)
 					{

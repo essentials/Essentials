@@ -1,11 +1,9 @@
 package net.ess3.protect;
 
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
-import com.earth2me.essentials.protect.data.IProtectedBlock;
 import java.util.ArrayList;
 import java.util.List;
-
+import static net.ess3.I18n._;
+import net.ess3.protect.data.IProtectedBlock;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

@@ -100,7 +100,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 					final IUser user = ess.getUserMap().getUser(player);
 					if (Permissions.GEOIP_SHOW.isAuthorized(user))
 					{
-						user.sendMessage(_("geoipJoinFormat", user.getDisplayName(), builder.toString()));
+						user.sendMessage(_("geoipJoinFormat", user.getPlayer().getDisplayName(), builder.toString()));
 					}
 				}
 			}
