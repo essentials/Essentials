@@ -12,7 +12,7 @@ public class Commandenderchest extends EssentialsCommand
 	{		
 		if (args.length > 0 && Permissions.ENDERCHEST_OTHERS.isAuthorized(user))
 		{
-			final IUser invUser = ess.getUserMap().getUser(args[0]);
+			final IUser invUser = ess.getUserMap().matchUser(args[0], false, false);
 			user.getPlayer().openInventory(invUser.getPlayer().getEnderChest());
 			user.setEnderSee(true);
 		}
