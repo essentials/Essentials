@@ -114,6 +114,10 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 	boolean isInvSee();
 
 	void setInvSee(boolean invsee);
+	
+	boolean isEnderSee();
+	
+	void setEnderSee(boolean endersee);
 
 	boolean hasInvulnerabilityAfterTeleport();
 

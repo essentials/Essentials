@@ -1,6 +1,8 @@
 package net.ess3.commands;
 
-import net.ess3.user.User;
+import static net.ess3.I18n._;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,7 +12,7 @@ public class Commandspeed extends EssentialsCommand
 {
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
@@ -22,7 +24,7 @@ public class Commandspeed extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -31,7 +33,7 @@ public class Commandspeed extends EssentialsCommand
 
 		boolean isFly;
 		float speed;
-		boolean isBypass = user.isAuthorized("essentials.speed.bypass");
+		boolean isBypass = Permissions.SPEED_BYPASS.isAuthorized(user);
 		if (args.length == 1)
 		{
 			//isFly = user.isFlying();
@@ -49,7 +51,7 @@ public class Commandspeed extends EssentialsCommand
 			//}
 			isFly = true;
 			speed = getMoveSpeed(args[0]);
-			if (user.isAuthorized("essentials.speed.others"))
+			if (Permissions.SPEED_OTHERS.isAuthorized(user))
 			{
 				speedOtherPlayers(server, user, isFly, isBypass, speed, args[1]);
 				return;
@@ -58,8 +60,8 @@ public class Commandspeed extends EssentialsCommand
 
 		//if (isFly)
 		//{
-			user.setFlySpeed(getRealMoveSpeed(speed, isFly, isBypass));
-			user.sendMessage(_("moveSpeed", _("flying"), speed, user.getDisplayName()));
+			user.getPlayer().setFlySpeed(getRealMoveSpeed(speed, isFly, isBypass));
+			user.sendMessage(_("moveSpeed", _("flying"), speed, user.getPlayer().getDisplayName()));
 		//}
 		//else
 		//{
@@ -77,11 +79,11 @@ public class Commandspeed extends EssentialsCommand
 				matchPlayer.setFlySpeed(getRealMoveSpeed(speed, isFly, isBypass));
 				sender.sendMessage(_("moveSpeed", _("flying"), speed, matchPlayer.getDisplayName()));
 			}
-			else
-			{
-				matchPlayer.setWalkSpeed(getRealMoveSpeed(speed, isFly, isBypass));
-				sender.sendMessage(_("moveSpeed", _("walking"), speed, matchPlayer.getDisplayName()));
-			}
+			//else
+		//	{
+		//		matchPlayer.setWalkSpeed(getRealMoveSpeed(speed, isFly, isBypass));
+		//		sender.sendMessage(_("moveSpeed", _("walking"), speed, matchPlayer.getDisplayName()));
+		//	}
 		}
 	}
 
@@ -132,7 +134,7 @@ public class Commandspeed extends EssentialsCommand
 		float maxSpeed = 1f;
 		if (!isBypass)
 		{
-			maxSpeed = (float)(isFly ? ess.getSettings().getMaxFlySpeed() : ess.getSettings().getMaxWalkSpeed());
+			maxSpeed = ess.getSettings().getData().getCommands().getSpeed().getMaxFlySpeed();// : ess.getSettings().ess.getSettings().getData().getCommands().getSpeed()getMaxWalkSpeed());
 		}
 
 		if (userSpeed < 1f)

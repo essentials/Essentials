@@ -25,6 +25,7 @@ public enum Permissions implements IPermission
 	CLEARINVENTORY_OTHERS,
 	DELHOME_OTHERS,
 	ECO_LOAN(PermissionDefault.FALSE),
+	ENDERCHEST_OTHERS,
 	EXP_GIVE,
 	EXP_GIVE_OTHERS,
 	EXP_SET,
@@ -72,6 +73,8 @@ public enum Permissions implements IPermission
 	SETHOME_OTHERS,
 	SLEEPINGIGNORED,
 	SPAWN_OTHERS,
+	SPEED_BYPASS,
+	SPEED_OTHERS,
 	SUDO_EXEMPT,
 	TELEPORT_COOLDOWN_BYPASS,
 	TELEPORT_HIDDEN,
@@ -101,7 +104,7 @@ public enum Permissions implements IPermission
 	}
 
 	private Permissions(final PermissionDefault defaultPerm)
-	{
+	{			
 		permission = base + toString().toLowerCase(Locale.ENGLISH).replace('_', '.');
 		this.defaultPerm = defaultPerm;
 	}

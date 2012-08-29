@@ -23,6 +23,7 @@ public class Commands implements StorageObject
 	private net.ess3.settings.commands.List list = new net.ess3.settings.commands.List();
 	private Spawnmob spawnmob = new Spawnmob();
 	private Tpa tpa = new Tpa();
+	private Speed speed = new Speed();
 	@ListType
 	@Comment(
 	{

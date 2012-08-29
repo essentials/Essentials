@@ -48,6 +48,9 @@ public class User extends UserBase implements IUser
 	@Getter
 	@Setter
 	private boolean invSee = false;
+	@Getter
+	@Setter
+	private boolean enderSee = false;
 	private transient Location afkPosition;
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
 	private WeakReference<Player> playerCache;
