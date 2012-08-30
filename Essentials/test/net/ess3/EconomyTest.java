@@ -13,7 +13,7 @@ public class EconomyTest extends EssentialsTest
 	public EconomyTest(final String testName)
 	{
 		super(testName);
-		server.addPlayer(PLAYERNAME);
+		addPlayer(PLAYERNAME);
 	}
 
 	// only one big test, since we use static instances

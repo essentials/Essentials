@@ -11,7 +11,7 @@ public class UserTest extends EssentialsTest
 	{
 		super(testName);
 		
-		server.addPlayer("testPlayer1");
+		addPlayer("testPlayer1");
 		base1 = ess.getUserMap().getUser("testPlayer1");
 	}
 
