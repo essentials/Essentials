@@ -51,6 +51,11 @@ public class Commandclearinventory extends EssentialsCommand
 				}
 			}
 		}
+		else if(commandLabel.equalsIgnoreCase("delhand") && user.isAuthorized("essentials.clearinventory.delhand"))
+		{
+			user.getItemInHand().setType(Material.AIR);
+			user.sendMessage(ChatColor.RED + "Hand Cleared.");
+		}
 		else
 		{
 			user.getInventory().clear();
