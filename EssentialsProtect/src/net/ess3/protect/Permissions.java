@@ -2,6 +2,7 @@ package net.ess3.protect;
 
 import java.util.Locale;
 import net.ess3.api.IPermission;
+import net.ess3.bukkit.PermissionFactory;
 import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
@@ -63,7 +64,7 @@ public enum Permissions implements IPermission
 		}
 		else
 		{
-			return Util.registerPermission(getPermissionName(), getPermissionDefault());
+			return PermissionFactory.registerPermission(getPermissionName(), getPermissionDefault());
 		}
 	}
 
