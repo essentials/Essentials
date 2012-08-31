@@ -368,6 +368,9 @@ starting-balance: 0
 
 # worth-# defines the value of an item when it is sold to the server via /sell.
 # These are now defined in worth.yml
+# Note, that for /repair, you can set the cost of repairing the items, as well as set the cost of the command itself.
+# "repair-item" will set the general cost to fix a tool
+# "repair-id" and "repair-item-name" are for setting the cost of invidual tools
 
 # Defines the cost to use the given commands PER USE
 command-costs:
