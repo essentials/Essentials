@@ -14,6 +14,7 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.GroupsPermissions;
 import net.ess3.storage.AsyncStorageObjectHolder;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 
 
@@ -155,7 +156,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	public MessageFormat getChatFormat(final IUser player)
 	{
 			String format = getRawChatFormat(player);
-			format = Util.replaceFormat(format);
+			format = FormatUtil.replaceFormat(format);
 			format = format.replace("{DISPLAYNAME}", "%1$s");
 			format = format.replace("{GROUP}", "{0}");
 			format = format.replace("{MESSAGE}", "%2$s");

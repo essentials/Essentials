@@ -4,6 +4,7 @@ import java.util.List;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 
@@ -43,7 +44,7 @@ public class Commandmail extends EssentialsCommand
 			}
 			if (!u.isIgnoringPlayer(user))
 			{
-				final String mail = Util.sanitizeString(Util.stripFormat(getFinalArg(args, 2)));
+				final String mail = Util.sanitizeString(FormatUtil.stripFormat(getFinalArg(args, 2)));
 				u.addMail(user.getName() + ": " + mail);
 			}
 			user.sendMessage(_("mailSent"));
@@ -55,7 +56,7 @@ public class Commandmail extends EssentialsCommand
 			{
 				throw new Exception(_("noPerm", "essentials.mail.sendall"));
 			}
-			ess.getPlugin().scheduleAsyncDelayedTask(new SendAll(user.getName() + ": " + Util.stripColor(getFinalArg(args, 1))));
+			ess.getPlugin().scheduleAsyncDelayedTask(new SendAll(user.getName() + ": " + FormatUtil.stripColor(getFinalArg(args, 1))));
 			user.sendMessage(_("mailSent"));
 			return;
 		}

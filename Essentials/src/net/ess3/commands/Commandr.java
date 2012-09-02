@@ -5,6 +5,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IReplyTo;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -29,18 +30,18 @@ public class Commandr extends EssentialsCommand
 			IUser user = ess.getUserMap().getUser((Player)sender);
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
-				message = Util.replaceFormat(message);
+				message = FormatUtil.replaceFormat(message);
 			}
 			else
 			{
-				message = Util.replaceFormat(message);
+				message = FormatUtil.replaceFormat(message);
 			}
 			replyTo = user;
 			senderName = user.getPlayer().getDisplayName();
 		}
 		else
 		{
-			message = Util.replaceFormat(message);
+			message = FormatUtil.replaceFormat(message);
 			replyTo = Console.getConsoleReplyTo();
 			senderName = Console.NAME;
 		}

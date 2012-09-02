@@ -9,6 +9,7 @@ import net.ess3.craftbukkit.SetExpFix;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData;
 import net.ess3.utils.DateUtil;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -40,7 +41,7 @@ public class Commandwhois extends EssentialsCommand
 		@Cleanup
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
-		final int prefixLength = Util.stripColor(settings.getData().getChat().getNicknamePrefix()).length();
+		final int prefixLength = FormatUtil.stripColor(settings.getData().getChat().getNicknamePrefix()).length();
 		boolean foundPlayer = false;
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
@@ -52,7 +53,7 @@ public class Commandwhois extends EssentialsCommand
 				continue;
 			}
 			user.acquireReadLock();
-			final String nickName = Util.stripFormat(user.getData().getNickname());
+			final String nickName = FormatUtil.stripFormat(user.getData().getNickname());
 			if (!whois.equalsIgnoreCase(nickName)
 				&& !whois.substring(prefixLength).equalsIgnoreCase(nickName)
 				&& !whois.equalsIgnoreCase(user.getName()))
@@ -66,7 +67,7 @@ public class Commandwhois extends EssentialsCommand
 			sender.sendMessage(_("whoisHealth", user.getPlayer().getHealth()));
 			sender.sendMessage(_("whoisExp", SetExpFix.getTotalExperience(user.getPlayer()), user.getPlayer().getLevel()));
 			sender.sendMessage(_("whoisLocation", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(), user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
-			sender.sendMessage(_("whoisMoney", Util.displayCurrency(user.getMoney(), ess)));
+			sender.sendMessage(_("whoisMoney", FormatUtil.displayCurrency(user.getMoney(), ess)));
 			sender.sendMessage(_("whoisIPAddress", user.getPlayer().getAddress().getAddress().toString()));
 			final String location = user.getData().getGeolocation();
 			if (location != null

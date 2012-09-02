@@ -1,5 +1,6 @@
 package net.ess3.api;
 
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 
 
@@ -169,7 +170,7 @@ public final class Economy
 		{
 			throw new RuntimeException(noCallBeforeLoad);
 		}
-		return Util.displayCurrency(amount, ess);
+		return FormatUtil.displayCurrency(amount, ess);
 	}
 
 	/**

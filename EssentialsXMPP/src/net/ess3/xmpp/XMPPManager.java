@@ -9,6 +9,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import net.ess3.utils.FormatUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jivesoftware.smack.*;
@@ -60,7 +61,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 						disconnect();
 						connect();
 					}
-					chat.sendMessage(Util.stripFormat(message));
+					chat.sendMessage(FormatUtil.stripFormat(message));
 					return true;
 				}
 			}

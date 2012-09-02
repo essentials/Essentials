@@ -10,6 +10,7 @@ import net.ess3.api.IUser;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import net.ess3.utils.FormatUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -268,7 +269,7 @@ public class EssentialsSign
 		final Double money = trade.getMoney();
 		if (money != null)
 		{
-			sign.setLine(index, Util.shortCurrency(money, ess));
+			sign.setLine(index, FormatUtil.shortCurrency(money, ess));
 		}
 	}
 	

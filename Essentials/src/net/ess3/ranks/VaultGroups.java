@@ -6,6 +6,7 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -71,7 +72,7 @@ public class VaultGroups implements IRanks
 	public MessageFormat getChatFormat(final IUser player)
 	{
 		String format = getRawChatFormat(player);
-		format = Util.replaceFormat(format);
+		format = FormatUtil.replaceFormat(format);
 		format = format.replace("{DISPLAYNAME}", "%1$s");
 		format = format.replace("{GROUP}", "{0}");
 		format = format.replace("{MESSAGE}", "%2$s");

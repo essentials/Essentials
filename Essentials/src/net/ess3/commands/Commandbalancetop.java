@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import net.ess3.utils.textreader.ArrayListInput;
 import net.ess3.utils.textreader.TextPager;
@@ -125,11 +126,11 @@ public class Commandbalancetop extends EssentialsCommand
 						}
 					});
 					
-					cache.getLines().add(_("serverTotal", Util.displayCurrency(totalMoney, ess)));
+					cache.getLines().add(_("serverTotal", FormatUtil.displayCurrency(totalMoney, ess)));
 					int pos = 1;
 					for (Map.Entry<String, Double> entry : sortedEntries)
 					{
-						cache.getLines().add(pos + ". " + entry.getKey() + ", " + Util.displayCurrency(entry.getValue(), ess));
+						cache.getLines().add(pos + ". " + entry.getKey() + ", " + FormatUtil.displayCurrency(entry.getValue(), ess));
 						pos++;
 					}
 					cacheage = System.currentTimeMillis();

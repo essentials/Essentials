@@ -7,6 +7,7 @@ import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.utils.Util;
 import java.util.*;
+import net.ess3.utils.FormatUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -147,7 +148,7 @@ public class SignProtection extends EssentialsSign
 		{
 			return SignProtectionState.OWNER;
 		}
-		if (Util.stripFormat(sign.getLine(3)).equalsIgnoreCase(username))
+		if (FormatUtil.stripFormat(sign.getLine(3)).equalsIgnoreCase(username))
 		{
 			return SignProtectionState.OWNER;
 		}

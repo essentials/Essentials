@@ -12,6 +12,7 @@ import net.ess3.utils.Util;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
+import net.ess3.utils.FormatUtil;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -80,7 +81,7 @@ public abstract class EssentialsChatPlayer implements Listener
 		final IUser user = chatStore.getUser();
 		if (Permissions.CHAT_COLOR.isAuthorized(user))
 		{
-			event.setMessage(Util.stripColor(event.getMessage()));
+			event.setMessage(FormatUtil.stripColor(event.getMessage()));
 		}
 		String group = ess.getRanks().getMainGroup(user);
 		String world = user.getPlayer().getWorld().getName();

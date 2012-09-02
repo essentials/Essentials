@@ -2,6 +2,7 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 
 
@@ -16,7 +17,7 @@ public class Commandping extends EssentialsCommand
 		}
 		else
 		{
-			user.sendMessage(Util.replaceFormat(getFinalArg(args, 0)));
+			user.sendMessage(FormatUtil.replaceFormat(getFinalArg(args, 0)));
 		}
 	}
 }

@@ -6,6 +6,7 @@ import net.ess3.economy.Trade;
 import net.ess3.utils.Util;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
+import net.ess3.utils.FormatUtil;
 import org.bukkit.inventory.ItemStack;
 
 //TODO: Sell Enchantment on Trade signs?
@@ -140,11 +141,11 @@ public class SignTrade extends EssentialsSign
 			final Double money = getMoney(split[0]);
 			if (money != null)
 			{
-				if (Util.shortCurrency(money, ess).length() * 2 > 15)
+				if (FormatUtil.shortCurrency(money, ess).length() * 2 > 15)
 				{
 					throw new SignException("Line can be too long!");
 				}
-				sign.setLine(index, Util.shortCurrency(money, ess) + ":0");
+				sign.setLine(index, FormatUtil.shortCurrency(money, ess) + ":0");
 				return;
 			}
 		}
@@ -160,7 +161,7 @@ public class SignTrade extends EssentialsSign
 				{
 					throw new SignException(_("moreThanZero"));
 				}
-				sign.setLine(index, Util.shortCurrency(money, ess) + ":" + Util.shortCurrency(amount, ess).substring(1));
+				sign.setLine(index, FormatUtil.shortCurrency(money, ess) + ":" + FormatUtil.shortCurrency(amount, ess).substring(1));
 				return;
 			}
 		}
@@ -318,7 +319,7 @@ public class SignTrade extends EssentialsSign
 			final Double amount = getDouble(split[1]);
 			if (money != null && amount != null)
 			{
-				final String newline = Util.shortCurrency(money, ess) + ":" + Util.shortCurrency(amount + value, ess).substring(1);
+				final String newline = FormatUtil.shortCurrency(money, ess) + ":" + FormatUtil.shortCurrency(amount + value, ess).substring(1);
 				if (newline.length() > 15)
 				{
 					throw new SignException("This sign is full: Line too long!");

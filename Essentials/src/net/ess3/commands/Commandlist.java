@@ -5,6 +5,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -75,7 +76,7 @@ public class Commandlist extends EssentialsCommand
 			for (String group : groups)
 			{
 				final StringBuilder groupString = new StringBuilder();
-				groupString.append(_("listGroupTag",Util.replaceFormat(group)));
+				groupString.append(_("listGroupTag",FormatUtil.replaceFormat(group)));
 				final List<IUser> users = sort.get(group);
 				Collections.sort(users);
 				boolean first = true;

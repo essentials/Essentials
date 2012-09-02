@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 import net.ess3.api.*;
 import net.ess3.permissions.Permissions;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 
 
@@ -123,7 +124,7 @@ public class Economy implements IEconomy
 	@Override
 	public String format(double amount)
 	{
-		return Util.displayCurrency(amount, ess);
+		return FormatUtil.displayCurrency(amount, ess);
 	}
 
 	@Override

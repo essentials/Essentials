@@ -10,6 +10,7 @@ import net.ess3.api.IUser;
 import net.ess3.api.IUserMap;
 import net.ess3.api.InvalidNameException;
 import net.ess3.storage.StorageObjectMap;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import org.bukkit.entity.Player;
 
@@ -121,11 +122,11 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	@Override
 	public Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline)
 	{
-		final String colorlessName = Util.stripColor(name);
+		final String colorlessName = FormatUtil.stripColor(name);
 		final String[] search = colorlessName.split(",");
 		final boolean multisearch = search.length > 1;
 		final Set<IUser> result = new LinkedHashSet<IUser>();
-		final String nicknamePrefix = Util.stripColor(getNickNamePrefix());
+		final String nicknamePrefix = FormatUtil.stripColor(getNickNamePrefix());
 		for (String searchString : search)
 		{
 			if (searchString.isEmpty())

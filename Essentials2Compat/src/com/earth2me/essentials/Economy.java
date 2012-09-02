@@ -3,6 +3,7 @@ package com.earth2me.essentials;
 import net.ess3.api.IEssentials;
 import net.ess3.api.NoLoanPermittedException;
 import net.ess3.api.UserDoesNotExistException;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 
 
@@ -179,7 +180,7 @@ public final class Economy
 		{
 			throw new RuntimeException(noCallBeforeLoad);
 		}
-		return Util.displayCurrency(amount, ess);
+		return FormatUtil.displayCurrency(amount, ess);
 	}
 
 	/**

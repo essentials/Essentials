@@ -6,6 +6,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -70,11 +71,11 @@ public class Commandnick extends EssentialsCommand
 	{
 		if (user == null || Permissions.NICK_COLOR.isAuthorized(user))
 		{
-			return Util.replaceFormat(nick);
+			return FormatUtil.replaceFormat(nick);
 		}
 		else
 		{
-			return Util.formatString(user, "essentials.nick", nick);
+			return FormatUtil.formatString(user, "essentials.nick", nick);
 		}
 	}
 

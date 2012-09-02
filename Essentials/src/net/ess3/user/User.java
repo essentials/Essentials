@@ -17,6 +17,7 @@ import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.economy.register.Method;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.DateUtil;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -154,10 +155,10 @@ public class User extends UserBase implements IUser
 		try
 		{
 			setMoney(getMoney() + value);
-			sendMessage(_("addedToAccount", Util.displayCurrency(value, ess)));
+			sendMessage(_("addedToAccount", FormatUtil.displayCurrency(value, ess)));
 			if (initiator != null)
 			{
-				initiator.sendMessage(_("addedToOthersAccount", Util.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
+				initiator.sendMessage(_("addedToOthersAccount", FormatUtil.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
 			}
 		}
 		finally
@@ -177,8 +178,8 @@ public class User extends UserBase implements IUser
 		{
 			setMoney(getMoney() - value);
 			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("moneySentTo", Util.displayCurrency(value, ess), reciever.getPlayer().getDisplayName()));
-			reciever.sendMessage(_("moneyRecievedFrom", Util.displayCurrency(value, ess), getPlayer().getDisplayName()));
+			sendMessage(_("moneySentTo", FormatUtil.displayCurrency(value, ess), reciever.getPlayer().getDisplayName()));
+			reciever.sendMessage(_("moneyRecievedFrom", FormatUtil.displayCurrency(value, ess), getPlayer().getDisplayName()));
 		}
 		else
 		{
@@ -200,10 +201,10 @@ public class User extends UserBase implements IUser
 			return;
 		}
 		setMoney(getMoney() - value);
-		sendMessage(_("takenFromAccount", Util.displayCurrency(value, ess)));
+		sendMessage(_("takenFromAccount", FormatUtil.displayCurrency(value, ess)));
 		if (initiator != null)
 		{
-			initiator.sendMessage(_("takenFromOthersAccount", Util.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
+			initiator.sendMessage(_("takenFromOthersAccount", FormatUtil.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
 		}
 	}
 
@@ -573,7 +574,7 @@ public class User extends UserBase implements IUser
 	@Override
 	public int compareTo(final IUser t)
 	{
-		return Util.stripColor(this.getPlayer().getDisplayName()).compareTo(Util.stripColor(t.getPlayer().getDisplayName()));
+		return FormatUtil.stripColor(this.getPlayer().getDisplayName()).compareTo(FormatUtil.stripColor(t.getPlayer().getDisplayName()));
 	}
 
 	@Override
