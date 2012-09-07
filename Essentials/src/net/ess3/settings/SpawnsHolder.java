@@ -180,7 +180,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		acquireReadLock();
 		try
 		{
-			return getData().getNewPlayerAnnouncement().replace('&', '§').replace("§§", "&").replace("{PLAYER}", user.getPlayer().getDisplayName()).replace("{DISPLAYNAME}", user.getPlayer().getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getPlayer().getAddress().toString());
+			return getData().getNewPlayerAnnouncement().replace('&', '\u00a7').replace("\u00a7\u00a7", "&").replace("{PLAYER}", user.getPlayer().getDisplayName()).replace("{DISPLAYNAME}", user.getPlayer().getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getPlayer().getAddress().toString());
 		}
 		finally
 		{
