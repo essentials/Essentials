@@ -155,7 +155,7 @@ commands:
     description: Request help from online operators.
     usage: /<command> <message>
     aliases: [ehelpop]
-  home:
+  h:
     description: Teleport to your home.
     usage: /<command> [player:][name]
     aliases: [ehome,homes,ehomes]
@@ -322,7 +322,7 @@ commands:
     description: Toggles if you can see msg/mail commands in chat.
     usage: /<command>
     aliases: [esocialspy]
-  spawn:
+  sp:
     description: Teleport to the spawnpoint.
     usage: /<command> [player]
     aliases: [espawn]
@@ -434,7 +434,7 @@ commands:
     description: Hide yourself from other players.
     usage: /<command> [on|off]
     aliases: [evanish]
-  warp:
+  w:
     description: List all warps or warp to the specified location.
     usage: /<command> <pagenumber|warp> [player]
     aliases: [ewarp,warps,ewarps]
