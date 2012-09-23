@@ -94,7 +94,7 @@ commands:
   essentials:
     description: Reloads essentials.
     usage: /<command>
-    aliases: [ess]
+    aliases: [ess,erel,ereload]
   exp:
     description: Give, set or look at a players exp.
     usage: /<command> [show|set|give] [playername [amount]]
