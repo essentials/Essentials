@@ -7,7 +7,6 @@ import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.plugin.Plugin;
@@ -134,7 +133,7 @@ public class GMGroups implements IRanks {
 	@Override
 	public boolean inGroup(IUser player, String groupname)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getName());
+		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getName());
 		if (handler == null)
 		{
 			return false;

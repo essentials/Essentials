@@ -57,7 +57,6 @@ public class Essentials implements IEssentials
 	private transient IRanks groups;
 	private transient SpawnsHolder spawns;
 	private transient final Methods paymentMethod = new Methods();
-	//private transient PermissionsHandler permissionsHandler;
 	private transient IUserMap userMap;
 	private transient ExecuteTimer execTimer;
 	@Getter

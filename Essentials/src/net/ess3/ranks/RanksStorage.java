@@ -15,7 +15,6 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.GroupsPermissions;
 import net.ess3.storage.AsyncStorageObjectHolder;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 
 
 public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRanks
