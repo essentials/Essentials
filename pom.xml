@@ -21,6 +21,7 @@
     <module>EssentialsSigns</module>
     <module>EssentialsUpdate</module>
     <module>EssentialsXMPP</module>
+    <module>EssentialsAntiBuild</module>
   </modules>
 
   <repositories>

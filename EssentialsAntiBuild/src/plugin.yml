@@ -1,0 +1,9 @@
+# This determines the command prefix when there are conflicts (/name:home, /name:help, etc.)
+name: EssentialsAntiBuild
+main: net.ess3.antibuild.EssentialsAnitBuild
+# Note to developers: This next line cannot change, or the automatic versioning system will break.
+version: ${build.number}
+website: http://tiny.cc/EssentialsWiki
+description: Provides build protection.
+authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits, Iaccidentally]
+softdepend: [Essentials]
