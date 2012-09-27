@@ -12,9 +12,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class EssentialsAntiBuild extends JavaPlugin implements IAntiBuild
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private final transient Map<AntiBuildConfig, Boolean> settingsBoolean = new EnumMap<AntiBuildConfig, Boolean>(AntiBuildConfig.class);
-	private final transient Map<AntiBuildConfig, List<Integer>> settingsList = new EnumMap<AntiBuildConfig, List<Integer>>(AntiBuildConfig.class);
 	private transient EssentialsConnect ess = null;
+	private transient AntiBuildHolder settings = null;
 
 	@Override
 	public void onEnable()
@@ -32,7 +31,7 @@ public class EssentialsAntiBuild extends JavaPlugin implements IAntiBuild
 	}
 
 	@Override
-	public boolean checkProtectionItems(final AntiBuildConfig list, final int id)
+	public boolean checkProtectionItems(final int id)
 	{
 		final List<Integer> itemList = settingsList.get(list);
 		return itemList != null && !itemList.isEmpty() && itemList.contains(id);
@@ -42,24 +41,17 @@ public class EssentialsAntiBuild extends JavaPlugin implements IAntiBuild
 	public EssentialsConnect getEssentialsConnect()
 	{
 		return ess;
+	}	
+	
+	@Override
+	public AntiBuildHolder getSettings()
+	{
+		return settings;
 	}
 
 	@Override
-	public Map<AntiBuildConfig, Boolean> getSettingsBoolean()
+	public void setSettings(final AntiBuildHolder settings)
 	{
-		return settingsBoolean;
-	}
-
-	@Override
-	public Map<AntiBuildConfig, List<Integer>> getSettingsList()
-	{
-		return settingsList;
-	}
-
-	@Override
-	public boolean getSettingBool(final AntiBuildConfig protectConfig)
-	{
-		final Boolean bool = settingsBoolean.get(protectConfig);
-		return bool == null ? protectConfig.getDefaultValueBoolean() : bool;
+		this.settings = settings;
 	}
 }

@@ -1,19 +1,15 @@
 package net.ess3.antibuild;
 
-import java.util.List;
-import java.util.Map;
-import org.bukkit.plugin.Plugin;
 
+import org.bukkit.plugin.Plugin;
 
 public interface IAntiBuild extends Plugin
 {
-	boolean checkProtectionItems(final AntiBuildConfig list, final int id);
-
-	boolean getSettingBool(final AntiBuildConfig protectConfig);
+	boolean checkProtectionItems(final int id);	
 
 	EssentialsConnect getEssentialsConnect();
+	
+	AntiBuildHolder getSettings();
 
-	Map<AntiBuildConfig, Boolean> getSettingsBoolean();
-
-	Map<AntiBuildConfig, List<Integer>> getSettingsList();
+	void setSettings(AntiBuildHolder settings);
 }

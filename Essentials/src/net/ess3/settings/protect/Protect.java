@@ -18,8 +18,7 @@ public class Protect implements StorageObject
 		"Set prevent.creeper-explosion to true, if you want to disable creeper explosions."
 	})
 	private int creeperMaxHeight = -1;
-	@Comment("Should we tell people they are not allowed to build")
-	private boolean warnOnBuildDisallow = true;
+
 	@Comment("Disable weather options")
 	private boolean disableStorm = false;
 	private boolean disableThunder = false;

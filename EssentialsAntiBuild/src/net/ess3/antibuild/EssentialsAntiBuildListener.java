@@ -3,6 +3,7 @@ package net.ess3.antibuild;
 import java.util.logging.Level;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
 import net.ess3.user.User;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -23,13 +24,13 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsAntiBuildListener implements Listener
 {
-	final private transient IAntiBuild prot;
+	final private transient IAntiBuild antib;
 	final private transient IEssentials ess;
 
 	public EssentialsAntiBuildListener(final IAntiBuild parent)
 	{
-		this.prot = parent;
-		this.ess = prot.getEssentialsConnect().getEssentials();
+		this.antib = parent;
+		this.ess = antib.getEssentialsConnect().getEssentials();
 	}
 
 	private boolean metaPermCheck(final User user, final String action, final Block block)
@@ -70,73 +71,95 @@ public class EssentialsAntiBuildListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{
-		final User user = ess.getUser(event.getPlayer());
+		final AntiBuildHolder ab = antib.getSettings();
+		ab.acquireReadLock();
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		final Block block = event.getBlockPlaced();
 		final int typeId = block.getTypeId();
 		final Material type = block.getType();
 
-		if (prot.getSettingBool(AntiBuildConfig.disable_build) && !user.canBuild() && !user.isAuthorized("essentials.build")
-			&& !metaPermCheck(user, "place", block))
+		try
 		{
-			if (ess.getSettings().warnOnBuildDisallow())
-			{
-				user.sendMessage(_("antiBuildPlace", type.toString()));
-			}
-			event.setCancelled(true);
-			return;
-		}
 
-		if (prot.checkProtectionItems(AntiBuildConfig.blacklist_placement, typeId) && !user.isAuthorized("essentials.protect.exemptplacement"))
-		{
-			if (ess.getSettings().warnOnBuildDisallow())
+			if (ab.getData().isBuild()
+				&& !user.canBuild() && !user.hasPermission("essentials.build")
+				&& !Permissions.getPlacePermission(type).isAuthorized(user))
+			//metaPermCheck(user, "place", block)) todo - double check metadata
 			{
-				user.sendMessage(_("antiBuildPlace", type.toString()));
+				if (ab.getData().isWarnOnBuildDisallow())
+				{
+					user.sendMessage(_("antiBuildPlace", type.toString()));
+				}
+				event.setCancelled(true);
+				return;
 			}
-			event.setCancelled(true);
-			return;
-		}
 
-		if (prot.checkProtectionItems(AntiBuildConfig.alert_on_placement, typeId)
-			&& !user.isAuthorized("essentials.protect.alerts.notrigger"))
+			if (ab.getData().getBlacklist().getPlacement().contains(type) && !Permissions.BLACKLIST_ALLOWPLACEMENT.isAuthorized(user))
+			//antib.checkProtectionItems(AntiBuildConfig.blacklist_placement, typeId) && !user.isAuthorized("essentials.protect.exemptplacement"))
+			{
+				if (ab.getData().isWarnOnBuildDisallow())
+				{
+					user.sendMessage(_("antiBuildPlace", type.toString()));
+				}
+				event.setCancelled(true);
+				return;
+			}
+
+			if (ab.getData().getAlert().getAlertOnPlacement().contains(type)
+				&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user))
+			{
+				antib.getEssentialsConnect().alert(user, type.toString(), _("alertPlaced"));
+			}
+		}
+		finally
 		{
-			prot.getEssentialsConnect().alert(user, type.toString(), _("alertPlaced"));
+			ab.unlock();
 		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockBreak(final BlockBreakEvent event)
 	{
-		final User user = ess.getUser(event.getPlayer());
+		final AntiBuildHolder ab = antib.getSettings();
+		ab.acquireReadLock();
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		final Block block = event.getBlock();
 		final int typeId = block.getTypeId();
 		final Material type = block.getType();
 
-		if (prot.getSettingBool(AntiBuildConfig.disable_build) && !user.canBuild() && !user.isAuthorized("essentials.build")
-			&& !metaPermCheck(user, "break", block))
+		try
 		{
-			if (ess.getSettings().warnOnBuildDisallow())
+			if (ab.getData().isBuild() && !user.canBuild() && !user.isAuthorized("essentials.build")
+				&& !Permissions.getBreakPermission(type).isAuthorized(user))
+				//!metaPermCheck(user, "break", block))
 			{
-				user.sendMessage(_("antiBuildBreak", type.toString()));
+				if (ab.getData().isWarnOnBuildDisallow())
+				{
+					user.sendMessage(_("antiBuildBreak", type.toString()));
+				}
+				event.setCancelled(true);
+				return;
 			}
-			event.setCancelled(true);
-			return;
-		}
 
-		if (prot.checkProtectionItems(AntiBuildConfig.blacklist_break, typeId)
-			&& !user.isAuthorized("essentials.protect.exemptbreak"))
-		{
-			if (ess.getSettings().warnOnBuildDisallow())
+			if (ab.getData().getBlacklist().getBreaking().contains(type) && !Permissions.BLACKLIST_ALLOWBREAK.isAuthorized(user))	
 			{
-				user.sendMessage(_("antiBuildBreak", type.toString()));
+				if (ab.getData().isWarnOnBuildDisallow())
+				{
+					user.sendMessage(_("antiBuildBreak", type.toString()));
+				}
+				event.setCancelled(true);
+				return;
 			}
-			event.setCancelled(true);
-			return;
-		}
 
-		if (prot.checkProtectionItems(AntiBuildConfig.alert_on_break, typeId)
-			&& !user.isAuthorized("essentials.protect.alerts.notrigger"))
+			if (antib.checkProtectionItems(AntiBuildConfig.alert_on_break, typeId)
+				&& !user.isAuthorized("essentials.protect.alerts.notrigger"))
+			{
+				antib.getEssentialsConnect().alert(user, type.toString(), _("alertBroke"));
+			}
+		}
+		finally
 		{
-			prot.getEssentialsConnect().alert(user, type.toString(), _("alertBroke"));
+			ab.unlock();
 		}
 	}
 
@@ -147,7 +170,7 @@ public class EssentialsAntiBuildListener implements Listener
 		if (entity instanceof Player)
 		{
 			final User user = ess.getUser(entity);
-			if (prot.getSettingBool(AntiBuildConfig.disable_build) && !user.canBuild() && !user.isAuthorized("essentials.build")
+			if (antib.getSettingBool(AntiBuildConfig.disable_build) && !user.canBuild() && !user.isAuthorized("essentials.build")
 				&& !metaPermCheck(user, "break", Material.PAINTING.getId()))
 			{
 				if (ess.getSettings().warnOnBuildDisallow())
@@ -164,7 +187,7 @@ public class EssentialsAntiBuildListener implements Listener
 	{
 		for (Block block : event.getBlocks())
 		{
-			if (prot.checkProtectionItems(AntiBuildConfig.blacklist_piston, block.getTypeId()))
+			if (antib.checkProtectionItems(AntiBuildConfig.blacklist_piston, block.getTypeId()))
 			{
 				event.setCancelled(true);
 				return;
@@ -180,7 +203,7 @@ public class EssentialsAntiBuildListener implements Listener
 			return;
 		}
 		final Block block = event.getRetractLocation().getBlock();
-		if (prot.checkProtectionItems(AntiBuildConfig.blacklist_piston, block.getTypeId()))
+		if (antib.checkProtectionItems(AntiBuildConfig.blacklist_piston, block.getTypeId()))
 		{
 			event.setCancelled(true);
 			return;
@@ -195,7 +218,7 @@ public class EssentialsAntiBuildListener implements Listener
 		final ItemStack item = event.getItem();
 
 		if (item != null
-			&& prot.checkProtectionItems(AntiBuildConfig.blacklist_usage, item.getTypeId())
+			&& antib.checkProtectionItems(AntiBuildConfig.blacklist_usage, item.getTypeId())
 			&& !user.isAuthorized("essentials.protect.exemptusage"))
 		{
 			if (ess.getSettings().warnOnBuildDisallow())
@@ -207,13 +230,13 @@ public class EssentialsAntiBuildListener implements Listener
 		}
 
 		if (item != null
-			&& prot.checkProtectionItems(AntiBuildConfig.alert_on_use, item.getTypeId())
+			&& antib.checkProtectionItems(AntiBuildConfig.alert_on_use, item.getTypeId())
 			&& !user.isAuthorized("essentials.protect.alerts.notrigger"))
 		{
-			prot.getEssentialsConnect().alert(user, item.getType().toString(), _("alertUsed"));
+			antib.getEssentialsConnect().alert(user, item.getType().toString(), _("alertUsed"));
 		}
 
-		if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+		if (antib.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
 		{
 			if (event.hasItem() && !metaPermCheck(user, "interact", item.getTypeId(), item.getData().getData()))
 			{
@@ -245,7 +268,7 @@ public class EssentialsAntiBuildListener implements Listener
 			final User user = ess.getUser(entity);
 			final ItemStack item = event.getRecipe().getResult();
 
-			if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+			if (antib.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
 			{
 				if (!metaPermCheck(user, "craft", item.getTypeId(), item.getData().getData()))
 				{
@@ -266,7 +289,7 @@ public class EssentialsAntiBuildListener implements Listener
 		final User user = ess.getUser(event.getPlayer());
 		final ItemStack item = event.getItem().getItemStack();
 
-		if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+		if (antib.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
 		{
 			if (!metaPermCheck(user, "pickup", item.getTypeId(), item.getData().getData()))
 			{
@@ -280,15 +303,15 @@ public class EssentialsAntiBuildListener implements Listener
 	public void onPlayerDropItem(final PlayerDropItemEvent event)
 	{
 
-		final User user = ess.getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		final ItemStack item = event.getItemDrop().getItemStack();
 
-		if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+		if (antib.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
 		{
 			if (!metaPermCheck(user, "drop", item.getTypeId(), item.getData().getData()))
 			{
 				event.setCancelled(true);
-				user.updateInventory();
+				user.getPlayer().updateInventory();
 				if (ess.getSettings().warnOnBuildDisallow())
 				{
 					user.sendMessage(_("antiBuildDrop", item.getType().toString()));
