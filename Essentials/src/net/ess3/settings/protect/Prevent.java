@@ -12,9 +12,7 @@ import org.bukkit.Material;
 @EqualsAndHashCode(callSuper = false)
 public class Prevent implements StorageObject
 {
-	@Comment("Which blocks should a piston not be able to push?")
-	@ListType(Material.class)
-	private Set<Material> pistonPush = new HashSet<Material>();
+	
 	private boolean lavaFlow = false;
 	private boolean waterFlow = false;
 	// private boolean waterbucketFlow = false; TODO: Test if this still works
@@ -36,9 +34,4 @@ public class Prevent implements StorageObject
 		"permission essentials.protect.entitytarget.bypass disables this"
 	})
 	private boolean entitytarget = false;
-
-	public Prevent()
-	{
-		pistonPush.add(Material.GLASS);
-	}
 }

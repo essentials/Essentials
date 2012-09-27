@@ -1,10 +1,10 @@
 package net.ess3.protect;
 
+import java.io.File;
+import java.io.IOException;
 import net.ess3.api.IEssentials;
 import net.ess3.settings.protect.Protect;
 import net.ess3.storage.AsyncStorageObjectHolder;
-import java.io.File;
-import java.io.IOException;
 
 
 public class ProtectHolder extends AsyncStorageObjectHolder<Protect>

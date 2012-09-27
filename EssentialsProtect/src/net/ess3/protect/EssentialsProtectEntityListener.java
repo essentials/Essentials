@@ -1,9 +1,5 @@
 package net.ess3.protect;
 
-import net.ess3.api.IEssentials;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -154,8 +150,7 @@ public class EssentialsProtectEntityListener implements Listener
 					&& (Permissions.PREVENTDAMAGE_LIGHTNING.isAuthorized(user)
 						&& !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
 				{
-					event.setCancelled(true);
-					return;
+					event.setCancelled(true);					
 				}
 			}
 		}
@@ -200,36 +195,7 @@ public class EssentialsProtectEntityListener implements Listener
 			{
 				event.setCancelled(true);
 				return;
-			}
-			// This code will prevent explosions near protected rails, signs or protected chests
-			// TODO: Use protect db instead of this code
-
-			for (Block block : event.blockList())
-			{
-				if ((block.getRelative(BlockFace.UP).getType() == Material.RAILS
-					 || block.getType() == Material.RAILS
-					 || block.getRelative(BlockFace.UP).getType() == Material.POWERED_RAIL
-					 || block.getType() == Material.POWERED_RAIL
-					 || block.getRelative(BlockFace.UP).getType() == Material.DETECTOR_RAIL
-					 || block.getType() == Material.DETECTOR_RAIL)
-					&& settings.getData().getSignsAndRails().isProtectRails())
-				{
-					event.setCancelled(true);
-					return;
-				}
-				if ((block.getType() == Material.WALL_SIGN
-					 || block.getRelative(BlockFace.NORTH).getType() == Material.WALL_SIGN
-					 || block.getRelative(BlockFace.EAST).getType() == Material.WALL_SIGN
-					 || block.getRelative(BlockFace.SOUTH).getType() == Material.WALL_SIGN
-					 || block.getRelative(BlockFace.WEST).getType() == Material.WALL_SIGN
-					 || block.getType() == Material.SIGN_POST
-					 || block.getRelative(BlockFace.UP).getType() == Material.SIGN_POST)
-					&& settings.getData().getSignsAndRails().isProtectSigns())
-				{
-					event.setCancelled(true);
-					return;
-				}
-			}
+			}	
 		}
 		finally
 		{
