@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.ess3.antibuild;
 
 import java.io.File;
@@ -10,11 +6,6 @@ import net.ess3.api.IEssentials;
 import net.ess3.settings.antibuild.AntiBuild;
 import net.ess3.storage.AsyncStorageObjectHolder;
 
-
-/**
- *
- * @author devhome
- */
 public class AntiBuildHolder extends AsyncStorageObjectHolder<AntiBuild>
 {
 	public AntiBuildHolder(final IEssentials ess)
