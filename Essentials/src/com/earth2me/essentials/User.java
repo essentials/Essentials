@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.potion.PotionEffectType;
 
 
 public class User extends UserData implements Comparable<User>, IReplyTo, IUser
@@ -590,6 +591,17 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	public boolean isGodModeEnabledRaw()
 	{
 		return super.isGodModeEnabled();
+	}
+	
+	@Override
+	public void setGodModeEnabled(boolean set)
+	{
+		if(set)
+		{
+			for(PotionEffectType effect : PotionEffectType.values())
+				this.removePotionEffect(effect);
+		}
+		super.setGodModeEnabled(set);
 	}
 
 	@Override
