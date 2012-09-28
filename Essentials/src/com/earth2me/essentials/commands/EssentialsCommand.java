@@ -94,7 +94,8 @@ public abstract class EssentialsCommand implements IEssentialsCommand
 		final Trade charge = new Trade(this.getName(), ess);
 		charge.isAffordableFor(user);
 		run(server, user, commandLabel, args);
-		charge.charge(user);
+		if(!cmd.getName().equalsIgnoreCase("tpaccept"))
+			charge.charge(user);
 	}
 
 	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
