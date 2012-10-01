@@ -378,6 +378,9 @@ min-money: -10000
 # Enable this to log all interactions with trade/buy/sell signs and sell command
 economy-log-enabled: false
 
+# Enable this to show the balance of a user after the amount of money in their account has changed
+display-balance-after-transaction: false
+
 ############################################################
 # +------------------------------------------------------+ #
 # |                   EssentialsHelp                     | #
