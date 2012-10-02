@@ -4,6 +4,7 @@ import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.Util;
+import java.util.GregorianCalendar;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,14 +36,22 @@ public class Commandtempban extends EssentialsCommand
 		}
 		else
 		{
-			if (user.isAuthorized("essentials.tempban.exempt"))
+			if (user.isAuthorized("essentials.tempban.exempt") && sender instanceof Player)
 			{
 				sender.sendMessage(_("tempbanExempt"));
 				return;
 			}
 		}
+		
 		final String time = getFinalArg(args, 1);
 		final long banTimestamp = Util.parseDateDiff(time, true);
+		
+		final float max = ess.getSettings().getMaxTempBan();
+		if(max != -1 && banTimestamp - (new GregorianCalendar()).getTimeInMillis() > max * 1000 && !ess.getUser(sender).isAuthorized("essentials.tempban.unlimited"))
+		{
+			sender.sendMessage(_("oversizedTempBan"));
+			throw new NoChargeException();
+		}
 
 		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
 		final String banReason = _("tempBanned", Util.formatDateDiff(banTimestamp), senderName);
