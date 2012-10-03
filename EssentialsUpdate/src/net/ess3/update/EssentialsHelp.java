@@ -63,7 +63,7 @@ public class EssentialsHelp implements Listener
 		}
 		else
 		{
-			sender.sendMessage("Please run the command as op from in game.");
+			sender.sendMessage("Please run the command as op from in game. If you are not able to run your server, visit the website http://help.ess3.net");
 		}
 	}
 
