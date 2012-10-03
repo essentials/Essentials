@@ -4,7 +4,6 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
-import net.ess3.settings.SpawnsHolder;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -48,8 +47,7 @@ public class Commandspawn extends EssentialsCommand
 
 	private void respawn(final IUser user, final Trade charge) throws Exception
 	{
-		final SpawnsHolder spawns = (SpawnsHolder)this.module;
-		final Location spawn = spawns.getSpawn(ess.getRanks().getMainGroup(user));
+		final Location spawn = ess.getSpawns().getSpawn(ess.getRanks().getMainGroup(user));
 		user.getTeleport().teleport(spawn, charge, TeleportCause.COMMAND);
 	}
 }

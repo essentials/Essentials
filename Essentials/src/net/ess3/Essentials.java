@@ -296,9 +296,6 @@ public class Essentials implements IEssentials
 		return getServer().getOnlinePlayers().length;
 	}
 
-	/*
-	 * @Override public PermissionsHandler getPermissionsHandler() { return permissionsHandler; }
-	 */
 	@Override
 	public IItemDb getItemDb()
 	{
@@ -339,6 +336,11 @@ public class Essentials implements IEssentials
 	public IEconomy getEconomy()
 	{
 		return economy;
+	}
+
+	public SpawnsHolder getSpawns()
+	{
+		return spawns;
 	}
 	
 	@Override
