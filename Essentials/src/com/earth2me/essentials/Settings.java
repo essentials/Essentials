@@ -934,4 +934,10 @@ public class Settings implements ISettings
 		double maxSpeed = config.getDouble("max-walk-speed", 0.8);
 		return maxSpeed > 1.0 ? 1.0 : Math.abs(maxSpeed);
 	}
+	
+	@Override
+	public long getMaxTempBan()
+	{
+		return config.getLong("max-tempban-time", -1);
+	}
 }
