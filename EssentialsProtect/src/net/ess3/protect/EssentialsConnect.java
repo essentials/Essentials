@@ -1,9 +1,9 @@
 package net.ess3.protect;
 
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
 import org.bukkit.plugin.Plugin;
 
 

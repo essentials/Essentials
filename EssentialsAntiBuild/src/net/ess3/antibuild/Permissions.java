@@ -12,12 +12,13 @@ import org.bukkit.permissions.PermissionDefault;
 
 public enum Permissions implements IPermission
 {
+	BUILD("essentials.", PermissionDefault.TRUE),
 	BLACKLIST_ALLOWPLACEMENT,
 	BLACKLIST_ALLOWUSAGE,
 	BLACKLIST_ALLOWBREAK,
 	ALERTS,
 	ALERTS_NOTRIGGER;
-	private static final String base = "essentials.build.";
+	private static final String defaultBase = "essentials.build.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;
 	private transient String parent = null;
@@ -28,6 +29,11 @@ public enum Permissions implements IPermission
 	}
 
 	private Permissions(final PermissionDefault defaultPerm)
+	{
+		this(defaultBase, defaultPerm);
+	}
+	
+	private Permissions(final String base, final PermissionDefault defaultPerm)
 	{
 		permission = base + toString().toLowerCase(Locale.ENGLISH).replace('_', '.');
 		this.defaultPerm = defaultPerm;
