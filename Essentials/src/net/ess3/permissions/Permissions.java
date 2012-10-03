@@ -4,7 +4,6 @@ import java.util.Locale;
 import net.ess3.api.IPermission;
 import net.ess3.bukkit.PermissionFactory;
 import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
 
@@ -96,7 +95,7 @@ public enum Permissions implements IPermission
 	private static final String base = "essentials.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;
-	private transient Permission bukkitPerm = null;
+	private transient String parent = null;
 
 	private Permissions()
 	{
@@ -104,7 +103,7 @@ public enum Permissions implements IPermission
 	}
 
 	private Permissions(final PermissionDefault defaultPerm)
-	{			
+	{
 		permission = base + toString().toLowerCase(Locale.ENGLISH).replace('_', '.');
 		this.defaultPerm = defaultPerm;
 	}
@@ -115,21 +114,18 @@ public enum Permissions implements IPermission
 		return permission;
 	}
 
-	
-	
 	@Override
-	public Permission getPermission()
+	public String getParentPermission()
 	{
-		if (bukkitPerm != null)
+		if (parent != null)
 		{
-			return bukkitPerm;
+			return parent;
 		}
 		else
 		{
-			return PermissionFactory.registerPermission(getPermissionName(), getPermissionDefault());
+			return PermissionFactory.registerParentPermission(getPermissionName());
 		}
 	}
-
 
 	@Override
 	public PermissionDefault getPermissionDefault()
@@ -137,11 +133,9 @@ public enum Permissions implements IPermission
 		return this.defaultPerm;
 	}
 
-
 	@Override
 	public boolean isAuthorized(CommandSender sender)
 	{
-		return sender.hasPermission(getPermission());
+		return PermissionFactory.checkPermission(sender, this);
 	}
 }
-

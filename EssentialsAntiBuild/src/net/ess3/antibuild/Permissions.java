@@ -7,13 +7,11 @@ import net.ess3.bukkit.PermissionFactory;
 import net.ess3.permissions.BasePermission;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
 
 public enum Permissions implements IPermission
 {
-	
 	BLACKLIST_ALLOWPLACEMENT,
 	BLACKLIST_ALLOWUSAGE,
 	BLACKLIST_ALLOWBREAK,
@@ -22,7 +20,7 @@ public enum Permissions implements IPermission
 	private static final String base = "essentials.build.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;
-	private transient Permission bukkitPerm = null;
+	private transient String parent = null;
 
 	private Permissions()
 	{
@@ -42,15 +40,15 @@ public enum Permissions implements IPermission
 	}
 
 	@Override
-	public Permission getPermission()
+	public String getParentPermission()
 	{
-		if (bukkitPerm != null)
+		if (parent != null)
 		{
-			return bukkitPerm;
+			return parent;
 		}
 		else
 		{
-			return PermissionFactory.registerPermission(getPermissionName(), getPermissionDefault());
+			return PermissionFactory.registerParentPermission(getPermissionName());
 		}
 	}
 
@@ -63,9 +61,8 @@ public enum Permissions implements IPermission
 	@Override
 	public boolean isAuthorized(final CommandSender sender)
 	{
-		return sender.hasPermission(getPermission());
+		return PermissionFactory.checkPermission(sender, this);
 	}
-	
 	private static EnumMap<Material, IPermission> permissions = new EnumMap<Material, IPermission>(Material.class);
 
 	public static IPermission getPlacePermission(final Material mat)
@@ -85,7 +82,7 @@ public enum Permissions implements IPermission
 		}
 		return perm;
 	}
-	
+
 	public static IPermission getBreakPermission(final Material mat)
 	{
 		IPermission perm = permissions.get(mat);
@@ -103,7 +100,7 @@ public enum Permissions implements IPermission
 		}
 		return perm;
 	}
-	
+
 	public static IPermission getInteractPermission(final Material mat)
 	{
 		IPermission perm = permissions.get(mat);
@@ -121,6 +118,7 @@ public enum Permissions implements IPermission
 		}
 		return perm;
 	}
+
 	public static IPermission getCraftPermission(final Material mat)
 	{
 		IPermission perm = permissions.get(mat);
@@ -138,7 +136,7 @@ public enum Permissions implements IPermission
 		}
 		return perm;
 	}
-	
+
 	public static IPermission getPickupPermission(final Material mat)
 	{
 		IPermission perm = permissions.get(mat);
@@ -156,7 +154,7 @@ public enum Permissions implements IPermission
 		}
 		return perm;
 	}
-	
+
 	public static IPermission getDropPermission(final Material mat)
 	{
 		IPermission perm = permissions.get(mat);

@@ -106,11 +106,9 @@ public class Essentials implements IEssentials
 
 		logger.log(Level.INFO, I18n._("usingTempFolderForTesting"));
 		logger.log(Level.INFO, dataFolder.toString());
-		//this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 		settings = new SettingsHolder(this);
 		i18n.updateLocale("en");
 		userMap = new UserMap(this);
-		//permissionsHandler = new PermissionsHandler(this);
 		economy = new Economy(this);
 	}
 
@@ -124,15 +122,10 @@ public class Essentials implements IEssentials
 
 		execTimer.mark("BukkitCheck");
 
-		//final EssentialsUpgrade upgrade = new EssentialsUpgrade(this);
-		//upgrade.beforeSettings();
-		//execTimer.mark("Upgrade");
 		reloadList = new ArrayList<IReload>();
 		settings = new SettingsHolder(this);
 		reloadList.add(settings);
 		execTimer.mark("Settings");
-		//upgrade.afterSettings();
-		//execTimer.mark("Upgrade2");
 		i18n.updateLocale(settings.getLocale());
 		userMap = new UserMap(this);
 		reloadList.add(userMap);
@@ -158,7 +151,6 @@ public class Essentials implements IEssentials
 		onReload();
 
 		backup = new Backup(this);
-		//permissionsHandler = new PermissionsHandler(this);
 
 		jails = new Jails(this);
 		reloadList.add(jails);
@@ -338,6 +330,7 @@ public class Essentials implements IEssentials
 		return economy;
 	}
 
+	@Override
 	public SpawnsHolder getSpawns()
 	{
 		return spawns;

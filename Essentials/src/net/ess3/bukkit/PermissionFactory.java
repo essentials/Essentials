@@ -1,7 +1,9 @@
 package net.ess3.bukkit;
 
-import java.util.regex.Pattern;
+import java.util.StringTokenizer;
+import net.ess3.api.IPermission;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
@@ -9,17 +11,20 @@ import org.bukkit.plugin.PluginManager;
 
 public class PermissionFactory
 {
-	private static transient final Pattern DOT_PATTERN = Pattern.compile("\\.");
-
-	public static Permission registerPermission(String permission, PermissionDefault defaultPerm)
+	public static String registerParentPermission(String permission)
 	{
 		final PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-		final String[] parts = DOT_PATTERN.split(permission);
+		final StringTokenizer tokenizer = new StringTokenizer(permission, ".");
 		final StringBuilder builder = new StringBuilder(permission.length());
 		Permission parent = null;
-		for (int i = 0; i < parts.length - 1; i++)
+		while (tokenizer.hasMoreTokens())
 		{
-			builder.append(parts[i]).append(".*");
+			String part = tokenizer.nextToken();
+			if (!tokenizer.hasMoreTokens())
+			{
+				break;
+			}
+			builder.append(part).append(".*");
 			String permString = builder.toString();
 			Permission perm = pluginManager.getPermission(permString);
 			if (perm == null)
@@ -31,21 +36,31 @@ public class PermissionFactory
 					parent.getChildren().put(perm.getName(), Boolean.TRUE);
 				}
 				parent = perm;
+				perm.recalculatePermissibles();
 			}
 			builder.deleteCharAt(builder.length() - 1);
 		}
-		Permission perm = pluginManager.getPermission(permission);
-		if (perm == null)
+		return parent == null ? null : parent.getName();
+	}
+
+	public static boolean checkPermission(CommandSender sender, IPermission perm)
+	{
+		final String permission = perm.getPermissionName();
+		if (sender.isPermissionSet(permission))
 		{
-			perm = new Permission(permission, defaultPerm);
-			pluginManager.addPermission(perm);
-			if (parent != null)
-			{
-				parent.getChildren().put(perm.getName(), Boolean.TRUE);
-			}
-			parent = perm;
+			return sender.hasPermission(permission);
 		}
-		perm.recalculatePermissibles();
-		return perm;
+		else
+		{
+			final String parentPermission = perm.getParentPermission();
+			if (parentPermission != null && sender.isPermissionSet(parentPermission))
+			{
+				return sender.hasPermission(parentPermission);
+			}
+			else
+			{
+				return perm.getPermissionDefault().getValue(sender.isOp());
+			}
+		}
 	}
 }

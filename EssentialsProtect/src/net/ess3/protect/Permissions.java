@@ -30,7 +30,7 @@ public enum Permissions implements IPermission
 	private static final String base = "essentials.protect.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;
-	private transient Permission bukkitPerm = null;
+	private transient String parent = null;
 
 	private Permissions()
 	{
@@ -50,15 +50,15 @@ public enum Permissions implements IPermission
 	}
 
 	@Override
-	public Permission getPermission()
+	public String getParentPermission()
 	{
-		if (bukkitPerm != null)
+		if (parent != null)
 		{
-			return bukkitPerm;
+			return parent;
 		}
 		else
 		{
-			return PermissionFactory.registerPermission(getPermissionName(), getPermissionDefault());
+			return PermissionFactory.registerParentPermission(getPermissionName());
 		}
 	}
 
@@ -71,6 +71,6 @@ public enum Permissions implements IPermission
 	@Override
 	public boolean isAuthorized(final CommandSender sender)
 	{
-		return sender.hasPermission(getPermission());
+		return PermissionFactory.checkPermission(sender, this);
 	}
 }
