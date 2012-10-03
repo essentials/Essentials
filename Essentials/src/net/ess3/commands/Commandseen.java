@@ -38,11 +38,11 @@ public class Commandseen extends EssentialsCommand
 		{
 			@Cleanup
 			IUser u = ess.getUserMap().getUser(args[0]);
-			u.acquireReadLock();
 			if (u == null)
 			{
 				throw new Exception(_("playerNotFound"));
 			}
+			u.acquireReadLock();
 			sender.sendMessage(_("seenOffline", u.getPlayer().getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
 			if (u.isBanned())
 			{
