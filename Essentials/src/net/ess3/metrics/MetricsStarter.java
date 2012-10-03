@@ -1,6 +1,5 @@
 package net.ess3.metrics;
 
-import com.nijikokun.bukkit.Permissions.Permissions;
 import java.util.Locale;
 import java.util.logging.Level;
 import lombok.Cleanup;
@@ -32,36 +31,36 @@ public class MetricsStarter implements Runnable
 	public MetricsStarter(final IEssentials plugin)
 	{
 		ess = plugin;
-		/*
-		 try
-		 {
 
-		 final Metrics metrics = new Metrics(ess);
-		 ess.setMetrics(metrics);
+		try
+		{
 
-		 @Cleanup
-		 ISettings settings = ess.getSettings();
-		 settings.acquireReadLock();
-		 if (!metrics.isOptOut())
-		 {
-		 if (settings.getData().getGeneral().isMetricsEnabled())
-		 {
-		 start = true;
-		 }
-		 else
-		 {
-		 ess.getLogger().info("This plugin collects minimal statistic data and sends it to http://metrics.essentials3.net.");
-		 ess.getLogger().info("You can opt out by running /essentials opt-out");
-		 ess.getLogger().info("This will start 5 minutes after the first admin/op joins.");
-		 start = false;
-		 }
-		 return;
-		 }
-		 }
-		 catch (Exception ex)
-		 {
-		 metricsError(ex);
-		 }*/
+			final Metrics metrics = new Metrics(ess.getPlugin());
+			ess.setMetrics(metrics);
+
+			@Cleanup
+			ISettings settings = ess.getSettings();
+			settings.acquireReadLock();
+			if (!metrics.isOptOut())
+			{
+				if (settings.getData().getGeneral().isMetricsEnabled())
+				{
+					start = true;
+				}
+				else
+				{
+					ess.getLogger().info("This plugin collects minimal statistic data and sends it to http://metrics.essentials3.net.");
+					ess.getLogger().info("You can opt out by running /essentials opt-out");
+					ess.getLogger().info("This will start 5 minutes after the first admin/op joins.");
+					start = false;
+				}
+				return;
+			}
+		}
+		catch (Exception ex)
+		{
+			metricsError(ex);
+		}
 	}
 
 	@Override
@@ -149,25 +148,19 @@ public class MetricsStarter implements Runnable
 			{
 				enabledGraph.addPlotter(new SimplePlotter("Warps"));
 			}
-			//todo - enable once settings are in
-			/*
-			 if (!ess.getSettings().areSignsDisabled())
-			 {
-			 enabledGraph.addPlotter(new SimplePlotter("Signs"));
-			 }
-			 if (ess.getSettings().getAutoAfk() > 0)
-			 {
-			 enabledGraph.addPlotter(new SimplePlotter("AutoAFK"));
-			 }
-			 if (ess.getSettings().changeDisplayName())
-			 {
-			 enabledGraph.addPlotter(new SimplePlotter("DisplayName"));
-			 }
-			 if (ess.getSettings().getChatRadius() >= 1)
-			 {
-			 enabledGraph.addPlotter(new SimplePlotter("LocalChat"));
-			 }
-			 */
+			if (ess.getSettings().getData().getCommands().getAfk().getAutoAFK() > 0)
+			{
+				enabledGraph.addPlotter(new SimplePlotter("AutoAFK"));
+			}
+			if (ess.getSettings().getData().getChat().getChangeDisplayname())
+			{
+				enabledGraph.addPlotter(new SimplePlotter("DisplayName"));
+			}
+			if (ess.getSettings().getData().getChat().getLocalRadius() >= 1)
+			{
+				enabledGraph.addPlotter(new SimplePlotter("LocalChat"));
+			}
+
 			final Graph depGraph = metrics.createGraph("Dependencies");
 			final Method method = ess.getPaymentMethod().getMethod();
 			if (method != null)
@@ -188,9 +181,6 @@ public class MetricsStarter implements Runnable
 				}
 				depGraph.addPlotter(new SimplePlotter(method.getName() + " " + version));
 			}
-			//todo - verify
-			depGraph.addPlotter(new SimplePlotter(Permissions.getInstance().getName()));
-
 			metrics.start();
 
 		}
