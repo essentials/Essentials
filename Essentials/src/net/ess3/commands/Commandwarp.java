@@ -9,7 +9,6 @@ import net.ess3.api.IUser;
 import net.ess3.api.IWarps;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
-import net.ess3.permissions.WarpPermissions;
 import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -83,7 +82,7 @@ public class Commandwarp extends EssentialsCommand
 			while (iterator.hasNext())
 			{
 				final String warpName = iterator.next();
-				if (!WarpPermissions.getPermission(warpName).isAuthorized(sender))
+				if (!Permissions.WARPS.isAuthorized(sender, warpName))
 				{
 					iterator.remove();
 				}
@@ -116,7 +115,7 @@ public class Commandwarp extends EssentialsCommand
 		final double fullCharge = chargeWarp.getCommandCost(user) + chargeCmd.getCommandCost(user);
 		final Trade charge = new Trade(fullCharge, ess);
 		charge.isAffordableFor(user);
-		if (WarpPermissions.getPermission(name).isAuthorized(user))
+		if (Permissions.WARPS.isAuthorized(user, name))
 		{
 			user.getTeleport().warp(name, charge, TeleportCause.COMMAND);
 			return;

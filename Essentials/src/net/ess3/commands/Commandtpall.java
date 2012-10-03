@@ -4,7 +4,7 @@ import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.permissions.WorldPermissions;
+import net.ess3.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -44,7 +44,7 @@ public class Commandtpall extends EssentialsCommand
 			settings.acquireReadLock();
 
 			if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
-				&& !WorldPermissions.getPermission(user.getPlayer().getWorld().getName()).isAuthorized(user))
+				&& !Permissions.WORLD.isAuthorized(user, user.getPlayer().getWorld().getName()))
 			{
 				continue;
 			}

@@ -4,7 +4,7 @@ import net.ess3.api.ChargeException;
 import net.ess3.economy.Trade;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
-import net.ess3.permissions.KitPermissions;
+import net.ess3.permissions.Permissions;
 import net.ess3.settings.Kit;
 import java.util.Locale;
 
@@ -53,7 +53,7 @@ public class SignKit extends EssentialsSign
 		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
 		final String group = sign.getLine(2);
 		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getRanks().inGroup(player, group)))
-			|| (group.isEmpty() && KitPermissions.getPermission(kitName).isAuthorized(player)))
+			|| (group.isEmpty() && Permissions.KITS.isAuthorized(player, kitName)))
 		{
 			final Trade charge = getTrade(sign, 3, ess);
 			charge.isAffordableFor(player);

@@ -3,7 +3,7 @@ package net.ess3.commands;
 import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
-import net.ess3.permissions.GivePermissions;
+import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -26,7 +26,7 @@ public class Commandgive extends EssentialsCommand
 		final ItemStack stack = ess.getItemDb().get(args[1], giveTo);
 
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
-		if (!GivePermissions.getPermission(stack.getType()).isAuthorized(sender))
+		if (!Permissions.GIVE.isAuthorized(sender, stack))
 		{
 			throw new Exception(_("cantSpawnItem", itemname));
 		}

@@ -5,7 +5,7 @@ import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
-import net.ess3.permissions.KitPermissions;
+import net.ess3.permissions.Permissions;
 import net.ess3.settings.Kit;
 import net.ess3.utils.Util;
 
@@ -26,7 +26,7 @@ public class Commandkit extends EssentialsCommand
 			{
 				for (String kitName : kitList)
 				{
-					if (!KitPermissions.getPermission(kitName).isAuthorized(user))
+					if (!Permissions.KITS.isAuthorized(user, kitName))
 					{
 						kitList.remove(kitName);
 					}
@@ -40,7 +40,7 @@ public class Commandkit extends EssentialsCommand
 			final String kitName = args[0].toLowerCase(Locale.ENGLISH);
 			final Kit kit = ess.getKits().getKit(kitName);
 
-			if (!KitPermissions.getPermission(kitName).isAuthorized(user))
+			if (!Permissions.KITS.isAuthorized(user, kitName))
 			{
 				throw new Exception(_("noKitPermission", "essentials.kit." + kitName));
 			}

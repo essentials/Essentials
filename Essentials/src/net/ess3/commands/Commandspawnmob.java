@@ -9,7 +9,7 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.bukkit.LivingEntities;
 import net.ess3.bukkit.LivingEntities.MobException;
-import net.ess3.permissions.SpawnmobPermissions;
+import net.ess3.permissions.Permissions;
 import net.ess3.utils.LocationUtil;
 import net.ess3.utils.Util;
 import org.bukkit.DyeColor;
@@ -18,7 +18,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.material.Colorable;
-//TODO - Bukkit cleanup
+
 
 public class Commandspawnmob extends EssentialsCommand
 {
@@ -31,7 +31,7 @@ public class Commandspawnmob extends EssentialsCommand
 			final Set<String> availableList = new HashSet<String>();
 			for (String mob : mobList)
 			{
-				if (SpawnmobPermissions.getPermission(mob).isAuthorized(user))
+				if (Permissions.SPAWNMOB.isAuthorized(user, mob))
 				{
 					availableList.add(mob);
 				}
@@ -76,7 +76,7 @@ public class Commandspawnmob extends EssentialsCommand
 			throw new Exception(_("invalidMob"));
 		}
 
-		if (!SpawnmobPermissions.getPermission(mob.getName()).isAuthorized(user))
+		if (!Permissions.SPAWNMOB.isAuthorized(user, mob.getName()))
 		{
 			throw new Exception(_("noPermToSpawnMob"));
 		}
@@ -111,7 +111,7 @@ public class Commandspawnmob extends EssentialsCommand
 				return;
 			}
 
-			if (!SpawnmobPermissions.getPermission(mobMount.getName()).isAuthorized(user))
+			if (!Permissions.SPAWNMOB.isAuthorized(user, mobMount.getName()))
 			{
 				throw new Exception(_("noPermToSpawnMob"));
 			}
@@ -279,6 +279,6 @@ public class Commandspawnmob extends EssentialsCommand
 					((Villager)spawned).setProfession(prof);
 				}
 			}
-		}		
+		}
 	}
 }

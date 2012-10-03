@@ -16,7 +16,6 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
-import net.ess3.permissions.NoCommandCostPermissions;
 import net.ess3.permissions.Permissions;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -172,7 +171,7 @@ public class Trade
 			user.getPlayer().updateInventory();
 		}
 		if (command != null && !command.isEmpty()
-			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user))
+			&& !Permissions.NOCOMMANDCOST.isAuthorized(user, command))
 		{
 			@Cleanup
 			final ISettings settings = ess.getSettings();
@@ -214,8 +213,7 @@ public class Trade
 	{
 		double cost = 0d;
 		if (command != null && !command.isEmpty()
-			&& !NoCommandCostPermissions.getPermission("all").isAuthorized(user)
-			&& !NoCommandCostPermissions.getPermission(command).isAuthorized(user))
+			&& !Permissions.NOCOMMANDCOST.isAuthorized(user, command))
 		{
 			cost = ess.getSettings().getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
 			if (cost == 0.0 && fallbackCommand != null && !fallbackCommand.isEmpty())

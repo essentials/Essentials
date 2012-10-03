@@ -5,7 +5,6 @@ import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import net.ess3.permissions.WorldPermissions;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -32,7 +31,7 @@ public class Commandtpohere extends EssentialsCommand
 		settings.acquireReadLock();
 		//todo - common method
 		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
-			&& !WorldPermissions.getPermission(user.getPlayer().getWorld().getName()).isAuthorized(player))
+			&& !Permissions.WORLD.isAuthorized(player, user.getPlayer().getWorld().getName()))
 		{
 			throw new Exception(_("noPerm", "essentials.world." + user.getPlayer().getWorld().getName()));
 		}

@@ -3,7 +3,7 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.IWarps;
-import net.ess3.permissions.WarpPermissions;
+import net.ess3.permissions.Permissions;
 import org.bukkit.Location;
 
 
@@ -36,7 +36,7 @@ public class Commandsetwarp extends EssentialsCommand
 		{
 		}
 
-		if (warpLoc == null || WarpPermissions.getPermission("overwrite." + args[0]).isAuthorized(user))
+		if (warpLoc == null || Permissions.WARP_OVERWRITE.isAuthorized(user, args[0]))
 			
 		{
 			warps.setWarp(args[0], loc);

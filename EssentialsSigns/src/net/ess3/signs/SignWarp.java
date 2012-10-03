@@ -4,7 +4,7 @@ import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
-import net.ess3.permissions.WarpPermissions;
+import net.ess3.permissions.Permissions;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -52,7 +52,7 @@ public class SignWarp extends EssentialsSign
 		final String group = sign.getLine(2);
 
 		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getRanks().inGroup(player, group)))
-			|| (group.isEmpty() && WarpPermissions.getPermission(warpName).isAuthorized(player)))
+			|| (group.isEmpty() && Permissions.WARPS.isAuthorized(player, warpName)))
 		{
 			final Trade charge = getTrade(sign, 3, ess);
 			try

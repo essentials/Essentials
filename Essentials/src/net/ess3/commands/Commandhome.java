@@ -6,7 +6,6 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
-import net.ess3.permissions.WorldPermissions;
 import net.ess3.utils.Util;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -98,7 +97,7 @@ public class Commandhome extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		if (user.getPlayer().getWorld() != loc.getWorld() && ess.getSettings().getData().getGeneral().isWorldHomePermissions()
-			&& !WorldPermissions.getPermission(loc.getWorld().getName()).isAuthorized(user))
+			&& !Permissions.WORLD.isAuthorized(user, loc.getWorld().getName()))
 		{
 			throw new Exception(_("noPerm", "essentials.world." + loc.getWorld().getName()));
 		}

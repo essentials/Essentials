@@ -138,4 +138,17 @@ public enum Permissions implements IPermission
 	{
 		return PermissionFactory.checkPermission(sender, this);
 	}
+	public static DotStarPermission ENCHANT = new DotStarPermission("essentials.enchant");
+	public static ItemStackDotStarPermission GIVE = new ItemStackDotStarPermission("essentials.give", PermissionDefault.TRUE);
+	public static DotStarPermission RANKS = new DotStarPermission("essentials.ranks");
+	public static DotStarPermission HELP = new DotStarPermission("essentials.help");
+	public static ItemStackDotStarPermission ITEMSPAWN = new ItemStackDotStarPermission("essentials.itemspawn", PermissionDefault.TRUE);
+	public static DotStarPermission KITS = new DotStarPermission("essentials.kits", PermissionDefault.TRUE);
+	public static DotStarPermission NOCOMMANDCOST = new DotStarPermission("essentials.nocommandcost");
+	public static DotStarPermission SPAWNER = new DotStarPermission("essentials.spawner");
+	public static DotStarPermission SPAWNMOB = new DotStarPermission("essentials.spawnmob");
+	public static ItemStackDotStarPermission UNLIMITED = new ItemStackDotStarPermission("essentials.unlimited.items");
+	public static DotStarPermission WARPS = new DotStarPermission("essentials.warps", PermissionDefault.TRUE);
+	public static DotStarPermission WARP_OVERWRITE = new DotStarPermission("essentials.warp.overwrite");
+	public static DotStarPermission WORLD = new DotStarPermission("essentials.world");
 }

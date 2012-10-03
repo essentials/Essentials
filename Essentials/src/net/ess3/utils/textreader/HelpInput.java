@@ -9,7 +9,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.permissions.HelpPermissions;
+import net.ess3.permissions.Permissions;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
@@ -87,7 +87,7 @@ public class HelpInput implements IText
 								{
 									permissions = value.get(PERMISSIONS);
 								}
-								if (HelpPermissions.getPermission(pluginNameLow).isAuthorized(user))
+								if (Permissions.HELP.isAuthorized(user, pluginNameLow))
 								{
 									pluginLines.add(_("helpLine", k.getKey(), value.get(DESCRIPTION)));
 								}

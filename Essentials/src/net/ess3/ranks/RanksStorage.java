@@ -12,25 +12,23 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.permissions.GroupsPermissions;
+import net.ess3.permissions.Permissions;
 import net.ess3.storage.AsyncStorageObjectHolder;
 import net.ess3.utils.FormatUtil;
 
 
 public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRanks
 {
-
 	@Override
 	public void finishRead()
 	{
-		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		
 	}
+
 	public RanksStorage(final IEssentials ess)
 	{
 		super(ess, Ranks.class);
@@ -42,7 +40,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	{
 		return new File(ess.getPlugin().getDataFolder(), "ranks.yml");
 	}
-	
+
 	public Collection<Entry<String, RankOptions>> getGroups(final IUser player)
 	{
 		acquireReadLock();
@@ -56,11 +54,11 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 			final ArrayList<Entry<String, RankOptions>> list = new ArrayList();
 			for (Entry<String, RankOptions> entry : groups.entrySet())
 			{
-				if (GroupsPermissions.getPermission(entry.getKey()).isAuthorized(player))
+				if (Permissions.RANKS.isAuthorized(player, entry.getKey()))
 				{
-					if(entry.getValue() != null)
+					if (entry.getValue() != null)
 					{
-					list.add(entry);
+						list.add(entry);
 					}
 				}
 			}
@@ -97,7 +95,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public double getTeleportDelay(final IUser player)
 	{
@@ -149,23 +147,23 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 		}
 		return 0;
 	}
-	
+
 	//TODO: Reimplement caching
 	@Override
 	public MessageFormat getChatFormat(final IUser player)
 	{
-			String format = getRawChatFormat(player);
-			format = FormatUtil.replaceFormat(format);
-			format = format.replace("{DISPLAYNAME}", "%1$s");
-			format = format.replace("{GROUP}", "{0}");
-			format = format.replace("{MESSAGE}", "%2$s");
-			format = format.replace("{WORLDNAME}", "{1}");
-			format = format.replace("{SHORTWORLDNAME}", "{2}");
-			format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
-			MessageFormat mFormat = new MessageFormat(format);
-			return mFormat;		
+		String format = getRawChatFormat(player);
+		format = FormatUtil.replaceFormat(format);
+		format = format.replace("{DISPLAYNAME}", "%1$s");
+		format = format.replace("{GROUP}", "{0}");
+		format = format.replace("{MESSAGE}", "%2$s");
+		format = format.replace("{WORLDNAME}", "{1}");
+		format = format.replace("{SHORTWORLDNAME}", "{2}");
+		format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
+		MessageFormat mFormat = new MessageFormat(format);
+		return mFormat;
 	}
-	
+
 	private String getRawChatFormat(final IUser player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
@@ -203,5 +201,4 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 		}
 		return "default";
 	}
-	
 }

@@ -4,7 +4,7 @@ import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.permissions.WorldPermissions;
+import net.ess3.permissions.Permissions;
 
 
 public class Commandtpa extends EssentialsCommand
@@ -28,7 +28,7 @@ public class Commandtpa extends EssentialsCommand
 		ISettings settings = ess.getSettings();
 		settings.acquireReadLock();
 		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && ess.getSettings().getData().getGeneral().isWorldTeleportPermissions()
-			&& !WorldPermissions.getPermission(user.getPlayer().getWorld().getName()).isAuthorized(user))
+			&& !Permissions.WORLD.isAuthorized(user, user.getPlayer().getWorld().getName()))
 		{
 			throw new Exception(_("noPerm", "essentials.world." + player.getPlayer().getWorld().getName()));
 		}

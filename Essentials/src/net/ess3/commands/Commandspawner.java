@@ -5,7 +5,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.bukkit.LivingEntities;
 import net.ess3.economy.Trade;
-import net.ess3.permissions.SpawnerPermissions;
+import net.ess3.permissions.Permissions;
 import net.ess3.utils.LocationUtil;
 import net.ess3.utils.Util;
 import org.bukkit.Location;
@@ -41,7 +41,7 @@ public class Commandspawner extends EssentialsCommand
 				user.sendMessage(_("invalidMob"));
 				return;
 			}
-			if (!SpawnerPermissions.getPermission(mob.getName()).isAuthorized(user))
+			if (!Permissions.SPAWNER.isAuthorized(user, mob.getName()))
 			{
 				throw new Exception(_("unableToSpawnMob"));
 			}

@@ -7,7 +7,6 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.permissions.Permissions;
-import net.ess3.permissions.UnlimitedItemPermissions;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -82,7 +81,7 @@ public class Commandunlimited extends EssentialsCommand
 		stack.setAmount(Math.min(stack.getType().getMaxStackSize(), 2));
 
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
-		if (!UnlimitedItemPermissions.getPermission(stack.getType()).isAuthorized(user))
+		if (!Permissions.UNLIMITED.isAuthorized(user, stack))
 		{
 			throw new Exception(_("unlimitedItemPermission", itemname));
 		}

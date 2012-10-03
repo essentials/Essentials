@@ -7,7 +7,6 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
-import net.ess3.permissions.WorldPermissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -34,7 +33,7 @@ public class Commandtp extends EssentialsCommand
 				throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
 			}
 			if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
-				&& !WorldPermissions.getPermission(player.getPlayer().getWorld().getName()).isAuthorized(user))
+				&& !Permissions.WORLD.isAuthorized(user, player.getPlayer().getWorld().getName()))
 			{
 				throw new Exception(_("noPerm", "essentials.world." + player.getPlayer().getWorld().getName()));
 			}
@@ -66,7 +65,7 @@ public class Commandtp extends EssentialsCommand
 				throw new Exception(_("teleportDisabled", toPlayer.getPlayer().getDisplayName()));
 			}
 			if (target.getPlayer().getWorld() != toPlayer.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
-				&& !WorldPermissions.getPermission(toPlayer.getPlayer().getWorld().getName()).isAuthorized(user))
+				&& !Permissions.WORLD.isAuthorized(user, toPlayer.getPlayer().getWorld().getName()))
 			{
 				throw new Exception(_("noPerm", "essentials.world." + toPlayer.getPlayer().getWorld().getName()));
 			}
@@ -86,7 +85,7 @@ public class Commandtp extends EssentialsCommand
 
 		sender.sendMessage(_("teleporting"));
 		final IUser target = ess.getUserMap().getUser(args[0]);
-		final IUser toPlayer =ess.getUserMap().getUser(args[1]);
+		final IUser toPlayer = ess.getUserMap().getUser(args[1]);
 		target.getTeleport().now(toPlayer.getPlayer(), false, TeleportCause.COMMAND);
 		target.sendMessage(_("teleportAtoB", Console.NAME, toPlayer.getPlayer().getDisplayName()));
 	}

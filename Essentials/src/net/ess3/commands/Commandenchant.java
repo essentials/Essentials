@@ -7,7 +7,7 @@ import java.util.TreeSet;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.bukkit.Enchantments;
-import net.ess3.permissions.EnchantPermissions;
+import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +30,7 @@ public class Commandenchant extends EssentialsCommand
 			for (Map.Entry<String, Enchantment> entry : Enchantments.entrySet())
 			{
 				final String enchantmentName = entry.getValue().getName().toLowerCase(Locale.ENGLISH);
-				if (enchantmentslist.contains(enchantmentName) || EnchantPermissions.getPermission(enchantmentName).isAuthorized(user))
+				if (enchantmentslist.contains(enchantmentName) || Permissions.ENCHANT.isAuthorized(user, enchantmentName))
 				{
 					enchantmentslist.add(entry.getKey());
 					//enchantmentslist.add(enchantmentName);
@@ -85,7 +85,7 @@ public class Commandenchant extends EssentialsCommand
 			throw new Exception(_("enchantmentNotFound"));
 		}
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
-		if (user != null && !EnchantPermissions.getPermission(enchantmentName).isAuthorized(user))
+		if (user != null && !Permissions.ENCHANT.isAuthorized(user, enchantmentName))
 		{
 			throw new Exception(_("enchantmentPerm", enchantmentName));
 		}
