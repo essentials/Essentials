@@ -33,7 +33,7 @@ public class EssentialsAntiBuildListener implements Listener
 		this.ess = antib.getEssentialsConnect().getEssentials();
 	}
 
-	private boolean metaPermCheck(final User user, final String action, final Block block)
+/*	private boolean metaPermCheck(final User user, final String action, final Block block)
 	{
 		if (block == null)
 		{
@@ -319,4 +319,5 @@ public class EssentialsAntiBuildListener implements Listener
 			}
 		}
 	}
+ */
 }

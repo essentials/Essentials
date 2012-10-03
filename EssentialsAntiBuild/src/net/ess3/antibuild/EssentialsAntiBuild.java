@@ -33,8 +33,9 @@ public class EssentialsAntiBuild extends JavaPlugin implements IAntiBuild
 	@Override
 	public boolean checkProtectionItems(final int id)
 	{
-		final List<Integer> itemList = settingsList.get(list);
-		return itemList != null && !itemList.isEmpty() && itemList.contains(id);
+		//final List<Integer> itemList = settingsList.get(list);
+		//return itemList != null && !itemList.isEmpty() && itemList.contains(id);
+		return false;
 	}
 
 	@Override
