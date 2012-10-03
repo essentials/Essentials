@@ -17,12 +17,11 @@ public class Commandpay extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		if (args[0].trim().length() < 3)
-		{
-			throw new NotEnoughArgumentsException("You need to specify a player to pay.");
-		}
-
 		double amount = Double.parseDouble(args[1].replaceAll("[^0-9\\.]", ""));
+		
+		if (amount <= 0 || Double.isNaN(amount) || Double.isInfinite(amount)) {
+			user.sendMessage(_("invalidAmount"));
+		}
 
 		boolean foundUser = false;
 		for (IUser u : ess.getUserMap().matchUsers(args[0], false, true))
