@@ -49,24 +49,12 @@ public class EssentialsProtectBlockListener implements Listener
 			&& user.isAuthorized("essentials.protect"))
 		{
 			protect.add(blockPlaced);
-			if (prot.getSettingBool(ProtectConfig.protect_below_rails)
-				&& !isProtected(blockPlaced.getRelative(BlockFace.DOWN), user))
-			{
-				protect.add(blockPlaced.getRelative(BlockFace.DOWN));
-			}
 		}
 		if ((blockPlaced.getType() == Material.SIGN_POST || blockPlaced.getType() == Material.WALL_SIGN)
 			&& prot.getSettingBool(ProtectConfig.protect_signs)
 			&& user.isAuthorized("essentials.protect"))
 		{
 			protect.add(blockPlaced);
-			if (prot.getSettingBool(ProtectConfig.protect_against_signs)
-				&& event.getBlockAgainst().getType() != Material.SIGN_POST
-				&& event.getBlockAgainst().getType() != Material.WALL_SIGN
-				&& !isProtected(event.getBlockAgainst(), user))
-			{
-				protect.add(event.getBlockAgainst());
-			}
 		}
 		for (Block block : protect)
 		{
@@ -204,31 +192,7 @@ public class EssentialsProtectBlockListener implements Listener
 
 		if (user.isAuthorized("essentials.protect.admin"))
 		{
-			if (type == Material.WALL_SIGN || type == Material.SIGN_POST || type == Material.RAILS || type == Material.POWERED_RAIL || type == Material.DETECTOR_RAIL)
-			{
-				storage.unprotectBlock(block);
-				if (type == Material.RAILS || type == Material.POWERED_RAIL || type == Material.DETECTOR_RAIL || type == Material.SIGN_POST)
-				{
-					final Block below = block.getRelative(BlockFace.DOWN);
-					storage.unprotectBlock(below);
-				}
-				else
-				{
-					for (BlockFace blockFace : faces)
-					{
-						final Block against = block.getRelative(blockFace);
-						storage.unprotectBlock(against);
-					}
-				}
-			}
-			else
-			{
-				for (BlockFace blockFace : faces)
-				{
-					final Block against = block.getRelative(blockFace);
-					storage.unprotectBlock(against);
-				}
-			}
+			storage.unprotectBlock(block);
 		}
 		else
 		{
@@ -240,31 +204,7 @@ public class EssentialsProtectBlockListener implements Listener
 			}
 			else
 			{
-				if (type == Material.WALL_SIGN || type == Material.SIGN_POST || type == Material.RAILS || type == Material.POWERED_RAIL || type == Material.DETECTOR_RAIL)
-				{
-					storage.unprotectBlock(block);
-					if (type == Material.RAILS || type == Material.POWERED_RAIL || type == Material.DETECTOR_RAIL || type == Material.SIGN_POST)
-					{
-						final Block below = block.getRelative(BlockFace.DOWN);
-						storage.unprotectBlock(below);
-					}
-					else
-					{
-						for (BlockFace blockFace : faces)
-						{
-							final Block against = block.getRelative(blockFace);
-							storage.unprotectBlock(against);
-						}
-					}
-				}
-				else
-				{
-					for (BlockFace blockFace : faces)
-					{
-						final Block against = block.getRelative(blockFace);
-						storage.unprotectBlock(against);
-					}
-				}
+				storage.unprotectBlock(block);
 			}
 		}
 	}
@@ -373,7 +313,7 @@ public class EssentialsProtectBlockListener implements Listener
 				final Block up = block.getRelative(BlockFace.UP);
 				if (up != null && up.getType() == Material.SIGN_POST)
 				{
-					return prot.getStorage().isProtected(block, user.getName());
+					return prot.getStorage().isProtected(up, user.getName());
 				}
 				final BlockFace[] directions = new BlockFace[]
 				{
@@ -390,7 +330,8 @@ public class EssentialsProtectBlockListener implements Listener
 						final org.bukkit.material.Sign signMat = (org.bukkit.material.Sign)signblock.getState().getData();
 						if (signMat != null && signMat.getFacing() == blockFace)
 						{
-							return prot.getStorage().isProtected(block, user.getName());
+							if(prot.getStorage().isProtected(signblock, user.getName()))
+								return true;
 						}
 					}
 				}
@@ -405,9 +346,11 @@ public class EssentialsProtectBlockListener implements Listener
 			if (prot.getSettingBool(ProtectConfig.protect_below_rails))
 			{
 				final Block up = block.getRelative(BlockFace.UP);
-				if (up != null && (type == Material.RAILS || type == Material.POWERED_RAIL || type == Material.DETECTOR_RAIL))
+				if (up != null)
 				{
-					return prot.getStorage().isProtected(block, user.getName());
+					final Material upType = up.getType();
+					if(upType == Material.RAILS || upType == Material.POWERED_RAIL || upType == Material.DETECTOR_RAIL)
+						return prot.getStorage().isProtected(up, user.getName());
 				}
 			}
 		}
