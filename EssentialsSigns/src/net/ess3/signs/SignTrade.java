@@ -10,8 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 //TODO: Sell Enchantment on Trade signs?
 public class SignTrade extends EssentialsSign
-{	
-
+{
 	public SignTrade()
 	{
 		super("Trade");

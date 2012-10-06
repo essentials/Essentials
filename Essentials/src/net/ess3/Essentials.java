@@ -335,7 +335,7 @@ public class Essentials implements IEssentials
 	{
 		return spawns;
 	}
-	
+
 	@Override
 	public void reload()
 	{

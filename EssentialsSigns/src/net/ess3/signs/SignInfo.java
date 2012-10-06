@@ -1,6 +1,5 @@
 package net.ess3.signs;
 
-
 import java.io.IOException;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
@@ -53,6 +52,3 @@ public class SignInfo extends EssentialsSign
 		return true;
 	}
 }
-
-
-

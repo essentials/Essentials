@@ -13,7 +13,7 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient EssentialsConnect ess = null;
 	private transient ProtectHolder settings = null;
-	
+
 	@Override
 	public void onEnable()
 	{
@@ -24,7 +24,7 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 			enableEmergencyMode(pm);
 			return;
 		}
-		ess = new EssentialsConnect(essPlugin, this);	
+		ess = new EssentialsConnect(essPlugin, this);
 
 		final EssentialsProtectBlockListener blockListener = new EssentialsProtectBlockListener(this);
 		pm.registerEvents(blockListener, this);
@@ -48,12 +48,11 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 		LOGGER.log(Level.SEVERE, "Essentials not installed or failed to load. Essenials Protect is in emergency mode now.");
 	}
 
-	
 	@Override
 	public EssentialsConnect getEssentialsConnect()
 	{
 		return ess;
-	}	
+	}
 
 	@Override
 	public ProtectHolder getSettings()

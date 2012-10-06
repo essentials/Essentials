@@ -35,13 +35,13 @@ public class SignGameMode extends EssentialsSign
 	{
 		final Trade charge = getTrade(sign, 2, ess);
 		final String mode = sign.getLine(1).trim();
-				
+
 		if (mode.isEmpty())
 		{
 			throw new SignException(_("invalidSignLine", 2));
 		}
 		charge.isAffordableFor(player);
-		
+
 		//this needs to be fixed
 		player.getPlayer().setGameMode(player.getPlayer().getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
 		player.sendMessage(_("gameMode", _(player.getPlayer().getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getPlayer().getDisplayName()));

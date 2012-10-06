@@ -69,14 +69,14 @@ public class SignBlockListener implements Listener
 			return true;
 		}
 		for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
+		{
+			if (sign.getBlocks().contains(block.getType())
+				&& !sign.onBlockBreak(block, player, ess))
 			{
-				if (sign.getBlocks().contains(block.getType())
-					&& !sign.onBlockBreak(block, player, ess))
-				{
-					LOGGER.log(Level.INFO, "A block was protected by a sign.");
-					return true;
-				}
-			}		
+				LOGGER.log(Level.INFO, "A block was protected by a sign.");
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -208,7 +208,7 @@ public class SignBlockListener implements Listener
 		{
 			return;
 		}
-		
+
 		for (Block block : event.getBlocks())
 		{
 			if (((block.getTypeId() == WALL_SIGN
@@ -238,7 +238,7 @@ public class SignBlockListener implements Listener
 		{
 			return;
 		}
-		
+
 		if (event.isSticky())
 		{
 			final Block block = event.getBlock();

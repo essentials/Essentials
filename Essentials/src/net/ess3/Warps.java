@@ -59,7 +59,7 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 	{
 		setWarp(name, new net.ess3.storage.StoredLocation(loc));
 	}
-	
+
 	public void setWarp(final String name, final net.ess3.storage.StoredLocation loc) throws Exception
 	{
 		IWarp warp = getObject(name);

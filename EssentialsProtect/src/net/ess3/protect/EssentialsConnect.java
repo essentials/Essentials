@@ -29,5 +29,4 @@ public class EssentialsConnect
 	{
 		return ess;
 	}
-	
 }

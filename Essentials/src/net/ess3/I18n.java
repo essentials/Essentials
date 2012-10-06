@@ -72,7 +72,8 @@ public class I18n implements II18n
 
 	public static String _(final String string, final Object... objects)
 	{
-		if (instance == null) {
+		if (instance == null)
+		{
 			return "";
 		}
 		if (objects.length == 0)

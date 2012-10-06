@@ -8,7 +8,7 @@ import org.bukkit.permissions.PermissionDefault;
 
 
 public enum Permissions implements IPermission
-{	
+{
 	ENTITYTARGET(PermissionDefault.TRUE),
 	PVP(PermissionDefault.TRUE),
 	PREVENTDAMAGE_FALL(PermissionDefault.FALSE),
@@ -22,7 +22,7 @@ public enum Permissions implements IPermission
 	PREVENTDAMAGE_FIRE(PermissionDefault.FALSE),
 	PREVENTDAMAGE_DROWNING(PermissionDefault.FALSE),
 	PREVENTDAMAGE_LIGHTNING(PermissionDefault.FALSE),
-	PREVENTDAMAGE_NONE(PermissionDefault.FALSE),	
+	PREVENTDAMAGE_NONE(PermissionDefault.FALSE),
 	USEFLINTSTEEL(PermissionDefault.TRUE);
 	private static final String base = "essentials.protect.";
 	private final String permission;
