@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.utils.DescParseTickFormat;
@@ -37,9 +36,7 @@ public class KeywordReplacer implements IText
 		String userName, address, version;
 		if (sender instanceof Player)
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().getUser((Player)sender);
-			user.acquireReadLock();
 			user.setDisplayNick();
 			displayName = user.getPlayer().getDisplayName();
 			userName = user.getPlayer().getName();

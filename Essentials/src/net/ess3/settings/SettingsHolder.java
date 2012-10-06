@@ -9,19 +9,17 @@ import net.ess3.storage.AsyncStorageObjectHolder;
 
 public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implements ISettings
 {
-
 	@Override
 	public void finishRead()
 	{
-		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		
 	}
-	private final transient AtomicBoolean debug = new AtomicBoolean(false);
+	private transient volatile boolean debug = false;
+
 	public SettingsHolder(final IEssentials ess)
 	{
 		super(ess, Settings.class);
@@ -32,12 +30,8 @@ public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implement
 	public final void onReload()
 	{
 		super.onReload();
-		acquireReadLock();
-		try {
-			debug.set(getData().getGeneral().isDebug());
-		} finally {
-			unlock();
-		}
+
+		debug = getData().getGeneral().isDebug();
 	}
 
 	@Override
@@ -49,29 +43,20 @@ public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implement
 	@Override
 	public String getLocale()
 	{
-		acquireReadLock();
-		try {
-			return getData().getGeneral().getLocale();
-		} finally {
-			unlock();
-		}
+		return getData().getGeneral().getLocale();
 	}
 
 	@Override
 	public boolean isDebug()
 	{
-		return debug.get();
+		return debug;
 	}
-	
+
 	@Override
 	public void setDebug(final boolean set)
 	{
-		debug.set(set);
-		acquireWriteLock();
-		try {
-			getData().getGeneral().setDebug(set);
-		} finally {
-			unlock();
-		}
+		debug = set;
+		getData().getGeneral().setDebug(set);
+		queueSave();
 	}
 }

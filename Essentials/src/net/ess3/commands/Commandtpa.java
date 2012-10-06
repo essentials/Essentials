@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -17,16 +16,14 @@ public class Commandtpa extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		@Cleanup
+		
 		IUser player = ess.getUserMap().matchUser(args[0], false, false);
-		player.acquireReadLock();
 		if (!player.getData().isTeleportEnabled())
 		{
 			throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
 		}
-		@Cleanup
+		
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && ess.getSettings().getData().getGeneral().isWorldTeleportPermissions()
 			&& !Permissions.WORLD.isAuthorized(user, user.getPlayer().getWorld().getName()))
 		{

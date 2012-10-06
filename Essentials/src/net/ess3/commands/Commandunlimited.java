@@ -2,7 +2,6 @@ package net.ess3.commands;
 
 import java.util.Locale;
 import java.util.Set;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
@@ -21,13 +20,12 @@ public class Commandunlimited extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		@Cleanup
+		
 		IUser target = user;
 
 		if (args.length > 1 && Permissions.UNLIMITED_OTHERS.isAuthorized(user))
 		{
 			target = ess.getUserMap().matchUser(args[1], false, false);
-			target.acquireReadLock();
 		}
 
 		if (args[0].equalsIgnoreCase("list"))
@@ -103,8 +101,8 @@ public class Commandunlimited extends EssentialsCommand
 			user.sendMessage(_(message, itemname, target.getPlayer().getDisplayName()));
 		}
 		target.sendMessage(_(message, itemname, target.getPlayer().getDisplayName()));
-		target.acquireWriteLock();
 		target.getData().setUnlimited(stack.getType(), enableUnlimited);
+		target.queueSave();
 
 		return true;
 	}

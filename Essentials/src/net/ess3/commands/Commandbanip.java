@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import org.bukkit.command.CommandSender;
@@ -16,9 +15,7 @@ public class Commandbanip extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		@Cleanup
 		final IUser player = ess.getUserMap().getUser(args[0]);
-		player.acquireReadLock();
 
 		if (player == null)
 		{

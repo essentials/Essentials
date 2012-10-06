@@ -1,15 +1,12 @@
 package net.ess3.commands;
 
-import java.util.List;
 import java.util.Set;
-import lombok.Cleanup;
 import net.ess3.Console;
 import static net.ess3.I18n._;
 import net.ess3.api.IReplyTo;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 
 
@@ -27,9 +24,7 @@ public class Commandmsg extends EssentialsCommand
 		String message = getFinalArg(args, 1);
 		if (isUser(sender))
 		{
-			@Cleanup
-			IUser user = getUser(sender);
-			user.acquireReadLock();
+			IUser user = getUser(sender);;
 			if (user.getData().isMuted())
 			{
 				throw new Exception(_("voiceSilenced"));

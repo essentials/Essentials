@@ -1,12 +1,10 @@
 package net.ess3.economy;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import net.ess3.api.*;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 
 
 public class Economy implements IEconomy
@@ -22,64 +20,27 @@ public class Economy implements IEconomy
 
 	private double getNPCBalance(String name) throws UserDoesNotExistException
 	{
-		npcs.acquireReadLock();
-		try
+		Double balance = npcs.getData().getBalances().get(name.toLowerCase(Locale.ENGLISH));
+		if (balance == null)
 		{
-			Map<String, Double> balances = npcs.getData().getBalances();
-			if (balances == null)
-			{
-				throw new UserDoesNotExistException(name);
-			}
-			Double balance = npcs.getData().getBalances().get(name.toLowerCase(Locale.ENGLISH));
-			if (balance == null)
-			{
-				throw new UserDoesNotExistException(name);
-			}
-			return balance;
+			throw new UserDoesNotExistException(name);
 		}
-		finally
-		{
-			npcs.unlock();
-		}
+		return balance;
 	}
 
 	private void setNPCBalance(String name, double balance, boolean checkExistance) throws UserDoesNotExistException
 	{
-		npcs.acquireWriteLock();
-		try
+		Map<String, Double> balances = npcs.getData().getBalances();
+		if (checkExistance && !balances.containsKey(name.toLowerCase(Locale.ENGLISH)))
 		{
-			Map<String, Double> balances = npcs.getData().getBalances();
-			if (balances == null)
-			{
-				balances = new HashMap<String, Double>();
-				npcs.getData().setBalances(balances);
-			}
-			if (checkExistance && !balances.containsKey(name.toLowerCase(Locale.ENGLISH)))
-			{
-				throw new UserDoesNotExistException(name);
-			}
-			balances.put(name.toLowerCase(Locale.ENGLISH), balance);
+			throw new UserDoesNotExistException(name);
 		}
-		finally
-		{
-			npcs.unlock();
-		}
+		npcs.getData().setBalance(name.toLowerCase(Locale.ENGLISH), balance);
 	}
 
 	private double getStartingBalance()
 	{
-		double startingBalance = 0;
-		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		try
-		{
-			startingBalance = settings.getData().getEconomy().getStartingBalance();
-		}
-		finally
-		{
-			settings.unlock();
-		}
-		return startingBalance;
+		return ess.getSettings().getData().getEconomy().getStartingBalance();
 	}
 
 	@Override
@@ -182,27 +143,15 @@ public class Economy implements IEconomy
 	@Override
 	public void removeNPC(String name) throws UserDoesNotExistException
 	{
-		npcs.acquireWriteLock();
-		try
+		Map<String, Double> balances = npcs.getData().getBalances();
+
+		if (balances.containsKey(name.toLowerCase(Locale.ENGLISH)))
 		{
-			Map<String, Double> balances = npcs.getData().getBalances();
-			if (balances == null)
-			{
-				balances = new HashMap<String, Double>();
-				npcs.getData().setBalances(balances);
-			}
-			if (balances.containsKey(name.toLowerCase(Locale.ENGLISH)))
-			{
-				balances.remove(name.toLowerCase(Locale.ENGLISH));
-			}
-			else
-			{
-				throw new UserDoesNotExistException(name);
-			}
+			npcs.getData().removeBalance(name.toLowerCase(Locale.ENGLISH));
 		}
-		finally
+		else
 		{
-			npcs.unlock();
+			throw new UserDoesNotExistException(name);
 		}
 	}
 }

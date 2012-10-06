@@ -15,7 +15,6 @@ public class Commandignore extends EssentialsCommand
 		}
 		IUser player = ess.getUserMap().matchUser(args[0], false, false);
 		
-		user.acquireWriteLock();
 		if (user.isIgnoringPlayer(player))
 		{
 			user.setIgnoredPlayer(player, false);
@@ -26,5 +25,6 @@ public class Commandignore extends EssentialsCommand
 			user.setIgnoredPlayer(player, true);
 			user.sendMessage(_("ignorePlayer", player.getName()));
 		}
+		user.queueSave();
 	}
 }

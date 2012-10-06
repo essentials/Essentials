@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -33,9 +32,8 @@ public class Commandtpaall extends EssentialsCommand
 		sender.sendMessage(_("teleportAAll"));
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			@Cleanup
+			
 			final IUser player = ess.getUserMap().getUser(onlinePlayer);
-			player.acquireReadLock();
 			if (user == player)
 			{
 				continue;
@@ -44,9 +42,8 @@ public class Commandtpaall extends EssentialsCommand
 			{
 				continue;
 			}
-			@Cleanup
+			
 			ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
 			if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
 				&& !Permissions.WORLD.isAuthorized(user, user.getPlayer().getWorld().getName()))
 			{

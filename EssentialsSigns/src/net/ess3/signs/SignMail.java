@@ -16,16 +16,7 @@ public class SignMail extends EssentialsSign
 	@Override
 	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
 	{
-		final List<String> mail;
-		player.acquireReadLock();
-		try
-		{
-			mail = player.getData().getMails();
-		}
-		finally
-		{
-			player.unlock();
-		}
+		final List<String> mail = player.getData().getMails();
 		if (mail == null || mail.isEmpty())
 		{
 			player.sendMessage(_("noNewMail"));

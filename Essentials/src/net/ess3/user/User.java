@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
 import net.ess3.Console;
@@ -67,18 +66,6 @@ public class User extends UserBase implements IUser
 		playerCache = new WeakReference<Player>(player);
 	}
 
-	private void destroyPlayerCache()
-	{
-		playerCache = null;
-	}
-
-	@Override
-	public void close()
-	{
-		super.close();
-		destroyPlayerCache();
-	}
-
 	@Override
 	public Player getPlayer()
 	{
@@ -88,21 +75,6 @@ public class User extends UserBase implements IUser
 			player = super.getPlayer();
 		}
 		return player;
-	}
-
-	public void example()
-	{
-		// Cleanup will call close at the end of the function
-		@Cleanup
-		final User user = this;
-
-		// read lock allows to read data from the user
-		user.acquireReadLock();
-		final double money = user.getData().getMoney();
-
-		// write lock allows only one thread to modify the data
-		user.acquireWriteLock();
-		user.getData().setMoney(10 + money);
 	}
 
 	@Override
@@ -150,20 +122,13 @@ public class User extends UserBase implements IUser
 		{
 			return;
 		}
-		acquireWriteLock();
-		try
+		setMoney(getMoney() + value);
+		sendMessage(_("addedToAccount", FormatUtil.displayCurrency(value, ess)));
+		if (initiator != null)
 		{
-			setMoney(getMoney() + value);
-			sendMessage(_("addedToAccount", FormatUtil.displayCurrency(value, ess)));
-			if (initiator != null)
-			{
-				initiator.sendMessage(_("addedToOthersAccount", FormatUtil.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
-			}
+			initiator.sendMessage(_("addedToOthersAccount", FormatUtil.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
 		}
-		finally
-		{
-			unlock();
-		}
+		queueSave();
 	}
 
 	@Override
@@ -220,58 +185,42 @@ public class User extends UserBase implements IUser
 	@Override
 	public void setLastLocation()
 	{
-		acquireWriteLock();
-		try
-		{
-			getData().setLastLocation(new net.ess3.storage.StoredLocation(getPlayer().getLocation()));
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().setLastLocation(new net.ess3.storage.StoredLocation(getPlayer().getLocation()));
+		queueSave();
 	}
 
 	public String getNick(boolean addprefixsuffix)
 	{
-		acquireReadLock();
-		try
-		{
-			final String nick = getData().getNickname();
-			@Cleanup
-			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
-			final IRanks groups = ess.getRanks();
-			// default: {PREFIX}{NICKNAMEPREFIX}{NAME}{SUFFIX}
-			String displayname = settings.getData().getChat().getDisplaynameFormat();
-			if (settings.getData().getCommands().isDisabled("nick") || nick == null || nick.isEmpty() || nick.equals(getName()))
-			{
-				displayname = displayname.replace("{NAME}", getName());
-				displayname = displayname.replace("{NICKNAMEPREFIX}", "");
-			}
-			else
-			{
-				displayname = displayname.replace("{NAME}", nick);
-				displayname = displayname.replace("{NICKNAMEPREFIX}", settings.getData().getChat().getNicknamePrefix());
-			}
 
-			if (displayname.contains("{PREFIX}"))
-			{
-				displayname = displayname.replace("{PREFIX}", groups.getPrefix(this));
-			}
-			if (displayname.contains("{SUFFIX}"))
-			{
-				displayname = displayname.replace("{SUFFIX}", groups.getSuffix(this));
-			}
-			displayname = displayname.replace("{WORLDNAME}", this.getPlayer().getWorld().getName());
-			displayname = displayname.replace('&', '\u00a7');
-			displayname = displayname.concat("\u00a7f");
-
-			return displayname;
-		}
-		finally
+		final String nick = getData().getNickname();
+		final ISettings settings = ess.getSettings();
+		final IRanks groups = ess.getRanks();
+		// default: {PREFIX}{NICKNAMEPREFIX}{NAME}{SUFFIX}
+		String displayname = settings.getData().getChat().getDisplaynameFormat();
+		if (settings.getData().getCommands().isDisabled("nick") || nick == null || nick.isEmpty() || nick.equals(getName()))
 		{
-			unlock();
+			displayname = displayname.replace("{NAME}", getName());
+			displayname = displayname.replace("{NICKNAMEPREFIX}", "");
 		}
+		else
+		{
+			displayname = displayname.replace("{NAME}", nick);
+			displayname = displayname.replace("{NICKNAMEPREFIX}", settings.getData().getChat().getNicknamePrefix());
+		}
+
+		if (displayname.contains("{PREFIX}"))
+		{
+			displayname = displayname.replace("{PREFIX}", groups.getPrefix(this));
+		}
+		if (displayname.contains("{SUFFIX}"))
+		{
+			displayname = displayname.replace("{SUFFIX}", groups.getSuffix(this));
+		}
+		displayname = displayname.replace("{WORLDNAME}", this.getPlayer().getWorld().getName());
+		displayname = displayname.replace('&', '\u00a7');
+		displayname = displayname.concat("\u00a7f");
+
+		return displayname;
 	}
 
 	@Override
@@ -300,9 +249,7 @@ public class User extends UserBase implements IUser
 	@Override
 	public void updateDisplayName()
 	{
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (isOnline() && settings.getData().getChat().getChangeDisplayname())
 		{
 			setDisplayNick();
@@ -355,20 +302,14 @@ public class User extends UserBase implements IUser
 
 	public void setAfk(final boolean set)
 	{
-		acquireWriteLock();
-		try
+
+		this.getPlayer().setSleepingIgnored(Permissions.SLEEPINGIGNORED.isAuthorized(this) ? true : set);
+		if (set && !getData().isAfk())
 		{
-			this.getPlayer().setSleepingIgnored(Permissions.SLEEPINGIGNORED.isAuthorized(this) ? true : set);
-			if (set && !getData().isAfk())
-			{
-				afkPosition = getPlayer().getLocation();
-			}
-			getData().setAfk(set);
+			afkPosition = getPlayer().getLocation();
 		}
-		finally
-		{
-			unlock();
-		}
+		getData().setAfk(set);
+		queueSave();
 	}
 
 	@Override
@@ -383,109 +324,76 @@ public class User extends UserBase implements IUser
 	@Override
 	public boolean checkJailTimeout(final long currentTime)
 	{
-		acquireReadLock();
-		try
+		if (getTimestamp(UserData.TimestampType.JAIL) > 0 && getTimestamp(UserData.TimestampType.JAIL) < currentTime && getData().isJailed())
 		{
-			if (getTimestamp(UserData.TimestampType.JAIL) > 0 && getTimestamp(UserData.TimestampType.JAIL) < currentTime && getData().isJailed())
+
+
+			setTimestamp(UserData.TimestampType.JAIL, 0);
+			getData().setJailed(false);
+			sendMessage(_("haveBeenReleased"));
+			getData().setJail(null);
+			queueSave();
+
+			try
 			{
-				acquireWriteLock();
-
-				setTimestamp(UserData.TimestampType.JAIL, 0);
-				getData().setJailed(false);
-				sendMessage(_("haveBeenReleased"));
-				getData().setJail(null);
-
-				try
-				{
-					teleport.back();
-				}
-				catch (Exception ex)
-				{
-				}
-				return true;
+				teleport.back();
 			}
-			return false;
+			catch (Exception ex)
+			{
+			}
+			return true;
 		}
-		finally
-		{
-			unlock();
-		}
+		return false;
 	}
 
 	//Returns true if status expired during this check
 	@Override
 	public boolean checkMuteTimeout(final long currentTime)
 	{
-		acquireReadLock();
-		try
+		if (getTimestamp(UserData.TimestampType.MUTE) > 0 && getTimestamp(UserData.TimestampType.MUTE) < currentTime && getData().isMuted())
 		{
-			if (getTimestamp(UserData.TimestampType.MUTE) > 0 && getTimestamp(UserData.TimestampType.MUTE) < currentTime && getData().isMuted())
-			{
-				acquireWriteLock();
-				setTimestamp(UserData.TimestampType.MUTE, 0);
-				sendMessage(_("canTalkAgain"));
-				getData().setMuted(false);
-				return true;
-			}
-			return false;
+			setTimestamp(UserData.TimestampType.MUTE, 0);
+			sendMessage(_("canTalkAgain"));
+			getData().setMuted(false);
+			queueSave();
+			return true;
 		}
-		finally
-		{
-			unlock();
-		}
+		return false;
 	}
 
 	//Returns true if status expired during this check
 	@Override
 	public boolean checkBanTimeout(final long currentTime)
 	{
-		acquireReadLock();
-		try
+		if (getData().getBan() != null && getData().getBan().getTimeout() > 0 && getData().getBan().getTimeout() < currentTime && isBanned())
 		{
-			if (getData().getBan() != null && getData().getBan().getTimeout() > 0 && getData().getBan().getTimeout() < currentTime && isBanned())
-			{
-				acquireWriteLock();
-				getData().setBan(null);
-				setBanned(false);
-				return true;
-			}
-			return false;
+			getData().setBan(null);
+			setBanned(false);
+			queueSave();
+			return true;
 		}
-		finally
-		{
-			unlock();
-		}
+		return false;
 	}
 
 	@Override
 	public void updateActivity(final boolean broadcast)
 	{
-		acquireReadLock();
-		try
+		if (getData().isAfk())
 		{
-			if (getData().isAfk())
+			getData().setAfk(false);
+			queueSave();
+			if (broadcast && !hidden)
 			{
-				acquireWriteLock();
-				getData().setAfk(false);
-				if (broadcast && !hidden)
-				{
-					ess.broadcastMessage(this, _("userIsNotAway", getPlayer().getDisplayName()));
-				}
+				ess.broadcastMessage(this, _("userIsNotAway", getPlayer().getDisplayName()));
 			}
-			lastActivity = System.currentTimeMillis();
 		}
-		finally
-		{
-			unlock();
-		}
+		lastActivity = System.currentTimeMillis();
 	}
 
 	@Override
 	public void checkActivity()
 	{
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		final long autoafkkick = settings.getData().getCommands().getAfk().getAutoAFKKick();
 		if (autoafkkick > 0 && lastActivity > 0 && (lastActivity + (autoafkkick * 1000)) < System.currentTimeMillis()
 			&& !hidden
@@ -506,21 +414,14 @@ public class User extends UserBase implements IUser
 			}
 		}
 		final long autoafk = settings.getData().getCommands().getAfk().getAutoAFK();
-		acquireReadLock();
-		try
+
+		if (!getData().isAfk() && autoafk > 0 && lastActivity + autoafk * 1000 < System.currentTimeMillis() && Permissions.AFK.isAuthorized(this))
 		{
-			if (!getData().isAfk() && autoafk > 0 && lastActivity + autoafk * 1000 < System.currentTimeMillis() && Permissions.AFK.isAuthorized(this))
+			setAfk(true);
+			if (!hidden)
 			{
-				setAfk(true);
-				if (!hidden)
-				{
-					ess.broadcastMessage(this, _("userIsAway", getPlayer().getDisplayName()));
-				}
+				ess.broadcastMessage(this, _("userIsAway", getPlayer().getDisplayName()));
 			}
-		}
-		finally
-		{
-			unlock();
 		}
 	}
 
@@ -533,20 +434,10 @@ public class User extends UserBase implements IUser
 	@Override
 	public boolean isGodModeEnabled()
 	{
-		acquireReadLock();
-		try
-		{
-			@Cleanup
-			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
-			return (getData().isGodmode()
-					&& !settings.getData().getWorldOptions(getPlayer().getLocation().getWorld().getName()).isGodmode())
-				   || (getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers());
-		}
-		finally
-		{
-			unlock();
-		}
+		final ISettings settings = ess.getSettings();
+		return (getData().isGodmode()
+				&& !settings.getData().getWorldOptions(getPlayer().getLocation().getWorld().getName()).isGodmode())
+			   || (getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers());
 	}
 
 	@Override
@@ -649,9 +540,7 @@ public class User extends UserBase implements IUser
 		final Map<Integer, ItemStack> overfilled;
 		if (Permissions.OVERSIZEDSTACKS.isAuthorized(this))
 		{
-			@Cleanup
 			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
 			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
 
 			overfilled = InventoryWorkaround.addItem(getPlayer().getInventory(), true, oversizedStackSize, itemStack);
@@ -684,9 +573,7 @@ public class User extends UserBase implements IUser
 		final double mon = getMoney();
 		if (Permissions.ECO_LOAN.isAuthorized(this))
 		{
-			@Cleanup
 			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
 			return (mon - cost) >= settings.getData().getEconomy().getMinMoney();
 		}
 		return cost <= mon;
@@ -710,9 +597,7 @@ public class User extends UserBase implements IUser
 
 	public void enableInvulnerabilityAfterTeleport()
 	{
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 
 		final long time = settings.getData().getGeneral().getTeleportInvulnerability();
 		if (time > 0)

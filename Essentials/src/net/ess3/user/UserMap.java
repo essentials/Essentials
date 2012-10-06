@@ -51,7 +51,8 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 			}
 		}
 		Player player = ess.getServer().getPlayerExact(name);
-		if (player != null) {
+		if (player != null)
+		{
 			return new User(ess.getServer().getOfflinePlayer(player.getName()), ess);
 		}
 		final File userFile = getUserFile(name);
@@ -97,7 +98,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 		}
 		return user;
 	}
-	
+
 	@Override
 	public IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline) throws TooManyMatchesException, PlayerNotFoundException
 	{
@@ -242,14 +243,6 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 
 	private String getNickNamePrefix()
 	{
-		ess.getSettings().acquireReadLock();
-		try
-		{
-			return ess.getSettings().getData().getChat().getNicknamePrefix();
-		}
-		finally
-		{
-			ess.getSettings().unlock();
-		}
+		return ess.getSettings().getData().getChat().getNicknamePrefix();
 	}
 }

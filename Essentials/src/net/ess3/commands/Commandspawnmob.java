@@ -136,17 +136,11 @@ public class Commandspawnmob extends EssentialsCommand
 		if (args.length >= 2)
 		{
 			int mobCount = Integer.parseInt(args[1]);
-			int serverLimit = 1;
+
 			ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
-			try
-			{
-				serverLimit = settings.getData().getCommands().getSpawnmob().getLimit();
-			}
-			finally
-			{
-				settings.unlock();
-			}
+
+			int serverLimit = settings.getData().getCommands().getSpawnmob().getLimit();
+
 			if (mobCount > serverLimit)
 			{
 				mobCount = serverLimit;

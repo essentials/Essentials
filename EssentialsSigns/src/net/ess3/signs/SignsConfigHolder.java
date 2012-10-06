@@ -19,43 +19,29 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 		super(ess, SignsConfig.class);
 		this.plugin = plugin;
 		onReload();
-		acquireReadLock();
-		try
+		final Map<String, Boolean> signs = getData().getSigns();
+		for (Map.Entry<String, Boolean> entry : signs.entrySet())
 		{
-			final Map<String, Boolean> signs = getData().getSigns();
-			for (Map.Entry<String, Boolean> entry : signs.entrySet())
+			if (entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOR") || entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOUR"))
 			{
-				if (entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOR") || entry.getKey().trim().toUpperCase(Locale.ENGLISH).equals("COLOUR"))
-				{
-					signsEnabled = true;
-					continue;
-				}
-				final Signs sign = Signs.valueOf(entry.getKey().toUpperCase(Locale.ENGLISH));
-				if (sign != null && entry.getValue())
-				{
-					enabledSigns.add(sign.getSign());
-					signsEnabled = true;
-				}				
+				signsEnabled = true;
+				continue;
+			}
+			final Signs sign = Signs.valueOf(entry.getKey().toUpperCase(Locale.ENGLISH));
+			if (sign != null && entry.getValue())
+			{
+				enabledSigns.add(sign.getSign());
+				signsEnabled = true;
 			}
 		}
-		finally
+
+		final Map<String, Boolean> signs2 = new HashMap<String, Boolean>();
+		for (Signs sign : Signs.values())
 		{
-			unlock();
+			signs2.put(sign.toString(), enabledSigns.contains(sign.getSign()));
 		}
-		acquireWriteLock();
-		try
-		{
-			final Map<String, Boolean> signs = new HashMap<String, Boolean>();
-			for (Signs sign : Signs.values())
-			{
-				signs.put(sign.toString(), enabledSigns.contains(sign.getSign()));
-			}
-			getData().setSigns(signs);
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().setSigns(signs2);
+		queueSave();
 	}
 
 	@Override

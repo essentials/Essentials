@@ -18,19 +18,11 @@ public class Commandmore extends EssentialsCommand
 		{
 			throw new Exception(_("cantSpawnItem", "Air"));
 		}
-		int defaultStackSize = 0;
-		int oversizedStackSize = 0;
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		try
-		{
-			defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();
-			oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
-		}
-		finally
-		{
-			settings.unlock();
-		}
+
+		int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();
+		int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
+
 		if (stack.getAmount() >= (Permissions.OVERSIZEDSTACKS.isAuthorized(user)
 								  ? oversizedStackSize
 								  : defaultStackSize > 0 ? defaultStackSize : stack.getMaxStackSize()))

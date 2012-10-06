@@ -21,19 +21,12 @@ public class EssentialsProtectWeatherListener implements Listener
 	public void onWeatherChange(final WeatherChangeEvent event)
 	{
 		final ProtectHolder settings = prot.getSettings();
-		settings.acquireReadLock();
-		try
+
+		if (!event.isCancelled()
+			&& settings.getData().isDisableStorm()
+			&& event.toWeatherState())
 		{
-			if (!event.isCancelled()
-				&& settings.getData().isDisableStorm()
-				&& event.toWeatherState())
-			{
-				event.setCancelled(true);
-			}
-		}
-		finally
-		{
-			settings.unlock();
+			event.setCancelled(true);
 		}
 	}
 
@@ -41,18 +34,11 @@ public class EssentialsProtectWeatherListener implements Listener
 	public void onLightningStrike(final LightningStrikeEvent event)
 	{
 		final ProtectHolder settings = prot.getSettings();
-		settings.acquireReadLock();
-		try
+
+		if (!event.isCancelled()
+			&& settings.getData().isDisableLighting())
 		{
-			if (!event.isCancelled()
-				&& settings.getData().isDisableLighting())
-			{
-				event.setCancelled(true);
-			}
-		}
-		finally
-		{
-			settings.unlock();
+			event.setCancelled(true);
 		}
 	}
 
@@ -60,19 +46,12 @@ public class EssentialsProtectWeatherListener implements Listener
 	public void onThunderChange(final ThunderChangeEvent event)
 	{
 		final ProtectHolder settings = prot.getSettings();
-		settings.acquireReadLock();
-		try
+
+		if (!event.isCancelled()
+			&& settings.getData().isDisableThunder()
+			&& event.toThunderState())
 		{
-			if (!event.isCancelled()
-				&& settings.getData().isDisableThunder()
-				&& event.toThunderState())
-			{
-				event.setCancelled(true);
-			}
-		}
-		finally
-		{
-			settings.unlock();
+			event.setCancelled(true);
 		}
 	}
 }

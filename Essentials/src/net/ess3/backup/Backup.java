@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IBackup;
 import net.ess3.api.IEssentials;
@@ -37,9 +36,7 @@ public class Backup implements Runnable, IBackup
 	{
 		if (running.compareAndSet(false, true))
 		{
-			@Cleanup
 			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
 			final long interval = settings.getData().getGeneral().getBackup().getInterval() * 1200; // minutes -> ticks
 			if (interval < 1200)
 			{
@@ -57,9 +54,7 @@ public class Backup implements Runnable, IBackup
 		{
 			return;
 		}
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		final String command = settings.getData().getGeneral().getBackup().getCommand();
 		if (command == null || command.isEmpty())
 		{

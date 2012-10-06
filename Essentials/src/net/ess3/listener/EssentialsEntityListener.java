@@ -1,7 +1,6 @@
 package net.ess3.listener;
 
 import java.util.List;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
@@ -38,15 +37,12 @@ public class EssentialsEntityListener implements Listener
 
 		if (eDefend instanceof Player && eAttack instanceof Player)
 		{
-			@Cleanup
+
 			final IUser attacker = ess.getUserMap().getUser((Player)eAttack);
-			@Cleanup
+
 			final IUser defender = ess.getUserMap().getUser((Player)eDefend);
-			@Cleanup
+
 			ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
-			attacker.acquireReadLock();
-			defender.acquireReadLock();
 
 			attacker.updateActivity(true);
 			if (settings.getData().getGeneral().getLoginAttackDelay() > 0 && !Permissions.PVPDELAY_EXEMPT.isAuthorized(attacker)
@@ -121,9 +117,8 @@ public class EssentialsEntityListener implements Listener
 	public void onPlayerDeathEvent(final PlayerDeathEvent event)
 	{
 		final IUser user = ess.getUserMap().getUser((Player)event.getEntity());
-		@Cleanup
+
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (Permissions.BACK_ONDEATH.isAuthorized(user) && !settings.getData().getCommands().isDisabled("back"))
 		{
 			user.setLastLocation();
@@ -161,12 +156,10 @@ public class EssentialsEntityListener implements Listener
 
 		if (event.getRegainReason() == RegainReason.SATIATED && event.getEntity() instanceof Player)
 		{
-			@Cleanup
+
 			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
-			@Cleanup
+
 			final IUser user = ess.getUserMap().getUser((Player)event.getEntity());
-			user.acquireReadLock();
 			if (user.getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers())
 			{
 				event.setCancelled(true);
@@ -187,18 +180,10 @@ public class EssentialsEntityListener implements Listener
 			return;
 		}
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		try
+		final Boolean prevent = settings.getData().getWorldOptions(event.getLocation().getWorld().getName()).getPreventSpawn(creature);
+		if (prevent != null && prevent)
 		{
-			final Boolean prevent = settings.getData().getWorldOptions(event.getLocation().getWorld().getName()).getPreventSpawn(creature);
-			if (prevent != null && prevent)
-			{
-				event.setCancelled(true);
-			}
-		}
-		finally
-		{
-			settings.unlock();
+			event.setCancelled(true);
 		}
 	}
 }

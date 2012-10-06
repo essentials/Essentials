@@ -21,8 +21,8 @@ public class Commandpowertool extends EssentialsCommand
 		// check to see if this is a clear all command
 		if (command != null && command.equalsIgnoreCase("d:"))
 		{
-			user.acquireWriteLock();
 			user.getData().clearAllPowertools();
+			user.queueSave();
 			user.sendMessage(_("powerToolClearAll"));
 			return;
 		}
@@ -34,7 +34,6 @@ public class Commandpowertool extends EssentialsCommand
 		}
 
 		final String itemName = itemStack.getType().toString().toLowerCase(Locale.ENGLISH).replaceAll("_", " ");
-		user.acquireReadLock();
 		List<String> powertools = user.getData().getPowertool(itemStack.getType());
 		if (command != null && !command.isEmpty())
 		{
@@ -57,7 +56,8 @@ public class Commandpowertool extends EssentialsCommand
 				{
 					throw new Exception(_("powerToolNoSuchCommandAssigned", command, itemName));
 				}
-
+				
+				powertools = new ArrayList<String>(powertools);
 				powertools.remove(command);
 				user.sendMessage(_("powerToolRemove", command, itemName));
 			}
@@ -74,11 +74,7 @@ public class Commandpowertool extends EssentialsCommand
 					{
 						throw new Exception(_("powerToolAlreadySet", command, itemName));
 					}
-				}
-				else if (powertools != null && !powertools.isEmpty())
-				{
-					// Replace all commands with this one
-					powertools.clear();
+					powertools = new ArrayList<String>(powertools);
 				}
 				else
 				{
@@ -91,10 +87,7 @@ public class Commandpowertool extends EssentialsCommand
 		}
 		else
 		{
-			if (powertools != null)
-			{
-				powertools.clear();
-			}
+			powertools = new ArrayList<String>();
 			user.sendMessage(_("powerToolRemoveAll", itemName));
 		}
 
@@ -103,7 +96,7 @@ public class Commandpowertool extends EssentialsCommand
 			user.getData().setPowerToolsEnabled(true);
 			user.sendMessage(_("powerToolsEnabled"));
 		}
-		user.acquireWriteLock();
 		user.getData().setPowertool(itemStack.getType(), powertools);
+		user.queueSave();
 	}
 }

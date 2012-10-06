@@ -14,8 +14,8 @@ public class Commandpowertooltoggle extends EssentialsCommand
 			user.sendMessage(_("noPowerTools"));
 			return;
 		}
-		user.acquireWriteLock();
 		user.getData().setPowerToolsEnabled(!user.getData().isPowerToolsEnabled());
+		user.queueSave();
 		user.sendMessage(user.getData().isPowerToolsEnabled()
 						 ? _("powerToolsEnabled")
 						 : _("powerToolsDisabled"));

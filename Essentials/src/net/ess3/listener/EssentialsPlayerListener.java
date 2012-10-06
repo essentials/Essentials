@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
@@ -60,9 +59,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(final PlayerChatEvent event)
 	{
-		@Cleanup
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireReadLock();
 		if (user.getData().isMuted())
 		{
 			event.setCancelled(true);
@@ -85,12 +82,9 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerMove(final PlayerMoveEvent event)
 	{
-		@Cleanup
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireReadLock();
-		@Cleanup
+
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 
 		if (user.getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers())
 		{
@@ -120,12 +114,9 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
-		@Cleanup
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireReadLock();
-		@Cleanup
+
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (settings.getData().getCommands().getGod().isRemoveOnDisconnect() && user.isGodModeEnabled())
 		{
 			user.setGodModeEnabled(false);
@@ -151,9 +142,8 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 		ess.getBackup().startTask();
-		@Cleanup
+
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireWriteLock();
 
 		user.updateDisplayName();
 		user.getData().setIpAddress(user.getPlayer().getAddress().getAddress().getHostAddress());
@@ -171,10 +161,10 @@ public class EssentialsPlayerListener implements Listener
 		{
 			user.getPlayer().setSleepingIgnored(true);
 		}
+		user.queueSave();
 
-		@Cleanup
+
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 
 		if (!settings.getData().getCommands().isDisabled("motd") && Permissions.MOTD.isAuthorized(user))
 		{
@@ -224,9 +214,8 @@ public class EssentialsPlayerListener implements Listener
 		default:
 			return;
 		}
-		@Cleanup
+
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireWriteLock();
 		user.getData().setNpc(false);
 
 		final long currentTime = System.currentTimeMillis();
@@ -250,14 +239,14 @@ public class EssentialsPlayerListener implements Listener
 
 		user.setTimestamp(TimestampType.LOGIN, System.currentTimeMillis());
 		user.updateCompass();
+		user.queueSave();
 	}
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerTeleport(final PlayerTeleportEvent event)
 	{
-		@Cleanup
+
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		//There is TeleportCause.COMMMAND but plugins have to actively pass the cause in on their teleports.
 		if ((event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND) && settings.getData().getCommands().getBack().isRegisterBackInListener())
 		{
@@ -270,9 +259,8 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerEggThrow(final PlayerEggThrowEvent event)
 	{
-		@Cleanup
+
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireReadLock();
 		final ItemStack hand = new ItemStack(Material.EGG, 1);
 		if (user.getData().hasUnlimited(hand.getType()))
 		{
@@ -284,9 +272,8 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event)
 	{
-		@Cleanup
+
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireReadLock();
 		if (user.getData().hasUnlimited(event.getBucket()))
 		{
 			event.getItemStack().setType(event.getBucket());
@@ -311,9 +298,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			for (Player player : ess.getServer().getOnlinePlayers())
 			{
-				@Cleanup
 				IUser spyer = ess.getUserMap().getUser(player);
-				spyer.acquireReadLock();
 				if (spyer.getData().isSocialspy() && !user.equals(spyer))
 				{
 					player.sendMessage(user.getPlayer().getDisplayName() + " : " + event.getMessage());
@@ -329,12 +314,9 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerChangedWorld(final PlayerChangedWorldEvent event)
 	{
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		@Cleanup
+
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireReadLock();
 		if (settings.getData().getChat().getChangeDisplayname())
 		{
 			user.updateDisplayName();
@@ -359,9 +341,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
-		@Cleanup
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireReadLock();
 		user.updateActivity(true);
 		switch (event.getAction())
 		{
@@ -370,9 +350,8 @@ public class EssentialsPlayerListener implements Listener
 			{
 				return;
 			}
-			@Cleanup
+
 			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
 			if (settings.getData().getCommands().getHome().isUpdateBedAtDaytime() && event.getClickedBlock().getType() == Material.BED_BLOCK)
 			{
 				event.getPlayer().setBedSpawnLocation(event.getClickedBlock().getLocation());
@@ -441,16 +420,13 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPlayerPickupItem(final PlayerPickupItemEvent event)
 	{
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (!settings.getData().getCommands().getAfk().isDisableItemPickupWhileAfk())
 		{
 			return;
 		}
-		@Cleanup
+
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireReadLock();
 		if (user.getData().isAfk())
 		{
 			event.setCancelled(true);

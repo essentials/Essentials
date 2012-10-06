@@ -20,8 +20,8 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class Teleport implements Runnable, ITeleport
 {
-
 	private static final double MOVE_CONSTANT = 0.3;
+
 
 	private static class Target
 	{
@@ -269,31 +269,15 @@ public class Teleport implements Runnable, ITeleport
 	@Override
 	public void back(Trade chargeFor) throws Exception
 	{
-		user.acquireReadLock();
-		try
-		{
-			teleport(new Target(user.getData().getLastLocation().getStoredLocation()), chargeFor, TeleportCause.COMMAND);
-		}
-		finally
-		{
-			user.unlock();
-		}
+		teleport(new Target(user.getData().getLastLocation().getStoredLocation()), chargeFor, TeleportCause.COMMAND);
 	}
 
 	@Override
 	public void back() throws Exception
 	{
-		user.acquireReadLock();
-		try
-		{
-			now(new Target(user.getData().getLastLocation().getStoredLocation()), TeleportCause.COMMAND);
-		}
-		finally
-		{
-			user.unlock();
-		}
+		now(new Target(user.getData().getLastLocation().getStoredLocation()), TeleportCause.COMMAND);
 	}
-	
+
 	@Override
 	public void home(Location loc, Trade chargeFor) throws Exception
 	{

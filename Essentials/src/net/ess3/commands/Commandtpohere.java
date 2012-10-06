@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -26,9 +25,8 @@ public class Commandtpohere extends EssentialsCommand
 		{
 			throw new NoSuchFieldException(_("playerNotFound"));
 		}
-		@Cleanup
+		
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		//todo - common method
 		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
 			&& !Permissions.WORLD.isAuthorized(player, user.getPlayer().getWorld().getName()))

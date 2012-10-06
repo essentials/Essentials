@@ -1,7 +1,6 @@
 package net.ess3.commands;
 
 import java.util.Locale;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
@@ -18,7 +17,6 @@ public class Commanddelhome extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		@Cleanup
 		IUser user = sender instanceof IUser ? (IUser)sender : null;
 		String name;
 		String[] expandedArg;
@@ -51,8 +49,8 @@ public class Commanddelhome extends EssentialsCommand
 		/*
 		 * if (name.equalsIgnoreCase("bed")) { throw new Exception("You cannot remove the vanilla home point"); }
 		 */
-		user.acquireWriteLock();
 		user.getData().removeHome(name.toLowerCase(Locale.ENGLISH));
+		user.queueSave();
 		sender.sendMessage(_("deleteHome", name));
 	}
 }

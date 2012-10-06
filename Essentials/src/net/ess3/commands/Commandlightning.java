@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -51,9 +50,7 @@ public class Commandlightning extends EssentialsCommand
 			{
 				matchPlayer.getPlayer().damage(power, strike);
 			}
-			@Cleanup
 			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
 			if (settings.getData().getCommands().getLightning().isWarnPlayer())
 			{
 				matchPlayer.sendMessage(_("lightningSmited"));

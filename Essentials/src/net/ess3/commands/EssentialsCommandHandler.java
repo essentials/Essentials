@@ -51,19 +51,11 @@ public class EssentialsCommandHandler implements ICommandHandler
 	@Override
 	public boolean handleCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
 	{
-		boolean disabled = false;
-		boolean overridden = false;
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		try
-		{
-			disabled = settings.getData().getCommands().isDisabled(command.getName());
-			overridden = !disabled || settings.getData().getCommands().isOverridden(command.getName());
-		}
-		finally
-		{
-			settings.unlock();
-		}
+
+		boolean disabled = settings.getData().getCommands().isDisabled(command.getName());
+		boolean overridden = !disabled || settings.getData().getCommands().isOverridden(command.getName());
+
 		// TODO: Move this stuff to bukkit workarounds
 		// Allow plugins to override the command via onCommand
 		if (!overridden && (!commandLabel.startsWith("e") || commandLabel.equalsIgnoreCase(command.getName())))
@@ -71,7 +63,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 			final PluginCommand pc = getAlternative(commandLabel);
 			if (pc != null)
 			{
-				
+
 				executed(commandLabel, pc.getLabel());
 				try
 				{
@@ -133,7 +125,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 				sender.sendMessage(_("noAccessCommand"));
 				return true;
 			}
-			
+
 			IUser user = null;
 			if (sender instanceof Player)
 			{
@@ -150,7 +142,6 @@ public class EssentialsCommandHandler implements ICommandHandler
 				}
 				else
 				{
-					user.acquireReadLock();
 					user.setPlayerCache((Player)sender);
 					try
 					{
@@ -158,7 +149,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 					}
 					finally
 					{
-						user.unlock();
+						user.setPlayerCache(null);
 					}
 				}
 				return true;

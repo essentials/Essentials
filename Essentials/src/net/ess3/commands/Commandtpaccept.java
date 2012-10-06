@@ -19,30 +19,22 @@ public class Commandtpaccept extends EssentialsCommand
 		}
 
 		final IUser target = user.getTeleportRequester();
-		if (target == null 
+		if (target == null
 			|| !target.isOnline()
 			|| (user.isTpRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
 			|| (!user.isTpRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}
-		
+
 		if (args.length > 0 && !target.getName().contains(args[0]))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}
 
-		int tpaAcceptCancellation = 0;
+
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		try
-		{
-			tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
-		}
-		finally
-		{
-			settings.unlock();
-		}
+		int tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
 
 		if (tpaAcceptCancellation != 0 && (System.currentTimeMillis() - user.getTeleportRequestTime()) / 1000 > tpaAcceptCancellation)
 		{

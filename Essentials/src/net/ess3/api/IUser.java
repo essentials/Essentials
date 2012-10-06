@@ -128,7 +128,7 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	/**
 	 * Since the Player object should not be stored for a long time, this method should be called again with a null
-	 * value or the close() method should be called.
+	 * value.
 	 *
 	 * @param player
 	 */

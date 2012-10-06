@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.regex.Pattern;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
@@ -126,17 +125,13 @@ public class FormatUtil
 
 	public static String shortCurrency(final double value, final IEssentials ess)
 	{
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		return settings.getData().getEconomy().getCurrencySymbol() + formatAsCurrency(value);
 	}
 
 	public static String displayCurrency(final double value, final IEssentials ess)
 	{
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		return _("currency", settings.getData().getEconomy().getCurrencySymbol(), formatAsCurrency(value));
 	}
 

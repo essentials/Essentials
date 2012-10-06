@@ -37,15 +37,7 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 			{
 				continue;
 			}
-			warp.acquireReadLock();
-			try
-			{
-				names.add(warp.getData().getName());
-			}
-			finally
-			{
-				warp.unlock();
-			}
+			names.add(warp.getData().getName());
 		}
 		Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
 		return names;
@@ -59,15 +51,7 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 		{
 			throw new WarpNotFoundException(_("warpNotExist"));
 		}
-		warp.acquireReadLock();
-		try
-		{
-			return warp.getData().getLocation().getStoredLocation();
-		}
-		finally
-		{
-			warp.unlock();
-		}
+		return warp.getData().getLocation().getStoredLocation();
 	}
 
 	@Override
@@ -83,15 +67,8 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 		{
 			warp = new WarpHolder(name, ess);
 		}
-		warp.acquireWriteLock();
-		try
-		{
-			warp.getData().setLocation(loc);
-		}
-		finally
-		{
-			warp.unlock();
-		}
+		warp.getData().setLocation(loc);
+		warp.queueSave();
 	}
 
 	@Override

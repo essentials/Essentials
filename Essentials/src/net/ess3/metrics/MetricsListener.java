@@ -1,7 +1,6 @@
 package net.ess3.metrics;
 
 import java.util.logging.Level;
-import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -30,16 +29,15 @@ public class MetricsListener implements Listener
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
 		final IUser player = ess.getUserMap().getUser(event.getPlayer());
-		@Cleanup
+		
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (settings.getData().getGeneral().getMetricsEnabled() == null && (Permissions.ESSENTIALS.isAuthorized(event.getPlayer()) || event.getPlayer().hasPermission("bukkit.broadcast.admin")))
 		{
 			player.sendMessage("PluginMetrics collects minimal statistic data, starting in about 5 minutes.");
 			player.sendMessage("To opt out, run /essentials opt-out");
 			ess.getLogger().log(Level.INFO, "[Metrics] Admin join - Starting 5 minute opt-out period.");
-			settings.acquireWriteLock();
 			settings.getData().getGeneral().setMetricsEnabled(true);
+			settings.queueSave();
 			ess.getPlugin().scheduleAsyncDelayedTask(starter, 5 * 1200);
 		}
 	}

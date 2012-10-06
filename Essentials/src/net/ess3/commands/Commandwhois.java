@@ -1,7 +1,6 @@
 package net.ess3.commands;
 
 import java.util.Locale;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -13,7 +12,6 @@ import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 
 
 public class Commandwhois extends EssentialsCommand
@@ -38,21 +36,18 @@ public class Commandwhois extends EssentialsCommand
 			showhidden = true;
 		}
 		final String whois = args[0].toLowerCase(Locale.ENGLISH);
-		@Cleanup
+
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		final int prefixLength = FormatUtil.stripColor(settings.getData().getChat().getNicknamePrefix()).length();
 		boolean foundPlayer = false;
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().getUser(onlinePlayer);
 
 			if (user.isHidden() && !showhidden)
 			{
 				continue;
 			}
-			user.acquireReadLock();
 			final String nickName = FormatUtil.stripFormat(user.getData().getNickname());
 			if (!whois.equalsIgnoreCase(nickName)
 				&& !whois.substring(prefixLength).equalsIgnoreCase(nickName)
@@ -90,7 +85,7 @@ public class Commandwhois extends EssentialsCommand
 												 ? DateUtil.formatDateDiff(user.getTimestamp(UserData.TimestampType.MUTE))
 												 : _("true")
 											   : _("false"))));
-			
+
 			if (!foundPlayer)
 			{
 				throw new NoSuchFieldException(_("playerNotFound"));

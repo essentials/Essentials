@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import net.ess3.Console;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
@@ -16,18 +15,14 @@ public class Commandtp extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		@Cleanup
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		switch (args.length)
 		{
 		case 0:
 			throw new NotEnoughArgumentsException();
 
 		case 1:
-			@Cleanup
 			final IUser player = ess.getUserMap().matchUser(args[0], false, false);
-			player.acquireReadLock();
 			if (!player.getData().isTeleportEnabled())
 			{
 				throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
@@ -49,12 +44,10 @@ public class Commandtp extends EssentialsCommand
 				throw new Exception(_("needTpohere"));
 			}
 			user.sendMessage(_("teleporting"));
-			@Cleanup
+			
 			final IUser target = ess.getUserMap().matchUser(args[0], false, false);
-			@Cleanup
+			
 			final IUser toPlayer = ess.getUserMap().matchUser(args[1], false, false);
-			target.acquireReadLock();
-			toPlayer.acquireReadLock();
 
 			if (!target.getData().isTeleportEnabled())
 			{

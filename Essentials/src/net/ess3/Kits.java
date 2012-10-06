@@ -32,25 +32,17 @@ public class Kits extends AsyncStorageObjectHolder<net.ess3.settings.Kits> imple
 	@Override
 	public Kit getKit(String kitName) throws Exception
 	{
-		acquireReadLock();
-		try
+		if (getData().getKits() == null || kitName == null
+			|| !getData().getKits().containsKey(kitName.toLowerCase(Locale.ENGLISH)))
 		{
-			if (getData().getKits() == null || kitName == null
-				|| !getData().getKits().containsKey(kitName.toLowerCase(Locale.ENGLISH)))
-			{
-				throw new Exception(_("kitError2"));
-			}
-			final Kit kit = getData().getKits().get(kitName.toLowerCase(Locale.ENGLISH));
-			if (kit == null)
-			{
-				throw new Exception(_("kitError2"));
-			}
-			return kit;
+			throw new Exception(_("kitError2"));
 		}
-		finally
+		final Kit kit = getData().getKits().get(kitName.toLowerCase(Locale.ENGLISH));
+		if (kit == null)
 		{
-			unlock();
+			throw new Exception(_("kitError2"));
 		}
+		return kit;
 	}
 
 	@Override
@@ -63,26 +55,18 @@ public class Kits extends AsyncStorageObjectHolder<net.ess3.settings.Kits> imple
 	@Override
 	public void sendKit(IUser user, Kit kit) throws Exception
 	{
-		final List<ItemStack> itemList = kit.getItems();		
-		user.giveItems(itemList, true);					
+		final List<ItemStack> itemList = kit.getItems();
+		user.giveItems(itemList, true);
 	}
 
 	@Override
 	public Collection<String> getList() throws Exception
 	{
-		acquireReadLock();
-		try
+		if (getData().getKits() == null)
 		{
-			if (getData().getKits() == null)
-			{
-				return Collections.emptyList();
-			}
-			return new ArrayList<String>(getData().getKits().keySet());
+			return Collections.emptyList();
 		}
-		finally
-		{
-			unlock();
-		}
+		return new ArrayList<String>(getData().getKits().keySet());
 	}
 
 	@Override
@@ -94,13 +78,11 @@ public class Kits extends AsyncStorageObjectHolder<net.ess3.settings.Kits> imple
 	@Override
 	public void finishRead()
 	{
-		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		
 	}
 
 	@Override

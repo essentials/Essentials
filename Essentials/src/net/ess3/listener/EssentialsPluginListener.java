@@ -65,16 +65,8 @@ public class EssentialsPluginListener implements Listener, IReload
 	private void checkGroups()
 	{
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		General.GroupStorage storage = General.GroupStorage.FILE;
-		try
-		{
-			storage = settings.getData().getGeneral().getGroupStorage();
-		}
-		finally
-		{
-			settings.unlock();
-		}
+		General.GroupStorage storage = settings.getData().getGeneral().getGroupStorage();
+
 		if (storage == General.GroupStorage.GROUPMANAGER)
 		{
 			Plugin groupManager = ess.getServer().getPluginManager().getPlugin("GroupManager");

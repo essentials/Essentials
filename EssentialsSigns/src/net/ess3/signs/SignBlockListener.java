@@ -1,11 +1,10 @@
 package net.ess3.signs;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
-import net.ess3.utils.Util;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.Material;
@@ -36,7 +35,6 @@ public class SignBlockListener implements Listener
 	public void onBlockBreak(final BlockBreakEvent event)
 	{
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (plugin.getSettings().areSignsDisabled())
 		{
 			return;

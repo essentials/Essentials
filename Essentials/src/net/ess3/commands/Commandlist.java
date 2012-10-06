@@ -6,9 +6,9 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 
 public class Commandlist extends EssentialsCommand
 {
@@ -40,17 +40,9 @@ public class Commandlist extends EssentialsCommand
 		}
 		sender.sendMessage(online);
 
-		boolean sortListByGroups = false;
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		try
-		{
-			sortListByGroups = settings.getData().getCommands().getList().isSortByGroups();
-		}
-		finally
-		{
-			settings.unlock();
-		}
+
+		boolean sortListByGroups = sortListByGroups = settings.getData().getCommands().getList().isSortByGroups();
 
 		if (sortListByGroups)
 		{
@@ -76,7 +68,7 @@ public class Commandlist extends EssentialsCommand
 			for (String group : groups)
 			{
 				final StringBuilder groupString = new StringBuilder();
-				groupString.append(_("listGroupTag",FormatUtil.replaceFormat(group)));
+				groupString.append(_("listGroupTag", FormatUtil.replaceFormat(group)));
 				final List<IUser> users = sort.get(group);
 				Collections.sort(users);
 				boolean first = true;
@@ -90,18 +82,12 @@ public class Commandlist extends EssentialsCommand
 					{
 						first = false;
 					}
-					user.acquireReadLock();
-					try
+
+					if (user.getData().isAfk())
 					{
-						if (user.getData().isAfk())
-						{
-							groupString.append(_("listAfkTag"));
-						}
+						groupString.append(_("listAfkTag"));
 					}
-					finally
-					{
-						user.unlock();
-					}
+
 					if (user.isHidden())
 					{
 						groupString.append(_("listHiddenTag"));
@@ -140,18 +126,12 @@ public class Commandlist extends EssentialsCommand
 				{
 					first = false;
 				}
-				user.acquireReadLock();
-				try
+
+				if (user.getData().isAfk())
 				{
-					if (user.getData().isAfk())
-					{
-						onlineUsers.append(_("listAfkTag"));
-					}
+					onlineUsers.append(_("listAfkTag"));
 				}
-				finally
-				{
-					user.unlock();
-				}
+
 				if (user.isHidden())
 				{
 					onlineUsers.append(_("listHiddenTag"));

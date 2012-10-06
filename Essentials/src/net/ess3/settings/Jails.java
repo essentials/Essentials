@@ -35,4 +35,11 @@ public class Jails implements StorageObject
 		jailMap.put(name, new StoredLocation(loc));
 		jails = jailMap;
 	}
+
+	public void removeJail(String name)
+	{
+		Map<String, StoredLocation> jailMap = new HashMap<String, StoredLocation>(getJails());
+		jailMap.remove(name);
+		jails = jailMap;
+	}
 }

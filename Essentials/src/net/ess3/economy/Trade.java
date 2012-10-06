@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
@@ -81,9 +80,8 @@ public class Trade
 			throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 		}
 
-		@Cleanup
+
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 
 		double money;
 		if (command != null && !command.isEmpty()
@@ -167,15 +165,14 @@ public class Trade
 			{
 				throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 			}
-			InventoryWorkaround.removeItem(user.getPlayer().getInventory() , true, true, getItemStack());
+			InventoryWorkaround.removeItem(user.getPlayer().getInventory(), true, true, getItemStack());
 			user.getPlayer().updateInventory();
 		}
 		if (command != null && !command.isEmpty()
 			&& !Permissions.NOCOMMANDCOST.isAuthorized(user, command))
 		{
-			@Cleanup
+
 			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
 			final double cost = settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
 			if (!user.canAfford(cost) && cost > 0)
 			{
@@ -227,9 +224,7 @@ public class Trade
 
 	public static void log(String type, String subtype, String event, String sender, Trade charge, String receiver, Trade pay, Location loc, IEssentials ess)
 	{
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (!settings.getData().getEconomy().isLogEnabled())
 		{
 			return;

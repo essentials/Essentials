@@ -2,7 +2,6 @@ package net.ess3.metrics;
 
 import java.util.Locale;
 import java.util.logging.Level;
-import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.economy.register.Method;
@@ -38,9 +37,7 @@ public class MetricsStarter implements Runnable
 			final Metrics metrics = new Metrics(ess.getPlugin());
 			ess.setMetrics(metrics);
 
-			@Cleanup
 			ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
 			if (!metrics.isOptOut())
 			{
 				if (settings.getData().getGeneral().getMetricsEnabled() == true)
@@ -128,9 +125,8 @@ public class MetricsStarter implements Runnable
 
 			final Graph enabledGraph = metrics.createGraph("EnabledFeatures");
 			enabledGraph.addPlotter(new SimplePlotter("Total"));
-			@Cleanup
+			
 			ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
 			final String BKcommand = settings.getData().getGeneral().getBackup().getCommand();;
 			if (BKcommand != null && !"".equals(BKcommand))
 			{

@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IJails;
@@ -55,114 +54,68 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 	@Override
 	public Location getJail(final String jailName) throws Exception
 	{
-		acquireReadLock();
-		try
+		if (getData().getJails() == null || jailName == null
+			|| !getData().getJails().containsKey(jailName.toLowerCase(Locale.ENGLISH)))
 		{
-			if (getData().getJails() == null || jailName == null
-				|| !getData().getJails().containsKey(jailName.toLowerCase(Locale.ENGLISH)))
-			{
-				throw new Exception(_("jailNotExist"));
-			}
-			Location loc = getData().getJails().get(jailName.toLowerCase(Locale.ENGLISH)).getStoredLocation();
-			if (loc == null || loc.getWorld() == null)
-			{
-				throw new Exception(_("jailNotExist"));
-			}
-			return loc;
+			throw new Exception(_("jailNotExist"));
 		}
-		finally
+		Location loc = getData().getJails().get(jailName.toLowerCase(Locale.ENGLISH)).getStoredLocation();
+		if (loc == null || loc.getWorld() == null)
 		{
-			unlock();
+			throw new Exception(_("jailNotExist"));
 		}
+		return loc;
 	}
 
 	@Override
 	public Collection<String> getList() throws Exception
 	{
-		acquireReadLock();
-		try
+		if (getData().getJails() == null)
 		{
-			if (getData().getJails() == null)
-			{
-				return Collections.emptyList();
-			}
-			return new ArrayList<String>(getData().getJails().keySet());
+			return Collections.emptyList();
 		}
-		finally
-		{
-			unlock();
-		}
+		return new ArrayList<String>(getData().getJails().keySet());
 	}
 
 	@Override
 	public void removeJail(final String jail) throws Exception
 	{
-		acquireWriteLock();
-		try
+		if (getData().getJails() == null)
 		{
-			if (getData().getJails() == null)
-			{
-				return;
-			}
-			getData().getJails().remove(jail.toLowerCase(Locale.ENGLISH));
+			return;
 		}
-		finally
-		{
-			unlock();
-		}
+		getData().removeJail(jail.toLowerCase(Locale.ENGLISH));
+		queueSave();
 	}
 
 	@Override
 	public void sendToJail(final IUser user, final String jail) throws Exception
 	{
-		acquireReadLock();
-		try
+		if (user.isOnline())
 		{
-			if (user.isOnline())
-			{
-				Location loc = getJail(jail);
-				user.getTeleport().now(loc, false, TeleportCause.COMMAND);
-			}
-			user.acquireWriteLock();
-			try
-			{
-				user.getData().setJail(jail);
-			}
-			finally
-			{
-				unlock();
-			}
+			Location loc = getJail(jail);
+			user.getTeleport().now(loc, false, TeleportCause.COMMAND);
 		}
-		finally
-		{
-			unlock();
-		}
+
+		user.getData().setJail(jail);
+		user.queueSave();
 	}
 
 	@Override
 	public void setJail(final String jailName, final Location loc) throws Exception
 	{
-		acquireWriteLock();
-		try
-		{
-			getData().addJail(jailName.toLowerCase(Locale.ENGLISH), loc);
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().addJail(jailName.toLowerCase(Locale.ENGLISH), loc);
+		queueSave();
 	}
 
 	@Override
 	public void finishRead()
 	{
-		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		
 	}
 
 	@Override
@@ -177,9 +130,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onBlockBreak(final BlockBreakEvent event)
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
-			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
 				event.setCancelled(true);
@@ -189,9 +140,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onBlockPlace(final BlockPlaceEvent event)
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
-			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
 				event.setCancelled(true);
@@ -201,9 +150,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onBlockDamage(final BlockDamageEvent event)
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
-			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
 				event.setCancelled(true);
@@ -217,9 +164,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onPlayerInteract(final PlayerInteractEvent event)
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
-			user.acquireReadLock();
 			if (user.getData().isJailed())
 			{
 				event.setCancelled(true);
@@ -229,9 +174,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onPlayerRespawn(final PlayerRespawnEvent event)
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
-			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
 				return;
@@ -257,9 +200,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		@EventHandler(priority = EventPriority.HIGH)
 		public void onPlayerTeleport(final PlayerTeleportEvent event)
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
-			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
 				return;
@@ -286,9 +227,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		@EventHandler(priority = EventPriority.HIGHEST)
 		public void onPlayerJoin(final PlayerJoinEvent event)
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
-			user.acquireReadLock();
 			if (!user.getData().isJailed() || user.getData().getJail() == null || user.getData().getJail().isEmpty())
 			{
 				return;

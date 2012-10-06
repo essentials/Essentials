@@ -1,7 +1,6 @@
 package net.ess3.commands;
 
 import java.util.Locale;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -45,13 +44,11 @@ public class Commandeco extends EssentialsCommand
 					if (player.canAfford(amount, false))
 					{
 						player.takeMoney(amount);
-					}					
+					}
 					break;
 
 				case RESET:
-					@Cleanup 
 					ISettings settings = ess.getSettings();
-					settings.acquireReadLock();
 					player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
 					break;
 				}
@@ -77,9 +74,7 @@ public class Commandeco extends EssentialsCommand
 					break;
 
 				case RESET:
-					@Cleanup 
 					ISettings settings = ess.getSettings();
-					settings.acquireReadLock();
 					player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
 					break;
 				}
@@ -103,8 +98,7 @@ public class Commandeco extends EssentialsCommand
 				break;
 
 			case RESET:
-				@Cleanup ISettings settings = ess.getSettings();
-				settings.acquireReadLock();
+				ISettings settings = ess.getSettings();
 				player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
 				break;
 			}

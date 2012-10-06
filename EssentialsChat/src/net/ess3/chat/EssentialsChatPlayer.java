@@ -1,5 +1,8 @@
 package net.ess3.chat;
 
+import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
@@ -8,10 +11,6 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
-import net.ess3.utils.Util;
-import java.util.Locale;
-import java.util.Map;
-import java.util.logging.Logger;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -112,18 +111,8 @@ public abstract class EssentialsChatPlayer implements Listener
 
 	protected void handleLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
 	{
-
-		long radius = 0;
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
-		try
-		{
-			radius = settings.getData().getChat().getLocalRadius();
-		}
-		finally
-		{
-			settings.unlock();
-		}
+		long radius = settings.getData().getChat().getLocalRadius();
 
 		if (radius < 1)
 		{

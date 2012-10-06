@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
@@ -26,9 +25,7 @@ public class HelpInput implements IText
 
 	public HelpInput(final IUser user, final String match, final IEssentials ess) throws IOException
 	{
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		boolean reported = false;
 		final List<String> newLines = new ArrayList<String>();
 		String pluginName = "";

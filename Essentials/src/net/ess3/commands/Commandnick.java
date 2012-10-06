@@ -1,13 +1,11 @@
 package net.ess3.commands;
 
 import java.util.Locale;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,9 +20,7 @@ public class Commandnick extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (!settings.getData().getChat().getChangeDisplayname())
 		{
 			throw new Exception(_("nickDisplayName"));
@@ -49,9 +45,7 @@ public class Commandnick extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		@Cleanup
 		final ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		if (!settings.getData().getChat().getChangeDisplayname())
 		{
 			throw new Exception(_("nickDisplayName"));

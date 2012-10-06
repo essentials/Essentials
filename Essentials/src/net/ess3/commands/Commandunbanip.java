@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import org.bukkit.command.CommandSender;
@@ -17,9 +16,7 @@ public class Commandunbanip extends EssentialsCommand
 		}
 		try
 		{
-			@Cleanup
 			final IUser user = ess.getUserMap().matchUser(args[0], false, true);
-			user.acquireReadLock();
 			ess.getServer().unbanIP(user.getData().getIpAddress());
 		}
 		catch (Exception ex)

@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
-import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
@@ -43,31 +42,23 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 
 	public Collection<Entry<String, RankOptions>> getGroups(final IUser player)
 	{
-		acquireReadLock();
-		try
+		final Map<String, RankOptions> groups = getData().getRanks();
+		if (groups == null || groups.isEmpty())
 		{
-			final Map<String, RankOptions> groups = getData().getRanks();
-			if (groups == null || groups.isEmpty())
+			return Collections.emptyList();
+		}
+		final ArrayList<Entry<String, RankOptions>> list = new ArrayList();
+		for (Entry<String, RankOptions> entry : groups.entrySet())
+		{
+			if (Permissions.RANKS.isAuthorized(player, entry.getKey()))
 			{
-				return Collections.emptyList();
-			}
-			final ArrayList<Entry<String, RankOptions>> list = new ArrayList();
-			for (Entry<String, RankOptions> entry : groups.entrySet())
-			{
-				if (Permissions.RANKS.isAuthorized(player, entry.getKey()))
+				if (entry.getValue() != null)
 				{
-					if (entry.getValue() != null)
-					{
-						list.add(entry);
-					}
+					list.add(entry);
 				}
 			}
-			return list;
 		}
-		finally
-		{
-			unlock();
-		}
+		return list;
 	}
 
 	@Override
@@ -173,9 +164,8 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 				return groupOptions.getValue().getMessageFormat();
 			}
 		}
-		@Cleanup
+
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		return settings.getData().getChat().getDefaultFormat();
 	}
 

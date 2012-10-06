@@ -3,7 +3,6 @@ package net.ess3.user;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import lombok.Cleanup;
 import lombok.Delegate;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
@@ -36,12 +35,13 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		this.offlinePlayer = base;
 		onReload();
 	}
-	
+
 	@Override
 	public void sendMessage(String string)
 	{
 		Player player = offlinePlayer.getPlayer();
-		if (player != null) {
+		if (player != null)
+		{
 			player.sendMessage(string);
 		}
 	}
@@ -50,7 +50,8 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	public void sendMessage(String[] strings)
 	{
 		Player player = offlinePlayer.getPlayer();
-		if (player != null) {
+		if (player != null)
+		{
 			player.sendMessage(strings);
 		}
 	}
@@ -65,9 +66,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	public boolean isPermissionSet(String string)
 	{
 		Player player = offlinePlayer.getPlayer();
-		if (player != null) {
+		if (player != null)
+		{
 			return player.isPermissionSet(string);
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
@@ -76,9 +80,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	public boolean isPermissionSet(Permission prmsn)
 	{
 		Player player = offlinePlayer.getPlayer();
-		if (player != null) {
+		if (player != null)
+		{
 			return player.isPermissionSet(prmsn);
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
@@ -87,9 +94,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	public boolean hasPermission(String string)
 	{
 		Player player = offlinePlayer.getPlayer();
-		if (player != null) {
+		if (player != null)
+		{
 			return player.hasPermission(string);
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
@@ -98,9 +108,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	public boolean hasPermission(Permission prmsn)
 	{
 		Player player = offlinePlayer.getPlayer();
-		if (player != null) {
+		if (player != null)
+		{
 			return player.hasPermission(prmsn);
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
@@ -162,300 +175,174 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 
 	public long getTimestamp(final UserData.TimestampType name)
 	{
-		acquireReadLock();
-		try
-		{
-			return getData().getTimestamp(name);
-		}
-		finally
-		{
-			unlock();
-		}
+		return getData().getTimestamp(name);
 	}
 
 	public void setTimestamp(final UserData.TimestampType name, final long value)
 	{
-		acquireWriteLock();
-		try
-		{
-			getData().setTimestamp(name, value);
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().setTimestamp(name, value);
+		queueSave();
 	}
 
 	public void setMoney(final double value)
 	{
-		acquireWriteLock();
-		try
+
+		final ISettings settings = ess.getSettings();
+
+		if (Math.abs(value) > settings.getData().getEconomy().getMaxMoney())
 		{
-			@Cleanup
-			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
-			if (Math.abs(value) > settings.getData().getEconomy().getMaxMoney())
-			{
-				getData().setMoney(value < 0 ? -settings.getData().getEconomy().getMaxMoney() : settings.getData().getEconomy().getMaxMoney());
-			}
-			else
-			{
-				getData().setMoney(value);
-			}
+			getData().setMoney(value < 0 ? -settings.getData().getEconomy().getMaxMoney() : settings.getData().getEconomy().getMaxMoney());
 		}
-		finally
+		else
 		{
-			unlock();
+			getData().setMoney(value);
 		}
+		queueSave();
 	}
 
 	public double getMoney()
 	{
-		acquireReadLock();
-		try
+		Double money = getData().getMoney();
+
+		final ISettings settings = ess.getSettings();
+
+		if (money == null)
 		{
-			Double money = getData().getMoney();
-			@Cleanup
-			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
-			if (money == null)
-			{
-				money = (double)settings.getData().getEconomy().getStartingBalance();
-			}
-			if (Math.abs(money) > settings.getData().getEconomy().getMaxMoney())
-			{
-				money = money < 0 ? -settings.getData().getEconomy().getMaxMoney() : settings.getData().getEconomy().getMaxMoney();
-			}
-			return money;
+			money = (double)settings.getData().getEconomy().getStartingBalance();
 		}
-		finally
+		if (Math.abs(money) > settings.getData().getEconomy().getMaxMoney())
 		{
-			unlock();
+			money = money < 0 ? -settings.getData().getEconomy().getMaxMoney() : settings.getData().getEconomy().getMaxMoney();
 		}
+		return money;
 	}
 
 	public void setHome(String name, Location loc)
 	{
-		acquireWriteLock();
-		try
-		{
-			getData().addHome(Util.sanitizeKey(name), loc);
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().addHome(Util.sanitizeKey(name), loc);
+		queueSave();
 	}
 
 	public boolean toggleAfk()
 	{
-		acquireWriteLock();
-		try
-		{
-			boolean ret = !getData().isAfk();
-			getData().setAfk(ret);
-			return ret;
-		}
-		finally
-		{
-			unlock();
-		}
+		boolean ret = !getData().isAfk();
+		getData().setAfk(ret);
+		queueSave();
+		return ret;
 	}
 
 	public void setGodModeEnabled(boolean set)
 	{
-		acquireWriteLock();
-		try
-		{
-			getData().setGodmode(set);
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().setGodmode(set);
+		queueSave();
 	}
 
 	public void setMuted(boolean mute)
 	{
-		acquireWriteLock();
-		try
-		{
-			getData().setMuted(mute);
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().setMuted(mute);
+		queueSave();
 	}
 
 	public boolean toggleSocialSpy()
 	{
-		acquireWriteLock();
-		try
-		{
-			boolean ret = !getData().isSocialspy();
-			getData().setSocialspy(ret);
-			return ret;
-		}
-		finally
-		{
-			unlock();
-		}
+		boolean ret = !getData().isSocialspy();
+		getData().setSocialspy(ret);
+		queueSave();
+		return ret;
 	}
 
 	public boolean toggleTeleportEnabled()
 	{
-		acquireWriteLock();
-		try
-		{
-			boolean ret = !getData().isTeleportEnabled();
-			getData().setTeleportEnabled(ret);
-			return ret;
-		}
-		finally
-		{
-			unlock();
-		}
+		boolean ret = !getData().isTeleportEnabled();
+		getData().setTeleportEnabled(ret);
+		queueSave();
+		return ret;
 	}
 
 	public boolean isIgnoringPlayer(final IUser user)
 	{
-		acquireReadLock();
-		try
-		{
-			return getData().getIgnore() == null ? false : getData().getIgnore().contains(user.getName().toLowerCase(Locale.ENGLISH)) && Permissions.CHAT_IGNORE_EXEMPT.isAuthorized(user);
-		}
-		finally
-		{
-			unlock();
-		}
+		return getData().getIgnore() == null ? false : getData().getIgnore().contains(user.getName().toLowerCase(Locale.ENGLISH)) && Permissions.CHAT_IGNORE_EXEMPT.isAuthorized(user);
 	}
 
 	public void setIgnoredPlayer(final IUser user, final boolean set)
 	{
-		acquireWriteLock();
-		try
-		{
-			getData().setIgnore(user.getName().toLowerCase(Locale.ENGLISH), set);
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().setIgnore(user.getName().toLowerCase(Locale.ENGLISH), set);
+		queueSave();
 	}
 
 	public void addMail(String string)
 	{
-		acquireWriteLock();
-		try
-		{
-			getData().addMail(string);
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().addMail(string);
+		queueSave();
 	}
 
 	public List<String> getMails()
 	{
-		acquireReadLock();
-		try
-		{
-			return getData().getMails();
-		}
-		finally
-		{
-			unlock();
-		}
+
+		return getData().getMails();
 	}
 
 	public Location getHome(String name) throws Exception
 	{
-		acquireReadLock();
+		if (getData().getHomes() == null)
+		{
+			return null;
+		}
 		try
 		{
-			if (getData().getHomes() == null)
-			{
-				return null;
-			}
-			try
-			{
-				return getData().getHomes().get(Util.sanitizeKey(name)).getStoredLocation();
-			}
-			catch (WorldNotLoadedException ex)
-			{
-				return null;
-			}
+			return getData().getHomes().get(Util.sanitizeKey(name)).getStoredLocation();
 		}
-		finally
+		catch (WorldNotLoadedException ex)
 		{
-			unlock();
+			return null;
 		}
 	}
 
 	public Location getHome(Location loc)
 	{
-
-		acquireReadLock();
-		try
+		if (getData().getHomes() == null)
 		{
-			if (getData().getHomes() == null)
+			return null;
+		}
+		ArrayList<Location> worldHomes = new ArrayList<Location>();
+		for (net.ess3.storage.StoredLocation location : getData().getHomes().values())
+		{
+			if (location.getWorldName().equals(loc.getWorld().getName()))
 			{
-				return null;
-			}
-			ArrayList<Location> worldHomes = new ArrayList<Location>();
-			for (net.ess3.storage.StoredLocation location : getData().getHomes().values())
-			{
-				if (location.getWorldName().equals(loc.getWorld().getName()))
+				try
 				{
-					try
-					{
-						worldHomes.add(location.getStoredLocation());
-					}
-					catch (WorldNotLoadedException ex)
-					{
-						continue;
-					}
+					worldHomes.add(location.getStoredLocation());
+				}
+				catch (WorldNotLoadedException ex)
+				{
+					continue;
 				}
 			}
-			if (worldHomes.isEmpty())
-			{
-				return null;
-			}
-			if (worldHomes.size() == 1)
-			{
-				return worldHomes.get(0);
-			}
-			double distance = Double.MAX_VALUE;
-			Location target = null;
-			for (Location location : worldHomes)
-			{
-				final double d = loc.distanceSquared(location);
-				if (d < distance)
-				{
-					target = location;
-					distance = d;
-				}
-			}
-			return target;
 		}
-		finally
+		if (worldHomes.isEmpty())
 		{
-			unlock();
+			return null;
 		}
+		if (worldHomes.size() == 1)
+		{
+			return worldHomes.get(0);
+		}
+		double distance = Double.MAX_VALUE;
+		Location target = null;
+		for (Location location : worldHomes)
+		{
+			final double d = loc.distanceSquared(location);
+			if (d < distance)
+			{
+				target = location;
+				distance = d;
+			}
+		}
+		return target;
 	}
-	
+
 	public Set<String> getHomes()
 	{
-		acquireReadLock();
-		try
-		{	
-			return getData().getHomes().keySet();
-		}
-		finally
-		{
-			unlock();
-		}
+		return getData().getHomes().keySet();
 	}
 }

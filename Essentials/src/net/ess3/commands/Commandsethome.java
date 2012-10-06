@@ -1,8 +1,6 @@
 package net.ess3.commands;
 
-import java.util.HashMap;
 import java.util.Locale;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
@@ -33,8 +31,8 @@ public class Commandsethome extends EssentialsCommand
 					if ((user.getHomes().size() < ess.getRanks().getHomeLimit(user))
 						|| (user.getHomes().contains(args[0].toLowerCase(Locale.ENGLISH))))
 					{
-						user.acquireWriteLock();
 						user.getData().addHome(args[0].toLowerCase(Locale.ENGLISH), user.getPlayer().getLocation());
+						user.queueSave();
 					}
 					else
 					{
@@ -51,7 +49,6 @@ public class Commandsethome extends EssentialsCommand
 			{
 				if (Permissions.SETHOME_OTHERS.isAuthorized(user))
 				{
-					@Cleanup
 					IUser usersHome = ess.getUserMap().getUser(ess.getServer().getPlayer(args[0]));
 					if (usersHome == null)
 					{
@@ -67,15 +64,15 @@ public class Commandsethome extends EssentialsCommand
 						throw new NotEnoughArgumentsException();
 					}
 
-					usersHome.acquireWriteLock();
 					usersHome.getData().addHome(name, user.getPlayer().getLocation());
+					usersHome.queueSave();
 				}
 			}
 		}
 		else
 		{
-			user.acquireWriteLock();
 			user.getData().addHome("home", user.getPlayer().getLocation());
+			user.queueSave();
 		}
 		user.sendMessage(_("homeSet", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(), user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
 

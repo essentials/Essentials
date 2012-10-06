@@ -47,7 +47,8 @@ public class EssentialsTimer implements Runnable
 			try
 			{
 				final IUser user = ess.getUserMap().getUser(player);
-				if (user == null) {
+				if (user == null)
+				{
 					continue;
 				}
 				onlineUsers.add(user);
@@ -56,15 +57,9 @@ public class EssentialsTimer implements Runnable
 
 				boolean mailDisabled = false;
 				ISettings settings = ess.getSettings();
-				settings.acquireReadLock();
-				try
-				{
-					mailDisabled = settings.getData().getCommands().isDisabled("mail");
-				}
-				finally
-				{
-					settings.unlock();
-				}
+
+				mailDisabled = settings.getData().getCommands().isDisabled("mail");
+
 				// New mail notification
 				if (!mailDisabled && Permissions.MAIL.isAuthorized(user) && !user.gotMailInfo())
 				{

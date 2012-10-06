@@ -29,19 +29,16 @@ import org.bukkit.plugin.EventExecutor;
 
 public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IEssentialsModule
 {
-
 	@Override
 	public void finishRead()
 	{
-		
 	}
 
 	@Override
 	public void finishWrite()
 	{
-		
 	}
-	
+
 	public SpawnsHolder(final IEssentials ess)
 	{
 		super(ess, Spawns.class);
@@ -57,15 +54,8 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	public void setSpawn(final Location loc, final String group)
 	{
-		acquireWriteLock();
-		try
-		{
-			getData().addSpawn(group, loc);
-		}
-		finally
-		{
-			unlock();
-		}
+		getData().addSpawn(group, loc);
+		queueSave();
 
 		if ("default".equalsIgnoreCase(group))
 		{
@@ -75,35 +65,27 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	public Location getSpawn(final String group)
 	{
-		acquireReadLock();
+		if (getData().getSpawns() == null || group == null)
+		{
+			return getWorldSpawn();
+		}
+		final Map<String, net.ess3.storage.StoredLocation> spawnMap = getData().getSpawns();
+		String groupName = group.toLowerCase(Locale.ENGLISH);
+		if (!spawnMap.containsKey(groupName))
+		{
+			groupName = "default";
+		}
+		if (!spawnMap.containsKey(groupName))
+		{
+			return getWorldSpawn();
+		}
 		try
 		{
-			if (getData().getSpawns() == null || group == null)
-			{
-				return getWorldSpawn();
-			}
-			final Map<String, net.ess3.storage.StoredLocation> spawnMap = getData().getSpawns();
-			String groupName = group.toLowerCase(Locale.ENGLISH);
-			if (!spawnMap.containsKey(groupName))
-			{
-				groupName = "default";
-			}
-			if (!spawnMap.containsKey(groupName))
-			{
-				return getWorldSpawn();
-			}
-			try
-			{
-				return spawnMap.get(groupName).getStoredLocation();
-			}
-			catch (WorldNotLoadedException ex)
-			{
-				return getWorldSpawn();
-			}
+			return spawnMap.get(groupName).getStoredLocation();
 		}
-		finally
+		catch (WorldNotLoadedException ex)
 		{
-			unlock();
+			return getWorldSpawn();
 		}
 	}
 
@@ -122,70 +104,37 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	public EventPriority getRespawnPriority()
 	{
-		acquireReadLock();
-		try
+		for (EventPriority priority : EventPriority.values())
 		{
-			for (EventPriority priority : EventPriority.values())
+			if (priority.toString().equalsIgnoreCase(getData().getRespawnPriority()))
 			{
-				if (priority.toString().equalsIgnoreCase(getData().getRespawnPriority()))
-				{
-					return priority;
-				}
+				return priority;
 			}
-			return EventPriority.NORMAL;
 		}
-		finally
-		{
-			unlock();
-		}
+		return EventPriority.NORMAL;
 	}
 
 	public Location getNewbieSpawn()
 	{
-		acquireReadLock();
-		try
+		if (getData().getNewbieSpawn() == null || getData().getNewbieSpawn().isEmpty()
+			|| getData().getNewbieSpawn().equalsIgnoreCase("none"))
 		{
-			if (getData().getNewbieSpawn() == null || getData().getNewbieSpawn().isEmpty()
-				|| getData().getNewbieSpawn().equalsIgnoreCase("none"))
-			{
-				return null;
-			}
-			return getSpawn(getData().getNewbieSpawn());
+			return null;
 		}
-		finally
-		{
-			unlock();
-		}
+		return getSpawn(getData().getNewbieSpawn());
 	}
 
 	public boolean getAnnounceNewPlayers()
 	{
-		acquireReadLock();
-		try
-		{
-			return getData().getNewPlayerAnnouncement() != null && !getData().getNewPlayerAnnouncement().isEmpty();
-		}
-		finally
-		{
-			unlock();
-		}
+		return getData().getNewPlayerAnnouncement() != null && !getData().getNewPlayerAnnouncement().isEmpty();
 	}
 
 	public String getAnnounceNewPlayerFormat(IUser user)
 	{
-		acquireReadLock();
-		try
-		{
-			return getData().getNewPlayerAnnouncement().replace('&', '\u00a7').replace("\u00a7\u00a7", "&").replace("{PLAYER}", user.getPlayer().getDisplayName()).replace("{DISPLAYNAME}", user.getPlayer().getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getPlayer().getAddress().toString());
-		}
-		finally
-		{
-			unlock();
-		}
+		return getData().getNewPlayerAnnouncement().replace('&', '\u00a7').replace("\u00a7\u00a7", "&").replace("{PLAYER}", user.getPlayer().getDisplayName()).replace("{DISPLAYNAME}", user.getPlayer().getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getPlayer().getAddress().toString());
 	}
-	
-	//TODO: Why is this stuff here in the settings folder?
 
+	//TODO: Why is this stuff here in the settings folder?
 	private void registerListeners()
 	{
 		final SpawnPlayerListener playerListener = new SpawnPlayerListener(ess, this);
@@ -224,17 +173,8 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		{
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
-			boolean respawnAtHome = false;
 			final ISettings settings = ess.getSettings();
-			settings.acquireReadLock();
-			try
-			{
-				respawnAtHome = ess.getSettings().getData().getCommands().getHome().isRespawnAtHome();
-			}
-			finally
-			{
-				settings.unlock();
-			}
+			boolean respawnAtHome = ess.getSettings().getData().getCommands().getHome().isRespawnAtHome();
 			if (respawnAtHome)
 			{
 				Location home;

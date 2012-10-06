@@ -50,64 +50,50 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 		{
 			return;
 		}
-		config.acquireReadLock();
-		try
+		if (event.getPlayer().getAddress() == null || event.getPlayer().getAddress().getAddress() == null)
 		{
-			if (event.getPlayer().getAddress() == null || event.getPlayer().getAddress().getAddress() == null) {
+			return;
+		}
+		final InetAddress address = event.getPlayer().getAddress().getAddress();
+
+		final StringBuilder builder = new StringBuilder();
+		if (config.getData().getDatabase().isShowCities())
+		{
+			final Location loc = ls.getLocation(address);
+			if (loc == null)
+			{
 				return;
 			}
-			final InetAddress address = event.getPlayer().getAddress().getAddress();
-			
-			final StringBuilder builder = new StringBuilder();
-			if (config.getData().getDatabase().isShowCities())
+			if (loc.city != null)
 			{
-				final Location loc = ls.getLocation(address);
-				if (loc == null)
-				{
-					return;
-				}
-				if (loc.city != null)
-				{
-					builder.append(loc.city).append(", ");
-				}
-				final String region = regionName.regionNameByCode(loc.countryCode, loc.region);
-				if (region != null)
-				{
-					builder.append(region).append(", ");
-				}
-				builder.append(loc.countryName);
+				builder.append(loc.city).append(", ");
 			}
-			else
+			final String region = regionName.regionNameByCode(loc.countryCode, loc.region);
+			if (region != null)
 			{
-				builder.append(ls.getCountry(address).getName());
+				builder.append(region).append(", ");
 			}
-			if (config.getData().isShowOnWhois())
-			{
-				u.acquireWriteLock();
-				try
-				{
-					u.getData().setGeolocation(builder.toString());
-				}
-				finally
-				{
-					u.unlock();
-				}
-			}
-			if (config.getData().isShowOnLogin() && !u.isHidden())
-			{
-				for (Player player : event.getPlayer().getServer().getOnlinePlayers())
-				{
-					final IUser user = ess.getUserMap().getUser(player);
-					if (Permissions.GEOIP_SHOW.isAuthorized(user))
-					{
-						user.sendMessage(_("geoipJoinFormat", user.getPlayer().getDisplayName(), builder.toString()));
-					}
-				}
-			}
+			builder.append(loc.countryName);
 		}
-		finally
+		else
 		{
-			config.unlock();
+			builder.append(ls.getCountry(address).getName());
+		}
+		if (config.getData().isShowOnWhois())
+		{
+			u.getData().setGeolocation(builder.toString());
+			u.queueSave();
+		}
+		if (config.getData().isShowOnLogin() && !u.isHidden())
+		{
+			for (Player player : event.getPlayer().getServer().getOnlinePlayers())
+			{
+				final IUser user = ess.getUserMap().getUser(player);
+				if (Permissions.GEOIP_SHOW.isAuthorized(user))
+				{
+					user.sendMessage(_("geoipJoinFormat", user.getPlayer().getDisplayName(), builder.toString()));
+				}
+			}
 		}
 	}
 
@@ -115,48 +101,40 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 	public final void onReload()
 	{
 		config.onReload();
-		config.acquireReadLock();
-		try
+		if (config.getData().getDatabase().isShowCities())
 		{
-			if (config.getData().getDatabase().isShowCities())
+			databaseFile = new File(geoip.getDataFolder(), "GeoIPCity.dat");
+		}
+		else
+		{
+			databaseFile = new File(geoip.getDataFolder(), "GeoIP.dat");
+		}
+		if (!databaseFile.exists())
+		{
+			if (config.getData().getDatabase().isDownloadIfMissing())
 			{
-				databaseFile = new File(geoip.getDataFolder(), "GeoIPCity.dat");
-			}
-			else
-			{
-				databaseFile = new File(geoip.getDataFolder(), "GeoIP.dat");
-			}
-			if (!databaseFile.exists())
-			{
-				if (config.getData().getDatabase().isDownloadIfMissing())
+				if (config.getData().getDatabase().isShowCities())
 				{
-					if (config.getData().getDatabase().isShowCities())
-					{
-						downloadDatabase(config.getData().getDatabase().getDownloadUrlCity());
-					}
-					else
-					{
-						downloadDatabase(config.getData().getDatabase().getDownloadUrl());
-					}
+					downloadDatabase(config.getData().getDatabase().getDownloadUrlCity());
 				}
 				else
 				{
-					LOGGER.log(Level.SEVERE, _("cantFindGeoIpDB"));
-					return;
+					downloadDatabase(config.getData().getDatabase().getDownloadUrl());
 				}
 			}
-			try
+			else
 			{
-				ls = new LookupService(databaseFile);
-			}
-			catch (IOException ex)
-			{
-				LOGGER.log(Level.SEVERE, _("cantReadGeoIpDB"), ex);
+				LOGGER.log(Level.SEVERE, _("cantFindGeoIpDB"));
+				return;
 			}
 		}
-		finally
+		try
 		{
-			config.unlock();
+			ls = new LookupService(databaseFile);
+		}
+		catch (IOException ex)
+		{
+			LOGGER.log(Level.SEVERE, _("cantReadGeoIpDB"), ex);
 		}
 	}
 
@@ -167,7 +145,8 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 			LOGGER.log(Level.SEVERE, _("geoIpUrlEmpty"));
 			return;
 		}
-		if (!databaseFile.getAbsoluteFile().getParentFile().exists()) {
+		if (!databaseFile.getAbsoluteFile().getParentFile().exists())
+		{
 			databaseFile.getAbsoluteFile().getParentFile().mkdirs();
 		}
 		InputStream input = null;

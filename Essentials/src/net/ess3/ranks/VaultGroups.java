@@ -1,7 +1,6 @@
 package net.ess3.ranks;
 
 import java.text.MessageFormat;
-import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
@@ -92,9 +91,7 @@ public class VaultGroups implements IRanks
 			return chatformat;
 		}
 
-		@Cleanup
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		return settings.getData().getChat().getDefaultFormat();
 	}
 

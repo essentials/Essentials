@@ -1,6 +1,5 @@
 package net.ess3.listener;
 
-import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.bukkit.BukkitMaterial;
@@ -33,9 +32,8 @@ public class EssentialsBlockListener implements Listener
 			return;
 		}
 		
-		@Cleanup
+		
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		user.acquireReadLock();
 
 		final boolean unlimitedForUser = user.getData().hasUnlimited(itemstack.getType());
 		if (unlimitedForUser && user.getPlayer().getGameMode() != GameMode.CREATIVE)

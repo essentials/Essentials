@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IItemDb;
@@ -66,9 +65,7 @@ public class ItemDb implements IItemDb
 	{
 		final ItemStack stack = get(id.toLowerCase(Locale.ENGLISH));
 
-		@Cleanup
 		net.ess3.api.ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 
 		final int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();
 

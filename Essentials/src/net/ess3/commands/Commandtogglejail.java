@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
@@ -19,9 +18,7 @@ public class Commandtogglejail extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		@Cleanup
 		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
-		player.acquireReadLock();
 
 		if (args.length >= 2 && !player.getData().isJailed())
 		{
@@ -50,7 +47,6 @@ public class Commandtogglejail extends EssentialsCommand
 				// Check if jail exists
 				ess.getJails().getJail(args[1]);
 			}
-			player.acquireWriteLock();
 			player.getData().setJailed(true);
 			player.sendMessage(_("userJailed"));
 			player.getData().setJail(args[1]);
@@ -61,6 +57,7 @@ public class Commandtogglejail extends EssentialsCommand
 				timeDiff = DateUtil.parseDateDiff(time, true);
 				player.setTimestamp(TimestampType.JAIL, timeDiff);
 			}
+			player.queueSave();
 			sender.sendMessage((timeDiff > 0
 								? _("playerJailedFor", player.getName(), DateUtil.formatDateDiff(timeDiff))
 								: _("playerJailed", player.getName())));
@@ -77,8 +74,8 @@ public class Commandtogglejail extends EssentialsCommand
 		{
 			final String time = getFinalArg(args, 2);
 			final long timeDiff = DateUtil.parseDateDiff(time, true);
-			player.acquireWriteLock();
 			player.setTimestamp(TimestampType.JAIL, timeDiff);
+			player.queueSave();
 			sender.sendMessage(_("jailSentenceExtended", DateUtil.formatDateDiff(timeDiff)));
 			return;
 		}
@@ -89,7 +86,6 @@ public class Commandtogglejail extends EssentialsCommand
 			{
 				throw new NotEnoughArgumentsException();
 			}
-			player.acquireWriteLock();
 			player.getData().setJailed(false);
 			player.setTimestamp(TimestampType.JAIL, 0);
 			player.sendMessage(_("jailReleasedPlayerNotify"));
@@ -98,6 +94,7 @@ public class Commandtogglejail extends EssentialsCommand
 			{
 				player.getTeleport().back();
 			}
+			player.queueSave();
 			sender.sendMessage(_("jailReleased", player.getName()));
 		}
 	}

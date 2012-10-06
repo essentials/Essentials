@@ -1,7 +1,6 @@
 package net.ess3.ranks;
 
 import java.text.MessageFormat;
-import lombok.Cleanup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
@@ -11,7 +10,9 @@ import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.plugin.Plugin;
 
-public class GMGroups implements IRanks {
+
+public class GMGroups implements IRanks
+{
 	private final transient IEssentials ess;
 	private final transient GroupManager groupManager;
 
@@ -90,32 +91,31 @@ public class GMGroups implements IRanks {
 	@Override
 	public MessageFormat getChatFormat(final IUser player)
 	{
-			String format = getRawChatFormat(player);
-			format = FormatUtil.replaceFormat(format);
-			format = format.replace("{DISPLAYNAME}", "%1$s");
-			format = format.replace("{GROUP}", "{0}");
-			format = format.replace("{MESSAGE}", "%2$s");
-			format = format.replace("{WORLDNAME}", "{1}");
-			format = format.replace("{SHORTWORLDNAME}", "{2}");
-			format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
-			MessageFormat mFormat = new MessageFormat(format);
-			return mFormat;		
+		String format = getRawChatFormat(player);
+		format = FormatUtil.replaceFormat(format);
+		format = format.replace("{DISPLAYNAME}", "%1$s");
+		format = format.replace("{GROUP}", "{0}");
+		format = format.replace("{MESSAGE}", "%2$s");
+		format = format.replace("{WORLDNAME}", "{1}");
+		format = format.replace("{SHORTWORLDNAME}", "{2}");
+		format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
+		MessageFormat mFormat = new MessageFormat(format);
+		return mFormat;
 	}
-	
+
 	private String getRawChatFormat(final IUser player)
 	{
 		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getPlayer());
 		if (handler != null)
 		{
 			String chatformat = handler.getPermissionString(player.getName(), "chatformat");
-			if (chatformat != null && !chatformat.isEmpty()) {
+			if (chatformat != null && !chatformat.isEmpty())
+			{
 				return chatformat;
 			}
 		}
-		
-		@Cleanup
+
 		ISettings settings = ess.getSettings();
-		settings.acquireReadLock();
 		return settings.getData().getChat().getDefaultFormat();
 	}
 

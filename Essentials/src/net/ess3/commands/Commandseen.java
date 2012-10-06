@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
@@ -36,13 +35,11 @@ public class Commandseen extends EssentialsCommand
 		}
 		catch (PlayerNotFoundException e)
 		{
-			@Cleanup
 			IUser u = ess.getUserMap().getUser(args[0]);
 			if (u == null)
 			{
 				throw new Exception(_("playerNotFound"));
 			}
-			u.acquireReadLock();
 			sender.sendMessage(_("seenOffline", u.getPlayer().getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
 			if (u.isBanned())
 			{

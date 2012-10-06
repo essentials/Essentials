@@ -23,17 +23,18 @@ public class Commandinvsee extends EssentialsCommand
 		{
 			invUser = ess.getUserMap().matchUser(args[0], false, false);
 		}
-		user.acquireWriteLock();
 		if (invUser == user && user.getData().getInventory() != null)
 		{
 			invUser.getPlayer().getInventory().setContents(user.getData().getInventory().getBukkitInventory());
 			user.getData().setInventory(null);
+			user.queueSave();
 			user.sendMessage(_("invRestored"));
 			throw new NoChargeException();
 		}
 		if (user.getData().getInventory() == null)
 		{
 			user.getData().setInventory(new Inventory(user.getPlayer().getInventory().getContents()));
+			user.queueSave();
 		}
 		ItemStack[] invUserStack = invUser.getPlayer().getInventory().getContents();
 		final int userStackLength = user.getPlayer().getInventory().getContents().length;

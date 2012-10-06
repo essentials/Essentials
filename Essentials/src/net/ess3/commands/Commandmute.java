@@ -1,12 +1,12 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
 import org.bukkit.command.CommandSender;
+
 
 public class Commandmute extends EssentialsCommand
 {
@@ -18,9 +18,7 @@ public class Commandmute extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		@Cleanup
 		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
-		player.acquireReadLock(); 
 		if (!player.getData().isMuted() && Permissions.MUTE_EXEMPT.isAuthorized(player))
 		{
 			throw new Exception(_("muteExempt"));

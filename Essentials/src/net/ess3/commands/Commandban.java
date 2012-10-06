@@ -1,6 +1,5 @@
 package net.ess3.commands;
 
-import lombok.Cleanup;
 import net.ess3.Console;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
@@ -19,7 +18,6 @@ public class Commandban extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		@Cleanup
 		final IUser user = ess.getUserMap().matchUser(args[0], false, true);
 		if (!user.isOnline())
 		{
@@ -38,7 +36,6 @@ public class Commandban extends EssentialsCommand
 			}
 		}
 
-		user.acquireWriteLock();
 		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
 		String banReason;
 		user.getData().setBan(new Ban());
@@ -55,6 +52,7 @@ public class Commandban extends EssentialsCommand
 		}
 		
 		user.setBanned(true);
+		user.queueSave();
 		user.getPlayer().kickPlayer(banReason);
 		for (Player player : server.getOnlinePlayers())
 		{

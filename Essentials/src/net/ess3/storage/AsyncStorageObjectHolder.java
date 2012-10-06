@@ -13,7 +13,7 @@ import org.bukkit.Bukkit;
 public abstract class AsyncStorageObjectHolder<T extends StorageObject> implements IStorageObjectHolder<T>
 {
 	private transient T data;
-	private final transient ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+	//private final transient ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
 	private final transient Class<T> clazz;
 	protected final transient IEssentials ess;
 	private final transient StorageObjectDataWriter writer;
@@ -52,7 +52,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		return data;
 	}
 
-	@Override
+	/*@Override
 	public void acquireReadLock()
 	{
 		rwl.readLock().lock();
@@ -67,9 +67,9 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		}
 		rwl.writeLock().lock();
 		rwl.readLock().lock();
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public void close()
 	{
 		unlock();
@@ -87,7 +87,15 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		{
 			rwl.readLock().unlock();
 		}
+	}*/
+
+	@Override
+	public void queueSave()
+	{
+		writer.schedule();
 	}
+	
+	
 
 	@Override
 	public void onReload()
@@ -123,14 +131,14 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		@Override
 		public StorageObject getObject()
 		{
-			acquireReadLock();
+			//acquireReadLock();
 			return getData();
 		}
 
 		@Override
 		public void onFinish()
 		{
-			unlock();
+			//unlock();
 			finishWrite();
 		}
 	}
@@ -147,11 +155,11 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		public File onStart() throws IOException
 		{
 			final File file = getStorageFile();
-			while (rwl.getReadHoldCount() > 0)
+			/*while (rwl.getReadHoldCount() > 0)
 			{
 				rwl.readLock().unlock();
 			}
-			rwl.writeLock().lock();
+			rwl.writeLock().lock();*/
 			return file;
 		}
 
@@ -162,7 +170,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 			{
 				data = object;
 			}
-			rwl.writeLock().unlock();
+			//rwl.writeLock().unlock();
 			loaded.set(true);
 		}
 
@@ -180,7 +188,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 					Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 				}
 			}
-			rwl.writeLock().unlock();
+			//rwl.writeLock().unlock();
 			loaded.set(true);
 			if (exception instanceof FileNotFoundException)
 			{
