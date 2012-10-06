@@ -2,8 +2,11 @@ package net.ess3.settings;
 
 import java.util.HashMap;
 import java.util.Map;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import net.ess3.storage.Comment;
 import net.ess3.storage.MapValueType;
 import net.ess3.storage.StorageObject;
@@ -58,13 +61,15 @@ public class Settings implements StorageObject
 		"##########################################################"
 	})
 	@MapValueType(WorldOptions.class)
-	private Map<String, WorldOptions> worlds = new HashMap<String, WorldOptions>();
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private Map<String, WorldOptions> worlds;
 
 	public WorldOptions getWorldOptions(final String name)
 	{
 		if (worlds == null)
 		{
-			worlds = new HashMap<String, WorldOptions>();
+			return new WorldOptions();
 		}
 		final WorldOptions options = worlds.get(name);
 		return (options == null) ? new WorldOptions() : options;

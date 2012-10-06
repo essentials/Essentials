@@ -152,4 +152,6 @@ public enum Permissions implements IPermission
 	public static DotStarPermission WARPS = new DotStarPermission("essentials.warps", PermissionDefault.TRUE);
 	public static DotStarPermission WARP_OVERWRITE = new DotStarPermission("essentials.warp.overwrite");
 	public static DotStarPermission WORLD = new DotStarPermission("essentials.world");
+	public static DotStarPermission NICK = new DotStarPermission("essentials.nick");
+	public static DotStarPermission SIGNS = new DotStarPermission("essentials.signs");
 }

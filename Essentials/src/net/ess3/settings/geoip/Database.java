@@ -9,8 +9,8 @@ import net.ess3.storage.StorageObject;
 @EqualsAndHashCode(callSuper = false)
 public class Database implements StorageObject
 {
-	boolean showCities = false;
-	boolean downloadIfMissing = true;
-	String downloadUrlCity = "http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz";
-	String downloadUrl = "http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz";
+	private boolean showCities = false;
+	private boolean downloadIfMissing = true;
+	private String downloadUrlCity = "http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz";
+	private String downloadUrl = "http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz";
 }

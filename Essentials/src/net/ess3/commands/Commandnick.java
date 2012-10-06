@@ -75,7 +75,7 @@ public class Commandnick extends EssentialsCommand
 		}
 		else
 		{
-			return FormatUtil.formatString(user, "essentials.nick", nick);
+			return FormatUtil.formatString(user, Permissions.NICK, nick);
 		}
 	}
 

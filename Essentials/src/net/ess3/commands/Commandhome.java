@@ -2,6 +2,7 @@ package net.ess3.commands;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
@@ -58,7 +59,7 @@ public class Commandhome extends EssentialsCommand
 			{
 				bed = null;
 			}
-			final List<String> homes = player.getHomes();
+			final Set<String> homes = player.getHomes();
 			if (homes.isEmpty() && player.equals(user))
 			{
 				if (bed != null)
@@ -75,7 +76,7 @@ public class Commandhome extends EssentialsCommand
 			}
 			else if (homes.size() == 1 && player.equals(user))
 			{
-				goHome(user, player, homes.get(0), charge);
+				goHome(user, player, homes.iterator().next(), charge);
 			}
 			else
 			{

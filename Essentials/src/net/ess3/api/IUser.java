@@ -1,6 +1,7 @@
 package net.ess3.api;
 
 import java.util.List;
+import java.util.Set;
 import net.ess3.storage.IStorageObjectHolder;
 import net.ess3.user.CooldownException;
 import net.ess3.user.UserData;
@@ -77,7 +78,7 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	void updateCompass();
 
-	List<String> getHomes();
+	Set<String> getHomes();
 
 	void addMail(String string);
 

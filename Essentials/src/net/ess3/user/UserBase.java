@@ -165,12 +165,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		acquireReadLock();
 		try
 		{
-			if (getData().getTimestamps() == null)
-			{
-				return 0;
-			}
-			Long ts = getData().getTimestamps().get(name);
-			return ts == null ? 0 : ts;
+			return getData().getTimestamp(name);
 		}
 		finally
 		{
@@ -183,11 +178,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		acquireWriteLock();
 		try
 		{
-			if (getData().getTimestamps() == null)
-			{
-				getData().setTimestamps(new HashMap<UserData.TimestampType, Long>());
-			}
-			getData().getTimestamps().put(name, value);
+			getData().setTimestamp(name, value);
 		}
 		finally
 		{
@@ -248,13 +239,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		acquireWriteLock();
 		try
 		{
-			Map<String, net.ess3.storage.StoredLocation> homes = getData().getHomes();
-			if (homes == null)
-			{
-				homes = new HashMap<String, net.ess3.storage.StoredLocation>();
-				getData().setHomes(homes);
-			}
-			homes.put(Util.sanitizeKey(name), new net.ess3.storage.StoredLocation(loc));
+			getData().addHome(Util.sanitizeKey(name), loc);
 		}
 		finally
 		{
@@ -351,18 +336,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		acquireWriteLock();
 		try
 		{
-			if (getData().getIgnore() == null)
-			{
-				getData().setIgnore(new HashSet<String>());
-			}
-			if (set)
-			{
-				getData().getIgnore().add(user.getName().toLowerCase(Locale.ENGLISH));
-			}
-			else
-			{
-				getData().getIgnore().remove(user.getName().toLowerCase(Locale.ENGLISH));
-			}
+			getData().setIgnore(user.getName().toLowerCase(Locale.ENGLISH), set);
 		}
 		finally
 		{
@@ -375,11 +349,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		acquireWriteLock();
 		try
 		{
-			if (getData().getMails() == null)
-			{
-				getData().setMails(new ArrayList<String>());
-			}
-			getData().getMails().add(string);
+			getData().addMail(string);
 		}
 		finally
 		{
@@ -392,14 +362,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		acquireReadLock();
 		try
 		{
-			if (getData().getMails() == null)
-			{
-				return Collections.emptyList();
-			}
-			else
-			{
-				return new ArrayList<String>(getData().getMails());
-			}
+			return getData().getMails();
 		}
 		finally
 		{
@@ -483,16 +446,12 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		}
 	}
 	
-	public List<String> getHomes()
+	public Set<String> getHomes()
 	{
 		acquireReadLock();
 		try
-		{
-			if (getData().getHomes() == null)
-			{
-				return null;
-			}	
-			return new ArrayList<String>(getData().getHomes().keySet());
+		{	
+			return getData().getHomes().keySet();
 		}
 		finally
 		{

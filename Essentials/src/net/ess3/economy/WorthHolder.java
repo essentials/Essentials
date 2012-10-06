@@ -83,10 +83,7 @@ public class WorthHolder extends AsyncStorageObjectHolder<net.ess3.economy.Worth
 	{
 		acquireWriteLock();
 		try {
-			if (getData().getSell() == null) {
-				getData().setSell(new HashMap<MaterialData, Double>());
-			}
-			getData().getSell().put(itemStack.getData(), price);
+			getData().setSellPrice(itemStack.getData(), price);
 		} finally {
 			unlock();
 		}

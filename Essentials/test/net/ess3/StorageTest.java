@@ -2,6 +2,7 @@ package net.ess3;
 
 import java.io.*;
 import net.ess3.settings.Settings;
+import net.ess3.settings.geoip.GeoIP;
 import net.ess3.storage.ObjectLoadException;
 import net.ess3.storage.StorageObject;
 import net.ess3.storage.YamlStorageReader;
@@ -48,7 +49,7 @@ public class StorageTest extends EssentialsTest
 			System.out.println(settings2.toString());
 			ext.mark("reload settings");
 			System.out.println(ext.end());
-			//assertEquals("Default and rewritten config should be equal", settings, settings2);
+			assertEquals("Default and rewritten config should be equal", settings, settings2);
 			//that assertion fails, because empty list and maps return as null
 		}
 		catch (ObjectLoadException ex)
@@ -75,7 +76,7 @@ public class StorageTest extends EssentialsTest
 
 			for (int j = 0; j < 10000; j++)
 			{
-				userdata.getHomes().put("home", new net.ess3.storage.StoredLocation(new Location(world, j, j, j)));
+				userdata.addHome("home", new Location(world, j, j, j));
 			}
 			ext.mark("change home 10000 times");
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -108,6 +109,49 @@ public class StorageTest extends EssentialsTest
 			fail(ex.getMessage());
 		}
 
+	}
+	
+	@Test
+	public void testGeoIp()
+	{
+		try
+		{
+			assertTrue(StorageObject.class.isAssignableFrom(Settings.class));
+			ExecuteTimer ext = new ExecuteTimer();
+			ext.start();
+			final ByteArrayInputStream bais = new ByteArrayInputStream(new byte[0]);
+			final Reader reader = new InputStreamReader(bais);
+			GeoIP geoip = new YamlStorageReader(reader, null).load(GeoIP.class);
+			ext.mark("load empty geoip");
+			final ByteArrayInputStream bais3 = new ByteArrayInputStream(new byte[0]);
+			final Reader reader3 = new InputStreamReader(bais3);
+			final GeoIP geoip3 = new YamlStorageReader(reader3, null).load(GeoIP.class);
+			ext.mark("load empty geoip (class cached)");
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			final PrintWriter writer = new PrintWriter(baos);
+			//geoip = geoip.withDatabase(geoip.getDatabase().withDownloadIfMissing(false));
+			new YamlStorageWriter(writer).save(geoip);
+			writer.close();
+			ext.mark("write geoip");
+			byte[] written = baos.toByteArray();
+			String writtenStr = new String(written);
+			System.out.println(writtenStr);
+			//writtenStr = writtenStr.replace("downloadIfMissing: true", "downloadIfMissing: false");
+			System.out.println(writtenStr);
+			final ByteArrayInputStream bais2 = new ByteArrayInputStream(writtenStr.getBytes());
+			final Reader reader2 = new InputStreamReader(bais2);
+			final GeoIP geoip2 = new YamlStorageReader(reader2, null).load(GeoIP.class);
+			System.out.println(geoip.toString());
+			System.out.println(geoip2.toString());
+			ext.mark("reload geoip");
+			System.out.println(ext.end());
+			assertEquals("Default and rewritten config should be equal", geoip, geoip2);
+			//that assertion fails, because empty list and maps return as null
+		}
+		catch (ObjectLoadException ex)
+		{
+			fail(ex.getMessage());
+		}
 	}
 
 	/*@Test

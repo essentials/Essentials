@@ -1,6 +1,5 @@
 package net.ess3.utils;
 
-import de.bananaco.bpermissions.imp.Permissions;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -10,8 +9,11 @@ import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
+import net.ess3.permissions.DotStarPermission;
 
-public class FormatUtil {
+
+public class FormatUtil
+{
 	static final transient Pattern REPLACE_COLOR_PATTERN = Pattern.compile("&([0-9a-f])");
 	static final transient Pattern REPLACE_MAGIC_PATTERN = Pattern.compile("&(k)");
 	static final transient Pattern REPLACE_PATTERN = Pattern.compile("&([0-9a-fk-or])");
@@ -74,14 +76,14 @@ public class FormatUtil {
 		return REPLACE_PATTERN.matcher(input).replaceAll("\u00a7$1");
 	}
 
-	public static String formatString(final IUser user, final String permBase, final String input)
+	public static String formatString(final IUser user, final DotStarPermission permBase, final String input)
 	{
 		if (input == null)
 		{
 			return null;
 		}
 		String message;
-		if (Permissions.hasPermission(user.getPlayer(), permBase + ".color"))
+		if (permBase.isAuthorized(user.getPlayer(), "color"))
 		{
 			message = replaceColor(input, REPLACE_COLOR_PATTERN);
 		}
@@ -89,7 +91,7 @@ public class FormatUtil {
 		{
 			message = stripColor(input, VANILLA_COLOR_PATTERN);
 		}
-		if (Permissions.hasPermission(user.getPlayer(), permBase + ".magic"))
+		if (permBase.isAuthorized(user.getPlayer(), "magic"))
 		{
 			message = replaceColor(message, REPLACE_MAGIC_PATTERN);
 		}
@@ -97,7 +99,7 @@ public class FormatUtil {
 		{
 			message = stripColor(message, VANILLA_MAGIC_PATTERN);
 		}
-		if (Permissions.hasPermission(user.getPlayer(), permBase + ".format"))
+		if (permBase.isAuthorized(user.getPlayer(), "format"))
 		{
 			message = replaceColor(message, REPLACE_FORMAT_PATTERN);
 		}
@@ -108,14 +110,14 @@ public class FormatUtil {
 		return message;
 	}
 
-	public static String formatMessage(final IUser user, final String permBase, final String input)
+	public static String formatMessage(final IUser user, final DotStarPermission permBase, final String input)
 	{
 		if (input == null)
 		{
 			return null;
 		}
 		String message = formatString(user, permBase, input);
-		if (!Permissions.hasPermission(user.getPlayer(), permBase + ".url"))
+		if (!permBase.isAuthorized(user.getPlayer(), "url"))
 		{
 			message = blockURL(message);
 		}
@@ -147,5 +149,4 @@ public class FormatUtil {
 		}
 		return str;
 	}
-
 }

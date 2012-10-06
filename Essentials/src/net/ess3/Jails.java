@@ -145,11 +145,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		acquireWriteLock();
 		try
 		{
-			if (getData().getJails() == null)
-			{
-				getData().setJails(new HashMap<String, net.ess3.storage.StoredLocation>());
-			}
-			getData().getJails().put(jailName.toLowerCase(Locale.ENGLISH), new net.ess3.storage.StoredLocation(loc));
+			getData().addJail(jailName.toLowerCase(Locale.ENGLISH), loc);
 		}
 		finally
 		{

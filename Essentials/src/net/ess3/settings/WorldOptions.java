@@ -2,8 +2,11 @@ package net.ess3.settings;
 
 import java.util.HashMap;
 import java.util.Map;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import net.ess3.storage.Comment;
 import net.ess3.storage.StorageObject;
 import org.bukkit.entity.EntityType;
@@ -29,6 +32,8 @@ public class WorldOptions implements StorageObject
 	private boolean godmode = true;
 	
 	@Comment("Prevent creatures spawning")
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
 	private Map<EntityType, Boolean> creatureSpawn = new HashMap<EntityType, Boolean>();
 
 	public boolean getPreventSpawn(String creatureName)

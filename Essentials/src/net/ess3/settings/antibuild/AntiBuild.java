@@ -1,11 +1,8 @@
 package net.ess3.settings.antibuild;
 
-import java.util.HashSet;
-import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.ess3.storage.*;
-import org.bukkit.Material;
 
 
 @Data
@@ -26,14 +23,11 @@ public class AntiBuild implements StorageObject
 		"Setting to false means EssentialsAntiBuild will never prevent you from using"
 	})
 	private boolean use = true;
-	
-	 @Comment({"Should we tell people they are not allowed to build"})
-    private boolean warnOnBuildDisallow = true;
-	
-	 
-	 Alert alert = new Alert();
-	
+	@Comment(
+	{
+		"Should we tell people they are not allowed to build"
+	})
+	private boolean warnOnBuildDisallow = true;
+	Alert alert = new Alert();
 	BlackList blacklist = new BlackList();
-	
-	
 }

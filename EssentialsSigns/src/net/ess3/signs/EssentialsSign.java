@@ -34,7 +34,7 @@ public class EssentialsSign
 	{
 		final ISign sign = new EventSign(event);
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		if (!SignsPermissions.getCreatePermission(signName).isAuthorized(user))
+		if (!SignsPermissions.CREATE.isAuthorized(user, signName))
 		{
 			// Return true, so other plugins can use the same sign title, just hope
 			// they won't change it to §1[Signname]
@@ -83,7 +83,7 @@ public class EssentialsSign
 		final IUser user = ess.getUserMap().getUser(player);
 		try
 		{
-			return SignsPermissions.getUsePermission(signName).isAuthorized(user)
+			return SignsPermissions.USE.isAuthorized(user, signName)
 				   && onSignInteract(sign, user, getUsername(user), ess);
 		}
 		catch (ChargeException ex)
@@ -104,7 +104,7 @@ public class EssentialsSign
 		final IUser user = ess.getUserMap().getUser(player);
 		try
 		{
-			return SignsPermissions.getBreakPermission(signName).isAuthorized(user)
+			return SignsPermissions.BREAK.isAuthorized(user, signName)
 				   && onSignBreak(sign, user, getUsername(user), ess);
 		}
 		catch (SignException ex)

@@ -1,9 +1,11 @@
 package net.ess3.settings;
 
-import java.util.HashMap;
 import java.util.Map;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import net.ess3.economy.Worth;
 import net.ess3.storage.Comment;
 import net.ess3.storage.MapValueType;
@@ -18,7 +20,9 @@ public class Economy implements StorageObject
 	private double startingBalance = 0.0;
 	@MapValueType(Double.class)
 	@Comment("Defines the cost to use the given commands PER USE")
-	private Map<String, Double> commandCosts = new HashMap<String, Double>();
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private Map<String, Double> commandCosts = null;
 	@Comment("Set this to a currency symbol you want to use.")
 	private String currencySymbol = "$";
 

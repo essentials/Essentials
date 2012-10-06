@@ -8,6 +8,7 @@ import net.ess3.api.IPlugin;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.introspector.BeanAccess;
 
 
 public class YamlStorageReader implements IStorageReader
@@ -30,6 +31,7 @@ public class YamlStorageReader implements IStorageReader
 		if (yaml == null)
 		{
 			yaml = new Yaml(prepareConstructor(clazz));
+			yaml.setBeanAccess(BeanAccess.FIELD);
 			PREPARED_YAMLS.put(clazz, yaml);
 		}
 		ReentrantLock lock;

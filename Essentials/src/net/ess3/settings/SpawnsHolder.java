@@ -60,11 +60,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		acquireWriteLock();
 		try
 		{
-			if (getData().getSpawns() == null)
-			{
-				getData().setSpawns(new HashMap<String, net.ess3.storage.StoredLocation>());
-			}
-			getData().getSpawns().put(group.toLowerCase(Locale.ENGLISH), new net.ess3.storage.StoredLocation(loc));
+			getData().addSpawn(group, loc);
 		}
 		finally
 		{

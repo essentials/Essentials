@@ -6,6 +6,7 @@ import net.ess3.api.IUser;
 import net.ess3.utils.Util;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -92,7 +93,7 @@ public class SignBlockListener implements Listener
 
 		for (int i = 0; i < 4; i++)
 		{
-			event.setLine(i, FormatUtil.formatString(user, "essentials.signs", event.getLine(i)));
+			event.setLine(i, FormatUtil.formatString(user, Permissions.SIGNS, event.getLine(i)));
 		}
 
 		for (Signs signs : Signs.values())

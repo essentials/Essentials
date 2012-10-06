@@ -1,9 +1,11 @@
 package net.ess3.settings;
 
-import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import net.ess3.settings.commands.*;
 import net.ess3.storage.Comment;
 import net.ess3.storage.ListType;
@@ -36,10 +38,14 @@ public class Commands implements StorageObject
 		"We should try to take priority over /god.  If this doesn't work, use /essentials:god or /egod.",
 		"If god is set using WorldGuard, use /ungod to remove then use whichever you see fit."
 	})
-	private List<String> overridden = new ArrayList<String>();
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private List<String> overridden = null;
 	@ListType
 	@Comment("Disabled commands will be completelly unavailable on the server.")
-	private List<String> disabled = new ArrayList<String>();
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private List<String> disabled = null;
 
 	public boolean isDisabled(final String commandName)
 	{

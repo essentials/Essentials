@@ -1,13 +1,18 @@
 package net.ess3.settings;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import net.ess3.storage.Comment;
 import net.ess3.storage.MapValueType;
 import net.ess3.storage.StorageObject;
 import net.ess3.storage.StoredLocation;
+import org.bukkit.Location;
 
 
 @Data
@@ -29,12 +34,29 @@ public class Spawns implements StorageObject
 		"Set this to highest, if you want to force EssentialsSpawn to handle the respawning"
 	})
 	private String respawnPriority = "normal";
-	@Comment({
+	@Comment(
+	{
 		"When we spawn for the first time, which spawnpoint do we use?",
 		"Set to none if you want to use the spawn point of the world."
 	})
 	private String newbieSpawn = "none";
 	@Comment("List of all spawnpoints")
 	@MapValueType(StoredLocation.class)
-	private Map<String, StoredLocation> spawns = new HashMap<String, StoredLocation>();
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private Map<String, StoredLocation> spawns;
+	
+	public Map<String, StoredLocation> getSpawns()
+	{
+		return spawns == null
+			   ? Collections.<String, StoredLocation>emptyMap()
+			   : Collections.unmodifiableMap(spawns);
+	}
+	
+	public void addSpawn(String name, Location location)
+	{
+		Map<String, StoredLocation> newspawns = new HashMap<String, StoredLocation>(getSpawns());
+		newspawns.put(name, new StoredLocation(location));
+		spawns = newspawns;
+	}
 }

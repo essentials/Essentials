@@ -10,6 +10,6 @@ import net.ess3.storage.StorageObject;
 public class GeoIP implements StorageObject
 {
 	private Database database = new Database();
-	private boolean showOnWhois = true;
 	private boolean showOnLogin = true;
+	private boolean showOnWhois = true;
 }
