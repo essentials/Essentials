@@ -41,7 +41,6 @@
                   <include>jivesoftware:smack</include>
                 </includes>
               </artifactSet>
-              <minimizeJar>true</minimizeJar>
             </configuration>
           </execution>
         </executions>

@@ -167,6 +167,9 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 			LOGGER.log(Level.SEVERE, _("geoIpUrlEmpty"));
 			return;
 		}
+		if (!databaseFile.getAbsoluteFile().getParentFile().exists()) {
+			databaseFile.getAbsoluteFile().getParentFile().mkdirs();
+		}
 		InputStream input = null;
 		OutputStream output = null;
 		try

@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
+import net.ess3.bukkit.BukkitPlugin;
 import org.bukkit.plugin.Plugin;
 
 
@@ -19,7 +20,7 @@ public class EssentialsConnect
 		{
 			LOGGER.log(Level.WARNING, _("versionMismatchAll"));
 		}
-		ess = (IEssentials)essPlugin;
+		ess = ((BukkitPlugin)essPlugin).getEssentials();
 		protect = (IProtect)essProtect;
 		protect.setSettings(new ProtectHolder(ess));
 	}

@@ -43,11 +43,11 @@ public class MetricsStarter implements Runnable
 			settings.acquireReadLock();
 			if (!metrics.isOptOut())
 			{
-				if (settings.getData().getGeneral().isMetricsEnabled())
+				if (settings.getData().getGeneral().getMetricsEnabled() == true)
 				{
 					start = true;
 				}
-				else
+				else if (settings.getData().getGeneral().getMetricsEnabled() == null)
 				{
 					ess.getLogger().info("This plugin collects minimal statistic data and sends it to http://metrics.essentials3.net.");
 					ess.getLogger().info("You can opt out by running /essentials opt-out");

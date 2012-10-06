@@ -77,5 +77,5 @@ public class General implements StorageObject
 	{
 		return loginAttackDelay * 1000;
 	}
-	public boolean metricsEnabled = true;
+	public Boolean metricsEnabled = null;
 }

@@ -25,6 +25,7 @@ public enum Permissions implements IPermission
 	DELHOME_OTHERS,
 	ECO_LOAN(PermissionDefault.FALSE),
 	ENDERCHEST_OTHERS,
+	ESSENTIALS,
 	EXP_GIVE,
 	EXP_GIVE_OTHERS,
 	EXP_SET,

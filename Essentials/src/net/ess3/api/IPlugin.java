@@ -11,6 +11,8 @@ public interface IPlugin extends Plugin {
 	int scheduleAsyncDelayedTask(final Runnable run);
 
 	int scheduleSyncDelayedTask(final Runnable run);
+	
+	int scheduleAsyncDelayedTask(final Runnable run, final long delay);
 
 	int scheduleSyncDelayedTask(final Runnable run, final long delay);
 

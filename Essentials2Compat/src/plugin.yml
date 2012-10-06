@@ -1,5 +1,5 @@
 name: Essentials
-main: net.ess3.Essentials
+main: com.earth2me.essentials.Essentials
 version: 2.9
 website: http://tiny.cc/EssentialsWiki
 description: Compatibility plugin for older plugins
