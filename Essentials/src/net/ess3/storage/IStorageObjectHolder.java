@@ -7,11 +7,5 @@ public interface IStorageObjectHolder<T extends StorageObject> extends IReload
 {
 	T getData();
 
-	//void acquireReadLock();
-
-	//void acquireWriteLock();
-
 	void queueSave();
-
-	//void unlock();
 }

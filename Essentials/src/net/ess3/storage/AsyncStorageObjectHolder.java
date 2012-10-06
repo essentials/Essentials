@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
@@ -13,7 +12,6 @@ import org.bukkit.Bukkit;
 public abstract class AsyncStorageObjectHolder<T extends StorageObject> implements IStorageObjectHolder<T>
 {
 	private transient T data;
-	//private final transient ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
 	private final transient Class<T> clazz;
 	protected final transient IEssentials ess;
 	private final transient StorageObjectDataWriter writer;
@@ -52,51 +50,12 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		return data;
 	}
 
-	/*@Override
-	public void acquireReadLock()
-	{
-		rwl.readLock().lock();
-	}
-
-	@Override
-	public void acquireWriteLock()
-	{
-		while (rwl.getReadHoldCount() > 0)
-		{
-			rwl.readLock().unlock();
-		}
-		rwl.writeLock().lock();
-		rwl.readLock().lock();
-	}*/
-
-	/*@Override
-	public void close()
-	{
-		unlock();
-	}
-
-	@Override
-	public void unlock()
-	{
-		if (rwl.isWriteLockedByCurrentThread())
-		{
-			rwl.writeLock().unlock();
-			writer.schedule();
-		}
-		while (rwl.getReadHoldCount() > 0)
-		{
-			rwl.readLock().unlock();
-		}
-	}*/
-
 	@Override
 	public void queueSave()
 	{
 		writer.schedule();
 	}
 	
-	
-
 	@Override
 	public void onReload()
 	{
@@ -131,14 +90,12 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		@Override
 		public StorageObject getObject()
 		{
-			//acquireReadLock();
 			return getData();
 		}
 
 		@Override
 		public void onFinish()
 		{
-			//unlock();
 			finishWrite();
 		}
 	}
@@ -154,13 +111,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		@Override
 		public File onStart() throws IOException
 		{
-			final File file = getStorageFile();
-			/*while (rwl.getReadHoldCount() > 0)
-			{
-				rwl.readLock().unlock();
-			}
-			rwl.writeLock().lock();*/
-			return file;
+			return getStorageFile();
 		}
 
 		@Override
@@ -170,7 +121,6 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 			{
 				data = object;
 			}
-			//rwl.writeLock().unlock();
 			loaded.set(true);
 		}
 
@@ -188,7 +138,6 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 					Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 				}
 			}
-			//rwl.writeLock().unlock();
 			loaded.set(true);
 			if (exception instanceof FileNotFoundException)
 			{
