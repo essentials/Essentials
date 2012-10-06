@@ -1,10 +1,5 @@
 package net.ess3.geoip;
 
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IReload;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 import com.maxmind.geoip.regionName;
@@ -16,6 +11,11 @@ import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IReload;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

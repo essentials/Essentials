@@ -1,9 +1,9 @@
 package net.ess3.signs;
 
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
 import net.ess3.api.IPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;

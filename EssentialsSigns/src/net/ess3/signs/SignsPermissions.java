@@ -2,9 +2,6 @@ package net.ess3.signs;
 
 import net.ess3.api.IPermission;
 import net.ess3.permissions.BasePermission;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import net.ess3.permissions.DotStarPermission;
 
 

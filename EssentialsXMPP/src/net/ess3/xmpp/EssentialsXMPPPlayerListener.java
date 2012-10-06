@@ -1,7 +1,6 @@
 package net.ess3.xmpp;
 
 import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

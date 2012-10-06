@@ -1,8 +1,8 @@
 package net.ess3.geoip;
 
+import java.util.logging.Level;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
-import java.util.logging.Level;
 import net.ess3.api.IPlugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -1,7 +1,6 @@
 package net.ess3.settings;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;

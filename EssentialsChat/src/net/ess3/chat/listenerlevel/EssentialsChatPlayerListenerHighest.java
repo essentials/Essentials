@@ -1,9 +1,9 @@
 package net.ess3.chat.listenerlevel;
 
+import java.util.Map;
 import net.ess3.api.IEssentials;
 import net.ess3.chat.ChatStore;
 import net.ess3.chat.EssentialsChatPlayer;
-import java.util.Map;
 import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

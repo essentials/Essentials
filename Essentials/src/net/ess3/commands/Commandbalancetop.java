@@ -7,7 +7,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 import net.ess3.utils.textreader.ArrayListInput;
 import net.ess3.utils.textreader.TextPager;
 import org.bukkit.command.CommandSender;

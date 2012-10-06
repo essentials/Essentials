@@ -4,7 +4,6 @@ import net.ess3.Console;
 import net.ess3.commands.EssentialsCommand;
 import net.ess3.commands.NotEnoughArgumentsException;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandxmpp extends EssentialsCommand

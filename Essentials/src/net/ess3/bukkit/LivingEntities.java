@@ -6,13 +6,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import static net.ess3.I18n._;
-import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 
 public class LivingEntities

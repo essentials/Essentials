@@ -1,9 +1,8 @@
 package net.ess3.xmpp;
 
-import net.ess3.api.IUser;
 import java.util.List;
+import net.ess3.api.IUser;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 

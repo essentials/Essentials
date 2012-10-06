@@ -1,6 +1,5 @@
 package net.ess3.settings;
 
-import java.util.HashMap;
 import java.util.Map;
 import lombok.AccessLevel;
 import lombok.Data;

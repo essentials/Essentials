@@ -1,12 +1,12 @@
 package net.ess3.signs;
 
+import java.util.Locale;
 import net.ess3.api.ChargeException;
-import net.ess3.economy.Trade;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
+import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.settings.Kit;
-import java.util.Locale;
 
 
 public class SignKit extends EssentialsSign

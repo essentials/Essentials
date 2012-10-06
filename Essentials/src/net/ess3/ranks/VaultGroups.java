@@ -6,7 +6,6 @@ import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.plugin.RegisteredServiceProvider;
 

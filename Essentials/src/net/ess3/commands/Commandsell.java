@@ -7,7 +7,6 @@ import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.economy.Trade;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

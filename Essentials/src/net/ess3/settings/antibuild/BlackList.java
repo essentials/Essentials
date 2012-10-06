@@ -1,6 +1,5 @@
 package net.ess3.settings.antibuild;
 
-import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Data;

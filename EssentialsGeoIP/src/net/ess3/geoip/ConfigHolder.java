@@ -1,10 +1,10 @@
 package net.ess3.geoip;
 
+import java.io.File;
+import java.io.IOException;
 import net.ess3.api.IEssentials;
 import net.ess3.settings.geoip.GeoIP;
 import net.ess3.storage.AsyncStorageObjectHolder;
-import java.io.File;
-import java.io.IOException;
 import org.bukkit.plugin.Plugin;
 
 

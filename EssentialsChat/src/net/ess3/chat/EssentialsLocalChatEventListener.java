@@ -3,8 +3,6 @@ package net.ess3.chat;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
-import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;

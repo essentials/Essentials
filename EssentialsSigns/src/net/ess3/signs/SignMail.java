@@ -1,9 +1,9 @@
 package net.ess3.signs;
 
+import java.util.List;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
-import java.util.List;
 
 
 public class SignMail extends EssentialsSign

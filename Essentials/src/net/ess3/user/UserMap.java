@@ -11,7 +11,6 @@ import net.ess3.api.IUserMap;
 import net.ess3.api.InvalidNameException;
 import net.ess3.storage.StorageObjectMap;
 import net.ess3.utils.FormatUtil;
-import net.ess3.utils.Util;
 import org.bukkit.entity.Player;
 
 
