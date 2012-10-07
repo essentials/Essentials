@@ -86,39 +86,34 @@ public class EssentialsExtra extends JavaPlugin
 
 		for (File file : commandDir.listFiles())
 		{
-			String name = file.getName();
-			if (name.startsWith("Command") && name.endsWith(".class"))
+			String fileName = file.getName();
+			if (fileName.startsWith("Command") && fileName.endsWith(".class"))
 			{
+				String commandName = fileName.substring(7, fileName.length() - 7);
 				try
 				{
-					registerCommand(name);
-					getLogger().info("Loaded command " + name.substring(0, name.length() - 7));
+					AnnotatedCommand anot = Class.forName(fileName).getAnnotation(AnnotatedCommand.class);
+					if (anot == null)
+					{
+						throw new IllegalArgumentException("Command class is not annotated with AnnotatedCommand.class");
+					}
+					commandMap.register("Essentials", new Command(commandName, anot.description(), anot.usage(), Arrays.asList(anot.aliases()))
+					{
+						@Override
+						public boolean execute(CommandSender cs, String label, String[] args)
+						{
+							return handler.handleCommand(cs, this, label, args);
+						}
+					});
+					getLogger().info("Loaded command " + commandName);
 				}
 				catch (Exception ex)
 				{
-					getLogger().log(Level.SEVERE, "Could not register " + name, ex);
+					getLogger().log(Level.SEVERE, "Could not register " + fileName, ex);
 				}
 			}
 		}
 
 		handler = new EssentialsCommandHandler(loader, "Command", "essentials.", ess);
-	}
-
-	private void registerCommand(String name) throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, NoSuchFieldException, SecurityException
-	{
-
-		AnnotatedCommand anot = Class.forName(name).getAnnotation(AnnotatedCommand.class);
-		if (anot == null)
-		{
-			throw new IllegalArgumentException("Command class is not annotated with AnnotatedCommand.class");
-		}
-		commandMap.register("Essentials", new Command(name.substring(0, name.length() - 7), anot.description(), anot.usage(), Arrays.asList(anot.aliases()))
-		{
-			@Override
-			public boolean execute(CommandSender cs, String label, String[] args)
-			{
-				return handler.handleCommand(cs, this, label, args);
-			}
-		});
 	}
 }
