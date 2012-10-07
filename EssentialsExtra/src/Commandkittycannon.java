@@ -2,11 +2,13 @@
 import java.util.Random;
 import net.ess3.api.IUser;
 import net.ess3.commands.EssentialsCommand;
+import net.ess3.extra.AnnotatedCommand;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ocelot;
 
 
+@AnnotatedCommand(description = "Throw an exploding kitten at your opponent", usage = "/<command>")
 public class Commandkittycannon extends EssentialsCommand
 {
 	private static Random random = new Random();

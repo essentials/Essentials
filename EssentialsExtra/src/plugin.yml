@@ -7,7 +7,3 @@ website: http://tiny.cc/EssentialsWiki
 description: Provides extra commands for Essentials
 authors: [md_5]
 depend: [Essentials-3]
-commands:
-  kittycannon:
-    description: Throw an exploding kitten at your opponent
-    usage: /<command>
