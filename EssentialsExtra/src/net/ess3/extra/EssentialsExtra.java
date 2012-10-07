@@ -1,9 +1,15 @@
 package net.ess3.extra;
 
 import java.io.File;
-import java.net.MalformedURLException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.logging.Level;
 import net.ess3.api.ICommandHandler;
 import net.ess3.api.IEssentials;
@@ -18,7 +24,6 @@ public class EssentialsExtra extends JavaPlugin
 {
 	private IEssentials ess;
 	private ICommandHandler handler;
-	private ClassLoader loader;
 
 	@Override
 	public void onLoad()
@@ -29,23 +34,59 @@ public class EssentialsExtra extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		handler = new EssentialsCommandHandler(loader, "Command", "essentials.", ess);
 		File commandDir = new File(ess.getPlugin().getDataFolder(), "extras");
 		commandDir.mkdir();
+
 		URL[] urls = null;
 		try
 		{
+			JarFile jar = new JarFile(getFile());
+			Enumeration<JarEntry> entries = jar.entries();
+			while (entries.hasMoreElements())
+			{
+				JarEntry entry = entries.nextElement();
+				String name = entry.getName();
+				if (name.startsWith("Command") && name.endsWith(".class"))
+				{
+					File outFile = new File(commandDir, name);
+					if (!outFile.exists())
+					{
+						InputStream is = jar.getInputStream(entry);
+						OutputStream os = new FileOutputStream(outFile);
+						byte[] buffer = new byte[4096];
+						int length;
+						while ((length = is.read(buffer)) > 0)
+						{
+							os.write(buffer, 0, length);
+						}
+						os.close();
+						is.close();
+
+					}
+				}
+			}
 			urls = new URL[]
 			{
 				commandDir.toURI().toURL()
 			};
 		}
-		catch (MalformedURLException ex)
+		catch (IOException ex)
 		{
 			getLogger().log(Level.SEVERE, "Could not get extra command dir", ex);
 			getServer().getPluginManager().disablePlugin(this);
 		}
-		loader = new URLClassLoader(urls, getClassLoader());
+
+		for (File file : commandDir.listFiles())
+		{
+			String name = file.getName();
+			if (name.startsWith("Command") && name.endsWith(".class"))
+			{
+				getLogger().info("Loaded command " + name.substring(0, name.length() - 7));
+			}
+		}
+
+		ClassLoader loader = new URLClassLoader(urls, getClassLoader());
+		handler = new EssentialsCommandHandler(loader, "Command", "essentials.", ess);
 	}
 
 	@Override
