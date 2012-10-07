@@ -79,8 +79,8 @@ public class EssentialsExtra extends JavaPlugin
 			getServer().getPluginManager().disablePlugin(this);
 		}
 
-		ClassLoader loader = new URLClassLoader(urls, getClassLoader());
-		final ICommandHandler handler = new EssentialsCommandHandler(loader, "Command", "essentials.", ess);;
+		ClassLoader loader = new URLClassLoader(urls);
+		final ICommandHandler handler = new EssentialsCommandHandler(loader, "Command", "essentials.", ess);
 		for (File file : commandDir.listFiles())
 		{
 			String fileName = file.getName();
@@ -89,7 +89,7 @@ public class EssentialsExtra extends JavaPlugin
 				String commandName = fileName.substring(7, fileName.length() - 7);
 				try
 				{
-					AnnotatedCommand anot = Class.forName(fileName).getAnnotation(AnnotatedCommand.class);
+					AnnotatedCommand anot = Class.forName(fileName, true, loader).getAnnotation(AnnotatedCommand.class);
 					if (anot == null)
 					{
 						throw new IllegalArgumentException("Command class is not annotated with AnnotatedCommand.class");
