@@ -27,15 +27,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsExtra extends JavaPlugin
 {
-	private IEssentials ess;
-	private ICommandHandler handler;
 	private CommandMap commandMap;
-	private ClassLoader loader;
 
 	@Override
 	public void onEnable()
 	{
-		ess = ((BukkitPlugin)getServer().getPluginManager().getPlugin("Essentials-3")).getEssentials();
+		final IEssentials ess = ((BukkitPlugin)getServer().getPluginManager().getPlugin("Essentials-3")).getEssentials();
 		File commandDir = new File(ess.getPlugin().getDataFolder(), "extras");
 		commandDir.mkdir();
 
@@ -45,7 +42,7 @@ public class EssentialsExtra extends JavaPlugin
 			PluginManager pm = Bukkit.getServer().getPluginManager();
 			Field f = SimplePluginManager.class.getDeclaredField("commandMap");
 			f.setAccessible(true);
-			CommandMap map = (CommandMap)f.get(pm);
+			commandMap = (CommandMap)f.get(pm);
 
 			JarFile jar = new JarFile(getFile());
 			Enumeration<JarEntry> entries = jar.entries();
@@ -82,8 +79,8 @@ public class EssentialsExtra extends JavaPlugin
 			getServer().getPluginManager().disablePlugin(this);
 		}
 
-		loader = new URLClassLoader(urls, getClassLoader());
-
+		ClassLoader loader = new URLClassLoader(urls, getClassLoader());
+		final ICommandHandler handler = new EssentialsCommandHandler(loader, "Command", "essentials.", ess);;
 		for (File file : commandDir.listFiles())
 		{
 			String fileName = file.getName();
@@ -113,7 +110,5 @@ public class EssentialsExtra extends JavaPlugin
 				}
 			}
 		}
-
-		handler = new EssentialsCommandHandler(loader, "Command", "essentials.", ess);
 	}
 }
