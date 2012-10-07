@@ -30,14 +30,8 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 
 	public RanksStorage(final IEssentials ess)
 	{
-		super(ess, Ranks.class);
+		super(ess, Ranks.class, new File(ess.getPlugin().getDataFolder(), "ranks.yml"));
 		onReload();
-	}
-
-	@Override
-	public File getStorageFile()
-	{
-		return new File(ess.getPlugin().getDataFolder(), "ranks.yml");
 	}
 
 	public Collection<Entry<String, RankOptions>> getGroups(final IUser player)

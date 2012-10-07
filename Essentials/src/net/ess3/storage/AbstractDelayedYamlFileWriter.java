@@ -2,7 +2,6 @@ package net.ess3.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -25,17 +24,16 @@ public abstract class AbstractDelayedYamlFileWriter implements Runnable
 		ess.getPlugin().scheduleAsyncDelayedTask(this);
 	}
 
-	public abstract File getFile() throws IOException;
+	public abstract File getFile();
 
 	public abstract StorageObject getObject();
 
 	@Override
 	public void run()
 	{
-		lock.lock();
-		try
+		final File file = getFile();
+		synchronized (file)
 		{
-			final File file = getFile();
 			PrintWriter pw = null;
 			try
 			{
@@ -60,14 +58,6 @@ public abstract class AbstractDelayedYamlFileWriter implements Runnable
 					pw.close();
 				}
 			}
-		}
-		catch (IOException ex)
-		{
-			Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
-		}
-		finally
-		{
-			lock.unlock();
 		}
 	}
 

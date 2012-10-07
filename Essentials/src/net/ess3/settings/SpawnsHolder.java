@@ -40,15 +40,9 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	public SpawnsHolder(final IEssentials ess)
 	{
-		super(ess, Spawns.class);
+		super(ess, Spawns.class, new File(ess.getPlugin().getDataFolder(), "spawn.yml"));
 		onReload();
 		registerListeners();
-	}
-
-	@Override
-	public File getStorageFile()
-	{
-		return new File(ess.getPlugin().getDataFolder(), "spawn.yml");
 	}
 
 	public void setSpawn(final Location loc, final String group)

@@ -31,7 +31,7 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 
 	public Jails(final IEssentials ess)
 	{
-		super(ess, net.ess3.settings.Jails.class);
+		super(ess, net.ess3.settings.Jails.class, new File(ess.getPlugin().getDataFolder(), "jail.yml"));
 		onReload();
 		registerListeners();
 	}
@@ -43,12 +43,6 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		final JailPlayerListener playerListener = new JailPlayerListener();
 		pluginManager.registerEvents(blockListener, ess.getPlugin());
 		pluginManager.registerEvents(playerListener, ess.getPlugin());
-	}
-
-	@Override
-	public File getStorageFile()
-	{
-		return new File(ess.getPlugin().getDataFolder(), "jail.yml");
 	}
 
 	@Override

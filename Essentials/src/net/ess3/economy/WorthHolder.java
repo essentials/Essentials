@@ -26,7 +26,7 @@ public class WorthHolder extends AsyncStorageObjectHolder<net.ess3.economy.Worth
 
 	public WorthHolder(final IEssentials ess)
 	{
-		super(ess, net.ess3.economy.Worth.class);
+		super(ess, net.ess3.economy.Worth.class, new File(ess.getPlugin().getDataFolder(), "worth.yml"));
 		onReload(false);
 	}
 
@@ -71,11 +71,5 @@ public class WorthHolder extends AsyncStorageObjectHolder<net.ess3.economy.Worth
 	{
 		getData().setSellPrice(itemStack.getData(), price);
 		queueSave();
-	}
-
-	@Override
-	public File getStorageFile() throws IOException
-	{
-		return new File(ess.getPlugin().getDataFolder(), "worth.yml");
 	}
 }

@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
+import lombok.Setter;
 import static net.ess3.I18n._;
 import net.ess3.api.*;
 import net.ess3.backup.Backup;
@@ -36,6 +37,7 @@ import net.ess3.metrics.Metrics;
 import net.ess3.ranks.RanksStorage;
 import net.ess3.settings.SettingsHolder;
 import net.ess3.settings.SpawnsHolder;
+import net.ess3.storage.StorageQueue;
 import net.ess3.user.UserMap;
 import net.ess3.utils.ExecuteTimer;
 import org.bukkit.Server;
@@ -46,22 +48,34 @@ import org.bukkit.plugin.InvalidDescriptionException;
 
 public class Essentials implements IEssentials
 {
+	@Getter
 	private transient ISettings settings;
+	@Getter
 	private transient IJails jails;
+	@Getter
 	private transient IKits kits;
+	@Getter
 	private transient IWarps warps;
+	@Getter
 	private transient IWorth worth;
-	private transient List<IReload> reloadList;
+	@Getter
 	private transient IBackup backup;
+	@Getter
 	private transient IItemDb itemDb;
-	private transient IRanks groups;
+	@Getter
+	@Setter
+	private transient IRanks ranks;
+	@Getter
 	private transient SpawnsHolder spawns;
+	@Getter
 	private transient final Methods paymentMethod = new Methods();
+	@Getter
 	private transient IUserMap userMap;
-	private transient ExecuteTimer execTimer;
 	@Getter
 	private final I18n i18n;
+	@Getter
 	private transient ICommandHandler commandHandler;
+	@Getter
 	private transient Economy economy;
 	@Getter
 	private final Server server;
@@ -69,26 +83,27 @@ public class Essentials implements IEssentials
 	private final Logger logger;
 	@Getter
 	private final IPlugin plugin;
-	public static boolean testing;
+	@Getter
+	@Setter
 	private transient Metrics metrics;
 	@Getter
 	private transient EssentialsTimer timer;
 	@Getter
 	private transient List<String> vanishedPlayers = new ArrayList<String>();
+	@Getter
+	private final transient StorageQueue storageQueue;
+	private transient ExecuteTimer execTimer;
+	public static boolean testing;
+	private transient List<IReload> reloadList;
 
 	public Essentials(final Server server, final Logger logger, final IPlugin plugin)
 	{
 		this.server = server;
 		this.logger = logger;
 		this.plugin = plugin;
+		this.storageQueue = new StorageQueue(plugin);
 		this.i18n = new I18n(this);
 		i18n.onEnable();
-	}
-
-	@Override
-	public ISettings getSettings()
-	{
-		return settings;
 	}
 
 	public void setupForTesting(final Server server) throws IOException, InvalidDescriptionException
@@ -106,6 +121,7 @@ public class Essentials implements IEssentials
 
 		logger.log(Level.INFO, I18n._("usingTempFolderForTesting"));
 		logger.log(Level.INFO, dataFolder.toString());
+		storageQueue.setEnabled(true);
 		settings = new SettingsHolder(this);
 		i18n.updateLocale("en");
 		userMap = new UserMap(this);
@@ -115,6 +131,7 @@ public class Essentials implements IEssentials
 	@Override
 	public void onEnable()
 	{
+		storageQueue.setEnabled(true);
 		execTimer = new ExecuteTimer();
 		execTimer.start();
 
@@ -130,8 +147,8 @@ public class Essentials implements IEssentials
 		userMap = new UserMap(this);
 		reloadList.add(userMap);
 		execTimer.mark("Init(Usermap)");
-		groups = new RanksStorage(this);
-		reloadList.add((RanksStorage)groups);
+		ranks = new RanksStorage(this);
+		reloadList.add((RanksStorage)ranks);
 		warps = new Warps(this);
 		reloadList.add(warps);
 		execTimer.mark("Init(Spawn/Warp)");
@@ -181,6 +198,7 @@ public class Essentials implements IEssentials
 		}
 		i18n.onDisable();
 		Trade.closeLog();
+		storageQueue.setEnabled(false);
 	}
 
 	@Override
@@ -195,48 +213,6 @@ public class Essentials implements IEssentials
 		}
 
 		i18n.updateLocale(settings.getLocale());
-	}
-
-	@Override
-	public IJails getJails()
-	{
-		return jails;
-	}
-
-	@Override
-	public IKits getKits()
-	{
-		return kits;
-	}
-
-	@Override
-	public IWarps getWarps()
-	{
-		return warps;
-	}
-
-	@Override
-	public IWorth getWorth()
-	{
-		return worth;
-	}
-
-	@Override
-	public IBackup getBackup()
-	{
-		return backup;
-	}
-
-	@Override
-	public Metrics getMetrics()
-	{
-		return metrics;
-	}
-
-	@Override
-	public void setMetrics(Metrics metrics)
-	{
-		this.metrics = metrics;
 	}
 
 	@Override
@@ -257,12 +233,6 @@ public class Essentials implements IEssentials
 	public void addReloadListener(final IReload listener)
 	{
 		reloadList.add(listener);
-	}
-
-	@Override
-	public Methods getPaymentMethod()
-	{
-		return paymentMethod;
 	}
 
 	@Override
@@ -289,56 +259,8 @@ public class Essentials implements IEssentials
 	}
 
 	@Override
-	public IItemDb getItemDb()
-	{
-		return itemDb;
-	}
-
-	@Override
-	public IUserMap getUserMap()
-	{
-		return userMap;
-	}
-
-	@Override
-	public IRanks getRanks()
-	{
-		return groups;
-	}
-
-	@Override
-	public ICommandHandler getCommandHandler()
-	{
-		return commandHandler;
-	}
-
-	@Override
-	public void setRanks(final IRanks groups)
-	{
-		this.groups = groups;
-	}
-
-	@Override
 	public void removeReloadListener(IReload groups)
 	{
 		this.reloadList.remove(groups);
-	}
-
-	@Override
-	public IEconomy getEconomy()
-	{
-		return economy;
-	}
-
-	@Override
-	public SpawnsHolder getSpawns()
-	{
-		return spawns;
-	}
-
-	@Override
-	public void reload()
-	{
-		//do something
 	}
 }

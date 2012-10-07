@@ -1,7 +1,6 @@
 package net.ess3.protect;
 
 import java.io.File;
-import java.io.IOException;
 import net.ess3.api.IEssentials;
 import net.ess3.settings.protect.Protect;
 import net.ess3.storage.AsyncStorageObjectHolder;
@@ -11,13 +10,7 @@ public class ProtectHolder extends AsyncStorageObjectHolder<Protect>
 {
 	public ProtectHolder(final IEssentials ess)
 	{
-		super(ess, Protect.class);
-	}
-
-	@Override
-	public File getStorageFile() throws IOException
-	{
-		return new File(ess.getPlugin().getDataFolder(), "protect.yml");
+		super(ess, Protect.class, new File(ess.getPlugin().getDataFolder(), "protect.yml"));
 	}
 
 	@Override

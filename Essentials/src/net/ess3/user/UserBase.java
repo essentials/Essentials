@@ -29,9 +29,9 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	@Delegate
 	protected final OfflinePlayer offlinePlayer;
 
-	public UserBase(final OfflinePlayer base, final IEssentials ess)
+	public UserBase(final OfflinePlayer base, final IEssentials ess) throws InvalidNameException
 	{
-		super(ess, UserData.class);
+		super(ess, UserData.class, ess.getUserMap().getUserFile(base.getName()));
 		this.offlinePlayer = base;
 		onReload();
 	}
@@ -158,19 +158,6 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 	public Set<PermissionAttachmentInfo> getEffectivePermissions()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public File getStorageFile() throws IOException
-	{
-		try
-		{
-			return ess.getUserMap().getUserFile(getName());
-		}
-		catch (InvalidNameException ex)
-		{
-			throw new IOException(ex.getMessage(), ex);
-		}
 	}
 
 	public long getTimestamp(final UserData.TimestampType name)

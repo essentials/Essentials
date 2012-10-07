@@ -21,7 +21,7 @@ public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implement
 
 	public SettingsHolder(final IEssentials ess)
 	{
-		super(ess, Settings.class);
+		super(ess, Settings.class, new File(ess.getPlugin().getDataFolder(), "settings.yml"));
 		onReload();
 	}
 
@@ -31,12 +31,6 @@ public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implement
 		super.onReload();
 
 		debug = getData().getGeneral().isDebug();
-	}
-
-	@Override
-	public File getStorageFile()
-	{
-		return new File(ess.getPlugin().getDataFolder(), "settings.yml");
 	}
 
 	@Override

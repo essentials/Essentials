@@ -51,7 +51,7 @@ public class Commandessentials extends EssentialsCommand
 
 	private void run_reload(final CommandSender sender, final String[] args) throws Exception
 	{
-		ess.reload();
+		ess.onReload();
 		sender.sendMessage(_("essentialsReload", ess.getPlugin().getVersion()));
 	}
 }

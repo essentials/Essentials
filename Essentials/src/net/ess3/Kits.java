@@ -19,14 +19,8 @@ public class Kits extends AsyncStorageObjectHolder<net.ess3.settings.Kits> imple
 {
 	public Kits(final IEssentials ess)
 	{
-		super(ess, net.ess3.settings.Kits.class);
+		super(ess, net.ess3.settings.Kits.class, new File(ess.getPlugin().getDataFolder(), "kits.yml"));
 		onReload();
-	}
-
-	@Override
-	public File getStorageFile() throws IOException
-	{
-		return new File(ess.getPlugin().getDataFolder(), "kits.yml");
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import net.ess3.EssentialsTimer;
 import net.ess3.economy.register.Methods;
 import net.ess3.metrics.Metrics;
 import net.ess3.settings.SpawnsHolder;
+import net.ess3.storage.StorageQueue;
 import org.bukkit.Server;
 import org.bukkit.World;
 
@@ -42,8 +43,6 @@ public interface IEssentials extends IComponent
 
 	Methods getPaymentMethod();
 
-	void reload();
-
 	void setRanks(IRanks groups);
 
 	void removeReloadListener(IReload groups);
@@ -65,4 +64,6 @@ public interface IEssentials extends IComponent
 	void setMetrics(Metrics metrics);
 
 	SpawnsHolder getSpawns();
+	
+	StorageQueue getStorageQueue();
 }

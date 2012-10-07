@@ -1,7 +1,6 @@
 package net.ess3.signs;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import net.ess3.api.IEssentials;
 import net.ess3.storage.AsyncStorageObjectHolder;
@@ -16,7 +15,7 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 
 	public SignsConfigHolder(final IEssentials ess, final Plugin plugin)
 	{
-		super(ess, SignsConfig.class);
+		super(ess, SignsConfig.class, new File(plugin.getDataFolder(), "config.yml"));
 		this.plugin = plugin;
 		onReload();
 		final Map<String, Boolean> signs = getData().getSigns();
@@ -42,12 +41,6 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 		}
 		getData().setSigns(signs2);
 		queueSave();
-	}
-
-	@Override
-	public File getStorageFile() throws IOException
-	{
-		return new File(plugin.getDataFolder(), "config.yml");
 	}
 
 	public Set<EssentialsSign> getEnabledSigns()

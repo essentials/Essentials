@@ -54,7 +54,7 @@ public class User extends UserBase implements IUser
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
 	private WeakReference<Player> playerCache;
 
-	public User(final OfflinePlayer base, final IEssentials ess)
+	public User(final OfflinePlayer base, final IEssentials ess) throws InvalidNameException
 	{
 		super(base, ess);
 		teleport = new Teleport(this, ess);

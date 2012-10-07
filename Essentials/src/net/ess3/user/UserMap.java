@@ -90,12 +90,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	@Override
 	public IUser getUser(final Player player)
 	{
-		IUser user = getObject(player.getName());
-		if (user == null)
-		{
-			user = new User(player, ess);
-		}
-		return user;
+		return getObject(player.getName());
 	}
 
 	@Override

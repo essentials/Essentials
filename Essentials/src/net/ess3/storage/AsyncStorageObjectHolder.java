@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
@@ -17,11 +19,14 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 	private final transient StorageObjectDataWriter writer;
 	private final transient StorageObjectDataReader reader;
 	private final transient AtomicBoolean loaded = new AtomicBoolean(false);
+	private volatile long savetime = 0;
+	private final transient File file;
 
-	public AsyncStorageObjectHolder(final IEssentials ess, final Class<T> clazz)
+	public AsyncStorageObjectHolder(final IEssentials ess, final Class<T> clazz, final File file)
 	{
 		this.ess = ess;
 		this.clazz = clazz;
+		this.file = file;
 		writer = new StorageObjectDataWriter();
 		reader = new StorageObjectDataReader();
 		try
@@ -53,9 +58,9 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 	@Override
 	public void queueSave()
 	{
-		writer.schedule();
+		ess.getStorageQueue().queue(this);
 	}
-	
+
 	@Override
 	public void onReload()
 	{
@@ -66,13 +71,42 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 	{
 		reader.schedule(instant);
 	}
-	
-	public abstract void finishRead();
-	
-	public abstract void finishWrite();
-	
-	public abstract File getStorageFile() throws IOException;
 
+	@Override
+	public String toString()
+	{
+		return file.getAbsolutePath();
+	}
+
+	public abstract void finishRead();
+
+	public abstract void finishWrite();
+
+	public StorageQueue.RequestState getRequestState(long timestamp)
+	{
+		if (savetime == 0 || savetime < timestamp || (timestamp < 0 && savetime > 0))
+		{
+			final long now = System.nanoTime();
+			if (Math.abs(now - savetime) < StorageQueue.DELAY)
+			{
+				return StorageQueue.RequestState.REQUEUE;
+			}
+			else
+			{
+				savetime = System.nanoTime();
+				return StorageQueue.RequestState.SCHEDULE;
+			}
+		}
+		else
+		{
+			return StorageQueue.RequestState.FINISHED;
+		}
+	}
+
+	Runnable getFileWriter()
+	{
+		return writer;
+	}
 
 	private class StorageObjectDataWriter extends AbstractDelayedYamlFileWriter
 	{
@@ -82,9 +116,9 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		}
 
 		@Override
-		public File getFile() throws IOException
+		public File getFile()
 		{
-			return getStorageFile();
+			return file;
 		}
 
 		@Override
@@ -109,9 +143,9 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		}
 
 		@Override
-		public File onStart() throws IOException
+		public File onStart()
 		{
-			return getStorageFile();
+			return file;
 		}
 
 		@Override
@@ -122,6 +156,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 				data = object;
 			}
 			loaded.set(true);
+			finishRead();
 		}
 
 		@Override
