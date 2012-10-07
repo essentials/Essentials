@@ -26,14 +26,9 @@ public class EssentialsExtra extends JavaPlugin
 	private ICommandHandler handler;
 
 	@Override
-	public void onLoad()
-	{
-		ess = ((BukkitPlugin)getServer().getPluginManager().getPlugin("Essentials-3")).getEssentials();
-	}
-
-	@Override
 	public void onEnable()
 	{
+		ess = ((BukkitPlugin)getServer().getPluginManager().getPlugin("Essentials-3")).getEssentials();
 		File commandDir = new File(ess.getPlugin().getDataFolder(), "extras");
 		commandDir.mkdir();
 
@@ -61,7 +56,6 @@ public class EssentialsExtra extends JavaPlugin
 						}
 						os.close();
 						is.close();
-
 					}
 				}
 			}
