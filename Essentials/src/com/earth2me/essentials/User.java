@@ -428,6 +428,8 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 			}
 		}
 		super.setMoney(value);
+		if(ess.getSettings().getDisplayBalanceAfterTransaction())
+			sendMessage(_("balance", value));
 		Trade.log("Update", "Set", "API", getName(), new Trade(value, ess), null, null, null, ess);
 	}
 
