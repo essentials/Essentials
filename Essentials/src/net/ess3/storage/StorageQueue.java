@@ -7,7 +7,6 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.ess3.api.IPlugin;
 
 
@@ -84,6 +83,11 @@ public class StorageQueue implements Runnable
 		{
 			startThread();
 		}
+	}
+
+	public int getQueueSize()
+	{
+		return queue.size();
 	}
 
 
