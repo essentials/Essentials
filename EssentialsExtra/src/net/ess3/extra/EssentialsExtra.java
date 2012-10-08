@@ -34,7 +34,7 @@ public class EssentialsExtra extends JavaPlugin
 	{
 		final IEssentials ess = ((BukkitPlugin)getServer().getPluginManager().getPlugin("Essentials-3")).getEssentials();
 		File commandDir = new File(ess.getPlugin().getDataFolder(), "extras");
-		commandDir.mkdir();
+		commandDir.mkdirs();
 
 		URL[] urls = null;
 		try
