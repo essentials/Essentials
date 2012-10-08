@@ -117,10 +117,19 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
-		final IText itOutput = new KeywordReplacer(new SimpleTextInput(ess.getSettings().getData().getGeneral().getLeaveMessage()), event.getPlayer(), ess);
-		final SimpleTextPager stPager = new SimpleTextPager(itOutput);
-		event.setQuitMessage(FormatUtil.replaceFormat(stPager.getString(0)));
-		
+		final String quitMessage = ess.getSettings().getData().getGeneral().getLeaveMessage();
+		if (quitMessage != null)
+		{
+			final IText itOutput = new KeywordReplacer(new SimpleTextInput(quitMessage), event.getPlayer(), ess);
+			final SimpleTextPager stPager = new SimpleTextPager(itOutput);
+			event.setQuitMessage(FormatUtil.replaceFormat(stPager.getString(0)));
+		}
+		else
+		{
+			event.setQuitMessage(quitMessage);
+		}
+
+
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
 		final ISettings settings = ess.getSettings();
@@ -151,10 +160,18 @@ public class EssentialsPlayerListener implements Listener
 
 		ess.getBackup().startTask();
 
-		final IText itOutput = new KeywordReplacer(new SimpleTextInput(ess.getSettings().getData().getGeneral().getJoinMessage()), event.getPlayer(), ess);
-		final SimpleTextPager stPager = new SimpleTextPager(itOutput);
-		event.setJoinMessage(FormatUtil.replaceFormat(stPager.getString(0)));
-
+		final String joinMessage = ess.getSettings().getData().getGeneral().getJoinMessage();
+		if (joinMessage != null)
+		{
+			final IText itOutput = new KeywordReplacer(new SimpleTextInput(joinMessage), event.getPlayer(), ess);
+			final SimpleTextPager stPager = new SimpleTextPager(itOutput);
+			event.setJoinMessage(FormatUtil.replaceFormat(stPager.getString(0)));
+		}
+		else
+		{
+			event.setJoinMessage(joinMessage);
+		}
+		
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
 		user.updateDisplayName();
