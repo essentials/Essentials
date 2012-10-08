@@ -1,6 +1,6 @@
 package net.ess3.settings;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -34,7 +34,7 @@ public class WorldOptions implements StorageObject
 	@Comment("Prevent creatures spawning")
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private Map<EntityType, Boolean> creatureSpawn = new HashMap<EntityType, Boolean>();
+	private Map<EntityType, Boolean> creatureSpawn = new EnumMap<EntityType, Boolean>(EntityType.class);
 
 	public boolean getPreventSpawn(String creatureName)
 	{

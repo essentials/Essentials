@@ -16,7 +16,7 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 //TODO: Translate the local/spy tags
 public abstract class EssentialsChatPlayer implements Listener
@@ -24,37 +24,37 @@ public abstract class EssentialsChatPlayer implements Listener
 	protected transient IEssentials ess;
 	protected final static Logger LOGGER = Logger.getLogger("Minecraft");
 	protected final transient Server server;
-	protected final transient Map<PlayerChatEvent, ChatStore> chatStorage;
+	protected final transient Map<AsyncPlayerChatEvent, ChatStore> chatStorage;
 
 	public EssentialsChatPlayer(final Server server,
 								final IEssentials ess,
-								final Map<PlayerChatEvent, ChatStore> chatStorage)
+								final Map<AsyncPlayerChatEvent, ChatStore> chatStorage)
 	{
 		this.ess = ess;
 		this.server = server;
 		this.chatStorage = chatStorage;
 	}
 
-	public void onPlayerChat(final PlayerChatEvent event)
+	public void onPlayerChat(final AsyncPlayerChatEvent event)
 	{
 	}
 
-	public ChatStore getChatStore(final PlayerChatEvent event)
+	public ChatStore getChatStore(final AsyncPlayerChatEvent event)
 	{
 		return chatStorage.get(event);
 	}
 
-	public void setChatStore(final PlayerChatEvent event, final ChatStore chatStore)
+	public void setChatStore(final AsyncPlayerChatEvent event, final ChatStore chatStore)
 	{
 		chatStorage.put(event, chatStore);
 	}
 
-	public ChatStore delChatStore(final PlayerChatEvent event)
+	public ChatStore delChatStore(final AsyncPlayerChatEvent event)
 	{
 		return chatStorage.remove(event);
 	}
 
-	protected void chargeChat(final PlayerChatEvent event, final ChatStore chatStore)
+	protected void chargeChat(final AsyncPlayerChatEvent event, final ChatStore chatStore)
 	{
 		try
 		{
@@ -75,7 +75,7 @@ public abstract class EssentialsChatPlayer implements Listener
 		}
 	}
 
-	protected void formatChat(final PlayerChatEvent event, final ChatStore chatStore)
+	protected void formatChat(final AsyncPlayerChatEvent event, final ChatStore chatStore)
 	{
 		final IUser user = chatStore.getUser();
 		if (Permissions.CHAT_COLOR.isAuthorized(user))
@@ -109,7 +109,7 @@ public abstract class EssentialsChatPlayer implements Listener
 		}
 	}
 
-	protected void handleLocalChat(final PlayerChatEvent event, final ChatStore chatStore)
+	protected void handleLocalChat(final AsyncPlayerChatEvent event, final ChatStore chatStore)
 	{
 		ISettings settings = ess.getSettings();
 		long radius = settings.getData().getChat().getLocalRadius();

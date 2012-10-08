@@ -1,5 +1,6 @@
 package net.ess3.chat;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -10,7 +11,7 @@ import net.ess3.api.IPlugin;
 import net.ess3.chat.listenerlevel.EssentialsChatPlayerListenerHighest;
 import net.ess3.chat.listenerlevel.EssentialsChatPlayerListenerLowest;
 import net.ess3.chat.listenerlevel.EssentialsChatPlayerListenerNormal;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -35,7 +36,7 @@ public class EssentialsChat extends JavaPlugin
 			return;
 		}
 
-		final Map<PlayerChatEvent, ChatStore> chatStore = new HashMap<PlayerChatEvent, ChatStore>();
+		final Map<AsyncPlayerChatEvent, ChatStore> chatStore = Collections.synchronizedMap(new HashMap<AsyncPlayerChatEvent, ChatStore>());
 
 		final EssentialsChatPlayerListenerLowest playerListenerLowest = new EssentialsChatPlayerListenerLowest(getServer(), ess, chatStore);
 		final EssentialsChatPlayerListenerNormal playerListenerNormal = new EssentialsChatPlayerListenerNormal(getServer(), ess, chatStore);

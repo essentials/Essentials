@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 
 public class EssentialsLocalChatEvent extends Event implements Cancellable
@@ -14,7 +14,7 @@ public class EssentialsLocalChatEvent extends Event implements Cancellable
 	private String format = "<%1$s> %2$s";
 	private long radius;
 	private boolean cancelled = false;
-	private PlayerChatEvent parentEvent = null;
+	private AsyncPlayerChatEvent parentEvent = null;
 	private static final HandlerList handlers = new HandlerList();
 
 	public EssentialsLocalChatEvent(final Player player, final String message, final String format, final long radius)
@@ -25,7 +25,7 @@ public class EssentialsLocalChatEvent extends Event implements Cancellable
 		this.radius = radius;
 	}
 
-	public EssentialsLocalChatEvent(final PlayerChatEvent event, final long radius)
+	public EssentialsLocalChatEvent(final AsyncPlayerChatEvent event, final long radius)
 	{
 		this(event.getPlayer(), event.getMessage(), event.getFormat(), radius);
 		this.parentEvent = event;
@@ -93,7 +93,7 @@ public class EssentialsLocalChatEvent extends Event implements Cancellable
 		this.radius = radius;
 	}
 
-	public PlayerChatEvent getParentEvent()
+	public AsyncPlayerChatEvent getParentEvent()
 	{
 		return parentEvent;
 	}

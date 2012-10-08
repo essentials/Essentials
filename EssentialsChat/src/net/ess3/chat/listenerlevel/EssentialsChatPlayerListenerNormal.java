@@ -7,21 +7,21 @@ import net.ess3.chat.EssentialsChatPlayer;
 import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 
 public class EssentialsChatPlayerListenerNormal extends EssentialsChatPlayer
 {
 	public EssentialsChatPlayerListenerNormal(final Server server,
 											  final IEssentials ess,
-											  final Map<PlayerChatEvent, ChatStore> chatStorage)
+											  final Map<AsyncPlayerChatEvent, ChatStore> chatStorage)
 	{
 		super(server, ess, chatStorage);
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	@Override
-	public void onPlayerChat(final PlayerChatEvent event)
+	public void onPlayerChat(final AsyncPlayerChatEvent event)
 	{
 		if (event.isCancelled())
 		{

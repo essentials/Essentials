@@ -13,9 +13,12 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
+import net.ess3.utils.FormatUtil;
 import net.ess3.utils.LocationUtil;
 import net.ess3.utils.textreader.IText;
 import net.ess3.utils.textreader.KeywordReplacer;
+import net.ess3.utils.textreader.SimpleTextInput;
+import net.ess3.utils.textreader.SimpleTextPager;
 import net.ess3.utils.textreader.TextInput;
 import net.ess3.utils.textreader.TextPager;
 import org.bukkit.Location;
@@ -114,6 +117,10 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
+		final IText itOutput = new KeywordReplacer(new SimpleTextInput(ess.getSettings().getData().getGeneral().getLeaveMessage()), event.getPlayer(), ess);
+		final SimpleTextPager stPager = new SimpleTextPager(itOutput);
+		event.setQuitMessage(FormatUtil.replaceFormat(stPager.getString(0)));
+		
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
 		final ISettings settings = ess.getSettings();
@@ -141,7 +148,12 @@ public class EssentialsPlayerListener implements Listener
 		{
 			return;
 		}
+
 		ess.getBackup().startTask();
+
+		final IText itOutput = new KeywordReplacer(new SimpleTextInput(ess.getSettings().getData().getGeneral().getJoinMessage()), event.getPlayer(), ess);
+		final SimpleTextPager stPager = new SimpleTextPager(itOutput);
+		event.setJoinMessage(FormatUtil.replaceFormat(stPager.getString(0)));
 
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
