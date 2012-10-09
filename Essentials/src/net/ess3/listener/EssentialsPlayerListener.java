@@ -243,8 +243,10 @@ public class EssentialsPlayerListener implements Listener
 		default:
 			return;
 		}
-
+		
+		ess.getUserMap().addPrejoinedPlayer(event.getPlayer());
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		ess.getUserMap().removePrejoinedPlayer(event.getPlayer());
 		user.getData().setNpc(false);
 
 		final long currentTime = System.currentTimeMillis();

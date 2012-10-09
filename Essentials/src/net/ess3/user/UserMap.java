@@ -2,8 +2,10 @@ package net.ess3.user;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
@@ -16,6 +18,8 @@ import org.bukkit.entity.Player;
 
 public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 {
+	private final Map<String, Player> prejoinedPlayers = new HashMap<String, Player>();
+
 	public UserMap(final IEssentials ess)
 	{
 		super(ess, "users");
@@ -49,7 +53,11 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 				return user;
 			}
 		}
-		Player player = ess.getServer().getPlayerExact(name);
+		Player player = prejoinedPlayers.get(name);
+		if (player == null)
+		{
+			player = ess.getServer().getPlayerExact(name);
+		}
 		if (player != null)
 		{
 			return new User(ess.getServer().getOfflinePlayer(player.getName()), ess);
@@ -238,5 +246,17 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	private String getNickNamePrefix()
 	{
 		return ess.getSettings().getData().getChat().getNicknamePrefix();
+	}
+
+	@Override
+	public void addPrejoinedPlayer(Player player)
+	{
+		prejoinedPlayers.put(player.getName().toLowerCase(Locale.ENGLISH), player);
+	}
+
+	@Override
+	public void removePrejoinedPlayer(Player player)
+	{
+		prejoinedPlayers.remove(player.getName().toLowerCase(Locale.ENGLISH));
 	}
 }

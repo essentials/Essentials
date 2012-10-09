@@ -36,4 +36,8 @@ public interface IUserMap extends IReload
 	IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline) throws TooManyMatchesException, PlayerNotFoundException;
 	
 	Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline);
+
+	public void addPrejoinedPlayer(Player player);
+
+	public void removePrejoinedPlayer(Player player);
 }
