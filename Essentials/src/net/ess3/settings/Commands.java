@@ -26,6 +26,7 @@ public class Commands implements StorageObject
 	private Spawnmob spawnmob = new Spawnmob();
 	private Tpa tpa = new Tpa();
 	private Speed speed = new Speed();
+	private SocialSpy socalspy = new SocialSpy();
 	@ListType
 	@Comment(
 	{

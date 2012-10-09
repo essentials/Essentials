@@ -322,8 +322,7 @@ public class EssentialsPlayerListener implements Listener
 	{
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		final String cmd = event.getMessage().toLowerCase(Locale.ENGLISH).split(" ")[0].replace("/", "").toLowerCase(Locale.ENGLISH);
-		final List<String> commands = Arrays.asList("msg", "r", "mail", "m", "t", "emsg", "tell", "er", "reply", "ereply", "email");
-		if (commands.contains(cmd))
+		if (ess.getSettings().getData().getCommands().getSocalspy().getSocialspyCommands().contains(cmd))
 		{
 			for (Player player : ess.getServer().getOnlinePlayers())
 			{

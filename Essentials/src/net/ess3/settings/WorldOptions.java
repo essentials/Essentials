@@ -11,26 +11,27 @@ import net.ess3.storage.Comment;
 import net.ess3.storage.StorageObject;
 import org.bukkit.entity.EntityType;
 
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class WorldOptions implements StorageObject
 {
-	
 	public WorldOptions()
 	{
 		//Populate creature spawn values
-		for (EntityType t : EntityType.values())
+		if (creatureSpawn.isEmpty())
 		{
-			if (t.isAlive())
+			for (EntityType t : EntityType.values())
 			{
-				creatureSpawn.put(t, false);
+				if (t.isAlive())
+				{
+					creatureSpawn.put(t, false);
+				}
 			}
 		}
 	}
-	
 	@Comment("Disables godmode for all players if they teleport to this world.")
 	private boolean godmode = true;
-	
 	@Comment("Prevent creatures spawning")
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
