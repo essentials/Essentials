@@ -16,6 +16,13 @@ public class Commanditem extends EssentialsCommand
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
+			
+		}
+		if (args.length > 1 && "love".equals(args[0]) && "you".equals(args[1]))
+		{	
+			user.sendMessage("What is love?");
+            user.sendMessage("Baby don't hurt me");
+			return;
 		}
 		final ItemStack stack = ess.getItemDb().get(args[0], user);
 
@@ -52,7 +59,7 @@ public class Commanditem extends EssentialsCommand
 				stack.addEnchantment(enchantment, level);
 			}
 		}
-
+		
 		if (stack.getTypeId() == 0)
 		{
 			throw new Exception(_("cantSpawnItem", "Air"));
