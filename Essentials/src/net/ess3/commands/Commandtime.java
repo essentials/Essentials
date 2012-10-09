@@ -44,7 +44,7 @@ public class Commandtime extends EssentialsCommand
 			return;
 		}
 
-		if (Permissions.TIME_SET.isAuthorized(sender))
+		if (!Permissions.TIME_SET.isAuthorized(sender))
 		{
 			sender.sendMessage(_("timeSetPermission"));
 			return;
