@@ -50,6 +50,7 @@ public class User extends UserBase implements IUser
 	@Getter
 	@Setter
 	private boolean enderSee = false;
+	private long lastThrottledAction;
 	private transient Location afkPosition;
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
 	private WeakReference<Player> playerCache;
@@ -654,5 +655,27 @@ public class User extends UserBase implements IUser
 	{
 		final boolean set = !vanished;
 		this.setVanished(set);
+	}
+
+	@Override
+	public boolean checkSignThrottle(int usageLimit)
+	{
+		if (isSignThrottled(usageLimit))
+		{
+			return true;
+		}
+		updateThrottle();
+		return false;
+	}
+
+	public boolean isSignThrottled(int usageLimit)
+	{
+		final long minTime = lastThrottledAction + (1000 / usageLimit);
+		return (System.currentTimeMillis() < minTime);
+	}
+
+	private void updateThrottle()
+	{
+		lastThrottledAction = System.currentTimeMillis();;
 	}
 }

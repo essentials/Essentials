@@ -7,7 +7,7 @@ import net.ess3.storage.AsyncStorageObjectHolder;
 import org.bukkit.plugin.Plugin;
 
 
-public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
+public class SignsConfigHolder extends AsyncStorageObjectHolder<SignConfig>
 {
 	private final transient Plugin plugin;
 	private Set<EssentialsSign> enabledSigns = new HashSet<EssentialsSign>();
@@ -15,7 +15,7 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignsConfig>
 
 	public SignsConfigHolder(final IEssentials ess, final Plugin plugin)
 	{
-		super(ess, SignsConfig.class, new File(plugin.getDataFolder(), "config.yml"));
+		super(ess, SignConfig.class, new File(plugin.getDataFolder(), "signs.yml"));
 		this.plugin = plugin;
 		onReload();
 		final Map<String, Boolean> signs = getData().getSigns();

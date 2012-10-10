@@ -1,5 +1,6 @@
 package net.ess3.chat;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -18,7 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-//TODO: Translate the local/spy tags
 public abstract class EssentialsChatPlayer implements Listener
 {
 	protected transient IEssentials ess;
@@ -86,11 +86,14 @@ public abstract class EssentialsChatPlayer implements Listener
 		String world = user.getPlayer().getWorld().getName();
 
 		IRanks groupSettings = ess.getRanks();
+		MessageFormat format = groupSettings.getChatFormat(user);
+		synchronized(format)
+		{
 		event.setFormat(groupSettings.getChatFormat(user).format(new Object[]
 				{
 					group, world, world.substring(0, 1).toUpperCase(Locale.ENGLISH)
 				}));
-
+		}
 	}
 
 	//TODO: Flesh this out - '?' trigger is too easily accidentally triggered

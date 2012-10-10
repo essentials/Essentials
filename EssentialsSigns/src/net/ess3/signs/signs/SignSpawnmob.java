@@ -1,10 +1,11 @@
-package net.ess3.signs;
+package net.ess3.signs.signs;
 
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.commands.Commandspawnmob;
 import net.ess3.economy.Trade;
+import net.ess3.signs.EssentialsSign;
 
 
 public class SignSpawnmob extends EssentialsSign

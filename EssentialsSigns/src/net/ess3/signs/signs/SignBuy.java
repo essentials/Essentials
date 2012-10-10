@@ -1,16 +1,17 @@
-package net.ess3.signs;
+package net.ess3.signs.signs;
 
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
+import net.ess3.signs.EssentialsSign;
 
 
-public class SignSell extends EssentialsSign
+public class SignBuy extends EssentialsSign
 {
-	public SignSell()
+	public SignBuy()
 	{
-		super("Sell");
+		super("Buy");
 	}
 
 	@Override
@@ -24,12 +25,15 @@ public class SignSell extends EssentialsSign
 	@Override
 	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
 	{
-		final Trade charge = getTrade(sign, 1, 2, player, ess);
-		final Trade money = getTrade(sign, 3, ess);
+		final Trade items = getTrade(sign, 1, 2, player, ess);
+		final Trade charge = getTrade(sign, 3, ess);
 		charge.isAffordableFor(player);
-		money.pay(player);
+		if (!items.pay(player, false))
+		{
+			throw new ChargeException("Inventory full");
+		}
 		charge.charge(player);
-		Trade.log("Sign", "Sell", "Interact", username, charge, username, money, sign.getBlock().getLocation(), ess);
+		Trade.log("Sign", "Buy", "Interact", username, charge, username, items, sign.getBlock().getLocation(), ess);
 		return true;
 	}
 }

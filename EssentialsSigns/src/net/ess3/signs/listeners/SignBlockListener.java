@@ -1,4 +1,4 @@
-package net.ess3.signs;
+package net.ess3.signs.listeners;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -6,6 +6,9 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.signs.EssentialsSign;
+import net.ess3.signs.ISignsPlugin;
+import net.ess3.signs.Signs;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

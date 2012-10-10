@@ -1,38 +1,37 @@
-package net.ess3.signs;
+package net.ess3.signs.signs;
 
-import java.util.Locale;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
-import net.ess3.settings.Kit;
+import net.ess3.signs.EssentialsSign;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
-public class SignKit extends EssentialsSign
+public class SignWarp extends EssentialsSign
 {
-	public SignKit()
+	public SignWarp()
 	{
-		super("Kit");
+		super("Warp");
 	}
 
 	@Override
 	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
 	{
 		validateTrade(sign, 3, ess);
+		final String warpName = sign.getLine(1);
 
-		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
-
-		if (kitName.isEmpty())
+		if (warpName.isEmpty())
 		{
-			sign.setLine(1, "§dKit name!");
+			sign.setLine(1, "§dWarp name!");
 			return false;
 		}
 		else
 		{
 			try
 			{
-				ess.getKits().getKit(kitName);
+				ess.getWarps().getWarp(warpName);
 			}
 			catch (Exception ex)
 			{
@@ -50,19 +49,16 @@ public class SignKit extends EssentialsSign
 	@Override
 	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
 	{
-		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
+		final String warpName = sign.getLine(1);
 		final String group = sign.getLine(2);
+
 		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getRanks().inGroup(player, group)))
-			|| (group.isEmpty() && Permissions.KITS.isAuthorized(player, kitName)))
+			|| (group.isEmpty() && Permissions.WARPS.isAuthorized(player, warpName)))
 		{
 			final Trade charge = getTrade(sign, 3, ess);
-			charge.isAffordableFor(player);
 			try
-			{;
-				final Kit kit = ess.getKits().getKit(kitName);
-				ess.getKits().checkTime(player, kit);
-				ess.getKits().sendKit(player, kit);
-				charge.charge(player);
+			{
+				player.getTeleport().warp(warpName, charge, TeleportCause.PLUGIN);
 			}
 			catch (Exception ex)
 			{

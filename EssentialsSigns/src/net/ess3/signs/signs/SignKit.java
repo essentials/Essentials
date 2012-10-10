@@ -1,36 +1,39 @@
-package net.ess3.signs;
+package net.ess3.signs.signs;
 
+import java.util.Locale;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import net.ess3.settings.Kit;
+import net.ess3.signs.EssentialsSign;
 
 
-public class SignWarp extends EssentialsSign
+public class SignKit extends EssentialsSign
 {
-	public SignWarp()
+	public SignKit()
 	{
-		super("Warp");
+		super("Kit");
 	}
 
 	@Override
 	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
 	{
 		validateTrade(sign, 3, ess);
-		final String warpName = sign.getLine(1);
 
-		if (warpName.isEmpty())
+		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
+
+		if (kitName.isEmpty())
 		{
-			sign.setLine(1, "§dWarp name!");
+			sign.setLine(1, "§dKit name!");
 			return false;
 		}
 		else
 		{
 			try
 			{
-				ess.getWarps().getWarp(warpName);
+				ess.getKits().getKit(kitName);
 			}
 			catch (Exception ex)
 			{
@@ -48,16 +51,19 @@ public class SignWarp extends EssentialsSign
 	@Override
 	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
 	{
-		final String warpName = sign.getLine(1);
+		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
 		final String group = sign.getLine(2);
-
 		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getRanks().inGroup(player, group)))
-			|| (group.isEmpty() && Permissions.WARPS.isAuthorized(player, warpName)))
+			|| (group.isEmpty() && Permissions.KITS.isAuthorized(player, kitName)))
 		{
 			final Trade charge = getTrade(sign, 3, ess);
+			charge.isAffordableFor(player);
 			try
-			{
-				player.getTeleport().warp(warpName, charge, TeleportCause.PLUGIN);
+			{;
+				final Kit kit = ess.getKits().getKit(kitName);
+				ess.getKits().checkTime(player, kit);
+				ess.getKits().sendKit(player, kit);
+				charge.charge(player);
 			}
 			catch (Exception ex)
 			{

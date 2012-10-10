@@ -8,6 +8,7 @@ import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
+import net.ess3.signs.signs.SignException;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -75,10 +76,14 @@ public class EssentialsSign
 		return user.getName().substring(0, user.getName().length() > 13 ? 13 : user.getName().length());
 	}
 
-	public final boolean onSignInteract(final Block block, final Player player, final IEssentials ess)
+	public final boolean onSignInteract(final Block block, final Player player, final IEssentials ess, final ISignsPlugin isp)
 	{
 		final ISign sign = new BlockSign(block);
 		final IUser user = ess.getUserMap().getUser(player);
+		if (user.checkSignThrottle(isp.getSettings().getData().getSignUsePerSecond()))
+		{
+			return false;
+		}
 		try
 		{
 			return SignsPermissions.USE.isAuthorized(user, signName)
@@ -466,7 +471,7 @@ public class EssentialsSign
 	}
 
 
-	static class BlockSign implements ISign
+	public static class BlockSign implements ISign
 	{
 		private final transient Sign sign;
 		private final transient Block block;

@@ -124,7 +124,9 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	void setGodModeEnabled(boolean set);
 
-	void setVanished(boolean set);
+	void setVanished(boolean set);	
+	
+	boolean checkSignThrottle(int throttle);
 
 	/**
 	 * Since the Player object should not be stored for a long time, this method should be called again with a null

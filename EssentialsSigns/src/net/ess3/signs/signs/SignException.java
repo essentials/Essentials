@@ -1,4 +1,4 @@
-package net.ess3.signs;
+package net.ess3.signs.signs;
 
 
 public class SignException extends Exception

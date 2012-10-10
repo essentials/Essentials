@@ -1,6 +1,8 @@
-package net.ess3.signs;
+package net.ess3.signs.listeners;
 
 import net.ess3.api.IEssentials;
+import net.ess3.signs.EssentialsSign;
+import net.ess3.signs.ISignsPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -43,7 +45,7 @@ public class SignPlayerListener implements Listener
 			{
 				if (csign.getLine(0).equalsIgnoreCase(sign.getSuccessName()))
 				{
-					sign.onSignInteract(block, event.getPlayer(), ess);
+					sign.onSignInteract(block, event.getPlayer(), ess, plugin);
 					event.setCancelled(true);
 					return;
 				}
