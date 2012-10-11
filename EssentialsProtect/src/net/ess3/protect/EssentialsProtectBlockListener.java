@@ -23,8 +23,8 @@ public class EssentialsProtectBlockListener implements Listener
 	{
 		final ProtectHolder settings = prot.getSettings();
 		final Block block = event.getBlock();
-		if (event.getBlock().getType() == Material.OBSIDIAN
-			|| event.getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN)
+		if (block.getType() == Material.OBSIDIAN
+			|| block.getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN)
 		{
 			event.setCancelled(settings.getData().getPrevent().isPortalCreation());
 			return;

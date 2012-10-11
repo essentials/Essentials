@@ -1,7 +1,6 @@
 package net.ess3.settings.antibuild;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
@@ -9,7 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import net.ess3.settings.WorldOptions;
 import net.ess3.storage.Comment;
 import net.ess3.storage.ListType;
 import net.ess3.storage.StorageObject;

@@ -442,6 +442,12 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
+	public void setGodModeEnabled(boolean set)
+	{
+		getData().setGodmode(set);
+	}
+
+	@Override
 	public void updateCompass()
 	{
 		try
