@@ -1,11 +1,8 @@
 package net.ess3.antibuild;
 
-import java.util.logging.Level;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
-import net.ess3.permissions.MaterialDotStarPermission;
-import net.ess3.user.User;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -34,54 +31,17 @@ public class EssentialsAntiBuildListener implements Listener
 		this.ess = antib.getEssentialsConnect().getEssentials();
 	}
 
-	/*private boolean metaPermCheck(final User user, final String action, final Block block)
-	{
-		if (block == null)
-		{
-			return false;
-		}
-		return metaPermCheck(user, action, block.getTypeId(), block.getData());
-	}
-
-	private boolean metaPermCheck(final User user, final String action, final int blockId)
-	{
-		final String blockPerm = "essentials.build." + action + "." + blockId;
-		return user.isAuthorized(blockPerm);
-	}
-
-	private boolean metaPermCheck(final User user, final String action, final int blockId, final byte data)
-	{
-		final String blockPerm = "essentials.build." + action + "." + blockId;
-		final String dataPerm = blockPerm + ":" + data;
-
-		if (user.isPermissionSet(dataPerm))
-		{
-			return user.isAuthorized(dataPerm);
-		}
-		else
-		{
-			if (ess.getSettings().isDebug())
-			{
-				ess.getLogger().log(Level.INFO, "DataValue perm on " + user.getName() + " is not directly set: " + dataPerm);
-			}
-		}
-
-		return user.isAuthorized(blockPerm);
-	}*/
-
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{	
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final Player user = event.getPlayer();
 		final Block block = event.getBlockPlaced();
 		final int typeId = block.getTypeId();
 		final Material type = block.getType();
 
-		if (antib.getSettings().getData().isDisableBuild()
-				//&& !user.canBuild() 
+		if (antib.getSettings().getData().isDisableBuild()			
 			    && !Permissions.BUILD.isAuthorized(user)
-				&& !Permissions.PLACEMENT.isAuthorized(user, block))
-			//metaPermCheck(user, "place", block)) todo - double check metadata
+				&& !Permissions.PLACEMENT.isAuthorized(user, block))			
 			{
 				if (antib.getSettings().getData().isWarnOnBuildDisallow())
 				{
@@ -111,13 +71,12 @@ public class EssentialsAntiBuildListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockBreak(final BlockBreakEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final Player user = event.getPlayer();
 		final Block block = event.getBlock();
 		final int typeId = block.getTypeId();
 		final Material type = block.getType();
 		
-			if (antib.getSettings().getData().isDisableBuild()
-				//&& !user.canBuild() 
+			if (antib.getSettings().getData().isDisableBuild() 
 				&& !Permissions.BUILD.isAuthorized(user)
 				&& !Permissions.BREAK.isAuthorized(user, block))
 			{
@@ -154,7 +113,6 @@ public class EssentialsAntiBuildListener implements Listener
 		{
 			final IUser user = ess.getUserMap().getUser((Player)entity);
 			if (antib.getSettings().getData().isDisableBuild() 
-				//&& !user.canBuild() 
 				&& !Permissions.BUILD.isAuthorized(user)
 				&& !Permissions.BREAK.isAuthorized(user, Material.PAINTING, null))
 			{
@@ -198,7 +156,7 @@ public class EssentialsAntiBuildListener implements Listener
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
 		// Do not return if cancelled, because the interact event has 2 cancelled states.
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final Player user = event.getPlayer();
 		final ItemStack item = event.getItem();
 
 		if (item != null
@@ -221,7 +179,6 @@ public class EssentialsAntiBuildListener implements Listener
 		}
 
 		if (antib.getSettings().getData().isDisableUse()
-			//&& !user.canBuild() 
 			&& !Permissions.BUILD.isAuthorized(user))
 		{
 			if (event.hasItem() && !Permissions.INTERACT.isAuthorized(user, item.getType(), item.getData()))
@@ -251,11 +208,10 @@ public class EssentialsAntiBuildListener implements Listener
 
 		if (entity instanceof Player)
 		{
-			final IUser user = ess.getUserMap().getUser((Player)entity);
+			final Player user = (Player)entity;
 			final ItemStack item = event.getRecipe().getResult();
 
 			if (antib.getSettings().getData().isDisableUse() 
-				//&& !user.canBuild() 
 				&& !Permissions.BUILD.isAuthorized(user))
 			{
 				if (!Permissions.CRAFT.isAuthorized(user, item.getType(), item.getData()))
@@ -274,11 +230,10 @@ public class EssentialsAntiBuildListener implements Listener
 	public void onPlayerPickupItem(PlayerPickupItemEvent event)
 	{
 
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final Player user = event.getPlayer();
 		final ItemStack item = event.getItem().getItemStack();
 
-		if (antib.getSettings().getData().isDisableUse() 			
-			//&& !user.canBuild() 
+		if (antib.getSettings().getData().isDisableUse() 
 			&& !Permissions.BUILD.isAuthorized(user))
 		{
 			if (!Permissions.PICKUP.isAuthorized(user, item.getType(), item.getData()))
@@ -293,11 +248,10 @@ public class EssentialsAntiBuildListener implements Listener
 	public void onPlayerDropItem(final PlayerDropItemEvent event)
 	{
 
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final Player user = event.getPlayer();
 		final ItemStack item = event.getItemDrop().getItemStack();
 
 		if (antib.getSettings().getData().isDisableUse()
-			//&& !user.canBuild() 
 			&& !Permissions.BUILD.isAuthorized(user));
 		{
 			if (!Permissions.DROP.isAuthorized(user, item.getType(), item.getData()))

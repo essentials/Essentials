@@ -4,7 +4,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
 import net.ess3.bukkit.BukkitPlugin;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -37,19 +36,18 @@ public class EssentialsConnect
 		return ess;
 	}
 
-	public void alert(final IUser user, final String item, final String type)
+	public void alert(final Player user, final String item, final String type)
 	{
-		final Location loc = user.getPlayer().getLocation();
+		final Location loc = user.getLocation();
 		final String warnMessage = _("alertFormat", user.getName(), type, item,
 									 loc.getWorld().getName() + "," + loc.getBlockX() + ","
 									 + loc.getBlockY() + "," + loc.getBlockZ());
 		LOGGER.log(Level.WARNING, warnMessage);
 		for (Player p : ess.getServer().getOnlinePlayers())
 		{
-			final IUser alertUser = ess.getUserMap().getUser(p);
-			if (Permissions.ALERTS.isAuthorized(alertUser))
+			if (Permissions.ALERTS.isAuthorized(p))
 			{
-				alertUser.sendMessage(warnMessage);
+				p.sendMessage(warnMessage);
 			}
 		}
 	}
