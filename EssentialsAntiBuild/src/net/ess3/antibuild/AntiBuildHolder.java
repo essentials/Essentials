@@ -9,7 +9,8 @@ public class AntiBuildHolder extends AsyncStorageObjectHolder<AntiBuild>
 {
 	public AntiBuildHolder(final IEssentials ess)
 	{
-		super(ess, AntiBuild.class, new File(ess.getPlugin().getDataFolder(), "protect.yml"));
+		super(ess, AntiBuild.class, new File(ess.getPlugin().getDataFolder(), "antibuild.yml"));
+		onReload();
 	}
 
 	@Override

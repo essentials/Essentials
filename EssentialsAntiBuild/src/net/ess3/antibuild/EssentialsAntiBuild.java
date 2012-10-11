@@ -1,8 +1,5 @@
 package net.ess3.antibuild;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -19,7 +16,7 @@ public class EssentialsAntiBuild extends JavaPlugin implements IAntiBuild
 	public void onEnable()
 	{
 		final PluginManager pm = this.getServer().getPluginManager();
-		final Plugin essPlugin = pm.getPlugin("Essentials");
+		final Plugin essPlugin = pm.getPlugin("Essentials-3");
 		if (essPlugin == null || !essPlugin.isEnabled())
 		{
 			return;
@@ -28,14 +25,6 @@ public class EssentialsAntiBuild extends JavaPlugin implements IAntiBuild
 
 		final EssentialsAntiBuildListener blockListener = new EssentialsAntiBuildListener(this);
 		pm.registerEvents(blockListener, this);
-	}
-
-	@Override
-	public boolean checkProtectionItems(final int id)
-	{
-		//final List<Integer> itemList = settingsList.get(list);
-		//return itemList != null && !itemList.isEmpty() && itemList.contains(id);
-		return false;
 	}
 
 	@Override

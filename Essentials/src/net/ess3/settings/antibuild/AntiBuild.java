@@ -15,19 +15,21 @@ public class AntiBuild implements StorageObject
 		"Set true to disable building for those people",
 		"Setting to false means EssentialsAntiBuild will never prevent you from building"
 	})
-	private boolean build = true;
+	private boolean disableBuild = true;
 	@Comment(
 	{
 		"Should people with build: false in permissions be allowed to use items",
 		"Set true to disable using for those people",
 		"Setting to false means EssentialsAntiBuild will never prevent you from using"
 	})
-	private boolean use = true;
+	private boolean disableUse = true;
 	@Comment(
 	{
 		"Should we tell people they are not allowed to build"
 	})
 	private boolean warnOnBuildDisallow = true;
-	Alert alert = new Alert();
-	BlackList blacklist = new BlackList();
+	
+	private Alert alert = new Alert();
+	private BlackList blacklist = new BlackList();
+
 }

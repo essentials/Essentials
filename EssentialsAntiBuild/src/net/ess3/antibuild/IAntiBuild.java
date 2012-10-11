@@ -5,8 +5,6 @@ import org.bukkit.plugin.Plugin;
 
 public interface IAntiBuild extends Plugin
 {
-	boolean checkProtectionItems(final int id);	
-
 	EssentialsConnect getEssentialsConnect();
 	
 	AntiBuildHolder getSettings();

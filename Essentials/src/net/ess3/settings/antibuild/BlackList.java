@@ -1,11 +1,15 @@
 package net.ess3.settings.antibuild;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import net.ess3.settings.WorldOptions;
 import net.ess3.storage.Comment;
 import net.ess3.storage.ListType;
 import net.ess3.storage.StorageObject;
@@ -48,9 +52,55 @@ public class BlackList implements StorageObject
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
 	private Set<Material> piston;
-
+	
 	public BlackList()
 	{
-		//todo defaults
+		if (placement == null)
+		{
+			Material[] mat =
+			{
+				Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
+			};
+			placement = new HashSet<Material>();
+			placement.addAll(Arrays.asList(mat));
+		}
+		
+		if (usage == null)
+		{
+			usage = new HashSet<Material>();
+			usage.add(Material.LAVA_BUCKET);
+		}
+		
+		if (breaking == null)
+		{
+			breaking = new HashSet<Material>();
+		}
+		
+		if (piston == null)
+		{
+			piston = new HashSet<Material>();
+		}
+		
+		
+	}
+	
+	public Set<Material> getPlacement()
+	{
+		return placement;
+	}
+	
+	public Set<Material> getUsage()
+	{
+		return usage;
+	}
+	
+	public Set<Material> getBreaking()
+	{
+		return breaking;
+	}
+	
+	public Set<Material> getPiston()
+	{
+		return piston;
 	}
 }
