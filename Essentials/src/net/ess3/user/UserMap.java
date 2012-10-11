@@ -151,7 +151,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 			for (Player player : ess.getServer().getOnlinePlayers())
 			{
 				if (player.getName().equalsIgnoreCase(searchString)
-					&& (includeHidden || (includeOffline && getUser(player).isHidden())))
+					&& (includeHidden || includeOffline || !getUser(player).isHidden()))
 				{
 					match = player;
 					break;
@@ -173,7 +173,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 				final String nickname = getUser(player).getData().getNickname();
 				if (nickname != null && !nickname.isEmpty()
 					&& nickname.equalsIgnoreCase(searchString)
-					&& (includeHidden || (includeOffline && getUser(player).isHidden())))
+					&& (includeHidden || includeOffline || !getUser(player).isHidden()))
 				{
 					if (multimatching || multisearch)
 					{
@@ -213,7 +213,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 				for (Player player : ess.getServer().getOnlinePlayers())
 				{
 					if (player.getName().toLowerCase(Locale.ENGLISH).startsWith(searchString)
-						&& (includeHidden || (includeOffline && getUser(player).isHidden())))
+						&& (includeHidden || includeOffline || !getUser(player).isHidden()))
 					{
 						result.add(getUser(player));
 						break;
@@ -221,7 +221,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 					final String nickname = getUser(player).getData().getNickname();
 					if (nickname != null && !nickname.isEmpty()
 						&& nickname.toLowerCase(Locale.ENGLISH).startsWith(searchString)
-						&& (includeHidden || (includeOffline && getUser(player).isHidden())))
+						&& (includeHidden || includeOffline || !getUser(player).isHidden()))
 					{
 						result.add(getUser(player));
 						break;
