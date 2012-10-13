@@ -190,7 +190,13 @@ public class EssentialsProtectEntityListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityTarget(final EntityTargetEvent event)
 	{
-		if (event.getTarget().getType() == EntityType.PLAYER)
+		final Entity entity = event.getTarget();	
+		if(entity == null)
+		{
+			return;
+		}
+		
+		if (entity.getType() == EntityType.PLAYER)
 		{
 			final Player user = (Player)event.getTarget();
 			if ((event.getReason() == TargetReason.CLOSEST_PLAYER
@@ -199,7 +205,8 @@ public class EssentialsProtectEntityListener implements Listener
 				 || event.getReason() == TargetReason.RANDOM_TARGET
 				 || event.getReason() == TargetReason.TARGET_ATTACKED_OWNER
 				 || event.getReason() == TargetReason.OWNER_ATTACKED_TARGET)
-				&& Permissions.ENTITYTARGET.isAuthorized(user))
+				&& !prot.getSettings().getData().getPrevent().isEntitytarget()
+				&& !Permissions.ENTITY_TARGET_BYPASS.isAuthorized(user, event.getEntity().getType().getName().toLowerCase()))
 			{
 				event.setCancelled(true);
 			}
