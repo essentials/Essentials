@@ -17,15 +17,10 @@ public class Commandtpo extends EssentialsCommand
 		}
 
 		//Just basically the old tp command
-		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
-		// Check if user is offline
-		if (!player.isOnline())
-		{
-			throw new NoSuchFieldException(_("playerNotFound"));
-		}
+		final IUser player = ess.getUserMap().matchUser(args[0], false);
 
 		// Verify permission
-		if (!player.isHidden() || Permissions.TELEPORT_HIDDEN.isAuthorized(user))
+		if (user.getPlayer().canSee(player.getPlayer()) || Permissions.TELEPORT_HIDDEN.isAuthorized(user))
 		{
 			user.getTeleport().now(player.getPlayer(), false, TeleportCause.COMMAND);
 			user.sendMessage(_("teleporting"));

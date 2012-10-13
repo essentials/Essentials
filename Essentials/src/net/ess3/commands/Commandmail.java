@@ -37,7 +37,7 @@ public class Commandmail extends EssentialsCommand
 				throw new Exception(_("noPerm", "essentials.mail.send"));
 			}
 
-			IUser u = ess.getUserMap().matchUser(args[1], true, true);
+			IUser u = ess.getUserMap().matchUser(args[1], true);
 			if (u == null)
 			{
 				throw new Exception(_("playerNeverOnServer", args[1]));
@@ -83,7 +83,7 @@ public class Commandmail extends EssentialsCommand
 		}
 		else if (args.length >= 3 && "send".equalsIgnoreCase(args[0]))
 		{
-			IUser u = ess.getUserMap().matchUser(args[1], true, true);
+			IUser u = ess.getUserMap().matchUser(args[1], true);
 			u.addMail("Server: " + getFinalArg(args, 2));
 			sender.sendMessage(_("mailSent"));
 			return;
@@ -95,7 +95,7 @@ public class Commandmail extends EssentialsCommand
 		else if (args.length >= 2)
 		{
 			//allow sending from console without "send" argument, since it's the only thing the console can do
-			IUser u = ess.getUserMap().matchUser(args[0], true, true);
+			IUser u = ess.getUserMap().matchUser(args[0], true);
 			u.addMail("Server: " + getFinalArg(args, 1));
 			sender.sendMessage(_("mailSent"));
 			return;

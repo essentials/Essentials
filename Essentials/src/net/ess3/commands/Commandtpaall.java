@@ -23,7 +23,7 @@ public class Commandtpaall extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final IUser player = ess.getUserMap().matchUser(args[0], false, false);
+		final IUser player = ess.getUserMap().matchUserExcludingHidden(args[0], getPlayerOrNull(sender));
 		teleportAAllPlayers(sender, player);
 	}
 

@@ -18,7 +18,7 @@ public class Commandmute extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
+		final IUser player = ess.getUserMap().matchUser(args[0], true);
 		if (!player.getData().isMuted() && Permissions.MUTE_EXEMPT.isAuthorized(player))
 		{
 			throw new Exception(_("muteExempt"));

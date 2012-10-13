@@ -15,7 +15,7 @@ public class Commandclearinventory extends EssentialsCommand
 	{
 		if (args.length > 0 && Permissions.CLEARINVENTORY_OTHERS.isAuthorized(user))
 		{
-			IUser p = ess.getUserMap().matchUser(args[0], false, false);
+			IUser p = ess.getUserMap().matchUserExcludingHidden(args[0], getPlayerOrNull(user));
 			if (p != null)
 			{
 				p.getPlayer().getInventory().clear();

@@ -38,7 +38,7 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	Location getHome(Location loc);
 
-	boolean isHidden();
+	//boolean isHidden();
 
 	ITeleport getTeleport();
 

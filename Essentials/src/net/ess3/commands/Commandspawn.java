@@ -18,7 +18,7 @@ public class Commandspawn extends EssentialsCommand
 		charge.isAffordableFor(user);
 		if (args.length > 0 && Permissions.SPAWN_OTHERS.isAuthorized(user))
 		{
-			final IUser otherUser = ess.getUserMap().matchUser(args[0], false, false);
+			final IUser otherUser = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 			respawn(otherUser, null);
 			if (!otherUser.equals(user))
 			{
@@ -39,7 +39,7 @@ public class Commandspawn extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final IUser user = ess.getUserMap().matchUser(args[0], false, false);
+		final IUser user = ess.getUserMap().matchUser(args[0], false);
 		respawn(user, null);
 		user.sendMessage(_("teleportAtoB", user.getPlayer().getDisplayName(), "spawn"));
 		sender.sendMessage(_("teleporting"));

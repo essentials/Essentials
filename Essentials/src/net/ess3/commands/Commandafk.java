@@ -12,7 +12,7 @@ public class Commandafk extends EssentialsCommand
 	{
 		if (args.length > 0 && Permissions.AFK_OTHERS.isAuthorized(user))
 		{
-			IUser afkUser = ess.getUserMap().matchUser(args[0], false, false);
+			IUser afkUser = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 			if (afkUser != null)
 			{
 				toggleAfk(afkUser);
@@ -30,19 +30,13 @@ public class Commandafk extends EssentialsCommand
 		if (!user.toggleAfk())
 		{
 			//user.sendMessage(_("markedAsNotAway"));
-			if (!user.isHidden())
-			{
-				ess.broadcastMessage(user, _("userIsNotAway", user.getPlayer().getDisplayName()));
-			}
+			ess.broadcastMessage(user, _("userIsNotAway", user.getPlayer().getDisplayName()));
 			user.updateActivity(false);
 		}
 		else
 		{
 			//user.sendMessage(_("markedAsAway"));
-			if (!user.isHidden())
-			{
-				ess.broadcastMessage(user, _("userIsAway", user.getPlayer().getDisplayName()));
-			}
+			ess.broadcastMessage(user, _("userIsAway", user.getPlayer().getDisplayName()));
 		}
 	}	
 }

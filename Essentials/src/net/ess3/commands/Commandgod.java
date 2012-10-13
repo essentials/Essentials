@@ -6,7 +6,6 @@ import net.ess3.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 
 
-
 public class Commandgod extends EssentialsCommand
 {
 	@Override
@@ -35,13 +34,8 @@ public class Commandgod extends EssentialsCommand
 
 	private void godOtherPlayers(final CommandSender sender, final String[] args)
 	{
-		for (IUser player : ess.getUserMap().matchUsers(args[0], false, true))
+		for (IUser player : ess.getUserMap().matchUsers(args[0], true))
 		{
-			if (player.isHidden())
-			{
-				continue;
-			}
-
 			if (args.length > 1)
 			{
 				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))

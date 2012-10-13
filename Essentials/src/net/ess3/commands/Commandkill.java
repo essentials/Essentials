@@ -16,7 +16,7 @@ public class Commandkill extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		for (IUser matchPlayer : ess.getUserMap().matchUsers(args[0], false, false))
+		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
 		{
 			final EntityDamageEvent ede = new EntityDamageEvent(matchPlayer.getPlayer(), sender instanceof IUser && sender.getName().equals(matchPlayer.getName()) ? EntityDamageEvent.DamageCause.SUICIDE : EntityDamageEvent.DamageCause.CUSTOM, Short.MAX_VALUE);
 			server.getPluginManager().callEvent(ede);

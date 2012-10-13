@@ -19,7 +19,7 @@ public class KeywordReplacer implements IText
 	private final transient IText input;
 	private final transient List<String> replaced;
 	private final transient IEssentials ess;
-	
+
 	public KeywordReplacer(final IText input, final CommandSender sender, final IEssentials ess)
 	{
 		this.input = input;
@@ -27,7 +27,7 @@ public class KeywordReplacer implements IText
 		this.ess = ess;
 		replaceKeywords(sender);
 	}
-	
+
 	private void replaceKeywords(final CommandSender sender)
 	{
 		String displayName, ipAddress, balance, mails, world;
@@ -55,11 +55,14 @@ public class KeywordReplacer implements IText
 		}
 
 		int playerHidden = 0;
-		for (Player p : ess.getServer().getOnlinePlayers())
+		if (sender instanceof Player)
 		{
-			if (ess.getUserMap().getUser(p).isHidden())
+			for (Player p : ess.getServer().getOnlinePlayers())
 			{
-				playerHidden++;
+				if (!p.canSee((Player)sender))
+				{
+					playerHidden++;
+				}
 			}
 		}
 		online = Integer.toString(ess.getServer().getOnlinePlayers().length - playerHidden);
@@ -77,17 +80,20 @@ public class KeywordReplacer implements IText
 		worlds = worldsBuilder.toString();
 
 		final StringBuilder playerlistBuilder = new StringBuilder();
-		for (Player p : ess.getServer().getOnlinePlayers())
+		if (sender instanceof Player)
 		{
-			if (ess.getUserMap().getUser(p).isHidden())
+			for (Player p : ess.getServer().getOnlinePlayers())
 			{
-				continue;
+				if (!p.canSee((Player)sender))
+				{
+					continue;
+				}
+				if (playerlistBuilder.length() > 0)
+				{
+					playerlistBuilder.append(", ");
+				}
+				playerlistBuilder.append(p.getDisplayName());
 			}
-			if (playerlistBuilder.length() > 0)
-			{
-				playerlistBuilder.append(", ");
-			}
-			playerlistBuilder.append(p.getDisplayName());
 		}
 		playerlist = playerlistBuilder.toString();
 

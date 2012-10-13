@@ -43,7 +43,7 @@ public class Commandwhois extends EssentialsCommand
 		{
 			final IUser user = ess.getUserMap().getUser(onlinePlayer);
 
-			if (user.isHidden() && !showhidden)
+			if (sender instanceof IUser && ((IUser)sender).getPlayer().canSee(onlinePlayer) && !showhidden)
 			{
 				continue;
 			}

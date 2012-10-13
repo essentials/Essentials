@@ -8,7 +8,7 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.command.CommandSender;
-
+import org.bukkit.entity.Player;
 
 
 public class Commandmsg extends EssentialsCommand
@@ -57,31 +57,37 @@ public class Commandmsg extends EssentialsCommand
 			Console.getConsoleReplyTo().setReplyTo(sender);
 			return;
 		}
+		
 
-		final Set<IUser> matchedPlayers = ess.getUserMap().matchUsers(args[0], true, false);
+		final Set<IUser> matchedPlayers = ess.getUserMap().matchUsers(args[0], false);
 
 		if (matchedPlayers.isEmpty())
 		{
 			throw new Exception(_("playerNotFound"));
 		}
 
-		int i = 0;
-		for (IUser u : matchedPlayers)
+		final Player player = getPlayerOrNull(sender);
+		if (isUser(sender))
 		{
-			if (u.isHidden())
+			int i = 0;
+			
+			for (IUser u : matchedPlayers)
 			{
-				i++;
+				if (!player.canSee(u.getPlayer()))
+				{
+					i++;
+				}
 			}
-		}
-		if (i == matchedPlayers.size())
-		{
-			throw new Exception(_("playerNotFound"));
+			if (i == matchedPlayers.size())
+			{
+				throw new Exception(_("playerNotFound"));
+			}
 		}
 
 		for (IUser matchedPlayer : matchedPlayers)
 		{
 			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getPlayer().getDisplayName(), message));
-			if (isUser(sender) && (matchedPlayer.isIgnoringPlayer(getUser(sender)) || matchedPlayer.isHidden()))
+			if (isUser(sender) && (matchedPlayer.isIgnoringPlayer(getUser(sender)) || !player.canSee(matchedPlayer.getPlayer())))
 			{
 				continue;
 			}

@@ -17,7 +17,7 @@ public class Commandtpahere extends EssentialsCommand
 		}
 
 		
-		final IUser player = ess.getUserMap().matchUser(args[0], false, false);
+		final IUser player = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 		if (!player.getData().isTeleportEnabled())
 		{
 			throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));

@@ -25,7 +25,7 @@ public class Commandunlimited extends EssentialsCommand
 
 		if (args.length > 1 && Permissions.UNLIMITED_OTHERS.isAuthorized(user))
 		{
-			target = ess.getUserMap().matchUser(args[1], false, false);
+			target = ess.getUserMap().matchUserExcludingHidden(args[1], user.getPlayer());
 		}
 
 		if (args[0].equalsIgnoreCase("list"))

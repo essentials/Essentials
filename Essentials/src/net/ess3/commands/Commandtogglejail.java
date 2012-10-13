@@ -18,7 +18,7 @@ public class Commandtogglejail extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
+		final IUser player = ess.getUserMap().matchUser(args[0], true);
 
 		if (args.length >= 2 && !player.getData().isJailed())
 		{

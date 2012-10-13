@@ -23,7 +23,7 @@ public class Commandpay extends EssentialsCommand
 		}
 
 		boolean foundUser = false;
-		for (IUser u : ess.getUserMap().matchUsers(args[0], false, true))
+		for (IUser u : ess.getUserMap().matchUsers(args[0], true))
 		{
 			user.payUser(u, amount);
 			Trade.log("Command", "Pay", "Player", user.getName(), new Trade(amount, ess), u.getName(), new Trade(amount, ess), user.getPlayer().getLocation(), ess);

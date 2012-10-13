@@ -22,7 +22,7 @@ public class Commandtp extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 
 		case 1:
-			final IUser player = ess.getUserMap().matchUser(args[0], false, false);
+			final IUser player = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 			if (!player.getData().isTeleportEnabled())
 			{
 				throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
@@ -45,9 +45,9 @@ public class Commandtp extends EssentialsCommand
 			}
 			user.sendMessage(_("teleporting"));
 			
-			final IUser target = ess.getUserMap().matchUser(args[0], false, false);
+			final IUser target = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 			
-			final IUser toPlayer = ess.getUserMap().matchUser(args[1], false, false);
+			final IUser toPlayer = ess.getUserMap().matchUserExcludingHidden(args[1], user.getPlayer());
 
 			if (!target.getData().isTeleportEnabled())
 			{

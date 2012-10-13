@@ -1,17 +1,15 @@
 package net.ess3.ranks;
 
-import java.text.MessageFormat;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.utils.FormatUtil;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 
-public class GMGroups implements IRanks
+public class GMGroups extends AbstractRanks implements IRanks
 {
 	private final transient IEssentials ess;
 	private final transient GroupManager groupManager;
@@ -21,11 +19,11 @@ public class GMGroups implements IRanks
 		this.ess = ess;
 		this.groupManager = (GroupManager)groupManager;
 	}
-
+	
 	@Override
-	public double getHealCooldown(IUser player)
+	public double getHealCooldown(CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getPlayer());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
 		if (handler == null)
 		{
 			return 0;
@@ -34,9 +32,9 @@ public class GMGroups implements IRanks
 	}
 
 	@Override
-	public double getTeleportCooldown(IUser player)
+	public double getTeleportCooldown(CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getPlayer());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
 		if (handler == null)
 		{
 			return 0;
@@ -45,9 +43,9 @@ public class GMGroups implements IRanks
 	}
 
 	@Override
-	public double getTeleportDelay(IUser player)
+	public double getTeleportDelay(CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getPlayer());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
 		if (handler == null)
 		{
 			return 0;
@@ -56,9 +54,9 @@ public class GMGroups implements IRanks
 	}
 
 	@Override
-	public String getPrefix(IUser player)
+	public String getPrefix(CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getPlayer());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
 		if (handler == null)
 		{
 			return null;
@@ -67,9 +65,9 @@ public class GMGroups implements IRanks
 	}
 
 	@Override
-	public String getSuffix(IUser player)
+	public String getSuffix(CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getPlayer());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
 		if (handler == null)
 		{
 			return null;
@@ -78,9 +76,9 @@ public class GMGroups implements IRanks
 	}
 
 	@Override
-	public int getHomeLimit(IUser player)
+	public int getHomeLimit(CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getPlayer());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
 		if (handler == null)
 		{
 			return 0;
@@ -89,23 +87,9 @@ public class GMGroups implements IRanks
 	}
 
 	@Override
-	public MessageFormat getChatFormat(final IUser player)
+	protected String getRawChatFormat(final CommandSender player)
 	{
-		String format = getRawChatFormat(player);
-		format = FormatUtil.replaceFormat(format);
-		format = format.replace("{DISPLAYNAME}", "%1$s");
-		format = format.replace("{GROUP}", "{0}");
-		format = format.replace("{MESSAGE}", "%2$s");
-		format = format.replace("{WORLDNAME}", "{1}");
-		format = format.replace("{SHORTWORLDNAME}", "{2}");
-		format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
-		MessageFormat mFormat = new MessageFormat(format);
-		return mFormat;
-	}
-
-	private String getRawChatFormat(final IUser player)
-	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getPlayer());
+		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
 		if (handler != null)
 		{
 			String chatformat = handler.getPermissionString(player.getName(), "chatformat");
@@ -120,9 +104,9 @@ public class GMGroups implements IRanks
 	}
 
 	@Override
-	public String getMainGroup(IUser player)
+	public String getMainGroup(CommandSender player)
 	{
-		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getPlayer());
+		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
 		if (handler == null)
 		{
 			return null;
@@ -131,9 +115,9 @@ public class GMGroups implements IRanks
 	}
 
 	@Override
-	public boolean inGroup(IUser player, String groupname)
+	public boolean inGroup(CommandSender player, String groupname)
 	{
-		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(player.getName());
+		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
 		if (handler == null)
 		{
 			return false;

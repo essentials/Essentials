@@ -19,7 +19,7 @@ public class Commandtempban extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final IUser user = ess.getUserMap().matchUser(args[0], false, true);
+		final IUser user = ess.getUserMap().matchUser(args[0], true);
 		if (!user.isOnline())
 		{
 			if (Permissions.TEMPBAN_OFFLINE.isAuthorized(sender))

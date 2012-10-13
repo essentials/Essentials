@@ -10,14 +10,21 @@ import java.util.Map.Entry;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.storage.AsyncStorageObjectHolder;
-import net.ess3.utils.FormatUtil;
+import org.bukkit.command.CommandSender;
 
 
 public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRanks
 {
+	private AbstractRanks abstractRanks = new AbstractRanks() {
+		@Override
+		protected String getRawChatFormat(CommandSender sender)
+		{
+			return RanksStorage.this.getRawChatFormat(sender);
+		}
+	};
+	
 	@Override
 	public void finishRead()
 	{
@@ -34,7 +41,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 		onReload();
 	}
 
-	public Collection<Entry<String, RankOptions>> getGroups(final IUser player)
+	public Collection<Entry<String, RankOptions>> getGroups(final CommandSender player)
 	{
 		final Map<String, RankOptions> groups = getData().getRanks();
 		if (groups == null || groups.isEmpty())
@@ -56,7 +63,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public double getHealCooldown(final IUser player)
+	public double getHealCooldown(final CommandSender player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
@@ -69,7 +76,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public double getTeleportCooldown(final IUser player)
+	public double getTeleportCooldown(final CommandSender player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
@@ -82,7 +89,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public double getTeleportDelay(final IUser player)
+	public double getTeleportDelay(final CommandSender player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
@@ -95,7 +102,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public String getPrefix(final IUser player)
+	public String getPrefix(final CommandSender player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
@@ -108,7 +115,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public String getSuffix(final IUser player)
+	public String getSuffix(final CommandSender player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
@@ -121,7 +128,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public int getHomeLimit(final IUser player)
+	public int getHomeLimit(final CommandSender player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
@@ -133,23 +140,13 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 		return 0;
 	}
 
-	//TODO: Reimplement caching
 	@Override
-	public MessageFormat getChatFormat(final IUser player)
+	public MessageFormat getChatFormat(final CommandSender player)
 	{
-		String format = getRawChatFormat(player);
-		format = FormatUtil.replaceFormat(format);
-		format = format.replace("{DISPLAYNAME}", "%1$s");
-		format = format.replace("{GROUP}", "{0}");
-		format = format.replace("{MESSAGE}", "%2$s");
-		format = format.replace("{WORLDNAME}", "{1}");
-		format = format.replace("{SHORTWORLDNAME}", "{2}");
-		format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
-		MessageFormat mFormat = new MessageFormat(format);
-		return mFormat;
+		return abstractRanks.getChatFormat(player);
 	}
 
-	private String getRawChatFormat(final IUser player)
+	private String getRawChatFormat(final CommandSender player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
@@ -164,7 +161,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public boolean inGroup(IUser player, String groupname)
+	public boolean inGroup(CommandSender player, String groupname)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
@@ -177,7 +174,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public String getMainGroup(IUser player)
+	public String getMainGroup(CommandSender player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{

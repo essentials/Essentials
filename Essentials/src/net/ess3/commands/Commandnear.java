@@ -22,7 +22,7 @@ public class Commandnear extends EssentialsCommand
 		{
 			try
 			{
-				otherUser = ess.getUserMap().matchUser(args[0], false, false);
+				otherUser = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 			}
 			catch (Exception ex)
 			{
@@ -62,7 +62,7 @@ public class Commandnear extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final IUser otherUser = ess.getUserMap().matchUser(args[0], false, false);
+		final IUser otherUser = ess.getUserMap().matchUser(args[0], false);
 		long radius = 200;
 		if (args.length > 1)
 		{
@@ -83,11 +83,11 @@ public class Commandnear extends EssentialsCommand
 		final World world = loc.getWorld();
 		final StringBuilder output = new StringBuilder();
 		final long radiusSquared = radius * radius;
+		Player userPlayer = user.getPlayer();
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			final IUser player = getUser(onlinePlayer);
-			if (!player.equals(user) && !player.isHidden())
+			if (!onlinePlayer.getName().equals(user.getName()) && userPlayer.canSee(onlinePlayer))
 			{
 				final Location playerLoc = onlinePlayer.getLocation();
 				if (playerLoc.getWorld() != world)

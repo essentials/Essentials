@@ -20,10 +20,11 @@ public class Commandrealname extends EssentialsCommand
 		}
 		final ISettings settings = ess.getSettings();
 		final String whois = args[0].toLowerCase(Locale.ENGLISH);
+		Player player = sender instanceof IUser ? ((IUser)sender).getPlayer() : null;
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			final IUser u = ess.getUserMap().getUser(onlinePlayer);
-			if (u.isHidden())
+			if (player != null && !player.canSee(onlinePlayer))
 			{
 				continue;
 			}

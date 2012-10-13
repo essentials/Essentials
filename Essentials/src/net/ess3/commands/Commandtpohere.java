@@ -18,13 +18,7 @@ public class Commandtpohere extends EssentialsCommand
 		}
 
 		//Just basically the old tphere command
-		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
-
-		// Check if user is offline
-		if (!player.isOnline())
-		{
-			throw new NoSuchFieldException(_("playerNotFound"));
-		}
+		final IUser player = ess.getUserMap().matchUser(args[0], false);
 		
 		ISettings settings = ess.getSettings();
 		//todo - common method
@@ -36,7 +30,7 @@ public class Commandtpohere extends EssentialsCommand
 
 
 		// Verify permission
-		if (!player.isHidden() || Permissions.TELEPORT_HIDDEN.isAuthorized(user))
+		if (user.getPlayer().canSee(player.getPlayer()) || Permissions.TELEPORT_HIDDEN.isAuthorized(user))
 		{
 			player.getTeleport().now(user.getPlayer(), false, TeleportCause.COMMAND);
 			user.sendMessage(_("teleporting"));

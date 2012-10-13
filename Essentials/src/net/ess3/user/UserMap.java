@@ -100,11 +100,22 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	{
 		return getObject(player.getName());
 	}
-
+	
 	@Override
-	public IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline) throws TooManyMatchesException, PlayerNotFoundException
+	public IUser matchUser(final String name, final boolean includeOffline) throws TooManyMatchesException, PlayerNotFoundException
 	{
-		final Set<IUser> users = matchUsers(name, includeHidden, includeOffline);
+		return matchUser(name, true, includeOffline, null);
+	}
+	
+	@Override
+	public IUser matchUserExcludingHidden(final String name, final Player requester) throws TooManyMatchesException, PlayerNotFoundException
+	{
+		return matchUser(name, false, false, requester);
+	}
+	
+	public IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline, final Player requester) throws TooManyMatchesException, PlayerNotFoundException
+	{
+		final Set<IUser> users = matchUsers(name, includeHidden, includeOffline, requester);
 		if (users.isEmpty())
 		{
 			throw new PlayerNotFoundException();
@@ -121,9 +132,20 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 			}
 		}
 	}
+	
+	@Override
+	public Set<IUser> matchUsers(final String name, final boolean includeOffline)
+	{
+		return matchUsers(name, true, includeOffline, null);
+	}
 
 	@Override
-	public Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline)
+	public Set<IUser> matchUsersExcludingHidden(final String name, final Player requester)
+	{
+		return matchUsers(name, false, false, requester);
+	}
+	
+	public Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline, final Player requester)
 	{
 		final String colorlessName = FormatUtil.stripColor(name);
 		final String[] search = colorlessName.split(",");
@@ -151,7 +173,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 			for (Player player : ess.getServer().getOnlinePlayers())
 			{
 				if (player.getName().equalsIgnoreCase(searchString)
-					&& (includeHidden || includeOffline || !getUser(player).isHidden()))
+					&& (includeHidden || includeOffline || requester == null || requester.canSee(player)))
 				{
 					match = player;
 					break;
@@ -173,7 +195,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 				final String nickname = getUser(player).getData().getNickname();
 				if (nickname != null && !nickname.isEmpty()
 					&& nickname.equalsIgnoreCase(searchString)
-					&& (includeHidden || includeOffline || !getUser(player).isHidden()))
+					&& (includeHidden || includeOffline || requester == null || requester.canSee(player)))
 				{
 					if (multimatching || multisearch)
 					{
@@ -213,7 +235,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 				for (Player player : ess.getServer().getOnlinePlayers())
 				{
 					if (player.getName().toLowerCase(Locale.ENGLISH).startsWith(searchString)
-						&& (includeHidden || includeOffline || !getUser(player).isHidden()))
+						&& (includeHidden || includeOffline || requester == null || requester.canSee(player)))
 					{
 						result.add(getUser(player));
 						break;
@@ -221,7 +243,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 					final String nickname = getUser(player).getData().getNickname();
 					if (nickname != null && !nickname.isEmpty()
 						&& nickname.toLowerCase(Locale.ENGLISH).startsWith(searchString)
-						&& (includeHidden || includeOffline || !getUser(player).isHidden()))
+						&& (includeHidden || includeOffline || requester == null || requester.canSee(player)))
 					{
 						result.add(getUser(player));
 						break;

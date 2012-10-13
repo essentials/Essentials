@@ -15,29 +15,38 @@ public class Commandlist extends EssentialsCommand
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
+		String online;
 		boolean showhidden = false;
 		if (Permissions.LIST_HIDDEN.isAuthorized(sender))
 		{
 			showhidden = true;
 		}
-		int playerHidden = 0;
-		for (Player onlinePlayer : server.getOnlinePlayers())
+		Player userPlayer = getPlayerOrNull(sender);
+		if (userPlayer != null)
 		{
-			if (ess.getUserMap().getUser(onlinePlayer).isHidden())
+			int playerHidden = 0;
+			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				playerHidden++;
+				if (!userPlayer.canSee(onlinePlayer))
+				{
+					playerHidden++;
+				}
 			}
-		}
 
-		String online;
-		if (showhidden && playerHidden > 0)
-		{
-			online = _("listAmountHidden", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
+			if (showhidden && playerHidden > 0)
+			{
+				online = _("listAmountHidden", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
+			}
+			else
+			{
+				online = _("listAmount", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
+			}
 		}
 		else
 		{
-			online = _("listAmount", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
+			online = _("listAmount", server.getOnlinePlayers().length, server.getMaxPlayers());
 		}
+
 		sender.sendMessage(online);
 
 		ISettings settings = ess.getSettings();
@@ -47,21 +56,26 @@ public class Commandlist extends EssentialsCommand
 		if (sortListByGroups)
 		{
 			Map<String, List<IUser>> sort = new HashMap<String, List<IUser>>();
+			Set<String> hiddenPlayers = new HashSet<String>();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				final IUser player = getUser(onlinePlayer);
-				if (player.isHidden() && !showhidden)
+				if (userPlayer != null
+					&& !userPlayer.canSee(onlinePlayer))
 				{
-					continue;
+					hiddenPlayers.add(onlinePlayer.getName());
+					if (!showhidden)
+					{
+						continue;
+					}
 				}
-				final String group = ess.getRanks().getMainGroup(player);
+				final String group = ess.getRanks().getMainGroup(onlinePlayer);
 				List<IUser> list = sort.get(group);
 				if (list == null)
 				{
 					list = new ArrayList<IUser>();
 					sort.put(group, list);
 				}
-				list.add(player);
+				list.add(getUser(onlinePlayer));
 			}
 			final String[] groups = sort.keySet().toArray(new String[0]);
 			Arrays.sort(groups, String.CASE_INSENSITIVE_ORDER);
@@ -88,7 +102,7 @@ public class Commandlist extends EssentialsCommand
 						groupString.append(_("listAfkTag"));
 					}
 
-					if (user.isHidden())
+					if (hiddenPlayers.contains(user.getName()))
 					{
 						groupString.append(_("listHiddenTag"));
 					}
@@ -102,14 +116,19 @@ public class Commandlist extends EssentialsCommand
 		else
 		{
 			final List<IUser> users = new ArrayList<IUser>();
+			Set<String> hiddenPlayers = new HashSet<String>();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				final IUser player = getUser(onlinePlayer);
-				if (player.isHidden() && !showhidden)
+				if (userPlayer != null
+					&& !userPlayer.canSee(onlinePlayer))
 				{
-					continue;
+					hiddenPlayers.add(onlinePlayer.getName());
+					if (!showhidden)
+					{
+						continue;
+					}
 				}
-				users.add(player);
+				users.add(getUser(onlinePlayer));
 			}
 			Collections.sort(users);
 
@@ -132,7 +151,7 @@ public class Commandlist extends EssentialsCommand
 					onlineUsers.append(_("listAfkTag"));
 				}
 
-				if (user.isHidden())
+				if (hiddenPlayers.contains(user.getName()))
 				{
 					onlineUsers.append(_("listHiddenTag"));
 				}

@@ -1,16 +1,14 @@
 package net.ess3.ranks;
 
-import java.text.MessageFormat;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.utils.FormatUtil;
 import net.milkbowl.vault.chat.Chat;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 
-public class VaultGroups implements IRanks
+public class VaultGroups extends AbstractRanks implements IRanks
 {
 	private final IEssentials ess;
 
@@ -25,66 +23,52 @@ public class VaultGroups implements IRanks
 	}
 
 	@Override
-	public double getHealCooldown(IUser player)
+	public double getHealCooldown(CommandSender player)
 	{
 		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerInfoDouble(player.getPlayer(), "healcooldown", 0);
+		return chat.getPlayerInfoDouble(getPlayer(player), "healcooldown", 0);
 	}
 
 	@Override
-	public double getTeleportCooldown(IUser player)
+	public double getTeleportCooldown(CommandSender player)
 	{
 		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerInfoDouble(player.getPlayer(), "teleportcooldown", 0);
+		return chat.getPlayerInfoDouble(getPlayer(player), "teleportcooldown", 0);
 	}
 
 	@Override
-	public double getTeleportDelay(IUser player)
+	public double getTeleportDelay(CommandSender player)
 	{
 		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerInfoDouble(player.getPlayer(), "teleportdelay", 0);
+		return chat.getPlayerInfoDouble(getPlayer(player), "teleportdelay", 0);
 	}
 
 	@Override
-	public String getPrefix(IUser player)
+	public String getPrefix(CommandSender player)
 	{
 		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerPrefix(player.getPlayer());
+		return chat.getPlayerPrefix(getPlayer(player));
 	}
 
 	@Override
-	public String getSuffix(IUser player)
+	public String getSuffix(CommandSender player)
 	{
 		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerSuffix(player.getPlayer());
+		return chat.getPlayerSuffix(getPlayer(player));
 	}
 
 	@Override
-	public int getHomeLimit(IUser player)
+	public int getHomeLimit(CommandSender player)
 	{
 		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerInfoInteger(player.getPlayer(), "homes", 0);
+		return chat.getPlayerInfoInteger(getPlayer(player), "homes", 0);
 	}
 
 	@Override
-	public MessageFormat getChatFormat(final IUser player)
-	{
-		String format = getRawChatFormat(player);
-		format = FormatUtil.replaceFormat(format);
-		format = format.replace("{DISPLAYNAME}", "%1$s");
-		format = format.replace("{GROUP}", "{0}");
-		format = format.replace("{MESSAGE}", "%2$s");
-		format = format.replace("{WORLDNAME}", "{1}");
-		format = format.replace("{SHORTWORLDNAME}", "{2}");
-		format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
-		MessageFormat mFormat = new MessageFormat(format);
-		return mFormat;
-	}
-
-	private String getRawChatFormat(final IUser player)
+	protected String getRawChatFormat(final CommandSender player)
 	{
 		Chat chat = getServiceProvider(Chat.class);
-		String chatformat = chat.getPlayerInfoString(player.getPlayer(), "chatformat", "");
+		String chatformat = chat.getPlayerInfoString(getPlayer(player), "chatformat", "");
 		if (chatformat != null && !chatformat.isEmpty())
 		{
 			return chatformat;
@@ -95,17 +79,17 @@ public class VaultGroups implements IRanks
 	}
 
 	@Override
-	public String getMainGroup(IUser player)
+	public String getMainGroup(CommandSender player)
 	{
 		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPrimaryGroup(player.getPlayer().getPlayer());
+		return chat.getPrimaryGroup(getPlayer(player));
 	}
 
 	@Override
-	public boolean inGroup(IUser player, String groupname)
+	public boolean inGroup(CommandSender player, String groupname)
 	{
 		Chat chat = getServiceProvider(Chat.class);
-		for (String group : chat.getPlayerGroups(player.getPlayer()))
+		for (String group : chat.getPlayerGroups(getPlayer(player)))
 		{
 			if (group.equalsIgnoreCase(groupname))
 			{

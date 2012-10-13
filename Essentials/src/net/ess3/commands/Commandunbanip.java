@@ -16,7 +16,7 @@ public class Commandunbanip extends EssentialsCommand
 		}
 		try
 		{
-			final IUser user = ess.getUserMap().matchUser(args[0], false, true);
+			final IUser user = ess.getUserMap().matchUser(args[0], true);
 			ess.getServer().unbanIP(user.getData().getIpAddress());
 		}
 		catch (Exception ex)

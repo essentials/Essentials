@@ -21,7 +21,7 @@ public class Commandinvsee extends EssentialsCommand
 		IUser invUser = user;
 		if (args.length == 1)
 		{
-			invUser = ess.getUserMap().matchUser(args[0], false, false);
+			invUser = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 		}
 		if (invUser == user && user.getData().getInventory() != null)
 		{

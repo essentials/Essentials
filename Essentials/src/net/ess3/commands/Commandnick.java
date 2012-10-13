@@ -31,7 +31,7 @@ public class Commandnick extends EssentialsCommand
 			{
 				throw new Exception(_("nickOthersPermission"));
 			}
-			setNickname(ess.getUserMap().matchUser(args[0], false, false), formatNickname(user, args[1]));
+			setNickname(ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer()), formatNickname(user, args[1]));
 			user.sendMessage(_("nickChanged"));
 			return;
 		}
@@ -56,7 +56,7 @@ public class Commandnick extends EssentialsCommand
 		}
 		else
 		{
-			setNickname(ess.getUserMap().matchUser(args[0], false, false), formatNickname(null, args[1]));
+			setNickname(ess.getUserMap().matchUser(args[0], false), formatNickname(null, args[1]));
 		}
 		sender.sendMessage(_("nickChanged"));
 	}

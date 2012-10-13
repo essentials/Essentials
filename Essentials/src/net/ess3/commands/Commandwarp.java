@@ -35,10 +35,10 @@ public class Commandwarp extends EssentialsCommand
 			IUser otherUser = null;
 			if (args.length == 2 && Permissions.WARP_OTHERS.isAuthorized(user))
 			{
-				otherUser = ess.getUserMap().matchUser(args[1],Permissions.WARP_HIDDEN.isAuthorized(user), false);
-				if (otherUser == null)
-				{
-					throw new Exception(_("playerNotFound"));
+				if (Permissions.WARP_HIDDEN.isAuthorized(user)) {
+					otherUser = ess.getUserMap().matchUser(args[1], false);
+				} else {
+					otherUser = ess.getUserMap().matchUserExcludingHidden(args[1], user.getPlayer());
 				}
 				warpUser(otherUser, args[0]);
 				throw new NoChargeException();
@@ -56,7 +56,7 @@ public class Commandwarp extends EssentialsCommand
 			warpList(sender, args);
 			throw new NoChargeException();
 		}
-		IUser otherUser = ess.getUserMap().matchUser(args[1],Permissions.WARP_HIDDEN.isAuthorized(sender), false);
+		IUser otherUser = ess.getUserMap().matchUser(args[1], false);
 		if (otherUser == null)
 		{
 			throw new Exception(_("playerNotFound"));

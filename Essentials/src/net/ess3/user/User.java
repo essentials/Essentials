@@ -39,9 +39,9 @@ public class User extends UserBase implements IUser
 	@Setter
 	private transient long lastOnlineActivity;
 	private transient long lastActivity = System.currentTimeMillis();
-	@Getter
+	/*@Getter
 	@Setter
-	private boolean hidden = false;
+	private boolean hidden = false;*/
 	@Getter
 	private transient boolean vanished;
 	@Getter
@@ -383,7 +383,7 @@ public class User extends UserBase implements IUser
 		{
 			getData().setAfk(false);
 			queueSave();
-			if (broadcast && !hidden)
+			if (broadcast)
 			{
 				ess.broadcastMessage(this, _("userIsNotAway", getPlayer().getDisplayName()));
 			}
@@ -397,7 +397,7 @@ public class User extends UserBase implements IUser
 		final ISettings settings = ess.getSettings();
 		final long autoafkkick = settings.getData().getCommands().getAfk().getAutoAFKKick();
 		if (autoafkkick > 0 && lastActivity > 0 && (lastActivity + (autoafkkick * 1000)) < System.currentTimeMillis()
-			&& !hidden
+			//&& !hidden
 			&& !Permissions.KICK_EXEMPT.isAuthorized(this)
 			&& !Permissions.AFK_KICKEXEMPT.isAuthorized(this))
 		{
@@ -419,10 +419,7 @@ public class User extends UserBase implements IUser
 		if (!getData().isAfk() && autoafk > 0 && lastActivity + autoafk * 1000 < System.currentTimeMillis() && Permissions.AFK.isAuthorized(this))
 		{
 			setAfk(true);
-			if (!hidden)
-			{
-				ess.broadcastMessage(this, _("userIsAway", getPlayer().getDisplayName()));
-			}
+			ess.broadcastMessage(this, _("userIsAway", getPlayer().getDisplayName()));
 		}
 	}
 
@@ -642,7 +639,6 @@ public class User extends UserBase implements IUser
 					p.hidePlayer(getPlayer());
 				}
 			}
-			setHidden(true);
 			ess.getVanishedPlayers().add(getName());
 		}
 		else
@@ -651,7 +647,6 @@ public class User extends UserBase implements IUser
 			{
 				p.showPlayer(getPlayer());
 			}
-			setHidden(false);
 			ess.getVanishedPlayers().remove(getName());
 		}
 	}

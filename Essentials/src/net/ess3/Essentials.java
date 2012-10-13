@@ -242,20 +242,19 @@ public class Essentials implements IEssentials
 		{
 			return getServer().broadcastMessage(message);
 		}
-		if (sender.isHidden())
-		{
-			return 0;
-		}
+		Player userPlayer = sender.getPlayer();
+		int delivered = 0;
 		for (Player player : getServer().getOnlinePlayers())
 		{
 			final IUser user = getUserMap().getUser(player);
-			if (!user.isIgnoringPlayer(sender))
+			if (!user.isIgnoringPlayer(sender) && player.canSee(userPlayer))
 			{
 				player.sendMessage(message);
+				delivered++;
 			}
 		}
 
-		return getServer().getOnlinePlayers().length;
+		return delivered;
 	}
 
 	@Override

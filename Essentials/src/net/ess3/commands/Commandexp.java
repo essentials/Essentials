@@ -87,7 +87,7 @@ public class Commandexp extends EssentialsCommand
 	private void showMatch(final CommandSender sender, final String match) throws NotEnoughArgumentsException
 	{
 		boolean foundUser = false;
-		for (IUser matchPlayer : ess.getUserMap().matchUsers(match, false, false))
+		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(match, getPlayerOrNull(sender)))
 		{
 			foundUser = true;			
 			showExp(sender, matchPlayer);
@@ -101,7 +101,7 @@ public class Commandexp extends EssentialsCommand
 	private void expMatch(final CommandSender sender, final String match, final String amount, final boolean toggle) throws NotEnoughArgumentsException
 	{
 		boolean foundUser = false;
-		for (IUser matchPlayer : ess.getUserMap().matchUsers(match, false, false))
+		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(match, getPlayerOrNull(sender)))
 		{			
 			setExp(sender, matchPlayer, amount, toggle);
 			foundUser = true;

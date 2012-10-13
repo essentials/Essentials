@@ -21,7 +21,7 @@ public class Commandgive extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final IUser giveTo = ess.getUserMap().matchUser(args[0], false, false);
+		final IUser giveTo = ess.getUserMap().matchUserExcludingHidden(args[0], getPlayerOrNull(sender));
 
 		final ItemStack stack = ess.getItemDb().get(args[1], giveTo);
 

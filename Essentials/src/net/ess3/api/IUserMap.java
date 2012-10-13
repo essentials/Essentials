@@ -22,20 +22,32 @@ public interface IUserMap extends IReload
 	int getUniqueUsers();
 
 	File getUserFile(final String name) throws InvalidNameException;
-	
+
 	/**
-	 * This method never returns null.
-	 * 
+	 * This method never returns null and includes hidden players.
+	 *
 	 * @param name
-	 * @param includeHidden
 	 * @param includeOffline
-	 * @return 
+	 * @return
 	 * @throws TooManyMatchesException if more than one player is found matching the name
 	 * @throws PlayerNotFoundException if the player matching the name is not found
 	 */
-	IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline) throws TooManyMatchesException, PlayerNotFoundException;
-	
-	Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline);
+	IUser matchUser(final String name, final boolean includeOffline) throws TooManyMatchesException, PlayerNotFoundException;
+
+	/**
+	 * This method never returns null and is for online players only.
+	 *
+	 * @param name
+	 * @param requester Can be null, if the requester is the console
+	 * @return
+	 * @throws TooManyMatchesException if more than one player is found matching the name
+	 * @throws PlayerNotFoundException if the player matching the name is not found
+	 */
+	IUser matchUserExcludingHidden(final String name, final Player requester) throws TooManyMatchesException, PlayerNotFoundException;
+
+	Set<IUser> matchUsers(final String name, final boolean includeOffline);
+
+	Set<IUser> matchUsersExcludingHidden(final String name, final Player requester);
 
 	public void addPrejoinedPlayer(Player player);
 

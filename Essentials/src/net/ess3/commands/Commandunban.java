@@ -16,7 +16,7 @@ public class Commandunban extends EssentialsCommand
 		}
 
 		
-		final IUser player = ess.getUserMap().matchUser(args[0], false, true);
+		final IUser player = ess.getUserMap().matchUser(args[0], true);
 		player.getData().setBan(null);
 		player.setBanned(false);
 		player.queueSave();

@@ -161,4 +161,11 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		}
 		throw new IllegalArgumentException();
 	}
+	
+	protected Player getPlayerOrNull(CommandSender sender) {
+		if (sender instanceof IUser) {
+			return ((IUser)sender).getPlayer();
+		}
+		return null;
+	}
 }

@@ -25,7 +25,7 @@ public class Commandlightning extends EssentialsCommand
 			return;
 		}
 
-		if (ess.getUserMap().matchUsers(args[0], false, false).isEmpty())
+		if (ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)).isEmpty())
 		{
 			throw new Exception(_("playerNotFound"));
 		}
@@ -42,7 +42,7 @@ public class Commandlightning extends EssentialsCommand
 			}
 		}
 
-		for (IUser matchPlayer : ess.getUserMap().matchUsers(args[0], false, false))
+		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
 		{
 			sender.sendMessage(_("lightningUse", matchPlayer.getPlayer().getDisplayName()));
 			final LightningStrike strike = matchPlayer.getPlayer().getWorld().strikeLightningEffect(matchPlayer.getPlayer().getLocation());

@@ -7,8 +7,6 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 
-
-
 public class Commandfly extends EssentialsCommand
 {
 	@Override
@@ -40,8 +38,8 @@ public class Commandfly extends EssentialsCommand
 
 	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args)
 	{
-		for (IUser matchPlayer : ess.getUserMap().matchUsers(args[0],false,false))
-		{	
+		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
+		{
 			if (args.length > 1)
 			{
 				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
@@ -57,7 +55,7 @@ public class Commandfly extends EssentialsCommand
 			{
 				matchPlayer.getPlayer().setAllowFlight(!matchPlayer.getPlayer().getAllowFlight());
 			}
-			
+
 			if (!matchPlayer.getPlayer().getAllowFlight())
 			{
 				matchPlayer.getPlayer().setFlying(false);

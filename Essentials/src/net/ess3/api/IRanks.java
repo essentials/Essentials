@@ -1,25 +1,28 @@
 package net.ess3.api;
 
 import java.text.MessageFormat;
+import org.bukkit.command.CommandSender;
 
-
+/**
+ * CommandSender object can be either IUser or Player
+ */
 public interface IRanks
 {
-	String getMainGroup(IUser player);
+	String getMainGroup(CommandSender player);
 
-	boolean inGroup(IUser player, String groupname);
+	boolean inGroup(CommandSender player, String groupname);
 
-	double getHealCooldown(IUser player);
+	double getHealCooldown(CommandSender player);
 
-	double getTeleportCooldown(IUser player);
+	double getTeleportCooldown(CommandSender player);
 
-	double getTeleportDelay(IUser player);
+	double getTeleportDelay(CommandSender player);
 
-	String getPrefix(IUser player);
+	String getPrefix(CommandSender player);
 
-	String getSuffix(IUser player);
+	String getSuffix(CommandSender player);
 
-	int getHomeLimit(IUser player);
+	int getHomeLimit(CommandSender player);
 
-	MessageFormat getChatFormat(IUser player);
+	MessageFormat getChatFormat(CommandSender player);
 }
