@@ -41,7 +41,7 @@ public class Commandgive extends EssentialsCommand
 			stack.setAmount(Integer.parseInt(args[2]));
 		}
 
-		if (args.length > 3)
+		if (args.length > 3 && Permissions.GIVE_ENCHANTED.isAuthorized(sender))
 		{
 			for (int i = Util.isInt(args[3]) ? 4 : 3; i < args.length; i++)
 			{

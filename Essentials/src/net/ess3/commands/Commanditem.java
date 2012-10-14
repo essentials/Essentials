@@ -37,7 +37,7 @@ public class Commanditem extends EssentialsCommand
 			stack.setAmount(Integer.parseInt(args[1]));
 		}
 		
-		if (args.length > 2)
+		if (args.length > 2 && Permissions.ITEM_ENCHANTED.isAuthorized(user))
 		{
 			for (int i = 2; i < args.length; i++)
 			{
