@@ -5,6 +5,7 @@ import java.util.Locale;
 import static net.ess3.I18n._;
 import net.ess3.bukkit.LivingEntities;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
@@ -20,9 +21,9 @@ public class Commandkillall extends EssentialsCommand
 		String type = "all";
 		int radius = -1;
 		World world;
-		if (sender instanceof Player)
+		if (isUser(sender))
 		{
-			world = ((Player)sender).getWorld();
+			world = getPlayer(sender).getWorld();
 			if (args.length == 1)
 			{
 				try
@@ -81,13 +82,14 @@ public class Commandkillall extends EssentialsCommand
 			entityClass = LivingEntities.fromName(killType).getEntityClass();
 		}
 		int numKills = 0;
+		Location loc = isUser(sender) ? getPlayer(sender).getLocation() : null;
 		for (Chunk chunk : world.getLoadedChunks())
 		{
 			for (Entity entity : chunk.getEntities())
 			{
-				if (sender instanceof Player)
+				if (loc != null)
 				{
-					if (radius >= 0 && ((Player)sender).getLocation().distanceSquared(entity.getLocation()) > radius)
+					if (radius >= 0 && loc.distanceSquared(entity.getLocation()) > radius)
 					{
 						continue;
 					}
@@ -103,7 +105,7 @@ public class Commandkillall extends EssentialsCommand
 						continue;
 					}
 				}
-				if(entity instanceof Ocelot)
+				if (entity instanceof Ocelot)
 				{
 					if (((Ocelot)entity).isTamed())
 					{

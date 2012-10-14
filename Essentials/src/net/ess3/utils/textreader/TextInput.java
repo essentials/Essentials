@@ -24,11 +24,11 @@ public class TextInput implements IText
 	{
 
 		File file = null;
-		if (sender instanceof Player)
+		if (sender instanceof IUser)
 		{
 			try
 			{
-				final IUser user = ess.getUserMap().getUser((Player)sender);
+				final IUser user = (IUser)sender;
 				file = new File(ess.getPlugin().getDataFolder(), filename + "_" + Util.sanitizeFileName(user.getName()) + ".txt");
 				if (!file.exists())
 				{

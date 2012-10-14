@@ -15,7 +15,7 @@ public class Commandtpaall extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			if (sender instanceof Player)
+			if (isUser(sender))
 			{
 				teleportAAllPlayers(sender, ess.getUserMap().getUser((Player)sender));
 				return;

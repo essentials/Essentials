@@ -34,9 +34,9 @@ public class KeywordReplacer implements IText
 		String worlds, online, unique, playerlist, date, time;
 		String worldTime12, worldTime24, worldDate, plugins;
 		String userName, address, version;
-		if (sender instanceof Player)
+		if (sender instanceof IUser)
 		{
-			final IUser user = ess.getUserMap().getUser((Player)sender);
+			final IUser user = (IUser)sender;
 			user.setDisplayNick();
 			displayName = user.getPlayer().getDisplayName();
 			userName = user.getPlayer().getName();
@@ -55,11 +55,12 @@ public class KeywordReplacer implements IText
 		}
 
 		int playerHidden = 0;
-		if (sender instanceof Player)
+		if (sender instanceof IUser)
 		{
+			final Player playerUser = ((IUser)sender).getPlayer();
 			for (Player p : ess.getServer().getOnlinePlayers())
 			{
-				if (!p.canSee((Player)sender))
+				if (!p.canSee(playerUser))
 				{
 					playerHidden++;
 				}
@@ -80,11 +81,12 @@ public class KeywordReplacer implements IText
 		worlds = worldsBuilder.toString();
 
 		final StringBuilder playerlistBuilder = new StringBuilder();
-		if (sender instanceof Player)
+		if (sender instanceof IUser)
 		{
+			final Player playerUser = ((IUser)sender).getPlayer();
 			for (Player p : ess.getServer().getOnlinePlayers())
 			{
-				if (!p.canSee((Player)sender))
+				if (!p.canSee(playerUser))
 				{
 					continue;
 				}

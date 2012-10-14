@@ -69,9 +69,9 @@ public abstract class EssentialsChatPlayer implements Listener
 
 	protected void charge(final CommandSender sender, final Trade charge) throws ChargeException
 	{
-		if (sender instanceof Player)
+		if (sender instanceof IUser)
 		{
-			charge.charge(ess.getUserMap().getUser((Player)sender));
+			charge.charge((IUser)sender);
 		}
 	}
 

@@ -120,7 +120,7 @@ public class EssentialsPlayerListener implements Listener
 		final String quitMessage = ess.getSettings().getData().getGeneral().getLeaveMessage();
 		if (quitMessage != null)
 		{
-			final IText itOutput = new KeywordReplacer(new SimpleTextInput(quitMessage), event.getPlayer(), ess);
+			final IText itOutput = new KeywordReplacer(new SimpleTextInput(quitMessage), ess.getUserMap().getUser(event.getPlayer()), ess);
 			final SimpleTextPager stPager = new SimpleTextPager(itOutput);
 			event.setQuitMessage(FormatUtil.replaceFormat(stPager.getString(0)));
 		}
@@ -163,7 +163,7 @@ public class EssentialsPlayerListener implements Listener
 		final String joinMessage = ess.getSettings().getData().getGeneral().getJoinMessage();
 		if (joinMessage != null)
 		{
-			final IText itOutput = new KeywordReplacer(new SimpleTextInput(joinMessage), event.getPlayer(), ess);
+			final IText itOutput = new KeywordReplacer(new SimpleTextInput(joinMessage), ess.getUserMap().getUser(event.getPlayer()), ess);
 			final SimpleTextPager stPager = new SimpleTextPager(itOutput);
 			event.setJoinMessage(FormatUtil.replaceFormat(stPager.getString(0)));
 		}

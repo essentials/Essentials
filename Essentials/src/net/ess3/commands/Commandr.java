@@ -7,7 +7,6 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandr extends EssentialsCommand
@@ -24,9 +23,9 @@ public class Commandr extends EssentialsCommand
 		IReplyTo replyTo;
 		String senderName;
 
-		if (sender instanceof Player)
+		if (sender instanceof IUser)
 		{
-			IUser user = ess.getUserMap().getUser((Player)sender);
+			IUser user = getUser(sender);
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
 				message = FormatUtil.replaceFormat(message);
@@ -46,18 +45,16 @@ public class Commandr extends EssentialsCommand
 		}
 
 		final CommandSender target = replyTo.getReplyTo();
-		final String targetName = target instanceof Player ? ((Player)target).getDisplayName() : Console.NAME;
-
-		if (target == null || ((target instanceof Player) && !((Player)target).isOnline()))
+		if (target == null || (isUser(target) && !getUser(target).isOnline()))
 		{
 			throw new Exception(_("foreverAlone"));
 		}
+		final String targetName = isUser(target) ? getPlayer(target).getDisplayName() : Console.NAME;
 
 		sender.sendMessage(_("msgFormat", _("me"), targetName, message));
-		if (target instanceof Player)
+		if (isUser(target))
 		{
-			IUser player = ess.getUserMap().getUser((Player)target);
-			if (sender instanceof Player && player.isIgnoringPlayer(ess.getUserMap().getUser((Player)sender)))
+			if (isUser(sender) && getUser(target).isIgnoringPlayer(getUser(sender)))
 			{
 				return;
 			}
@@ -66,9 +63,9 @@ public class Commandr extends EssentialsCommand
 		replyTo.setReplyTo(target);
 		if (target != sender)
 		{
-			if (target instanceof Player)
+			if (isUser(target))
 			{
-				ess.getUserMap().getUser((Player)target).setReplyTo(sender);
+				getUser(target).setReplyTo(sender);
 			}
 			else
 			{

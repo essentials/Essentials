@@ -21,7 +21,7 @@ public class Commandban extends EssentialsCommand
 		final IUser user = ess.getUserMap().matchUser(args[0], true);
 		if (!user.isOnline())
 		{
-			if (sender instanceof Player && Permissions.BAN_OFFLINE.isAuthorized(user))
+			if (isUser(sender) && Permissions.BAN_OFFLINE.isAuthorized(user))
 			{
 				sender.sendMessage(_("banExempt"));
 				return;
@@ -36,7 +36,7 @@ public class Commandban extends EssentialsCommand
 			}
 		}
 
-		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
+		final String senderName = isUser(sender) ? getPlayer(sender).getDisplayName() : Console.NAME;
 		String banReason;
 		user.getData().setBan(new Ban());
 		if (args.length > 1)
