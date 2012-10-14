@@ -78,10 +78,7 @@ public abstract class EssentialsChatPlayer implements Listener
 	protected void formatChat(final AsyncPlayerChatEvent event, final ChatStore chatStore)
 	{
 		final IUser user = chatStore.getUser();
-		if (Permissions.CHAT_COLOR.isAuthorized(user))
-		{
-			event.setMessage(FormatUtil.stripColor(event.getMessage()));
-		}
+		event.setMessage(FormatUtil.formatMessage(user, Permissions.CHAT, event.getMessage()));
 		String group = ess.getRanks().getMainGroup(user);
 		String world = user.getPlayer().getWorld().getName();
 

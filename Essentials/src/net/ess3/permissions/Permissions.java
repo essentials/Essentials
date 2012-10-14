@@ -156,4 +156,5 @@ public enum Permissions implements IPermission
 	public static DotStarPermission WORLD = new DotStarPermission("essentials.world");
 	public static DotStarPermission NICK = new DotStarPermission("essentials.nick");
 	public static DotStarPermission SIGNS = new DotStarPermission("essentials.signs");
+	public static DotStarPermission CHAT = new DotStarPermission("essentials.chat");
 }
