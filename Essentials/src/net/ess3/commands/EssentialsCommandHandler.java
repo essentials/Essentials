@@ -126,13 +126,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 				return true;
 			}
 
-			IUser user = null;
-			if (sender instanceof Player)
-			{
-				user = ess.getUserMap().getUser((Player)sender);
-				LOGGER.log(Level.INFO, String.format("[PLAYER_COMMAND] %s: /%s %s ", ((Player)sender).getName(), commandLabel, EssentialsCommand.getFinalArg(args, 0)));
-			}
-
+			IUser user = (sender instanceof Player) ? ess.getUserMap().getUser((Player)sender) : null;
 			// Run the command
 			try
 			{
@@ -197,16 +191,17 @@ public class EssentialsCommandHandler implements ICommandHandler
 	}
 
 	//TODO: Move this stuff to bukkit workarounds
+	@Override
 	public final void addPlugin(final Plugin plugin)
 	{
-		if (plugin.getDescription().getMain().contains("com.earth2me.essentials"))
+		if (plugin.getDescription().getMain().contains("net.ess3.essentials"))
 		{
 			return;
 		}
-		final List<Command> commands = PluginCommandYamlParser.parse(plugin);
+		final List<Command> pcommands = PluginCommandYamlParser.parse(plugin);
 		final String pluginName = plugin.getDescription().getName().toLowerCase(Locale.ENGLISH);
 
-		for (Command command : commands)
+		for (Command command : pcommands)
 		{
 			final PluginCommand pc = (PluginCommand)command;
 			final List<String> labels = new ArrayList<String>(pc.getAliases());
@@ -245,6 +240,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 		}
 	}
 
+	@Override
 	public void removePlugin(final Plugin plugin)
 	{
 		final Iterator<Map.Entry<String, List<PluginCommand>>> iterator = altcommands.entrySet().iterator();
@@ -269,17 +265,17 @@ public class EssentialsCommandHandler implements ICommandHandler
 
 	public PluginCommand getAlternative(final String label)
 	{
-		final List<PluginCommand> commands = altcommands.get(label);
-		if (commands == null || commands.isEmpty())
+		final List<PluginCommand> pcommands = altcommands.get(label);
+		if (pcommands == null || pcommands.isEmpty())
 		{
 			return null;
 		}
-		if (commands.size() == 1)
+		if (pcommands.size() == 1)
 		{
-			return commands.get(0);
+			return pcommands.get(0);
 		}
 		// return the first command that is not an alias
-		for (PluginCommand command : commands)
+		for (PluginCommand command : pcommands)
 		{
 			if (command.getName().equalsIgnoreCase(label))
 			{
@@ -287,7 +283,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 			}
 		}
 		// return the first alias
-		return commands.get(0);
+		return pcommands.get(0);
 	}
 
 	public void executed(final String label, final String otherLabel)
@@ -299,6 +295,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 		disabledList.put(label, otherLabel);
 	}
 
+	@Override
 	public Map<String, String> disabledCommands()
 	{
 		return disabledList;
