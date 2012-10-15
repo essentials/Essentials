@@ -231,6 +231,25 @@ public class Util
 		}
 		return c.getTimeInMillis();
 	}
+	
+	public static String parseDateDiffInverse(String time) throws Exception
+	{
+		final Pattern timePattern;
+		timePattern = Pattern.compile(
+			"(?:([0-9]+)\\s*y[a-z]*[,\\s]*)?"
+			+ "(?:([0-9]+)\\s*mo[a-z]*[,\\s]*)?"
+			+ "(?:([0-9]+)\\s*w[a-z]*[,\\s]*)?"
+			+ "(?:([0-9]+)\\s*d[a-z]*[,\\s]*)?"
+			+ "(?:([0-9]+)\\s*h[a-z]*[,\\s]*)?"
+			+ "(?:([0-9]+)\\s*m[a-z]*[,\\s]*)?"
+			+ "(?:([0-9]+)\\s*(?:s[a-z]*)?)?", Pattern.CASE_INSENSITIVE);
+		final Matcher m;
+		m = timePattern.matcher(time);
+
+		return m.replaceFirst("");
+		
+	}
+	
 	// The player can stand inside these materials 
 	private static final Set<Integer> AIR_MATERIALS = new HashSet<Integer>();
 	private static final HashSet<Byte> AIR_MATERIALS_TARGET = new HashSet<Byte>();

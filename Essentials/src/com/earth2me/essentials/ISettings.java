@@ -62,6 +62,8 @@ public interface ISettings extends IConf
 
 	List<Integer> getProtectList(final String configName);
 
+	boolean getJailSpamTeleport();
+	
 	boolean getProtectPreventSpawn(final String creatureName);
 
 	String getProtectString(final String configName);
@@ -120,6 +122,12 @@ public interface ISettings extends IConf
 
 	boolean removeGodOnDisconnect();
 
+	boolean jailHistory();
+	
+	int jailAutobanNumber();
+	
+	long jailAutobanDuration();
+	
 	boolean changeDisplayName();
 
 	boolean changePlayerListName();

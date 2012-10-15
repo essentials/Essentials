@@ -426,6 +426,10 @@ public class Settings implements ISettings
 		signUsePerSecond = _getSignUsePerSecond();
 		kits = _getKits();
 		chatFormats.clear();
+		jailHistory = _jailHistory();
+		jailSpamTeleport = _jailSpamTeleport();
+		jailAutobanNumber = _jailAutobanNumber();
+		jailAutobanDuration = _jailAutobanDuration();
 		changeDisplayName = _changeDisplayName();
 		disabledCommands = getDisabledCommands();
 		nicknamePrefix = _getNicknamePrefix();
@@ -552,6 +556,19 @@ public class Settings implements ISettings
 		return config.getBoolean("permission-based-item-spawn", false);
 	}
 
+	private boolean jailSpamTeleport = true;
+	
+	public boolean _jailSpamTeleport()
+	{
+		return config.getBoolean("jail-spam-teleport", true);
+	}
+	
+	@Override
+	public boolean getJailSpamTeleport()
+	{
+		return jailSpamTeleport;
+	}
+	
 	@Override
 	public String getLocale()
 	{
@@ -664,6 +681,48 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("remove-god-on-disconnect", false);
 	}
+	
+	private boolean jailHistory = true;
+	
+	private boolean _jailHistory()
+	{
+		return config.getBoolean("jail-history", true);
+	}
+	
+	@Override
+	public boolean jailHistory()
+	{
+		return jailHistory;
+	}
+	
+	private int jailAutobanNumber = 0;
+	
+	private int _jailAutobanNumber()
+	{
+		final int number = config.getInt("jail-autoban-number", 0);
+		return (number > 0 ? number : 0);
+	}
+	
+	@Override
+	public int jailAutobanNumber()
+	{
+		return jailAutobanNumber;
+	}
+	
+	private long jailAutobanDuration = 0;
+	
+	private long _jailAutobanDuration()
+	{
+		final long number = config.getInt("jail-autoban-duration", 0);
+		return (number > 0 ? number : 0);
+	}
+	
+	@Override
+	public long jailAutobanDuration()
+	{
+		return jailAutobanDuration;
+	}
+	
 	private boolean changeDisplayName = true;
 
 	private boolean _changeDisplayName()

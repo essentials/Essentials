@@ -21,4 +21,6 @@ public interface IEssentialsCommand
 	void setEssentials(IEssentials ess);
 
 	void setEssentialsModule(IEssentialsModule module);
+	
+	boolean getIgnoreJailed();
 }

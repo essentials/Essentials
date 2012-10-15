@@ -56,6 +56,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		muteTimeout = _getMuteTimeout();
 		jailed = getJailed();
 		jailTimeout = _getJailTimeout();
+		jailhistory = _getJailHistory();
 		lastLogin = _getLastLogin();
 		lastLogout = _getLastLogout();
 		lastLoginAddress = _getLastLoginAddress();
@@ -98,6 +99,76 @@ public abstract class UserData extends PlayerExtension implements IConf
 		config.setProperty("money", value);
 		config.save();
 	}
+	
+	private Map<String, Object> jailhistory;
+	
+	private Map<String, Object> _getJailHistory()
+	{
+		if (config.isConfigurationSection("jailhistory"))
+		{
+			return config.getConfigurationSection("jailhistory").getValues(false);
+		}
+		return new HashMap<String, Object>();
+	}
+
+	public List<String> getJailHistory()
+	{
+		return new ArrayList<String>(jailhistory.keySet());
+	}
+	
+	public ArrayList<String> getJailHistoryEntry(String name) {
+		if (config.hasProperty("jailhistory." + name)) {
+			final ArrayList<String> historyEntry;
+			historyEntry = new ArrayList();
+			historyEntry.add(config.getString("jailhistory." + name + ".jailedby"));
+			historyEntry.add(config.getString("jailhistory." + name + ".reason"));
+			historyEntry.add(config.getString("jailhistory." + name + ".duration"));
+			historyEntry.add(config.getString("jailhistory." + name + ".timestamp"));
+			historyEntry.add(config.getString("jailhistory." + name + ".durationms"));
+			return historyEntry;
+		}
+		
+		return null;
+	}
+	
+	public void addJailHistory(String jailedby, String reason, String duration, String timestamp, String durationRaw) {
+		final String name;
+		name = String.valueOf(getJailHistory().size() + 1);
+		ArrayList<String> history = new ArrayList();
+		history.add(jailedby);
+		history.add(reason);
+		history.add(duration);
+		history.add(timestamp);
+		history.add(durationRaw);
+		jailhistory.put(name, history);
+		config.setProperty("jailhistory." + name + ".jailedby", jailedby);
+		config.setProperty("jailhistory." + name + ".reason", reason);
+		config.setProperty("jailhistory." + name + ".duration", duration);
+		config.setProperty("jailhistory." + name + ".timestamp", timestamp);
+		config.setProperty("jailhistory." + name + ".durationms", durationRaw);
+		config.save();
+	}
+	
+	public void delJailHistory(String name) throws Exception
+	{
+		String search = name;
+		if (!jailhistory.containsKey(search))
+		{
+			search = Util.safeString(search);
+		}
+		
+		if (jailhistory.containsKey(search)) {
+			jailhistory.remove(search);
+			config.removeProperty("jailhistory." + search);
+			config.save();
+		}
+	}
+	
+	public boolean hasJailHistory()
+	{
+		return config.hasProperty("jailhistory");
+	}
+	
 	private Map<String, Object> homes;
 
 	private Map<String, Object> _getHomes()
@@ -157,7 +228,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 	{
 		return new ArrayList<String>(homes.keySet());
 	}
-
+	
 	public void setHome(String name, Location loc)
 	{
 		//Invalid names will corrupt the yaml
@@ -188,11 +259,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 
 	public boolean hasHome()
 	{
-		if (config.hasProperty("home"))
-		{
-			return true;
-		}
-		return false;
+		return config.hasProperty("home");
 	}
 	private String nickname;
 
@@ -831,5 +898,5 @@ public abstract class UserData extends PlayerExtension implements IConf
 	public void save()
 	{
 		config.save();
-	}
+	}	
 }

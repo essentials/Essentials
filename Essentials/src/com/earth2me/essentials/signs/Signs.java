@@ -20,7 +20,8 @@ public enum Signs
 	TIME(new SignTime()),
 	TRADE(new SignTrade()),
 	WARP(new SignWarp()),
-	WEATHER(new SignWeather());
+	WEATHER(new SignWeather()),
+	JAIL(new SignJail());
 	
 	private final EssentialsSign sign;
 

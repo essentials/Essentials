@@ -57,6 +57,11 @@ public class EssentialsSign
 		return true;
 	}
 
+	public boolean getIgnoreJailed()
+	{
+		return false;
+	}
+	
 	public String getSuccessName()
 	{
 		return _("signFormatSuccess", this.signName);
@@ -82,8 +87,8 @@ public class EssentialsSign
 		}
 		try
 		{
-			return (user.isAuthorized("essentials.signs." + signName.toLowerCase(Locale.ENGLISH) + ".use")
-					|| user.isAuthorized("essentials.signs.use." + signName.toLowerCase(Locale.ENGLISH)))
+			return (user.isAuthorized("essentials.signs." + signName.toLowerCase(Locale.ENGLISH) + ".use", this.getIgnoreJailed())
+					|| user.isAuthorized("essentials.signs.use." + signName.toLowerCase(Locale.ENGLISH), this.getIgnoreJailed()))
 				   && onSignInteract(sign, user, getUsername(user), ess);
 		}
 		catch (ChargeException ex)

@@ -2,6 +2,9 @@ package com.earth2me.essentials;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.api.IJails;
+import com.earth2me.essentials.commands.Commandban;
+import com.earth2me.essentials.signs.EssentialsSign;
+import com.earth2me.essentials.signs.SignJail;
 import com.earth2me.essentials.storage.AsyncStorageObjectHolder;
 import java.io.File;
 import java.util.*;
@@ -9,11 +12,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -46,6 +54,157 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 		pluginManager.registerEvents(blockListener, ess);
 	}
 
+	@Override
+	public void jailtimeSelf(final IUser player) {
+			
+		if (player instanceof User)
+		{
+			final User target = (User)player;
+			
+			if (!target.isJailed())
+			{
+				target.sendMessage(_("playerNotJailed", "You", "are"));
+				return;
+			}
+		
+			if (target.hasJailHistory())
+			{
+				if (target.getJailHistory().size() > 0)
+				{
+					final ArrayList<String> historyEntry = target.getJailHistoryEntry(target.getJailHistory().get(target.getJailHistory().size() - 1));
+					if (historyEntry.size() >= 3)
+					{
+						target.sendMessage(_("userJailedInfo", historyEntry.get(0), historyEntry.get(2), historyEntry.get(1)));	
+					}
+				}
+				else
+				{
+					target.sendMessage(_("userJailed"));
+				}
+			}
+			target.sendMessage(_("userJailRemaining", Util.formatDateDiff(target.getJailTimeout())));	
+		}
+	}
+	
+	@Override
+	public void jailtimeOther(final CommandSender sender, final IUser player) {
+		if (player instanceof User)
+		{
+			final User target = (User)player;
+			
+			if (target.hasJailHistory())
+			{
+				if (target.getJailHistory().size() > 0)
+				{
+					final ArrayList<String> historyEntry = target.getJailHistoryEntry(target.getJailHistory().get(target.getJailHistory().size() - 1));
+					if (historyEntry.size() >= 3)
+					{
+						sender.sendMessage(_("userJailedInfoOther", target.getDisplayName(), historyEntry.get(0), historyEntry.get(2), historyEntry.get(1)));	
+					}
+				}
+				else
+				{
+					sender.sendMessage(_("jailHistoryNotFound", target.getDisplayName()));
+				}
+			}
+			
+			sender.sendMessage(_("userJailRemaining", Util.formatDateDiff(target.getJailTimeout())));	
+		}
+	}
+	
+	@Override
+	public void jailhistory(final CommandSender sender, final IUser player)
+	{
+		if (player instanceof User)
+		{
+			final User target = (User)player;
+			if (target.hasJailHistory() && target.getJailHistory().size() > 0)
+			{
+				sender.sendMessage(_("jailHistoryBegin", target.getDisplayName()));
+				for (String s : target.getJailHistory())
+				{
+					final ArrayList<String> historyEntry = target.getJailHistoryEntry(s);
+					if (historyEntry.size() >= 4)
+					{
+						sender.sendMessage(_("jailHistoryMessage",s,historyEntry.get(3),historyEntry.get(0),historyEntry.get(2),historyEntry.get(1)));
+					}
+				}
+			}
+			else
+			{
+				sender.sendMessage(_("playerNoJailHistory", target.getDisplayName()));
+			}
+		}
+	}
+	
+	@Override
+	public void checkAutoBan(final CommandSender sender, final IUser player) 
+	{
+		if (player instanceof User) {
+			final User target = (User)player;
+			if (ess.getSettings().jailAutobanNumber() > 0)
+			{
+				if (target.hasJailHistory() && (target.getJailHistory().size() >= ess.getSettings().jailAutobanNumber()) && !target.isBanned())
+				{
+					final Commandban command = new Commandban();
+					command.setEssentials(ess);
+					final String[] commandArgs;
+					commandArgs = new String[]
+						{
+							target.getName(), _("jailAutobanNumberReason")
+						};
+					try
+					{
+						command.run(ess.getServer(), Console.getCommandSender(ess.getServer()), "ban", commandArgs);
+					}
+					catch (Exception ex)
+					{
+						//what do?
+					}
+
+					sender.sendMessage(_("jailAutobanNumberReached"));
+				}
+			}
+		
+			if (ess.getSettings().jailAutobanDuration() > 0)
+			{
+				if (target.hasJailHistory() && !target.isBanned())
+				{
+					long duration = 0;
+					for (String s : target.getJailHistory())
+					{
+						final ArrayList<String> historyEntry = target.getJailHistoryEntry(s);
+						if (historyEntry.size() >= 5)
+						{
+							duration += Long.parseLong(historyEntry.get(4));
+						}
+					}
+					
+					if ((duration + 10000) > (ess.getSettings().jailAutobanDuration() * 60 * 60 * 1000)) //10000 for +-10sec
+					{
+						final Commandban command = new Commandban();
+						command.setEssentials(ess);
+						final String[] commandArgs;
+						commandArgs = new String[]
+							{
+								target.getName(), _("jailAutobanDurationReason")
+							};
+						try
+						{
+							command.run(ess.getServer(), Console.getCommandSender(ess.getServer()), "ban", commandArgs);
+						}
+						catch (Exception ex)
+						{
+							//what do?
+						}
+
+						sender.sendMessage(_("jailAutobanDurationReached"));
+					}
+				}
+			}
+		}
+	}
+	
 	@Override
 	public File getStorageFile()
 	{
@@ -291,7 +450,10 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
-			user.sendMessage(_("jailMessage"));
+			if (ess.getSettings().getJailSpamTeleport())
+			{
+				user.sendMessage(_("jailMessage"));
+			}
 		}
 
 		@EventHandler(priority = EventPriority.HIGHEST)
@@ -318,7 +480,8 @@ public class Jails extends AsyncStorageObjectHolder<com.earth2me.essentials.sett
 					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
-			user.sendMessage(_("jailMessage"));
+			
+			ess.getJails().jailtimeSelf(user);
 		}
 	}
 }
