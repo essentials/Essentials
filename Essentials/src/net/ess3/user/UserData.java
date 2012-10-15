@@ -104,6 +104,7 @@ public class UserData implements StorageObject
 	private boolean socialspy;
 	private boolean npc;
 	private boolean powerToolsEnabled;
+	private boolean balancetopHide = false;
 
 	public UserData()
 	{

@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
 import net.ess3.utils.textreader.ArrayListInput;
 import net.ess3.utils.textreader.TextPager;
@@ -33,7 +34,34 @@ public class Commandbalancetop extends EssentialsCommand
 			}
 			catch (NumberFormatException ex)
 			{
-				if (args[0].equalsIgnoreCase("force") && sender.isOp())
+				if (args[0].equalsIgnoreCase("hide"))
+				{
+					if (args.length == 1 && isUser(sender) && Permissions.BALANCETOP_HIDE.isAuthorized(sender))
+					{
+						IUser user = getUser(sender);
+						user.getData().setBalancetopHide(!user.getData().isBalancetopHide());
+						user.queueSave();
+						sender.sendMessage(
+								user.getData().isBalancetopHide()
+								? "You are now hidden from /balancetop"
+								: "You are now shown in /balancetop"); //TODO:I18n
+					}
+					else if (args.length == 2 && Permissions.BALANCETOP_HIDE_OTHERS.isAuthorized(sender))
+					{
+						IUser user = ess.getUserMap().matchUser(args[1], true);
+						user.getData().setBalancetopHide(!user.getData().isBalancetopHide());
+						user.queueSave();
+						sender.sendMessage(
+								user.getData().isBalancetopHide()
+								? user.getName() + " is now hidden from /balancetop"
+								: user.getName() + " is now shown in /balancetop"); //TODO:I18n
+					}
+					else
+					{
+						throw new NotEnoughArgumentsException();
+					}
+				}
+				if (args[0].equalsIgnoreCase("force") && Permissions.BALANCETOP_FORCE.isAuthorized(sender))
 				{
 					force = true;
 				}
@@ -100,7 +128,7 @@ public class Commandbalancetop extends EssentialsCommand
 			{
 				if (force || cacheage <= System.currentTimeMillis() - CACHETIME)
 				{
-					cache.getLines().clear();					
+					cache.getLines().clear();
 					final Map<String, Double> balances = new HashMap<String, Double>();
 					double totalMoney = 0d;
 					for (String u : ess.getUserMap().getAllUniqueUsers())
@@ -110,8 +138,11 @@ public class Commandbalancetop extends EssentialsCommand
 						{
 							final double userMoney = user.getMoney();
 							user.updateMoneyCache(userMoney);
-							totalMoney += userMoney;
-							balances.put(user.getPlayer().getDisplayName(), userMoney);
+							if (!user.getData().isBalancetopHide())
+							{
+								totalMoney += userMoney;
+								balances.put(user.getName(), userMoney);
+							}
 						}
 					}
 
@@ -124,7 +155,7 @@ public class Commandbalancetop extends EssentialsCommand
 							return -entry1.getValue().compareTo(entry2.getValue());
 						}
 					});
-					
+
 					cache.getLines().add(_("serverTotal", FormatUtil.displayCurrency(totalMoney, ess)));
 					int pos = 1;
 					for (Map.Entry<String, Double> entry : sortedEntries)

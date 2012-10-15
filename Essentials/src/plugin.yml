@@ -29,7 +29,7 @@ commands:
     aliases: [bal,money,emoney,ebalance,ebal]
   balancetop:
     description: Gets the top balance values.
-    usage: /<command> <page>
+    usage: /<command> [pagenumber|hide [player]|force]
     aliases: [baltop,ebaltop,ebalancetop]
   ban:
     description: Bans a player.
