@@ -106,7 +106,6 @@ public class Commandlist extends EssentialsCommand
 					{
 						groupString.append(_("listHiddenTag"));
 					}
-					user.setDisplayNick();
 					groupString.append(user.getPlayer().getDisplayName());
 					groupString.append("§f");
 				}
@@ -155,7 +154,6 @@ public class Commandlist extends EssentialsCommand
 				{
 					onlineUsers.append(_("listHiddenTag"));
 				}
-				user.setDisplayNick();
 				onlineUsers.append(user.getPlayer().getDisplayName());
 				onlineUsers.append("§f");
 			}

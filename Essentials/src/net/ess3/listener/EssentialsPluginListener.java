@@ -31,7 +31,7 @@ public class EssentialsPluginListener implements Listener, IReload
 	public void onPluginEnable(final PluginEnableEvent event)
 	{
 		checkGroups();
-		//ess.getPermissionsHandler().checkPermissions();
+		ess.getPlugin().onPluginEnable(event.getPlugin());
 		ess.getCommandHandler().addPlugin(event.getPlugin());
 		if (!Methods.hasMethod() && Methods.setMethod(ess.getServer().getPluginManager()))
 		{
@@ -46,7 +46,7 @@ public class EssentialsPluginListener implements Listener, IReload
 	public void onPluginDisable(final PluginDisableEvent event)
 	{
 		checkGroups();
-		//ess.getPermissionsHandler().checkPermissions();
+		ess.getPlugin().onPluginDisable(event.getPlugin());
 		ess.getCommandHandler().removePlugin(event.getPlugin());
 		// Check to see if the plugin thats being disabled is the one we are using
 		if (Methods.hasMethod() && Methods.checkDisabled(event.getPlugin()))

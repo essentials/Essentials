@@ -31,4 +31,10 @@ public interface IPlugin extends Plugin {
 	Location callRespawnEvent(Player player, Location loc, boolean bedSpawn);
 
 	void callSuicideEvent(Player player);
+
+	public boolean isModuleEnabled(String name);
+
+	public void onPluginEnable(Plugin plugin);
+
+	public void onPluginDisable(Plugin plugin);
 }

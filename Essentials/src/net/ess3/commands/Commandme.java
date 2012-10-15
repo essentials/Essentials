@@ -26,12 +26,11 @@ public class Commandme extends EssentialsCommand
 		{
 			message = FormatUtil.replaceFormat(message);
 		}
-		else {
+		else
+		{
 			message = FormatUtil.stripColor(message);
 		}
-		
 
-		user.setDisplayNick();
 		ess.broadcastMessage(user, _("action", user.getPlayer().getDisplayName(), message));
 	}
 }

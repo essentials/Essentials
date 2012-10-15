@@ -56,7 +56,6 @@ public class Commandwhois extends EssentialsCommand
 			}
 			foundPlayer = true;
 			sender.sendMessage(_("whoisTop", user.getName()));
-			user.setDisplayNick();
 			sender.sendMessage(_("whoisIs", user.getPlayer().getDisplayName(), user.getName()));
 			sender.sendMessage(_("whoisHealth", user.getPlayer().getHealth()));
 			sender.sendMessage(_("whoisExp", SetExpFix.getTotalExperience(user.getPlayer()), user.getPlayer().getLevel()));

@@ -28,7 +28,6 @@ public class Commandrealname extends EssentialsCommand
 			{
 				continue;
 			}
-			u.setDisplayNick();
 			final String displayName = FormatUtil.stripFormat(u.getPlayer().getDisplayName()).toLowerCase(Locale.ENGLISH);
 			if (!whois.equals(displayName)
 				&& !displayName.equals(FormatUtil.stripFormat(settings.getData().getChat().getNicknamePrefix()) + whois)

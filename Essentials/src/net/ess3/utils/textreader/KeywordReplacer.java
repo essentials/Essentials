@@ -37,7 +37,6 @@ public class KeywordReplacer implements IText
 		if (sender instanceof IUser)
 		{
 			final IUser user = (IUser)sender;
-			user.setDisplayNick();
 			displayName = user.getPlayer().getDisplayName();
 			userName = user.getPlayer().getName();
 			ipAddress = user.getPlayer().getAddress() == null || user.getPlayer().getAddress().getAddress() == null ? "" : user.getPlayer().getAddress().getAddress().toString();

@@ -1,6 +1,9 @@
 package net.ess3.bukkit;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import net.ess3.Essentials;
 import static net.ess3.I18n._;
@@ -21,15 +24,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 
 public class BukkitPlugin extends JavaPlugin implements IPlugin
-{	
+{
 	private Essentials ess;
-	
+	private Map<String, Plugin> modules = Collections.synchronizedMap(new HashMap<String, Plugin>());
+
 	@Override
 	public void onEnable()
 	{
@@ -75,7 +80,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 			this.setEnabled(false);
 			return;
 		}
-		
+
 		final EssentialsPluginListener serverListener = new EssentialsPluginListener(ess);
 		pm.registerEvents(serverListener, this);
 		ess.addReloadListener(serverListener);
@@ -89,7 +94,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 		final EssentialsEntityListener entityListener = new EssentialsEntityListener(ess);
 		pm.registerEvents(entityListener, this);
 
-		
+
 		final MetricsStarter metricsStarter = new MetricsStarter(ess);
 		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
 		{
@@ -116,7 +121,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	{
 		return ess.getCommandHandler().handleCommand(sender, command, label, args);
 	}
-	
+
 	@Override
 	public int scheduleAsyncDelayedTask(final Runnable run)
 	{
@@ -128,7 +133,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	{
 		return getServer().getScheduler().scheduleSyncDelayedTask(this, run);
 	}
-	
+
 	@Override
 	public int scheduleAsyncDelayedTask(final Runnable run, final long delay)
 	{
@@ -179,7 +184,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public Location callRespawnEvent(Player player, Location loc, boolean bedSpawn)
+	public Location callRespawnEvent(final Player player, final Location loc, final boolean bedSpawn)
 	{
 		final PlayerRespawnEvent pre = new PlayerRespawnEvent(player, loc, bedSpawn);
 		getServer().getPluginManager().callEvent(pre);
@@ -187,7 +192,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public void callSuicideEvent(Player player)
+	public void callSuicideEvent(final Player player)
 	{
 		EntityDamageEvent ede = new EntityDamageEvent(player, EntityDamageEvent.DamageCause.SUICIDE, 1000);
 		getServer().getPluginManager().callEvent(ede);
@@ -197,5 +202,34 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	public IEssentials getEssentials()
 	{
 		return ess;
+	}
+
+	@Override
+	public boolean isModuleEnabled(final String name)
+	{
+		return modules.containsKey(name);
+	}
+
+	@Override
+	public void onPluginEnable(final Plugin plugin)
+	{
+		if (plugin.getName().equals(this.getName())
+			|| !plugin.getName().startsWith("Essentials"))
+		{
+			return;
+		}
+		// Remove "Essentials" from name
+		modules.put(plugin.getName().substring(10), plugin);
+	}
+
+	@Override
+	public void onPluginDisable(final Plugin plugin)
+	{
+		if (plugin.getName().equals(this.getName())
+			|| !plugin.getName().startsWith("Essentials"))
+		{
+			return;
+		}
+		modules.remove(plugin.getName().substring(10));
 	}
 }

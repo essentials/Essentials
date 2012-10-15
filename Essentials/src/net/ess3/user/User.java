@@ -40,8 +40,8 @@ public class User extends UserBase implements IUser
 	private transient long lastOnlineActivity;
 	private transient long lastActivity = System.currentTimeMillis();
 	/*@Getter
-	@Setter
-	private boolean hidden = false;*/
+	 @Setter
+	 private boolean hidden = false;*/
 	@Getter
 	private transient boolean vanished;
 	@Getter
@@ -211,15 +211,15 @@ public class User extends UserBase implements IUser
 
 		if (displayname.contains("{PREFIX}"))
 		{
-			displayname = displayname.replace("{PREFIX}", groups.getPrefix(this));
+			displayname = displayname.replace("{PREFIX}", addprefixsuffix ? groups.getPrefix(this) : "");
 		}
 		if (displayname.contains("{SUFFIX}"))
 		{
-			displayname = displayname.replace("{SUFFIX}", groups.getSuffix(this));
+			displayname = displayname.replace("{SUFFIX}", addprefixsuffix ? groups.getSuffix(this) : "");
 		}
 		displayname = displayname.replace("{WORLDNAME}", this.getPlayer().getWorld().getName());
 		displayname = displayname.replace('&', '\u00a7');
-		displayname = displayname.concat("\u00a7f");
+		displayname = displayname.concat("\u00a7r");
 
 		return displayname;
 	}
@@ -250,8 +250,9 @@ public class User extends UserBase implements IUser
 	@Override
 	public void updateDisplayName()
 	{
-		final ISettings settings = ess.getSettings();
-		if (isOnline() && settings.getData().getChat().getChangeDisplayname())
+		final Boolean changeDisplayname = ess.getSettings().getData().getChat().getChangeDisplayname();
+
+		if (isOnline() && (changeDisplayname == true || (changeDisplayname == null && ess.getPlugin().isModuleEnabled("Chat"))));
 		{
 			setDisplayNick();
 		}
