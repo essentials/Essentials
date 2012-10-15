@@ -138,7 +138,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 				return groupOptions.getValue().getHomes();
 			}
 		}
-		return 0;
+		return 1;
 	}
 
 	@Override
