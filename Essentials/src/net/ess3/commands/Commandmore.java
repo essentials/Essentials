@@ -2,8 +2,10 @@ package net.ess3.commands;
 
 import java.util.Locale;
 import static net.ess3.I18n._;
+import net.ess3.api.ChargeException;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
+import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,37 +31,69 @@ public class Commandmore extends EssentialsCommand
 		{
 			if (stack == null)
 			{
-				throw new Exception(_("cantSpawnItem", "Air"));
+				if (stacks.length == 1)
+				{
+					throw new Exception(_("cantSpawnItem", "Air"));
+				}
+				else
+				{
+					continue;
+				}
 			}
 			ISettings settings = ess.getSettings();
-			
+
 			int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();
 			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
-			
-			if (stack.getAmount() >= (Permissions.OVERSIZEDSTACKS.isAuthorized(user)
-									  ? oversizedStackSize
-									  : defaultStackSize > 0 ? defaultStackSize : stack.getMaxStackSize()))
+
+			int newAmount = Permissions.OVERSIZEDSTACKS.isAuthorized(user)
+							? oversizedStackSize
+							: defaultStackSize > 0 ? defaultStackSize : stack.getMaxStackSize();
+			if (stack.getAmount() >= newAmount)
 			{
-				throw new NoChargeException();
+				if (stacks.length == 1)
+				{
+					throw new NoChargeException();
+				}
+				else
+				{
+					continue;
+				}
 			}
 			final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
 			if (!Permissions.ITEMSPAWN.isAuthorized(user, stack))
 			{
-				throw new Exception(_("cantSpawnItem", itemname));
+				if (stacks.length == 1)
+				{
+					throw new Exception(_("cantSpawnItem", itemname));
+				}
+				else
+				{
+					continue;
+				}
 			}
-			if (Permissions.OVERSIZEDSTACKS.isAuthorized(user))
+			if (stack.getAmount() < newAmount && stacks.length > 1)
 			{
-				stack.setAmount(oversizedStackSize);
+				Trade trade = new Trade("more", ess);
+				try
+				{
+					trade.charge(user);
+				}
+				catch (ChargeException ex)
+				{
+					user.sendMessage(ex.getMessage());
+					break;
+				}
 			}
-			else
-			{
-				stack.setAmount(defaultStackSize > 0 ? defaultStackSize : stack.getMaxStackSize());
-			}
+			stack.setAmount(newAmount);
 		}
 		if (stacks.length > 1)
 		{
 			user.getPlayer().getInventory().setContents(stacks);
 		}
 		user.getPlayer().updateInventory();
+		if (stacks.length > 1)
+		{
+			throw new NoChargeException();
+		}
 	}
 }
