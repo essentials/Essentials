@@ -2,6 +2,7 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.utils.Util;
 
 
 public class Commandignore extends EssentialsCommand
@@ -13,8 +14,18 @@ public class Commandignore extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		IUser player = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
-		
+		IUser player;
+		try {
+			player = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
+		} catch(Exception e) {
+			if (args[0].equalsIgnoreCase("list")) {
+				user.sendMessage(Util.joinList(user.getData().getIgnore()));
+				throw new NoChargeException();
+			} else {
+				throw e;
+			}
+		}
+			
 		if (user.isIgnoringPlayer(player))
 		{
 			user.setIgnoredPlayer(player, false);
