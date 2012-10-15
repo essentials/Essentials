@@ -23,10 +23,11 @@ public class Commands implements StorageObject
 	private Home home = new Home();
 	private Lightning lightning = new Lightning();
 	private net.ess3.settings.commands.List list = new net.ess3.settings.commands.List();
+	private Near near = new Near();
+	private SocialSpy socalspy = new SocialSpy();
 	private Spawnmob spawnmob = new Spawnmob();
 	private Tpa tpa = new Tpa();
 	private Speed speed = new Speed();
-	private SocialSpy socalspy = new SocialSpy();
 	@ListType
 	@Comment(
 	{

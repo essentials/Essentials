@@ -14,7 +14,7 @@ public class Commandnear extends EssentialsCommand
 	@Override
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		long radius = 200;
+		long radius = ess.getSettings().getData().getCommands().getNear().getDefaultRadius();
 
 		IUser otherUser = null;
 
@@ -63,7 +63,7 @@ public class Commandnear extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		final IUser otherUser = ess.getUserMap().matchUser(args[0], false);
-		long radius = 200;
+		long radius = ess.getSettings().getData().getCommands().getNear().getDefaultRadius();
 		if (args.length > 1)
 		{
 			try
