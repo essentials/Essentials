@@ -88,8 +88,15 @@ public class Commandtime extends EssentialsCommand
 	private void setWorldsTime(final CommandSender sender, final Collection<World> worlds, final long ticks, final boolean add)
 	{
 		// Update the time
-		for (World world : worlds)
+		Iterator<World> iterator = worlds.iterator();
+		while (iterator.hasNext())
 		{
+			World world = iterator.next();
+			if (!Permissions.TIME_WORLDS.isAuthorized(sender, world.getName())) {
+				iterator.remove();
+				sender.sendMessage("You are not allowed to set the time in world "+world.getName()); //TODO:I18n
+				continue;
+			}
 			long time = world.getTime();
 			if (!add)
 			{
@@ -98,6 +105,9 @@ public class Commandtime extends EssentialsCommand
 			world.setTime(time + (add ? 0 : 24000) + ticks);
 		}
 
+		if (worlds.isEmpty()) {
+			return;
+		}
 		final StringBuilder output = new StringBuilder();
 		for (World world : worlds)
 		{
