@@ -11,7 +11,7 @@ import net.ess3.storage.StorageObject;
 public class RankOptions implements StorageObject
 {
 	@Comment("Message format of chat messages")
-	private String messageFormat;
+	private String chatFormat;
 	@Comment("Prefix for name")
 	private String prefix;
 	@Comment("Suffix for name")

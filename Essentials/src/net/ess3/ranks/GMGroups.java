@@ -1,5 +1,6 @@
 package net.ess3.ranks;
 
+import java.util.logging.Level;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
@@ -19,84 +20,130 @@ public class GMGroups extends AbstractRanks implements IRanks
 		this.ess = ess;
 		this.groupManager = (GroupManager)groupManager;
 	}
-	
-	@Override
-	public double getHealCooldown(CommandSender player)
+
+	private double getGMDouble(final CommandSender player, final String key, final double defaultValue)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-		if (handler == null)
+		try
 		{
-			return 0;
+			final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
+			if (handler == null)
+			{
+				return defaultValue;
+			}
+			return handler.getPermissionDouble(player.getName(), key);
 		}
-		return handler.getPermissionDouble(player.getName(), "healcooldown");
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
+			return defaultValue;
+		}
+	}
+
+	private int getGMInteger(final CommandSender player, final String key, final int defaultValue)
+	{
+		try
+		{
+			final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
+			if (handler == null)
+			{
+				return defaultValue;
+			}
+			return handler.getPermissionInteger(player.getName(), key);
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
+			return defaultValue;
+		}
+	}
+
+	private String getGMString(final CommandSender player, final String key, final String defaultValue)
+	{
+		try
+		{
+			final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
+			if (handler == null)
+			{
+				return defaultValue;
+			}
+			return handler.getPermissionString(player.getName(), key);
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
+			return defaultValue;
+		}
 	}
 
 	@Override
-	public double getTeleportCooldown(CommandSender player)
+	public double getHealCooldown(final CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-		if (handler == null)
-		{
-			return 0;
-		}
-		return handler.getPermissionDouble(player.getName(), "teleportcooldown");
+		return getGMDouble(player, "healcooldown", 0);
 	}
 
 	@Override
-	public double getTeleportDelay(CommandSender player)
+	public double getTeleportCooldown(final CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-		if (handler == null)
-		{
-			return 0;
-		}
-		return handler.getPermissionDouble(player.getName(), "teleportdelay");
+		return getGMDouble(player, "teleportcooldown", 0);
 	}
 
 	@Override
-	public String getPrefix(CommandSender player)
+	public double getTeleportDelay(final CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-		if (handler == null)
+		return getGMDouble(player, "teleportdelay", 0);
+	}
+
+	@Override
+	public String getPrefix(final CommandSender player)
+	{
+		try
 		{
+			final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
+			if (handler == null)
+			{
+				return null;
+			}
+			return handler.getUserPrefix(player.getName());
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
 			return null;
 		}
-		return handler.getUserPrefix(player.getName());
 	}
 
 	@Override
-	public String getSuffix(CommandSender player)
+	public String getSuffix(final CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-		if (handler == null)
+		try
 		{
+			final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
+			if (handler == null)
+			{
+				return null;
+			}
+			return handler.getUserSuffix(player.getName());
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
 			return null;
 		}
-		return handler.getUserSuffix(player.getName());
 	}
 
 	@Override
-	public int getHomeLimit(CommandSender player)
+	public int getHomeLimit(final CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-		if (handler == null)
-		{
-			return 0;
-		}
-		return handler.getPermissionInteger(player.getName(), "homes");
+		return getGMInteger(player, "homes", 1);
 	}
 
 	@Override
 	protected String getRawChatFormat(final CommandSender player)
 	{
-		AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-		if (handler != null)
+		String chatformat = getGMString(player, "chatformat", null);
+		if (chatformat != null && !chatformat.isEmpty())
 		{
-			String chatformat = handler.getPermissionString(player.getName(), "chatformat");
-			if (chatformat != null && !chatformat.isEmpty())
-			{
-				return chatformat;
-			}
+			return chatformat;
 		}
 
 		ISettings settings = ess.getSettings();
@@ -106,22 +153,38 @@ public class GMGroups extends AbstractRanks implements IRanks
 	@Override
 	public String getMainGroup(CommandSender player)
 	{
-		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-		if (handler == null)
+		try
 		{
+			final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
+			if (handler == null)
+			{
+				return null;
+			}
+			return handler.getGroup(player.getName());
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
 			return null;
 		}
-		return handler.getGroup(player.getName());
 	}
 
 	@Override
 	public boolean inGroup(CommandSender player, String groupname)
 	{
-		final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-		if (handler == null)
+		try
 		{
+			final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
+			if (handler == null)
+			{
+				return false;
+			}
+			return handler.inGroup(player.getName(), groupname);
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
 			return false;
 		}
-		return handler.inGroup(player.getName(), groupname);
 	}
 }

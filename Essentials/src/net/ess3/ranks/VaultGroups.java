@@ -1,5 +1,6 @@
 package net.ess3.ranks;
 
+import java.util.logging.Level;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
@@ -16,85 +17,154 @@ public class VaultGroups extends AbstractRanks implements IRanks
 	{
 		this.ess = ess;
 	}
-	
-	private <T> T getServiceProvider(Class<T> clazz) {
-		RegisteredServiceProvider<T> provider = ess.getServer().getServicesManager().getRegistration(clazz);
+
+	private <T> T getServiceProvider(final Class<T> clazz)
+	{
+		final RegisteredServiceProvider<T> provider = ess.getServer().getServicesManager().getRegistration(clazz);
 		return provider.getProvider();
 	}
 
-	@Override
-	public double getHealCooldown(CommandSender player)
+	private double getVaultDouble(final CommandSender player, final String key, final double defaultValue)
 	{
-		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerInfoDouble(getPlayer(player), "healcooldown", 0);
+		try
+		{
+			final Chat chat = getServiceProvider(Chat.class);
+			return chat.getPlayerInfoDouble(getPlayer(player), key, defaultValue);
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
+			return defaultValue;
+		}
+	}
+
+	private int getVaultInteger(final CommandSender player, final String key, final int defaultValue)
+	{
+		try
+		{
+			final Chat chat = getServiceProvider(Chat.class);
+			return chat.getPlayerInfoInteger(getPlayer(player), key, defaultValue);
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
+			return defaultValue;
+		}
+	}
+
+	private String getVaultString(final CommandSender player, final String key, final String defaultValue)
+	{
+		try
+		{
+			final Chat chat = getServiceProvider(Chat.class);
+			return chat.getPlayerInfoString(getPlayer(player), key, defaultValue);
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
+			return defaultValue;
+		}
 	}
 
 	@Override
-	public double getTeleportCooldown(CommandSender player)
+	public double getHealCooldown(final CommandSender player)
 	{
-		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerInfoDouble(getPlayer(player), "teleportcooldown", 0);
+		return getVaultDouble(player, "healcooldown", 0);
 	}
 
 	@Override
-	public double getTeleportDelay(CommandSender player)
+	public double getTeleportCooldown(final CommandSender player)
 	{
-		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerInfoDouble(getPlayer(player), "teleportdelay", 0);
+		return getVaultDouble(player, "teleportcooldown", 0);
 	}
 
 	@Override
-	public String getPrefix(CommandSender player)
+	public double getTeleportDelay(final CommandSender player)
 	{
-		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerPrefix(getPlayer(player));
+		return getVaultDouble(player, "teleportdelay", 0);
 	}
 
 	@Override
-	public String getSuffix(CommandSender player)
+	public String getPrefix(final CommandSender player)
 	{
-		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerSuffix(getPlayer(player));
+		try
+		{
+			final Chat chat = getServiceProvider(Chat.class);
+			return chat.getPlayerPrefix(getPlayer(player));
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
+			return null;
+		}
 	}
 
 	@Override
-	public int getHomeLimit(CommandSender player)
+	public String getSuffix(final CommandSender player)
 	{
-		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPlayerInfoInteger(getPlayer(player), "homes", 0);
+		try
+		{
+			final Chat chat = getServiceProvider(Chat.class);
+			return chat.getPlayerSuffix(getPlayer(player));
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
+			return null;
+		}
+	}
+
+	@Override
+	public int getHomeLimit(final CommandSender player)
+	{
+		return getVaultInteger(player, "homes", 1);
 	}
 
 	@Override
 	protected String getRawChatFormat(final CommandSender player)
 	{
-		Chat chat = getServiceProvider(Chat.class);
-		String chatformat = chat.getPlayerInfoString(getPlayer(player), "chatformat", "");
+		final String chatformat = getVaultString(player, "chatformat", null);
 		if (chatformat != null && !chatformat.isEmpty())
 		{
 			return chatformat;
 		}
 
-		ISettings settings = ess.getSettings();
+		final ISettings settings = ess.getSettings();
 		return settings.getData().getChat().getDefaultFormat();
 	}
 
 	@Override
-	public String getMainGroup(CommandSender player)
+	public String getMainGroup(final CommandSender player)
 	{
-		Chat chat = getServiceProvider(Chat.class);
-		return chat.getPrimaryGroup(getPlayer(player));
+		try
+		{
+			final Chat chat = getServiceProvider(Chat.class);
+			return chat.getPrimaryGroup(getPlayer(player));
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
+			return null;
+		}
 	}
 
 	@Override
-	public boolean inGroup(CommandSender player, String groupname)
+	public boolean inGroup(final CommandSender player, final String groupname)
 	{
-		Chat chat = getServiceProvider(Chat.class);
-		for (String group : chat.getPlayerGroups(getPlayer(player)))
+		try
 		{
-			if (group.equalsIgnoreCase(groupname))
+			final Chat chat = getServiceProvider(Chat.class);
+			for (String group : chat.getPlayerGroups(getPlayer(player)))
 			{
-				return true;
+				if (group.equalsIgnoreCase(groupname))
+				{
+					return true;
+				}
 			}
+		}
+		catch (Exception e)
+		{
+			ess.getLogger().log(Level.WARNING, e.getMessage(), e);
 		}
 		return false;
 	}

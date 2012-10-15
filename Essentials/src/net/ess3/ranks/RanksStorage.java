@@ -17,14 +17,15 @@ import org.bukkit.command.CommandSender;
 
 public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRanks
 {
-	private AbstractRanks abstractRanks = new AbstractRanks() {
+	private AbstractRanks abstractRanks = new AbstractRanks()
+	{
 		@Override
-		protected String getRawChatFormat(CommandSender sender)
+		protected String getRawChatFormat(final CommandSender sender)
 		{
 			return RanksStorage.this.getRawChatFormat(sender);
 		}
 	};
-	
+
 	@Override
 	public void finishRead()
 	{
@@ -150,9 +151,9 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
-			if (groupOptions.getValue().getMessageFormat() != null)
+			if (groupOptions.getValue().getChatFormat() != null)
 			{
-				return groupOptions.getValue().getMessageFormat();
+				return groupOptions.getValue().getChatFormat();
 			}
 		}
 
@@ -161,7 +162,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public boolean inGroup(CommandSender player, String groupname)
+	public boolean inGroup(final CommandSender player, final String groupname)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
@@ -174,7 +175,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 	}
 
 	@Override
-	public String getMainGroup(CommandSender player)
+	public String getMainGroup(final CommandSender player)
 	{
 		for (Entry<String, RankOptions> groupOptions : getGroups(player))
 		{
