@@ -39,7 +39,6 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 	Location getHome(Location loc);
 
 	//boolean isHidden();
-
 	ITeleport getTeleport();
 
 	void checkCooldown(UserData.TimestampType cooldownType, double cooldown, boolean set, IPermission bypassPermission) throws CooldownException;
@@ -84,8 +83,6 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	void setMuted(boolean mute);
 
-	boolean toggleSocialSpy();
-
 	void requestTeleport(IUser user, boolean b);
 
 	boolean isTpRequestHere();
@@ -115,17 +112,17 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 	boolean isInvSee();
 
 	void setInvSee(boolean invsee);
-	
+
 	boolean isEnderSee();
-	
+
 	void setEnderSee(boolean endersee);
 
 	boolean hasInvulnerabilityAfterTeleport();
 
 	void setGodModeEnabled(boolean set);
 
-	void setVanished(boolean set);	
-	
+	void setVanished(boolean set);
+
 	boolean checkSignThrottle(int throttle);
 
 	/**

@@ -320,7 +320,7 @@ commands:
     aliases: [esetworth]
   socialspy:
     description: Toggles if you can see msg/mail commands in chat.
-    usage: /<command>
+    usage: /<command> [player] [on|off]
     aliases: [esocialspy]
   spawn:
     description: Teleport to the spawnpoint.

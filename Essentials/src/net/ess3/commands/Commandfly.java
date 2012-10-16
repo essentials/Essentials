@@ -40,6 +40,11 @@ public class Commandfly extends EssentialsCommand
 	{
 		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
 		{
+			if (Permissions.FLY_EXEMPT.isAuthorized(matchPlayer))
+			{
+				sender.sendMessage("Can't change fly mode for player " + matchPlayer.getName()); //TODO: I18n
+				continue;
+			}
 			if (args.length > 1)
 			{
 				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
@@ -60,7 +65,9 @@ public class Commandfly extends EssentialsCommand
 			{
 				matchPlayer.getPlayer().setFlying(false);
 			}
-			sender.sendMessage(_("flyMode", _(matchPlayer.getPlayer().getAllowFlight() ? "enabled" : "disabled"), matchPlayer.getPlayer().getDisplayName()));
+			final String message = _("flyMode", _(matchPlayer.getPlayer().getAllowFlight() ? "enabled" : "disabled"), matchPlayer.getPlayer().getDisplayName());
+			matchPlayer.sendMessage(message);
+			sender.sendMessage(message);
 		}
 	}
 }

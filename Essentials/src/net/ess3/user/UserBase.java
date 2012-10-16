@@ -230,14 +230,6 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		queueSave();
 	}
 
-	public boolean toggleSocialSpy()
-	{
-		boolean ret = !getData().isSocialspy();
-		getData().setSocialspy(ret);
-		queueSave();
-		return ret;
-	}
-
 	public boolean toggleTeleportEnabled()
 	{
 		boolean ret = !getData().isTeleportEnabled();

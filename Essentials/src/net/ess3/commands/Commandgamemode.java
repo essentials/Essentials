@@ -37,7 +37,12 @@ public class Commandgamemode extends EssentialsCommand
 	private void gamemodeOtherPlayers(final CommandSender sender, final String args[])
 	{
 		for (IUser player : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
-		{		
+		{
+			if (Permissions.GAMEMODE_EXEMPT.isAuthorized(player))
+			{
+				sender.sendMessage("Can't change gamemode for player " + player.getPlayer().getDisplayName()); //TODO: I18n
+				continue;
+			}
 			if (args.length > 1)
 			{
 				if (args[1].contains("creat") || args[1].equalsIgnoreCase("1"))

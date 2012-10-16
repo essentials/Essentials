@@ -36,6 +36,13 @@ public class Commandgod extends EssentialsCommand
 	{
 		for (IUser player : ess.getUserMap().matchUsers(args[0], true))
 		{
+			if (player.isOnline()
+				? Permissions.GOD_EXEMPT.isAuthorized(player)
+				: !Permissions.GOD_OFFLINE.isAuthorized(sender))
+			{
+				sender.sendMessage("Can't change god mode for player " + player.getName()); //TODO: I18n
+				continue;
+			}
 			if (args.length > 1)
 			{
 				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
