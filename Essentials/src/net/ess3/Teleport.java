@@ -233,11 +233,19 @@ public class Teleport implements Runnable, ITeleport
 		teleTimer = ess.getPlugin().scheduleSyncRepeatingTask(this, 10, 10);
 	}
 
-	private void now(Target target, TeleportCause cause) throws Exception
+	private void now(final Target target, final TeleportCause cause) throws Exception
 	{
 		cancel();
 		user.setLastLocation();
-		user.getPlayer().teleport(LocationUtil.getSafeDestination(target.getLocation()), cause);
+		final Location loc = LocationUtil.getSafeDestination(target.getLocation());
+		ess.getPlugin().scheduleSyncDelayedTask(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				user.getPlayer().teleport(loc, cause);
+			}
+		});
 	}
 
 	@Override
