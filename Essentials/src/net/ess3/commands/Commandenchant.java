@@ -50,8 +50,9 @@ public class Commandenchant extends EssentialsCommand
 				level = -1;
 			}
 		}
+		final boolean allowUnsafe = Permissions.ENCHANT_UNSAFE.isAuthorized(user);
 		final Enchantment enchantment = getEnchantment(args[0], user);
-		if (level < 0 || level > enchantment.getMaxLevel())
+		if (level < 0 || (!allowUnsafe && level > enchantment.getMaxLevel()))
 		{
 			level = enchantment.getMaxLevel();
 		}
@@ -61,7 +62,14 @@ public class Commandenchant extends EssentialsCommand
 		}
 		else
 		{
-			stack.addEnchantment(enchantment, level);
+			if (allowUnsafe)
+			{
+				stack.addUnsafeEnchantment(enchantment, level);
+			}
+			else
+			{
+				stack.addEnchantment(enchantment, level);
+			}
 		}
 		user.getPlayer().getInventory().setItemInHand(stack);
 		user.getPlayer().updateInventory();

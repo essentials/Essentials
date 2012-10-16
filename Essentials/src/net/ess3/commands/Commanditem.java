@@ -56,7 +56,14 @@ public class Commanditem extends EssentialsCommand
 				{
 					level = enchantment.getMaxLevel();
 				}
-				stack.addEnchantment(enchantment, level);
+				if (Permissions.ITEM_ENCHANTED_UNSAFE.isAuthorized(sender))
+				{
+					stack.addUnsafeEnchantment(enchantment, level);
+				}
+				else
+				{
+					stack.addEnchantment(enchantment, level);
+				}
 			}
 		}
 		
