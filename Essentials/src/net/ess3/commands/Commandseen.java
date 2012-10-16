@@ -35,12 +35,8 @@ public class Commandseen extends EssentialsCommand
 		}
 		catch (PlayerNotFoundException e)
 		{
-			IUser u = ess.getUserMap().getUser(args[0]);
-			if (u == null)
-			{
-				throw new Exception(_("playerNotFound"));
-			}
-			sender.sendMessage(_("seenOffline", u.getPlayer().getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
+			IUser u = ess.getUserMap().matchUser(args[0], true);
+			sender.sendMessage(_("seenOffline", u.getName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
 			if (u.isBanned())
 			{
 				sender.sendMessage(_("whoisBanned", show ? u.getData().getBan().getReason() : _("true")));
