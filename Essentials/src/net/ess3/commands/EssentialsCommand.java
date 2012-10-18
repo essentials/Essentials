@@ -1,5 +1,6 @@
 package net.ess3.commands;
 
+import java.util.List;
 import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
@@ -37,51 +38,6 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		this.module = module;
 	}
 
-	/*protected IUser getPlayer(final String[] args, final int pos) throws NoSuchFieldException, NotEnoughArgumentsException
-	{
-		return getPlayer(args, pos, false);
-	}
-
-	protected IUser getPlayer(final String[] args, final int pos, final boolean getOffline) throws NoSuchFieldException, NotEnoughArgumentsException
-	{
-		if (args.length <= pos)
-		{
-			throw new NotEnoughArgumentsException();
-		}
-		if (args[pos].isEmpty())
-		{
-			throw new NoSuchFieldException(_("playerNotFound"));
-		}
-		final IUser user = ess.getUserMap().getUser(args[pos]);
-		if (user != null)
-		{
-			if (!getOffline && (!user.isOnline() || user.isHidden()))
-			{
-				throw new NoSuchFieldException(_("playerNotFound"));
-			}
-			return user;
-		}
-		final List<Player> matches = server.matchPlayer(args[pos]);
-
-		if (!matches.isEmpty())
-		{
-			for (Player player : matches)
-			{
-				final IUser userMatch = player.getUser();
-				if (userMatch.getDisplayName().startsWith(args[pos]) && (getOffline || !userMatch.isHidden()))
-				{
-					return userMatch;
-				}
-			}
-			final IUser userMatch = matches.get(0).getUser();
-			if (getOffline || !userMatch.isHidden())
-			{
-				return userMatch;
-			}
-		}
-		throw new NoSuchFieldException(_("playerNotFound"));
-	}*/
-
 	@Override
 	public final void run(final IUser user, final Command cmd, final String commandLabel, final String[] args) throws Exception
 	{
@@ -105,6 +61,28 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		throw new Exception(_("onlyPlayers", commandName));
+	}
+	
+	@Override
+	public final List<String> tabComplete(final IUser user, final Command cmd, final String commandLabel, final String[] args)
+	{
+		return tabComplete(user, commandLabel, args);
+	}
+
+	protected List<String> tabComplete(final IUser user, final String commandLabel, final String[] args)
+	{
+		return tabComplete((CommandSender)user, commandLabel, args);
+	}
+
+	@Override
+	public final List<String> tabComplete(final CommandSender sender, final Command cmd, final String commandLabel, final String[] args)
+	{
+		return tabComplete(sender, commandLabel, args);
+	}
+
+	protected List<String> tabComplete(final CommandSender sender, final String commandLabel, final String[] args)
+	{
+		return null;
 	}
 
 	public static String getFinalArg(final String[] args, final int start)

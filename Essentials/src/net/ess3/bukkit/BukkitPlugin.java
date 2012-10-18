@@ -3,6 +3,7 @@ package net.ess3.bukkit;
 import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import net.ess3.Essentials;
@@ -17,6 +18,7 @@ import net.ess3.metrics.MetricsListener;
 import net.ess3.metrics.MetricsStarter;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -119,7 +121,13 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	@Override
 	public boolean onCommand(final org.bukkit.command.CommandSender sender, final Command command, final String label, final String[] args)
 	{
-		return ess.getCommandHandler().handleCommand(sender, command, label, args);
+		return ess.getCommandHandler().onCommand(sender, command, label, args);
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args)
+	{
+		return ess.getCommandHandler().onTabComplete(sender, command, alias, args);
 	}
 
 	@Override

@@ -11,11 +11,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.PluginCommandYamlParser;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 
-public class EssentialsCommandHandler implements ICommandHandler
+public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 {
 	private final transient ClassLoader classLoader;
 	private final transient String commandPath;
@@ -49,7 +50,7 @@ public class EssentialsCommandHandler implements ICommandHandler
 	}
 
 	@Override
-	public boolean handleCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
+	public boolean onCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
 	{
 		ISettings settings = ess.getSettings();
 
@@ -109,6 +110,9 @@ public class EssentialsCommandHandler implements ICommandHandler
 					cmd.init(ess, commandName);
 					cmd.setEssentialsModule(module);
 					commands.put(commandName, cmd);
+					if (command instanceof PluginCommand) {
+						((PluginCommand)command).setExecutor(this);
+					}
 				}
 				catch (Exception ex)
 				{
@@ -172,6 +176,122 @@ public class EssentialsCommandHandler implements ICommandHandler
 		{
 			LOGGER.log(Level.SEVERE, _("commandFailed", commandLabel), ex);
 			return true;
+		}
+	}
+
+	//TODO: Clean this up, since both methods have a lot in common.
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String commandLabel, String[] args)
+	{
+		ISettings settings = ess.getSettings();
+
+		boolean disabled = settings.getData().getCommands().isDisabled(command.getName());
+		boolean overridden = !disabled || settings.getData().getCommands().isOverridden(command.getName());
+
+		// TODO: Move this stuff to bukkit workarounds
+		// Allow plugins to override the command via onCommand
+		if (!overridden && (!commandLabel.startsWith("e") || commandLabel.equalsIgnoreCase(command.getName())))
+		{
+			final PluginCommand pc = getAlternative(commandLabel);
+			if (pc != null)
+			{
+
+				executed(commandLabel, pc.getLabel());
+				try
+				{
+					return pc.tabComplete(sender, commandLabel, args);
+				}
+				catch (final Exception ex)
+				{
+					final ArrayList<StackTraceElement> elements = new ArrayList<StackTraceElement>(Arrays.asList(ex.getStackTrace()));
+					elements.remove(0);
+					final ArrayList<StackTraceElement> toRemove = new ArrayList<StackTraceElement>();
+					for (final StackTraceElement e : elements)
+					{
+						if (e.getClassName().equals("net.ess3.Essentials"))
+						{
+							toRemove.add(e);
+						}
+					}
+					elements.removeAll(toRemove);
+					final StackTraceElement[] trace = elements.toArray(new StackTraceElement[elements.size()]);
+					ex.setStackTrace(trace);
+					ex.printStackTrace();
+					sender.sendMessage(ChatColor.RED + "An internal error occurred while attempting to perform this command");
+					return null;
+				}
+			}
+		}
+		
+		try
+		{
+			// Check for disabled commands
+			if (disabled)
+			{
+				return null;
+			}
+
+			final String commandName = command.getName().toLowerCase(Locale.ENGLISH);
+			IEssentialsCommand cmd = commands.get(commandName);
+			if (cmd == null)
+			{
+				try
+				{
+					cmd = (IEssentialsCommand)classLoader.loadClass(commandPath + commandName).newInstance();
+					cmd.init(ess, commandName);
+					cmd.setEssentialsModule(module);
+					commands.put(commandName, cmd);
+					if (command instanceof PluginCommand) {
+						((PluginCommand)command).setExecutor(this);
+					}
+				}
+				catch (Exception ex)
+				{
+					sender.sendMessage(_("commandNotLoaded", commandName));
+					LOGGER.log(Level.SEVERE, _("commandNotLoaded", commandName), ex);
+					return null;
+				}
+			}
+
+			// Check authorization
+			if (sender != null && !cmd.isAuthorized(sender))
+			{
+				LOGGER.log(Level.WARNING, _("deniedAccessCommand", sender.getName()));
+				sender.sendMessage(_("noAccessCommand"));
+				return null;
+			}
+
+			IUser user = (sender instanceof Player) ? ess.getUserMap().getUser((Player)sender) : null;
+			// Run the command
+			try
+			{
+				if (user == null)
+				{
+					return cmd.tabComplete(sender, command, commandLabel, args);
+				}
+				else
+				{
+					user.setPlayerCache((Player)sender);
+					try
+					{
+						return cmd.tabComplete(user, command, commandLabel, args);
+					}
+					finally
+					{
+						user.setPlayerCache(null);
+					}
+				}
+			}
+			catch (Throwable ex)
+			{
+				showCommandError(sender, commandLabel, ex);
+				return null;
+			}
+		}
+		catch (Throwable ex)
+		{
+			LOGGER.log(Level.SEVERE, _("commandFailed", commandLabel), ex);
+			return null;
 		}
 	}
 
