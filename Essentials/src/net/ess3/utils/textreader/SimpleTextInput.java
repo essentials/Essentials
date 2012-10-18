@@ -1,9 +1,6 @@
 package net.ess3.utils.textreader;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class SimpleTextInput implements IText

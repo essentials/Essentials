@@ -28,13 +28,13 @@ public class Teleport implements Runnable, ITeleport
 		private final Location location;
 		private final Entity entity;
 
-		public Target(Location location)
+		Target(Location location)
 		{
 			this.location = location;
 			this.entity = null;
 		}
 
-		public Target(Entity entity)
+		Target(Entity entity)
 		{
 			this.entity = entity;
 			this.location = null;

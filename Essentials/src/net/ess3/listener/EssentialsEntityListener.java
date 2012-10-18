@@ -6,11 +6,13 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.user.User;
 import net.ess3.user.UserData.TimestampType;
 import org.bukkit.Material;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,6 +56,11 @@ public class EssentialsEntityListener implements Listener
 			{
 				event.setCancelled(true);
 			}
+			if (attacker.isVanished() && !Permissions.VANISH_PVP.isAuthorized(attacker))
+			{
+				event.setCancelled(true);
+			}
+
 			final ItemStack itemstack = ((Player)eAttack).getItemInHand();
 			final List<String> commandList = attacker.getData().getPowertool(itemstack.getType());
 			if (commandList != null && !commandList.isEmpty())
@@ -184,6 +191,22 @@ public class EssentialsEntityListener implements Listener
 		if (prevent != null && prevent)
 		{
 			event.setCancelled(true);
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	public void onPotionSplashEvent(final PotionSplashEvent event)
+	{
+		for (LivingEntity entity : event.getAffectedEntities())
+		{
+			if (entity instanceof Player)
+			{
+				User user = (User)ess.getUserMap().getPlayer(entity);
+				if (user.isGodModeEnabled())
+				{
+					event.setIntensity(entity, 0d);
+				}
+			}
 		}
 	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Set;
 import net.ess3.user.PlayerNotFoundException;
 import net.ess3.user.TooManyMatchesException;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 
@@ -52,4 +53,6 @@ public interface IUserMap extends IReload
 	public void addPrejoinedPlayer(Player player);
 
 	public void removePrejoinedPlayer(Player player);
+
+	public Object getPlayer(LivingEntity livingEntity);
 }
