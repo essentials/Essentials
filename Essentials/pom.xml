@@ -12,21 +12,18 @@
 
   <artifactId>Essentials</artifactId>
   <dependencies>
-    <dependency>
-      <groupId>com.platymuus.bukkit</groupId>
-      <artifactId>BukkitPermissions</artifactId>
-      <version>1.2</version>
-    </dependency>
-    <!--<dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit</artifactId>
-      <version>${bukkit.version}</version>
-    </dependency>-->
+    <!-- Internal Depends -->
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>EssentialsGroupManager</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>0.11.4</version>
+    </dependency>
+    <!-- Test Depends -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -34,37 +31,16 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>0.11.4</version>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>1.9.5</version>
+      <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>ru.tehkode</groupId>
-      <artifactId>PermissionsEx</artifactId>
-      <version>1.15</version>
-    </dependency>
-    <!--
-    Note: these jars are manually added to our maven repo
-    -->
+    <!-- External Plugin Depends -->
     <dependency>
       <groupId>cosine</groupId>
       <artifactId>BOSEconomy</artifactId>
       <version>0.7</version>
-    </dependency>
-    <dependency>
-      <groupId>de.bananaco</groupId>
-      <artifactId>bPermissions</artifactId>
-      <version>1.7.3</version>
-    </dependency>
-    <dependency>
-      <groupId>de.bananaco</groupId>
-      <artifactId>bPermissions2</artifactId>
-      <version>2.8.6</version>
-    </dependency>
-    <dependency>
-      <groupId>com.nijiko.coelho</groupId>
-      <artifactId>iConomy</artifactId>
-      <version>4.65</version>
     </dependency>
     <dependency>
       <groupId>com.iConomy</groupId>
@@ -82,20 +58,9 @@
       <version>0.05</version>
     </dependency>
     <dependency>
-      <groupId>net.krinsoft</groupId>
-      <artifactId>Privileges</artifactId>
-      <version>1.3</version>
-    </dependency>
-    <dependency>
       <groupId>net.milkbowl</groupId>
       <artifactId>Vault</artifactId>
       <version>1.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.9.0</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>
