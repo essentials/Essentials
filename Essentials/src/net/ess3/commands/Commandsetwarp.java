@@ -4,6 +4,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.api.IWarps;
 import net.ess3.permissions.Permissions;
+import net.ess3.utils.Util;
 import org.bukkit.Location;
 
 
@@ -19,9 +20,9 @@ public class Commandsetwarp extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		if (args[0].matches("[0-9]+"))
+		if (Util.isInt(args[0]))
 		{
-			throw new NotEnoughArgumentsException();
+			throw new NoSuchFieldException(_("invalidWarpName"));
 		}
 
 		final Location loc = user.getPlayer().getLocation();

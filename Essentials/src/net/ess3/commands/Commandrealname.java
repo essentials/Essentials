@@ -20,6 +20,7 @@ public class Commandrealname extends EssentialsCommand
 		}
 		final ISettings settings = ess.getSettings();
 		final String whois = args[0].toLowerCase(Locale.ENGLISH);
+		boolean foundUser = false;
 		Player player = sender instanceof IUser ? ((IUser)sender).getPlayer() : null;
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
@@ -29,13 +30,15 @@ public class Commandrealname extends EssentialsCommand
 				continue;
 			}
 			final String displayName = FormatUtil.stripFormat(u.getPlayer().getDisplayName()).toLowerCase(Locale.ENGLISH);
-			if (!whois.equals(displayName)
-				&& !displayName.equals(FormatUtil.stripFormat(settings.getData().getChat().getNicknamePrefix()) + whois)
-				&& !whois.equalsIgnoreCase(u.getName()))
+			if (displayName.contains(whois))
 			{
-				continue;
+				foundUser = true;
+				sender.sendMessage(u.getPlayer().getDisplayName() + " " + _("is") + " " + u.getName());
 			}
-			sender.sendMessage(u.getPlayer().getDisplayName() + " " + _("is") + " " + u.getName());
+		}
+		if (!foundUser)
+		{
+			throw new NoSuchFieldException(_("playerNotFound"));
 		}
 	}
 }

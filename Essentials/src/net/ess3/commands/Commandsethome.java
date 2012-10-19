@@ -52,7 +52,7 @@ public class Commandsethome extends EssentialsCommand
 					IUser usersHome = ess.getUserMap().getUser(ess.getServer().getPlayer(args[0]));
 					if (usersHome == null)
 					{
-						throw new Exception(_("playerNotFound"));
+						throw new NoSuchFieldException(_("playerNotFound"));
 					}
 					String name = args[1].toLowerCase(Locale.ENGLISH);
 					if (!Permissions.SETHOME_MULTIPLE.isAuthorized(user))
@@ -61,7 +61,7 @@ public class Commandsethome extends EssentialsCommand
 					}
 					if ("bed".equals(name.toLowerCase(Locale.ENGLISH)))
 					{
-						throw new NotEnoughArgumentsException();
+						throw new NoSuchFieldException(_("invalidHomeName"));
 					}
 
 					usersHome.getData().addHome(name, user.getPlayer().getLocation());

@@ -53,6 +53,4 @@ public interface IUserMap extends IReload
 	public void addPrejoinedPlayer(Player player);
 
 	public void removePrejoinedPlayer(Player player);
-
-	public Object getPlayer(LivingEntity livingEntity);
 }

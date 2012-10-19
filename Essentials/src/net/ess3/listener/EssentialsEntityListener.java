@@ -201,7 +201,7 @@ public class EssentialsEntityListener implements Listener
 		{
 			if (entity instanceof Player)
 			{
-				User user = (User)ess.getUserMap().getPlayer(entity);
+				User user = (User)ess.getUserMap().getUser((Player)event.getEntity());
 				if (user.isGodModeEnabled())
 				{
 					event.setIntensity(entity, 0d);

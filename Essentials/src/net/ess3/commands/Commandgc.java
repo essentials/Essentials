@@ -1,6 +1,8 @@
 package net.ess3.commands;
 
+import java.lang.management.ManagementFactory;
 import static net.ess3.I18n._;
+import net.ess3.utils.DateUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -25,6 +27,7 @@ public class Commandgc extends EssentialsCommand
 		{
 			color = ChatColor.RED;
 		}
+		sender.sendMessage(_("uptime", DateUtil.formatDateDiff(ManagementFactory.getRuntimeMXBean().getStartTime())));
 		sender.sendMessage(_("tps", "" + color + tps));
 		sender.sendMessage(_("gcmax", (Runtime.getRuntime().maxMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gctotal", (Runtime.getRuntime().totalMemory() / 1024 / 1024)));

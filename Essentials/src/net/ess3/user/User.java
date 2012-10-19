@@ -417,7 +417,7 @@ public class User extends UserBase implements IUser
 		}
 		final long autoafk = settings.getData().getCommands().getAfk().getAutoAFK();
 
-		if (!getData().isAfk() && autoafk > 0 && lastActivity + autoafk * 1000 < System.currentTimeMillis() && Permissions.AFK.isAuthorized(this))
+		if (!getData().isAfk() && autoafk > 0 && lastActivity + autoafk * 1000 < System.currentTimeMillis() && Permissions.AFK_AUTO.isAuthorized(this))
 		{
 			setAfk(true);
 			ess.broadcastMessage(this, _("userIsAway", getPlayer().getDisplayName()));

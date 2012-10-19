@@ -10,6 +10,7 @@ import org.bukkit.permissions.PermissionDefault;
 public enum Permissions implements IPermission
 {
 	AFK,
+	AFK_AUTO,
 	AFK_KICKEXEMPT,
 	AFK_OTHERS,
 	BACK_ONDEATH,
