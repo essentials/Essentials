@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import net.ess3.api.ICommandHandler;
 import net.ess3.api.IEssentials;
 import net.ess3.bukkit.BukkitPlugin;
+import org.bukkit.command.TabExecutor;
 import net.ess3.commands.EssentialsCommandHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -80,7 +81,7 @@ public class EssentialsExtra extends JavaPlugin
 		}
 
 		ClassLoader loader = new URLClassLoader(urls);
-		final ICommandHandler handler = new EssentialsCommandHandler(loader, "Command", "essentials.", ess);
+		final TabExecutor handler = new EssentialsCommandHandler(loader, "Command", "essentials.", ess);
 		for (File file : commandDir.listFiles())
 		{
 			String fileName = file.getName();
@@ -99,7 +100,7 @@ public class EssentialsExtra extends JavaPlugin
 						@Override
 						public boolean execute(CommandSender cs, String label, String[] args)
 						{
-							return handler.handleCommand(cs, this, label, args);
+							return handler.onCommand(cs, this, label, args);
 						}
 					});
 					getLogger().info("Loaded command " + commandName);

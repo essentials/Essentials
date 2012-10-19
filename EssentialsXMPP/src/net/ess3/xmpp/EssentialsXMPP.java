@@ -14,6 +14,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.command.TabExecutor;
 
 
 public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
@@ -23,7 +24,7 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	private transient UserManager users;
 	private transient XMPPManager xmpp;
 	private transient IEssentials ess;
-	private transient ICommandHandler commandHandler;
+	private transient TabExecutor commandHandler;
 
 	public static IEssentialsXMPP getInstance()
 	{
@@ -73,7 +74,7 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
 	{
-		return commandHandler.handleCommand(sender, command, commandLabel, args);
+		return commandHandler.onCommand(sender, command, commandLabel, args);
 	}
 
 	@Override
