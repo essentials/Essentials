@@ -12,14 +12,4 @@ public class ProtectHolder extends AsyncStorageObjectHolder<Protect>
 	{
 		super(ess, Protect.class, new File(ess.getPlugin().getDataFolder(), "protect.yml"));
 	}
-
-	@Override
-	public void finishRead()
-	{
-	}
-
-	@Override
-	public void finishWrite()
-	{
-	}
 }

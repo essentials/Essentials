@@ -8,15 +8,6 @@ import net.ess3.storage.AsyncStorageObjectHolder;
 
 public class WarpHolder extends AsyncStorageObjectHolder<Warp> implements IWarp
 {
-	@Override
-	public void finishRead()
-	{
-	}
-
-	@Override
-	public void finishWrite()
-	{
-	}
 	private final String name;
 
 	public WarpHolder(String name, IEssentials ess) throws InvalidNameException

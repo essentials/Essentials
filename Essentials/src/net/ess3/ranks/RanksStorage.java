@@ -26,16 +26,6 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 		}
 	};
 
-	@Override
-	public void finishRead()
-	{
-	}
-
-	@Override
-	public void finishWrite()
-	{
-	}
-
 	public RanksStorage(final IEssentials ess)
 	{
 		super(ess, Ranks.class, new File(ess.getPlugin().getDataFolder(), "ranks.yml"));

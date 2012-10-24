@@ -7,20 +7,6 @@ import net.ess3.storage.AsyncStorageObjectHolder;
 
 public class MoneyHolder extends AsyncStorageObjectHolder<Money>
 {
-
-	@Override
-	public void finishRead()
-	{
-		
-	}
-
-	@Override
-	public void finishWrite()
-	{
-		
-	}
-	
-	
 	public MoneyHolder(IEssentials ess)
 	{
 		super(ess, Money.class, new File(ess.getPlugin().getDataFolder(), "economy_npcs.yml"));

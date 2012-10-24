@@ -79,16 +79,6 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void finishRead()
-	{
-	}
-
-	@Override
-	public void finishWrite()
-	{
-	}
-
-	@Override
 	public void checkCooldown(final UserData.TimestampType cooldownType, final double cooldown, final boolean set, final IPermission bypassPermission) throws CooldownException
 	{
 		final Calendar now = new GregorianCalendar();

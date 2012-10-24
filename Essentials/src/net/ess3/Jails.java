@@ -103,16 +103,6 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 	}
 
 	@Override
-	public void finishRead()
-	{
-	}
-
-	@Override
-	public void finishWrite()
-	{
-	}
-
-	@Override
 	public int getCount()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
