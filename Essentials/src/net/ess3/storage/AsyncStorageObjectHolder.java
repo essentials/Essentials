@@ -82,6 +82,10 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 
 	public abstract void finishWrite();
 
+	protected void fillWithDefaults()
+	{
+	}
+
 	public StorageQueue.RequestState getRequestState(long timestamp)
 	{
 		if (savetime == 0 || savetime < timestamp || (timestamp < 0 && savetime > 0))
@@ -107,6 +111,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 	{
 		return writer;
 	}
+
 
 	private class StorageObjectDataWriter extends AbstractDelayedYamlFileWriter
 	{
@@ -176,6 +181,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 			loaded.set(true);
 			if (exception instanceof FileNotFoundException)
 			{
+				fillWithDefaults();
 				writer.schedule();
 			}
 		}
