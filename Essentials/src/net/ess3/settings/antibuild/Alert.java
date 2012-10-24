@@ -23,20 +23,17 @@ public class Alert implements StorageObject
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
 	private Set<Material> alertOnPlacement = new HashSet<Material>();
-	;
 	@Comment("For which block types would you like to be alerted when used?")
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
 	private Set<Material> alertOnUse = new HashSet<Material>();
-	;
 	@Comment("For which block types would you like to be alerted when broken?")
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
 	private Set<Material> alertOnBreak = new HashSet<Material>();
-
-	;
+	
 	public Alert()
 	{
 		if (alertOnPlacement.isEmpty())
