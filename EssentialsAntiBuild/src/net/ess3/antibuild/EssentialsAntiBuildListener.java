@@ -51,7 +51,7 @@ public class EssentialsAntiBuildListener implements Listener
 				return;
 			}
 
-			if (antib.getSettings().getData().getBlacklist().getPlacement().contains(type) && !Permissions.BLACKLIST_ALLOWPLACEMENT.isAuthorized(user))			
+			if (antib.getSettings().getData().getBlacklist().getPlacement(type) && !Permissions.BLACKLIST_ALLOWPLACEMENT.isAuthorized(user))			
 			{
 				if (antib.getSettings().getData().isWarnOnBuildDisallow())
 				{
@@ -61,7 +61,7 @@ public class EssentialsAntiBuildListener implements Listener
 				return;
 			}
 
-			if (antib.getSettings().getData().getAlert().getAlertOnPlacement().contains(type)
+			if (antib.getSettings().getData().getAlert().getAlertOnPlacement(type)
 				&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user))
 			{
 				antib.getEssentialsConnect().alert(user, type.toString(), _("alertPlaced"));
@@ -88,7 +88,7 @@ public class EssentialsAntiBuildListener implements Listener
 				return;
 			}
 
-			if (antib.getSettings().getData().getBlacklist().getBreaking().contains(type) && !Permissions.BLACKLIST_ALLOWBREAK.isAuthorized(user))	
+			if (antib.getSettings().getData().getBlacklist().getBreaking(type) && !Permissions.BLACKLIST_ALLOWBREAK.isAuthorized(user))	
 			{
 				if (antib.getSettings().getData().isWarnOnBuildDisallow())
 				{
@@ -98,7 +98,7 @@ public class EssentialsAntiBuildListener implements Listener
 				return;
 			}
 
-			if (antib.getSettings().getData().getAlert().getAlertOnBreak().contains(type)
+			if (antib.getSettings().getData().getAlert().getAlertOnBreak(type)
 				&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user))
 			{
 				antib.getEssentialsConnect().alert(user, type.toString(), _("alertBroke"));
@@ -130,7 +130,7 @@ public class EssentialsAntiBuildListener implements Listener
 	{
 		for (Block block : event.getBlocks())
 		{
-			if (antib.getSettings().getData().getBlacklist().getPiston().contains(block.getType()))
+			if (antib.getSettings().getData().getBlacklist().getPiston(block.getType()))
 			{
 				event.setCancelled(true);
 				return;
@@ -146,7 +146,7 @@ public class EssentialsAntiBuildListener implements Listener
 			return;
 		}
 		final Block block = event.getRetractLocation().getBlock();
-		if (antib.getSettings().getData().getBlacklist().getPiston().contains(block.getType()))
+		if (antib.getSettings().getData().getBlacklist().getPiston(block.getType()))
 		{
 			event.setCancelled(true);
 		}
@@ -160,7 +160,7 @@ public class EssentialsAntiBuildListener implements Listener
 		final ItemStack item = event.getItem();
 
 		if (item != null
-			&& antib.getSettings().getData().getBlacklist().getUsage().contains(item.getType())
+			&& antib.getSettings().getData().getBlacklist().getUsage(item.getType())
 			&& !Permissions.BLACKLIST_ALLOWUSAGE.isAuthorized(user))
 		{
 			if (antib.getSettings().getData().isWarnOnBuildDisallow())
@@ -172,7 +172,7 @@ public class EssentialsAntiBuildListener implements Listener
 		}
 
 		if (item != null
-			&& antib.getSettings().getData().getAlert().getAlertOnUse().contains(item.getType())
+			&& antib.getSettings().getData().getAlert().getAlertOnUse(item.getType())
 			&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user))
 		{
 			antib.getEssentialsConnect().alert(user, item.getType().toString(), _("alertUsed"));

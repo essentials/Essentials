@@ -25,7 +25,7 @@ public class BlackList implements StorageObject
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private Set<Material> placement;
+	private Set<Material> placement = new HashSet<Material>();
 	@Comment(
 	{
 		"Which items should people be prevented from using"
@@ -33,7 +33,7 @@ public class BlackList implements StorageObject
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private Set<Material> usage;
+	private Set<Material> usage = new HashSet<Material>();
 	@Comment(
 	{
 		"Which blocks should people be prevented from breaking"
@@ -41,7 +41,7 @@ public class BlackList implements StorageObject
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private Set<Material> breaking;
+	private Set<Material> breaking = new HashSet<Material>();
 	@Comment(
 	{
 		"Which blocks should not be pushed by pistons"
@@ -49,56 +49,60 @@ public class BlackList implements StorageObject
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private Set<Material> piston;
+	private Set<Material> piston = new HashSet<Material>();
 	
 	public BlackList()
 	{
-		if (placement == null)
+		if(placement.isEmpty())
 		{
 			Material[] mat =
 			{
 				Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
 			};
-			placement = new HashSet<Material>();
+			
 			placement.addAll(Arrays.asList(mat));
 		}
 		
-		if (usage == null)
+		
+		if (usage.isEmpty())
 		{
-			usage = new HashSet<Material>();
 			usage.add(Material.LAVA_BUCKET);
-		}
-		
-		if (breaking == null)
+		}			
+	}
+	
+	public boolean getPlacement(Material mat)
+	{
+		if(placement == null)
 		{
-			breaking = new HashSet<Material>();
+		return false;
 		}
-		
-		if (piston == null)
+		return placement.contains(mat);
+	}
+	
+	public boolean getUsage(Material mat)
+	{
+		if(usage == null)
 		{
-			piston = new HashSet<Material>();
+			return false;
 		}
-		
-		
+		return usage.contains(mat);
 	}
 	
-	public Set<Material> getPlacement()
+	public boolean getBreaking(Material mat)
 	{
-		return placement;
+		if(breaking == null)
+		{
+			return false;
+		}
+		return breaking.contains(mat);
 	}
 	
-	public Set<Material> getUsage()
+	public boolean getPiston(Material mat)
 	{
-		return usage;
-	}
-	
-	public Set<Material> getBreaking()
-	{
-		return breaking;
-	}
-	
-	public Set<Material> getPiston()
-	{
-		return piston;
+		if(piston == null)
+		{
+			return false;
+		}
+		return piston.contains(mat);
 	}
 }
