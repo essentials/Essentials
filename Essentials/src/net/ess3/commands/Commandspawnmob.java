@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
+import java.util.regex.Pattern;
 import static net.ess3.I18n._;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -22,6 +23,8 @@ import org.bukkit.material.Colorable;
 
 public class Commandspawnmob extends EssentialsCommand
 {
+	private final transient Pattern colon = Pattern.compile(":");
+
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
@@ -45,7 +48,7 @@ public class Commandspawnmob extends EssentialsCommand
 
 
 		final String[] mountparts = args[0].split(",");
-		String[] parts = mountparts[0].split(":");
+		String[] parts = colon.split(mountparts[0]);
 		String mobType = parts[0];
 		String mobData = null;
 		if (parts.length == 2)
@@ -56,7 +59,7 @@ public class Commandspawnmob extends EssentialsCommand
 		String mountData = null;
 		if (mountparts.length > 1)
 		{
-			parts = mountparts[1].split(":");
+			parts = colon.split(mountparts[1]);
 			mountType = parts[0];
 			if (parts.length == 2)
 			{

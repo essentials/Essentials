@@ -1,6 +1,7 @@
 package net.ess3.commands;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
@@ -13,6 +14,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class Commandgive extends EssentialsCommand
 {
+	private final transient Pattern data = Pattern.compile("[:+',;.]");
+
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
@@ -45,7 +48,7 @@ public class Commandgive extends EssentialsCommand
 		{
 			for (int i = Util.isInt(args[3]) ? 4 : 3; i < args.length; i++)
 			{
-				final String[] split = args[i].split("[:+',;.]", 2);
+				final String[] split = data.split(args[i], 2);
 				if (split.length < 1)
 				{
 					continue;

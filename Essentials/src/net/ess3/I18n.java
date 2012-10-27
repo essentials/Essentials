@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import net.ess3.api.IEssentials;
 import net.ess3.api.II18n;
 
@@ -97,6 +98,7 @@ public class I18n implements II18n
 		}
 		return messageFormat.format(objects);
 	}
+	private final Pattern partSplit = Pattern.compile("[_\\.]");
 
 	public void updateLocale(final String loc)
 	{
@@ -104,7 +106,7 @@ public class I18n implements II18n
 		{
 			return;
 		}
-		final String[] parts = loc.split("[_\\.]");
+		final String[] parts = partSplit.split(loc);
 		if (parts.length == 1)
 		{
 			currentLocale = new Locale(parts[0]);

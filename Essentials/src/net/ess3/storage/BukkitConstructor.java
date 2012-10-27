@@ -21,6 +21,8 @@ import org.yaml.snakeyaml.nodes.*;
 public class BukkitConstructor extends Constructor
 {
 	private final transient Pattern NUMPATTERN = Pattern.compile("\\d+");
+	private final transient Pattern DATAPATTERN = Pattern.compile("[:+',;.]");
+	private final transient Pattern WORD = Pattern.compile("\\W");
 	private final transient IPlugin plugin;
 
 	public BukkitConstructor(final Class clazz, final IPlugin plugin)
@@ -59,7 +61,7 @@ public class BukkitConstructor extends Constructor
 				{
 					return null;
 				}
-				final String[] split = val.split("[:+',;.]", 2);
+				final String[] split = DATAPATTERN.split(val, 2);
 				if (split.length == 0)
 				{
 					return null;
@@ -92,12 +94,12 @@ public class BukkitConstructor extends Constructor
 				{
 					return null;
 				}
-				final String[] split1 = val.split("\\W");
+				final String[] split1 = WORD.split(val);
 				if (split1.length == 0)
 				{
 					return null;
 				}
-				final String[] split2 = split1[0].split("[:+',;.]", 2);
+				final String[] split2 = DATAPATTERN.split(split1[0], 2);
 				if (split2.length == 0)
 				{
 					return null;
@@ -131,7 +133,7 @@ public class BukkitConstructor extends Constructor
 				{
 					for (int i = 2; i < split1.length; i++)
 					{
-						final String[] split3 = split1[0].split("[:+',;.]", 2);
+						final String[] split3 = DATAPATTERN.split(split1[0], 2);
 						if (split3.length < 1)
 						{
 							continue;
@@ -175,7 +177,7 @@ public class BukkitConstructor extends Constructor
 				{
 					return null;
 				}
-				final String[] split = val.split("[:+',;.]", 2);
+				final String[] split = DATAPATTERN.split(val, 2);
 				if (split.length == 0)
 				{
 					return null;

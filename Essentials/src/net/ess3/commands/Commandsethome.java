@@ -1,6 +1,7 @@
 package net.ess3.commands;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
@@ -8,13 +9,15 @@ import net.ess3.permissions.Permissions;
 
 public class Commandsethome extends EssentialsCommand
 {
+	private final transient Pattern colon = Pattern.compile(":");
+
 	@Override
 	public void run(final IUser user, final String commandLabel, String[] args) throws Exception
 	{
 		if (args.length > 0)
 		{
 			//Allowing both formats /sethome khobbits house | /sethome khobbits:house
-			final String[] nameParts = args[0].split(":");
+			final String[] nameParts = colon.split(args[0]);
 			if (nameParts[0].length() != args[0].length())
 			{
 				args = nameParts;

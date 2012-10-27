@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
@@ -171,7 +172,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			event.setJoinMessage(joinMessage);
 		}
-		
+
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
 		user.updateDisplayName();
@@ -243,7 +244,7 @@ public class EssentialsPlayerListener implements Listener
 		default:
 			return;
 		}
-		
+
 		ess.getUserMap().addPrejoinedPlayer(event.getPlayer());
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		ess.getUserMap().removePrejoinedPlayer(event.getPlayer());
@@ -318,12 +319,13 @@ public class EssentialsPlayerListener implements Listener
 			});
 		}
 	}
+	private final Pattern spaceSplit = Pattern.compile(" ");
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event)
 	{
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		final String cmd = event.getMessage().toLowerCase(Locale.ENGLISH).split(" ")[0].replace("/", "").toLowerCase(Locale.ENGLISH);
+		final String cmd = spaceSplit.split(event.getMessage().toLowerCase(Locale.ENGLISH))[0].replace("/", "").toLowerCase(Locale.ENGLISH);
 		if (ess.getSettings().getData().getCommands().getSocalspy().getSocialspyCommands().contains(cmd))
 		{
 			for (Player player : ess.getServer().getOnlinePlayers())
