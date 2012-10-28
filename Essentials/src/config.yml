@@ -449,7 +449,7 @@ protect:
     fireball-playerdamage: false
     witherskull-explosion: flase
     witherskull-playerdamage: false
-    wither-spawnexplosion: flase
+    wither-spawn-explosion: flase
     wither-blockreplace: false
     creeper-explosion: false
     creeper-playerdamage: false

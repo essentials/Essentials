@@ -23,9 +23,9 @@ public class Prevent implements StorageObject
 	private boolean creeperExplosion = false;
 	private boolean creeperBlockdamage = false;
 	private boolean enderdragonBlockdamage = false;
-	private boolean WitherSpawnExplosion = false;
-	private boolean WitherSkullExplosion = false;
-	private boolean WitherBlockreplace = false;
+	private boolean witherSpawnExplosion = false;
+	private boolean witherskullExplosion = false;
+	private boolean witherBlockreplace = false;
 	private boolean endermanPickup = false;
 	private boolean villagerDeath = false;
 	@Comment(
