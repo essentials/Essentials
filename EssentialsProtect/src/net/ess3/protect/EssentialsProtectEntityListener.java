@@ -149,6 +149,13 @@ public class EssentialsProtectEntityListener implements Listener
 			{
 				event.setCancelled(true);
 			}
+			if (cause == DamageCause.WITHER
+				&& (Permissions.PREVENTDAMAGE_WITHER.isAuthorized(user))
+					&& !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user))
+			{
+				event.setCancelled(true);
+				return;
+			}
 		}
 	}
 

@@ -8,15 +8,10 @@
 # If you receive an error when Essentials loads, ensure that:
 #   - No tabs are present: YAML only allows spaces
 #   - Indents are correct: YAML hierarchy is based entirely on indentation
-#   - You have "escaped" all apostrophes in your text: If you want to write "don't", for example, write "don''t" instead (note the doubled apostrphe)
-#   - List items are prefixed with a hyphen and indented:
-#       lists:
-#         - look like this
-#       not:
-#       - like this
+#   - You have "escaped" all apostrophes in your text: If you want to write "don't", for example, write "don''t" instead (note the doubled apostrophe)
 #   - Text with symbols is enclosed in single or double quotation marks
-#   - CraftBukkit and Permissions have been updated: CraftBukkit and Essentials almost always line up, but sometimes other plugins fall behind CraftBukkit's multiple daily updates
-#   - You have saved the document as UTF-8, NOT the default, ANSI
+
+# If you have problems join the Essentials help support channel: http://tiny.cc/EssentialsChat
 
 ############################################################
 # +------------------------------------------------------+ #
@@ -25,7 +20,7 @@
 ############################################################
 
 # A color code between 0-9 or a-f. Set to 'none' to disable.
-ops-name-color: 'c'
+ops-name-color: '4'
 
 # The character(s) to prefix all nicknames, so that you know they are not true usernames.
 nickname-prefix: '~'
@@ -50,9 +45,9 @@ teleport-cooldown: 0
 # The delay, in seconds, before a user actually teleports.  If the user moves or gets attacked in this timeframe, the teleport never occurs.
 teleport-delay: 0
 
-# The delay, in seconds, a player can't be attacked by other players after he has been teleported by a command
-# This will also prevent that the player can attack other players
-teleport-invulnerability: 2
+# The delay, in seconds, a player can't be attacked by other players after they have been teleported by a command
+# This will also prevent the player attacking other players
+teleport-invulnerability: 4
 
 # The delay, in seconds, required between /heal attempts
 heal-cooldown: 60
@@ -72,7 +67,7 @@ item-spawn-blacklist:
 #  - essentials.give.item-[itemid]
 permission-based-item-spawn: false
 
-# Mob limit on spawnmob
+# Mob limit on the /spawnmob command per execution
 spawnmob-limit: 10
 
 # Shall we notify users when using /lightning
@@ -80,33 +75,36 @@ warn-on-smite: true
 
 # motd and rules are now configured in the files motd.txt and rules.txt
 
-# When a command conflicts with another plugin, by default, Essentials will try to force the OTHER plugin to take
-# priority.  If a command is in this list, Essentials will try to give ITSELF priority.  This does not always work:
-# usually whichever plugin was updated most recently wins out.  However, the full name of the command will always work.
-# For example, if WorldGuard and Essentials are both enabled, and WorldGuard takes control over /god, /essentials:god
-# will still map to Essentials, whereas it might normally get forced upon WorldGuard.  Commands prefixed with an "e",
-# such as /egod, will always grant Essentials priority.
-# We should try to take priority over /god.  If this doesn't work, use
-# /essentials:god or /egod.  If god is set using WorldGuard, use /ungod to remove then use whichever you see fit.
+# When a command conflicts with another plugin, by default, Essentials will try to force the OTHER plugin to take priority.
+# Commands in in this list, will tell Essentials to 'not give up' the command to other plugins.
+# In this state, which plugin 'wins' appears to be almost random.
+# 
+# If you have two plugin with the same command and you wish to force Essentials to take over, you need an alias.
+# To force essentials to take 'god' alias 'god' to 'egod'.
+# See http://wiki.bukkit.org/Bukkit.yml#aliases for more information
+
 overridden-commands:
-  - god
+#  - god
 
 # Disabled commands will be completely unavailable on the server.
+# Disabling commands here will have no effect on command conflicts.
 disabled-commands:
 # - nick
 
-# Restricted commands have been removed.
-# Now we have a whitelist, all commands not on this list are only available to ops.
-# These will have NO EFFECT if you have Permissions installed!
-# They are here only if you want something simpler than Permissions.
+# If you do not wish to use a permission system, you can define a list of 'player perms' below.
+# This list has no effect if your using a supported permissions system.
+# If your using an unsupported permissions system simply delete this section.
+# Whitelist the commands and permissions you wish to give players by default (everything else is op only).
 # These are the permissions without the "essentials." part.
 player-commands:
   - afk
+  - afk.auto
   - back
   - back.ondeath
   - balance
   - balance.others
   - balancetop
+  - build
   - chat.color
   - chat.format
   - chat.shout
@@ -125,7 +123,7 @@ player-commands:
   - info
   - itemdb
   - kit
-  - kit.tools
+  - kits.tools
   - list
   - mail
   - mail.send
@@ -137,8 +135,6 @@ player-commands:
   - near
   - pay
   - ping
-  - powertool
-  - powertooltoggle
   - protect
   - r
   - rules
@@ -156,11 +152,13 @@ player-commands:
   - signs.use.disposal
   - signs.use.enchant
   - signs.use.free
-  - signs.use.gamemode  
+  - signs.use.gamemode
   - signs.use.heal
+  - signs.use.info
   - signs.use.kit
   - signs.use.mail
   - signs.use.protection
+  - signs.use.repair
   - signs.use.sell
   - signs.use.time
   - signs.use.trade
@@ -187,50 +185,49 @@ kits:
   dtools:
     delay: 10
     items:
-      - 277 1 efficiency:1
+      - 277 1 efficiency:1 durability:1
       - 278 1
       - 279:780 1
   tools:
     delay: 10
     items:
       - 272 1
-      - 273 1 
+      - 273 1
       - 274 1
       - 275 1
 
 # Essentials Sign Control
-# See http://ess.khhq.net/wiki/Sign_Tutorial for instructions on how to use these.
+# See http://wiki.ess3.net/wiki/Sign_Tutorial for instructions on how to use these.
 # To enable signs, remove # symbol. To disable all signs, comment/remove each sign.
 # Essentials Colored sign support will be enabled when any sign types are enabled.
-# We recommend not enabling chest protection signs if you don't intend to use them, (or are using LWC/Lockette).
+# Color is not an actual sign, it's for enabling using color codes on signs, when the correct permissions are given.
 
 enabledSigns:
+  #- color
   #- balance
   #- buy
-  #- color
-  #- disposal
-  #- enchant
+  #- sell
+  #- trade
   #- free
+  #- disposal
+  #- warp
+  #- kit
+  #- mail
+  #- enchant
   #- gamemode
   #- heal
   #- info
-  #- kit
-  #- mail
-  #- protection
-  #- repair
-  #- sell
   #- spawnmob
+  #- repair
   #- time
-  #- trade
-  #- warp
-  #- weather 
+  #- weather  
   
-# How many times per second can Essentials signs be interacted with.
-# Values should be between 1-20, 20 being virtually no lag protection.s
+# How many times per second can Essentials signs be interacted with per player.
+# Values should be between 1-20, 20 being virtually no lag protection.
 # Lower numbers will reduce the possibility of lag, but may annoy players.
 sign-use-per-second: 4
 
-# Backup runs a command while saving is disabled
+# Backup runs a batch/bash command while saving is disabled
 backup:
   # Interval in minutes
   interval: 30
@@ -249,15 +246,11 @@ debug: false
 
 # Set the locale for all messages
 # If you don't set this, the default locale of the server will be used.
-# Don't forget to remove the # infront of the line
+# Don't forget to remove the # in front of the line
 #locale: de_DE
 
 # Turn off god mode when people exit
 remove-god-on-disconnect: false
-
-# Use the permission system of bukkit
-# This only works if no other permission plugins are installed
-use-bukkit-permissions: false
 
 # Auto-AFK
 # After this timeout in seconds, the user will be set as afk.
@@ -284,7 +277,7 @@ disable-item-pickup-while-afk: false
 # Disable this to reduce server lag.
 cancel-afk-on-move: true
 
-# You can disable the death messages of minecraft here
+# You can disable the death messages of Minecraft here
 death-messages: true
 
 # Add worlds to this list, if you want to automatically disable god mode there
@@ -293,20 +286,21 @@ no-god-in-worlds:
 
 # Set to true to enable per-world permissions for teleporting between worlds with essentials commands
 # This applies to /world, /back, /tp[a|o][here|all], but not warps.
-# Give someone permission to teleport to a world with essentials.world.<worldname>
+# Give someone permission to teleport to a world with essentials.worlds.<worldname>
+# This does not affect the /home command, there is a separate toggle below for this.
 world-teleport-permissions: false
 
 # The number of items given if the quantity parameter is left out in /item or /give.
-# If this number is below 1, the maximum stack size size is given. If oversized stacks
-# is not enabled, any number higher then the maximum stack size results in more than one stack.
+# If this number is below 1, the maximum stack size size is given. If over-sized stacks
+# are not enabled, any number higher than the maximum stack size results in more than one stack.
 default-stack-size: -1
 
-# Oversized stacks are stacks that ignore the normal max stacksize.
+# Over-sized stacks are stacks that ignore the normal max stack size.
 # They can be obtained using /give and /item, if the player has essentials.oversizedstacks permission.
-# How many items should be in an oversized stack?
+# How many items should be in an over-sized stack?
 oversized-stacksize: 64
 
-# Do you allow to repair enchanted weapons and armor?
+# Allow repair of enchanted weapons and armor.
 # If you set this to false, you can still allow it for certain players using the permission
 # essentials.repair.enchanted
 repair-enchanted: true
@@ -315,15 +309,14 @@ repair-enchanted: true
 #If you set this to true any plugin that uses teleport will have the previous location registered.
 register-back-in-listener: false
 
-#Set timeout in seconds for players to accept tpa before request is cancelled.
-#Set to 0 for no timeout
-tpa-accept-cancellation: 0
-
-#Cancels a request made by tpa / tpc on world change to prevent cross world tp
-cancel-tp-requests-on-world-change: false
-
 #Delay to wait before people can cause attack damage after logging in 
 login-attack-delay: 5
+
+#Set the max fly speed, values range from 0.1 to 1.0
+max-fly-speed: 0.8
+
+#Set the maximum amount of mail that can be sent within a minute.
+mails-per-minute: 1000
 
 ############################################################
 # +------------------------------------------------------+ #
@@ -331,19 +324,16 @@ login-attack-delay: 5
 # +------------------------------------------------------+ #
 ############################################################
 
-# If no home is set, send players to spawn when /home is used
-spawn-if-no-home: true
-
 # Allows people to set their bed at daytime
 update-bed-at-daytime: true
 
 # Set to true to enable per-world permissions for using homes to teleport between worlds
 # This applies to the /home only.
-# Give someone permission to teleport to a world with essentials.world.<worldname>
+# Give someone permission to teleport to a world with essentials.worlds.<worldname>
 world-home-permissions: false
 
 # Allow players to have multiple homes.
-# Players need essentials.sethome.multiple before they can have more than 1 home, default to 'default' below.
+# Players need essentials.sethome.multiple before they can have more than 1 home, defaults to 'default' below.
 # Define different amounts of multiple homes for different permissions, e.g. essentials.sethome.multiple.vip
 # People with essentials.sethome.multiple.unlimited are not limited by these numbers.
 sethome-multiple:  
@@ -370,6 +360,7 @@ starting-balance: 0
 # These are now defined in worth.yml
 
 # Defines the cost to use the given commands PER USE
+# Some commands like /repair have sub-costs, check the wiki for more information.
 command-costs:
   # /example costs $1000 PER USE
   #example: 1000
@@ -399,9 +390,9 @@ economy-log-enabled: false
 # Show other plugins commands in help
 non-ess-in-help: true
 
-# Hide plugins which don't give a permission
+# Hide plugins which do not give a permission
 # You can override a true value here for a single plugin by adding a permission to a user/group.
-# The individual permission is: essentials.help.<plugin>, anyone with essentials.* or '*' will see all help this setting reguardless.
+# The individual permission is: essentials.help.<plugin>, anyone with essentials.* or '*' will see all help regardless.
 # You can use negative permissions to remove access to just a single plugins help if the following is enabled.
 hide-permissionless-help: true
 
@@ -416,21 +407,21 @@ chat:
   # If EssentialsChat is installed, this will define how far a player's voice travels, in blocks.  Set to 0 to make all chat global.
   # Note that users with the "essentials.chat.spy" permission will hear everything, regardless of this setting.
   # Users with essentials.chat.shout can override this by prefixing text with an exclamation mark (!)
-  # Or with essentials.chat.question can override this by prefixing text with a question mark (?)
+  # Users with essentials.chat.question can override this by prefixing text with a question mark (?)
   # You can add command costs for shout/question by adding chat-shout and chat-question to the command costs section."
   radius: 0
 
   # Chat formatting can be done in two ways, you can either define a standard format for all chat
   # Or you can give a group specific chat format, to give some extra variation.
   # If set to the default chat format which "should" be compatible with ichat.
-  # For more information of chat formatting, check out the wiki: http://ess.khhq.net/wiki/Chat_Formatting  
+  # For more information of chat formatting, check out the wiki: http://wiki.ess3.net/wiki/Chat_Formatting  
 
   format: '<{DISPLAYNAME}> {MESSAGE}'
-  #format: '&7[{GROUP}]&f {DISPLAYNAME}&7:&f {MESSAGE}'
+  #format: '&7[{GROUP}]&r {DISPLAYNAME}&7:&r {MESSAGE}'
 
   group-formats:
-  #  Default: '{WORLDNAME} {DISPLAYNAME}&7:&f {MESSAGE}'
-  #  Admins: '{WORLDNAME} &c[{GROUP}]&f {DISPLAYNAME}&7:&c {MESSAGE}'
+  #  Default: '{WORLDNAME} {DISPLAYNAME}&7:&r {MESSAGE}'
+  #  Admins: '{WORLDNAME} &c[{GROUP}]&r {DISPLAYNAME}&7:&c {MESSAGE}'
 
   # If you are using group formats make sure to remove the '#' to allow the setting to be read.
 
@@ -441,41 +432,6 @@ chat:
 ############################################################
 
 protect:
-  # Database settings for sign/rail protection
-
-  # mysql or sqlite
-  # We strongly recommend against using mysql here, unless you have a good reason.
-  # Sqlite seems to be faster in almost all cases, and in some cases mysql can be much slower.
-  datatype: 'sqlite'
-
-  # If you specified MySQL above, you MUST enter the appropriate details here.
-  # If you specified SQLite above, these will be IGNORED.
-  username: 'root'
-  password: 'root'
-  mysqlDb: 'jdbc:mysql://localhost:3306/minecraft'
-
-  # For which block types would you like to be alerted?
-  # You can find a list of IDs in plugins/Essentials/items.csv after loading Essentials for the first time.
-  # 10 = lava :: 11 = still lava :: 46 = TNT :: 327 = lava bucket
-  alert:
-    on-placement: 10,11,46,327
-    on-use: 327
-    on-break: 
-
-  blacklist:
-
-    # Which blocks should people be prevented from placing
-    placement: 10,11,46,327
-
-    # Which items should people be prevented from using
-    usage: 327
-
-    # Which blocks should people be prevented from breaking
-    break:
-
-    # Which blocks should not be pushed by pistons
-    piston:
-
   # General physics/behavior modifications
   prevent:
     lava-flow: false
@@ -518,7 +474,7 @@ protect:
       ender_dragon: false
       pig: false
       sheep: false
-      cow: false      
+      cow: false
       chicken: false
       squid: false
       wolf: false
@@ -527,19 +483,14 @@ protect:
       ocelot: false
       iron_golem: false
       villager: false
-
+      wither: false
+      bat: false
+      witch: false
+      
   # Maximum height the creeper should explode. -1 allows them to explode everywhere.
   # Set prevent.creeper-explosion to true, if you want to disable creeper explosions.
   creeper:
     max-height: -1
-
-  # Protect various blocks.
-  protect:
-    # Protect all signs
-    signs: true
-
-    # Prevent users from destroying rails
-    rails: true
 
     # Blocks below rails/signs are also protected if the respective rail/sign is protected.
     # This makes it more difficult to circumvent protection, and should be enabled.
@@ -580,23 +531,58 @@ protect:
 
     # Should the damage after hit by a lightning be disabled?
     lightning: false
-
-    # Should people with build: false in permissions be allowed to build
-    # Set true to disable building for those people
-    build: true
-
-    # Should people with build: false in permissions be allowed to use items
-    # Set true to disable using for those people
-    use: true
-
-    # Should we tell people they are not allowed to build
-    warn-on-build-disallow: true
+    
+    # Should Wither damage be disabled?
+    wither: false
 
     # Disable weather options
     weather:
       storm: false
       thunder: false
-      lightning: false
+      lightning: false     
+
+############################################################
+# +------------------------------------------------------+ #
+# |                EssentialsAntiBuild                   | #
+# +------------------------------------------------------+ #
+############################################################
+
+  # Disable various default physics and behaviors
+
+    # Should people with build: false in permissions be allowed to build
+    # Set true to disable building for those people
+    # Setting to false means EssentialsAntiBuild will never prevent you from building
+    build: true
+
+    # Should people with build: false in permissions be allowed to use items
+    # Set true to disable using for those people
+    # Setting to false means EssentialsAntiBuild will never prevent you from using
+    use: true
+
+    # Should we tell people they are not allowed to build
+    warn-on-build-disallow: true
+
+  # For which block types would you like to be alerted?
+  # You can find a list of IDs in plugins/Essentials/items.csv after loading Essentials for the first time.
+  # 10 = lava :: 11 = still lava :: 46 = TNT :: 327 = lava bucket
+  alert:
+    on-placement: 10,11,46,327
+    on-use: 327
+    on-break:
+
+  blacklist:
+
+    # Which blocks should people be prevented from placing
+    placement: 10,11,46,327
+
+    # Which items should people be prevented from using
+    usage: 327
+
+    # Which blocks should people be prevented from breaking
+    break:
+
+    # Which blocks should not be pushed by pistons
+    piston:
 
 ############################################################
 # +------------------------------------------------------+ #
@@ -614,9 +600,9 @@ newbies:
   # When we spawn for the first time, which spawnpoint do we use?
   # Set to "none" if you want to use the spawn point of the world.
   spawnpoint: newbies
-  
+
   # Do we want to give users anything on first join? Set to '' to disable
-  # This kit will be given regardless of cost, and permissions.
+  # This kit will be given regardless  of cost, and permissions.
   #kit: ''
   kit: tools
 

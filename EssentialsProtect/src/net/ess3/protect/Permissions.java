@@ -22,6 +22,7 @@ public enum Permissions implements IPermission
 	PREVENTDAMAGE_FIRE(PermissionDefault.FALSE),
 	PREVENTDAMAGE_DROWNING(PermissionDefault.FALSE),
 	PREVENTDAMAGE_LIGHTNING(PermissionDefault.FALSE),
+	PREVENTDAMAGE_WITHER(PermissionDefault.FALSE),
 	PREVENTDAMAGE_NONE(PermissionDefault.FALSE),
 	USEFLINTSTEEL(PermissionDefault.TRUE);
 	private static final String base = "essentials.protect.";
