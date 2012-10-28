@@ -89,6 +89,14 @@ public class EssentialsProtectEntityListener implements Listener
 				event.setCancelled(true);
 				return;
 			}
+			
+			if ((event.getEntity() instanceof WitherSkull 
+					 && Permissions.PREVENTDAMAGE_WITHERSKULL.isAuthorized(user)
+					 && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
+			{
+				event.setCancelled(true);
+				return;
+			}
 
 			if (eAttack instanceof TNTPrimed
 				&& (Permissions.PREVENTDAMAGE_TNT.isAuthorized(user)
@@ -171,6 +179,12 @@ public class EssentialsProtectEntityListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
+		else if (event.getEntity() instanceof Wither
+			&& settings.getData().getPrevent().isWitherSpawnExplosion())
+		{
+			event.setCancelled(true);
+			return;
+		}
 		else if (event.getEntity() instanceof Creeper
 				 && (settings.getData().getPrevent().isCreeperExplosion()
 					 || settings.getData().getPrevent().isCreeperBlockdamage()
@@ -188,6 +202,12 @@ public class EssentialsProtectEntityListener implements Listener
 		}
 		else if ((event.getEntity() instanceof Fireball || event.getEntity() instanceof SmallFireball)
 				 && settings.getData().getPrevent().isFireballExplosion())
+		{
+			event.setCancelled(true);
+			return;
+		}
+		else if ((event.getEntity() instanceof WitherSkull)
+			     && settings.getData().getPrevent().isWitherSkullExplosion())
 		{
 			event.setCancelled(true);
 			return;
@@ -238,6 +258,11 @@ public class EssentialsProtectEntityListener implements Listener
 		if (event.getEntityType() == EntityType.ENDERMAN && settings.getData().getPrevent().isEndermanPickup())
 		{
 			event.setCancelled(true);
+		}
+		if (event.getEntityType() == EntityType.WITHER && settings.getData().getPrevent().isWitherBlockreplace())
+		{
+			event.setCancelled(true);
+			return;
 		}
 	}
 }
