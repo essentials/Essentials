@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.api.IUserMap;
@@ -100,19 +101,19 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	{
 		return getObject(player.getName());
 	}
-	
+
 	@Override
 	public IUser matchUser(final String name, final boolean includeOffline) throws TooManyMatchesException, PlayerNotFoundException
 	{
 		return matchUser(name, true, includeOffline, null);
 	}
-	
+
 	@Override
 	public IUser matchUserExcludingHidden(final String name, final Player requester) throws TooManyMatchesException, PlayerNotFoundException
 	{
 		return matchUser(name, false, false, requester);
 	}
-	
+
 	public IUser matchUser(final String name, final boolean includeHidden, final boolean includeOffline, final Player requester) throws TooManyMatchesException, PlayerNotFoundException
 	{
 		final Set<IUser> users = matchUsers(name, includeHidden, includeOffline, requester);
@@ -132,7 +133,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 			}
 		}
 	}
-	
+
 	@Override
 	public Set<IUser> matchUsers(final String name, final boolean includeOffline)
 	{
@@ -144,11 +145,12 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	{
 		return matchUsers(name, false, false, requester);
 	}
-	
+	private final Pattern comma = Pattern.compile(",");
+
 	public Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline, final Player requester)
 	{
 		final String colorlessName = FormatUtil.stripColor(name);
-		final String[] search = colorlessName.split(",");
+		final String[] search = comma.split(colorlessName);
 		final boolean multisearch = search.length > 1;
 		final Set<IUser> result = new LinkedHashSet<IUser>();
 		final String nicknamePrefix = FormatUtil.stripColor(getNickNamePrefix());

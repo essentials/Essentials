@@ -22,53 +22,59 @@ public class Alert implements StorageObject
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private Set<Material> alertOnPlacement = null;
-	@Comment("For which block types would you like to be alerted when used?")	
+	private Set<Material> alertOnPlacement = new HashSet<Material>();
+	@Comment("For which block types would you like to be alerted when used?")
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private Set<Material> alertOnUse = null;
+	private Set<Material> alertOnUse = new HashSet<Material>();
 	@Comment("For which block types would you like to be alerted when broken?")
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private Set<Material> alertOnBreak = null;
+	private Set<Material> alertOnBreak = new HashSet<Material>();
+	
 	public Alert()
 	{
-		if (alertOnPlacement == null)
+		if (alertOnPlacement.isEmpty())
 		{
 			Material[] mat =
 			{
 				Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
 			};
-			alertOnPlacement = new HashSet<Material>();
 			alertOnPlacement.addAll(Arrays.asList(mat));
 		}
-		
-		if (alertOnUse == null)
-		{			
-			alertOnUse = new HashSet<Material>();
+
+		if (alertOnUse.isEmpty())
+		{
 			alertOnUse.add(Material.LAVA_BUCKET);
 		}
-		
+	}
+
+	public boolean getAlertOnPlacement(Material mat)
+	{
+		if (alertOnPlacement == null)
+		{
+			return false;
+		}
+		return alertOnPlacement.contains(mat);
+	}
+
+	public boolean getAlertOnUse(Material mat)
+	{
+		if (alertOnUse == null)
+		{
+			return false;
+		}
+		return alertOnUse.contains(mat);
+	}
+
+	public boolean getAlertOnBreak(Material mat)
+	{
 		if (alertOnBreak == null)
 		{
-			alertOnBreak = new HashSet<Material>();
+			return false;
 		}
-	}
-	
-	public Set<Material> getAlertOnPlacement()
-	{
-		return alertOnPlacement;
-	}
-	
-	public Set<Material> getAlertOnUse()
-	{
-		return alertOnUse;
-	}
-	
-	public Set<Material> getAlertOnBreak()
-	{
-		return alertOnBreak;
+		return alertOnBreak.contains(mat);
 	}
 }

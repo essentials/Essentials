@@ -70,16 +70,6 @@ public class Kits extends AsyncStorageObjectHolder<net.ess3.settings.Kits> imple
 	}
 
 	@Override
-	public void finishRead()
-	{
-	}
-
-	@Override
-	public void finishWrite()
-	{
-	}
-
-	@Override
 	public void checkTime(IUser user, Kit kit) throws NoChargeException
 	{
 		final Calendar time = new GregorianCalendar();

@@ -2,6 +2,7 @@ package net.ess3.commands;
 
 import java.util.Locale;
 import java.util.Set;
+import java.util.regex.Pattern;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
@@ -14,6 +15,8 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class Commandhome extends EssentialsCommand
 {
+	private final transient Pattern colon = Pattern.compile(":");
+
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
@@ -24,7 +27,7 @@ public class Commandhome extends EssentialsCommand
 		String[] nameParts;
 		if (args.length > 0)
 		{
-			nameParts = args[0].split(":");
+			nameParts = colon.split(args[0]);
 			if (nameParts[0].length() == args[0].length() || !Permissions.HOME_OTHERS.isAuthorized(user))
 			{
 				homeName = nameParts[0];

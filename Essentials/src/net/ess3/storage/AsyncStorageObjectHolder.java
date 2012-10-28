@@ -2,10 +2,7 @@ package net.ess3.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
@@ -78,9 +75,17 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		return file.getAbsolutePath();
 	}
 
-	public abstract void finishRead();
+	protected void finishRead()
+	{
+	}
 
-	public abstract void finishWrite();
+	protected void finishWrite()
+	{
+	}
+
+	protected void fillWithDefaults()
+	{
+	}
 
 	public StorageQueue.RequestState getRequestState(long timestamp)
 	{
@@ -107,6 +112,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 	{
 		return writer;
 	}
+
 
 	private class StorageObjectDataWriter extends AbstractDelayedYamlFileWriter
 	{
@@ -176,6 +182,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 			loaded.set(true);
 			if (exception instanceof FileNotFoundException)
 			{
+				fillWithDefaults();
 				writer.schedule();
 			}
 		}

@@ -14,16 +14,6 @@ import org.bukkit.material.MaterialData;
 
 public class WorthHolder extends AsyncStorageObjectHolder<net.ess3.economy.Worth> implements IWorth
 {
-	@Override
-	public void finishRead()
-	{
-	}
-
-	@Override
-	public void finishWrite()
-	{
-	}
-
 	public WorthHolder(final IEssentials ess)
 	{
 		super(ess, net.ess3.economy.Worth.class, new File(ess.getPlugin().getDataFolder(), "worth.yml"));

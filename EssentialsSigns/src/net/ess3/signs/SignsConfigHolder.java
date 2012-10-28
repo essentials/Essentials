@@ -52,14 +52,4 @@ public class SignsConfigHolder extends AsyncStorageObjectHolder<SignConfig>
 	{
 		return !signsEnabled;
 	}
-
-	@Override
-	public void finishRead()
-	{
-	}
-
-	@Override
-	public void finishWrite()
-	{
-	}
 }

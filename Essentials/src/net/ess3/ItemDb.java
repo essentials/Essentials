@@ -84,31 +84,39 @@ public class ItemDb implements IItemDb
 		return stack;
 	}
 
+	@Override
 	public ItemStack get(final String id, final int quantity) throws Exception
 	{
 		final ItemStack retval = get(id.toLowerCase(Locale.ENGLISH));
 		retval.setAmount(quantity);
 		return retval;
 	}
+	private final Pattern idMatch = Pattern.compile("^\\d+[:+',;.]\\d+$");
+	private final Pattern metaSplit = Pattern.compile("[:+',;.]");
+	private final Pattern number = Pattern.compile("^\\d+$");
+	private final Pattern conjoined = Pattern.compile("^[^:+',;.]+[:+',;.]\\d+$");
 
+	@Override
 	public ItemStack get(final String id) throws Exception
 	{
 		int itemid = 0;
 		String itemname = null;
 		short metaData = 0;
-		if (id.matches("^\\d+[:+',;.]\\d+$"))
+		if (idMatch.matcher(id).matches())
 		{
-			itemid = Integer.parseInt(id.split("[:+',;.]")[0]);
-			metaData = Short.parseShort(id.split("[:+',;.]")[1]);
+			String[] split = metaSplit.split(id);
+			itemid = Integer.parseInt(split[0]);
+			metaData = Short.parseShort(split[1]);
 		}
-		else if (id.matches("^\\d+$"))
+		else if (number.matcher(id).matches())
 		{
 			itemid = Integer.parseInt(id);
 		}
-		else if (id.matches("^[^:+',;.]+[:+',;.]\\d+$"))
+		else if (conjoined.matcher(id).matches())
 		{
-			itemname = id.split("[:+',;.]")[0].toLowerCase(Locale.ENGLISH);
-			metaData = Short.parseShort(id.split("[:+',;.]")[1]);
+			String[] split = metaSplit.split(id);
+			itemname = split[0].toLowerCase(Locale.ENGLISH);
+			metaData = Short.parseShort(split[1]);
 		}
 		else
 		{

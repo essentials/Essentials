@@ -1,6 +1,7 @@
 package net.ess3.commands;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
@@ -9,6 +10,8 @@ import org.bukkit.command.CommandSender;
 
 public class Commanddelhome extends EssentialsCommand
 {
+	private final transient Pattern colon = Pattern.compile(":");
+
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
@@ -22,7 +25,7 @@ public class Commanddelhome extends EssentialsCommand
 		String[] expandedArg;
 
 		//Allowing both formats /sethome khobbits house | /sethome khobbits:house
-		final String[] nameParts = args[0].split(":");
+		final String[] nameParts = colon.split(args[0]);
 		if (nameParts[0].length() != args[0].length())
 		{
 			expandedArg = nameParts;

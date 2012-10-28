@@ -77,7 +77,7 @@ public class General implements StorageObject
 	{
 		return loginAttackDelay * 1000;
 	}
-	public Boolean metricsEnabled = null;
+	private Boolean metricsEnabled = null;
 	
 	@Comment("The join message when players join the server")
 	private String joinMessage = "&e{PLAYER} has joined the game";
