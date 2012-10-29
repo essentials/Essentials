@@ -755,6 +755,7 @@ public class Settings implements ISettings
 	}
 	private boolean prefixsuffixconfigured = false;
 	private boolean addprefixsuffix = false;
+	private boolean essentialsChatActive = false;
 
 	private boolean _addPrefixSuffix()
 	{
@@ -767,9 +768,15 @@ public class Settings implements ISettings
 	}
 
 	@Override
+	public void setEssentialsChatActive(boolean essentialsChatActive)
+	{
+		this.essentialsChatActive = essentialsChatActive;
+	}
+
+	@Override
 	public boolean addPrefixSuffix()
 	{
-		return prefixsuffixconfigured ? addprefixsuffix : ess.getServer().getPluginManager().isPluginEnabled("EssentialsChat");
+		return prefixsuffixconfigured ? addprefixsuffix : essentialsChatActive;
 	}
 	private boolean disablePrefix = false;
 

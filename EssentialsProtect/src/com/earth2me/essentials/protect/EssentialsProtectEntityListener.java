@@ -10,9 +10,9 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
-import org.bukkit.event.entity.*;
 
 
 public class EssentialsProtectEntityListener implements Listener
@@ -114,6 +114,16 @@ public class EssentialsProtectEntityListener implements Listener
 				event.setCancelled(true);
 				return;
 			}
+			
+			if ((event.getEntity() instanceof WitherSkull 
+				&& prot.getSettingBool(ProtectConfig.prevent_witherskull_playerdmg)
+				&& !(target instanceof Player
+					 && user.isAuthorized("essentials.protect.damage.witherskull")
+					 && !user.isAuthorized("essentials.protect.damage.disable"))))
+			{
+				event.setCancelled(true);
+				return;
+			}
 
 			if (eAttack instanceof TNTPrimed && prot.getSettingBool(ProtectConfig.prevent_tnt_playerdmg)
 				&& !(target instanceof Player
@@ -184,6 +194,14 @@ public class EssentialsProtectEntityListener implements Listener
 				event.setCancelled(true);
 				return;
 			}
+			if (cause == DamageCause.WITHER
+				&& prot.getSettingBool(ProtectConfig.disable_wither)
+				&& !(user.isAuthorized("essentials.protect.damage.wither"))
+					 && !user.isAuthorized("essentials.protect.damage.disable"))
+			{
+				event.setCancelled(true);
+				return;
+			}
 		}
 	}
 
@@ -204,6 +222,12 @@ public class EssentialsProtectEntityListener implements Listener
 			{
 				event.getLocation().getWorld().createExplosion(event.getLocation(), 0F);
 			}
+			return;
+		}
+		if (event.getEntity() instanceof Wither
+			&& prot.getSettingBool(ProtectConfig.prevent_wither_spawnexplosion))
+		{
+			event.setCancelled(true);
 			return;
 		}
 		else if (event.getEntity() instanceof Creeper
@@ -228,6 +252,13 @@ public class EssentialsProtectEntityListener implements Listener
 			event.setCancelled(true);
 			return;
 		}
+		else if ((event.getEntity() instanceof WitherSkull)
+			     && prot.getSettingBool(ProtectConfig.prevent_witherskull_explosion))
+		{
+			event.setCancelled(true);
+			return;
+		}
+			
 		// This code will prevent explosions near protected rails, signs or protected chests
 		// TODO: Use protect db instead of this code
 
@@ -318,6 +349,11 @@ public class EssentialsProtectEntityListener implements Listener
 	public void onEntityChangeBlock(EntityChangeBlockEvent event)
 	{
 		if (event.getEntityType() == EntityType.ENDERMAN && prot.getSettingBool(ProtectConfig.prevent_enderman_pickup))
+		{
+			event.setCancelled(true);
+			return;
+		}
+		if (event.getEntityType() == EntityType.WITHER && prot.getSettingBool(ProtectConfig.prevent_wither_blockreplace))
 		{
 			event.setCancelled(true);
 			return;

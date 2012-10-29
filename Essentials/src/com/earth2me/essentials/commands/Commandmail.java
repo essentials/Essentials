@@ -6,7 +6,6 @@ import com.earth2me.essentials.Util;
 import java.util.List;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandmail extends EssentialsCommand
@@ -45,16 +44,7 @@ public class Commandmail extends EssentialsCommand
 				throw new Exception(_("noPerm", "essentials.mail.send"));
 			}
 
-			Player player = server.getPlayer(args[1]);
-			User u;
-			if (player != null)
-			{
-				u = ess.getUser(player);
-			}
-			else
-			{
-				u = ess.getOfflineUser(args[1]);
-			}
+			User u = ess.getUser(args[1]);
 			if (u == null)
 			{
 				throw new Exception(_("playerNeverOnServer", args[1]));
@@ -113,16 +103,7 @@ public class Commandmail extends EssentialsCommand
 		}
 		else if (args.length >= 3 && "send".equalsIgnoreCase(args[0]))
 		{
-			Player player = server.getPlayer(args[1]);
-			User u;
-			if (player != null)
-			{
-				u = ess.getUser(player);
-			}
-			else
-			{
-				u = ess.getOfflineUser(args[1]);
-			}
+			User u = ess.getUser(args[1]);
 			if (u == null)
 			{
 				throw new Exception(_("playerNeverOnServer", args[1]));
@@ -138,16 +119,7 @@ public class Commandmail extends EssentialsCommand
 		else if (args.length >= 2)
 		{
 			//allow sending from console without "send" argument, since it's the only thing the console can do
-			Player player = server.getPlayer(args[0]);
-			User u;
-			if (player != null)
-			{
-				u = ess.getUser(player);
-			}
-			else
-			{
-				u = ess.getOfflineUser(args[0]);
-			}
+			User u = ess.getUser(args[0]);
 			if (u == null)
 			{
 				throw new Exception(_("playerNeverOnServer", args[0]));

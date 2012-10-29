@@ -189,4 +189,6 @@ public interface ISettings extends IConf
 	double getMaxWalkSpeed();
 
 	public int getMailsPerMinute();
+
+	public void setEssentialsChatActive(boolean b);
 }
