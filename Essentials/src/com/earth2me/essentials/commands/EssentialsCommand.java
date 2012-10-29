@@ -43,12 +43,6 @@ public abstract class EssentialsCommand implements IEssentialsCommand
 		return name;
 	}
 
-	@Override
-	public boolean getIgnoreJailed()
-	{
-		return false;
-	}
-	
 	protected User getPlayer(final Server server, final String[] args, final int pos) throws NoSuchFieldException, NotEnoughArgumentsException
 	{
 		return getPlayer(server, args, pos, false);

@@ -10,8 +10,6 @@ public interface IUser extends Player
 	long getLastTeleportTimestamp();
 
 	boolean isAuthorized(String node);
-	
-	boolean isAuthorized(String node, boolean ignoreJailed);
 
 	boolean isAuthorized(IEssentialsCommand cmd);
 

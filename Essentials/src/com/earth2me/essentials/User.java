@@ -57,19 +57,13 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	@Override
 	public boolean isAuthorized(final IEssentialsCommand cmd, final String permissionPrefix)
 	{
-		return isAuthorized(permissionPrefix + (cmd.getName().equals("r") ? "msg" : cmd.getName()), cmd.getIgnoreJailed());
+		return isAuthorized(permissionPrefix + (cmd.getName().equals("r") ? "msg" : cmd.getName()));
 	}
 
 	@Override
 	public boolean isAuthorized(final String node)
 	{
-		return isAuthorized(node, false);
-	}
-	
-	@Override
-	public boolean isAuthorized(final String node, boolean ignoreJailed)
-	{
-		final boolean result = isAuthorizedCheck(node, ignoreJailed);
+		final boolean result = isAuthorizedCheck(node);
 		if (ess.getSettings().isDebug())
 		{
 			ess.getLogger().log(Level.INFO, "checking if " + base.getName() + " has " + node + " - " + result);
@@ -77,7 +71,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		return result;
 	}
 	
-	private boolean isAuthorizedCheck(final String node, boolean ignoreJailed) 
+	private boolean isAuthorizedCheck(final String node) 
 	{
 
 		if (base instanceof OfflinePlayer)
@@ -85,7 +79,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 			return false;
 		}
 
-		if (isJailed() && !ignoreJailed)
+		if (isJailed())
 		{
 			return false;
 		}

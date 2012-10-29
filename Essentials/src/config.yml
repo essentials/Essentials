@@ -221,7 +221,6 @@ enabledSigns:
   #- repair
   #- time
   #- weather  
-  #- jail
   
 # How many times per second can Essentials signs be interacted with per player.
 # Values should be between 1-20, 20 being virtually no lag protection.
@@ -318,20 +317,6 @@ max-fly-speed: 0.8
 
 #Set the maximum amount of mail that can be sent within a minute.
 mails-per-minute: 1000
-
-#Set to true to enable jail history logging
-jail-history: true
-
-#Set amount of jail sentences after which a player automatically gets kicked.
-#This is disabled if set to 0 or jail history is set to false
-jail-autoban-number: 0
-
-#Set amount of total jail duration in hours after which a player automatically gets kicked.
-#This is disabled if set to 0 or jail history is set to false
-jail-autoban-duration: 0
-
-#Set whether jailed players get feedback on being jailed on teleport
-jail-spam-teleport: true
 
 ############################################################
 # +------------------------------------------------------+ #

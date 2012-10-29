@@ -1,12 +1,8 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.Util;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,7 +14,7 @@ public class Commandtogglejail extends EssentialsCommand
 	{
 		super("togglejail");
 	}
-	
+
 	@Override
 	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
@@ -62,24 +58,12 @@ public class Commandtogglejail extends EssentialsCommand
 			player.setJail(null);
 			player.setJail(args[1]);
 			long timeDiff = 0;
-			final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-			String reason = "";
-			
 			if (args.length > 2)
 			{
-				final String remainder = getFinalArg(args, 2);
-				timeDiff = Util.parseDateDiff(remainder, true);
+				final String time = getFinalArg(args, 2);
+				timeDiff = Util.parseDateDiff(time, true);
 				player.setJailTimeout(timeDiff);
-			
-				reason = Util.parseDateDiffInverse(remainder);
 			}
-			
-			if (ess.getSettings().jailHistory())
-			{
-				player.addJailHistory(sender.getName(), reason, Util.formatDateDiff(timeDiff), dateFormat.format(Calendar.getInstance().getTime()), String.valueOf(timeDiff - System.currentTimeMillis()));
-				ess.getJails().checkAutoBan(sender, player);
-			}
-			
 			sender.sendMessage((timeDiff > 0
 								? _("playerJailedFor", player.getName(), Util.formatDateDiff(timeDiff))
 								: _("playerJailed", player.getName())));
@@ -92,7 +76,6 @@ public class Commandtogglejail extends EssentialsCommand
 			return;
 		}
 
-		//not logged at the moment
 		if (args.length >= 2 && player.isJailed() && args[1].equalsIgnoreCase(player.getJail()))
 		{
 			final String time = getFinalArg(args, 2);

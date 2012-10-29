@@ -840,6 +840,12 @@ public class OfflinePlayer implements Player
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
+	
+	@Override
+	public void setBedSpawnLocation(Location lctn, boolean force)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
 	@Override
 	public void playEffect(EntityEffect ee)

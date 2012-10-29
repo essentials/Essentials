@@ -175,10 +175,6 @@ commands:
     description: Spawn an item.
     usage: /<command> <item|numeric> [amount <enchantmentname[:level]> ...]
     aliases: [i,eitem]
-  jailinfo:
-    description: Shows information on a player's jail sentences.
-    usage: /<command> [time|history|history erase] [player] [entry]
-    aliases: [jinfo]
   jails:
     description: List all jails.
     usage: /<command>
