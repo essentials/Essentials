@@ -86,7 +86,7 @@ public abstract class EssentialsChatPlayer implements Listener
 		MessageFormat format = groupSettings.getChatFormat(user);
 		synchronized(format)
 		{
-		event.setFormat(groupSettings.getChatFormat(user).format(new Object[]
+		event.setFormat(format.format(new Object[]
 				{
 					group, world, world.substring(0, 1).toUpperCase(Locale.ENGLISH)
 				}));
