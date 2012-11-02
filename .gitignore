@@ -32,3 +32,4 @@ manifest.mf
 .idea/
 
 EssentialsRelease/
+/Essentials/dependency-reduced-pom.xml

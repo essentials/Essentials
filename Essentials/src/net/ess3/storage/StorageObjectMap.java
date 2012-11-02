@@ -5,16 +5,23 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
+import java.util.regex.Pattern;
 import net.ess3.api.IEssentials;
 import net.ess3.api.InvalidNameException;
 import net.ess3.utils.Util;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.io.IOUtils;
 
 
 public abstract class StorageObjectMap<I> extends CacheLoader<String, I> implements IStorageObjectMap<I>
@@ -23,6 +30,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	private final transient File folder;
 	protected final transient Cache<String, I> cache = CacheBuilder.newBuilder().softValues().build(this);
 	protected final transient ConcurrentSkipListSet<String> keys = new ConcurrentSkipListSet<String>();
+	protected final transient ConcurrentSkipListMap<String, File> zippedfiles = new ConcurrentSkipListMap<String, File>();
 
 	public StorageObjectMap(final IEssentials ess, final String folderName)
 	{
@@ -51,19 +59,76 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 				cache.invalidateAll();
 				for (String string : folder.list())
 				{
+					final File file = new File(folder, string);
+					if (!file.isFile() || !file.canRead())
+					{
+						continue;
+					}
+					if (string.endsWith(".yml"))
+					{
+						addFileToKeys(string.substring(0, string.length() - 4));
+					}
+					if (string.endsWith(".zip"))
+					{
+						addZipFile(file);
+					}
+				}
+			}
+
+			private void addFileToKeys(String filename)
+			{
+				try
+				{
+
+					final String name = Util.decodeFileName(filename);
+					keys.add(name.toLowerCase(Locale.ENGLISH));
+
+				}
+				catch (InvalidNameException ex)
+				{
+					ess.getLogger().log(Level.WARNING, "Invalid filename: " + filename, ex);
+				}
+			}
+			
+			private final Pattern zipCheck = Pattern.compile("^[a-zA-Z0-9-]+\\.yml$");
+
+			private void addZipFile(File file)
+			{
+				try
+				{
+					ZipFile zipFile = new ZipFile(file);
 					try
 					{
-						if (!string.endsWith(".yml"))
+						Enumeration<ZipArchiveEntry> entries = zipFile.getEntriesInPhysicalOrder();
+						while (entries.hasMoreElements())
 						{
-							continue;
+							ZipArchiveEntry entry = entries.nextElement();
+							String name = entry.getName();
+							if (entry.isDirectory() || entry.getSize() == 0 || !zipCheck.matcher(name).matches())
+							{
+								continue;
+							}
+							try
+							{
+								String shortName = name.substring(0, name.length() - 4);
+								addFileToKeys(shortName);
+								final String decodedName = Util.decodeFileName(shortName).toLowerCase(Locale.ENGLISH);
+								zippedfiles.put(decodedName, file);
+							}
+							catch (InvalidNameException ex)
+							{
+								ess.getLogger().log(Level.WARNING, "Invalid filename " + name + " in " + file.getAbsoluteFile(), ex);
+							}
 						}
-						final String name = Util.decodeFileName(string.substring(0, string.length() - 4));
-						keys.add(name.toLowerCase(Locale.ENGLISH));
 					}
-					catch (InvalidNameException ex)
+					finally
 					{
-						ess.getLogger().log(Level.WARNING, "Invalid filename: " + string, ex);
+						zipFile.close();
 					}
+				}
+				catch (IOException ex)
+				{
+					ess.getLogger().log(Level.WARNING, "Error opening file " + file.getAbsolutePath(), ex);
 				}
 			}
 		});
@@ -98,12 +163,17 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	@Override
 	public void removeObject(final String name) throws InvalidNameException
 	{
-		keys.remove(name.toLowerCase(Locale.ENGLISH));
-		cache.invalidate(name.toLowerCase(Locale.ENGLISH));
+		String lowerCaseName = name.toLowerCase(Locale.ENGLISH);
+		keys.remove(lowerCaseName);
+		cache.invalidate(lowerCaseName);
 		final File file = getStorageFile(name);
 		if (file.exists())
 		{
 			file.delete();
+		}
+		if (zippedfiles.containsKey(lowerCaseName))
+		{
+			zippedfiles.put(lowerCaseName, null);
 		}
 	}
 
@@ -126,12 +196,59 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 		{
 			throw new InvalidNameException(new IOException("Folder does not exists: " + folder));
 		}
-		return new File(folder, Util.sanitizeFileName(name) + ".yml");
+		String sanitizedFilename = Util.sanitizeFileName(name) + ".yml";
+		File file = new File(folder, sanitizedFilename);
+
+		if (!file.exists())
+		{
+			extractFileFromZip(name, sanitizedFilename, file);
+		}
+		return file;
 	}
 
 	@Override
 	public void onReload()
 	{
 		loadAllObjectsAsync();
+	}
+
+	private void extractFileFromZip(final String name, String sanitizedFilename, File file)
+	{
+		String lowerCaseName = name.toLowerCase(Locale.ENGLISH);
+		File zipFile = zippedfiles.get(lowerCaseName);
+		if (zipFile != null)
+		{
+			try
+			{
+				ZipFile zip = new ZipFile(zipFile);
+				try
+				{
+					ZipArchiveEntry entry = zip.getEntry(sanitizedFilename);
+					if (entry != null)
+					{
+						try
+						{
+							IOUtils.copy(zip.getInputStream(entry), new FileOutputStream(file));
+						}
+						catch (IOException ex)
+						{
+							ess.getLogger().log(Level.WARNING, "Failed to write file: " + file.getAbsolutePath(), ex);
+						}
+					}
+					else
+					{
+						ess.getLogger().log(Level.WARNING, "File " + file.getAbsolutePath() + " not found in zip file " + zipFile.getAbsolutePath());
+					}
+				}
+				finally
+				{
+					zip.close();
+				}
+			}
+			catch (IOException ex)
+			{
+				ess.getLogger().log(Level.WARNING, "File " + file.getAbsolutePath() + " could not be extracted from " + zipFile.getAbsolutePath(), ex);
+			}
+		}
 	}
 }

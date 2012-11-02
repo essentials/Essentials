@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import junit.framework.TestCase;
 import net.ess3.api.IPlugin;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -82,17 +83,8 @@ public abstract class EssentialsTest extends TestCase
 		plugin = mock(IPlugin.class);
 
 		
-		File tmp;
-		try
-		{
-			tmp = File.createTempFile("ess", "tmp");
-		}
-		catch (IOException ex)
-		{
-			throw new RuntimeException(ex);
-		}
-		tmp.deleteOnExit();
-		when(plugin.getDataFolder()).thenReturn(tmp.getParentFile());
+		File folder = FileUtils.getTempDirectory();
+		when(plugin.getDataFolder()).thenReturn(folder);
 		when(world.getName()).thenReturn("world");
 
 		ess = new Essentials(server, logger, plugin);
