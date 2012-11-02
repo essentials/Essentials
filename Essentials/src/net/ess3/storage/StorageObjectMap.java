@@ -108,17 +108,9 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 							{
 								continue;
 							}
-							try
-							{
-								String shortName = name.substring(0, name.length() - 4);
-								addFileToKeys(shortName);
-								final String decodedName = Util.decodeFileName(shortName).toLowerCase(Locale.ENGLISH);
-								zippedfiles.put(decodedName, file);
-							}
-							catch (InvalidNameException ex)
-							{
-								ess.getLogger().log(Level.WARNING, "Invalid filename " + name + " in " + file.getAbsoluteFile(), ex);
-							}
+							String shortName = name.substring(0, name.length() - 4);
+							addFileToKeys(shortName);
+							zippedfiles.put(name, file);
 						}
 					}
 					finally
@@ -171,9 +163,10 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 		{
 			file.delete();
 		}
-		if (zippedfiles.containsKey(lowerCaseName))
+		String sanitizedFilename = Util.sanitizeFileName(name) + ".yml";
+		if (zippedfiles.containsKey(sanitizedFilename))
 		{
-			zippedfiles.put(lowerCaseName, null);
+			zippedfiles.put(sanitizedFilename, null);
 		}
 	}
 
@@ -201,7 +194,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 
 		if (!file.exists())
 		{
-			extractFileFromZip(name, sanitizedFilename, file);
+			extractFileFromZip(sanitizedFilename, file);
 		}
 		return file;
 	}
@@ -212,10 +205,9 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 		loadAllObjectsAsync();
 	}
 
-	private void extractFileFromZip(final String name, String sanitizedFilename, File file)
+	private void extractFileFromZip(String sanitizedFilename, File file)
 	{
-		String lowerCaseName = name.toLowerCase(Locale.ENGLISH);
-		File zipFile = zippedfiles.get(lowerCaseName);
+		File zipFile = zippedfiles.get(sanitizedFilename);
 		if (zipFile != null)
 		{
 			try
