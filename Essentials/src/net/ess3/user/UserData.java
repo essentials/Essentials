@@ -17,7 +17,7 @@ public class UserData implements StorageObject
 {
 	public enum TimestampType
 	{
-		JAIL, MUTE, LASTHEAL, LASTTELEPORT, LOGIN, LOGOUT, KIT
+		JAIL, MUTE, LASTHEAL, LASTTELEPORT, LOGIN, LOGOUT, KIT, COMMAND
 	}
 	private String nickname;
 	private Double money;
@@ -56,16 +56,16 @@ public class UserData implements StorageObject
 			   : Collections.unmodifiableMap(powerTools);
 	}
 	private StoredLocation lastLocation;
-	@MapKeyType(TimestampType.class)
+	@MapKeyType(String.class)
 	@MapValueType(Long.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	private Map<TimestampType, Long> timestamps = new HashMap<TimestampType, Long>();
+	private Map<String, Long> timestamps = new HashMap<String, Long>();
 
-	public Map<TimestampType, Long> getTimestamps()
+	public Map<String, Long> getTimestamps()
 	{
 		return timestamps == null
-			   ? Collections.<TimestampType, Long>emptyMap()
+			   ? Collections.<String, Long>emptyMap()
 			   : Collections.unmodifiableMap(timestamps);
 	}
 	private String jail;
@@ -108,19 +108,32 @@ public class UserData implements StorageObject
 
 	public UserData()
 	{
-		timestamps.put(TimestampType.JAIL, Long.MIN_VALUE);
+		timestamps.put(TimestampType.JAIL.name(), Long.MIN_VALUE);
 	}
 
 	public long getTimestamp(TimestampType type)
 	{
-		Long val = getTimestamps().get(type);
+		Long val = getTimestamps().get(type.name());
+		return val == null ? 0 : val;
+	}
+
+	public long getTimestamp(TimestampType type, String subType)
+	{
+		Long val = getTimestamps().get(type.name() + "-" + subType.toUpperCase(Locale.ENGLISH));
 		return val == null ? 0 : val;
 	}
 
 	public void setTimestamp(TimestampType type, Long value)
 	{
-		Map<TimestampType, Long> ts = new HashMap<TimestampType, Long>(getTimestamps());
-		ts.put(type, value);
+		Map<String, Long> ts = new HashMap<String, Long>(getTimestamps());
+		ts.put(type.name(), value);
+		timestamps = ts;
+	}
+
+	public void setTimestamp(TimestampType type, String subType, Long value)
+	{
+		Map<String, Long> ts = new HashMap<String, Long>(getTimestamps());
+		ts.put(type.name() + "-" + subType.toUpperCase(Locale.ENGLISH), value);
 		timestamps = ts;
 	}
 
@@ -171,6 +184,13 @@ public class UserData implements StorageObject
 	{
 		Map<String, StoredLocation> homeMap = new HashMap<String, StoredLocation>(getHomes());
 		homeMap.put(name, new StoredLocation(location));
+		homes = homeMap;
+	}
+
+	public void addHome(String name, StoredLocation location)
+	{
+		Map<String, StoredLocation> homeMap = new HashMap<String, StoredLocation>(getHomes());
+		homeMap.put(name, location);
 		homes = homeMap;
 	}
 

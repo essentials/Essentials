@@ -90,7 +90,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 				}
 			}
 			
-			private final Pattern zipCheck = Pattern.compile("^[a-zA-Z0-9-]+\\.yml$");
+			private final Pattern zipCheck = Pattern.compile("^[a-zA-Z0-9]*-?[a-zA-Z0-9]+\\.yml$");
 
 			private void addZipFile(File file)
 			{
