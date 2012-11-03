@@ -34,8 +34,9 @@ public class UpdateSettings
 		data.getCommands().getSpawnmob().setLimit(settings.getSpawnMobLimit());
 		data.getCommands().getSpeed().setMaxFlySpeed(settings.getMaxFlySpeed());
 		data.getCommands().getSpeed().setMaxWalkSpeed(settings.getMaxWalkSpeed());
-		data.getCommands().getTpa().setCancelTpRequestsOnWorldChange(false); //TODO
-		data.getCommands().getTpa().setTimeout(0); //TODO
+		data.getCommands().getTeleport().setCancelRequestsOnWorldChange(false); //TODO
+		data.getCommands().getTeleport().setRequestTimeout(0); //TODO
+		data.getCommands().getTeleport().setInvulnerability(settings.getTeleportInvulnerability());
 		data.getEconomy().setCurrencySymbol(settings.getCurrencySymbol());
 		data.getEconomy().setLogEnabled(settings.isEcoLogEnabled());
 		data.getEconomy().setMaxMoney(settings.getMaxMoney());
@@ -55,7 +56,6 @@ public class UpdateSettings
 		data.getGeneral().setLoginAttackDelay(settings.getLoginAttackDelay());
 		data.getGeneral().setMetricsEnabled(settings.isMetricsEnabled());
 		data.getGeneral().setOversizedStacksize(settings.getOversizedStackSize());
-		data.getGeneral().setTeleportInvulnerability(settings.getTeleportInvulnerability());
 		data.getGeneral().setWorldHomePermissions(settings.isWorldHomePermissions());
 		data.getGeneral().setWorldTeleportPermissions(settings.isWorldTeleportPermissions());
 		data.getWorldOptions(null); //TODO
