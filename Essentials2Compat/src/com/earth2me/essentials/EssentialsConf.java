@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.storage.StoredLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -238,19 +239,14 @@ public class EssentialsConf extends YamlConfiguration
 		return isSet(path);
 	}
 
-	public Location getLocation(final String path, final Server server) throws Exception
+	public StoredLocation getLocation(final String path, final Server server) throws Exception
 	{
 		final String worldName = getString((path == null ? "" : path + ".") + "world");
 		if (worldName == null || worldName.isEmpty())
 		{
 			return null;
 		}
-		final World world = server.getWorld(worldName);
-		if (world == null)
-		{
-			throw new Exception(_("invalidWorld"));
-		}
-		return new Location(world,
+		return new StoredLocation(worldName,
 							getDouble((path == null ? "" : path + ".") + "x", 0),
 							getDouble((path == null ? "" : path + ".") + "y", 0),
 							getDouble((path == null ? "" : path + ".") + "z", 0),

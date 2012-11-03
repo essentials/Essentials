@@ -1,7 +1,5 @@
 package net.ess3.user;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import lombok.Delegate;
 import net.ess3.api.IEssentials;
@@ -24,7 +22,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
 
-public class UserBase extends AsyncStorageObjectHolder<UserData> implements OfflinePlayer, CommandSender, IStorageObjectHolder<UserData>
+public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implements OfflinePlayer, CommandSender, IStorageObjectHolder<UserData>
 {
 	@Delegate
 	protected final OfflinePlayer offlinePlayer;
