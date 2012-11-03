@@ -107,6 +107,10 @@ commands:
     description: Satisfy the hunger.
     usage: /<command> [player]
     aliases: [efeed,eat,eeat]
+  filldispenser:
+    description: Fill dispensers quickly!
+    usage: /<command> [radius] [item] [amount]
+    aliases: [fd]
   fly:
     description: Take off, and soar!
     usage: /<command> [player] [on|off]

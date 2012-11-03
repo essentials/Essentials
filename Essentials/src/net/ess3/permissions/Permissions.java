@@ -37,6 +37,7 @@ public enum Permissions implements IPermission
 	EXP_SET_OTHERS,
 	EXP_OTHERS,
 	FEED_OTHERS,
+	FILLDISPENSER,
 	FLY_EXEMPT,
 	FLY_OTHERS,
 	GAMEMODE_EXEMPT,
