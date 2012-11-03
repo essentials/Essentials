@@ -1,6 +1,5 @@
 package com.earth2me.essentials;
 
-import static net.ess3.I18n._;
 import com.google.common.io.Files;
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -14,11 +13,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static net.ess3.I18n._;
 import net.ess3.storage.StoredLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;

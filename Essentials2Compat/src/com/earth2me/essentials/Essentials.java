@@ -1,8 +1,6 @@
 package com.earth2me.essentials;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IPlugin;
 import org.bukkit.Bukkit;

@@ -6,16 +6,13 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.api.InvalidNameException;
 import net.ess3.api.NoLoanPermittedException;
 import net.ess3.api.UserDoesNotExistException;
 import net.ess3.user.User;
-import net.ess3.user.UserBase;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 
 
 class UpdateUserFiles
