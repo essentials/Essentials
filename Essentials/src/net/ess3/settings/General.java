@@ -51,17 +51,7 @@ public class General implements StorageObject
 		" VAULT: Options are stored using a permissions plugin supported by Vault"
 	})
 	private GroupStorage groupStorage = GroupStorage.FILE;
-	@Comment(
-	{
-		"The delay, in seconds, a player can't be attacked by other players after he has been teleported by a command",
-		"This will also prevent that the player can attack other players"
-	})
-	private long teleportInvulnerability = 0;
-
-	public long getTeleportInvulnerability()
-	{
-		return teleportInvulnerability * 1000;
-	}
+	
 	@Comment(
 	{
 		"Set to true to enable per-world permissions for teleporting between worlds with essentials commands",

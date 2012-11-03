@@ -24,9 +24,9 @@ public class Commands implements StorageObject
 	private Lightning lightning = new Lightning();
 	private net.ess3.settings.commands.List list = new net.ess3.settings.commands.List();
 	private Near near = new Near();
-	private SocialSpy socalspy = new SocialSpy();
+	private SocialSpy socialspy = new SocialSpy();
 	private Spawnmob spawnmob = new Spawnmob();
-	private Tpa tpa = new Tpa();
+	private Teleport teleport = new Teleport();
 	private Speed speed = new Speed();
 	@ListType
 	@Comment(

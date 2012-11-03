@@ -326,7 +326,7 @@ public class EssentialsPlayerListener implements Listener
 	{
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 		final String cmd = spaceSplit.split(event.getMessage().toLowerCase(Locale.ENGLISH))[0].replace("/", "").toLowerCase(Locale.ENGLISH);
-		if (ess.getSettings().getData().getCommands().getSocalspy().getSocialspyCommands().contains(cmd))
+		if (ess.getSettings().getData().getCommands().getSocialspy().getSocialspyCommands().contains(cmd))
 		{
 			for (Player player : ess.getServer().getOnlinePlayers())
 			{
@@ -360,7 +360,7 @@ public class EssentialsPlayerListener implements Listener
 				user.sendMessage(_("noGodWorldWarning"));
 			}
 		}
-		if (settings.getData().getCommands().getTpa().isCancelTpRequestsOnWorldChange())
+		if (settings.getData().getCommands().getTeleport().isCancelRequestsOnWorldChange())
 		{
 			if (user.getTeleportRequester() != null)
 			{

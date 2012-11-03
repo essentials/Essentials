@@ -594,7 +594,7 @@ public class User extends UserBase implements IUser
 	{
 		final ISettings settings = ess.getSettings();
 
-		final long time = settings.getData().getGeneral().getTeleportInvulnerability();
+		final long time = settings.getData().getCommands().getTeleport().getInvulnerability();
 		if (time > 0)
 		{
 			teleportInvulnerabilityTimestamp = System.currentTimeMillis() + time;

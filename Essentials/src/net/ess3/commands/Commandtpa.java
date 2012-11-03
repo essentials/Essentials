@@ -36,7 +36,7 @@ public class Commandtpa extends EssentialsCommand
 			player.sendMessage(_("typeTpaccept"));
 			player.sendMessage(_("typeTpdeny"));
 			int tpaAcceptCancellation = 0;
-			tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
+			tpaAcceptCancellation = settings.getData().getCommands().getTeleport().getRequestTimeout();
 			if (tpaAcceptCancellation != 0)
 			{
 				player.sendMessage(_("teleportRequestTimeoutInfo", tpaAcceptCancellation));

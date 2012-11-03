@@ -34,7 +34,7 @@ public class Commandtpahere extends EssentialsCommand
 		player.sendMessage(_("typeTpaccept"));
 		int tpaAcceptCancellation = 0;
 		{
-			tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
+			tpaAcceptCancellation = settings.getData().getCommands().getTeleport().getRequestTimeout();
 		}
 		if (tpaAcceptCancellation != 0)
 		{

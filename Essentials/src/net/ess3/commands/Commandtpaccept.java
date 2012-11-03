@@ -34,7 +34,7 @@ public class Commandtpaccept extends EssentialsCommand
 
 
 		ISettings settings = ess.getSettings();
-		int tpaAcceptCancellation = settings.getData().getCommands().getTpa().getTimeout();
+		int tpaAcceptCancellation = settings.getData().getCommands().getTeleport().getRequestTimeout();
 
 		if (tpaAcceptCancellation != 0 && (System.currentTimeMillis() - user.getTeleportRequestTime()) / 1000 > tpaAcceptCancellation)
 		{

@@ -32,7 +32,7 @@ public class Commandspeed extends EssentialsCommand
 		}
 
 		boolean isFly;
-		float speed;
+		double speed;
 		boolean isBypass = Permissions.SPEED_BYPASS.isAuthorized(user);
 		if (args.length == 1)
 		{
@@ -60,7 +60,7 @@ public class Commandspeed extends EssentialsCommand
 
 		//if (isFly)
 		//{
-			user.getPlayer().setFlySpeed(getRealMoveSpeed(speed, isFly, isBypass));
+			user.getPlayer().setFlySpeed((float)getRealMoveSpeed(speed, isFly, isBypass));
 			user.sendMessage(_("moveSpeed", _("flying"), speed, user.getPlayer().getDisplayName()));
 		//}
 		//else
@@ -70,13 +70,13 @@ public class Commandspeed extends EssentialsCommand
 		//}
 	}
 
-	private void speedOtherPlayers(final Server server, final CommandSender sender, final boolean isFly, final boolean isBypass, final float speed, final String target)
+	private void speedOtherPlayers(final Server server, final CommandSender sender, final boolean isFly, final boolean isBypass, final double speed, final String target)
 	{
 		for (Player matchPlayer : server.matchPlayer(target))
 		{
 			if (isFly)
 			{
-				matchPlayer.setFlySpeed(getRealMoveSpeed(speed, isFly, isBypass));
+				matchPlayer.setFlySpeed((float)getRealMoveSpeed(speed, isFly, isBypass));
 				sender.sendMessage(_("moveSpeed", _("flying"), speed, matchPlayer.getDisplayName()));
 			}
 			//else
@@ -128,10 +128,10 @@ public class Commandspeed extends EssentialsCommand
 		return userSpeed;
 	}
 
-	private float getRealMoveSpeed(final float userSpeed, final boolean isFly, final boolean isBypass)
+	private double getRealMoveSpeed(final double userSpeed, final boolean isFly, final boolean isBypass)
 	{
-		final float defaultSpeed = isFly ? 0.1f : 0.2f;
-		float maxSpeed = 1f;
+		final double defaultSpeed = isFly ? 0.1f : 0.2f;
+		double maxSpeed = 1f;
 		if (!isBypass)
 		{
 			maxSpeed = ess.getSettings().getData().getCommands().getSpeed().getMaxFlySpeed();// : ess.getSettings().ess.getSettings().getData().getCommands().getSpeed()getMaxWalkSpeed());
@@ -143,7 +143,7 @@ public class Commandspeed extends EssentialsCommand
 		}
 		else
 		{
-			float ratio = ((userSpeed - 1) / 9) * (maxSpeed - defaultSpeed);
+			double ratio = ((userSpeed - 1) / 9) * (maxSpeed - defaultSpeed);
 			return ratio + defaultSpeed;
 		}
 	}
