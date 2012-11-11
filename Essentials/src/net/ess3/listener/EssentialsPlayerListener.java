@@ -494,4 +494,11 @@ public class EssentialsPlayerListener implements Listener
 			user.setInvSee(false);
 		}
 	}
+	
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	public void onPlayerFishEvent(final PlayerFishEvent event)
+	{
+		final IUser user = ess.getUserMap().getUser((Player)event.getPlayer());
+		user.updateActivity(true);
+	}
 }
