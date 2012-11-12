@@ -1,6 +1,5 @@
 package net.ess3;
 
-
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
@@ -12,10 +11,7 @@ import net.ess3.permissions.Permissions;
 import net.ess3.user.User;
 import net.ess3.utils.LocationUtil;
 import net.ess3.utils.Util;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
@@ -25,7 +21,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.material.Colorable;
 
-
 public class SpawnMob
 {
 	private static transient Pattern colon = Pattern.compile(":");
@@ -34,7 +29,7 @@ public class SpawnMob
 	public static String mobList(final IUser user) throws NotEnoughArgumentsException
 	{
 		final Set<String> mobList = LivingEntities.getLivingEntityList();
-		final Set<String> availableList = new HashSet<String>();
+		final List<String> availableList = new ArrayList<String>();
 		for (String mob : mobList)
 		{
 			if (Permissions.SPAWNMOB.isAuthorized(user, mob))
@@ -46,6 +41,8 @@ public class SpawnMob
 		{
 			availableList.add(_("none"));
 		}
+
+		Collections.sort(availableList);
 		return Util.joinList(availableList);
 	}
 
