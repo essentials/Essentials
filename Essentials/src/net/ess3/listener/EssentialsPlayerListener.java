@@ -149,8 +149,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 		user.updateActivity(false);
 		//user.getPlayer().dispose();
-		boolean ptclear = ess.getSettings().getData().getGeneral().getPtClearOnQuit();
-		if (ptclear = true)
+		if (settings.getData().getGeneral().isPtClearOnQuit())
 		{
 			user.getData().clearAllPowertools();
 			user.queueSave();

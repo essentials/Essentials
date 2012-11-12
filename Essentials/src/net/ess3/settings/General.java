@@ -76,5 +76,5 @@ public class General implements StorageObject
 	private String leaveMessage ="&e{PLAYER} has left the game";
 	
 	@Comment("Enable this to clear powertools when a player disconnects")
-	private Boolean ptClearOnQuit = false;
+	private boolean ptClearOnQuit = false;
 }
