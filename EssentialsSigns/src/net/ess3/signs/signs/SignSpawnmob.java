@@ -1,5 +1,6 @@
 package net.ess3.signs.signs;
 
+import net.ess3.SpawnMob;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
@@ -23,21 +24,15 @@ public class SignSpawnmob extends EssentialsSign
 		return true;
 	}
 
-	//TODO: This should call a method not a command
 	@Override
 	protected boolean onSignInteract(ISign sign, IUser player, String username, IEssentials ess) throws SignException, ChargeException
 	{
 		final Trade charge = getTrade(sign, 3, ess);
 		charge.isAffordableFor(player);
-		Commandspawnmob command = new Commandspawnmob();
-		command.init(ess, "spawnmob");
-		String[] args = new String[]
-		{
-			sign.getLine(2), sign.getLine(1)
-		};
 		try
 		{
-			command.run(player, "spawnmob", args);
+			String[] mobData = SpawnMob.mobData(sign.getLine(2));
+			SpawnMob.spawnmob(ess, ess.getServer(), player, player, mobData, Integer.parseInt(sign.getLine(1)));
 		}
 		catch (Exception ex)
 		{
