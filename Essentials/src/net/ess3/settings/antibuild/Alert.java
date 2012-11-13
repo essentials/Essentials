@@ -33,25 +33,18 @@ public class Alert implements StorageObject
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
 	private Set<Material> alertOnBreak = new HashSet<Material>();
-	
-	public Alert()
-	{
-		if (alertOnPlacement.isEmpty())
-		{
-			Material[] mat =
-			{
-				Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
-			};
-			alertOnPlacement.addAll(Arrays.asList(mat));
-		}
 
-		if (alertOnUse.isEmpty())
+	public void setupDefaults()
+	{
+		Material[] mat =
 		{
-			alertOnUse.add(Material.LAVA_BUCKET);
-		}
+			Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
+		};
+		alertOnPlacement.addAll(Arrays.asList(mat));
+		alertOnUse.add(Material.LAVA_BUCKET);
 	}
 
-	public boolean getAlertOnPlacement(Material mat)
+	public boolean getAlertOnPlacementContains(Material mat)
 	{
 		if (alertOnPlacement == null)
 		{
@@ -60,7 +53,7 @@ public class Alert implements StorageObject
 		return alertOnPlacement.contains(mat);
 	}
 
-	public boolean getAlertOnUse(Material mat)
+	public boolean getAlertOnUseContains(Material mat)
 	{
 		if (alertOnUse == null)
 		{
@@ -69,7 +62,7 @@ public class Alert implements StorageObject
 		return alertOnUse.contains(mat);
 	}
 
-	public boolean getAlertOnBreak(Material mat)
+	public boolean getAlertOnBreakContains(Material mat)
 	{
 		if (alertOnBreak == null)
 		{

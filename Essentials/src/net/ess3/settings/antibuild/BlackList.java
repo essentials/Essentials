@@ -50,56 +50,46 @@ public class BlackList implements StorageObject
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
 	private Set<Material> piston = new HashSet<Material>();
-	
-	public BlackList()
+
+	public void setupDefaults()
 	{
-		if(placement.isEmpty())
+		Material[] mat =
 		{
-			Material[] mat =
-			{
-				Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
-			};
-			
-			placement.addAll(Arrays.asList(mat));
-		}
-		
-		
-		if (usage.isEmpty())
-		{
-			usage.add(Material.LAVA_BUCKET);
-		}			
+			Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
+		};
+		placement.addAll(Arrays.asList(mat));
 	}
-	
+
 	public boolean getPlacement(Material mat)
 	{
-		if(placement == null)
+		if (placement == null)
 		{
-		return false;
+			return false;
 		}
 		return placement.contains(mat);
 	}
-	
+
 	public boolean getUsage(Material mat)
 	{
-		if(usage == null)
+		if (usage == null)
 		{
 			return false;
 		}
 		return usage.contains(mat);
 	}
-	
+
 	public boolean getBreaking(Material mat)
 	{
-		if(breaking == null)
+		if (breaking == null)
 		{
 			return false;
 		}
 		return breaking.contains(mat);
 	}
-	
+
 	public boolean getPiston(Material mat)
 	{
-		if(piston == null)
+		if (piston == null)
 		{
 			return false;
 		}

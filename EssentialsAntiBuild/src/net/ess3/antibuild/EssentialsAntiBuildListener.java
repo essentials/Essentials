@@ -61,7 +61,7 @@ public class EssentialsAntiBuildListener implements Listener
 				return;
 			}
 
-			if (antib.getSettings().getData().getAlert().getAlertOnPlacement(type)
+			if (antib.getSettings().getData().getAlert().getAlertOnPlacementContains(type)
 				&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user))
 			{
 				antib.getEssentialsConnect().alert(user, type.toString(), _("alertPlaced"));
@@ -98,7 +98,7 @@ public class EssentialsAntiBuildListener implements Listener
 				return;
 			}
 
-			if (antib.getSettings().getData().getAlert().getAlertOnBreak(type)
+			if (antib.getSettings().getData().getAlert().getAlertOnBreakContains(type)
 				&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user))
 			{
 				antib.getEssentialsConnect().alert(user, type.toString(), _("alertBroke"));
@@ -172,7 +172,7 @@ public class EssentialsAntiBuildListener implements Listener
 		}
 
 		if (item != null
-			&& antib.getSettings().getData().getAlert().getAlertOnUse(item.getType())
+			&& antib.getSettings().getData().getAlert().getAlertOnUseContains(item.getType())
 			&& !Permissions.ALERTS_NOTRIGGER.isAuthorized(user))
 		{
 			antib.getEssentialsConnect().alert(user, item.getType().toString(), _("alertUsed"));
