@@ -93,8 +93,8 @@ public class Commandnick extends EssentialsCommand
 		{
 			throw new Exception(_("nickNamesAlpha"));
 		}
-		FormatUtil.stripFormat(nick);
-		if (ess.getSettings().getData().getChat().getMaxNickLength() > 0 && nick.length() > ess.getSettings().getData().getChat().getMaxNickLength())
+		final String stripNick = FormatUtil.stripFormat(nick);
+		if (ess.getSettings().getData().getChat().getMaxNickLength() > 0 && stripNick.length() > ess.getSettings().getData().getChat().getMaxNickLength())
 		{
 			throw new Exception(_("nickTooLong"));
 		}
