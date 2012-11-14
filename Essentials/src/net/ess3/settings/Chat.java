@@ -30,4 +30,6 @@ public class Chat implements StorageObject
 	private int localRadius = 0;
 	@Comment("Set the default chat format here, it will be overwritten by group specific chat formats.")
 	private String defaultFormat = "&7[{GROUP}]&f {DISPLAYNAME}&7:&f {MESSAGE}";
+	@Comment("Set the maximum length a nick can be. Set to -1 to disable. Note: formatting characters do not count.")
+	private long MaxNickLength = 25;
 }
