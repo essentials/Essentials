@@ -31,7 +31,7 @@ public class Commandeco extends EssentialsCommand
 
 		if (args[1].contentEquals("**"))
 		{
-			Boolean ecoResetAll = false;
+			boolean ecoResetAll = false;
 			ISettings settings = ess.getSettings();
 			for (String sUser : ess.getUserMap().getAllUniqueUsers())
 			{
@@ -64,7 +64,7 @@ public class Commandeco extends EssentialsCommand
 		}
 		else if (args[1].contentEquals("*"))
 		{
-			Boolean ecoResetAllOnline = false;
+			boolean ecoResetAllOnline = false;
 			ISettings settings = ess.getSettings();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
