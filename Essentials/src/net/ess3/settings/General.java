@@ -75,6 +75,9 @@ public class General implements StorageObject
 	@Comment("The quit message when players leave the server")
 	private String leaveMessage ="&e{PLAYER} has left the game";
 	
-	@Comment("Enable this to clear powertools when a player disconnects")
+	@Comment("Enable this to clear powertools when a player disconnects.")
 	private boolean ptClearOnQuit = false;
+	
+	@Comment("Enable this to clear powertools when a player changes worlds.")
+	private boolean ptClearOnWorldChange = false;
 }

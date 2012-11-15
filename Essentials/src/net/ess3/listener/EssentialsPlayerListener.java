@@ -153,6 +153,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			user.getData().clearAllPowertools();
 			user.queueSave();
+			user.sendMessage(_("powerToolClearAll"));
 		}
 	}
 
@@ -372,6 +373,12 @@ public class EssentialsPlayerListener implements Listener
 				user.requestTeleport(null, false);
 				user.sendMessage(_("teleportRequestsCancelledWorldChange"));
 			}
+		}
+		if (settings.getData().getGeneral().isPtClearOnWorldChange())
+		{
+			user.getData().clearAllPowertools();
+			user.queueSave();
+			user.sendMessage(_("powerToolClearAll"));
 		}
 	}
 

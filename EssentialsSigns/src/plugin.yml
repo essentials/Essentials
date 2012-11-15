@@ -5,5 +5,5 @@ main: net.ess3.signs.EssentialsSignsPlugin
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides signs, utilizing Essentials.
-authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits]
+authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits, Iaccidentally]
 depend: [Essentials-3]
