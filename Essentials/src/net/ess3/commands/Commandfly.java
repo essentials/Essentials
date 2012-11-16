@@ -7,67 +7,45 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 
-public class Commandfly extends EssentialsCommand
+public class Commandfly extends EssentialsSettingsCommand
 {
-	@Override
-	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void setValue(final IUser player, final boolean value)
 	{
-		if (args.length < 1)
+		player.getPlayer().setAllowFlight(value);
+		if (!player.getPlayer().getAllowFlight())
 		{
-			throw new NotEnoughArgumentsException();
+			player.getPlayer().setFlying(false);
 		}
-
-		flyOtherPlayers(server, sender, args);
 	}
 
-	@Override
-	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	protected boolean getValue(final IUser player)
 	{
-		if (args.length > 0 && args[0].trim().length() > 2 && Permissions.FLY_OTHERS.isAuthorized(user))
-		{
-			flyOtherPlayers(server, user, args);
-			return;
-		}
-		user.getPlayer().setAllowFlight(!user.getPlayer().getAllowFlight());
-		if (!user.getPlayer().getAllowFlight())
-		{
-			user.getPlayer().setFlying(false);
-		}
-		user.sendMessage(_("flyMode", _(user.getPlayer().getAllowFlight() ? "enabled" : "disabled"), user.getPlayer().getDisplayName()));
+		return player.getPlayer().getAllowFlight();
 	}
 
-	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args)
+	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
 	{
-		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
-		{
-			if (Permissions.FLY_EXEMPT.isAuthorized(matchPlayer))
-			{
-				sender.sendMessage("Can't change fly mode for player " + matchPlayer.getName()); //TODO: I18n
-				continue;
-			}
-			if (args.length > 1)
-			{
-				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
-				{
-					matchPlayer.getPlayer().setAllowFlight(true);
-				}
-				else
-				{
-					matchPlayer.getPlayer().setAllowFlight(false);
-				}
-			}
-			else
-			{
-				matchPlayer.getPlayer().setAllowFlight(!matchPlayer.getPlayer().getAllowFlight());
-			}
-
-			if (!matchPlayer.getPlayer().getAllowFlight())
-			{
-				matchPlayer.getPlayer().setFlying(false);
-			}
-			final String message = _("flyMode", _(matchPlayer.getPlayer().getAllowFlight() ? "enabled" : "disabled"), matchPlayer.getPlayer().getDisplayName());
-			matchPlayer.sendMessage(message);
-			sender.sendMessage(message);
+		if (value) {
+			sender.sendMessage( _("flyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
+		else {
+			sender.sendMessage("Can't change fly mode for player " + player.getName());
+		}
+	}
+
+	protected void informPlayer(final IUser player)
+	{
+		final String message = _("flyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName());
+		player.sendMessage(message);
+	}
+
+	protected boolean canToggleOthers(final IUser user)
+	{
+		return Permissions.FLY_OTHERS.isAuthorized(user);
+	}
+
+	protected boolean isExempt(final CommandSender sender, final IUser player)
+	{
+		return Permissions.FLY_EXEMPT.isAuthorized(player);
 	}
 }
