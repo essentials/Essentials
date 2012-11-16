@@ -31,6 +31,8 @@ public class Commandeco extends EssentialsCommand
 
 		if (args[1].contentEquals("**"))
 		{
+			boolean ecoResetAll = false;
+			ISettings settings = ess.getSettings();
 			for (String sUser : ess.getUserMap().getAllUniqueUsers())
 			{
 				final IUser player = ess.getUserMap().getUser(sUser);
@@ -48,14 +50,22 @@ public class Commandeco extends EssentialsCommand
 					break;
 
 				case RESET:
-					ISettings settings = ess.getSettings();
 					player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
+					ecoResetAll = true;
 					break;
 				}
 			}
+			if (ecoResetAll == true)
+			{
+				ess.broadcastMessage(null, _("ecoResetAll", settings.getData().getEconomy().getCurrencySymbol() + amount));
+			}
+
+
 		}
 		else if (args[1].contentEquals("*"))
 		{
+			boolean ecoResetAllOnline = false;
+			ISettings settings = ess.getSettings();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
 				final IUser player = ess.getUserMap().getUser(onlinePlayer);
@@ -74,10 +84,14 @@ public class Commandeco extends EssentialsCommand
 					break;
 
 				case RESET:
-					ISettings settings = ess.getSettings();
 					player.setMoney(amount == 0 ? settings.getData().getEconomy().getStartingBalance() : amount);
+					ecoResetAllOnline = true;
 					break;
 				}
+			}
+			if (ecoResetAllOnline == true)
+			{
+				ess.broadcastMessage(null, _("ecoResetAllOnline", settings.getData().getEconomy().getCurrencySymbol() + amount));
 			}
 		}
 		else
