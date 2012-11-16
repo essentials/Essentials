@@ -111,8 +111,10 @@ public enum Permissions implements IPermission
 	WARP_LIST(PermissionDefault.TRUE),
 	WARP_HIDDEN,
 	WARP_OTHERS,
+	VANISH_EXEMPT,
 	VANISH_SEE_OTHERS, 
-	VANISH_PVP;
+	VANISH_PVP,
+	VANISH_OTHERS;
 	private static final String base = "essentials.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;

@@ -69,8 +69,6 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	boolean isGodModeEnabled();
 
-	boolean isTeleportEnabled();
-
 	boolean isIgnoringPlayer(IUser user);
 
 	void setIgnoredPlayer(IUser user, boolean set);
@@ -120,8 +118,6 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 	boolean hasInvulnerabilityAfterTeleport();
 
 	void setGodModeEnabled(boolean set);
-
-	void setTeleportEnabled(boolean set);
 
 	void setVanished(boolean set);
 

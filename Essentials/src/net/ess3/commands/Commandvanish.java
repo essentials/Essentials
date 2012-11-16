@@ -1,37 +1,46 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 
 
-public class Commandvanish extends EssentialsCommand
+public class Commandvanish extends EssentialsSettingsCommand
 {
-	@Override
-	protected void run(IUser user, String commandLabel, String[] args) throws Exception
+	protected void setValue(final IUser player, final boolean value)
 	{
-		if (args.length < 1)
-		{
-			user.toggleVanished();
-			if (user.isVanished())
-			{
-				user.sendMessage(_("vanished"));
-			}
-			else
-			{
-				user.sendMessage(_("unvanished"));
-			}
+		player.setVanished(value);
+	}
+
+	protected boolean getValue(final IUser player)
+	{
+		return player.isVanished();
+	}
+
+	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
+	{
+		if (value) {
+			sender.sendMessage( _("vanishMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
-		else
-		{
-			if (args[0].contains("on") || args[0].contains("ena") || args[0].equalsIgnoreCase("1"))
-			{
-				user.setVanished(true);
-			}
-			else
-			{
-				user.setVanished(false);
-			}
-			user.sendMessage(user.isVanished() ? _("vanished") : _("unvanished"));
+		else {
+			sender.sendMessage("Can't change vanish mode for player " + player.getName());
 		}
-	}		
+	}
+
+	protected void informPlayer(final IUser player)
+	{
+		player.sendMessage(getValue(player) ? _("vanished") : _("unvanished"));
+	}
+
+	protected boolean canToggleOthers(final IUser user)
+	{
+		return Permissions.VANISH_OTHERS.isAuthorized(user);
+	}
+
+	protected boolean isExempt(final CommandSender sender, final IUser player)
+	{
+		return Permissions.VANISH_EXEMPT.isAuthorized(player);
+	}
+
 }
