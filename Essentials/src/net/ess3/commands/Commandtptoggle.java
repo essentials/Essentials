@@ -25,6 +25,7 @@ public class Commandtptoggle extends EssentialsSettingsCommand
 			sender.sendMessage( _("teleportMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
 		else {
+			//TODO: TL this
 			sender.sendMessage("Can't change teleport toggle for player " + player.getName());
 		}
 	}

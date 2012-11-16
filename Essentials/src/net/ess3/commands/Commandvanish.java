@@ -24,6 +24,7 @@ public class Commandvanish extends EssentialsSettingsCommand
 			sender.sendMessage( _("vanishMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
 		else {
+			//TODO: TL this
 			sender.sendMessage("Can't change vanish mode for player " + player.getName());
 		}
 	}

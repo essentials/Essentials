@@ -29,6 +29,7 @@ public class Commandfly extends EssentialsSettingsCommand
 			sender.sendMessage( _("flyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
 		else {
+			//TODO: TL this
 			sender.sendMessage("Can't change fly mode for player " + player.getName());
 		}
 	}

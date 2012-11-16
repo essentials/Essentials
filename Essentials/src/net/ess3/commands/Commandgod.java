@@ -23,6 +23,7 @@ public class Commandgod extends EssentialsSettingsCommand
 			sender.sendMessage( _("godMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
 		else {
+			//TODO: TL this
 			sender.sendMessage("Can't change god mode for player " + player.getName());
 		}
 	}
