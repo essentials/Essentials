@@ -43,8 +43,8 @@ public class Commandbalancetop extends EssentialsCommand
 						user.queueSave();
 						sender.sendMessage(
 								user.getData().isBalancetopHide()
-								? "You are now hidden from /balancetop"
-								: "You are now shown in /balancetop"); //TODO:I18n
+								? _("baltopHidden")
+								: _("baltopShown")); 
 					}
 					else if (args.length == 2 && Permissions.BALANCETOP_HIDE_OTHERS.isAuthorized(sender))
 					{
@@ -53,8 +53,8 @@ public class Commandbalancetop extends EssentialsCommand
 						user.queueSave();
 						sender.sendMessage(
 								user.getData().isBalancetopHide()
-								? user.getName() + " is now hidden from /balancetop"
-								: user.getName() + " is now shown in /balancetop"); //TODO:I18n
+								? user.getName() + _("userBaltopHidden")
+								: user.getName() + _("userBaltopShown")); 
 					}
 					else
 					{

@@ -37,20 +37,19 @@ public class Commandweather extends EssentialsCommand
 		}
 	}
 
-	//TODO: Translate these
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2) //running from console means inserting a world arg before other args
 		{
-			throw new Exception("When running from console, usage is: /" + commandName + " <world> <storm/sun> [duration]");
+			throw new Exception(_("weatherConsole"));
 		}
 
 		final boolean isStorm = args[1].equalsIgnoreCase("storm");
 		final World world = server.getWorld(args[0]);
 		if (world == null)
 		{
-			throw new Exception("World named " + args[0] + " not found!");
+			throw new Exception(_("worldnameNotFound"));
 		}
 		if (args.length > 2)
 		{

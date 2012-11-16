@@ -32,7 +32,7 @@ public class Commandgc extends EssentialsCommand
 		sender.sendMessage(_("gcmax", (Runtime.getRuntime().maxMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gctotal", (Runtime.getRuntime().totalMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gcfree", (Runtime.getRuntime().freeMemory() / 1024 / 1024)));
-		sender.sendMessage("Essentials write queue size: " + ess.getStorageQueue().getQueueSize()); //TODO:TL
+		sender.sendMessage(_("gcquene", (ess.getStorageQueue().getQueueSize()))); 
 
 		for (World w : server.getWorlds())
 		{

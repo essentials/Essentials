@@ -668,6 +668,6 @@ public class User extends UserBase implements IUser
 
 	private void updateThrottle()
 	{
-		lastThrottledAction = System.currentTimeMillis();;
+		lastThrottledAction = System.currentTimeMillis();
 	}
 }
