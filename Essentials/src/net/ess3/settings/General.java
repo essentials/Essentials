@@ -51,7 +51,6 @@ public class General implements StorageObject
 		" VAULT: Options are stored using a permissions plugin supported by Vault"
 	})
 	private GroupStorage groupStorage = GroupStorage.FILE;
-	
 	@Comment(
 	{
 		"Set to true to enable per-world permissions for teleporting between worlds with essentials commands",
@@ -67,17 +66,18 @@ public class General implements StorageObject
 	{
 		return loginAttackDelay * 1000;
 	}
+
+	public void setLoginAttackDelay(long loginAttackDelay)
+	{
+		this.loginAttackDelay = loginAttackDelay / 1000;
+	}
 	private Boolean metricsEnabled = null;
-	
 	@Comment("The join message when players join the server")
 	private String joinMessage = "&e{PLAYER} has joined the game";
-	
 	@Comment("The quit message when players leave the server")
-	private String leaveMessage ="&e{PLAYER} has left the game";
-	
+	private String leaveMessage = "&e{PLAYER} has left the game";
 	@Comment("Enable this to clear powertools when a player disconnects.")
 	private boolean ptClearOnQuit = false;
-	
 	@Comment("Enable this to clear powertools when a player changes worlds.")
 	private boolean ptClearOnWorldChange = false;
 }
