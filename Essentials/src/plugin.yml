@@ -458,3 +458,11 @@ commands:
     description: Calculates the worth of items in hand or as specified.
     usage: /<command> [item] [amount]
     aliases: [eworth,price,eprice]
+  disableplugin:
+    description: Disables another plugin
+    usage: /<command> <plugin>
+    aliases: [edisableplugin]
+  enableplugin:
+    description: Enables another plugin
+    usage: /<command> <plugin>
+    aliases: [eenableplugin]
