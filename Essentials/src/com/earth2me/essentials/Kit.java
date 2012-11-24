@@ -55,24 +55,30 @@ public class Kit
 
 		// When was the last kit used?
 		final long lastTime = user.getKitTimestamp(kitName);
-
-		if (lastTime < earliestLong)
+		if (!delay > Double.MAX_VALUE)
 		{
-			user.setKitTimestamp(kitName, time.getTimeInMillis());
-		}
-		else if (lastTime > time.getTimeInMillis())
-		{
-			// This is to make sure time didn't get messed up on last kit use.
-			// If this happens, let's give the user the benifit of the doubt.
-			user.setKitTimestamp(kitName, time.getTimeInMillis());
+			if (lastTime < earliestLong)
+			{
+				user.setKitTimestamp(kitName, time.getTimeInMillis());
+			}
+			else if (lastTime > time.getTimeInMillis())
+			{
+				// This is to make sure time didn't get messed up on last kit use.
+				// If this happens, let's give the user the benifit of the doubt.
+				user.setKitTimestamp(kitName, time.getTimeInMillis());
+			}
+			else
+			{
+				time.setTimeInMillis(lastTime);
+				time.add(Calendar.SECOND, (int)delay);
+				time.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
+				user.sendMessage(_("kitTimed", Util.formatDateDiff(time.getTimeInMillis())));
+				throw new NoChargeException();
+			}	
 		}
 		else
 		{
-			time.setTimeInMillis(lastTime);
-			time.add(Calendar.SECOND, (int)delay);
-			time.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
-			user.sendMessage(_("kitTimed", Util.formatDateDiff(time.getTimeInMillis())));
-			throw new NoChargeException();
+			throw new Exception("The delay for the kit " + kitName + " was over the maximum allowed time!");
 		}
 	}
 
