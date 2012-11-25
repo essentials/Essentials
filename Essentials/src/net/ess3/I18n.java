@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 import net.ess3.api.IEssentials;
 import net.ess3.api.II18n;
 
+import org.bukkit.ChatColor;
+
 
 public class I18n implements II18n
 {
@@ -57,11 +59,11 @@ public class I18n implements II18n
 		{
 			try
 			{
-				return customBundle.getString(string);
+				return ChatColor.translateAlternateColorCodes('&', customBundle.getString(string));
 			}
 			catch (MissingResourceException ex)
 			{
-				return localeBundle.getString(string);
+				return ChatColor.translateAlternateColorCodes('&', localeBundle.getString(string));
 			}
 		}
 		catch (MissingResourceException ex)
