@@ -5,7 +5,7 @@ main: net.ess3.update.EssentialsUpdate
 version: ${build.number}
 description: This plugin allows to install or update all Essentials plugins
 website: http://tiny.cc/EssentialsWiki
-authors: [snowleo]
+authors: [Essentialsteam, "http://contributors.ess3.net"]
 commands:
   essentialsupdate:
     description: Install or update the Essentials plugins.

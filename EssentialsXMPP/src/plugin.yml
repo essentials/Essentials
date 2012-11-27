@@ -5,8 +5,7 @@ main: net.ess3.xmpp.EssentialsXMPP
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides xmpp communication.
-authors:
-  - snowleo
+authors: [Essentialsteam, "http://contributors.ess3.net"]
 depend: [Essentials-3]
 commands:
   setxmpp:

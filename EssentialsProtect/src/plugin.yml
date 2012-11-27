@@ -5,5 +5,5 @@ main: net.ess3.protect.EssentialsProtect
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides protection for various parts of the world.
-authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits]
+authors: [Essentialsteam, "http://contributors.ess3.net"]
 softdepend: [Essentials-3]

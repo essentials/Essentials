@@ -5,5 +5,5 @@ main: net.ess3.extra.EssentialsExtra
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides extra commands for Essentials
-authors: [md_5]
+authors: [Essentialsteam, "http://contributors.ess3.net"]
 depend: [Essentials-3]

@@ -5,5 +5,5 @@ main: net.ess3.geoip.EssentialsGeoIP
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Shows the country or city of a user on login and /whois.
-authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits]
+authors: [Essentialsteam, "http://contributors.ess3.net"]
 depend: [Essentials-3]

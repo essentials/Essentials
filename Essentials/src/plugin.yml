@@ -5,7 +5,7 @@ main: net.ess3.bukkit.BukkitPlugin
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides an essential, core set of commands for Bukkit.
-authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits, md_5, Iaccidentally]
+authors: [Essentialsteam, "http://contributors.ess3.net"]
 commands:
   afk:
     description: Marks you as away-from-keyboard.
