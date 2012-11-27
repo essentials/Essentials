@@ -5,5 +5,5 @@ main: net.ess3.antibuild.EssentialsAntiBuild
 version: ${build.number}
 website: http://tiny.cc/EssentialsWiki
 description: Provides build protection.
-authors: [Essentialsteam, "http://contributors.ess3.net"]
+authors: ["Essentials Team", "http://contributors.ess3.net"]
 softdepend: [Essentials]
