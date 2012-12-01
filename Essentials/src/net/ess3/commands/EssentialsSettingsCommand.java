@@ -100,7 +100,6 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 				else
 				{
 					setValue(matchPlayer, true);
-					;
 				}
 			}
 			else

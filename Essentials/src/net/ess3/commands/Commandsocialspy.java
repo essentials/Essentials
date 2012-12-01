@@ -6,66 +6,44 @@ import net.ess3.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 
 
-public class Commandsocialspy extends EssentialsCommand
+public class Commandsocialspy extends EssentialsSettingsCommand
 {
-	@Override
-	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
-	{
-		if (args.length < 1)
-		{
-			throw new NotEnoughArgumentsException();
-		}
 
-		socialspyOtherPlayers(sender, args);
+	protected void setValue(final IUser player, final boolean value)
+	{
+		player.getData().setSocialspy(value);
+		player.queueSave();
 	}
 
-	@Override
-	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
+	protected boolean getValue(final IUser player)
 	{
-		if (args.length > 0 && !args[0].trim().isEmpty() && Permissions.SOCIALSPY_OTHERS.isAuthorized(user))
-		{
-			socialspyOtherPlayers(user, args);
-			return;
-		}
-
-		user.getData().setSocialspy(!user.getData().isSocialspy());
-		user.queueSave();
-		user.sendMessage("§7SocialSpy " + (user.getData().isSocialspy() ? _("enabled") : _("disabled")));
+		return player.getData().isSocialspy();
 	}
 
-	private void socialspyOtherPlayers(final CommandSender sender, final String[] args)
+	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
 	{
-		for (IUser player : ess.getUserMap().matchUsers(args[0], true))
-		{
-			if (player.isOnline()
-				? Permissions.SOCIALSPY_EXEMPT.isAuthorized(player)
-				: !Permissions.SOCIALSPY_OFFLINE.isAuthorized(sender))
-			{
-				sender.sendMessage("Can't change socialspy for player " + player.getName()); //TODO: I18n
-				continue;
-			}
-			if (args.length > 1)
-			{
-				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
-				{
-					player.getData().setSocialspy(true);
-					player.queueSave();
-				}
-				else
-				{
-					player.getData().setSocialspy(false);
-					player.queueSave();
-				}
-			}
-			else
-			{
-				player.getData().setSocialspy(!player.getData().isSocialspy());
-				player.queueSave();
-			}
-
-			final boolean enabled = player.getData().isSocialspy();
-			player.sendMessage("§7SocialSpy " + (enabled ? _("enabled") : _("disabled"))); //TODO:I18n
-			sender.sendMessage("§7SocialSpy " + (enabled ? _("enabled") : _("disabled")));
+		if (value) {
+			sender.sendMessage( _("socialSpyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
+		else {
+			//TODO: TL this
+			sender.sendMessage("Can't change socialspy for player " + player.getName());
+		}
+	}
+
+	protected void informPlayer(final IUser player)
+	{
+		final String message = _("socialSpyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName());
+		player.sendMessage(message);
+	}
+
+	protected boolean canToggleOthers(final IUser user)
+	{
+		return Permissions.SOCIALSPY_OTHERS.isAuthorized(user);
+	}
+
+	protected boolean isExempt(final CommandSender sender, final IUser player)
+	{
+		return (player.isOnline() ? Permissions.SOCIALSPY_EXEMPT.isAuthorized(player) : !Permissions.SOCIALSPY_OFFLINE.isAuthorized(sender));
 	}
 }

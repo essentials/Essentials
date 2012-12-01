@@ -12,6 +12,7 @@ public class Commandtptoggle extends EssentialsSettingsCommand
 	protected void setValue(final IUser player, final boolean value)
 	{
 		player.getData().setTeleportEnabled(value);
+		player.queueSave();
 	}
 
 	protected boolean getValue(final IUser player)

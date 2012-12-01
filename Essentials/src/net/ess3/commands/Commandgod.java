@@ -10,6 +10,7 @@ public class Commandgod extends EssentialsSettingsCommand
 	protected void setValue(final IUser player, final boolean value)
 	{
 		player.setGodModeEnabled(value);
+		player.queueSave();
 	}
 
 	protected boolean getValue(final IUser player)
