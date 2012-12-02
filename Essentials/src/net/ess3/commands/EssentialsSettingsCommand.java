@@ -34,11 +34,10 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-	protected void playerMatch(final IUser player, final String arg)
+	protected void playerMatch(final IUser player, final String arg) throws NotEnoughArgumentsException
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
-
 
 	protected boolean toggleOfflinePlayers()
 	{
@@ -83,11 +82,10 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 		informPlayer(user);
 	}
 
-	private void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args)
+	private void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
 	{
 		Set<IUser> matches = toggleOfflinePlayers() ? ess.getUserMap().matchUsers(args[0], true) : ess.getUserMap().matchUsersExcludingHidden(
-				args[0], getPlayerOrNull(
-				sender));
+				args[0], getPlayerOrNull(sender));
 
 		for (IUser matchPlayer : matches)
 		{

@@ -1,8 +1,5 @@
 package net.ess3.commands;
 
-import java.util.Set;
-import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
 
 
@@ -38,7 +35,8 @@ public abstract class EssentialsToggleCommand extends EssentialsSettingsCommand
 		{
 			setValue(player, !getValue(player));
 		}
-		else {
+		else
+		{
 			if (arg.contains("on") || arg.contains("ena") || arg.equalsIgnoreCase("1"))
 			{
 				setValue(player, true);
