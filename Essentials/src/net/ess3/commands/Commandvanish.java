@@ -44,4 +44,8 @@ public class Commandvanish extends EssentialsSettingsCommand
 		return Permissions.VANISH_EXEMPT.isAuthorized(player);
 	}
 
+	protected boolean toggleOfflinePlayers()
+	{
+		return false;
+	}
 }

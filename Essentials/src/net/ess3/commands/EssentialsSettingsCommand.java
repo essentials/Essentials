@@ -1,10 +1,9 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
+import java.util.Set;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
 
 
 public abstract class EssentialsSettingsCommand extends EssentialsCommand
@@ -38,6 +37,11 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 	protected boolean isExempt(final CommandSender sender, final IUser player)
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	protected boolean toggleOfflinePlayers()
+	{
+		return true;
 	}
 
 	@Override
@@ -84,7 +88,11 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 
 	private void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args)
 	{
-		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
+		Set<IUser> matches = toggleOfflinePlayers() ? ess.getUserMap().matchUsers(args[0], true) : ess.getUserMap().matchUsersExcludingHidden(
+				args[0], getPlayerOrNull(
+				sender));
+
+		for (IUser matchPlayer : matches)
 		{
 			if (isExempt(sender, matchPlayer))
 			{

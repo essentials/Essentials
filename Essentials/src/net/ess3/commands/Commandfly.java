@@ -1,10 +1,9 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandfly extends EssentialsSettingsCommand
@@ -48,5 +47,10 @@ public class Commandfly extends EssentialsSettingsCommand
 	protected boolean isExempt(final CommandSender sender, final IUser player)
 	{
 		return Permissions.FLY_EXEMPT.isAuthorized(player);
+	}
+
+	protected boolean toggleOfflinePlayers()
+	{
+		return false;
 	}
 }
