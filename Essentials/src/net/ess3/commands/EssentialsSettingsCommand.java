@@ -9,16 +9,6 @@ import net.ess3.api.IUser;
 public abstract class EssentialsSettingsCommand extends EssentialsCommand
 {
 
-	protected void setValue(final IUser player, final boolean value)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	protected boolean getValue(final IUser player)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
 	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
@@ -38,6 +28,17 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
+
+	protected boolean canMatch(final String arg)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	protected void playerMatch(final IUser player, final String arg)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
 
 	protected boolean toggleOfflinePlayers()
 	{
@@ -65,13 +66,9 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 		}
 		else if (args.length > 0)
 		{
-			if (args[0].equalsIgnoreCase("on") || args[0].startsWith("enable") || args[0].equalsIgnoreCase("1"))
+			if (canMatch(args[0]))
 			{
-				setValue(user, true);
-			}
-			else if (args[0].equalsIgnoreCase("off") || args[0].startsWith("disable") || args[0].equalsIgnoreCase("0"))
-			{
-				setValue(user, true);
+				playerMatch(user, args[0]);
 			}
 			else if (args[0].trim().length() > 2 && canToggleOthers(user))
 			{
@@ -81,7 +78,7 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 		}
 		else
 		{
-			setValue(user, !getValue(user));
+			playerMatch(user, null);
 		}
 		informPlayer(user);
 	}
@@ -99,26 +96,8 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 				informSender(sender, false, matchPlayer);
 				continue;
 			}
-			if (args.length > 1)
-			{
-				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
-				{
-					setValue(matchPlayer, true);
-				}
-				else
-				{
-					setValue(matchPlayer, true);
-				}
-			}
-			else
-			{
-				setValue(matchPlayer, !getValue(matchPlayer));
-			}
 
-			if (!matchPlayer.getPlayer().getAllowFlight())
-			{
-				matchPlayer.getPlayer().setFlying(false);
-			}
+			playerMatch(matchPlayer, args[1]);
 			informPlayer(matchPlayer);
 			informSender(sender, true, matchPlayer);
 		}

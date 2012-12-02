@@ -6,7 +6,7 @@ import net.ess3.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 
 
-public class Commandsocialspy extends EssentialsSettingsCommand
+public class Commandsocialspy extends EssentialsToggleCommand
 {
 
 	protected void setValue(final IUser player, final boolean value)

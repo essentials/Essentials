@@ -5,7 +5,7 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 
-public class Commandgod extends EssentialsSettingsCommand
+public class Commandgod extends EssentialsToggleCommand
 {
 	protected void setValue(final IUser player, final boolean value)
 	{

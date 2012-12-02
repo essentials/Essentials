@@ -6,7 +6,7 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 
 
-public class Commandfly extends EssentialsSettingsCommand
+public class Commandfly extends EssentialsToggleCommand
 {
 	protected void setValue(final IUser player, final boolean value)
 	{
