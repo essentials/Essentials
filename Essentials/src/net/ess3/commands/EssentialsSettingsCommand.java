@@ -9,35 +9,17 @@ import net.ess3.api.IUser;
 public abstract class EssentialsSettingsCommand extends EssentialsCommand
 {
 
-	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+	abstract protected void informSender(final CommandSender sender, final boolean value, final IUser player);
 
-	protected void informPlayer(final IUser player)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+	abstract protected void informPlayer(final IUser player);
 
-	protected boolean canToggleOthers(final IUser user)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+	abstract protected boolean canToggleOthers(final IUser user);
 
-	protected boolean isExempt(final CommandSender sender, final IUser player)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+	abstract protected boolean isExempt(final CommandSender sender, final IUser player);
 
-	protected boolean canMatch(final String arg)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+	abstract protected boolean canMatch(final String arg);
 
-	protected void playerMatch(final IUser player, final String arg) throws NotEnoughArgumentsException
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+	abstract protected void playerMatch(final IUser player, final String arg) throws NotEnoughArgumentsException;
 
 	protected boolean toggleOfflinePlayers()
 	{

@@ -6,15 +6,9 @@ import net.ess3.api.IUser;
 public abstract class EssentialsToggleCommand extends EssentialsSettingsCommand
 {
 
-	protected void setValue(final IUser player, final boolean value)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+	abstract protected void setValue(final IUser player, final boolean value);
 
-	protected boolean getValue(final IUser player)
-	{
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+	abstract protected boolean getValue(final IUser player);
 
 	protected boolean canMatch(final String arg)
 	{

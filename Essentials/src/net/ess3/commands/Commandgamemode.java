@@ -37,7 +37,7 @@ public class Commandgamemode extends EssentialsSettingsCommand
 
 	protected void informPlayer(final IUser player)
 	{
-		final String message = _("flyMode", getValue(player).toString().toLowerCase(Locale.ENGLISH), player.getPlayer().getDisplayName());
+		final String message = _("gameMode", getValue(player).toString().toLowerCase(Locale.ENGLISH), player.getPlayer().getDisplayName());
 		player.sendMessage(message);
 	}
 
