@@ -20,10 +20,12 @@ public class Commandvanish extends EssentialsToggleCommand
 
 	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
 	{
-		if (value) {
-			sender.sendMessage( _("vanishMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
+		if (value)
+		{
+			sender.sendMessage(_("vanishMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
-		else {
+		else
+		{
 			//TODO: TL this
 			sender.sendMessage("Can't change vanish mode for player " + player.getName());
 		}
@@ -34,7 +36,7 @@ public class Commandvanish extends EssentialsToggleCommand
 		player.sendMessage(getValue(player) ? _("vanished") : _("unvanished"));
 	}
 
-	protected boolean canToggleOthers(final IUser user)
+	protected boolean canEditOthers(final IUser user)
 	{
 		return Permissions.VANISH_OTHERS.isAuthorized(user);
 	}

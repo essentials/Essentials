@@ -37,7 +37,7 @@ public class Commandsocialspy extends EssentialsToggleCommand
 		player.sendMessage(message);
 	}
 
-	protected boolean canToggleOthers(final IUser user)
+	protected boolean canEditOthers(final IUser user)
 	{
 		return Permissions.SOCIALSPY_OTHERS.isAuthorized(user);
 	}

@@ -13,7 +13,7 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 
 	abstract protected void informPlayer(final IUser player);
 
-	abstract protected boolean canToggleOthers(final IUser user);
+	abstract protected boolean canEditOthers(final IUser user);
 
 	abstract protected boolean isExempt(final CommandSender sender, final IUser player);
 
@@ -34,15 +34,15 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		toggleOtherPlayers(server, sender, args);
+		editOtherPlayers(server, sender, args);
 	}
 
 	@Override
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length > 1 && args[0].trim().length() > 2 && canToggleOthers(user))
+		if (args.length > 1 && args[0].trim().length() > 2 && canEditOthers(user))
 		{
-			toggleOtherPlayers(server, user, args);
+			editOtherPlayers(server, user, args);
 			return;
 		}
 		else if (args.length > 0)
@@ -51,9 +51,9 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 			{
 				playerMatch(user, args[0]);
 			}
-			else if (args[0].trim().length() > 2 && canToggleOthers(user))
+			else if (args[0].trim().length() > 2 && canEditOthers(user))
 			{
-				toggleOtherPlayers(server, user, args);
+				editOtherPlayers(server, user, args);
 				return;
 			}
 		}
@@ -64,7 +64,7 @@ public abstract class EssentialsSettingsCommand extends EssentialsCommand
 		informPlayer(user);
 	}
 
-	private void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
+	private void editOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
 	{
 		Set<IUser> matches = toggleOfflinePlayers() ? ess.getUserMap().matchUsers(args[0], true) : ess.getUserMap().matchUsersExcludingHidden(
 				args[0], getPlayerOrNull(sender));

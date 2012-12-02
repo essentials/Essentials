@@ -22,10 +22,12 @@ public class Commandtptoggle extends EssentialsToggleCommand
 
 	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
 	{
-		if (value) {
-			sender.sendMessage( _("teleportMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
+		if (value)
+		{
+			sender.sendMessage(_("teleportMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
-		else {
+		else
+		{
 			//TODO: TL this
 			sender.sendMessage("Can't change teleport toggle for player " + player.getName());
 		}
@@ -37,7 +39,7 @@ public class Commandtptoggle extends EssentialsToggleCommand
 		player.sendMessage(message);
 	}
 
-	protected boolean canToggleOthers(final IUser user)
+	protected boolean canEditOthers(final IUser user)
 	{
 		return Permissions.TPTOGGLE_OTHERS.isAuthorized(user);
 	}

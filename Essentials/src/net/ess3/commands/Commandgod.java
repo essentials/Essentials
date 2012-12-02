@@ -1,9 +1,10 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import org.bukkit.command.CommandSender;
+
 
 public class Commandgod extends EssentialsToggleCommand
 {
@@ -20,10 +21,12 @@ public class Commandgod extends EssentialsToggleCommand
 
 	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
 	{
-		if (value) {
-			sender.sendMessage( _("godMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
+		if (value)
+		{
+			sender.sendMessage(_("godMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
-		else {
+		else
+		{
 			//TODO: TL this
 			sender.sendMessage("Can't change god mode for player " + player.getName());
 		}
@@ -35,7 +38,7 @@ public class Commandgod extends EssentialsToggleCommand
 		player.sendMessage(message);
 	}
 
-	protected boolean canToggleOthers(final IUser user)
+	protected boolean canEditOthers(final IUser user)
 	{
 		return Permissions.GOD_OTHERS.isAuthorized(user);
 	}

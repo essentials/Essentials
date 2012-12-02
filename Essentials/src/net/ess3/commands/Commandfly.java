@@ -24,10 +24,12 @@ public class Commandfly extends EssentialsToggleCommand
 
 	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
 	{
-		if (value) {
-			sender.sendMessage( _("flyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
+		if (value)
+		{
+			sender.sendMessage(_("flyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
-		else {
+		else
+		{
 			//TODO: TL this
 			sender.sendMessage("Can't change fly mode for player " + player.getName());
 		}
@@ -39,7 +41,7 @@ public class Commandfly extends EssentialsToggleCommand
 		player.sendMessage(message);
 	}
 
-	protected boolean canToggleOthers(final IUser user)
+	protected boolean canEditOthers(final IUser user)
 	{
 		return Permissions.FLY_OTHERS.isAuthorized(user);
 	}

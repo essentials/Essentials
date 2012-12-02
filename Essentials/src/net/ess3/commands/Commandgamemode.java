@@ -41,7 +41,7 @@ public class Commandgamemode extends EssentialsSettingsCommand
 		player.sendMessage(message);
 	}
 
-	protected boolean canToggleOthers(final IUser user)
+	protected boolean canEditOthers(final IUser user)
 	{
 		return Permissions.GAMEMODE_OTHERS.isAuthorized(user);
 	}
