@@ -5,6 +5,6 @@ public class NoChargeException extends Exception
 {
 	public NoChargeException()
 	{
-		super("Will charge later");
+		super(_("chargeError"));
 	}
 }
