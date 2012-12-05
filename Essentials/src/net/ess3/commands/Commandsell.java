@@ -17,6 +17,9 @@ public class Commandsell extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
+		double totalWorth = 0.0;
+		double worth = 0.0;
+		String type = "";
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
@@ -28,6 +31,7 @@ public class Commandsell extends EssentialsCommand
 		}
 		else if (args[0].equalsIgnoreCase("inventory") || args[0].equalsIgnoreCase("invent") || args[0].equalsIgnoreCase("all"))
 		{
+			type = "items and blocks";
 			for (ItemStack stack : user.getPlayer().getInventory().getContents())
 			{
 				if (stack == null || stack.getType() == Material.AIR)
@@ -36,16 +40,22 @@ public class Commandsell extends EssentialsCommand
 				}
 				try
 				{
-					sellItem(user, stack, args, true);
+					worth = sellItem(user, stack, args, true);
+					totalWorth += worth;
 				}
 				catch (Exception e)
 				{
 				}
 			}
+			if (totalWorth > 0)
+			{
+				user.sendMessage(_("totalWorth", type, FormatUtil.displayCurrency(totalWorth, ess)));
+			}
 			return;
 		}
 		else if (args[0].equalsIgnoreCase("blocks"))
 		{
+			type = "blocks";
 			for (ItemStack stack : user.getPlayer().getInventory().getContents())
 			{
 				if (stack == null || stack.getTypeId() > 255 || stack.getType() == Material.AIR)
@@ -54,11 +64,16 @@ public class Commandsell extends EssentialsCommand
 				}
 				try
 				{
-					sellItem(user, stack, args, true);
+					worth = sellItem(user, stack, args, true);
+					totalWorth += worth;
 				}
 				catch (Exception e)
 				{
 				}
+			}
+			if (totalWorth > 0)
+			{
+				user.sendMessage(_("totalWorth", type, FormatUtil.displayCurrency(totalWorth, ess)));
 			}
 			return;
 		}
@@ -69,7 +84,7 @@ public class Commandsell extends EssentialsCommand
 		sellItem(user, is, args, false);
 	}
 
-	private void sellItem(IUser user, ItemStack is, String[] args, boolean isBulkSell) throws Exception
+	private double sellItem(IUser user, ItemStack is, String[] args, boolean isBulkSell) throws Exception
 	{
 		if (is == null || is.getType() == Material.AIR)
 		{
@@ -135,7 +150,7 @@ public class Commandsell extends EssentialsCommand
 			}
 			else
 			{
-				return;
+				return worth * amount;
 			}
 		}
 
@@ -148,6 +163,7 @@ public class Commandsell extends EssentialsCommand
 		user.giveMoney(worth * amount);
 		user.sendMessage(_("itemSold", FormatUtil.displayCurrency(worth * amount, ess), amount, is.getType().toString().toLowerCase(Locale.ENGLISH), FormatUtil.displayCurrency(worth, ess)));
 		logger.log(Level.INFO, _("itemSoldConsole", user.getPlayer().getDisplayName(), is.getType().toString().toLowerCase(Locale.ENGLISH), FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)));
+		return worth * amount;
 
 	}
 }
