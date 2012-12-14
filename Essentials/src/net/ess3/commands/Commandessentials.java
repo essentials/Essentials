@@ -46,7 +46,7 @@ public class Commandessentials extends EssentialsCommand
 	private void run_debug(final CommandSender sender, final String[] args) throws Exception
 	{
 		ess.getSettings().setDebug(!ess.getSettings().isDebug());
-		sender.sendMessage("Essentials " + ess.getPlugin().getVersion() + " debug mode " + (ess.getSettings().isDebug() ? "enabled" : "disabled"));
+		sender.sendMessage(_("debugToggle", ess.getPlugin().getVersion(), _(ess.getSettings().isDebug() ? "enabled" : "disabled")));
 	}
 
 	private void run_reload(final CommandSender sender, final String[] args) throws Exception

@@ -52,7 +52,7 @@ public class Commandworld extends EssentialsCommand
 
 		if (!Permissions.WORLD.isAuthorized(user, world.getName()))
 		{
-			user.sendMessage(_("invalidWorld")); //TODO: Make a "world teleport denied" translation
+			user.sendMessage(_("deniedWorldAccess", world.getName()));
 			throw new NoChargeException();
 		}
 

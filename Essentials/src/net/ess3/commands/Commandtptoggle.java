@@ -28,8 +28,7 @@ public class Commandtptoggle extends EssentialsToggleCommand
 		}
 		else
 		{
-			//TODO: TL this
-			sender.sendMessage("Can't change teleport toggle for player " + player.getName());
+			sender.sendMessage(_("tptoggleFailed", player.getName()));
 		}
 	}
 

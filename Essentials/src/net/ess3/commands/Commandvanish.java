@@ -26,8 +26,7 @@ public class Commandvanish extends EssentialsToggleCommand
 		}
 		else
 		{
-			//TODO: TL this
-			sender.sendMessage("Can't change vanish mode for player " + player.getName());
+			sender.sendMessage(_("vanishFailed", player.getName()));
 		}
 	}
 

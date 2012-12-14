@@ -10,7 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
+import static net.ess3.I18n._;
 
 public class MetricsListener implements Listener
 {
@@ -33,9 +33,9 @@ public class MetricsListener implements Listener
 		ISettings settings = ess.getSettings();
 		if (settings.getData().getGeneral().getMetricsEnabled() == null && (Permissions.ESSENTIALS.isAuthorized(event.getPlayer()) || event.getPlayer().hasPermission("bukkit.broadcast.admin")))
 		{
-			player.sendMessage("PluginMetrics collects minimal statistic data, starting in about 5 minutes.");
-			player.sendMessage("To opt out, run /essentials opt-out");
-			ess.getLogger().log(Level.INFO, "[Metrics] Admin join - Starting 5 minute opt-out period.");
+			player.sendMessage(_("metrics1"));
+			player.sendMessage(_("metrics2"));
+			ess.getLogger().log(Level.INFO, _("metrics3"));
 			settings.getData().getGeneral().setMetricsEnabled(true);
 			settings.queueSave();
 			ess.getPlugin().scheduleAsyncDelayedTask(starter, 5 * 1200);

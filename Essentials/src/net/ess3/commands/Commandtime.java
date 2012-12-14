@@ -94,7 +94,7 @@ public class Commandtime extends EssentialsCommand
 			World world = iterator.next();
 			if (!Permissions.TIME_WORLDS.isAuthorized(sender, world.getName())) {
 				iterator.remove();
-				sender.sendMessage("You are not allowed to set the time in world "+world.getName()); //TODO:I18n
+				sender.sendMessage(_("timeWorldFailed", world.getName()));
 				continue;
 			}
 			long time = world.getTime();
