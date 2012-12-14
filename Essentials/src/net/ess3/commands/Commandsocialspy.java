@@ -26,8 +26,7 @@ public class Commandsocialspy extends EssentialsToggleCommand
 			sender.sendMessage( _("socialSpyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
 		else {
-			//TODO: TL this
-			sender.sendMessage("Can't change socialspy for player " + player.getName());
+			sender.sendMessage(_("socialSpyFailed", player.getName()));
 		}
 	}
 

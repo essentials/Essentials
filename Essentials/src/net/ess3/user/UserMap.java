@@ -15,7 +15,7 @@ import net.ess3.api.InvalidNameException;
 import net.ess3.storage.StorageObjectMap;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.entity.Player;
-
+import static net.ess3.I18n._;
 
 public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 {
@@ -47,7 +47,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 			IUser user = getUser(lowercaseName);
 			if (user == null)
 			{
-				throw new Exception("User not found!");
+				throw new Exception(_("userNotFound"));
 			}
 			else
 			{
@@ -69,7 +69,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 			keys.add(name.toLowerCase(Locale.ENGLISH));
 			return new User(ess.getServer().getOfflinePlayer(name), ess);
 		}
-		throw new Exception("User not found!");
+		throw new Exception(_("userNotFound"));
 	}
 
 	@Override

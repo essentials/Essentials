@@ -119,7 +119,7 @@ public class Essentials implements IEssentials
 			throw new IOException();
 		}
 
-		logger.log(Level.INFO, I18n._("usingTempFolderForTesting"));
+		logger.log(Level.INFO, _("usingTempFolderForTesting"));
 		logger.log(Level.INFO, dataFolder.toString());
 		storageQueue.setEnabled(true);
 		settings = new SettingsHolder(this);

@@ -8,7 +8,7 @@ import net.ess3.economy.register.Method;
 import net.ess3.economy.register.methods.VaultEco;
 import net.ess3.metrics.Metrics.Graph;
 import net.ess3.metrics.Metrics.Plotter;
-
+import static net.ess3.I18n._;
 
 public class MetricsStarter implements Runnable
 {
@@ -46,9 +46,9 @@ public class MetricsStarter implements Runnable
 				}
 				else if (settings.getData().getGeneral().getMetricsEnabled() == null)
 				{
-					ess.getLogger().info("This plugin collects minimal statistic data and sends it to http://metrics.essentials3.net.");
-					ess.getLogger().info("You can opt out by running /essentials opt-out");
-					ess.getLogger().info("This will start 5 minutes after the first admin/op joins.");
+					ess.getLogger().info(_("metrics1"));
+					ess.getLogger().info(_("metrics2"));
+					ess.getLogger().info(_("metrics4"));
 					start = false;
 				}
 				return;

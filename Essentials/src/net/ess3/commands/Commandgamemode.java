@@ -30,8 +30,7 @@ public class Commandgamemode extends EssentialsSettingsCommand
 			sender.sendMessage( _("gameMode", getValue(player).toString().toLowerCase(Locale.ENGLISH), player.getPlayer().getDisplayName()));
 		}
 		else {
-			//TODO: TL this
-			sender.sendMessage("Can't change game mode for player " + player.getName());
+			sender.sendMessage(_("gamemodeFailed", player.getName()));
 		}
 	}
 

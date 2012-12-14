@@ -27,8 +27,7 @@ public class Commandgod extends EssentialsToggleCommand
 		}
 		else
 		{
-			//TODO: TL this
-			sender.sendMessage("Can't change god mode for player " + player.getName());
+			sender.sendMessage(_("godFailed", player.getName()));
 		}
 	}
 
