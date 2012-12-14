@@ -21,7 +21,7 @@ public class Commandban extends EssentialsCommand
 		final IUser user = ess.getUserMap().matchUser(args[0], true);
 		if (!user.isOnline())
 		{
-			if (isUser(sender) && Permissions.BAN_OFFLINE.isAuthorized(user))
+			if (isUser(sender) && Permissions.BAN_OFFLINE.isAuthorized(sender))
 			{
 				sender.sendMessage(_("banExempt"));
 				return;
@@ -29,7 +29,7 @@ public class Commandban extends EssentialsCommand
 		}
 		else
 		{
-			if (Permissions.BAN_EXEMPT.isAuthorized(sender))
+			if (isUser(sender) && Permissions.BAN_EXEMPT.isAuthorized(user))
 			{
 				sender.sendMessage(_("banExempt"));
 				return;
