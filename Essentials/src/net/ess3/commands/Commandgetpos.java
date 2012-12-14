@@ -4,6 +4,7 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import static net.ess3.I18n._;
 
 
 
@@ -37,18 +38,17 @@ public class Commandgetpos extends EssentialsCommand
 		outputPosition(sender, user.getPlayer().getLocation(), null);
 	}
 
-	//TODO: Translate
 	private void outputPosition(final CommandSender sender, final Location coords, final Location distance)
 	{
-		sender.sendMessage("§7World: " + coords.getWorld().getName());
-		sender.sendMessage("§7X: " + coords.getBlockX() + " (+East <-> -West)");
-		sender.sendMessage("§7Y: " + coords.getBlockY() + " (+Up <-> -Down)");
-		sender.sendMessage("§7Z: " + coords.getBlockZ() + " (+South <-> -North)");
-		sender.sendMessage("§7Yaw: " + (coords.getYaw() + 180 + 360) % 360 + " (Rotation)");
-		sender.sendMessage("§7Pitch: " + coords.getPitch() + " (Head angle)");
+		sender.sendMessage(_("getposWorld", coords.getWorld().getName()));
+		sender.sendMessage(_("getposX", coords.getBlockX()));
+		sender.sendMessage(_("getposY", coords.getBlockY()));
+		sender.sendMessage(_("getposZ", coords.getBlockZ()));
+		sender.sendMessage(_("getposYaw", (coords.getYaw() + 540) % 360));
+		sender.sendMessage(_("getposPitch", coords.getPitch()));
 		if (distance != null && coords.getWorld().equals(distance.getWorld()))
 		{
-			sender.sendMessage("§7Distance: " + coords.distance(distance));
+			sender.sendMessage(_("getposDistance", coords.distance(distance)));
 		}
 	}
 }

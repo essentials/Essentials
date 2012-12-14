@@ -2,6 +2,7 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -20,7 +21,7 @@ public class Commandkill extends EssentialsCommand
 		{
 			final EntityDamageEvent ede = new EntityDamageEvent(matchPlayer.getPlayer(), sender instanceof IUser && sender.getName().equals(matchPlayer.getName()) ? EntityDamageEvent.DamageCause.SUICIDE : EntityDamageEvent.DamageCause.CUSTOM, Short.MAX_VALUE);
 			server.getPluginManager().callEvent(ede);
-			if (ede.isCancelled() && !sender.hasPermission("essentials.kill.force"))
+			if (ede.isCancelled() && Permissions.KILL_FORCE.isAuthorized(sender))
 			{
 				continue;
 			}

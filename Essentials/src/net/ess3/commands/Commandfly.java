@@ -30,8 +30,7 @@ public class Commandfly extends EssentialsToggleCommand
 		}
 		else
 		{
-			//TODO: TL this
-			sender.sendMessage("Can't change fly mode for player " + player.getName());
+			sender.sendMessage(_("flyFailed", player.getName()));
 		}
 	}
 
