@@ -10,17 +10,29 @@
 
 groups:
   Default:
-    default: true
-    permissions:
-    - -bukkit.command.kill
+    default: false
+    permissions: []
     inheritance:
-    - g:groupmanager_default
-    - g:bukkit_default
-    - g:essentials_default
-    - g:towny_default
+    - default
+    - g:essentials_builder
+    - g:towny_builder
     info:
-      prefix: '&e'
-      build: false
+      prefix: '&2'
+      build: true
+      suffix: ''
+  Moderator:
+    default: false
+    permissions: []
+    inheritance:
+    - builder
+    - g:groupmanager_moderator
+    - g:bukkit_moderator
+    - g:essentials_moderator
+    - g:towny_moderator
+    - g:vanish_moderator
+    info:
+      prefix: '&5'
+      build: true
       suffix: ''
   Builder:
     default: false
