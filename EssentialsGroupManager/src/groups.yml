@@ -11,8 +11,7 @@
 groups:
   Default:
     default: true
-    permissions:
-    - -bukkit.command.kill
+    permissions
     inheritance:
     - g:groupmanager_default
     - g:bukkit_default
@@ -20,7 +19,7 @@ groups:
     - g:towny_default
     info:
       prefix: '&e'
-      build: false
+      build:false
       suffix: ''
   Builder:
     default: false
