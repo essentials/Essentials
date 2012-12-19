@@ -123,6 +123,10 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	boolean checkSignThrottle(int throttle);
 
+    public boolean isRecipeSee();
+
+    public void setRecipeSee(boolean recipeSee);
+
 	/**
 	 * Since the Player object should not be stored for a long time, this method should be called again with a null
 	 * value.
