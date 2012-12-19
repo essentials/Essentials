@@ -54,9 +54,9 @@ public class User extends UserBase implements IUser
 	private transient Location afkPosition;
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
 	private WeakReference<Player> playerCache;
-    @Getter
-    @Setter
-    private boolean recipeSee = false;
+	@Getter
+	@Setter
+	private boolean recipeSee = false;
 
 	public User(final OfflinePlayer base, final IEssentials ess) throws InvalidNameException
 	{

@@ -495,14 +495,14 @@ public class EssentialsPlayerListener implements Listener
 				}
 			}
 		}
-        if (event.getView().getTopInventory().getType() == InventoryType.WORKBENCH)
-        {
-            final IUser user = ess.getUserMap().getUser((Player)event.getWhoClicked());
-            if(user.isRecipeSee())
-            {
-                event.setCancelled(true);
-            }
-        }
+		if (event.getView().getTopInventory().getType() == InventoryType.WORKBENCH)
+		{
+			final IUser user = ess.getUserMap().getUser((Player)event.getWhoClicked());
+			if(user.isRecipeSee())
+			{
+				event.setCancelled(true);
+			}
+		}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -513,17 +513,17 @@ public class EssentialsPlayerListener implements Listener
 			final IUser user = ess.getUserMap().getUser((Player)event.getPlayer());
 			user.setInvSee(false);
 		}
-        else if (event.getView().getTopInventory().getType() == InventoryType.WORKBENCH)
-        {
-            final IUser user = ess.getUserMap().getUser((Player)event.getPlayer());
-            if(user.isRecipeSee())
-            {
-                user.setRecipeSee(false);
-                event.getView().getTopInventory().clear();
-            }
-        }
+		else if (event.getView().getTopInventory().getType() == InventoryType.WORKBENCH)
+		{
+			final IUser user = ess.getUserMap().getUser((Player)event.getPlayer());
+			if (user.isRecipeSee())
+			{
+				user.setRecipeSee(false);
+				event.getView().getTopInventory().clear();
+			}
+		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPlayerFishEvent(final PlayerFishEvent event)
 	{
