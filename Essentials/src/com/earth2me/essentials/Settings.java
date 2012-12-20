@@ -237,6 +237,13 @@ public class Settings implements ISettings
 		}
 		return 0.0;
 	}
+	
+	@Override
+	public List<String> getSocialSpyCommands()
+	{
+			return config.getStringList("socialspy-commands");
+	}	
+	
 	private String nicknamePrefix = "~";
 
 	private String _getNicknamePrefix()
