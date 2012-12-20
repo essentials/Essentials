@@ -34,6 +34,8 @@ public interface ISettings extends IConf
 
 	double getCommandCost(String label);
 
+	Set<String> getSocialSpyCommands();
+	
 	String getCurrencySymbol();
 
 	int getOversizedStackSize();
