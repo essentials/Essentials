@@ -239,9 +239,15 @@ public class Settings implements ISettings
 	}
 	
 	@Override
-	public List<String> getSocialSpyCommands()
+	public Set<String> getSocialSpyCommands()
 	{
-			return config.getStringList("socialspy-commands");
+		Set<String> socialspyCommands = new HashSet<String>();
+		for (String c : config.getStringList("socialspy-commands"))
+		{
+			socialspyCommands.add(c.toLowerCase(Locale.ENGLISH));
+		}
+		
+		return socialspyCommands;
 	}	
 	
 	private String nicknamePrefix = "~";
