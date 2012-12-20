@@ -66,6 +66,8 @@ public interface ISettings extends IConf
 
 	String getProtectString(final String configName);
 
+	Set<String> getSocialSpyCommands();
+	
 	boolean getRespawnAtHome();
 
 	Set getMultipleHomes();
