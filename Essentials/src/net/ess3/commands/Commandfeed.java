@@ -5,6 +5,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandfeed extends EssentialsCommand
@@ -18,8 +19,9 @@ public class Commandfeed extends EssentialsCommand
 		}
 		else
 		{
-			user.getPlayer().setFoodLevel(20);
-			user.getPlayer().setSaturation(10);
+			final Player player = user.getPlayer();
+			player.setFoodLevel(20);
+			player.setSaturation(10);
 			user.sendMessage(_("feed"));
 		}
 	}
@@ -34,9 +36,10 @@ public class Commandfeed extends EssentialsCommand
 		}
 		for (IUser player : users)
 		{			
-			player.getPlayer().setFoodLevel(20);
-			player.getPlayer().setSaturation(10);
-			sender.sendMessage(_("feedOther", player.getPlayer().getDisplayName()));
+			final Player realPlayer = player.getPlayer();
+			realPlayer.setFoodLevel(20);
+			realPlayer.setSaturation(10);
+			sender.sendMessage(_("feedOther", realPlayer.getDisplayName()));
 		}
 	}
 }

@@ -20,7 +20,7 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 {
 	private final transient ClassLoader classLoader;
 	private final transient String commandPath;
-	private final transient String permissionPrefix;
+	private final transient String permissionPrefix;// TODO: Needed
 	private final transient IEssentialsModule module;
 	private static final transient Logger LOGGER = Bukkit.getLogger();
 	private final transient Map<String, List<PluginCommand>> altcommands = new HashMap<String, List<PluginCommand>>();

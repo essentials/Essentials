@@ -83,7 +83,7 @@ public class Commandgamemode extends EssentialsSettingsCommand
 
 	private GameMode matchGameMode(String modeString) throws NotEnoughArgumentsException
 	{
-		GameMode mode = null;
+		final GameMode mode;
 		if (modeString.equalsIgnoreCase("gmc") || modeString.equalsIgnoreCase("egmc")
 			|| modeString.contains("creat") || modeString.equalsIgnoreCase("1") || modeString.equalsIgnoreCase("c"))
 		{

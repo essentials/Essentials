@@ -12,7 +12,7 @@ public class Commandbigtree extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		TreeType tree;
+		final TreeType tree;
 		if (args.length > 0 && args[0].equalsIgnoreCase("redwood"))
 		{
 			tree = TreeType.TALL_REDWOOD;

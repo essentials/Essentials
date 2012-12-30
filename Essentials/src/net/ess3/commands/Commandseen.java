@@ -30,7 +30,7 @@ public class Commandseen extends EssentialsCommand
 		}
 		try
 		{
-			IUser u = ess.getUserMap().matchUserExcludingHidden(args[0], getPlayerOrNull(sender));
+			final IUser u = ess.getUserMap().matchUserExcludingHidden(args[0], getPlayerOrNull(sender));
 			sender.sendMessage(_("seenOnline", u.getPlayer().getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
 		}
 		catch (PlayerNotFoundException e)

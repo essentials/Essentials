@@ -2,7 +2,6 @@ package net.ess3.commands;
 
 import java.util.Locale;
 import static net.ess3.I18n._;
-import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.command.CommandSender;
@@ -18,7 +17,6 @@ public class Commandrealname extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final ISettings settings = ess.getSettings();
 		final String whois = args[0].toLowerCase(Locale.ENGLISH);
 		boolean foundUser = false;
 		Player player = sender instanceof IUser ? ((IUser)sender).getPlayer() : null;

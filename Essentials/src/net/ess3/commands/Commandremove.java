@@ -100,54 +100,51 @@ public class Commandremove extends EssentialsCommand
 						continue;
 					}
 				}
-				if (toRemove == ToRemove.DROPS)
-				{
-					if (e instanceof Item)
-					{
-						e.remove();
-						removed++;
-					}
+				switch (toRemove) {
+					case DROPS:
+						if (e instanceof Item)
+						{
+							e.remove();
+							removed++;
+						}
+						break;
+					case ARROWS:
+						if (e instanceof Projectile)
+						{
+							e.remove();
+							removed++;
+						}
+						break;
+					case BOATS:
+						if (e instanceof Boat)
+						{
+							e.remove();
+							removed++;
+						}
+						break;
+					case MINECARTS:
+						if (e instanceof Minecart)
+						{
+							e.remove();
+							removed++;
+						}
+						break;
+					case PAINTINGS:
+						if (e instanceof Painting)
+						{
+							e.remove();
+							removed++;
+						}
+						break;
+					case XP:
+						if (e instanceof ExperienceOrb)
+						{
+							e.remove();
+							removed++;
+						}
+						break;
 				}
-				else if (toRemove == ToRemove.ARROWS)
-				{
-					if (e instanceof Projectile)
-					{
-						e.remove();
-						removed++;
-					}
-				}
-				else if (toRemove == ToRemove.BOATS)
-				{
-					if (e instanceof Boat)
-					{
-						e.remove();
-						removed++;
-					}
-				}
-				else if (toRemove == ToRemove.MINECARTS)
-				{
-					if (e instanceof Minecart)
-					{
-						e.remove();
-						removed++;
-					}
-				}
-				else if (toRemove == ToRemove.XP)
-				{
-					if (e instanceof ExperienceOrb)
-					{
-						e.remove();
-						removed++;
-					}
-				}
-				else if (toRemove == ToRemove.PAINTINGS)
-				{
-					if (e instanceof Painting)
-					{
-						e.remove();
-						removed++;
-					}
-				}
+
 			}
 		}
 		sender.sendMessage(_("removed", removed));

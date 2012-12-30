@@ -6,7 +6,6 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import net.ess3.user.User;
 import net.ess3.user.UserData.TimestampType;
 import org.bukkit.Material;
 import org.bukkit.entity.Ageable;

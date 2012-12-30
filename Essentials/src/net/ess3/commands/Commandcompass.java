@@ -10,7 +10,7 @@ public class Commandcompass extends EssentialsCommand
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		final int bearing = (int)(user.getPlayer().getLocation().getYaw() + 180 + 360) % 360;
-		String dir;
+		final String dir;
 		if (bearing < 23)
 		{
 			dir = "N";

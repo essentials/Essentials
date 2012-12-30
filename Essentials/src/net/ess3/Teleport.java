@@ -2,7 +2,6 @@ package net.ess3;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ITeleport;
@@ -38,7 +37,6 @@ public class Teleport implements Runnable, ITeleport
 	private Target teleportTarget;
 	private Trade chargeFor;
 	private final IEssentials ess;
-	private static final Logger logger = Logger.getLogger("Minecraft");
 	private TeleportCause cause;
 
 	private void initTimer(long delay, Target target, Trade chargeFor, TeleportCause cause)
@@ -88,7 +86,7 @@ public class Teleport implements Runnable, ITeleport
 
 		health = teleportUser.getPlayer().getHealth();  // in case user healed, then later gets injured
 
-		long now = System.currentTimeMillis();
+		final long now = System.currentTimeMillis();
 		if (now > started + tpDelay)
 		{
 			try
@@ -185,7 +183,7 @@ public class Teleport implements Runnable, ITeleport
 
 	private void teleport(Target target, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		double delay = ess.getRanks().getTeleportDelay(user);
+		final double delay = ess.getRanks().getTeleportDelay(user);
 
 		if (chargeFor != null)
 		{
@@ -258,7 +256,7 @@ public class Teleport implements Runnable, ITeleport
 	//The teleportToMe function is a wrapper used to handle teleporting players to them, like /tphere
 	public void teleportToMe(IUser otherUser, Trade chargeFor, TeleportCause cause) throws Exception
 	{
-		Target target = new Target(user.getPlayer());
+		final Target target = new Target(user.getPlayer());
 
 		double delay = ess.getRanks().getTeleportDelay(user);
 
@@ -286,7 +284,7 @@ public class Teleport implements Runnable, ITeleport
 	
 	private void warnUser(final IUser user, final double delay)
 	{
-		Calendar c = new GregorianCalendar();
+		final Calendar c = new GregorianCalendar();
 		c.add(Calendar.SECOND, (int)delay);
 		c.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
 		user.sendMessage(_("dontMoveMessage", DateUtil.formatDateDiff(c.getTimeInMillis())));

@@ -2,6 +2,7 @@ package net.ess3.commands;
 
 import net.ess3.api.IUser;
 import org.bukkit.entity.Fireball;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.util.Vector;
 
@@ -16,8 +17,11 @@ public class Commandfireball extends EssentialsCommand
 		{
 			small = true;
 		}
-		final Vector direction = user.getPlayer().getEyeLocation().getDirection().multiply(2);
-		final Fireball fireball = user.getPlayer().getWorld().spawn(user.getPlayer().getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), small ? SmallFireball.class : Fireball.class);
-		fireball.setShooter(user.getPlayer());
+		
+		final Player player = user.getPlayer();
+		
+		final Vector direction = player.getEyeLocation().getDirection().multiply(2);
+		final Fireball fireball = player.getWorld().spawn(player.getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), small ? SmallFireball.class : Fireball.class);
+		fireball.setShooter(player);
 	}
 }
