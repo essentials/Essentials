@@ -45,18 +45,20 @@ public class EssentialsPlayerListener implements Listener
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private final transient Server server;
 	private final transient IEssentials ess;
-
+	private final transient IUserMap userMap;
+	
 	public EssentialsPlayerListener(final IEssentials parent)
 	{
 		super();
 		this.ess = parent;
+		userMap = ess.getUserMap();
 		this.server = parent.getServer();
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerRespawn(final PlayerRespawnEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 		user.updateCompass();
 		user.updateDisplayName();
 	}
@@ -64,7 +66,6 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(final AsyncPlayerChatEvent event) // TODO: Does this update work?
 	{
-		final IUserMap userMap = ess.getUserMap();
 		final IUser user = userMap.getUser(event.getPlayer());
 		if (user.getData().isMuted())
 		{
@@ -88,7 +89,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerMove(final PlayerMoveEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 
 		final ISettings settings = ess.getSettings();
 
@@ -123,7 +124,7 @@ public class EssentialsPlayerListener implements Listener
 		final String quitMessage = ess.getSettings().getData().getGeneral().getLeaveMessage();
 		if (quitMessage != null)
 		{
-			final IText itOutput = new KeywordReplacer(new SimpleTextInput(quitMessage), ess.getUserMap().getUser(event.getPlayer()), ess);
+			final IText itOutput = new KeywordReplacer(new SimpleTextInput(quitMessage), userMap.getUser(event.getPlayer()), ess);
 			final SimpleTextPager stPager = new SimpleTextPager(itOutput);
 			event.setQuitMessage(FormatUtil.replaceFormat(stPager.getString(0)));
 		}
@@ -133,7 +134,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 
 
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 
 		final ISettings settings = ess.getSettings();
 		if (settings.getData().getCommands().getGod().isRemoveOnDisconnect() && user.isGodModeEnabled())
@@ -170,7 +171,8 @@ public class EssentialsPlayerListener implements Listener
 				delayedJoin(event.getPlayer());
 			}
 		});
-/*		if (!event.getPlayer().isOnline())
+/* TODO: Make sure my update is good
+		if (!event.getPlayer().isOnline())
 		{
 			return;
 		}
@@ -255,7 +257,7 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 		ess.getBackup().startTask();
-		final IUser user = ess.getUserMap().getUser(player);
+		final IUser user = userMap.getUser(player);
 		user.setDisplayNick();
 		user.updateCompass();
 		user.getData().setTimestamp(TimestampType.LOGIN, System.currentTimeMillis());
@@ -265,7 +267,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			for (String p : ess.getVanishedPlayers())
 			{
-				Player toVanish = ess.getUserMap().getUser(p).getPlayer();
+				Player toVanish = userMap.getUser(p).getPlayer();
 				if (toVanish.isOnline())
 				{
 					user.setVanished(true);
@@ -285,9 +287,9 @@ public class EssentialsPlayerListener implements Listener
 			});
 		}
 		
-		Map<String, String> disabledCommands = ess.getCommandHandler().disabledCommands();
+		final ISettings settings = ess.getSettings();
 		
-		if (!disabledCommands.containsKey("motd") && Permissions.MOTD.isAuthorized(user))
+		if (!settings.getData().getCommands().isDisabled("motd") && Permissions.MOTD.isAuthorized(user))
 		{
 			try
 			{
@@ -309,7 +311,7 @@ public class EssentialsPlayerListener implements Listener
 			}
 		}
 
-		if (!disabledCommands.containsKey("mail") && Permissions.MAIL.isAuthorized(user))
+		if (!settings.getData().getCommands().isDisabled("mail") && Permissions.MAIL.isAuthorized(user))
 		{
 			final List<String> mail = user.getMails();
 			if (mail.isEmpty())
@@ -341,9 +343,9 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 
-		ess.getUserMap().addPrejoinedPlayer(event.getPlayer());
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		ess.getUserMap().removePrejoinedPlayer(event.getPlayer());
+		userMap.addPrejoinedPlayer(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
+		userMap.removePrejoinedPlayer(event.getPlayer());
 		user.getData().setNpc(false);
 
 		final long currentTime = System.currentTimeMillis();
@@ -378,7 +380,7 @@ public class EssentialsPlayerListener implements Listener
 		//There is TeleportCause.COMMMAND but plugins have to actively pass the cause in on their teleports.
 		if ((event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND) && settings.getData().getCommands().getBack().isRegisterBackInListener())
 		{
-			final IUser user = ess.getUserMap().getUser(event.getPlayer());
+			final IUser user = userMap.getUser(event.getPlayer());
 			user.setLastLocation();
 		}
 
@@ -388,7 +390,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerEggThrow(final PlayerEggThrowEvent event)
 	{
 
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 		final ItemStack hand = new ItemStack(Material.EGG, 1);
 		if (user.getData().hasUnlimited(hand.getType()))
 		{
@@ -401,7 +403,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event)
 	{
 
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 		if (user.getData().hasUnlimited(event.getBucket()))
 		{
 			event.getItemStack().setType(event.getBucket());
@@ -420,13 +422,13 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 		final String cmd = spaceSplit.split(event.getMessage().toLowerCase(Locale.ENGLISH))[0].replace("/", "").toLowerCase(Locale.ENGLISH);
 		if (ess.getSettings().getData().getCommands().getSocialspy().getSocialspyCommands().contains(cmd))
 		{
 			for (Player player : ess.getServer().getOnlinePlayers())
 			{
-				IUser spyer = ess.getUserMap().getUser(player);
+				IUser spyer = userMap.getUser(player);
 				if (spyer.getData().isSocialspy() && !user.equals(spyer))
 				{
 					player.sendMessage(user.getPlayer().getDisplayName() + " : " + event.getMessage());
@@ -444,7 +446,7 @@ public class EssentialsPlayerListener implements Listener
 	{
 		final ISettings settings = ess.getSettings();
 
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 		if (settings.getData().getChat().getChangeDisplayname())
 		{
 			user.updateDisplayName();
@@ -475,7 +477,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 		user.updateActivity(true);
 		switch (event.getAction())
 		{
@@ -559,7 +561,7 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 		if (user.getData().isAfk())
 		{
 			event.setCancelled(true);
@@ -571,11 +573,11 @@ public class EssentialsPlayerListener implements Listener
 	{
 		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
 		{
-			final IUser user = ess.getUserMap().getUser((Player)event.getWhoClicked());
+			final IUser user = userMap.getUser((Player)event.getWhoClicked());
 			final InventoryHolder invHolder = event.getView().getTopInventory().getHolder();
 			if (invHolder != null && invHolder instanceof Player)
 			{
-				final IUser invOwner = ess.getUserMap().getUser((Player)invHolder);
+				final IUser invOwner = userMap.getUser((Player)invHolder);
 				if (user.isInvSee() && (!Permissions.INVSEE_MODIFY.isAuthorized(user)
 										|| Permissions.INVSEE_PREVENT_MODIFY.isAuthorized(invOwner)
 										|| !invOwner.isOnline()))
@@ -586,7 +588,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 		if (event.getView().getTopInventory().getType() == InventoryType.WORKBENCH)
 		{
-			final IUser user = ess.getUserMap().getUser((Player)event.getWhoClicked());
+			final IUser user = userMap.getUser((Player)event.getWhoClicked());
 			if(user.isRecipeSee())
 			{
 				event.setCancelled(true);
@@ -599,12 +601,12 @@ public class EssentialsPlayerListener implements Listener
 	{
 		if (event.getView().getTopInventory().getType() == InventoryType.PLAYER)
 		{
-			final IUser user = ess.getUserMap().getUser((Player)event.getPlayer());
+			final IUser user = userMap.getUser((Player)event.getPlayer());
 			user.setInvSee(false);
 		}
 		else if (event.getView().getTopInventory().getType() == InventoryType.WORKBENCH)
 		{
-			final IUser user = ess.getUserMap().getUser((Player)event.getPlayer());
+			final IUser user = userMap.getUser((Player)event.getPlayer());
 			if (user.isRecipeSee())
 			{
 				user.setRecipeSee(false);
@@ -616,7 +618,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPlayerFishEvent(final PlayerFishEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser((Player)event.getPlayer());
+		final IUser user = userMap.getUser((Player)event.getPlayer());
 		user.updateActivity(true);
 	}
 }
