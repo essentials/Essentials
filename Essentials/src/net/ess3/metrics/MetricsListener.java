@@ -1,27 +1,27 @@
 package net.ess3.metrics;
 
+import static net.ess3.I18n._;
+
 import java.util.logging.Level;
+
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import org.bukkit.Server;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import static net.ess3.I18n._;
 
 public class MetricsListener implements Listener
 {
-	private final transient Server server;
 	private final transient IEssentials ess;
 	private final transient MetricsStarter starter;
 
 	public MetricsListener(final IEssentials parent, final MetricsStarter starter)
 	{
 		this.ess = parent;
-		this.server = parent.getServer();
 		this.starter = starter;
 	}
 

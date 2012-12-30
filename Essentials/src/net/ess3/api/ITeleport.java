@@ -9,6 +9,13 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public interface ITeleport
 {
+	/**
+	 * Teleport to a location now
+	 * @param loc - location to send to
+	 * @param cooldown - To check cooldown
+	 * @param cause - Why was the send caused? Use a {@link TeleportCause}
+	 * @throws Exception
+	 */
 	void now(Location loc, boolean cooldown, TeleportCause cause) throws Exception;
 
 	void now(Entity entity, boolean cooldown, TeleportCause cause) throws Exception;

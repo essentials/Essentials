@@ -178,7 +178,13 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	{
 		getServer().getScheduler().cancelTask(taskId);
 	}
-
+	
+	@Override
+	public void cancelTask(BukkitTask taskId) 
+	{
+		getServer().getScheduler().cancelTask(taskId.getTaskId());
+	}
+	
 	@Override
 	public String getVersion()
 	{
@@ -229,6 +235,12 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 		}
 		// Remove "Essentials" from name
 		modules.put(plugin.getName().substring(10), plugin);
+	}
+	
+	@Override
+	public void registerModule(Plugin module) 
+	{ // TODO: Use, solution for L231
+		modules.put(module.getName().substring(10), module);
 	}
 
 	@Override
