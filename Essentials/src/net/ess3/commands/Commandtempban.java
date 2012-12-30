@@ -5,6 +5,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.Ban;
+import net.ess3.user.UserData;
 import net.ess3.utils.DateUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -40,9 +41,11 @@ public class Commandtempban extends EssentialsCommand
 		final long banTimestamp = DateUtil.parseDateDiff(time, true);
 
 		final String banReason = _("tempBanned", DateUtil.formatDateDiff(banTimestamp));
-		user.getData().setBan(new Ban());
-		user.getData().getBan().setReason(banReason);
-		user.getData().getBan().setTimeout(banTimestamp);
+		UserData userData = user.getData();
+		userData.setBan(new Ban());
+		Ban ban = userData.getBan();
+		ban.setReason(banReason);
+		ban.setTimeout(banTimestamp);
 		user.setBanned(true);
 		user.queueSave();
 		user.getPlayer().kickPlayer(banReason);

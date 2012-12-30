@@ -3,6 +3,7 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandext extends EssentialsCommand
@@ -35,8 +36,9 @@ public class Commandext extends EssentialsCommand
 	{
 		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(name, getPlayerOrNull(sender)))
 		{
-			matchPlayer.getPlayer().setFireTicks(0);
-			sender.sendMessage(_("extinguishOthers", matchPlayer.getPlayer().getDisplayName()));
+			final Player player = matchPlayer.getPlayer();
+			player.setFireTicks(0);
+			sender.sendMessage(_("extinguishOthers", player.getDisplayName()));
 		}
 	}
 }

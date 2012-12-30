@@ -75,7 +75,6 @@ public class Commandsell extends EssentialsCommand
 		{
 			throw new Exception(_("itemSellAir"));
 		}
-		int id = is.getTypeId();
 		int amount = 0;
 		if (args.length > 1)
 		{

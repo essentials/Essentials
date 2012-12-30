@@ -89,7 +89,7 @@ public class Commandspeed extends EssentialsCommand
 
 	private boolean isFlyMode(final String modeString) throws NotEnoughArgumentsException
 	{
-		boolean isFlyMode;
+		final boolean isFlyMode;
 		if (modeString.contains("fly") || modeString.equalsIgnoreCase("f"))
 		{
 			isFlyMode = true;

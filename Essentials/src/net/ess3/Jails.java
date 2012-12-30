@@ -108,10 +108,10 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-
 	private class JailBlockListener implements Listener
 	{
-		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+
+        @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onBlockBreak(final BlockBreakEvent event)
 		{
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());

@@ -26,7 +26,7 @@ public interface IPlugin extends Plugin {
 
 	String getVersion();
 
-	Class getClassByName(final String name);
+	Class<?> getClassByName(final String name);
 
 	Location callRespawnEvent(Player player, Location loc, boolean bedSpawn);
 

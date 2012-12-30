@@ -100,7 +100,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 		final MetricsStarter metricsStarter = new MetricsStarter(ess);
 		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
 		{
-			getServer().getScheduler().scheduleAsyncDelayedTask(this, metricsStarter, 1);
+			getServer().getScheduler().runTaskLaterAsynchronously(this, metricsStarter, 1);
 		}
 		else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
 		{
@@ -185,7 +185,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public Class getClassByName(final String name)
+	public Class<?> getClassByName(final String name)
 	{
 		final JavaPluginLoader jpl = (JavaPluginLoader)this.getPluginLoader();
 		return jpl.getClassByName(name);

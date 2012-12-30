@@ -81,11 +81,8 @@ public class Trade
 		}
 
 
-		final ISettings settings = ess.getSettings();
-
-		double money;
 		if (command != null && !command.isEmpty()
-			&& 0 < (money = getCommandCost(user))
+			&& 0 < getCommandCost(user)
 			&& !Permissions.ECO_LOAN.isAuthorized(user))
 		{
 			throw new ChargeException(_("notEnoughMoney"));
@@ -240,7 +237,7 @@ public class Trade
 				Logger.getLogger("Minecraft").log(Level.SEVERE, null, ex);
 			}
 		}
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append(type).append(",").append(subtype).append(",").append(event).append(",\"");
 		sb.append(DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL).format(new Date()));
 		sb.append("\",\"");
@@ -288,9 +285,10 @@ public class Trade
 		{
 			if (pay.getItemStack() != null)
 			{
-				sb.append(pay.getItemStack().getAmount()).append(",");
-				sb.append(pay.getItemStack().getType().toString()).append(",");
-				sb.append(pay.getItemStack().getDurability());
+				ItemStack is = pay.getItemStack();
+				sb.append(is.getAmount()).append(",");
+				sb.append(is.getType().toString()).append(",");
+				sb.append(is.getDurability());
 			}
 			if (pay.getMoney() != null)
 			{

@@ -4,6 +4,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -32,12 +33,13 @@ public class Commandhat extends EssentialsCommand
 		}
 		else
 		{
-			if (user.getPlayer().getItemInHand().getType() != Material.AIR)
+			final Player player = user.getPlayer();
+			if (player.getItemInHand().getType() != Material.AIR)
 			{
-				final ItemStack hand = user.getPlayer().getItemInHand().clone();
+				final ItemStack hand = player.getItemInHand().clone();
 				if (hand.getType().getMaxDurability() == 0)
 				{
-					final PlayerInventory inv = user.getPlayer().getInventory();
+					final PlayerInventory inv = player.getInventory();
 					final ItemStack head = inv.getHelmet();
 					hand.setAmount(1);
 					InventoryWorkaround.removeItem(inv, true, true, hand);

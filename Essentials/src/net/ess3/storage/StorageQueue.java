@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import net.ess3.api.IPlugin;
 
 
-public class StorageQueue implements Runnable
+public class StorageQueue implements Runnable 
 {
 	private DelayQueue<WriteRequest> queue = new DelayQueue<WriteRequest>();
 	public final static long DELAY = TimeUnit.NANOSECONDS.convert(1, TimeUnit.SECONDS);

@@ -3,8 +3,11 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+
+import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
 
 
 public class Commandsudo extends EssentialsCommand
@@ -29,14 +32,16 @@ public class Commandsudo extends EssentialsCommand
 		{
 			throw new Exception(_("sudoExempt"));
 		}
-
-		sender.sendMessage(_("sudoRun", user.getPlayer().getDisplayName(), command, getFinalArg(arguments, 0)));
-
-		ess.getServer().dispatchCommand(user, command);
-		final PluginCommand execCommand = ess.getServer().getPluginCommand(command);
+		
+		final Player player = user.getPlayer();
+		sender.sendMessage(_("sudoRun", player.getDisplayName(), command, getFinalArg(arguments, 0)));
+		
+		final Server server = ess.getServer();
+		server.dispatchCommand(user, command);
+		final PluginCommand execCommand = server.getPluginCommand(command);
 		if (execCommand != null)
 		{
-			execCommand.execute(user.getPlayer(), command, arguments);
+			execCommand.execute(player, command, arguments);
 		}
 
 	}

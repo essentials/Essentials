@@ -1,10 +1,10 @@
 package net.ess3.listener;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -12,6 +12,7 @@ import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
+import net.ess3.api.IUserMap;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.FormatUtil;
@@ -61,9 +62,10 @@ public class EssentialsPlayerListener implements Listener
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onPlayerChat(final PlayerChatEvent event)
+	public void onPlayerChat(final AsyncPlayerChatEvent event) // TODO: Does this update work?
 	{
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUserMap userMap = ess.getUserMap();
+		final IUser user = userMap.getUser(event.getPlayer());
 		if (user.getData().isMuted())
 		{
 			event.setCancelled(true);
@@ -73,14 +75,14 @@ public class EssentialsPlayerListener implements Listener
 		final Iterator<Player> it = event.getRecipients().iterator();
 		while (it.hasNext())
 		{
-			final IUser player = ess.getUserMap().getUser(it.next());
-			if (player.isIgnoringPlayer(user))
+			final IUser u = userMap.getUser(it.next());
+			if (u.getData().getIgnore().contains(user.getName()))
 			{
 				it.remove();
 			}
 		}
 		user.updateActivity(true);
-		user.updateDisplayName();
+		user.setDisplayNick();
 	}
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -160,7 +162,15 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		if (!event.getPlayer().isOnline())
+		ess.getPlugin().scheduleAsyncDelayedTask(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				delayedJoin(event.getPlayer());
+			}
+		});
+/*		if (!event.getPlayer().isOnline())
 		{
 			return;
 		}
@@ -235,9 +245,89 @@ public class EssentialsPlayerListener implements Listener
 			{
 				user.sendMessage(_("youHaveNewMail", mail.size()));
 			}
+		}*/
+	}
+	
+	public void delayedJoin(final Player player)
+	{
+		if (!player.isOnline())
+		{
+			return;
+		}
+		ess.getBackup().startTask();
+		final IUser user = ess.getUserMap().getUser(player);
+		user.setDisplayNick();
+		user.updateCompass();
+		user.getData().setTimestamp(TimestampType.LOGIN, System.currentTimeMillis());
+		user.updateActivity(false);
+
+		if (!ess.getVanishedPlayers().isEmpty() && !Permissions.VANISH_SEE_OTHERS.isAuthorized(user))
+		{
+			for (String p : ess.getVanishedPlayers())
+			{
+				Player toVanish = ess.getUserMap().getUser(p).getPlayer();
+				if (toVanish.isOnline())
+				{
+					user.setVanished(true);
+				}
+			}
+		}
+
+		if (Permissions.SLEEPINGIGNORED.isAuthorized(user))
+		{
+			ess.getPlugin().scheduleSyncDelayedTask(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					user.getPlayer().setSleepingIgnored(true);
+				}
+			});
+		}
+		
+		Map<String, String> disabledCommands = ess.getCommandHandler().disabledCommands();
+		
+		if (!disabledCommands.containsKey("motd") && Permissions.MOTD.isAuthorized(user))
+		{
+			try
+			{
+				final IText input = new TextInput(user, "motd", true, ess);
+				final IText output = new KeywordReplacer(input, user, ess);
+				final TextPager pager = new TextPager(output, true);
+				pager.showPage("1", null, "motd", user);
+			}
+			catch (IOException ex)
+			{
+				if (ess.getSettings().isDebug())
+				{
+					LOGGER.log(Level.WARNING, ex.getMessage(), ex);
+				}
+				else
+				{
+					LOGGER.log(Level.WARNING, ex.getMessage());
+				}
+			}
+		}
+
+		if (!disabledCommands.containsKey("mail") && Permissions.MAIL.isAuthorized(user))
+		{
+			final List<String> mail = user.getMails();
+			if (mail.isEmpty())
+			{
+				final String msg = _("noNewMail");
+				if (!msg.isEmpty())
+				{
+					user.sendMessage(msg);
+				}
+			}
+			else
+			{
+				user.sendMessage(_("youHaveNewMail", mail.size()));
+			}
 		}
 	}
 
+	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerLogin(final PlayerLoginEvent event)
 	{
@@ -419,8 +509,7 @@ public class EssentialsPlayerListener implements Listener
 	private boolean usePowertools(final IUser user)
 	{
 		final ItemStack is = user.getPlayer().getItemInHand();
-		int id;
-		if (is == null || (id = is.getTypeId()) == 0)
+		if (is == null || is.getTypeId() == 0)
 		{
 			return false;
 		}

@@ -6,6 +6,7 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LightningStrike;
+import org.bukkit.entity.Player;
 
 
 public class Commandlightning extends EssentialsCommand
@@ -21,7 +22,8 @@ public class Commandlightning extends EssentialsCommand
 		}
 		if ((args.length < 1 || !Permissions.LIGHTNING_OTHERS.isAuthorized(user)) && user != null)
 		{
-			user.getPlayer().getWorld().strikeLightning(user.getPlayer().getTargetBlock(null, 600).getLocation());
+			final Player player = user.getPlayer();
+			player.getWorld().strikeLightning(player.getTargetBlock(null, 600).getLocation());
 			return;
 		}
 
@@ -44,11 +46,12 @@ public class Commandlightning extends EssentialsCommand
 
 		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
 		{
-			sender.sendMessage(_("lightningUse", matchPlayer.getPlayer().getDisplayName()));
-			final LightningStrike strike = matchPlayer.getPlayer().getWorld().strikeLightningEffect(matchPlayer.getPlayer().getLocation());
+			final Player player = matchPlayer.getPlayer();
+			sender.sendMessage(_("lightningUse", player.getDisplayName()));
+			final LightningStrike strike = player.getWorld().strikeLightningEffect(player.getLocation());
 			if (!matchPlayer.isGodModeEnabled())
 			{
-				matchPlayer.getPlayer().damage(power, strike);
+				player.damage(power, strike);
 			}
 			final ISettings settings = ess.getSettings();
 			if (settings.getData().getCommands().getLightning().isWarnPlayer())

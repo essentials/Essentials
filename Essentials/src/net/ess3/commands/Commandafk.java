@@ -12,7 +12,7 @@ public class Commandafk extends EssentialsCommand
 	{
 		if (args.length > 0 && Permissions.AFK_OTHERS.isAuthorized(user))
 		{
-			IUser afkUser = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
+			final IUser afkUser = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 			if (afkUser != null)
 			{
 				toggleAfk(afkUser);

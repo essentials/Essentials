@@ -13,7 +13,7 @@ public class Commandgc extends EssentialsCommand
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		final float tps = ess.getTimer().getAverageTPS();
+		float tps = ess.getTimer().getAverageTPS();
 		ChatColor color;
 		if (tps >= 18)
 		{
@@ -27,17 +27,16 @@ public class Commandgc extends EssentialsCommand
 		{
 			color = ChatColor.RED;
 		}
-		final Runtime runTime = Runtime.getRuntime();
 		sender.sendMessage(_("uptime", DateUtil.formatDateDiff(ManagementFactory.getRuntimeMXBean().getStartTime())));
 		sender.sendMessage(_("tps", "" + color + tps));
-		sender.sendMessage(_("gcmax", (runTime.maxMemory() / 1024 / 1024)));
-		sender.sendMessage(_("gctotal", (runTime.totalMemory() / 1024 / 1024)));
-		sender.sendMessage(_("gcfree", (runTime.freeMemory() / 1024 / 1024)));
+		sender.sendMessage(_("gcmax", (Runtime.getRuntime().maxMemory() / 1024 / 1024)));
+		sender.sendMessage(_("gctotal", (Runtime.getRuntime().totalMemory() / 1024 / 1024)));
+		sender.sendMessage(_("gcfree", (Runtime.getRuntime().freeMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gcquene", (ess.getStorageQueue().getQueueSize()))); 
 
 		for (World w : server.getWorlds())
 		{
-			String worldType = "World";
+			final String worldType;
 			switch (w.getEnvironment())
 			{
 			case NETHER:
@@ -46,6 +45,10 @@ public class Commandgc extends EssentialsCommand
 			case THE_END:
 				worldType = "The End";
 				break;
+			default:
+				worldType = "World";
+				break;
+				
 			}
 
 			sender.sendMessage(

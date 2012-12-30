@@ -112,9 +112,9 @@ public class Commandnick extends EssentialsCommand
 				{
 					continue;
 				}
-				String dn = p.getDisplayName().toLowerCase(Locale.ENGLISH);
-				String n = p.getName().toLowerCase(Locale.ENGLISH);
-				String nk = nick.toLowerCase(Locale.ENGLISH);
+				final String dn = p.getDisplayName().toLowerCase(Locale.ENGLISH);
+				final String n = p.getName().toLowerCase(Locale.ENGLISH);
+				final String nk = nick.toLowerCase(Locale.ENGLISH);
 				if (nk.equals(dn) || nk.equals(n))
 				{
 					throw new Exception(_("nickInUse"));
