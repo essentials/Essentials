@@ -27,11 +27,12 @@ public class Commandgc extends EssentialsCommand
 		{
 			color = ChatColor.RED;
 		}
+		Runtime runtime = Runtime.getRuntime();
 		sender.sendMessage(_("uptime", DateUtil.formatDateDiff(ManagementFactory.getRuntimeMXBean().getStartTime())));
 		sender.sendMessage(_("tps", "" + color + tps));
-		sender.sendMessage(_("gcmax", (Runtime.getRuntime().maxMemory() / 1024 / 1024)));
-		sender.sendMessage(_("gctotal", (Runtime.getRuntime().totalMemory() / 1024 / 1024)));
-		sender.sendMessage(_("gcfree", (Runtime.getRuntime().freeMemory() / 1024 / 1024)));
+		sender.sendMessage(_("gcmax", (runtime.maxMemory() / 1024 / 1024)));
+		sender.sendMessage(_("gctotal", (runtime.totalMemory() / 1024 / 1024)));
+		sender.sendMessage(_("gcfree", (runtime.freeMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gcquene", (ess.getStorageQueue().getQueueSize()))); 
 
 		for (World w : server.getWorlds())
