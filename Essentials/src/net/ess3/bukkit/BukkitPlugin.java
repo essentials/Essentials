@@ -30,6 +30,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
+import org.bukkit.scheduler.BukkitTask;
 
 
 public class BukkitPlugin extends JavaPlugin implements IPlugin
@@ -131,9 +132,9 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public int scheduleAsyncDelayedTask(final Runnable run)
+	public BukkitTask scheduleAsyncDelayedTask(final Runnable run)
 	{
-		return getServer().getScheduler().scheduleAsyncDelayedTask(this, run);
+		return getServer().getScheduler().runTaskAsynchronously(this, run);
 	}
 
 	@Override
@@ -143,9 +144,9 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public int scheduleAsyncDelayedTask(final Runnable run, final long delay)
+	public BukkitTask scheduleAsyncDelayedTask(final Runnable run, final long delay)
 	{
-		return getServer().getScheduler().scheduleAsyncDelayedTask(this, run, delay);
+		return getServer().getScheduler().runTaskLaterAsynchronously(this, run, delay);
 	}
 
 	@Override
@@ -161,9 +162,9 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public int scheduleAsyncRepeatingTask(final Runnable run, final long delay, final long period)
+	public BukkitTask scheduleAsyncRepeatingTask(final Runnable run, final long delay, final long period)
 	{
-		return getServer().getScheduler().scheduleAsyncRepeatingTask(this, run, delay, period);
+		return getServer().getScheduler().runTaskTimer(this, run, delay, period);
 	}
 
 	@Override

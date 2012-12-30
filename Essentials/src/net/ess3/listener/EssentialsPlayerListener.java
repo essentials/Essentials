@@ -14,6 +14,7 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.api.IUserMap;
 import net.ess3.permissions.Permissions;
+import net.ess3.settings.Commands;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.FormatUtil;
 import net.ess3.utils.LocationUtil;
@@ -267,7 +268,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			for (String p : ess.getVanishedPlayers())
 			{
-				Player toVanish = userMap.getUser(p).getPlayer();
+				final Player toVanish = userMap.getUser(p).getPlayer();
 				if (toVanish.isOnline())
 				{
 					user.setVanished(true);
@@ -287,9 +288,9 @@ public class EssentialsPlayerListener implements Listener
 			});
 		}
 		
-		final ISettings settings = ess.getSettings();
+		final Commands settings = ess.getSettings().getData().getCommands();
 		
-		if (!settings.getData().getCommands().isDisabled("motd") && Permissions.MOTD.isAuthorized(user))
+		if (!settings.isDisabled("motd") && Permissions.MOTD.isAuthorized(user))
 		{
 			try
 			{
@@ -311,7 +312,7 @@ public class EssentialsPlayerListener implements Listener
 			}
 		}
 
-		if (!settings.getData().getCommands().isDisabled("mail") && Permissions.MAIL.isAuthorized(user))
+		if (!settings.isDisabled("mail") && Permissions.MAIL.isAuthorized(user))
 		{
 			final List<String> mail = user.getMails();
 			if (mail.isEmpty())
