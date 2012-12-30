@@ -10,10 +10,11 @@ public class Commandfly extends EssentialsToggleCommand
 {
 	protected void setValue(final IUser player, final boolean value)
 	{
-		player.getPlayer().setAllowFlight(value);
-		if (!player.getPlayer().getAllowFlight())
+		final Player realPlayer = player.getPlayer();
+		realPlayer.setAllowFlight(value);
+		if (!realPlayer.getAllowFlight())
 		{
-			player.getPlayer().setFlying(false);
+			realPlayer.setFlying(false);
 		}
 	}
 
