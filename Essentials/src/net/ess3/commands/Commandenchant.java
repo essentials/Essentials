@@ -10,6 +10,7 @@ import net.ess3.bukkit.Enchantments;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -71,8 +72,9 @@ public class Commandenchant extends EssentialsCommand
 				stack.addEnchantment(enchantment, level);
 			}
 		}
-		user.getPlayer().getInventory().setItemInHand(stack);
-		user.getPlayer().updateInventory();
+		final Player player = user.getPlayer();
+		player.getInventory().setItemInHand(stack);
+		player.updateInventory();
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
 		if (level == 0)
 		{

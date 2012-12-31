@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import net.ess3.api.IPlugin;
 
 
-public class StorageQueue implements Runnable
+public class StorageQueue implements Runnable 
 {
 	private DelayQueue<WriteRequest> queue = new DelayQueue<WriteRequest>();
 	public final static long DELAY = TimeUnit.NANOSECONDS.convert(1, TimeUnit.SECONDS);
@@ -28,7 +28,7 @@ public class StorageQueue implements Runnable
 	{
 		synchronized (lock)
 		{
-			List<WriteRequest> requests = new ArrayList<WriteRequest>();
+			final List<WriteRequest> requests = new ArrayList<WriteRequest>();
 			while (enabled.get() || !queue.isEmpty())
 			{
 				try
@@ -36,13 +36,13 @@ public class StorageQueue implements Runnable
 					queue.drainTo(requests);
 					for (WriteRequest request : requests)
 					{
-						RequestState state = request.getRequestState();
+						final RequestState state = request.getRequestState();
 						if (state == RequestState.REQUEUE)
 						{
 							queue.add(request);
 							continue;
 						}
-						if (state == RequestState.SCHEDULE)
+						else if (state == RequestState.SCHEDULE)
 						{
 							plugin.scheduleAsyncDelayedTask(request.getRunnable());
 						}

@@ -1,6 +1,7 @@
 package net.ess3.bukkit;
 
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static net.ess3.I18n._;
@@ -16,6 +17,7 @@ public class VersionCheck
 	{
 		final PluginManager pm = plugin.getServer().getPluginManager();
 		final String pluginVersion = plugin.getDescription().getVersion();
+		final Logger log = plugin.getLogger();
 		for (org.bukkit.plugin.Plugin p : pm.getPlugins())
 		{
 			if (p.getDescription().getName().startsWith("Essentials")
@@ -30,16 +32,16 @@ public class VersionCheck
 			final int versionNumber = Integer.parseInt(versionMatch.group(1));
 			if (versionNumber < BUKKIT_VERSION && versionNumber > 100)
 			{
-				plugin.getLogger().log(Level.SEVERE, _("notRecommendedBukkit"));
-				plugin.getLogger().log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
+				log.log(Level.SEVERE, _("notRecommendedBukkit"));
+				log.log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
 				return false;
 			}
 		}
 		else
 		{
-			plugin.getLogger().log(Level.INFO, _("bukkitFormatChanged"));
-			plugin.getLogger().log(Level.INFO, plugin.getServer().getVersion());
-			plugin.getLogger().log(Level.INFO, plugin.getServer().getBukkitVersion());
+			log.log(Level.INFO, _("bukkitFormatChanged"));
+			log.log(Level.INFO, plugin.getServer().getVersion());
+			log.log(Level.INFO, plugin.getServer().getBukkitVersion());
 		}
 		return true;
 	}

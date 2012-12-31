@@ -1,7 +1,6 @@
 package net.ess3;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;

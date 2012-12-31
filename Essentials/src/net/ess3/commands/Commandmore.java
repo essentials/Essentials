@@ -7,6 +7,8 @@ import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
+
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -16,15 +18,16 @@ public class Commandmore extends EssentialsCommand
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		ItemStack[] stacks;
+		final Player player = user.getPlayer();
 		if (args.length > 0 && args[0].equalsIgnoreCase("all"))
 		{
-			stacks = user.getPlayer().getInventory().getContents();
+			stacks = player.getInventory().getContents();
 		}
 		else
 		{
 			stacks = new ItemStack[]
 			{
-				user.getPlayer().getItemInHand()
+				player.getItemInHand()
 			};
 		}
 		for (ItemStack stack : stacks)
@@ -42,8 +45,8 @@ public class Commandmore extends EssentialsCommand
 			}
 			ISettings settings = ess.getSettings();
 
-			int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();
-			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
+			final int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();
+			final int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
 
 			int newAmount = Permissions.OVERSIZEDSTACKS.isAuthorized(user)
 							? oversizedStackSize
@@ -88,9 +91,9 @@ public class Commandmore extends EssentialsCommand
 		}
 		if (stacks.length > 1)
 		{
-			user.getPlayer().getInventory().setContents(stacks);
+			player.getInventory().setContents(stacks);
 		}
-		user.getPlayer().updateInventory();
+		player.updateInventory();
 		if (stacks.length > 1)
 		{
 			throw new NoChargeException();

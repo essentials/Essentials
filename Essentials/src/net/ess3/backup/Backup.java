@@ -54,18 +54,29 @@ public class Backup implements Runnable, IBackup
 		{
 			return;
 		}
+		
 		final ISettings settings = ess.getSettings();
-		final String command = settings.getData().getGeneral().getBackup().getCommand();
-		if (command == null || command.isEmpty())
-		{
+		
+		final net.ess3.settings.Backup backupSettings = settings.getData().getGeneral().getBackup();
+		
+		String backupCommand = backupSettings.getCommand() == null || backupSettings.getCommand().isEmpty()
+				? ("NORUN")  : backupSettings.getCommand();
+		
+		/*if (backupCommand.equals("NORUN")) { TODO: Un-comment if you do not want commands to be run if there is no backup command
 			return;
-		}
+		}*/
+		
 		ess.getLogger().log(Level.INFO, _("backupStarted"));
-		final CommandSender consoleSender = server.getConsoleSender();
-		server.dispatchCommand(consoleSender, "save-all");
-		server.dispatchCommand(consoleSender, "save-off");
-
-		ess.getPlugin().scheduleAsyncDelayedTask(new BackupRunner(command));
+		
+		if (!backupSettings.getCommandsBeforeBackup().isEmpty()) 
+		{
+			final CommandSender consoleSender = server.getConsoleSender();
+			for (String command : backupSettings.getCommandsBeforeBackup()) {
+				server.dispatchCommand(consoleSender, command);
+			}
+		}
+		
+		ess.getPlugin().scheduleAsyncDelayedTask(new BackupRunner(backupCommand));
 	}
 
 
@@ -83,28 +94,31 @@ public class Backup implements Runnable, IBackup
 		{
 			try
 			{
-				final ProcessBuilder childBuilder = new ProcessBuilder(command);
-				childBuilder.redirectErrorStream(true);
-				childBuilder.directory(ess.getPlugin().getRootFolder());
-				final Process child = childBuilder.start();
-				final BufferedReader reader = new BufferedReader(new InputStreamReader(child.getInputStream()));
-				try
+				if (!command.equalsIgnoreCase("NORUN"))
 				{
-					child.waitFor();
-					String line;
-					do
+					final ProcessBuilder childBuilder = new ProcessBuilder(command);
+					childBuilder.redirectErrorStream(true);
+					childBuilder.directory(ess.getPlugin().getRootFolder());
+					final Process child = childBuilder.start();
+					final BufferedReader reader = new BufferedReader(new InputStreamReader(child.getInputStream()));
+					try
 					{
-						line = reader.readLine();
-						if (line != null)
+						child.waitFor();
+						String line;
+						do
 						{
-							ess.getLogger().log(Level.INFO, line);
+							line = reader.readLine();
+							if (line != null)
+							{
+								ess.getLogger().log(Level.INFO, line);
+							}
 						}
+						while (line != null);
 					}
-					while (line != null);
-				}
-				finally
-				{
-					reader.close();
+					finally
+					{
+						reader.close();
+					}
 				}
 			}
 			catch (InterruptedException ex)

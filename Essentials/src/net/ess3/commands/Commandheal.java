@@ -6,6 +6,7 @@ import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandheal extends EssentialsCommand
@@ -23,10 +24,11 @@ public class Commandheal extends EssentialsCommand
 		}
 
 		user.checkCooldown(TimestampType.LASTHEAL, ess.getRanks().getHealCooldown(user), true, Permissions.HEAL_COOLDOWN_BYPASS);
-
-		user.getPlayer().setHealth(20);
-		user.getPlayer().setFireTicks(0);
-		user.getPlayer().setFoodLevel(20);
+		
+		final Player player = user.getPlayer();
+		player.setHealth(20);
+		player.setFireTicks(0);
+		player.setFoodLevel(20);
 		user.sendMessage(_("heal"));
 	}
 
@@ -50,11 +52,12 @@ public class Commandheal extends EssentialsCommand
 			return;
 		}
 		for (IUser p : users)
-		{			
-			p.getPlayer().setHealth(20);
-			p.getPlayer().setFoodLevel(20);
-			p.getPlayer().sendMessage(_("heal"));
-			sender.sendMessage(_("healOther", p.getPlayer().getDisplayName()));
+		{	
+			final Player player = p.getPlayer();
+			player.setHealth(20);
+			player.setFoodLevel(20);
+			player.sendMessage(_("heal"));
+			sender.sendMessage(_("healOther", player.getDisplayName()));
 		}
 	}
 }

@@ -30,6 +30,7 @@ package net.ess3.utils.gnu.inet.encoding;
 public class PunycodeException
 		extends Exception
 {
+    private static final long serialVersionUID = -4335979163218011160L;
 	public static String OVERFLOW = "Overflow.";
 	public static String BAD_INPUT = "Bad input.";
 

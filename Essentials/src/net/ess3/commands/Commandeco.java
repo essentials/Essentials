@@ -17,8 +17,8 @@ public class Commandeco extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		EcoCommands cmd;
-		double amount;
+		final EcoCommands cmd;
+		final double amount;
 		try
 		{
 			cmd = EcoCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH));
@@ -65,7 +65,7 @@ public class Commandeco extends EssentialsCommand
 		else if (args[1].contentEquals("*"))
 		{
 			boolean ecoResetAllOnline = false;
-			ISettings settings = ess.getSettings();
+			final ISettings settings = ess.getSettings();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
 				final IUser player = ess.getUserMap().getUser(onlinePlayer);

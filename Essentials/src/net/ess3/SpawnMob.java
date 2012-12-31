@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Server;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
@@ -148,12 +149,14 @@ public class SpawnMob
 
 	private static void spawnMob(final IEssentials ess, final Server server, final CommandSender sender, final IUser target, final Location sloc, EntityType mob, String mobData, EntityType mobMount, String mountData) throws Exception
 	{
-		Entity spawnedMob = sloc.getWorld().spawn(sloc, (Class<? extends LivingEntity>)mob.getEntityClass());
+		
+		final World spawningWorld = sloc.getWorld();
+		final Entity spawnedMob = spawningWorld.spawn(sloc, (Class<? extends LivingEntity>)mob.getEntityClass());
 		Entity spawnedMount = null;
 
 		if (mobMount != null)
 		{
-			spawnedMount = sloc.getWorld().spawn(sloc, (Class<? extends LivingEntity>)mobMount.getEntityClass());
+			spawnedMount = spawningWorld.spawn(sloc, (Class<? extends LivingEntity>)mobMount.getEntityClass());
 			spawnedMob.setPassenger(spawnedMount);
 		}
 		if (mobData != null)

@@ -2,7 +2,6 @@ package net.ess3.commands;
 
 import java.util.*;
 import static net.ess3.I18n._;
-import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.DescParseTickFormat;
 import net.ess3.utils.Util;
@@ -51,7 +50,7 @@ public class Commandtime extends EssentialsCommand
 		}
 
 		// Parse the target time int ticks from args[0]
-		long ticks;
+		final long ticks;
 		try
 		{
 			ticks = DescParseTickFormat.parse(validArgs[0]);

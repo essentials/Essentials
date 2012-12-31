@@ -32,7 +32,7 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 		final List<String> names = new ArrayList<String>();
 		for (String key : getAllKeys())
 		{
-			IWarp warp = getObject(key);
+			final IWarp warp = getObject(key);
 			if (warp == null)
 			{
 				continue;
@@ -46,7 +46,7 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 	@Override
 	public Location getWarp(final String name) throws Exception
 	{
-		IWarp warp = getObject(name);
+		final IWarp warp = getObject(name);
 		if (warp == null)
 		{
 			throw new WarpNotFoundException(_("warpNotExist"));
@@ -92,7 +92,7 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 	}
 
 
-	private static class StringIgnoreCase
+	private static class StringIgnoreCase // TODO: USed?
 	{
 		private final String string;
 

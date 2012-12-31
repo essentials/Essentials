@@ -12,7 +12,7 @@ import org.bukkit.Bukkit;
 public abstract class AbstractDelayedYamlFileWriter implements Runnable
 {
 	private final transient IEssentials ess;
-	private final transient ReentrantLock lock = new ReentrantLock();
+	private final transient ReentrantLock lock = new ReentrantLock(); // TODO: Needed?
 
 	public AbstractDelayedYamlFileWriter(final IEssentials ess)
 	{

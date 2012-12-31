@@ -118,7 +118,7 @@ public class Commandmail extends EssentialsCommand
 		{
 			for (String username : ess.getUserMap().getAllUniqueUsers())
 			{
-				IUser user = ess.getUserMap().getUser(username);
+				final IUser user = ess.getUserMap().getUser(username);
 				if (user != null)
 				{
 					user.addMail(message);

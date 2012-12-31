@@ -24,7 +24,7 @@ public class Commandmsg extends EssentialsCommand
 		String message = getFinalArg(args, 1);
 		if (isUser(sender))
 		{
-			IUser user = getUser(sender);;
+			final IUser user = getUser(sender);
 			if (user.getData().isMuted())
 			{
 				throw new Exception(_("voiceSilenced"));
@@ -86,8 +86,9 @@ public class Commandmsg extends EssentialsCommand
 
 		for (IUser matchedPlayer : matchedPlayers)
 		{
-			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getPlayer().getDisplayName(), message));
-			if (isUser(sender) && (matchedPlayer.isIgnoringPlayer(getUser(sender)) || !player.canSee(matchedPlayer.getPlayer())))
+			final Player realPlayer = matchedPlayer.getPlayer();
+			sender.sendMessage(_("msgFormat", translatedMe, realPlayer.getDisplayName(), message));
+			if (isUser(sender) && (matchedPlayer.isIgnoringPlayer(getUser(sender)) || !player.canSee(realPlayer)))
 			{
 				continue;
 			}

@@ -25,7 +25,7 @@ public class Commandr extends EssentialsCommand
 
 		if (sender instanceof IUser)
 		{
-			IUser user = getUser(sender);
+			final IUser user = getUser(sender);
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
 				message = FormatUtil.replaceFormat(message);

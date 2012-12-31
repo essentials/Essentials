@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commandkillall extends EssentialsCommand
@@ -68,10 +69,10 @@ public class Commandkillall extends EssentialsCommand
 		{
 			radius *= radius;
 		}
-		String killType = type.toLowerCase(Locale.ENGLISH);
-		boolean animals = killType.startsWith("animal");
-		boolean monster = killType.startsWith("monster") || killType.startsWith("mob");
-		boolean all = killType.equals("all");
+		final String killType = type.toLowerCase(Locale.ENGLISH);
+		final boolean animals = killType.startsWith("animal");
+		final boolean monster = killType.startsWith("monster") || killType.startsWith("mob");
+		final boolean all = killType.equals("all");
 		Class<? extends Entity> entityClass = null;
 		if (!animals && !monster && !all)
 		{
@@ -82,7 +83,7 @@ public class Commandkillall extends EssentialsCommand
 			entityClass = LivingEntities.fromName(killType).getEntityClass();
 		}
 		int numKills = 0;
-		Location loc = isUser(sender) ? getPlayer(sender).getLocation() : null;
+		final Location loc = isUser(sender) ? getPlayer(sender).getLocation() : null;
 		for (Chunk chunk : world.getLoadedChunks())
 		{
 			for (Entity entity : chunk.getEntities())
@@ -94,7 +95,7 @@ public class Commandkillall extends EssentialsCommand
 						continue;
 					}
 				}
-				if (entity instanceof LivingEntity == false || entity instanceof HumanEntity)
+				if (!(entity instanceof LivingEntity) || entity instanceof HumanEntity)
 				{
 					continue;
 				}
@@ -116,7 +117,7 @@ public class Commandkillall extends EssentialsCommand
 				{
 					if (entity instanceof Animals || entity instanceof NPC || entity instanceof Snowman || entity instanceof WaterMob)
 					{
-						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
+						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.<ItemStack> emptyList());
 						ess.getServer().getPluginManager().callEvent(event);
 						entity.remove();
 						numKills++;
@@ -126,7 +127,7 @@ public class Commandkillall extends EssentialsCommand
 				{
 					if (entity instanceof Monster || entity instanceof ComplexLivingEntity || entity instanceof Flying || entity instanceof Slime)
 					{
-						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
+						EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.<ItemStack> emptyList());
 						ess.getServer().getPluginManager().callEvent(event);
 						entity.remove();
 						numKills++;
@@ -134,14 +135,14 @@ public class Commandkillall extends EssentialsCommand
 				}
 				else if (all)
 				{
-					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
+					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.<ItemStack> emptyList());
 					ess.getServer().getPluginManager().callEvent(event);
 					entity.remove();
 					numKills++;
 				}
 				else if (entityClass != null && entityClass.isAssignableFrom(entity.getClass()))
 				{
-					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.EMPTY_LIST);
+					EntityDeathEvent event = new EntityDeathEvent((LivingEntity)entity, Collections.<ItemStack> emptyList());
 					ess.getServer().getPluginManager().callEvent(event);
 					entity.remove();
 					numKills++;

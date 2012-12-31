@@ -113,26 +113,26 @@ public class UserData implements StorageObject
 
 	public long getTimestamp(TimestampType type)
 	{
-		Long val = getTimestamps().get(type.name());
+		final Long val = getTimestamps().get(type.name());
 		return val == null ? 0 : val;
 	}
 
 	public long getTimestamp(TimestampType type, String subType)
 	{
-		Long val = getTimestamps().get(type.name() + "-" + subType.toUpperCase(Locale.ENGLISH));
+		final Long val = getTimestamps().get(type.name() + "-" + subType.toUpperCase(Locale.ENGLISH));
 		return val == null ? 0 : val;
 	}
 
 	public void setTimestamp(TimestampType type, Long value)
 	{
-		Map<String, Long> ts = new HashMap<String, Long>(getTimestamps());
+		final Map<String, Long> ts = new HashMap<String, Long>(getTimestamps());
 		ts.put(type.name(), value);
 		timestamps = ts;
 	}
 
 	public void setTimestamp(TimestampType type, String subType, Long value)
 	{
-		Map<String, Long> ts = new HashMap<String, Long>(getTimestamps());
+		final Map<String, Long> ts = new HashMap<String, Long>(getTimestamps());
 		ts.put(type.name() + "-" + subType.toUpperCase(Locale.ENGLISH), value);
 		timestamps = ts;
 	}
@@ -146,13 +146,13 @@ public class UserData implements StorageObject
 	{
 		if (!state && unlimited.contains(mat))
 		{
-			Set<Material> unlimitedSet = new HashSet<Material>(getUnlimited());
+			final Set<Material> unlimitedSet = new HashSet<Material>(getUnlimited());
 			unlimitedSet.remove(mat);
 			unlimited = unlimitedSet;
 		}
 		if (state && !unlimited.contains(mat))
 		{
-			Set<Material> unlimitedSet = new HashSet<Material>(getUnlimited());
+			final Set<Material> unlimitedSet = new HashSet<Material>(getUnlimited());
 			unlimitedSet.add(mat);
 			unlimited = unlimitedSet;
 		}
@@ -170,7 +170,7 @@ public class UserData implements StorageObject
 
 	public void setPowertool(Material mat, List<String> commands)
 	{
-		Map<Material, List<String>> powerToolMap = new HashMap<Material, List<String>>(getPowerTools());
+		final Map<Material, List<String>> powerToolMap = new HashMap<Material, List<String>>(getPowerTools());
 		powerToolMap.put(mat, commands);
 		powerTools = powerToolMap;
 	}
@@ -182,14 +182,14 @@ public class UserData implements StorageObject
 
 	public void addHome(String name, Location location)
 	{
-		Map<String, StoredLocation> homeMap = new HashMap<String, StoredLocation>(getHomes());
+		final Map<String, StoredLocation> homeMap = new HashMap<String, StoredLocation>(getHomes());
 		homeMap.put(name, new StoredLocation(location));
 		homes = homeMap;
 	}
 
 	public void addHome(String name, StoredLocation location)
 	{
-		Map<String, StoredLocation> homeMap = new HashMap<String, StoredLocation>(getHomes());
+		final Map<String, StoredLocation> homeMap = new HashMap<String, StoredLocation>(getHomes());
 		homeMap.put(name, location);
 		homes = homeMap;
 	}
@@ -200,14 +200,14 @@ public class UserData implements StorageObject
 		{
 			return;
 		}
-		Map<String, StoredLocation> homeMap = new HashMap<String, StoredLocation>(getHomes());
+		final Map<String, StoredLocation> homeMap = new HashMap<String, StoredLocation>(getHomes());
 		homeMap.remove(home);
 		homes = homeMap;
 	}
 
 	public void addMail(String mail)
 	{
-		List<String> mailList = new ArrayList<String>(getMails());
+		final List<String> mailList = new ArrayList<String>(getMails());
 		mailList.add(mail);
 		mails = mailList;
 	}
@@ -221,13 +221,13 @@ public class UserData implements StorageObject
 	{
 		if (state && !ignore.contains(name))
 		{
-			Set<String> ignoreSet = new HashSet<String>(getIgnore());
+			final Set<String> ignoreSet = new HashSet<String>(getIgnore());
 			ignoreSet.add(name);
 			ignore = ignoreSet;
 		}
 		if (!state && ignore.contains(name))
 		{
-			Set<String> ignoreSet = new HashSet<String>(getIgnore());
+			final Set<String> ignoreSet = new HashSet<String>(getIgnore());
 			ignoreSet.remove(name);
 			ignore = ignoreSet;
 		}

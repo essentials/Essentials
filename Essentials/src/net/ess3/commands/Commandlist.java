@@ -49,14 +49,14 @@ public class Commandlist extends EssentialsCommand
 
 		sender.sendMessage(online);
 
-		ISettings settings = ess.getSettings();
+		final ISettings settings = ess.getSettings();
 
-		boolean sortListByGroups = sortListByGroups = settings.getData().getCommands().getList().isSortByGroups();
+		final boolean sortListByGroups = settings.getData().getCommands().getList().isSortByGroups();
 
 		if (sortListByGroups)
 		{
-			Map<String, List<IUser>> sort = new HashMap<String, List<IUser>>();
-			Set<String> hiddenPlayers = new HashSet<String>();
+			final Map<String, List<IUser>> sort = new HashMap<String, List<IUser>>();
+			final Set<String> hiddenPlayers = new HashSet<String>();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
 				if (userPlayer != null
@@ -115,7 +115,7 @@ public class Commandlist extends EssentialsCommand
 		else
 		{
 			final List<IUser> users = new ArrayList<IUser>();
-			Set<String> hiddenPlayers = new HashSet<String>();
+			final Set<String> hiddenPlayers = new HashSet<String>();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
 				if (userPlayer != null

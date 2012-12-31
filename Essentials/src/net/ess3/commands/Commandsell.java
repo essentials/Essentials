@@ -8,6 +8,7 @@ import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.economy.Trade;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -75,7 +76,6 @@ public class Commandsell extends EssentialsCommand
 		{
 			throw new Exception(_("itemSellAir"));
 		}
-		int id = is.getTypeId();
 		int amount = 0;
 		if (args.length > 1)
 		{
@@ -85,8 +85,8 @@ public class Commandsell extends EssentialsCommand
 				amount = -amount;
 			}
 		}
-		double worth = ess.getWorth().getPrice(is);
-		boolean stack = args.length > 1 && args[1].endsWith("s");
+		final double worth = ess.getWorth().getPrice(is);
+		final boolean stack = args.length > 1 && args[1].endsWith("s");
 
 		if (Double.isNaN(worth))
 		{
@@ -139,15 +139,17 @@ public class Commandsell extends EssentialsCommand
 			}
 		}
 
+		final Player player = user.getPlayer();
+		
 		//TODO: Prices for Enchantments
 		final ItemStack ris = is.clone();
 		ris.setAmount(amount);
-		InventoryWorkaround.removeItem(user.getPlayer().getInventory(), true, true, ris);
-		user.getPlayer().updateInventory();
-		Trade.log("Command", "Sell", "Item", user.getName(), new Trade(ris, ess), user.getName(), new Trade(worth * amount, ess), user.getPlayer().getLocation(), ess);
+		InventoryWorkaround.removeItem(player.getInventory(), true, true, ris);
+		player.updateInventory();
+		Trade.log("Command", "Sell", "Item", user.getName(), new Trade(ris, ess), user.getName(), new Trade(worth * amount, ess), player.getLocation(), ess);
 		user.giveMoney(worth * amount);
 		user.sendMessage(_("itemSold", FormatUtil.displayCurrency(worth * amount, ess), amount, is.getType().toString().toLowerCase(Locale.ENGLISH), FormatUtil.displayCurrency(worth, ess)));
-		logger.log(Level.INFO, _("itemSoldConsole", user.getPlayer().getDisplayName(), is.getType().toString().toLowerCase(Locale.ENGLISH), FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)));
+		logger.log(Level.INFO, _("itemSoldConsole", player.getDisplayName(), is.getType().toString().toLowerCase(Locale.ENGLISH), FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)));
 
 	}
 }

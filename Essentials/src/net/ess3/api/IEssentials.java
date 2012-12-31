@@ -66,4 +66,5 @@ public interface IEssentials extends IComponent
 	SpawnsHolder getSpawns();
 	
 	StorageQueue getStorageQueue();
+	
 }

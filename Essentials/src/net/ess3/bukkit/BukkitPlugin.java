@@ -30,6 +30,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
+import org.bukkit.scheduler.BukkitTask;
 
 
 public class BukkitPlugin extends JavaPlugin implements IPlugin
@@ -100,7 +101,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 		final MetricsStarter metricsStarter = new MetricsStarter(ess);
 		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
 		{
-			getServer().getScheduler().scheduleAsyncDelayedTask(this, metricsStarter, 1);
+			getServer().getScheduler().runTaskLaterAsynchronously(this, metricsStarter, 1);
 		}
 		else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
 		{
@@ -131,9 +132,9 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public int scheduleAsyncDelayedTask(final Runnable run)
+	public BukkitTask scheduleAsyncDelayedTask(final Runnable run)
 	{
-		return getServer().getScheduler().scheduleAsyncDelayedTask(this, run);
+		return getServer().getScheduler().runTaskAsynchronously(this, run);
 	}
 
 	@Override
@@ -143,9 +144,9 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public int scheduleAsyncDelayedTask(final Runnable run, final long delay)
+	public BukkitTask scheduleAsyncDelayedTask(final Runnable run, final long delay)
 	{
-		return getServer().getScheduler().scheduleAsyncDelayedTask(this, run, delay);
+		return getServer().getScheduler().runTaskLaterAsynchronously(this, run, delay);
 	}
 
 	@Override
@@ -161,9 +162,9 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public int scheduleAsyncRepeatingTask(final Runnable run, final long delay, final long period)
+	public BukkitTask scheduleAsyncRepeatingTask(final Runnable run, final long delay, final long period)
 	{
-		return getServer().getScheduler().scheduleAsyncRepeatingTask(this, run, delay, period);
+		return getServer().getScheduler().runTaskTimer(this, run, delay, period);
 	}
 
 	@Override
@@ -177,7 +178,13 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	{
 		getServer().getScheduler().cancelTask(taskId);
 	}
-
+	
+	@Override
+	public void cancelTask(BukkitTask taskId) 
+	{
+		getServer().getScheduler().cancelTask(taskId.getTaskId());
+	}
+	
 	@Override
 	public String getVersion()
 	{
@@ -185,7 +192,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public Class getClassByName(final String name)
+	public Class<?> getClassByName(final String name)
 	{
 		final JavaPluginLoader jpl = (JavaPluginLoader)this.getPluginLoader();
 		return jpl.getClassByName(name);
@@ -228,6 +235,12 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 		}
 		// Remove "Essentials" from name
 		modules.put(plugin.getName().substring(10), plugin);
+	}
+	
+	@Override
+	public void registerModule(Plugin module) 
+	{ // TODO: Use, solution for L231
+		modules.put(module.getName().substring(10), module);
 	}
 
 	@Override
