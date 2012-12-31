@@ -57,7 +57,7 @@ public class EssentialsPlayerListener implements Listener
 		if (!player.isOnline()) {
 			return;
 		}
-		final IUser user = userMap.getUser(event.getPlayer());
+		final IUser user = userMap.getUser(player);
 		user.updateCompass();
 		user.updateDisplayName();
 	}
