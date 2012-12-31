@@ -1,17 +1,16 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-
-import net.ess3.api.IUser;
-import net.ess3.utils.Util;
-import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
-import org.bukkit.inventory.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.*;
+import net.ess3.api.IUser;
+import net.ess3.utils.Util;
+
 
 public class Commandrecipe extends EssentialsCommand
 {
@@ -49,15 +48,15 @@ public class Commandrecipe extends EssentialsCommand
 		sender.sendMessage(_("recipe", getMaterialName(item), recipeNo + 1, recipes.size()));
 		if (recipe instanceof FurnaceRecipe)
 		{
-			furnaceRecipe(sender, (FurnaceRecipe) recipe);
+			furnaceRecipe(sender, (FurnaceRecipe)recipe);
 		}
 		else if (recipe instanceof ShapedRecipe)
 		{
-			shapedRecipe(sender, (ShapedRecipe) recipe);
+			shapedRecipe(sender, (ShapedRecipe)recipe);
 		}
 		else if (recipe instanceof ShapelessRecipe)
 		{
-			shapelessRecipe(sender, (ShapelessRecipe) recipe);
+			shapelessRecipe(sender, (ShapelessRecipe)recipe);
 		}
 		if (recipes.size() > 1 && args.length == 1)
 		{

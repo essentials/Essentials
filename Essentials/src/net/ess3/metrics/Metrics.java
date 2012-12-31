@@ -23,6 +23,7 @@ package net.ess3.metrics;
  * The views and conclusions contained in the software and documentation are those of the authors and contributors and
  * should not be interpreted as representing official policies, either expressed or implied, of anybody else.
  */
+
 import java.io.*;
 import java.net.Proxy;
 import java.net.URL;
@@ -193,7 +194,8 @@ public class Metrics
 			}
 
 			// Begin hitting the server with glorious data
-			taskId = plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable()
+			taskId = plugin.getServer().getScheduler().runTaskTimerAsynchronously(
+					plugin, new Runnable()
 			{
 				private boolean firstPost = true;
 

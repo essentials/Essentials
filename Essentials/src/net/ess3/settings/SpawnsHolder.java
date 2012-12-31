@@ -1,10 +1,19 @@
 package net.ess3.settings;
 
+import static net.ess3.I18n._;
 import java.io.File;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
-import static net.ess3.I18n._;
+import org.bukkit.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventException;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.plugin.EventExecutor;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IEssentialsModule;
 import net.ess3.api.ISettings;
@@ -15,15 +24,6 @@ import net.ess3.utils.textreader.IText;
 import net.ess3.utils.textreader.KeywordReplacer;
 import net.ess3.utils.textreader.SimpleTextInput;
 import net.ess3.utils.textreader.SimpleTextPager;
-import org.bukkit.*;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventException;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.plugin.EventExecutor;
 
 
 public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IEssentialsModule
@@ -37,7 +37,8 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	/**
 	 * Sets a spawn location
-	 * @param loc - Location you want to set as spawn
+	 *
+	 * @param loc   - Location you want to set as spawn
 	 * @param group - Group to save it undr in the config
 	 */
 	public void setSpawn(final Location loc, final String group)
@@ -53,6 +54,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	/**
 	 * Get the spawn for a group from the config
+	 *
 	 * @param group - Group name
 	 * @return
 	 */
@@ -84,6 +86,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	/**
 	 * Gets the World spawn location
+	 *
 	 * @return
 	 */
 	private Location getWorldSpawn()
@@ -101,6 +104,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	/**
 	 * Get re-spawn listen priority
+	 *
 	 * @return
 	 */
 	public EventPriority getRespawnPriority()
@@ -117,12 +121,12 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	/**
 	 * Get the newbie spawn from the config
+	 *
 	 * @return
 	 */
 	public Location getNewbieSpawn()
 	{
-		if (getData().getNewbieSpawn() == null || getData().getNewbieSpawn().isEmpty()
-			|| getData().getNewbieSpawn().equalsIgnoreCase("none"))
+		if (getData().getNewbieSpawn() == null || getData().getNewbieSpawn().isEmpty() || getData().getNewbieSpawn().equalsIgnoreCase("none"))
 		{
 			return null;
 		}
@@ -136,14 +140,19 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	public String getAnnounceNewPlayerFormat(IUser user)
 	{
-		return getData().getNewPlayerAnnouncement().replace('&', '\u00a7').replace("\u00a7\u00a7", "&").replace("{PLAYER}", user.getPlayer().getDisplayName()).replace("{DISPLAYNAME}", user.getPlayer().getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace("{USERNAME}", user.getName()).replace("{ADDRESS}", user.getPlayer().getAddress().toString());
+		return getData().getNewPlayerAnnouncement().replace('&', '\u00a7').replace("\u00a7\u00a7", "&").replace(
+				"{PLAYER}", user.getPlayer().getDisplayName()).replace(
+				"{DISPLAYNAME}", user.getPlayer().getDisplayName()).replace("{GROUP}", ess.getRanks().getMainGroup(user)).replace(
+				"{USERNAME}", user.getName()).replace(
+				"{ADDRESS}", user.getPlayer().getAddress().toString());
 	}
 
 	//TODO: Why is this stuff here in the settings folder?
 	private void registerListeners()
 	{
 		final SpawnPlayerListener playerListener = new SpawnPlayerListener(ess, this);
-		ess.getServer().getPluginManager().registerEvent(PlayerRespawnEvent.class, playerListener, getRespawnPriority(), new EventExecutor()
+		ess.getServer().getPluginManager().registerEvent(
+				PlayerRespawnEvent.class, playerListener, getRespawnPriority(), new EventExecutor()
 		{
 			@Override
 			public void execute(final Listener ll, final Event event) throws EventException
@@ -151,7 +160,8 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 				((SpawnPlayerListener)ll).onPlayerRespawn((PlayerRespawnEvent)event);
 			}
 		}, ess.getPlugin());
-		ess.getServer().getPluginManager().registerEvent(PlayerJoinEvent.class, playerListener, getRespawnPriority(), new EventExecutor()
+		ess.getServer().getPluginManager().registerEvent(
+				PlayerJoinEvent.class, playerListener, getRespawnPriority(), new EventExecutor()
 		{
 			@Override
 			public void execute(final Listener ll, final Event event) throws EventException

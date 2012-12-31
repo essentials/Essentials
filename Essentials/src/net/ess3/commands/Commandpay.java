@@ -5,7 +5,6 @@ import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 
 
-
 public class Commandpay extends EssentialsCommand
 {
 	@Override
@@ -17,8 +16,9 @@ public class Commandpay extends EssentialsCommand
 		}
 
 		final double amount = Double.parseDouble(args[1].replaceAll("[^0-9\\.]", ""));
-		
-		if (amount <= 0 || Double.isNaN(amount) || Double.isInfinite(amount)) {
+
+		if (amount <= 0 || Double.isNaN(amount) || Double.isInfinite(amount))
+		{
 			user.sendMessage(_("invalidAmount"));
 		}
 
@@ -26,7 +26,9 @@ public class Commandpay extends EssentialsCommand
 		for (IUser u : ess.getUserMap().matchUsers(args[0], true))
 		{
 			user.payUser(u, amount);
-			Trade.log("Command", "Pay", "Player", user.getName(), new Trade(amount, ess), u.getName(), new Trade(amount, ess), user.getPlayer().getLocation(), ess);
+			Trade.log(
+					"Command", "Pay", "Player", user.getName(), new Trade(amount, ess), u.getName(), new Trade(amount, ess), user.getPlayer().getLocation(),
+					ess);
 			foundUser = true;
 		}
 

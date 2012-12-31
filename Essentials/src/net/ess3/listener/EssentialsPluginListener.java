@@ -1,6 +1,12 @@
 package net.ess3.listener;
 
 import java.util.logging.Level;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.plugin.Plugin;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IReload;
 import net.ess3.api.ISettings;
@@ -9,12 +15,6 @@ import net.ess3.ranks.GMGroups;
 import net.ess3.ranks.RanksStorage;
 import net.ess3.ranks.VaultGroups;
 import net.ess3.settings.General;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.plugin.Plugin;
 
 
 public class EssentialsPluginListener implements Listener, IReload
@@ -35,10 +35,10 @@ public class EssentialsPluginListener implements Listener, IReload
 		ess.getCommandHandler().addPlugin(event.getPlugin());
 		if (!Methods.hasMethod() && Methods.setMethod(ess.getServer().getPluginManager()))
 		{
-			ess.getLogger().log(Level.INFO, "Payment method found ({0} version: {1})", new Object[]
-					{
-						Methods.getMethod().getName(), Methods.getMethod().getVersion()
-					});
+			ess.getLogger().log(
+					Level.INFO, "Payment method found ({0} version: {1})", new Object[]{
+					Methods.getMethod().getName(), Methods.getMethod().getVersion()
+			});
 		}
 	}
 

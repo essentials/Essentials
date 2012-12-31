@@ -1,13 +1,13 @@
 package net.ess3.commands;
 
-import java.util.*;
 import static net.ess3.I18n._;
-import net.ess3.permissions.Permissions;
-import net.ess3.utils.DescParseTickFormat;
-import net.ess3.utils.Util;
+import java.util.*;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import net.ess3.permissions.Permissions;
+import net.ess3.utils.DescParseTickFormat;
+import net.ess3.utils.Util;
 
 
 public class Commandtime extends EssentialsCommand
@@ -91,7 +91,8 @@ public class Commandtime extends EssentialsCommand
 		while (iterator.hasNext())
 		{
 			World world = iterator.next();
-			if (!Permissions.TIME_WORLDS.isAuthorized(sender, world.getName())) {
+			if (!Permissions.TIME_WORLDS.isAuthorized(sender, world.getName()))
+			{
 				iterator.remove();
 				sender.sendMessage(_("timeWorldFailed", world.getName()));
 				continue;
@@ -104,7 +105,8 @@ public class Commandtime extends EssentialsCommand
 			world.setTime(time + (add ? 0 : 24000) + ticks);
 		}
 
-		if (worlds.isEmpty()) {
+		if (worlds.isEmpty())
+		{
 			return;
 		}
 		final StringBuilder output = new StringBuilder();

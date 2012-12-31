@@ -1,7 +1,7 @@
 package net.ess3.signs.signs;
 
-import java.util.List;
 import static net.ess3.I18n._;
+import java.util.List;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.signs.EssentialsSign;

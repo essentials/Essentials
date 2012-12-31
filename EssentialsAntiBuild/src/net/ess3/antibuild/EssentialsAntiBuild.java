@@ -31,8 +31,8 @@ public class EssentialsAntiBuild extends JavaPlugin implements IAntiBuild
 	public EssentialsConnect getEssentialsConnect()
 	{
 		return ess;
-	}	
-	
+	}
+
 	@Override
 	public AntiBuildHolder getSettings()
 	{

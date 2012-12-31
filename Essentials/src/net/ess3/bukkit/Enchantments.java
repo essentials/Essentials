@@ -15,7 +15,7 @@ public final class Enchantments
 	private Enchantments()
 	{
 	}
-	
+
 	private static final transient Pattern NUMPATTERN = Pattern.compile("\\d+");
 	private static final Map<String, Enchantment> ENCHANTMENTS = new HashMap<String, Enchantment>();
 
@@ -112,12 +112,16 @@ public final class Enchantments
 		ENCHANTMENTS.put("unlimited", Enchantment.ARROW_INFINITE);
 		ENCHANTMENTS.put("unlimitedarrows", Enchantment.ARROW_INFINITE);
 	}
-	
-	public static Enchantment getByName(final String name) {
+
+	public static Enchantment getByName(final String name)
+	{
 		Enchantment enchantment;
-		if (NUMPATTERN.matcher(name).matches()) {
+		if (NUMPATTERN.matcher(name).matches())
+		{
 			enchantment = Enchantment.getById(Integer.parseInt(name));
-		} else {
+		}
+		else
+		{
 			enchantment = Enchantment.getByName(name.toUpperCase(Locale.ENGLISH));
 		}
 		if (enchantment == null)

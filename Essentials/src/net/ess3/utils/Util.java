@@ -3,12 +3,12 @@ package net.ess3.utils;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.regex.Pattern;
-import net.ess3.api.InvalidNameException;
-import net.ess3.utils.gnu.inet.encoding.Punycode;
-import net.ess3.utils.gnu.inet.encoding.PunycodeException;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import net.ess3.api.InvalidNameException;
+import net.ess3.utils.gnu.inet.encoding.Punycode;
+import net.ess3.utils.gnu.inet.encoding.PunycodeException;
 
 
 public final class Util
@@ -16,6 +16,7 @@ public final class Util
 	private Util()
 	{
 	}
+
 	private final static Pattern INVALIDFILECHARS = Pattern.compile("[^\u0020-\u007E\u0085\u00A0-\uD7FF\uE000-\uFFFC]");
 	private final static Pattern INVALIDCHARS = Pattern.compile("[^\t\n\r\u0020-\u007E\u0085\u00A0-\uD7FF\uE000-\uFFFC]");
 
@@ -80,10 +81,11 @@ public final class Util
 
 	public static ItemStack convertBlockToItem(final Block block)
 	{
-		final ItemStack is = new ItemStack(block.getType(), 1/*, (short)0, block.getData()*/); // TODO: Do we need block.getData? that constructor is depreciated
-		
+		final ItemStack is = new ItemStack(
+				block.getType(), 1/*, (short)0, block.getData()*/); // TODO: Do we need block.getData? that constructor is depreciated
+
 		short s = 0;
-		
+
 		switch (is.getType())
 		{
 		case WOODEN_DOOR:
@@ -214,5 +216,5 @@ public final class Util
 		}
 		return buf.toString();
 	}
-	
+
 }

@@ -2,12 +2,12 @@ package net.ess3;
 
 import java.util.*;
 import java.util.logging.Level;
+import org.bukkit.entity.Player;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
-import org.bukkit.entity.Player;
 
 
 public class EssentialsTimer implements Runnable

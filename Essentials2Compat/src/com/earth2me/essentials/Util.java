@@ -2,7 +2,8 @@ package com.earth2me.essentials;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.*;
+import java.util.Collection;
+import java.util.Locale;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,7 @@ public class Util
 	private Util()
 	{
 	}
+
 	private final static Logger logger = Logger.getLogger("Minecraft");
 	private final static Pattern INVALIDFILECHARS = Pattern.compile("[^a-z0-9]");
 	private final static Pattern INVALIDCHARS = Pattern.compile("[^\t\n\r\u0020-\u007E\u0085\u00A0-\uD7FF\uE000-\uFFFC]");
@@ -46,7 +48,7 @@ public class Util
 		}
 		return str;
 	}
-	
+
 	public static double roundDouble(final double d)
 	{
 		return Math.round(d * 100.0) / 100.0;

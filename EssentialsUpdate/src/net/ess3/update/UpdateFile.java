@@ -1,10 +1,6 @@
 package net.ess3.update;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.security.KeyFactory;
 import java.security.PublicKey;
@@ -25,7 +21,9 @@ public class UpdateFile
 {
 	private final static Logger LOGGER = Bukkit.getLogger();
 	private final static String UPDATE_URL = "http://goo.gl/67jev";
-	private final static BigInteger PUBLIC_KEY = new BigInteger("5ha6a2d4qdy17ttkg8evh74sl5a87djojwenu12k1lvy8ui6003e6l06rntczpoh99mhc3txj8mqlxw111oyy9yl7s7qpyluyzix3j1odxrxx4u52gxvyu6qiteapczkzvi7rxgeqsozz7b19rdx73a7quo9ybwpz1cr82r7x5k0pg2a73pjjsv2j1awr13azo7klrcxp9y5xxwf5qv1s3tw4zqftli18u0ek5qkbzfbgk1v5n2f11pkwwk6p0mibrn26wnjbv11vyiqgu95o7busmt6vf5q7grpcenl637w83mbin56s3asj1131b2mscj9xep3cbj7la9tgsxl5bj87vzy8sk2d34kzwqdqgh9nry43nqqus12l1stmiv184r8r3jcy8w43e8h1u1mzklldb5eytkuhayqik8l3ns04hwt8sgacvw534be8sx26qrn5s1", 36);
+	private final static BigInteger PUBLIC_KEY = new BigInteger(
+			"5ha6a2d4qdy17ttkg8evh74sl5a87djojwenu12k1lvy8ui6003e6l06rntczpoh99mhc3txj8mqlxw111oyy9yl7s7qpyluyzix3j1odxrxx4u52gxvyu6qiteapczkzvi7rxgeqsozz7b19rdx73a7quo9ybwpz1cr82r7x5k0pg2a73pjjsv2j1awr13azo7klrcxp9y5xxwf5qv1s3tw4zqftli18u0ek5qkbzfbgk1v5n2f11pkwwk6p0mibrn26wnjbv11vyiqgu95o7busmt6vf5q7grpcenl637w83mbin56s3asj1131b2mscj9xep3cbj7la9tgsxl5bj87vzy8sk2d34kzwqdqgh9nry43nqqus12l1stmiv184r8r3jcy8w43e8h1u1mzklldb5eytkuhayqik8l3ns04hwt8sgacvw534be8sx26qrn5s1",
+			36);
 	private final transient File file;
 	private final transient Plugin plugin;
 	private final transient TreeMap<Version, VersionInfo> versions = new TreeMap<Version, VersionInfo>();
@@ -105,8 +103,7 @@ public class UpdateFile
 				{
 					break;
 				}
-				else if ((cur >= '0' && cur <= '9')
-						 || (cur >= 'a' && cur <= 'z'))
+				else if ((cur >= '0' && cur <= '9') || (cur >= 'a' && cur <= 'z'))
 				{
 					if (isSignature)
 					{

@@ -15,13 +15,12 @@ public interface Method
 	/**
 	 * Encodes the Plugin into an Object disguised as the Plugin. If you want the original Plugin Class you must cast it
 	 * to the correct Plugin, to do so you have to verify the name and or version then cast.
-	 *
+	 * <p/>
 	 * <pre>
 	 *  if(method.getName().equalsIgnoreCase("iConomy"))
 	 *   iConomy plugin = ((iConomy)method.getPlugin());</pre>
 	 *
-	 * @return
-	 * <code>Object</code>
+	 * @return <code>Object</code>
 	 * @see #getName()
 	 * @see #getVersion()
 	 */
@@ -33,7 +32,7 @@ public interface Method
 	 * @return <code>String</code> Plugin name.
 	 */
 	public String getName();
-	
+
 	/**
 	 * Returns the reported name of this method.
 	 *
@@ -51,7 +50,7 @@ public interface Method
 	/**
 	 * Returns the amount of decimal places that get stored
 	 * NOTE: it will return -1 if there is no rounding
-	 * 
+	 *
 	 * @return <code>int</code> for each decimal place
 	 */
 	public int fractionalDigits();
@@ -108,7 +107,7 @@ public interface Method
 	/**
 	 * Forces an account creation
 	 *
-	 * @param name Account name
+	 * @param name    Account name
 	 * @param balance Initial account balance
 	 * @return <code>boolean</code>
 	 */

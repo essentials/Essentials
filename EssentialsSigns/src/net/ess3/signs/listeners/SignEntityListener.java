@@ -1,8 +1,5 @@
 package net.ess3.signs.listeners;
 
-import net.ess3.api.IEssentials;
-import net.ess3.signs.EssentialsSign;
-import net.ess3.signs.ISignsPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -10,6 +7,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import net.ess3.api.IEssentials;
+import net.ess3.signs.EssentialsSign;
+import net.ess3.signs.ISignsPlugin;
 
 
 public class SignEntityListener implements Listener
@@ -33,10 +33,8 @@ public class SignEntityListener implements Listener
 
 		for (Block block : event.blockList())
 		{
-			if (((block.getTypeId() == Material.WALL_SIGN.getId()
-				  || block.getTypeId() == Material.SIGN_POST.getId())
-				 && EssentialsSign.isValidSign(new EssentialsSign.BlockSign(block)))
-				|| EssentialsSign.checkIfBlockBreaksSigns(block))
+			if (((block.getTypeId() == Material.WALL_SIGN.getId() || block.getTypeId() == Material.SIGN_POST.getId()) && EssentialsSign.isValidSign(
+					new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
 			{
 				event.setCancelled(true);
 				return;
@@ -61,18 +59,15 @@ public class SignEntityListener implements Listener
 		}
 
 		final Block block = event.getBlock();
-		if (((block.getTypeId() == Material.WALL_SIGN.getId()
-			  || block.getTypeId() == Material.SIGN_POST.getId())
-			 && EssentialsSign.isValidSign(new EssentialsSign.BlockSign(block)))
-			|| EssentialsSign.checkIfBlockBreaksSigns(block))
+		if (((block.getTypeId() == Material.WALL_SIGN.getId() || block.getTypeId() == Material.SIGN_POST.getId()) && EssentialsSign.isValidSign(
+				new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
 		{
 			event.setCancelled(true);
 			return;
 		}
 		for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
 		{
-			if (sign.getBlocks().contains(block.getType())
-				&& !sign.onBlockBreak(block, ess))
+			if (sign.getBlocks().contains(block.getType()) && !sign.onBlockBreak(block, ess))
 			{
 				event.setCancelled(true);
 				return;

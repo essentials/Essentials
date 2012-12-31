@@ -1,12 +1,14 @@
 package net.ess3.utils;
 
+import static net.ess3.I18n._;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static net.ess3.I18n._;
 
-public class DateUtil {
+
+public class DateUtil
+{
 	public static String formatDateDiff(long date)
 	{
 		Calendar c = new GregorianCalendar();
@@ -28,29 +30,11 @@ public class DateUtil {
 		}
 
 		StringBuilder sb = new StringBuilder();
-		int[] types = new int[]
-		{
-			Calendar.YEAR,
-			Calendar.MONTH,
-			Calendar.DAY_OF_MONTH,
-			Calendar.HOUR_OF_DAY,
-			Calendar.MINUTE,
-			Calendar.SECOND
+		int[] types = new int[]{
+				Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND
 		};
-		String[] names = new String[]
-		{
-			_("year"),
-			_("years"),
-			_("month"),
-			_("months"),
-			_("day"),
-			_("days"),
-			_("hour"),
-			_("hours"),
-			_("minute"),
-			_("minutes"),
-			_("second"),
-			_("seconds")
+		String[] names = new String[]{
+				_("year"), _("years"), _("month"), _("months"), _("day"), _("days"), _("hour"), _("hours"), _("minute"), _("minutes"), _("second"), _("seconds")
 		};
 		for (int i = 0; i < types.length; i++)
 		{
@@ -85,13 +69,8 @@ public class DateUtil {
 	public static long parseDateDiff(String time, boolean future) throws Exception
 	{
 		Pattern timePattern = Pattern.compile(
-				"(?:([0-9]+)\\s*y[a-z]*[,\\s]*)?"
-				+ "(?:([0-9]+)\\s*mo[a-z]*[,\\s]*)?"
-				+ "(?:([0-9]+)\\s*w[a-z]*[,\\s]*)?"
-				+ "(?:([0-9]+)\\s*d[a-z]*[,\\s]*)?"
-				+ "(?:([0-9]+)\\s*h[a-z]*[,\\s]*)?"
-				+ "(?:([0-9]+)\\s*m[a-z]*[,\\s]*)?"
-				+ "(?:([0-9]+)\\s*(?:s[a-z]*)?)?", Pattern.CASE_INSENSITIVE);
+				"(?:([0-9]+)\\s*y[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*mo[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*w[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*d[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*h[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*m[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*(?:s[a-z]*)?)?",
+				Pattern.CASE_INSENSITIVE);
 		Matcher m = timePattern.matcher(time);
 		int years = 0;
 		int months = 0;

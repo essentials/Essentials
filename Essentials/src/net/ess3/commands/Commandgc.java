@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
-import java.lang.management.ManagementFactory;
 import static net.ess3.I18n._;
-import net.ess3.utils.DateUtil;
+import java.lang.management.ManagementFactory;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import net.ess3.utils.DateUtil;
 
 
 public class Commandgc extends EssentialsCommand
@@ -33,7 +33,7 @@ public class Commandgc extends EssentialsCommand
 		sender.sendMessage(_("gcmax", (runtime.maxMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gctotal", (runtime.totalMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gcfree", (runtime.freeMemory() / 1024 / 1024)));
-		sender.sendMessage(_("gcquene", (ess.getStorageQueue().getQueueSize()))); 
+		sender.sendMessage(_("gcquene", (ess.getStorageQueue().getQueueSize())));
 
 		for (World w : server.getWorlds())
 		{
@@ -49,13 +49,11 @@ public class Commandgc extends EssentialsCommand
 			default:
 				worldType = "World";
 				break;
-				
+
 			}
 
 			sender.sendMessage(
-					worldType + " \"" + w.getName() + "\": "
-					+ w.getLoadedChunks().length + _("gcchunks")
-					+ w.getEntities().size() + _("gcentities"));
+					worldType + " \"" + w.getName() + "\": " + w.getLoadedChunks().length + _("gcchunks") + w.getEntities().size() + _("gcentities"));
 		}
 	}
 }

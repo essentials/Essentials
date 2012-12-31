@@ -1,18 +1,18 @@
 package net.ess3;
 
+import static net.ess3.I18n._;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-import static net.ess3.I18n._;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IItemDb;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.storage.ManagedFile;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 
 public class ItemDb implements IItemDb
@@ -24,6 +24,7 @@ public class ItemDb implements IItemDb
 		this.ess = ess;
 		file = new ManagedFile("items.csv", ess);
 	}
+
 	private final transient Map<String, Long> items = new HashMap<String, Long>();
 	private final transient ManagedFile file;
 	private static final Pattern SPLIT = Pattern.compile("[^a-zA-Z0-9]");
@@ -91,6 +92,7 @@ public class ItemDb implements IItemDb
 		retval.setAmount(quantity);
 		return retval;
 	}
+
 	private final Pattern idMatch = Pattern.compile("^\\d+[:+',;.]\\d+$");
 	private final Pattern metaSplit = Pattern.compile("[:+',;.]");
 	private final Pattern number = Pattern.compile("^\\d+$");

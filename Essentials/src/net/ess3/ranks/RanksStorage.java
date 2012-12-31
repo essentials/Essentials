@@ -7,12 +7,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
 import net.ess3.permissions.Permissions;
 import net.ess3.storage.AsyncStorageObjectHolder;
-import org.bukkit.command.CommandSender;
 
 
 public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRanks

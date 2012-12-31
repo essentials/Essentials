@@ -1,10 +1,10 @@
 package net.ess3.permissions;
 
 import java.util.Locale;
-import net.ess3.api.IPermission;
-import net.ess3.bukkit.PermissionFactory;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
+import net.ess3.api.IPermission;
+import net.ess3.bukkit.PermissionFactory;
 
 
 public enum Permissions implements IPermission
@@ -113,7 +113,7 @@ public enum Permissions implements IPermission
 	WARP_HIDDEN,
 	WARP_OTHERS,
 	VANISH_EXEMPT,
-	VANISH_SEE_OTHERS, 
+	VANISH_SEE_OTHERS,
 	VANISH_PVP,
 	VANISH_OTHERS;
 	private static final String base = "essentials.";
@@ -162,6 +162,7 @@ public enum Permissions implements IPermission
 	{
 		return PermissionFactory.checkPermission(sender, this);
 	}
+
 	public static DotStarPermission ENCHANT = new DotStarPermission("essentials.enchant");
 	public static MaterialDotStarPermission GIVE = new MaterialDotStarPermission("essentials.give", PermissionDefault.TRUE);
 	public static DotStarPermission RANKS = new DotStarPermission("essentials.ranks");

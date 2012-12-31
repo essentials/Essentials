@@ -17,15 +17,19 @@
  */
 package net.ess3;
 
+import static net.ess3.I18n._;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.Server;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.InvalidDescriptionException;
 import lombok.Getter;
 import lombok.Setter;
-import static net.ess3.I18n._;
 import net.ess3.api.*;
 import net.ess3.backup.Backup;
 import net.ess3.commands.EssentialsCommandHandler;
@@ -40,10 +44,6 @@ import net.ess3.settings.SpawnsHolder;
 import net.ess3.storage.StorageQueue;
 import net.ess3.user.UserMap;
 import net.ess3.utils.ExecuteTimer;
-import org.bukkit.Server;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.InvalidDescriptionException;
 
 
 public class Essentials implements IEssentials

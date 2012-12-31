@@ -30,6 +30,7 @@ public class Version implements Comparable<Version>
 	{
 		return type;
 	}
+
 	private final transient int major;
 	private final transient int minor;
 	private final transient int build;

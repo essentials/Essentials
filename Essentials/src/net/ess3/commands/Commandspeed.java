@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 
 
 public class Commandspeed extends EssentialsCommand
@@ -60,8 +60,8 @@ public class Commandspeed extends EssentialsCommand
 
 		//if (isFly)
 		//{
-			user.getPlayer().setFlySpeed((float)getRealMoveSpeed(speed, isFly, isBypass));
-			user.sendMessage(_("moveSpeed", _("flying"), speed, user.getPlayer().getDisplayName()));
+		user.getPlayer().setFlySpeed((float)getRealMoveSpeed(speed, isFly, isBypass));
+		user.sendMessage(_("moveSpeed", _("flying"), speed, user.getPlayer().getDisplayName()));
 		//}
 		//else
 		//{
@@ -80,10 +80,10 @@ public class Commandspeed extends EssentialsCommand
 				sender.sendMessage(_("moveSpeed", _("flying"), speed, matchPlayer.getDisplayName()));
 			}
 			//else
-		//	{
-		//		matchPlayer.setWalkSpeed(getRealMoveSpeed(speed, isFly, isBypass));
-		//		sender.sendMessage(_("moveSpeed", _("walking"), speed, matchPlayer.getDisplayName()));
-		//	}
+			//	{
+			//		matchPlayer.setWalkSpeed(getRealMoveSpeed(speed, isFly, isBypass));
+			//		sender.sendMessage(_("moveSpeed", _("walking"), speed, matchPlayer.getDisplayName()));
+			//	}
 		}
 	}
 
@@ -94,8 +94,7 @@ public class Commandspeed extends EssentialsCommand
 		{
 			isFlyMode = true;
 		}
-		else if (modeString.contains("walk") || modeString.contains("run")
-				 || modeString.equalsIgnoreCase("w") || modeString.equalsIgnoreCase("r"))
+		else if (modeString.contains("walk") || modeString.contains("run") || modeString.equalsIgnoreCase("w") || modeString.equalsIgnoreCase("r"))
 		{
 			isFlyMode = false;
 		}

@@ -80,8 +80,7 @@ public class YamlStorageReader implements IStorageReader
 		{
 			prepareList(field, description, classes, constructor);
 			prepareMap(field, description, classes, constructor);
-			if (StorageObject.class.isAssignableFrom(field.getType())
-				&& !classes.contains(field.getType()))
+			if (StorageObject.class.isAssignableFrom(field.getType()) && !classes.contains(field.getType()))
 			{
 				prepareConstructor(constructor, classes, field.getType());
 			}
@@ -95,8 +94,7 @@ public class YamlStorageReader implements IStorageReader
 		if (listType != null)
 		{
 			description.putListPropertyType(field.getName(), listType.value());
-			if (StorageObject.class.isAssignableFrom(listType.value())
-				&& !classes.contains(listType.value()))
+			if (StorageObject.class.isAssignableFrom(listType.value()) && !classes.contains(listType.value()))
 			{
 				prepareConstructor(constructor, classes, listType.value());
 			}
@@ -109,11 +107,9 @@ public class YamlStorageReader implements IStorageReader
 		if (mapType != null)
 		{
 			final MapKeyType mapKeyType = field.getAnnotation(MapKeyType.class);
-			description.putMapPropertyType(field.getName(),
-										   mapKeyType == null ? String.class : mapKeyType.value(),
-										   mapType.value());
-			if (StorageObject.class.isAssignableFrom(mapType.value())
-				&& !classes.contains(mapType.value()))
+			description.putMapPropertyType(
+					field.getName(), mapKeyType == null ? String.class : mapKeyType.value(), mapType.value());
+			if (StorageObject.class.isAssignableFrom(mapType.value()) && !classes.contains(mapType.value()))
 			{
 				prepareConstructor(constructor, classes, mapType.value());
 			}

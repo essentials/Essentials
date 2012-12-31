@@ -1,19 +1,19 @@
 package net.ess3.commands;
 
-import java.util.*;
 import static net.ess3.I18n._;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
-import net.ess3.utils.DescParseTickFormat;
+import java.util.*;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
+import net.ess3.utils.DescParseTickFormat;
 
 
 public class Commandptime extends EssentialsCommand
 {
 	public static final Set<String> getAliases = new HashSet<String>();
-	
+
 	static
 	{
 		getAliases.add("get");
@@ -21,7 +21,7 @@ public class Commandptime extends EssentialsCommand
 		getAliases.add("show");
 		getAliases.add("display");
 	}
-	
+
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
@@ -39,14 +39,14 @@ public class Commandptime extends EssentialsCommand
 			getUsersTime(sender, users);
 			return;
 		}
-		
+
 		IUser user = isUser(sender) ? getUser(sender) : null;
 		if ((!users.contains(user) || users.size() > 1) && user != null && !Permissions.PTIME_OTHERS.isAuthorized(user))
 		{
 			user.sendMessage(_("pTimeOthersPermission"));
 			return;
 		}
-		
+
 		Long ticks;
 		// Parse the target time int ticks from args[0]
 		String timeParam = args[0];
@@ -56,7 +56,7 @@ public class Commandptime extends EssentialsCommand
 			relative = false;
 			timeParam = timeParam.substring(1);
 		}
-		
+
 		if (getAliases.contains(timeParam))
 		{
 			getUsersTime(sender, users);
@@ -77,7 +77,7 @@ public class Commandptime extends EssentialsCommand
 				throw new NotEnoughArgumentsException(e);
 			}
 		}
-		
+
 		setUsersTime(sender, users, ticks, relative);
 	}
 
@@ -90,7 +90,7 @@ public class Commandptime extends EssentialsCommand
 		{
 			sender.sendMessage(_("pTimePlayers"));
 		}
-		
+
 		for (IUser user : users)
 		{
 			if (user.getPlayer().getPlayerTimeOffset() == 0)
@@ -143,7 +143,7 @@ public class Commandptime extends EssentialsCommand
 				user.getPlayer().setPlayerTime(time, relative);
 			}
 		}
-		
+
 		final StringBuilder msg = new StringBuilder();
 		for (IUser user : users)
 		{
@@ -151,7 +151,7 @@ public class Commandptime extends EssentialsCommand
 			{
 				msg.append(", ");
 			}
-			
+
 			msg.append(user.getName());
 		}
 
@@ -205,7 +205,7 @@ public class Commandptime extends EssentialsCommand
 		{
 			user = ess.getUserMap().getUser(matchedPlayers.get(0));
 		}
-		
+
 		if (user != null)
 		{
 			users.add(user);
@@ -223,7 +223,7 @@ public class Commandptime extends EssentialsCommand
 		{
 			throw new Exception(_("playerNotFound"));
 		}
-		
+
 		return users;
 	}
 }

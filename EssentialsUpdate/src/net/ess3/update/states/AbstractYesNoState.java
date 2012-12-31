@@ -22,22 +22,18 @@ public abstract class AbstractYesNoState extends AbstractState
 	@Override
 	public AbstractState getNextState()
 	{
-		return answer
-			   ? (yesState == null ? null : getState(yesState))
-			   : (noState == null ? null : getState(noState));
+		return answer ? (yesState == null ? null : getState(yesState)) : (noState == null ? null : getState(noState));
 	}
 
 	@Override
 	public boolean reactOnAnswer(final String answer)
 	{
-		if (answer.equalsIgnoreCase("yes")
-			|| answer.equalsIgnoreCase("y"))
+		if (answer.equalsIgnoreCase("yes") || answer.equalsIgnoreCase("y"))
 		{
 			this.answer = true;
 			return true;
 		}
-		if (answer.equalsIgnoreCase("no")
-			|| answer.equalsIgnoreCase("n"))
+		if (answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("n"))
 		{
 			this.answer = false;
 			return true;

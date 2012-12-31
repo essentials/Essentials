@@ -1,18 +1,14 @@
 package com.earth2me.essentials;
 
-import com.google.common.io.PatternFilenameFilter;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
-import net.ess3.api.InvalidNameException;
-import net.ess3.api.NoLoanPermittedException;
-import net.ess3.api.UserDoesNotExistException;
-import net.ess3.user.User;
 import org.bukkit.Material;
+import com.google.common.io.PatternFilenameFilter;
+import net.ess3.api.*;
+import net.ess3.user.User;
 
 
 class UpdateUserFiles
@@ -57,7 +53,8 @@ class UpdateUserFiles
 			else
 			{
 				IUser user = ess.getUserMap().getUser(name);
-				if (user == null) {
+				if (user == null)
+				{
 					try
 					{
 						user = new User(ess.getServer().getOfflinePlayer(name), ess);
@@ -137,6 +134,7 @@ class UpdateUserFiles
 		String realname = getPlayer(name);
 		return realname == null ? BROKENNAME : realname;
 	}
+
 	private final Map<String, String> players = new HashMap<String, String>();
 
 	private String getPlayer(String check)

@@ -16,16 +16,16 @@ public class Commandtpahere extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		
+
 		final IUser player = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 		if (!player.getData().isTeleportEnabled())
 		{
 			throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
 		}
-		
+
 		ISettings settings = ess.getSettings();
-		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
-			&& !Permissions.WORLD.isAuthorized(user, user.getPlayer().getWorld().getName()))
+		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions() && !Permissions.WORLD.isAuthorized(
+				user, user.getPlayer().getWorld().getName()))
 		{
 			throw new Exception(_("noPerm", "essentials.world." + user.getPlayer().getWorld().getName()));
 		}

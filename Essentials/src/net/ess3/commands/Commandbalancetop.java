@@ -1,17 +1,17 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.text.DateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData;
 import net.ess3.utils.FormatUtil;
 import net.ess3.utils.textreader.ArrayListInput;
 import net.ess3.utils.textreader.TextPager;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandbalancetop extends EssentialsCommand
@@ -43,9 +43,7 @@ public class Commandbalancetop extends EssentialsCommand
 						user.getData().setBalancetopHide(!user.getData().isBalancetopHide());
 						user.queueSave();
 						sender.sendMessage(
-								user.getData().isBalancetopHide()
-								? _("baltopHidden")
-								: _("baltopShown")); 
+								user.getData().isBalancetopHide() ? _("baltopHidden") : _("baltopShown"));
 					}
 					else if (args.length == 2 && Permissions.BALANCETOP_HIDE_OTHERS.isAuthorized(sender))
 					{
@@ -54,9 +52,7 @@ public class Commandbalancetop extends EssentialsCommand
 						userData.setBalancetopHide(!userData.isBalancetopHide());
 						user.queueSave();
 						sender.sendMessage(
-								userData.isBalancetopHide()
-								? user.getName() + _("userBaltopHidden")
-								: user.getName() + _("userBaltopShown")); 
+								userData.isBalancetopHide() ? user.getName() + _("userBaltopHidden") : user.getName() + _("userBaltopShown"));
 					}
 					else
 					{
@@ -149,7 +145,8 @@ public class Commandbalancetop extends EssentialsCommand
 					}
 
 					final List<Map.Entry<String, Double>> sortedEntries = new ArrayList<Map.Entry<String, Double>>(balances.entrySet());
-					Collections.sort(sortedEntries, new Comparator<Map.Entry<String, Double>>()
+					Collections.sort(
+							sortedEntries, new Comparator<Map.Entry<String, Double>>()
 					{
 						@Override
 						public int compare(final Entry<String, Double> entry1, final Entry<String, Double> entry2)

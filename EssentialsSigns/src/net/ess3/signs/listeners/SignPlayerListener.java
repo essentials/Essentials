@@ -1,8 +1,5 @@
 package net.ess3.signs.listeners;
 
-import net.ess3.api.IEssentials;
-import net.ess3.signs.EssentialsSign;
-import net.ess3.signs.ISignsPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -11,6 +8,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import net.ess3.api.IEssentials;
+import net.ess3.signs.EssentialsSign;
+import net.ess3.signs.ISignsPlugin;
 
 
 public class SignPlayerListener implements Listener
@@ -55,8 +55,7 @@ public class SignPlayerListener implements Listener
 		{
 			for (EssentialsSign sign : plugin.getSettings().getEnabledSigns())
 			{
-				if (sign.getBlocks().contains(block.getType())
-					&& !sign.onBlockInteract(block, event.getPlayer(), ess))
+				if (sign.getBlocks().contains(block.getType()) && !sign.onBlockInteract(block, event.getPlayer(), ess))
 				{
 					event.setCancelled(true);
 					return;

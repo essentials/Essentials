@@ -1,15 +1,15 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import static net.ess3.I18n._;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData;
 import net.ess3.utils.Util;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 
 public class Commandpowertool extends EssentialsCommand
@@ -57,7 +57,7 @@ public class Commandpowertool extends EssentialsCommand
 				{
 					throw new Exception(_("powerToolNoSuchCommandAssigned", command, itemName));
 				}
-				
+
 				powertools = new ArrayList<String>(powertools);
 				powertools.remove(command);
 				user.sendMessage(_("powerToolRemove", command, itemName));

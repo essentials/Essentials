@@ -67,8 +67,7 @@ public class EnchantmentLevel implements Entry<Enchantment, Integer>
 		if (obj instanceof Entry)
 		{
 			final Entry entry = (Entry)obj;
-			if (entry.getKey() instanceof Enchantment
-				&& entry.getValue() instanceof Integer)
+			if (entry.getKey() instanceof Enchantment && entry.getValue() instanceof Integer)
 			{
 				final Enchantment objEnchantment = (Enchantment)entry.getKey();
 				final Integer objLevel = (Integer)entry.getValue();

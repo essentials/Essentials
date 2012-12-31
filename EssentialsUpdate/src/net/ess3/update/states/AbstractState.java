@@ -1,8 +1,7 @@
 package net.ess3.update.states;
 
-import net.ess3.update.AbstractWorkListener;
-import net.ess3.update.AbstractWorkListener;
 import org.bukkit.entity.Player;
+import net.ess3.update.AbstractWorkListener;
 
 
 public abstract class AbstractState
@@ -66,11 +65,8 @@ public abstract class AbstractState
 	public final AbstractState reactOnAnswer(final Player sender, final String answer)
 	{
 		final String trimmedAnswer = answer.trim();
-		if (trimmedAnswer.equalsIgnoreCase("quit")
-			|| trimmedAnswer.equalsIgnoreCase("bye")
-			|| trimmedAnswer.equalsIgnoreCase("abort")
-			|| trimmedAnswer.equalsIgnoreCase("cancel")
-			|| trimmedAnswer.equalsIgnoreCase("exit"))
+		if (trimmedAnswer.equalsIgnoreCase("quit") || trimmedAnswer.equalsIgnoreCase("bye") || trimmedAnswer.equalsIgnoreCase(
+				"abort") || trimmedAnswer.equalsIgnoreCase("cancel") || trimmedAnswer.equalsIgnoreCase("exit"))
 		{
 			abort();
 			return null;

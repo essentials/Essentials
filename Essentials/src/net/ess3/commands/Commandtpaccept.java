@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Commandtpaccept extends EssentialsCommand
@@ -19,10 +19,8 @@ public class Commandtpaccept extends EssentialsCommand
 		}
 
 		final IUser target = user.getTeleportRequester();
-		if (target == null
-			|| !target.isOnline()
-			|| (user.isTpRequestHere() && !Permissions.TPAHERE.isAuthorized(target))
-			|| (!user.isTpRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
+		if (target == null || !target.isOnline() || (user.isTpRequestHere() && !Permissions.TPAHERE.isAuthorized(
+				target)) || (!user.isTpRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}

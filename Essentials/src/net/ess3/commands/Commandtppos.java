@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-import net.ess3.api.IUser;
-import net.ess3.economy.Trade;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import net.ess3.api.IUser;
+import net.ess3.economy.Trade;
 
 
 public class Commandtppos extends EssentialsCommand
@@ -30,7 +30,7 @@ public class Commandtppos extends EssentialsCommand
 		{
 			location.setPitch(Float.parseFloat(args[4]));
 		}
-		if (x > 30000000 ||  y > 30000000 || z > 30000000 || x < -30000000 || y < -30000000 || z < -30000000)
+		if (x > 30000000 || y > 30000000 || z > 30000000 || x < -30000000 || y < -30000000 || z < -30000000)
 		{
 			throw new NotEnoughArgumentsException(_("tpposTooFar"));
 		}
@@ -62,7 +62,7 @@ public class Commandtppos extends EssentialsCommand
 		{
 			location.setPitch(Float.parseFloat(args[5]));
 		}
-		if (x > 30000000 ||  y > 30000000 || z > 30000000 || x < -30000000 || y < -30000000 || z < -30000000)
+		if (x > 30000000 || y > 30000000 || z > 30000000 || x < -30000000 || y < -30000000 || z < -30000000)
 		{
 			throw new NotEnoughArgumentsException(_("tpposTooFar"));
 		}

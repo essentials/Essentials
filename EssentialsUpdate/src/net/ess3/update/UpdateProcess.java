@@ -1,8 +1,5 @@
 package net.ess3.update;
 
-import net.ess3.update.states.InstallationFinishedEvent;
-import net.ess3.update.states.StateMachine;
-import net.ess3.update.tasks.SelfUpdate;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -13,6 +10,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
+import net.ess3.update.states.InstallationFinishedEvent;
+import net.ess3.update.states.StateMachine;
+import net.ess3.update.tasks.SelfUpdate;
+
 
 // TODO: This whole thing should make use of the conversations api
 public class UpdateProcess implements Listener
@@ -43,40 +44,37 @@ public class UpdateProcess implements Listener
 				currentPlayer.sendMessage("A newer version of EssentialsUpdate is found. Downloading new file and reloading server.");
 			}
 			Bukkit.getLogger().log(Level.INFO, "A newer version of EssentialsUpdate is found. Downloading new file and reloading server.");
-			new SelfUpdate(new AbstractWorkListener(plugin, updateCheck.getNewVersionInfo())
-			{
-				@Override
-				public void onWorkAbort(final String message)
-				{
-					if (message != null && !message.isEmpty()
-						&& UpdateProcess.this.currentPlayer != null
-						&& UpdateProcess.this.currentPlayer.isOnline())
+			new SelfUpdate(
+					new AbstractWorkListener(plugin, updateCheck.getNewVersionInfo())
 					{
-						UpdateProcess.this.currentPlayer.sendMessage(message);
-					}
-					if (message != null && !message.isEmpty())
-					{
-						Bukkit.getLogger().log(Level.SEVERE, message);
-					}
-					UpdateProcess.this.currentPlayer = null;
-				}
+						@Override
+						public void onWorkAbort(final String message)
+						{
+							if (message != null && !message.isEmpty() && UpdateProcess.this.currentPlayer != null && UpdateProcess.this.currentPlayer.isOnline())
+							{
+								UpdateProcess.this.currentPlayer.sendMessage(message);
+							}
+							if (message != null && !message.isEmpty())
+							{
+								Bukkit.getLogger().log(Level.SEVERE, message);
+							}
+							UpdateProcess.this.currentPlayer = null;
+						}
 
-				@Override
-				public void onWorkDone(final String message)
-				{
-					if (message != null && !message.isEmpty()
-						&& UpdateProcess.this.currentPlayer != null
-						&& UpdateProcess.this.currentPlayer.isOnline())
-					{
-						UpdateProcess.this.currentPlayer.sendMessage(message);
-					}
-					if (message != null && !message.isEmpty())
-					{
-						Bukkit.getLogger().log(Level.INFO, message);
-					}
-					UpdateProcess.this.currentPlayer = null;
-				}
-			}).start();
+						@Override
+						public void onWorkDone(final String message)
+						{
+							if (message != null && !message.isEmpty() && UpdateProcess.this.currentPlayer != null && UpdateProcess.this.currentPlayer.isOnline())
+							{
+								UpdateProcess.this.currentPlayer.sendMessage(message);
+							}
+							if (message != null && !message.isEmpty())
+							{
+								Bukkit.getLogger().log(Level.INFO, message);
+							}
+							UpdateProcess.this.currentPlayer = null;
+						}
+					}).start();
 			return true;
 		}
 		if (updateCheck.getResult() == UpdateCheck.CheckResult.NEW_ESS_BUKKIT)
@@ -142,13 +140,16 @@ public class UpdateProcess implements Listener
 			switch (result)
 			{
 			case NEW_ESS:
-				player.sendMessage("The new version " + updateCheck.getNewVersion().toString() + " for Essentials is available. Please type /essentialsupdate to update.");
+				player.sendMessage(
+						"The new version " + updateCheck.getNewVersion().toString() + " for Essentials is available. Please type /essentialsupdate to update.");
 				break;
 			case NEW_BUKKIT:
-				player.sendMessage("Your bukkit version is not the recommended build for Essentials, please update to version " + updateCheck.getNewBukkitVersion() + ".");
+				player.sendMessage(
+						"Your bukkit version is not the recommended build for Essentials, please update to version " + updateCheck.getNewBukkitVersion() + ".");
 				break;
 			case NEW_ESS_BUKKIT:
-				player.sendMessage("There is a new version " + updateCheck.getNewVersion().toString() + " of Essentials for Bukkit " + updateCheck.getNewBukkitVersion());
+				player.sendMessage(
+						"There is a new version " + updateCheck.getNewVersion().toString() + " of Essentials for Bukkit " + updateCheck.getNewBukkitVersion());
 				break;
 			default:
 			}
@@ -187,7 +188,8 @@ public class UpdateProcess implements Listener
 	private void startWork()
 	{
 		currentPlayer.sendMessage("Installation wizard done. Starting installation.");
-		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
+		Bukkit.getScheduler().scheduleSyncDelayedTask(
+				plugin, new Runnable()
 		{
 			@Override
 			public void run()

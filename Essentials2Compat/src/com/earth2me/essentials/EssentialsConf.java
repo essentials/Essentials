@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import com.google.common.io.Files;
+import static net.ess3.I18n._;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -13,8 +13,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static net.ess3.I18n._;
-import net.ess3.storage.StoredLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -23,6 +21,8 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import com.google.common.io.Files;
+import net.ess3.storage.StoredLocation;
 
 
 @Deprecated
@@ -127,7 +127,9 @@ public class EssentialsConf extends YamlConfiguration
 				{
 					buffer.rewind();
 					data.clear();
-					LOGGER.log(Level.INFO, "File " + configFile.getAbsolutePath().toString() + " is not utf-8 encoded, trying " + Charset.defaultCharset().displayName());
+					LOGGER.log(
+							Level.INFO,
+							"File " + configFile.getAbsolutePath().toString() + " is not utf-8 encoded, trying " + Charset.defaultCharset().displayName());
 					decoder = Charset.defaultCharset().newDecoder();
 					result = decoder.decode(buffer, data, true);
 					if (result.isError())
@@ -245,12 +247,10 @@ public class EssentialsConf extends YamlConfiguration
 		{
 			return null;
 		}
-		return new StoredLocation(worldName,
-							getDouble((path == null ? "" : path + ".") + "x", 0),
-							getDouble((path == null ? "" : path + ".") + "y", 0),
-							getDouble((path == null ? "" : path + ".") + "z", 0),
-							(float)getDouble((path == null ? "" : path + ".") + "yaw", 0),
-							(float)getDouble((path == null ? "" : path + ".") + "pitch", 0));
+		return new StoredLocation(
+				worldName, getDouble((path == null ? "" : path + ".") + "x", 0), getDouble((path == null ? "" : path + ".") + "y", 0),
+				getDouble((path == null ? "" : path + ".") + "z", 0), (float)getDouble((path == null ? "" : path + ".") + "yaw", 0),
+				(float)getDouble((path == null ? "" : path + ".") + "pitch", 0));
 	}
 
 	public void setProperty(final String path, final Location loc)
@@ -267,9 +267,7 @@ public class EssentialsConf extends YamlConfiguration
 	public ItemStack getItemStack(final String path)
 	{
 		final ItemStack stack = new ItemStack(
-				Material.valueOf(getString(path + ".type", "AIR")),
-				getInt(path + ".amount", 1),
-				(short)getInt(path + ".damage", 0));
+				Material.valueOf(getString(path + ".type", "AIR")), getInt(path + ".amount", 1), (short)getInt(path + ".damage", 0));
 		final ConfigurationSection enchants = getConfigurationSection(path + ".enchant");
 		if (enchants != null)
 		{

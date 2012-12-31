@@ -1,13 +1,12 @@
 package net.ess3;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import junit.framework.TestCase;
-import net.ess3.api.IPlugin;
-import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -15,8 +14,9 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import junit.framework.TestCase;
+import net.ess3.api.IPlugin;
+import org.apache.commons.io.FileUtils;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -43,37 +43,39 @@ public abstract class EssentialsTest extends TestCase
 			when(pluginManager.getPlugins()).thenReturn(new Plugin[0]);
 			when(server.getLogger()).thenReturn(logger);
 			when(server.getOnlinePlayers()).thenReturn(playerList.toArray(new Player[0]));
-			when(server.getPlayerExact(anyString())).thenAnswer(new Answer<Player>()
-			{
-				@Override
-				public Player answer(InvocationOnMock invocation) throws Throwable
-				{
-					Object[] args = invocation.getArguments();
-					String name = (String)args[0];
-					for (Player player : playerList)
+			when(server.getPlayerExact(anyString())).thenAnswer(
+					new Answer<Player>()
 					{
-						if (player.getName().equalsIgnoreCase(name))
+						@Override
+						public Player answer(InvocationOnMock invocation) throws Throwable
 						{
-							return player;
+							Object[] args = invocation.getArguments();
+							String name = (String)args[0];
+							for (Player player : playerList)
+							{
+								if (player.getName().equalsIgnoreCase(name))
+								{
+									return player;
+								}
+							}
+							return null;
 						}
-					}
-					return null;
-				}
-			});
+					});
 			when(server.getPluginManager()).thenReturn(pluginManager);
 			when(server.getOfflinePlayers()).thenReturn(playerList.toArray(new Player[0]));
-			when(server.getOfflinePlayer(anyString())).thenAnswer(new Answer<OfflinePlayer>()
-			{
-				@Override
-				public OfflinePlayer answer(InvocationOnMock invocation) throws Throwable
-				{
-					Object[] args = invocation.getArguments();
-					String name = (String)args[0];
-					OfflinePlayer player = mock(OfflinePlayer.class);
-					when(player.getName()).thenReturn(name);
-					return player;
-				}
-			});
+			when(server.getOfflinePlayer(anyString())).thenAnswer(
+					new Answer<OfflinePlayer>()
+					{
+						@Override
+						public OfflinePlayer answer(InvocationOnMock invocation) throws Throwable
+						{
+							Object[] args = invocation.getArguments();
+							String name = (String)args[0];
+							OfflinePlayer player = mock(OfflinePlayer.class);
+							when(player.getName()).thenReturn(name);
+							return player;
+						}
+					});
 			Bukkit.setServer(server);
 		}
 		else
@@ -82,7 +84,7 @@ public abstract class EssentialsTest extends TestCase
 		}
 		plugin = mock(IPlugin.class);
 
-		
+
 		File folder = FileUtils.getTempDirectory();
 		when(plugin.getDataFolder()).thenReturn(folder);
 		when(world.getName()).thenReturn("world");

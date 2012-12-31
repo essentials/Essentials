@@ -2,20 +2,20 @@ package com.earth2me.essentials;
 
 import java.io.File;
 import java.util.*;
-import net.ess3.api.IEssentials;
-import net.ess3.storage.StoredLocation;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.inventory.ItemStack;
+import net.ess3.api.IEssentials;
+import net.ess3.storage.StoredLocation;
 
 
-public class UserData 
+public class UserData
 {
 	protected final transient IEssentials ess;
 	private EssentialsConf config;
 	private final File folder;
-	
+
 
 	protected UserData(IEssentials ess, File file)
 	{
@@ -59,6 +59,7 @@ public class UserData
 		kitTimestamps = _getKitTimestamps();
 		nickname = _getNickname();
 	}
+
 	private double money;
 
 	private double _getMoney()
@@ -90,6 +91,7 @@ public class UserData
 		config.setProperty("money", value);
 		config.save();
 	}
+
 	private Map<String, Object> homes;
 
 	private Map<String, Object> _getHomes()
@@ -115,13 +117,12 @@ public class UserData
 		}
 		return search;
 	}
-		
+
 	public StoredLocation getHome(String name) throws Exception
 	{
 		String search = getHomeName(name);
-		return config.getLocation("homes." + search, ess.getServer());	
+		return config.getLocation("homes." + search, ess.getServer());
 	}
-
 
 
 	public List<String> getHomes()
@@ -165,6 +166,7 @@ public class UserData
 		}
 		return false;
 	}
+
 	private String nickname;
 
 	public String _getNickname()
@@ -183,6 +185,7 @@ public class UserData
 		config.setProperty("nickname", nick);
 		config.save();
 	}
+
 	private List<Integer> unlimited;
 
 	private List<Integer> _getUnlimited()
@@ -213,6 +216,7 @@ public class UserData
 		config.setProperty("unlimited", unlimited);
 		config.save();
 	}
+
 	private Map<String, Object> powertools;
 
 	private Map<String, Object> _getPowertools()
@@ -223,8 +227,9 @@ public class UserData
 		}
 		return new HashMap<String, Object>();
 	}
-	
-	public Set<String> getPowertools() {
+
+	public Set<String> getPowertools()
+	{
 		return powertools.keySet();
 	}
 
@@ -265,6 +270,7 @@ public class UserData
 	{
 		return !powertools.isEmpty();
 	}
+
 	private StoredLocation lastLocation;
 
 	private StoredLocation _getLastLocation()
@@ -303,6 +309,7 @@ public class UserData
 		config.setProperty("timestamps.lastteleport", time);
 		config.save();
 	}
+
 	private long lastHealTimestamp;
 
 	private long _getLastHealTimestamp()
@@ -321,6 +328,7 @@ public class UserData
 		config.setProperty("timestamps.lastheal", time);
 		config.save();
 	}
+
 	private String jail;
 
 	private String _getJail()
@@ -347,6 +355,7 @@ public class UserData
 		}
 		config.save();
 	}
+
 	private List<String> mails;
 
 	private List<String> _getMails()
@@ -379,6 +388,7 @@ public class UserData
 		mails.add(mail);
 		setMails(mails);
 	}
+
 	private boolean teleportEnabled;
 
 	private boolean getTeleportEnabled()
@@ -411,6 +421,7 @@ public class UserData
 		setSocialSpyEnabled(ret);
 		return ret;
 	}
+
 	private List<String> ignoredPlayers;
 
 	public List<String> getIgnoredPlayers()
@@ -452,6 +463,7 @@ public class UserData
 		config.setProperty("godmode", set);
 		config.save();
 	}
+
 	private boolean muted;
 
 	public boolean getMuted()
@@ -470,6 +482,7 @@ public class UserData
 		config.setProperty("muted", set);
 		config.save();
 	}
+
 	private long muteTimeout;
 
 	private long _getMuteTimeout()
@@ -488,6 +501,7 @@ public class UserData
 		config.setProperty("timestamps.mute", time);
 		config.save();
 	}
+
 	private boolean jailed;
 
 	private boolean getJailed()
@@ -513,6 +527,7 @@ public class UserData
 		setJailed(ret);
 		return ret;
 	}
+
 	private long jailTimeout;
 
 	private long _getJailTimeout()
@@ -553,6 +568,7 @@ public class UserData
 		config.setProperty("ban.timeout", time);
 		config.save();
 	}
+
 	private long lastLogin;
 
 	private long _getLastLogin()
@@ -590,6 +606,7 @@ public class UserData
 		config.setProperty("timestamps.logout", time);
 		config.save();
 	}
+
 	private String lastLoginAddress;
 
 	private String _getLastLoginAddress()
@@ -607,6 +624,7 @@ public class UserData
 		lastLoginAddress = address;
 		config.setProperty("ipAddress", address);
 	}
+
 	private boolean afk;
 
 	private boolean getAfk()
@@ -632,6 +650,7 @@ public class UserData
 		setAfk(ret);
 		return ret;
 	}
+
 	private boolean newplayer;
 	private String geolocation;
 
@@ -659,6 +678,7 @@ public class UserData
 		}
 		config.save();
 	}
+
 	private boolean isSocialSpyEnabled;
 
 	private boolean _isSocialSpyEnabled()
@@ -677,6 +697,7 @@ public class UserData
 		config.setProperty("socialspy", status);
 		config.save();
 	}
+
 	private boolean isNPC;
 
 	private boolean _isNPC()
@@ -695,6 +716,7 @@ public class UserData
 		config.setProperty("npc", set);
 		config.save();
 	}
+
 	private boolean arePowerToolsEnabled;
 
 	public boolean arePowerToolsEnabled()
@@ -720,6 +742,7 @@ public class UserData
 	{
 		return config.getBoolean("powertoolsenabled", true);
 	}
+
 	private ConfigurationSection kitTimestamps;
 
 	private ConfigurationSection _getKitTimestamps()
@@ -744,8 +767,9 @@ public class UserData
 		}
 		return new MemoryConfiguration();
 	}
-	
-	public Set<String> getKitTimestamps() {
+
+	public Set<String> getKitTimestamps()
+	{
 		return kitTimestamps.getKeys(false);
 	}
 

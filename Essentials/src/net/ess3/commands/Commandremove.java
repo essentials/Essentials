@@ -1,12 +1,13 @@
 package net.ess3.commands;
 
-import java.util.Locale;
 import static net.ess3.I18n._;
-import net.ess3.api.IUser;
+import java.util.Locale;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
+import net.ess3.api.IUser;
+
 
 //Todo: Fix this up
 public class Commandremove extends EssentialsCommand
@@ -88,7 +89,7 @@ public class Commandremove extends EssentialsCommand
 		{
 			radius *= radius;
 		}
-		
+
 		for (Chunk chunk : world.getLoadedChunks())
 		{
 			for (Entity e : chunk.getEntities())
@@ -100,49 +101,50 @@ public class Commandremove extends EssentialsCommand
 						continue;
 					}
 				}
-				switch (toRemove) {
-					case DROPS:
-						if (e instanceof Item)
-						{
-							e.remove();
-							removed++;
-						}
-						break;
-					case ARROWS:
-						if (e instanceof Projectile)
-						{
-							e.remove();
-							removed++;
-						}
-						break;
-					case BOATS:
-						if (e instanceof Boat)
-						{
-							e.remove();
-							removed++;
-						}
-						break;
-					case MINECARTS:
-						if (e instanceof Minecart)
-						{
-							e.remove();
-							removed++;
-						}
-						break;
-					case PAINTINGS:
-						if (e instanceof Painting)
-						{
-							e.remove();
-							removed++;
-						}
-						break;
-					case XP:
-						if (e instanceof ExperienceOrb)
-						{
-							e.remove();
-							removed++;
-						}
-						break;
+				switch (toRemove)
+				{
+				case DROPS:
+					if (e instanceof Item)
+					{
+						e.remove();
+						removed++;
+					}
+					break;
+				case ARROWS:
+					if (e instanceof Projectile)
+					{
+						e.remove();
+						removed++;
+					}
+					break;
+				case BOATS:
+					if (e instanceof Boat)
+					{
+						e.remove();
+						removed++;
+					}
+					break;
+				case MINECARTS:
+					if (e instanceof Minecart)
+					{
+						e.remove();
+						removed++;
+					}
+					break;
+				case PAINTINGS:
+					if (e instanceof Painting)
+					{
+						e.remove();
+						removed++;
+					}
+					break;
+				case XP:
+					if (e instanceof ExperienceOrb)
+					{
+						e.remove();
+						removed++;
+					}
+					break;
 				}
 
 			}

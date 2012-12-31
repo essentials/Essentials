@@ -1,7 +1,6 @@
 package com.earth2me.essentials;
 
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,7 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventPriority;
 
 
-public interface ISettings 
+public interface ISettings
 {
 	boolean areSignsDisabled();
 
@@ -27,7 +26,6 @@ public interface ISettings
 	//MessageFormat getChatFormat(String group);
 
 	int getChatRadius();
-
 
 
 	double getCommandCost(String label);
@@ -71,7 +69,6 @@ public interface ISettings
 	int getHomeLimit(String set);
 
 
-
 	boolean getSortListByGroups();
 
 	int getSpawnMobLimit();
@@ -83,7 +80,6 @@ public interface ISettings
 	double getTeleportDelay();
 
 	boolean hidePermissionlessHelp();
-
 
 
 	boolean isCommandDisabled(String label);

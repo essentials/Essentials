@@ -1,18 +1,18 @@
 package net.ess3.economy.register.methods;
 
+import org.bukkit.plugin.Plugin;
 import com.iCo6.iConomy;
 import com.iCo6.system.Account;
 import com.iCo6.system.Accounts;
 import com.iCo6.system.Holdings;
 import net.ess3.economy.register.Method;
-import org.bukkit.plugin.Plugin;
 
 
 /**
  * iConomy 6 Implementation of Method
  *
  * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun) @copyright (c) 2011 @license AOL license
- * <http://aol.nexua.org>
+ *         <http://aol.nexua.org>
  */
 public class iCo6 implements Method
 {
@@ -115,9 +115,8 @@ public class iCo6 implements Method
 	@Override
 	public boolean isCompatible(Plugin plugin)
 	{
-		return plugin.getDescription().getName().equalsIgnoreCase("iconomy")
-			   && plugin.getClass().getName().equals("com.iCo6.iConomy")
-			   && plugin instanceof iConomy;
+		return plugin.getDescription().getName().equalsIgnoreCase("iconomy") && plugin.getClass().getName().equals(
+				"com.iCo6.iConomy") && plugin instanceof iConomy;
 	}
 
 	@Override

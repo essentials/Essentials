@@ -1,17 +1,13 @@
 package net.ess3.update.tasks;
 
-import net.ess3.update.AbstractWorkListener;
-import net.ess3.update.GetFile;
+import java.io.File;
+import java.net.URL;
+import java.util.logging.Level;
+import org.bukkit.Bukkit;
 import net.ess3.update.AbstractWorkListener;
 import net.ess3.update.GetFile;
 import net.ess3.update.ModuleInfo;
 import net.ess3.update.VersionInfo;
-import java.io.File;
-import java.net.URL;
-import java.util.logging.Level;
-
-import net.ess3.update.VersionInfo;
-import org.bukkit.Bukkit;
 
 
 public class InstallModule implements Runnable, Task

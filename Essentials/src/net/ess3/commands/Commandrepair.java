@@ -1,16 +1,16 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import static net.ess3.I18n._;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 
 public class Commandrepair extends EssentialsCommand
@@ -31,8 +31,7 @@ public class Commandrepair extends EssentialsCommand
 				throw new Exception(_("repairInvalidType"));
 			}
 
-			if (!item.getEnchantments().isEmpty()
-				&& !Permissions.REPAIR_ENCHANTED.isAuthorized(user))
+			if (!item.getEnchantments().isEmpty() && !Permissions.REPAIR_ENCHANTED.isAuthorized(user))
 			{
 				throw new Exception(_("repairEnchanted"));
 			}
@@ -112,8 +111,7 @@ public class Commandrepair extends EssentialsCommand
 				user.sendMessage(ex.getMessage());
 				continue;
 			}
-			if (!item.getEnchantments().isEmpty()
-				&& !Permissions.REPAIR_ENCHANTED.isAuthorized(user))
+			if (!item.getEnchantments().isEmpty() && !Permissions.REPAIR_ENCHANTED.isAuthorized(user))
 			{
 				continue;
 			}

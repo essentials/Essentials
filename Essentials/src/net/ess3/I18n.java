@@ -66,7 +66,9 @@ public class I18n implements II18n
 		}
 		catch (MissingResourceException ex)
 		{
-			Logger.getLogger("Minecraft").log(Level.WARNING, String.format("Missing translation key \"%s\" in translation file %s", ex.getKey(), localeBundle.getLocale().toString()), ex);
+			Logger.getLogger("Minecraft").log(
+					Level.WARNING, String.format(
+					"Missing translation key \"%s\" in translation file %s", ex.getKey(), localeBundle.getLocale().toString()), ex);
 			return defaultBundle.getString(string);
 		}
 	}
@@ -98,6 +100,7 @@ public class I18n implements II18n
 		}
 		return messageFormat.format(objects);
 	}
+
 	private final Pattern partSplit = Pattern.compile("[_\\.]");
 
 	public void updateLocale(final String loc)
@@ -127,10 +130,7 @@ public class I18n implements II18n
 
 	public static String capitalCase(final String input)
 	{
-		return input == null || input.length() == 0
-			   ? input
-			   : input.toUpperCase(Locale.ENGLISH).charAt(0)
-				 + input.toLowerCase(Locale.ENGLISH).substring(1);
+		return input == null || input.length() == 0 ? input : input.toUpperCase(Locale.ENGLISH).charAt(0) + input.toLowerCase(Locale.ENGLISH).substring(1);
 	}
 
 

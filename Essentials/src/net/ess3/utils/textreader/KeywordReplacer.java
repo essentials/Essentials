@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
-import net.ess3.utils.DescParseTickFormat;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.utils.DescParseTickFormat;
 
 
 public class KeywordReplacer implements IText
@@ -47,7 +47,8 @@ public class KeywordReplacer implements IText
 			world = player.getLocation() == null || player.getLocation().getWorld() == null ? "" : player.getLocation().getWorld().getName();
 			worldTime12 = DescParseTickFormat.format12(player.getWorld() == null ? 0 : player.getWorld().getTime());
 			worldTime24 = DescParseTickFormat.format24(player.getWorld() == null ? 0 : player.getWorld().getTime());
-			worldDate = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(DescParseTickFormat.ticksToDate(player.getWorld() == null ? 0 : player.getWorld().getFullTime()));
+			worldDate = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(
+					DescParseTickFormat.ticksToDate(player.getWorld() == null ? 0 : player.getWorld().getFullTime()));
 		}
 		else
 		{

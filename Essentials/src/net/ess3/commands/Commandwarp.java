@@ -1,17 +1,17 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import net.ess3.api.IUser;
 import net.ess3.api.IWarps;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
-import org.bukkit.command.CommandSender;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Commandwarp extends EssentialsCommand
@@ -35,9 +35,12 @@ public class Commandwarp extends EssentialsCommand
 			IUser otherUser = null;
 			if (args.length == 2 && Permissions.WARP_OTHERS.isAuthorized(user))
 			{
-				if (Permissions.WARP_HIDDEN.isAuthorized(user)) {
+				if (Permissions.WARP_HIDDEN.isAuthorized(user))
+				{
 					otherUser = ess.getUserMap().matchUser(args[1], false);
-				} else {
+				}
+				else
+				{
 					otherUser = ess.getUserMap().matchUserExcludingHidden(args[1], user.getPlayer());
 				}
 				warpUser(otherUser, args[0]);

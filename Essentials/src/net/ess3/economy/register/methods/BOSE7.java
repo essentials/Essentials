@@ -1,8 +1,8 @@
 package net.ess3.economy.register.methods;
 
+import org.bukkit.plugin.Plugin;
 import cosine.boseconomy.BOSEconomy;
 import net.ess3.economy.register.Method;
-import org.bukkit.plugin.Plugin;
 
 
 /**
@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
  *
  * @author Acrobot
  * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun) @copyright (c) 2011 @license AOL license
- * <http://aol.nexua.org>
+ *         <http://aol.nexua.org>
  */
 public class BOSE7 implements Method
 {
@@ -133,9 +133,8 @@ public class BOSE7 implements Method
 	@Override
 	public boolean isCompatible(Plugin plugin)
 	{
-		return plugin.getDescription().getName().equalsIgnoreCase("boseconomy")
-			   && plugin instanceof BOSEconomy
-			   && !plugin.getDescription().getVersion().equals("0.6.2");
+		return plugin.getDescription().getName().equalsIgnoreCase("boseconomy") && plugin instanceof BOSEconomy && !plugin.getDescription().getVersion().equals(
+				"0.6.2");
 	}
 
 	@Override

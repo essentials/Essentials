@@ -14,10 +14,10 @@ public class DotStarPermission extends AbstractSuperpermsPermission
 	{
 		this(base, PermissionDefault.OP);
 	}
-	
+
 	public DotStarPermission(final String base, final PermissionDefault defaultPerm)
 	{
-		this.base = base+".";
+		this.base = base + ".";
 		this.dotStarPermission = base + ".*";
 		this.defaultPerm = defaultPerm;
 	}

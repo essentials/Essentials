@@ -91,7 +91,7 @@ public class StoredLocation
 
 	public static class WorldNotLoadedException extends Exception
 	{
-        private static final long serialVersionUID = -2079102649647074279L;
+		private static final long serialVersionUID = -2079102649647074279L;
 
 		public WorldNotLoadedException(String worldname)
 		{

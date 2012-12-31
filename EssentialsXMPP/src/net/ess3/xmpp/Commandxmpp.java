@@ -1,9 +1,9 @@
 package net.ess3.xmpp;
 
+import org.bukkit.command.CommandSender;
 import net.ess3.Console;
 import net.ess3.commands.EssentialsCommand;
 import net.ess3.commands.NotEnoughArgumentsException;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandxmpp extends EssentialsCommand

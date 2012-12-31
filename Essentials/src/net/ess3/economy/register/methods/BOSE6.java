@@ -1,15 +1,15 @@
 package net.ess3.economy.register.methods;
 
+import org.bukkit.plugin.Plugin;
 import cosine.boseconomy.BOSEconomy;
 import net.ess3.economy.register.Method;
-import org.bukkit.plugin.Plugin;
 
 
 /**
  * BOSEconomy 6 Implementation of Method
  *
  * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun) @copyright (c) 2011 @license AOL license
- * <http://aol.nexua.org>
+ *         <http://aol.nexua.org>
  */
 @SuppressWarnings("deprecation")
 public class BOSE6 implements Method
@@ -80,8 +80,7 @@ public class BOSE6 implements Method
 	@Override
 	public boolean hasBankAccount(String bank, String name)
 	{
-		return this.BOSEconomy.isBankOwner(bank, name)
-			   || this.BOSEconomy.isBankMember(bank, name);
+		return this.BOSEconomy.isBankOwner(bank, name) || this.BOSEconomy.isBankMember(bank, name);
 	}
 
 	@Override
@@ -134,9 +133,8 @@ public class BOSE6 implements Method
 	@Override
 	public boolean isCompatible(Plugin plugin)
 	{
-		return plugin.getDescription().getName().equalsIgnoreCase("boseconomy")
-			   && plugin instanceof BOSEconomy
-			   && plugin.getDescription().getVersion().equals("0.6.2");
+		return plugin.getDescription().getName().equalsIgnoreCase("boseconomy") && plugin instanceof BOSEconomy && plugin.getDescription().getVersion().equals(
+				"0.6.2");
 	}
 
 	@Override

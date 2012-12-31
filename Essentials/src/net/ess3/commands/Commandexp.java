@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.SetExpFix;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandexp extends EssentialsCommand
@@ -13,7 +13,7 @@ public class Commandexp extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		
+
 		if (args.length == 0)
 		{
 			showExp(user, user);
@@ -89,7 +89,7 @@ public class Commandexp extends EssentialsCommand
 		boolean foundUser = false;
 		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(match, getPlayerOrNull(sender)))
 		{
-			foundUser = true;			
+			foundUser = true;
 			showExp(sender, matchPlayer);
 		}
 		if (!foundUser)
@@ -102,7 +102,7 @@ public class Commandexp extends EssentialsCommand
 	{
 		boolean foundUser = false;
 		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(match, getPlayerOrNull(sender)))
-		{			
+		{
 			setExp(sender, matchPlayer, amount, toggle);
 			foundUser = true;
 		}
@@ -115,8 +115,10 @@ public class Commandexp extends EssentialsCommand
 	private void showExp(final CommandSender sender, final IUser target)
 	{
 		final int totalExp = SetExpFix.getTotalExperience(target.getPlayer());
-		final int expLeft = (int)Util.roundDouble(((((3.5 * target.getPlayer().getLevel()) + 6.7) - (totalExp - ((1.75 * (target.getPlayer().getLevel() * target.getPlayer().getLevel())) + (5.00 * target.getPlayer().getLevel())))) + 1));
-		sender.sendMessage(_("exp", target.getPlayer().getDisplayName(), SetExpFix.getTotalExperience(target.getPlayer()), target.getPlayer().getLevel(), expLeft));
+		final int expLeft = (int)Util.roundDouble(
+				((((3.5 * target.getPlayer().getLevel()) + 6.7) - (totalExp - ((1.75 * (target.getPlayer().getLevel() * target.getPlayer().getLevel())) + (5.00 * target.getPlayer().getLevel())))) + 1));
+		sender.sendMessage(
+				_("exp", target.getPlayer().getDisplayName(), SetExpFix.getTotalExperience(target.getPlayer()), target.getPlayer().getLevel(), expLeft));
 	}
 
 	private void setExp(final CommandSender sender, final IUser target, final String strAmount, final boolean give)

@@ -1,16 +1,16 @@
 package net.ess3.utils.textreader;
 
+import static net.ess3.I18n._;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static net.ess3.I18n._;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
 
 
 public class HelpInput implements IText
@@ -55,9 +55,9 @@ public class HelpInput implements IText
 				{
 					try
 					{
-						if (!match.equalsIgnoreCase("") && (!pluginNameLow.contains(match)) && (!k.getKey().toLowerCase(Locale.ENGLISH).contains(match))
-							&& (!(k.getValue().get(DESCRIPTION) instanceof String
-								  && ((String)k.getValue().get(DESCRIPTION)).toLowerCase(Locale.ENGLISH).contains(match))))
+						if (!match.equalsIgnoreCase("") && (!pluginNameLow.contains(match)) && (!k.getKey().toLowerCase(Locale.ENGLISH).contains(
+								match)) && (!(k.getValue().get(DESCRIPTION) instanceof String && ((String)k.getValue().get(DESCRIPTION)).toLowerCase(
+								Locale.ENGLISH).contains(match))))
 						{
 							continue;
 						}

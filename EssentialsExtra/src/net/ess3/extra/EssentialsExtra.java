@@ -12,18 +12,17 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
-import net.ess3.api.ICommandHandler;
-import net.ess3.api.IEssentials;
-import net.ess3.bukkit.BukkitPlugin;
-import org.bukkit.command.TabExecutor;
-import net.ess3.commands.EssentialsCommandHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import net.ess3.api.IEssentials;
+import net.ess3.bukkit.BukkitPlugin;
+import net.ess3.commands.EssentialsCommandHandler;
 
 
 public class EssentialsExtra extends JavaPlugin
@@ -69,9 +68,8 @@ public class EssentialsExtra extends JavaPlugin
 					}
 				}
 			}
-			urls = new URL[]
-			{
-				commandDir.toURI().toURL()
+			urls = new URL[]{
+					commandDir.toURI().toURL()
 			};
 		}
 		catch (Exception ex)
@@ -95,7 +93,8 @@ public class EssentialsExtra extends JavaPlugin
 					{
 						throw new IllegalArgumentException("Command class is not annotated with AnnotatedCommand.class");
 					}
-					commandMap.register("Essentials", new Command(commandName, anot.description(), anot.usage(), Arrays.asList(anot.aliases()))
+					commandMap.register(
+							"Essentials", new Command(commandName, anot.description(), anot.usage(), Arrays.asList(anot.aliases()))
 					{
 						@Override
 						public boolean execute(CommandSender cs, String label, String[] args)

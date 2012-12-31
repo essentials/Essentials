@@ -3,6 +3,7 @@ package net.ess3.api;
 import java.text.MessageFormat;
 import org.bukkit.command.CommandSender;
 
+
 /**
  * CommandSender object can be either IUser or Player
  */

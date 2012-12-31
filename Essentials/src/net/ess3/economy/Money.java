@@ -3,11 +3,7 @@ package net.ess3.economy;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import net.ess3.storage.MapValueType;
 import net.ess3.storage.StorageObject;
 
@@ -23,12 +19,11 @@ public class Money implements StorageObject
 
 	public Map<String, Double> getBalances()
 	{
-		return balances == null
-				? Collections.<String, Double>emptyMap()
-			   : Collections.unmodifiableMap(balances);
+		return balances == null ? Collections.<String, Double>emptyMap() : Collections.unmodifiableMap(balances);
 	}
-	
-	public void setBalance(String name, Double value) {
+
+	public void setBalance(String name, Double value)
+	{
 		Map<String, Double> balanceMap = new HashMap<String, Double>(getBalances());
 		balanceMap.put(name, value);
 		balances = balanceMap;
@@ -40,6 +35,6 @@ public class Money implements StorageObject
 		balanceMap.remove(name);
 		balances = balanceMap;
 	}
-	
-	
+
+
 }

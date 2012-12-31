@@ -1,7 +1,9 @@
 package net.ess3.commands;
 
-import java.util.Locale;
 import static net.ess3.I18n._;
+import java.util.Locale;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.SetExpFix;
@@ -9,8 +11,6 @@ import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.FormatUtil;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandwhois extends EssentialsCommand
@@ -49,9 +49,7 @@ public class Commandwhois extends EssentialsCommand
 			}
 			final UserData userData = user.getData();
 			final String nickName = FormatUtil.stripFormat(userData.getNickname());
-			if (!whois.equalsIgnoreCase(nickName)
-				&& !whois.substring(prefixLength).equalsIgnoreCase(nickName)
-				&& !whois.equalsIgnoreCase(user.getName()))
+			if (!whois.equalsIgnoreCase(nickName) && !whois.substring(prefixLength).equalsIgnoreCase(nickName) && !whois.equalsIgnoreCase(user.getName()))
 			{
 				continue;
 			}
@@ -61,12 +59,14 @@ public class Commandwhois extends EssentialsCommand
 			sender.sendMessage(_("whoisIs", player.getDisplayName(), user.getName()));
 			sender.sendMessage(_("whoisHealth", player.getHealth()));
 			sender.sendMessage(_("whoisExp", SetExpFix.getTotalExperience(player), player.getLevel()));
-			sender.sendMessage(_("whoisLocation", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()));
+			sender.sendMessage(
+					_(
+							"whoisLocation", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(),
+							player.getLocation().getBlockZ()));
 			sender.sendMessage(_("whoisMoney", FormatUtil.displayCurrency(user.getMoney(), ess)));
 			sender.sendMessage(_("whoisIPAddress", player.getAddress().getAddress().toString()));
 			final String location = userData.getGeolocation();
-			if (location != null
-				&& Permissions.GEOIP_SHOW.isAuthorized(sender))
+			if (location != null && Permissions.GEOIP_SHOW.isAuthorized(sender))
 			{
 				sender.sendMessage(_("whoisGeoLocation", location));
 			}
@@ -75,16 +75,14 @@ public class Commandwhois extends EssentialsCommand
 			sender.sendMessage(_("whoisOP", (user.isOp() ? _("true") : _("false"))));
 			sender.sendMessage(_("whoisFly", player.getAllowFlight() ? _("true") : _("false"), player.isFlying() ? _("flying") : _("notFlying")));
 			sender.sendMessage(_("whoisAFK", (userData.isAfk() ? _("true") : _("false"))));
-			sender.sendMessage(_("whoisJail", (userData.isJailed()
-											   ? user.getTimestamp(UserData.TimestampType.JAIL) > 0
-												 ? DateUtil.formatDateDiff(user.getTimestamp(UserData.TimestampType.JAIL))
-												 : _("true")
-											   : _("false"))));
-			sender.sendMessage(_("whoisMute", (userData.isMuted()
-											   ? user.getTimestamp(UserData.TimestampType.MUTE) > 0
-												 ? DateUtil.formatDateDiff(user.getTimestamp(UserData.TimestampType.MUTE))
-												 : _("true")
-											   : _("false"))));
+			sender.sendMessage(
+					_(
+							"whoisJail", (userData.isJailed() ? user.getTimestamp(UserData.TimestampType.JAIL) > 0 ? DateUtil.formatDateDiff(
+							user.getTimestamp(UserData.TimestampType.JAIL)) : _("true") : _("false"))));
+			sender.sendMessage(
+					_(
+							"whoisMute", (userData.isMuted() ? user.getTimestamp(UserData.TimestampType.MUTE) > 0 ? DateUtil.formatDateDiff(
+							user.getTimestamp(UserData.TimestampType.MUTE)) : _("true") : _("false"))));
 
 			if (!foundPlayer)
 			{

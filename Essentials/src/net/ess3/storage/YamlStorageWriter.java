@@ -83,7 +83,7 @@ public class YamlStorageWriter implements IStorageWriter
 				}
 			}
 		}
-        writer.println();
+		writer.println();
 	}
 
 	private boolean writeKey(final Field field, final int depth, final Object data)
@@ -197,7 +197,7 @@ public class YamlStorageWriter implements IStorageWriter
 				}
 			}
 		}
-        writer.println();
+		writer.println();
 	}
 
 	private void writeIndention(final int depth)

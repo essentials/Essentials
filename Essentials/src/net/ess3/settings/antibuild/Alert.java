@@ -3,15 +3,11 @@ package net.ess3.settings.antibuild;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import org.bukkit.Material;
+import lombok.*;
 import net.ess3.storage.Comment;
 import net.ess3.storage.ListType;
 import net.ess3.storage.StorageObject;
-import org.bukkit.Material;
 
 
 @Data
@@ -36,9 +32,8 @@ public class Alert implements StorageObject
 
 	public void setupDefaults()
 	{
-		Material[] mat =
-		{
-			Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
+		Material[] mat = {
+				Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
 		};
 		alertOnPlacement.addAll(Arrays.asList(mat));
 		alertOnUse.add(Material.LAVA_BUCKET);

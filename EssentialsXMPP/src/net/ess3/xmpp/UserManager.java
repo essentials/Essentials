@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.ess3.api.IReload;
 import org.bukkit.configuration.file.YamlConfiguration;
+import net.ess3.api.IReload;
 
 
 public class UserManager implements IReload

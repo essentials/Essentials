@@ -14,7 +14,6 @@ public @interface AnnotatedCommand
 
 	String usage() default "";
 
-	String[] aliases() default 
-	{
+	String[] aliases() default {
 	};
 }

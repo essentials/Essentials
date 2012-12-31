@@ -1,15 +1,15 @@
 package net.ess3.protect;
 
 import java.util.Locale;
+import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.PermissionDefault;
 import net.ess3.api.IPermission;
 import net.ess3.bukkit.PermissionFactory;
 import net.ess3.permissions.DotStarPermission;
-import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.PermissionDefault;
 
 
 public enum Permissions implements IPermission
-{	
+{
 	PVP(PermissionDefault.TRUE),
 	PREVENTDAMAGE_FALL(PermissionDefault.FALSE),
 	PREVENTDAMAGE_CREEPER(PermissionDefault.FALSE),
@@ -73,5 +73,5 @@ public enum Permissions implements IPermission
 		return PermissionFactory.checkPermission(sender, this);
 	}
 
-		public static DotStarPermission ENTITY_TARGET_BYPASS = new DotStarPermission("essentials.protect.entitytarget.bypass");
+	public static DotStarPermission ENTITY_TARGET_BYPASS = new DotStarPermission("essentials.protect.entitytarget.bypass");
 }

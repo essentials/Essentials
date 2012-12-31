@@ -1,9 +1,9 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandsocialspy extends EssentialsToggleCommand
@@ -22,10 +22,12 @@ public class Commandsocialspy extends EssentialsToggleCommand
 
 	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
 	{
-		if (value) {
-			sender.sendMessage( _("socialSpyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
+		if (value)
+		{
+			sender.sendMessage(_("socialSpyMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
-		else {
+		else
+		{
 			sender.sendMessage(_("socialSpyFailed", player.getName()));
 		}
 	}

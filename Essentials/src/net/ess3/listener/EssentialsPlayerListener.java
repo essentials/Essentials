@@ -1,5 +1,6 @@
 package net.ess3.listener;
 
+import static net.ess3.I18n._;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +8,21 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import static net.ess3.I18n._;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -18,19 +33,6 @@ import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.FormatUtil;
 import net.ess3.utils.LocationUtil;
 import net.ess3.utils.textreader.*;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.*;
-import org.bukkit.event.player.*;
-import org.bukkit.event.player.PlayerLoginEvent.Result;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
 
 
 public class EssentialsPlayerListener implements Listener
@@ -39,7 +41,7 @@ public class EssentialsPlayerListener implements Listener
 	private final transient Server server;
 	private final transient IEssentials ess;
 	private final transient IUserMap userMap;
-	
+
 	public EssentialsPlayerListener(final IEssentials parent)
 	{
 		super();
@@ -156,14 +158,15 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		ess.getPlugin().scheduleAsyncDelayedTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				delayedJoin(event.getPlayer());
-			}
-		});
+		ess.getPlugin().scheduleAsyncDelayedTask(
+				new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						delayedJoin(event.getPlayer());
+					}
+				});
 /* TODO: Make sure my update is good
 		if (!event.getPlayer().isOnline())
 		{
@@ -242,7 +245,7 @@ public class EssentialsPlayerListener implements Listener
 			}
 		}*/
 	}
-	
+
 	public void delayedJoin(final Player player)
 	{
 		if (!player.isOnline())
@@ -270,18 +273,19 @@ public class EssentialsPlayerListener implements Listener
 
 		if (Permissions.SLEEPINGIGNORED.isAuthorized(user))
 		{
-			ess.getPlugin().scheduleSyncDelayedTask(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					user.getPlayer().setSleepingIgnored(true);
-				}
-			});
+			ess.getPlugin().scheduleSyncDelayedTask(
+					new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							user.getPlayer().setSleepingIgnored(true);
+						}
+					});
 		}
-		
+
 		final Commands settings = ess.getSettings().getData().getCommands();
-		
+
 		if (!settings.isDisabled("motd") && Permissions.MOTD.isAuthorized(user))
 		{
 			try
@@ -322,7 +326,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 	}
 
-	
+
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerLogin(final PlayerLoginEvent event)
 	{
@@ -349,7 +353,8 @@ public class EssentialsPlayerListener implements Listener
 		if (!banExpired && (user.isBanned() || event.getResult() == Result.KICK_BANNED))
 		{
 			final String banReason = user.getData().getBan() == null ? "" : user.getData().getBan().getReason();
-			event.disallow(Result.KICK_BANNED, banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban") ? _("defaultBanReason") : banReason);
+			event.disallow(
+					Result.KICK_BANNED, banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban") ? _("defaultBanReason") : banReason);
 			return;
 		}
 
@@ -400,16 +405,18 @@ public class EssentialsPlayerListener implements Listener
 		if (user.getData().hasUnlimited(event.getBucket()))
 		{
 			event.getItemStack().setType(event.getBucket());
-			ess.getPlugin().scheduleSyncDelayedTask(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					user.getPlayer().updateInventory();
-				}
-			});
+			ess.getPlugin().scheduleSyncDelayedTask(
+					new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							user.getPlayer().updateInventory();
+						}
+					});
 		}
 	}
+
 	private final Pattern spaceSplit = Pattern.compile(" ");
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -444,7 +451,8 @@ public class EssentialsPlayerListener implements Listener
 		{
 			user.updateDisplayName();
 		}
-		if (!settings.getData().getWorldOptions(event.getPlayer().getLocation().getWorld().getName()).isGodmode() && !Permissions.NOGOD_OVERRIDE.isAuthorized(user))
+		if (!settings.getData().getWorldOptions(event.getPlayer().getLocation().getWorld().getName()).isGodmode() && !Permissions.NOGOD_OVERRIDE.isAuthorized(
+				user))
 		{
 			if (user.getData().isGodmode())
 			{
@@ -571,9 +579,8 @@ public class EssentialsPlayerListener implements Listener
 			if (invHolder != null && invHolder instanceof Player)
 			{
 				final IUser invOwner = userMap.getUser((Player)invHolder);
-				if (user.isInvSee() && (!Permissions.INVSEE_MODIFY.isAuthorized(user)
-										|| Permissions.INVSEE_PREVENT_MODIFY.isAuthorized(invOwner)
-										|| !invOwner.isOnline()))
+				if (user.isInvSee() && (!Permissions.INVSEE_MODIFY.isAuthorized(user) || Permissions.INVSEE_PREVENT_MODIFY.isAuthorized(
+						invOwner) || !invOwner.isOnline()))
 				{
 					event.setCancelled(true);
 				}
@@ -582,7 +589,7 @@ public class EssentialsPlayerListener implements Listener
 		if (event.getView().getTopInventory().getType() == InventoryType.WORKBENCH)
 		{
 			final IUser user = userMap.getUser((Player)event.getWhoClicked());
-			if(user.isRecipeSee())
+			if (user.isRecipeSee())
 			{
 				event.setCancelled(true);
 			}

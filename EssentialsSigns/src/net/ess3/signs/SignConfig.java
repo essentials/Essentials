@@ -16,24 +16,24 @@ public class SignConfig implements StorageObject
 
 	public Map<String, Boolean> getSigns()
 	{
-		return signs == null
-			   ? Collections.<String, Boolean>emptyMap()
-			   : Collections.unmodifiableMap(signs);
+		return signs == null ? Collections.<String, Boolean>emptyMap() : Collections.unmodifiableMap(signs);
 	}
 
 	public void setSigns(final Map<String, Boolean> signs)
 	{
 		this.signs = signs;
 	}
+
 	@Comment(
-	{
-		"How many times per second can Essentials signs be interacted with.",
-		"Values should be between 1-20, 20 being virtually no lag protection.",
-		"Lower numbers will reduce the possiblity of lag, but may annoy players."
-	})
+			{
+					"How many times per second can Essentials signs be interacted with.",
+					"Values should be between 1-20, 20 being virtually no lag protection.",
+					"Lower numbers will reduce the possiblity of lag, but may annoy players."
+			})
 	private int signUsesPerSecond = 4;
 
-	public int getSignUsePerSecond()	{
+	public int getSignUsePerSecond()
+	{
 
 		return signUsesPerSecond > 0 ? signUsesPerSecond : 1;
 	}

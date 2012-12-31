@@ -94,9 +94,8 @@ public class IrcBot extends PircBot
 	}
 
 	@Override
-	protected void onKick(final String channel, final String kickerNick,
-						  final String kickerLogin, final String kickerHostname,
-						  final String recipientNick, final String reason)
+	protected void onKick(
+			final String channel, final String kickerNick, final String kickerLogin, final String kickerHostname, final String recipientNick, final String reason)
 	{
 		if (recipientNick.equals(getNick()))
 		{
@@ -112,33 +111,29 @@ public class IrcBot extends PircBot
 	}
 
 	@Override
-	protected void onMessage(final String channel, final String sender,
-							 final String login, final String hostname,
-							 final String message)
+	protected void onMessage(
+			final String channel, final String sender, final String login, final String hostname, final String message)
 	{
 		player.sendMessage(formatChatMessage(sender, message, false));
 	}
 
 	@Override
-	protected void onAction(final String sender, final String login,
-							final String hostname, final String target,
-							final String action)
+	protected void onAction(
+			final String sender, final String login, final String hostname, final String target, final String action)
 	{
 		player.sendMessage(formatChatMessage(sender, action, true));
 	}
 
 	@Override
-	protected void onNotice(final String sourceNick, final String sourceLogin,
-							final String sourceHostname, final String target,
-							final String notice)
+	protected void onNotice(
+			final String sourceNick, final String sourceLogin, final String sourceHostname, final String target, final String notice)
 	{
 		player.sendMessage(formatChatMessage(sourceNick, notice, false));
 	}
 
 	@Override
-	protected void onTopic(final String channel, final String topic,
-						   final String setBy, final long date,
-						   final boolean changed)
+	protected void onTopic(
+			final String channel, final String topic, final String setBy, final long date, final boolean changed)
 	{
 		player.sendMessage(formatChatMessage(channel, topic, false));
 	}

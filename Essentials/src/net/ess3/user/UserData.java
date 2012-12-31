@@ -1,14 +1,10 @@
 package net.ess3.user;
 
 import java.util.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import net.ess3.storage.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import lombok.*;
+import net.ess3.storage.*;
 
 
 @Data
@@ -19,6 +15,8 @@ public class UserData implements StorageObject
 	{
 		JAIL, MUTE, LASTHEAL, LASTTELEPORT, LOGIN, LOGOUT, KIT, COMMAND
 	}
+
+
 	private String nickname;
 	private Double money;
 	@MapValueType(StoredLocation.class)
@@ -28,10 +26,9 @@ public class UserData implements StorageObject
 
 	public Map<String, StoredLocation> getHomes()
 	{
-		return homes == null
-			   ? Collections.<String, StoredLocation>emptyMap()
-			   : Collections.unmodifiableMap(homes);
+		return homes == null ? Collections.<String, StoredLocation>emptyMap() : Collections.unmodifiableMap(homes);
 	}
+
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
@@ -39,10 +36,9 @@ public class UserData implements StorageObject
 
 	public Set<Material> getUnlimited()
 	{
-		return unlimited == null
-			   ? Collections.<Material>emptySet()
-			   : Collections.unmodifiableSet(unlimited);
+		return unlimited == null ? Collections.<Material>emptySet() : Collections.unmodifiableSet(unlimited);
 	}
+
 	@MapValueType(List.class)
 	@MapKeyType(Material.class)
 	@Getter(AccessLevel.NONE)
@@ -51,10 +47,9 @@ public class UserData implements StorageObject
 
 	public Map<Material, List<String>> getPowerTools()
 	{
-		return powerTools == null
-			   ? Collections.<Material, List<String>>emptyMap()
-			   : Collections.unmodifiableMap(powerTools);
+		return powerTools == null ? Collections.<Material, List<String>>emptyMap() : Collections.unmodifiableMap(powerTools);
 	}
+
 	private StoredLocation lastLocation;
 	@MapKeyType(String.class)
 	@MapValueType(Long.class)
@@ -64,10 +59,9 @@ public class UserData implements StorageObject
 
 	public Map<String, Long> getTimestamps()
 	{
-		return timestamps == null
-			   ? Collections.<String, Long>emptyMap()
-			   : Collections.unmodifiableMap(timestamps);
+		return timestamps == null ? Collections.<String, Long>emptyMap() : Collections.unmodifiableMap(timestamps);
 	}
+
 	private String jail;
 	@ListType
 	@Getter(AccessLevel.NONE)
@@ -76,10 +70,9 @@ public class UserData implements StorageObject
 
 	public List<String> getMails()
 	{
-		return mails == null
-			   ? Collections.<String>emptyList()
-			   : Collections.unmodifiableList(mails);
+		return mails == null ? Collections.<String>emptyList() : Collections.unmodifiableList(mails);
 	}
+
 	private Inventory inventory;
 	private boolean teleportEnabled;
 	@ListType
@@ -89,10 +82,9 @@ public class UserData implements StorageObject
 
 	public Set<String> getIgnore()
 	{
-		return ignore == null
-			   ? Collections.<String>emptySet()
-			   : Collections.unmodifiableSet(ignore);
+		return ignore == null ? Collections.<String>emptySet() : Collections.unmodifiableSet(ignore);
 	}
+
 	private boolean godmode;
 	private boolean muted;
 	private boolean jailed;

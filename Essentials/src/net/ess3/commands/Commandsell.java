@@ -1,16 +1,15 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.util.Locale;
 import java.util.logging.Level;
-import static net.ess3.I18n._;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.economy.Trade;
 import net.ess3.utils.FormatUtil;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 
 
 public class Commandsell extends EssentialsCommand
@@ -140,7 +139,7 @@ public class Commandsell extends EssentialsCommand
 		}
 
 		final Player player = user.getPlayer();
-		
+
 		//TODO: Prices for Enchantments
 		final ItemStack ris = is.clone();
 		ris.setAmount(amount);
@@ -148,8 +147,14 @@ public class Commandsell extends EssentialsCommand
 		player.updateInventory();
 		Trade.log("Command", "Sell", "Item", user.getName(), new Trade(ris, ess), user.getName(), new Trade(worth * amount, ess), player.getLocation(), ess);
 		user.giveMoney(worth * amount);
-		user.sendMessage(_("itemSold", FormatUtil.displayCurrency(worth * amount, ess), amount, is.getType().toString().toLowerCase(Locale.ENGLISH), FormatUtil.displayCurrency(worth, ess)));
-		logger.log(Level.INFO, _("itemSoldConsole", player.getDisplayName(), is.getType().toString().toLowerCase(Locale.ENGLISH), FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)));
+		user.sendMessage(
+				_(
+						"itemSold", FormatUtil.displayCurrency(worth * amount, ess), amount, is.getType().toString().toLowerCase(Locale.ENGLISH),
+						FormatUtil.displayCurrency(worth, ess)));
+		logger.log(
+				Level.INFO, _(
+				"itemSoldConsole", player.getDisplayName(), is.getType().toString().toLowerCase(Locale.ENGLISH),
+				FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)));
 
 	}
 }

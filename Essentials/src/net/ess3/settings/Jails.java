@@ -3,15 +3,11 @@ package net.ess3.settings;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import org.bukkit.Location;
+import lombok.*;
 import net.ess3.storage.MapValueType;
 import net.ess3.storage.StorageObject;
 import net.ess3.storage.StoredLocation;
-import org.bukkit.Location;
 
 
 @Data
@@ -22,15 +18,14 @@ public class Jails implements StorageObject
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
 	private Map<String, StoredLocation> jails;
-	
+
 	public Map<String, StoredLocation> getJails()
 	{
-		return jails == null
-			   ? Collections.<String, StoredLocation>emptyMap()
-			   : Collections.unmodifiableMap(jails);
+		return jails == null ? Collections.<String, StoredLocation>emptyMap() : Collections.unmodifiableMap(jails);
 	}
-	
-	public void addJail(String name, Location loc) {
+
+	public void addJail(String name, Location loc)
+	{
 		Map<String, StoredLocation> jailMap = new HashMap<String, StoredLocation>(getJails());
 		jailMap.put(name, new StoredLocation(loc));
 		jails = jailMap;

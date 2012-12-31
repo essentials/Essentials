@@ -1,20 +1,17 @@
 package net.ess3.utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import static net.ess3.I18n._;
+import java.util.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 
-public class LocationUtil {
-		// The player can stand inside these materials 
+
+public class LocationUtil
+{
+	// The player can stand inside these materials
 	private static final Set<Integer> AIR_MATERIALS = new HashSet<Integer>();
 	private static final HashSet<Byte> AIR_MATERIALS_TARGET = new HashSet<Byte>();
 
@@ -72,7 +69,7 @@ public class LocationUtil {
 		}
 		return block.getLocation();
 	}
-	
+
 	public final static int RADIUS = 3;
 	public final static Vector3D[] VOLUME;
 
@@ -85,10 +82,12 @@ public class LocationUtil {
 			this.y = y;
 			this.z = z;
 		}
+
 		public int x;
 		public int y;
 		public int z;
 	}
+
 
 	static
 	{
@@ -103,7 +102,8 @@ public class LocationUtil {
 				}
 			}
 		}
-		Collections.sort(pos, new Comparator<Vector3D>()
+		Collections.sort(
+				pos, new Comparator<Vector3D>()
 		{
 			@Override
 			public int compare(Vector3D a, Vector3D b)
@@ -212,8 +212,8 @@ public class LocationUtil {
 			return true;
 		}
 
-		if ((!AIR_MATERIALS.contains(world.getBlockAt(x, y, z).getType().getId()))
-			|| (!AIR_MATERIALS.contains(world.getBlockAt(x, y + 1, z).getType().getId())))
+		if ((!AIR_MATERIALS.contains(world.getBlockAt(x, y, z).getType().getId())) || (!AIR_MATERIALS.contains(
+				world.getBlockAt(x, y + 1, z).getType().getId())))
 		{
 			return true;
 		}

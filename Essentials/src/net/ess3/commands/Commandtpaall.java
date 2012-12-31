@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandtpaall extends EssentialsCommand
@@ -32,7 +32,7 @@ public class Commandtpaall extends EssentialsCommand
 		sender.sendMessage(_("teleportAAll"));
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			
+
 			final IUser player = ess.getUserMap().getUser(onlinePlayer);
 			if (user == player)
 			{
@@ -42,10 +42,10 @@ public class Commandtpaall extends EssentialsCommand
 			{
 				continue;
 			}
-			
+
 			ISettings settings = ess.getSettings();
-			if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions()
-				&& !Permissions.WORLD.isAuthorized(user, user.getPlayer().getWorld().getName()))
+			if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions() && !Permissions.WORLD.isAuthorized(
+					user, user.getPlayer().getWorld().getName()))
 			{
 				continue;
 			}

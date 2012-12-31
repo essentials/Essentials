@@ -2,26 +2,28 @@ package net.ess3.api;
 
 import java.util.List;
 import java.util.Set;
-import net.ess3.storage.IStorageObjectHolder;
-import net.ess3.user.CooldownException;
-import net.ess3.user.UserData;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import net.ess3.storage.IStorageObjectHolder;
+import net.ess3.user.CooldownException;
+import net.ess3.user.UserData;
 
 
 public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolder<UserData>, IReload, IReplyTo, Comparable<IUser>
 {
 	/**
 	 * Get the ammount of money in a users account
+	 *
 	 * @return
 	 */
 	double getMoney();
 
 	/**
 	 * Remove money from the account
+	 *
 	 * @param value
 	 */
 	void takeMoney(double value);
@@ -131,9 +133,9 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	boolean checkSignThrottle(int throttle);
 
-    public boolean isRecipeSee();
+	public boolean isRecipeSee();
 
-    public void setRecipeSee(boolean recipeSee);
+	public void setRecipeSee(boolean recipeSee);
 
 	/**
 	 * Since the Player object should not be stored for a long time, this method should be called again with a null
@@ -145,7 +147,7 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	/**
 	 * If this is not cached using the setPlayerCache method, this call is slow and should not be called often.
-	 *
+	 * <p/>
 	 * It iterates over all players, that are online and does a equal check on their names.
 	 *
 	 * @return

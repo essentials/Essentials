@@ -1,12 +1,12 @@
 package net.ess3.commands;
 
-import java.util.List;
 import static net.ess3.I18n._;
+import java.util.List;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
 import net.ess3.utils.Util;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandmail extends EssentialsCommand

@@ -1,12 +1,12 @@
 package net.ess3.xmpp;
 
-import net.ess3.api.IEssentials;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import net.ess3.api.IEssentials;
 
 
 class EssentialsXMPPPlayerListener implements Listener

@@ -1,15 +1,14 @@
 package net.ess3.commands;
 
-import java.util.Locale;
 import static net.ess3.I18n._;
+import java.util.Locale;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.ChargeException;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
-
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 
 public class Commandmore extends EssentialsCommand
@@ -25,9 +24,8 @@ public class Commandmore extends EssentialsCommand
 		}
 		else
 		{
-			stacks = new ItemStack[]
-			{
-				player.getItemInHand()
+			stacks = new ItemStack[]{
+					player.getItemInHand()
 			};
 		}
 		for (ItemStack stack : stacks)
@@ -48,9 +46,8 @@ public class Commandmore extends EssentialsCommand
 			final int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();
 			final int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
 
-			int newAmount = Permissions.OVERSIZEDSTACKS.isAuthorized(user)
-							? oversizedStackSize
-							: defaultStackSize > 0 ? defaultStackSize : stack.getMaxStackSize();
+			int newAmount = Permissions.OVERSIZEDSTACKS.isAuthorized(
+					user) ? oversizedStackSize : defaultStackSize > 0 ? defaultStackSize : stack.getMaxStackSize();
 			if (stack.getAmount() >= newAmount)
 			{
 				if (stacks.length == 1)

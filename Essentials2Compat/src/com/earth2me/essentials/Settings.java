@@ -1,17 +1,17 @@
 package com.earth2me.essentials;
 
+import static net.ess3.I18n._;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.ItemStack;
+import net.ess3.api.IEssentials;
 
 
 public class Settings implements ISettings
@@ -52,6 +52,7 @@ public class Settings implements ISettings
 	{
 		return config.getInt("sethome-multiple." + set, config.getInt("sethome-multiple.default", 3));
 	}
+
 	private int chatRadius = 0;
 
 	private int _getChatRadius()
@@ -141,8 +142,8 @@ public class Settings implements ISettings
 		}
 		return config.getBoolean("override-" + name.toLowerCase(Locale.ENGLISH), false);
 	}
-	private ConfigurationSection commandCosts;
 
+	private ConfigurationSection commandCosts;
 
 
 	public ConfigurationSection _getCommandCosts()
@@ -177,6 +178,7 @@ public class Settings implements ISettings
 		}
 		return 0.0;
 	}
+
 	private String nicknamePrefix = "~";
 
 	private String _getNicknamePrefix()
@@ -201,6 +203,7 @@ public class Settings implements ISettings
 	{
 		return config.getDouble("heal-cooldown", 0);
 	}
+
 	private ConfigurationSection kits;
 
 	public ConfigurationSection _getKits()
@@ -241,6 +244,7 @@ public class Settings implements ISettings
 		}
 		return null;
 	}
+
 	private ChatColor operatorColor = null;
 
 	@Override
@@ -314,6 +318,7 @@ public class Settings implements ISettings
 	{
 		return config.getString("backup.command", null);
 	}
+
 	private Map<String, MessageFormat> chatFormats = Collections.synchronizedMap(new HashMap<String, MessageFormat>());
 
 	/*@Override
@@ -337,7 +342,7 @@ public class Settings implements ISettings
 		}
 		return mFormat;
 	}*/
-	
+
 	public String getDefaultChatformat()
 	{
 		return config.getString("chat.format", "&7[{GROUP}]&f {DISPLAYNAME}&7:&f {MESSAGE}");
@@ -410,6 +415,7 @@ public class Settings implements ISettings
 		warnOnBuildDisallow = _warnOnBuildDisallow();
 		mailsPerMinute = _getMailsPerMinute();
 	}
+
 	private List<Integer> itemSpawnBl = new ArrayList<Integer>();
 
 	@Override
@@ -445,6 +451,7 @@ public class Settings implements ISettings
 		}
 		return epItemSpwn;
 	}
+
 	private List<String> enabledSigns = new ArrayList<String>();
 	private boolean signsEnabled = false;
 
@@ -483,6 +490,7 @@ public class Settings implements ISettings
 		}
 		return newSigns;
 	}
+
 	private boolean warnOnBuildDisallow;
 
 	private boolean _warnOnBuildDisallow()
@@ -495,6 +503,7 @@ public class Settings implements ISettings
 	{
 		return warnOnBuildDisallow;
 	}
+
 	private boolean debug = false;
 	private boolean configDebug = false;
 
@@ -587,6 +596,7 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean(configName, def);
 	}
+
 	private final static double MAXMONEY = 10000000000000.0;
 
 	@Override
@@ -599,6 +609,7 @@ public class Settings implements ISettings
 		}
 		return max;
 	}
+
 	private final static double MINMONEY = -10000000000000.0;
 
 	@Override
@@ -633,6 +644,7 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("remove-god-on-disconnect", false);
 	}
+
 	private boolean changeDisplayName = true;
 
 	private boolean _changeDisplayName()
@@ -645,6 +657,7 @@ public class Settings implements ISettings
 	{
 		return changeDisplayName;
 	}
+
 	private boolean changePlayerListName = false;
 
 	private boolean _changePlayerListName()
@@ -663,6 +676,7 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("use-bukkit-permissions", false);
 	}
+
 	private boolean prefixsuffixconfigured = false;
 	private boolean addprefixsuffix = false;
 	private boolean essentialsChatActive = false;
@@ -688,6 +702,7 @@ public class Settings implements ISettings
 	{
 		return prefixsuffixconfigured ? addprefixsuffix : essentialsChatActive;
 	}
+
 	private boolean disablePrefix = false;
 
 	private boolean _disablePrefix()
@@ -700,6 +715,7 @@ public class Settings implements ISettings
 	{
 		return disablePrefix;
 	}
+
 	private boolean disableSuffix = false;
 
 	private boolean _disableSuffix()
@@ -724,6 +740,7 @@ public class Settings implements ISettings
 	{
 		return config.getLong("auto-afk-kick", -1);
 	}
+
 	private boolean getFreezeAfkPlayers;
 
 	@Override
@@ -736,6 +753,7 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("freeze-afk-players", false);
 	}
+
 	private boolean cancelAfkOnMove;
 
 	@Override
@@ -754,6 +772,7 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("death-messages", true);
 	}
+
 	private Set<String> noGodWorlds = new HashSet<String>();
 
 	@Override
@@ -785,6 +804,7 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("world-home-permissions", false);
 	}
+
 	private boolean registerBackInListener;
 
 	@Override
@@ -797,6 +817,7 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("register-back-in-listener", false);
 	}
+
 	private boolean disableItemPickupWhileAfk;
 
 	@Override
@@ -854,6 +875,7 @@ public class Settings implements ISettings
 	{
 		this.metricsEnabled = metricsEnabled;
 	}
+
 	private boolean teleportInvulnerability;
 
 	@Override
@@ -872,6 +894,7 @@ public class Settings implements ISettings
 	{
 		return teleportInvulnerability;
 	}
+
 	private long loginAttackDelay;
 
 	private long _getLoginAttackDelay()
@@ -884,6 +907,7 @@ public class Settings implements ISettings
 	{
 		return loginAttackDelay;
 	}
+
 	private int signUsePerSecond;
 
 	private int _getSignUsePerSecond()
@@ -913,12 +937,14 @@ public class Settings implements ISettings
 		double maxSpeed = config.getDouble("max-walk-speed", 0.8);
 		return maxSpeed > 1.0 ? 1.0 : Math.abs(maxSpeed);
 	}
-	
+
 	private int mailsPerMinute;
 
-	private int _getMailsPerMinute() {
+	private int _getMailsPerMinute()
+	{
 		return config.getInt("mails-per-minute", 1000);
 	}
+
 	@Override
 	public int getMailsPerMinute()
 	{

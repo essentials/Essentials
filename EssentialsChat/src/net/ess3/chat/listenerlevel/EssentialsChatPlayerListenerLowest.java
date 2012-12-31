@@ -1,21 +1,20 @@
 package net.ess3.chat.listenerlevel;
 
 import java.util.Map;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
-import net.ess3.chat.ChatStore;
-import net.ess3.chat.EssentialsChatPlayer;
 import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.chat.ChatStore;
+import net.ess3.chat.EssentialsChatPlayer;
 
 
 public class EssentialsChatPlayerListenerLowest extends EssentialsChatPlayer
 {
-	public EssentialsChatPlayerListenerLowest(final Server server,
-											  final IEssentials ess,
-											  final Map<AsyncPlayerChatEvent, ChatStore> chatStorage)
+	public EssentialsChatPlayerListenerLowest(
+			final Server server, final IEssentials ess, final Map<AsyncPlayerChatEvent, ChatStore> chatStorage)
 	{
 		super(server, ess, chatStorage);
 	}
@@ -29,7 +28,7 @@ public class EssentialsChatPlayerListenerLowest extends EssentialsChatPlayer
 			return;
 		}
 		final IUser user = ess.getUserMap().getUser(event.getPlayer());
-		if(user == null)
+		if (user == null)
 		{
 			event.setCancelled(true);
 			return;

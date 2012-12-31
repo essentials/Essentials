@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class ArrayListInput implements IText
 {
-	private final transient List<String> lines = new ArrayList<String>();	
-	
+	private final transient List<String> lines = new ArrayList<String>();
+
 	@Override
 	public List<String> getLines()
 	{
@@ -27,5 +27,5 @@ public class ArrayListInput implements IText
 	{
 		return Collections.emptyMap();
 	}
-	
+
 }

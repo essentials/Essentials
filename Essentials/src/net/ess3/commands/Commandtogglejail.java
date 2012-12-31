@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandtogglejail extends EssentialsCommand
@@ -58,9 +58,8 @@ public class Commandtogglejail extends EssentialsCommand
 				player.setTimestamp(TimestampType.JAIL, timeDiff);
 			}
 			player.queueSave();
-			sender.sendMessage((timeDiff > 0
-								? _("playerJailedFor", player.getName(), DateUtil.formatDateDiff(timeDiff))
-								: _("playerJailed", player.getName())));
+			sender.sendMessage(
+					(timeDiff > 0 ? _("playerJailedFor", player.getName(), DateUtil.formatDateDiff(timeDiff)) : _("playerJailed", player.getName())));
 			return;
 		}
 

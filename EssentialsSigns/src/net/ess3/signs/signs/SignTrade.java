@@ -1,6 +1,7 @@
 package net.ess3.signs.signs;
 
 import static net.ess3.I18n._;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
@@ -8,7 +9,7 @@ import net.ess3.economy.Trade;
 import net.ess3.signs.EssentialsSign;
 import net.ess3.signs.SignsPermissions;
 import net.ess3.utils.FormatUtil;
-import org.bukkit.inventory.ItemStack;
+
 
 //TODO: Sell Enchantment on Trade signs?
 public class SignTrade extends EssentialsSign
@@ -77,10 +78,8 @@ public class SignTrade extends EssentialsSign
 	{
 		final Trade trade = getTrade(sign, 2, false, false, ess);
 		ItemStack itemInHand = player.getPlayer().getItemInHand();
-		if (trade.getItemStack() != null && itemInHand != null
-			&& trade.getItemStack().getTypeId() == itemInHand.getTypeId()
-			&& trade.getItemStack().getDurability() == itemInHand.getDurability()
-			&& trade.getItemStack().getEnchantments().equals(itemInHand.getEnchantments()))
+		if (trade.getItemStack() != null && itemInHand != null && trade.getItemStack().getTypeId() == itemInHand.getTypeId() && trade.getItemStack().getDurability() == itemInHand.getDurability() && trade.getItemStack().getEnchantments().equals(
+				itemInHand.getEnchantments()))
 		{
 			int amount = itemInHand.getAmount();
 			amount -= amount % trade.getItemStack().getAmount();
@@ -100,8 +99,7 @@ public class SignTrade extends EssentialsSign
 	@Override
 	protected boolean onSignBreak(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
 	{
-		if ((sign.getLine(3).length() > 3 && sign.getLine(3).substring(2).equalsIgnoreCase(username))
-			|| SignsPermissions.TRADE_OVERRIDE.isAuthorized(player))
+		if ((sign.getLine(3).length() > 3 && sign.getLine(3).substring(2).equalsIgnoreCase(username)) || SignsPermissions.TRADE_OVERRIDE.isAuthorized(player))
 		{
 			try
 			{
@@ -174,8 +172,7 @@ public class SignTrade extends EssentialsSign
 			{
 				throw new SignException(_("moreThanZero"));
 			}
-			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp"))
-				&& getItemStack(split[1], amount, ess).getTypeId() == 0)
+			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp")) && getItemStack(split[1], amount, ess).getTypeId() == 0)
 			{
 				throw new SignException(_("moreThanZero"));
 			}
@@ -197,8 +194,7 @@ public class SignTrade extends EssentialsSign
 			{
 				throw new SignException(_("moreThanZero"));
 			}
-			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp"))
-				&& getItemStack(split[1], stackamount, ess).getTypeId() == 0)
+			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp")) && getItemStack(split[1], stackamount, ess).getTypeId() == 0)
 			{
 				throw new SignException(_("moreThanZero"));
 			}

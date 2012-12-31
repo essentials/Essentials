@@ -1,14 +1,11 @@
 package net.ess3.antibuild;
 
-import java.util.EnumMap;
 import java.util.Locale;
-import net.ess3.api.IPermission;
-import net.ess3.bukkit.PermissionFactory;
-import net.ess3.permissions.BasePermission;
-import net.ess3.permissions.MaterialDotStarPermission;
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
+import net.ess3.api.IPermission;
+import net.ess3.bukkit.PermissionFactory;
+import net.ess3.permissions.MaterialDotStarPermission;
 
 
 public enum Permissions implements IPermission
@@ -33,7 +30,7 @@ public enum Permissions implements IPermission
 	{
 		this(defaultBase, defaultPerm);
 	}
-	
+
 	private Permissions(final String base, final PermissionDefault defaultPerm)
 	{
 		permission = base + toString().toLowerCase(Locale.ENGLISH).replace('_', '.');
@@ -70,12 +67,12 @@ public enum Permissions implements IPermission
 	{
 		return PermissionFactory.checkPermission(sender, this);
 	}
-	
+
 	public static MaterialDotStarPermission PLACEMENT = new MaterialDotStarPermission("essentials.build.place");
 	public static MaterialDotStarPermission BREAK = new MaterialDotStarPermission("essentials.build.break");
 	public static MaterialDotStarPermission INTERACT = new MaterialDotStarPermission("essentials.build.interact");
 	public static MaterialDotStarPermission CRAFT = new MaterialDotStarPermission("essentials.build.craft");
 	public static MaterialDotStarPermission PICKUP = new MaterialDotStarPermission("essentials.build.pickup");
 	public static MaterialDotStarPermission DROP = new MaterialDotStarPermission("essentials.build.drop");
-	
+
 }

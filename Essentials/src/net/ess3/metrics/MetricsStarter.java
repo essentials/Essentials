@@ -1,5 +1,6 @@
 package net.ess3.metrics;
 
+import static net.ess3.I18n._;
 import java.util.Locale;
 import java.util.logging.Level;
 import net.ess3.api.IEssentials;
@@ -8,7 +9,7 @@ import net.ess3.economy.register.Method;
 import net.ess3.economy.register.methods.VaultEco;
 import net.ess3.metrics.Metrics.Graph;
 import net.ess3.metrics.Metrics.Plotter;
-import static net.ess3.I18n._;
+
 
 public class MetricsStarter implements Runnable
 {
@@ -25,7 +26,10 @@ public class MetricsStarter implements Runnable
 		EssentialsProtect,
 		EssentialsGeoIP,
 		EssentialsXMPP
-	};
+	}
+
+
+	;
 
 	public MetricsStarter(final IEssentials plugin)
 	{
@@ -81,53 +85,58 @@ public class MetricsStarter implements Runnable
 			localeGraph.addPlotter(new SimplePlotter(ess.getI18n().getCurrentLocale().getDisplayLanguage(Locale.ENGLISH)));
 
 			final Graph featureGraph = metrics.createGraph("Features");
-			featureGraph.addPlotter(new Plotter("Unique Accounts")
-			{
-				@Override
-				public int getValue()
-				{
-					return ess.getUserMap().getUniqueUsers();
-				}
-			});
-			featureGraph.addPlotter(new Plotter("Jails")
-			{
-				@Override
-				public int getValue()
-				{
-					return ess.getJails().getCount();
-				}
-			});
-			featureGraph.addPlotter(new Plotter("Kits")
-			{
-				@Override
-				public int getValue()
-				{
-					int size = 0;
-					try
+			featureGraph.addPlotter(
+					new Plotter("Unique Accounts")
 					{
-						size = ess.getKits().getList().size();
-					}
-					catch (Exception ex)
+						@Override
+						public int getValue()
+						{
+							return ess.getUserMap().getUniqueUsers();
+						}
+					});
+			featureGraph.addPlotter(
+					new Plotter("Jails")
 					{
-					}
-					return size;
+						@Override
+						public int getValue()
+						{
+							return ess.getJails().getCount();
+						}
+					});
+			featureGraph.addPlotter(
+					new Plotter("Kits")
+					{
+						@Override
+						public int getValue()
+						{
+							int size = 0;
+							try
+							{
+								size = ess.getKits().getList().size();
+							}
+							catch (Exception ex)
+							{
+							}
+							return size;
 
-				}
-			});
-			featureGraph.addPlotter(new Plotter("Warps")
-			{
-				@Override
-				public int getValue()
-				{
-					return ess.getWarps().getList().size();
-				}
-			});
+						}
+					});
+			featureGraph.addPlotter(
+					new Plotter("Warps")
+					{
+						@Override
+						public int getValue()
+						{
+							return ess.getWarps().getList().size();
+						}
+					});
 
 			final Graph enabledGraph = metrics.createGraph("EnabledFeatures");
 			enabledGraph.addPlotter(new SimplePlotter("Total"));
-			
+
 			ISettings settings = ess.getSettings();
-			final String BKcommand = settings.getData().getGeneral().getBackup().getCommand();;
+			final String BKcommand = settings.getData().getGeneral().getBackup().getCommand();
+			;
 			if (BKcommand != null && !"".equals(BKcommand))
 			{
 				enabledGraph.addPlotter(new SimplePlotter("Backup"));

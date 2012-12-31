@@ -48,7 +48,8 @@ public class UpdateCheck
 
 	public void scheduleUpdateTask()
 	{
-		plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable()
+		plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(
+				plugin, new Runnable()
 		{
 			@Override
 			public void run()
@@ -187,7 +188,8 @@ public class UpdateCheck
 
 	private int getBukkitVersion()
 	{
-		final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(plugin.getServer().getVersion());
+		final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(
+				plugin.getServer().getVersion());
 		if (versionMatch.matches())
 		{
 			return Integer.parseInt(versionMatch.group(1));

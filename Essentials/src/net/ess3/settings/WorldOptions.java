@@ -2,14 +2,10 @@ package net.ess3.settings;
 
 import java.util.EnumMap;
 import java.util.Map;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import org.bukkit.entity.EntityType;
+import lombok.*;
 import net.ess3.storage.Comment;
 import net.ess3.storage.StorageObject;
-import org.bukkit.entity.EntityType;
 
 
 @Data
@@ -30,6 +26,7 @@ public class WorldOptions implements StorageObject
 			}
 		}
 	}
+
 	@Comment("Disables godmode for all players if they teleport to this world.")
 	private boolean godmode = true;
 	@Comment("Prevent creatures spawning")
@@ -39,6 +36,7 @@ public class WorldOptions implements StorageObject
 
 	/**
 	 * Checks if a entity can be spawned.
+	 *
 	 * @param creatureName - Name of the {@link EntityType}
 	 * @return
 	 */
@@ -49,6 +47,7 @@ public class WorldOptions implements StorageObject
 
 	/**
 	 * Checks if an {@link EntityType} is allowed to be spawned
+	 *
 	 * @param creature - {@link EntityType} to check
 	 * @return
 	 */

@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
-import java.util.Set;
 import static net.ess3.I18n._;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
+import java.util.Set;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 
 
 public class Commandfeed extends EssentialsCommand
@@ -35,7 +35,7 @@ public class Commandfeed extends EssentialsCommand
 			return;
 		}
 		for (IUser player : users)
-		{			
+		{
 			final Player realPlayer = player.getPlayer();
 			realPlayer.setFoodLevel(20);
 			realPlayer.setSaturation(10);

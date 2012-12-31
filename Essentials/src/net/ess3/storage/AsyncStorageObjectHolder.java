@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
-import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
+import net.ess3.api.IEssentials;
 
 
 public abstract class AsyncStorageObjectHolder<T extends StorageObject> implements IStorageObjectHolder<T>
@@ -38,7 +38,6 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 
 	/**
 	 * Warning: If you access this method, you have to acquire a read or write lock first
-	 *
 	 *
 	 * @return Object storing all the data
 	 */

@@ -1,24 +1,20 @@
 package net.ess3.listener;
 
-import java.util.List;
 import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
-import net.ess3.user.UserData.TimestampType;
+import java.util.List;
 import org.bukkit.Material;
-import org.bukkit.entity.Ageable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.inventory.ItemStack;
+import net.ess3.api.IEssentials;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
+import net.ess3.user.UserData.TimestampType;
 
 
 public class EssentialsEntityListener implements Listener
@@ -46,8 +42,9 @@ public class EssentialsEntityListener implements Listener
 			ISettings settings = ess.getSettings();
 
 			attacker.updateActivity(true);
-			if (settings.getData().getGeneral().getLoginAttackDelay() > 0 && !Permissions.PVPDELAY_EXEMPT.isAuthorized(attacker)
-				&& (System.currentTimeMillis() < (attacker.getTimestamp(TimestampType.LOGIN) + settings.getData().getGeneral().getLoginAttackDelay())))
+			if (settings.getData().getGeneral().getLoginAttackDelay() > 0 && !Permissions.PVPDELAY_EXEMPT.isAuthorized(
+					attacker) && (System.currentTimeMillis() < (attacker.getTimestamp(
+					TimestampType.LOGIN) + settings.getData().getGeneral().getLoginAttackDelay())))
 			{
 				event.setCancelled(true);
 			}
@@ -102,9 +99,11 @@ public class EssentialsEntityListener implements Listener
 	public void onEntityDamage(final EntityDamageEvent event)
 	{
 		final Entity entity = event.getEntity();
-		if (entity instanceof Player) {
+		if (entity instanceof Player)
+		{
 			final Player player = (Player)entity;
-			if (ess.getUserMap().getUser(player).isGodModeEnabled()) {
+			if (ess.getUserMap().getUser(player).isGodModeEnabled())
+			{
 				player.setFireTicks(0);
 				player.setRemainingAir(player.getMaximumAir());
 				event.setCancelled(true);
@@ -196,7 +195,7 @@ public class EssentialsEntityListener implements Listener
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPotionSplashEvent(final PotionSplashEvent event)
 	{

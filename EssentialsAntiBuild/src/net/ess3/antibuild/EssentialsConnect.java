@@ -1,13 +1,13 @@
 package net.ess3.antibuild;
 
+import static net.ess3.I18n._;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static net.ess3.I18n._;
-import net.ess3.api.IEssentials;
-import net.ess3.bukkit.BukkitPlugin;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import net.ess3.api.IEssentials;
+import net.ess3.bukkit.BukkitPlugin;
 
 
 public class EssentialsConnect
@@ -24,7 +24,7 @@ public class EssentialsConnect
 		}
 		ess = ((BukkitPlugin)essPlugin).getEssentials();
 		antib = (IAntiBuild)essProtect;
-		antib.setSettings(new AntiBuildHolder(ess));	
+		antib.setSettings(new AntiBuildHolder(ess));
 	}
 
 	public void onDisable()
@@ -39,9 +39,8 @@ public class EssentialsConnect
 	public void alert(final Player user, final String item, final String type)
 	{
 		final Location loc = user.getLocation();
-		final String warnMessage = _("alertFormat", user.getName(), type, item,
-									 loc.getWorld().getName() + "," + loc.getBlockX() + ","
-									 + loc.getBlockY() + "," + loc.getBlockZ());
+		final String warnMessage = _(
+				"alertFormat", user.getName(), type, item, loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ());
 		LOGGER.log(Level.WARNING, warnMessage);
 		for (Player p : ess.getServer().getOnlinePlayers())
 		{

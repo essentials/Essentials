@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
-import java.util.Locale;
 import static net.ess3.I18n._;
-import net.ess3.api.IUser;
-import net.ess3.utils.FormatUtil;
+import java.util.Locale;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
+import net.ess3.api.IUser;
+import net.ess3.utils.FormatUtil;
 
 
 public class Commandworth extends EssentialsCommand
@@ -41,18 +41,12 @@ public class Commandworth extends EssentialsCommand
 			throw new Exception(_("itemCannotBeSold"));
 		}
 
-		user.sendMessage(iStack.getDurability() != 0
-						 ? _("worthMeta",
-							 iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""),
-							 iStack.getDurability(),
-							 FormatUtil.displayCurrency(worth * amount, ess),
-							 amount,
-							 FormatUtil.displayCurrency(worth, ess))
-						 : _("worth",
-							 iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""),
-							 FormatUtil.displayCurrency(worth * amount, ess),
-							 amount,
-							 FormatUtil.displayCurrency(worth, ess)));
+		user.sendMessage(
+				iStack.getDurability() != 0 ? _(
+						"worthMeta", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), iStack.getDurability(),
+						FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)) : _(
+						"worth", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), FormatUtil.displayCurrency(worth * amount, ess),
+						amount, FormatUtil.displayCurrency(worth, ess)));
 	}
 
 	@Override
@@ -85,18 +79,12 @@ public class Commandworth extends EssentialsCommand
 			throw new Exception(_("itemCannotBeSold"));
 		}
 
-		sender.sendMessage(iStack.getDurability() != 0
-						   ? _("worthMeta",
-							   iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""),
-							   iStack.getDurability(),
-							   FormatUtil.displayCurrency(worth * amount, ess),
-							   amount,
-							   FormatUtil.displayCurrency(worth, ess))
-						   : _("worth",
-							   iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""),
-							   FormatUtil.displayCurrency(worth * amount, ess),
-							   amount,
-							   FormatUtil.displayCurrency(worth, ess)));
+		sender.sendMessage(
+				iStack.getDurability() != 0 ? _(
+						"worthMeta", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), iStack.getDurability(),
+						FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)) : _(
+						"worth", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), FormatUtil.displayCurrency(worth * amount, ess),
+						amount, FormatUtil.displayCurrency(worth, ess)));
 
 	}
 }

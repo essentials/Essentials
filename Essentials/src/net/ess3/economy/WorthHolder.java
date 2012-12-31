@@ -2,13 +2,13 @@ package net.ess3.economy;
 
 import java.io.File;
 import java.util.Map;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IWorth;
 import net.ess3.storage.AsyncStorageObjectHolder;
 import net.ess3.storage.EnchantmentLevel;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
 
 public class WorthHolder extends AsyncStorageObjectHolder<net.ess3.economy.Worth> implements IWorth

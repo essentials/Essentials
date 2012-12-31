@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
  * This class can be removed when https://github.com/Bukkit/CraftBukkit/pull/193 is accepted to CraftBukkit
  */
 
+
 public final class InventoryWorkaround
 {
 	private InventoryWorkaround()
@@ -30,7 +31,8 @@ public final class InventoryWorkaround
 			{
 				continue;
 			}
-			if (item.getTypeId() == cItem.getTypeId() && (!enforceAmount || item.getAmount() == cItem.getAmount()) && (!enforceDurability || cItem.getDurability() == item.getDurability()) && (!enforceEnchantments || cItem.getEnchantments().equals(item.getEnchantments())))
+			if (item.getTypeId() == cItem.getTypeId() && (!enforceAmount || item.getAmount() == cItem.getAmount()) && (!enforceDurability || cItem.getDurability() == item.getDurability()) && (!enforceEnchantments || cItem.getEnchantments().equals(
+					item.getEnchantments())))
 			{
 				return i;
 			}
@@ -57,7 +59,8 @@ public final class InventoryWorkaround
 			{
 				continue;
 			}
-			if (item.getTypeId() == cItem.getTypeId() && cItem.getAmount() < maxAmount && (!enforceDurability || cItem.getDurability() == item.getDurability()) && cItem.getEnchantments().equals(item.getEnchantments()))
+			if (item.getTypeId() == cItem.getTypeId() && cItem.getAmount() < maxAmount && (!enforceDurability || cItem.getDurability() == item.getDurability()) && cItem.getEnchantments().equals(
+					item.getEnchantments()))
 			{
 				return i;
 			}
@@ -109,7 +112,8 @@ public final class InventoryWorkaround
 					combined[j] = items[i].clone();
 					break;
 				}
-				if (combined[j].getTypeId() == items[i].getTypeId() && (!enforceDurability || combined[j].getDurability() == items[i].getDurability()) && combined[j].getEnchantments().equals(items[i].getEnchantments()))
+				if (combined[j].getTypeId() == items[i].getTypeId() && (!enforceDurability || combined[j].getDurability() == items[i].getDurability()) && combined[j].getEnchantments().equals(
+						items[i].getEnchantments()))
 				{
 					combined[j].setAmount(combined[j].getAmount() + items[i].getAmount());
 					break;
@@ -266,7 +270,8 @@ public final class InventoryWorkaround
 					combined[j] = items[i].clone();
 					break;
 				}
-				if (combined[j].getTypeId() == items[i].getTypeId() && (!enforceDurability || combined[j].getDurability() == items[i].getDurability()) && (!enforceEnchantments || combined[j].getEnchantments().equals(items[i].getEnchantments())))
+				if (combined[j].getTypeId() == items[i].getTypeId() && (!enforceDurability || combined[j].getDurability() == items[i].getDurability()) && (!enforceEnchantments || combined[j].getEnchantments().equals(
+						items[i].getEnchantments())))
 				{
 					combined[j].setAmount(combined[j].getAmount() + items[i].getAmount());
 					break;

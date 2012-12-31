@@ -1,10 +1,10 @@
 package net.ess3.economy.register.methods;
 
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import net.ess3.economy.register.Method;
 import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
 
 public class VaultEco implements Method
@@ -34,12 +34,12 @@ public class VaultEco implements Method
 	{
 		return this.vault.getDescription().getName();
 	}
-	
+
 	public String getEconomy()
 	{
 		return economy == null ? "NoEco" : economy.getName();
 	}
-	
+
 	@Override
 	public String getLongName()
 	{
@@ -85,8 +85,7 @@ public class VaultEco implements Method
 	@Override
 	public boolean hasBankAccount(String bank, String name)
 	{
-		return this.economy.isBankOwner(bank, name).transactionSuccess()
-			   || this.economy.isBankMember(bank, name).transactionSuccess();
+		return this.economy.isBankOwner(bank, name).transactionSuccess() || this.economy.isBankMember(bank, name).transactionSuccess();
 	}
 
 	@Override
@@ -148,7 +147,8 @@ public class VaultEco implements Method
 	public void setPlugin(Plugin plugin)
 	{
 		this.vault = (Vault)plugin;
-		RegisteredServiceProvider<Economy> economyProvider = this.vault.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+		RegisteredServiceProvider<Economy> economyProvider = this.vault.getServer().getServicesManager().getRegistration(
+				net.milkbowl.vault.economy.Economy.class);
 		if (economyProvider != null)
 		{
 			this.economy = economyProvider.getProvider();

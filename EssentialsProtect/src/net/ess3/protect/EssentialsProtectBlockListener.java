@@ -6,7 +6,9 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
+import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 
 
 public class EssentialsProtectBlockListener implements Listener
@@ -23,8 +25,7 @@ public class EssentialsProtectBlockListener implements Listener
 	{
 		final ProtectHolder settings = prot.getSettings();
 		final Block block = event.getBlock();
-		if (block.getType() == Material.OBSIDIAN
-			|| block.getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN)
+		if (block.getType() == Material.OBSIDIAN || block.getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN)
 		{
 			event.setCancelled(settings.getData().getPrevent().isPortalCreation());
 			return;

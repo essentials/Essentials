@@ -1,17 +1,17 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.util.List;
 import java.util.logging.Logger;
-import static net.ess3.I18n._;
+import org.bukkit.Server;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IEssentialsModule;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.AbstractSuperpermsPermission;
-import org.bukkit.Server;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public abstract class EssentialsCommand extends AbstractSuperpermsPermission implements IEssentialsCommand
@@ -62,7 +62,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	{
 		throw new Exception(_("onlyPlayers", commandName));
 	}
-	
+
 	@Override
 	public final List<String> tabComplete(final IUser user, final Command cmd, final String commandLabel, final String[] args)
 	{
@@ -104,44 +104,52 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 	{
 		return permission;
 	}
-	
-	protected boolean isUser(CommandSender sender) {
+
+	protected boolean isUser(CommandSender sender)
+	{
 		return sender instanceof IUser;
 	}
-	
+
 	/**
 	 * Converts a CommandSender object to an User.
-	 * 
+	 *
 	 * @param sender
-	 * @return 
+	 * @return
 	 * @throws IllegalArgumentException if the object is neither a superclass of IUser or Player
 	 */
-	protected IUser getUser(CommandSender sender) {
-		if (sender instanceof IUser) {
+	protected IUser getUser(CommandSender sender)
+	{
+		if (sender instanceof IUser)
+		{
 			return (IUser)sender;
 		}
-		if (sender instanceof Player) {
+		if (sender instanceof Player)
+		{
 			return ess.getUserMap().getUser((Player)sender);
 		}
 		throw new IllegalArgumentException();
 	}
-	
+
 	/**
 	 * Converts a CommandSender object to an User.
-	 * 
+	 *
 	 * @param sender
-	 * @return 
+	 * @return
 	 * @throws IllegalArgumentException if the object is not a superclass of IUser
 	 */
-	protected Player getPlayer(CommandSender sender) {
-		if (sender instanceof IUser) {
+	protected Player getPlayer(CommandSender sender)
+	{
+		if (sender instanceof IUser)
+		{
 			return ((IUser)sender).getPlayer();
 		}
 		throw new IllegalArgumentException();
 	}
-	
-	protected Player getPlayerOrNull(CommandSender sender) {
-		if (sender instanceof IUser) {
+
+	protected Player getPlayerOrNull(CommandSender sender)
+	{
+		if (sender instanceof IUser)
+		{
 			return ((IUser)sender).getPlayer();
 		}
 		return null;

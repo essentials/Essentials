@@ -1,9 +1,9 @@
 package net.ess3.xmpp;
 
 import java.util.List;
-import net.ess3.api.IUser;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
+import net.ess3.api.IUser;
 
 
 public interface IEssentialsXMPP extends Plugin

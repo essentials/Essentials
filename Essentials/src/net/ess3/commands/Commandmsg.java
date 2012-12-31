@@ -1,14 +1,14 @@
 package net.ess3.commands;
 
-import java.util.Set;
-import net.ess3.Console;
 import static net.ess3.I18n._;
+import java.util.Set;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import net.ess3.Console;
 import net.ess3.api.IReplyTo;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandmsg extends EssentialsCommand
@@ -57,7 +57,7 @@ public class Commandmsg extends EssentialsCommand
 			Console.getConsoleReplyTo().setReplyTo(sender);
 			return;
 		}
-		
+
 
 		final Set<IUser> matchedPlayers = ess.getUserMap().matchUsers(args[0], false);
 
@@ -70,7 +70,7 @@ public class Commandmsg extends EssentialsCommand
 		if (isUser(sender))
 		{
 			int i = 0;
-			
+
 			for (IUser u : matchedPlayers)
 			{
 				if (!player.canSee(u.getPlayer()))

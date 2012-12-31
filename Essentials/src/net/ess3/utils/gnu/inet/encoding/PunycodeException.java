@@ -24,21 +24,22 @@ package net.ess3.utils.gnu.inet.encoding;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
  * USA
  */
+
+
 /**
  * Exception handling for Punycode class.
  */
-public class PunycodeException
-		extends Exception
+public class PunycodeException extends Exception
 {
-    private static final long serialVersionUID = -4335979163218011160L;
+	private static final long serialVersionUID = -4335979163218011160L;
 	public static String OVERFLOW = "Overflow.";
 	public static String BAD_INPUT = "Bad input.";
 
 	/**
-   * Creates a new PunycodeException.
-   *
-   * @param m message.
-   */
+	 * Creates a new PunycodeException.
+	 *
+	 * @param m message.
+	 */
 	public PunycodeException(String m)
 	{
 		super(m);

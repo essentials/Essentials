@@ -1,6 +1,7 @@
 package net.ess3;
 
 import java.io.*;
+import org.bukkit.Location;
 import net.ess3.settings.Settings;
 import net.ess3.settings.geoip.GeoIP;
 import net.ess3.storage.ObjectLoadException;
@@ -8,7 +9,6 @@ import net.ess3.storage.StorageObject;
 import net.ess3.storage.YamlStorageReader;
 import net.ess3.storage.YamlStorageWriter;
 import net.ess3.utils.ExecuteTimer;
-import org.bukkit.Location;
 import org.junit.Test;
 
 
@@ -110,7 +110,7 @@ public class StorageTest extends EssentialsTest
 		}
 
 	}
-	
+
 	@Test
 	public void testGeoIp()
 	{

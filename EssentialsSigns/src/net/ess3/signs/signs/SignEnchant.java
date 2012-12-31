@@ -1,15 +1,15 @@
 package net.ess3.signs.signs;
 
-import java.util.Locale;
 import static net.ess3.I18n._;
+import java.util.Locale;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.bukkit.Enchantments;
 import net.ess3.economy.Trade;
 import net.ess3.signs.EssentialsSign;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
 
 
 public class SignEnchant extends EssentialsSign
@@ -90,10 +90,8 @@ public class SignEnchant extends EssentialsSign
 		}
 
 		final ItemStack playerHand = player.getPlayer().getItemInHand();
-		if (playerHand == null
-			|| playerHand.getAmount() != 1
-			|| (playerHand.containsEnchantment(enchantment)
-				&& playerHand.getEnchantmentLevel(enchantment) == level))
+		if (playerHand == null || playerHand.getAmount() != 1 || (playerHand.containsEnchantment(enchantment) && playerHand.getEnchantmentLevel(
+				enchantment) == level))
 		{
 			throw new SignException(_("missingItems", 1, sign.getLine(1)));
 		}

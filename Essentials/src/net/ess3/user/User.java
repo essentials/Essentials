@@ -1,15 +1,20 @@
 package net.ess3.user;
 
+import static net.ess3.I18n._;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import lombok.Getter;
 import lombok.Setter;
 import net.ess3.Console;
-import static net.ess3.I18n._;
 import net.ess3.Teleport;
 import net.ess3.api.*;
 import net.ess3.craftbukkit.InventoryWorkaround;
@@ -17,11 +22,6 @@ import net.ess3.economy.register.Method;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.FormatUtil;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 
 public class User extends UserBase implements IUser
@@ -245,7 +245,10 @@ public class User extends UserBase implements IUser
 	{
 		final Boolean changeDisplayname = ess.getSettings().getData().getChat().getChangeDisplayname();
 
-		if (isOnline() && (changeDisplayname == true || (changeDisplayname == null && ess.getPlugin().isModuleEnabled("Chat"))));
+		if (isOnline() && (changeDisplayname == true || (changeDisplayname == null && ess.getPlugin().isModuleEnabled("Chat"))))
+		{
+			;
+		}
 		{
 			setDisplayNick();
 		}
@@ -392,8 +395,7 @@ public class User extends UserBase implements IUser
 		final long autoafkkick = settings.getData().getCommands().getAfk().getAutoAFKKick();
 		if (autoafkkick > 0 && lastActivity > 0 && (lastActivity + (autoafkkick * 1000)) < System.currentTimeMillis()
 			//&& !hidden
-			&& !Permissions.KICK_EXEMPT.isAuthorized(this)
-			&& !Permissions.AFK_KICKEXEMPT.isAuthorized(this))
+			&& !Permissions.KICK_EXEMPT.isAuthorized(this) && !Permissions.AFK_KICKEXEMPT.isAuthorized(this))
 		{
 			final String kickReason = _("autoAfkKickReason", autoafkkick / 60.0);
 			lastActivity = 0;
@@ -427,9 +429,8 @@ public class User extends UserBase implements IUser
 	public boolean isGodModeEnabled()
 	{
 		final ISettings settings = ess.getSettings();
-		return (getData().isGodmode()
-				&& !settings.getData().getWorldOptions(getPlayer().getLocation().getWorld().getName()).isGodmode())
-			   || (getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers());
+		return (getData().isGodmode() && !settings.getData().getWorldOptions(
+				getPlayer().getLocation().getWorld().getName()).isGodmode()) || (getData().isAfk() && settings.getData().getCommands().getAfk().isFreezeAFKPlayers());
 	}
 
 	@Override
@@ -591,6 +592,7 @@ public class User extends UserBase implements IUser
 	{
 		return true;
 	}
+
 	private transient long teleportInvulnerabilityTimestamp = 0;
 
 	public void enableInvulnerabilityAfterTeleport()
@@ -607,8 +609,7 @@ public class User extends UserBase implements IUser
 	@Override
 	public void resetInvulnerabilityAfterTeleport()
 	{
-		if (teleportInvulnerabilityTimestamp != 0
-			&& teleportInvulnerabilityTimestamp < System.currentTimeMillis())
+		if (teleportInvulnerabilityTimestamp != 0 && teleportInvulnerabilityTimestamp < System.currentTimeMillis())
 		{
 			teleportInvulnerabilityTimestamp = 0;
 		}

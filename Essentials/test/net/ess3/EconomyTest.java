@@ -33,7 +33,7 @@ public class EconomyTest extends EssentialsTest
 		{
 			fail(ex.getMessage());
 		}
-		assertFalse("NPC can be removed",ess.getEconomy().playerExists(NPCNAME));
+		assertFalse("NPC can be removed", ess.getEconomy().playerExists(NPCNAME));
 
 		//test Math
 		try

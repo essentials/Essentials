@@ -153,7 +153,8 @@ public class FakeInventory implements Inventory
 	{
 		for (int i = 0; i < items.length; i++)
 		{
-			if (items[i] == null || items[i].getTypeId() == 0) {
+			if (items[i] == null || items[i].getTypeId() == 0)
+			{
 				return i;
 			}
 		}
@@ -241,7 +242,8 @@ public class FakeInventory implements Inventory
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-    public boolean containsAtLeast(ItemStack arg0, int arg1) {
+	public boolean containsAtLeast(ItemStack arg0, int arg1)
+	{
 		throw new UnsupportedOperationException("Not supported yet.");
-    }
+	}
 }

@@ -1,23 +1,6 @@
 package net.ess3.signs;
 
-import net.ess3.signs.signs.SignBalance;
-import net.ess3.signs.signs.SignBuy;
-import net.ess3.signs.signs.SignDisposal;
-import net.ess3.signs.signs.SignEnchant;
-import net.ess3.signs.signs.SignFeed;
-import net.ess3.signs.signs.SignFree;
-import net.ess3.signs.signs.SignGameMode;
-import net.ess3.signs.signs.SignHeal;
-import net.ess3.signs.signs.SignInfo;
-import net.ess3.signs.signs.SignKit;
-import net.ess3.signs.signs.SignMail;
-import net.ess3.signs.signs.SignRepair;
-import net.ess3.signs.signs.SignSell;
-import net.ess3.signs.signs.SignSpawnmob;
-import net.ess3.signs.signs.SignTime;
-import net.ess3.signs.signs.SignTrade;
-import net.ess3.signs.signs.SignWarp;
-import net.ess3.signs.signs.SignWeather;
+import net.ess3.signs.signs.*;
 
 
 public enum Signs

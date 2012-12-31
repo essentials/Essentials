@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-import net.ess3.Essentials;
-import net.ess3.api.IPlugin;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
+import net.ess3.Essentials;
+import net.ess3.api.IPlugin;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.error.YAMLException;
@@ -407,8 +407,8 @@ public class BukkitConstructor extends Constructor
 				}
 				catch (Exception e)
 				{
-					throw new YAMLException("Cannot create property=" + key + " for JavaBean="
-											+ object + "; " + e.getMessage(), e);
+					throw new YAMLException(
+							"Cannot create property=" + key + " for JavaBean=" + object + "; " + e.getMessage(), e);
 				}
 			}
 			return object;

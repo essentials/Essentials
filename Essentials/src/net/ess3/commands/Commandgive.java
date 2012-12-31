@@ -1,14 +1,14 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.util.Locale;
 import java.util.regex.Pattern;
-import static net.ess3.I18n._;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
-import net.ess3.utils.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
+import net.ess3.utils.Util;
 
 
 public class Commandgive extends EssentialsCommand
@@ -81,7 +81,7 @@ public class Commandgive extends EssentialsCommand
 		giveTo.giveItems(stack, false);
 
 		final String itemName = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');
-		sender.sendMessage( _("give", stack.getAmount(), itemName, giveTo.getPlayer().getDisplayName()));
+		sender.sendMessage(_("give", stack.getAmount(), itemName, giveTo.getPlayer().getDisplayName()));
 
 	}
 }

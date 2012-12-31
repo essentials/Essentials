@@ -1,15 +1,9 @@
 package net.ess3.signs;
 
+import static net.ess3.I18n._;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-import static net.ess3.I18n._;
-import net.ess3.api.ChargeException;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
-import net.ess3.economy.Trade;
-import net.ess3.signs.signs.SignException;
-import net.ess3.utils.FormatUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -17,6 +11,12 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.ItemStack;
+import net.ess3.api.ChargeException;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.economy.Trade;
+import net.ess3.signs.signs.SignException;
+import net.ess3.utils.FormatUtil;
 
 
 public class EssentialsSign
@@ -86,8 +86,7 @@ public class EssentialsSign
 		}
 		try
 		{
-			return SignsPermissions.USE.isAuthorized(user, signName)
-				   && onSignInteract(sign, user, getUsername(user), ess);
+			return SignsPermissions.USE.isAuthorized(user, signName) && onSignInteract(sign, user, getUsername(user), ess);
 		}
 		catch (ChargeException ex)
 		{
@@ -107,8 +106,7 @@ public class EssentialsSign
 		final IUser user = ess.getUserMap().getUser(player);
 		try
 		{
-			return SignsPermissions.BREAK.isAuthorized(user, signName)
-				   && onSignBreak(sign, user, getUsername(user), ess);
+			return SignsPermissions.BREAK.isAuthorized(user, signName) && onSignBreak(sign, user, getUsername(user), ess);
 		}
 		catch (SignException ex)
 		{
@@ -214,12 +212,8 @@ public class EssentialsSign
 		{
 			return true;
 		}
-		final BlockFace[] directions = new BlockFace[]
-		{
-			BlockFace.NORTH,
-			BlockFace.EAST,
-			BlockFace.SOUTH,
-			BlockFace.WEST
+		final BlockFace[] directions = new BlockFace[]{
+				BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
 		};
 		for (BlockFace blockFace : directions)
 		{
@@ -276,8 +270,7 @@ public class EssentialsSign
 		}
 	}
 
-	protected final void validateTrade(final ISign sign, final int amountIndex, final int itemIndex,
-									   final IUser player, final IEssentials ess) throws SignException
+	protected final void validateTrade(final ISign sign, final int amountIndex, final int itemIndex, final IUser player, final IEssentials ess) throws SignException
 	{
 		if (sign.getLine(itemIndex).equalsIgnoreCase("exp") || sign.getLine(itemIndex).equalsIgnoreCase("xp"))
 		{
@@ -292,8 +285,7 @@ public class EssentialsSign
 		sign.setLine(itemIndex, sign.getLine(itemIndex).trim());
 	}
 
-	protected final Trade getTrade(final ISign sign, final int amountIndex, final int itemIndex,
-								   final IUser player, final IEssentials ess) throws SignException
+	protected final Trade getTrade(final ISign sign, final int amountIndex, final int itemIndex, final IUser player, final IEssentials ess) throws SignException
 	{
 		if (sign.getLine(itemIndex).equalsIgnoreCase("exp") || sign.getLine(itemIndex).equalsIgnoreCase("xp"))
 		{
@@ -301,7 +293,8 @@ public class EssentialsSign
 			return new Trade(amount, ess);
 		}
 		final ItemStack item = getItemStack(sign.getLine(itemIndex), 1, ess);
-		final int amount = Math.min(getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * player.getPlayer().getInventory().getSize());
+		final int amount = Math.min(
+				getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * player.getPlayer().getInventory().getSize());
 		if (item.getTypeId() == 0 || amount < 1)
 		{
 			throw new SignException(_("moreThanZero"));

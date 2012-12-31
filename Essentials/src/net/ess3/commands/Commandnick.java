@@ -1,14 +1,14 @@
 package net.ess3.commands;
 
-import java.util.Locale;
 import static net.ess3.I18n._;
+import java.util.Locale;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
-import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandnick extends EssentialsCommand

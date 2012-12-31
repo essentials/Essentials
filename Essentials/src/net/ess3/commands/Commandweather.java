@@ -1,9 +1,9 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-import net.ess3.api.IUser;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import net.ess3.api.IUser;
 
 
 public class Commandweather extends EssentialsCommand
@@ -24,16 +24,14 @@ public class Commandweather extends EssentialsCommand
 
 			world.setStorm(isStorm ? true : false);
 			world.setWeatherDuration(Integer.parseInt(args[1]) * 20);
-			user.sendMessage(isStorm
-							 ? _("weatherStormFor", world.getName(), args[1])
-							 : _("weatherSunFor", world.getName(), args[1]));
+			user.sendMessage(
+					isStorm ? _("weatherStormFor", world.getName(), args[1]) : _("weatherSunFor", world.getName(), args[1]));
 		}
 		else
 		{
 			world.setStorm(isStorm ? true : false);
-			user.sendMessage(isStorm
-							 ? _("weatherStorm", world.getName())
-							 : _("weatherSun", world.getName()));
+			user.sendMessage(
+					isStorm ? _("weatherStorm", world.getName()) : _("weatherSun", world.getName()));
 		}
 	}
 
@@ -56,16 +54,14 @@ public class Commandweather extends EssentialsCommand
 
 			world.setStorm(isStorm ? true : false);
 			world.setWeatherDuration(Integer.parseInt(args[2]) * 20);
-			sender.sendMessage(isStorm
-							   ? _("weatherStormFor", world.getName(), args[2])
-							   : _("weatherSunFor", world.getName(), args[2]));
+			sender.sendMessage(
+					isStorm ? _("weatherStormFor", world.getName(), args[2]) : _("weatherSunFor", world.getName(), args[2]));
 		}
 		else
 		{
 			world.setStorm(isStorm ? true : false);
-			sender.sendMessage(isStorm
-							   ? _("weatherStorm", world.getName())
-							   : _("weatherSun", world.getName()));
+			sender.sendMessage(
+					isStorm ? _("weatherStorm", world.getName()) : _("weatherSun", world.getName()));
 		}
 	}
 }

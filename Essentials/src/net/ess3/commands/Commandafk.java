@@ -37,5 +37,5 @@ public class Commandafk extends EssentialsCommand
 			//user.sendMessage(_("markedAsAway"));
 			ess.broadcastMessage(user, _("userIsAway", user.getPlayer().getDisplayName()));
 		}
-	}	
+	}
 }

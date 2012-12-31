@@ -1,10 +1,5 @@
 package net.ess3.listener;
 
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
-import net.ess3.bukkit.BukkitMaterial;
-import net.ess3.craftbukkit.InventoryWorkaround;
-
 import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -13,7 +8,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.bukkit.BukkitMaterial;
 
 
 public class EssentialsBlockListener implements Listener
@@ -25,7 +22,7 @@ public class EssentialsBlockListener implements Listener
 		this.ess = ess;
 	}
 
-	@EventHandler(priority = EventPriority.LOW,ignoreCancelled=true)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{
 		final Block block = event.getBlockPlaced();
@@ -34,7 +31,7 @@ public class EssentialsBlockListener implements Listener
 		{
 			return;
 		}
-		
+
 		final Player player = event.getPlayer();
 		final IUser user = ess.getUserMap().getUser(player);
 

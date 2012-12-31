@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.util.Locale;
 import java.util.regex.Pattern;
-import static net.ess3.I18n._;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import org.bukkit.command.CommandSender;
 
 
 public class Commanddelhome extends EssentialsCommand
@@ -48,10 +48,10 @@ public class Commanddelhome extends EssentialsCommand
 		{
 			name = expandedArg[0];
 		}
-		if (name.equalsIgnoreCase("bed")) 
-		{ 
-			throw new Exception (_("vanillaHome")); 
-		} 
+		if (name.equalsIgnoreCase("bed"))
+		{
+			throw new Exception(_("vanillaHome"));
+		}
 		user.getData().removeHome(name.toLowerCase(Locale.ENGLISH));
 		user.queueSave();
 		sender.sendMessage(_("deleteHome", name));

@@ -1,17 +1,9 @@
 package net.ess3.user;
 
-import java.util.*;
-import lombok.Delegate;
-import net.ess3.api.IEssentials;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.api.InvalidNameException;
-import net.ess3.permissions.Permissions;
-import net.ess3.settings.Economy;
-import net.ess3.storage.AsyncStorageObjectHolder;
-import net.ess3.storage.IStorageObjectHolder;
-import net.ess3.storage.StoredLocation.WorldNotLoadedException;
-import net.ess3.utils.Util;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -21,6 +13,16 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
+import lombok.Delegate;
+import net.ess3.api.IEssentials;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
+import net.ess3.api.InvalidNameException;
+import net.ess3.permissions.Permissions;
+import net.ess3.storage.AsyncStorageObjectHolder;
+import net.ess3.storage.IStorageObjectHolder;
+import net.ess3.storage.StoredLocation.WorldNotLoadedException;
+import net.ess3.utils.Util;
 
 
 public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implements OfflinePlayer, CommandSender, IStorageObjectHolder<UserData>
@@ -241,7 +243,8 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 
 	public boolean isIgnoringPlayer(final IUser user)
 	{
-		return getData().getIgnore() == null ? false : getData().getIgnore().contains(user.getName().toLowerCase(Locale.ENGLISH)) && Permissions.CHAT_IGNORE_EXEMPT.isAuthorized(user);
+		return getData().getIgnore() == null ? false : getData().getIgnore().contains(
+				user.getName().toLowerCase(Locale.ENGLISH)) && Permissions.CHAT_IGNORE_EXEMPT.isAuthorized(user);
 	}
 
 	public void setIgnoredPlayer(final IUser user, final boolean set)

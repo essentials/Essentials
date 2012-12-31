@@ -1,13 +1,13 @@
 package net.ess3.commands;
 
-import java.util.*;
 import static net.ess3.I18n._;
+import java.util.*;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandlist extends EssentialsCommand
@@ -59,8 +59,7 @@ public class Commandlist extends EssentialsCommand
 			final Set<String> hiddenPlayers = new HashSet<String>();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				if (userPlayer != null
-					&& !userPlayer.canSee(onlinePlayer))
+				if (userPlayer != null && !userPlayer.canSee(onlinePlayer))
 				{
 					hiddenPlayers.add(onlinePlayer.getName());
 					if (!showhidden)
@@ -118,8 +117,7 @@ public class Commandlist extends EssentialsCommand
 			final Set<String> hiddenPlayers = new HashSet<String>();
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
-				if (userPlayer != null
-					&& !userPlayer.canSee(onlinePlayer))
+				if (userPlayer != null && !userPlayer.canSee(onlinePlayer))
 				{
 					hiddenPlayers.add(onlinePlayer.getName());
 					if (!showhidden)

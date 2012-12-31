@@ -1,13 +1,13 @@
 package net.ess3.signs.signs;
 
 import static net.ess3.I18n._;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.economy.Trade;
 import net.ess3.signs.EssentialsSign;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 
 public class SignFree extends EssentialsSign

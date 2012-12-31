@@ -1,11 +1,11 @@
 package net.ess3.utils.textreader;
 
+import static net.ess3.I18n._;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import net.ess3.I18n;
-import static net.ess3.I18n._;
 import org.bukkit.command.CommandSender;
+import net.ess3.I18n;
 
 
 public class TextPager

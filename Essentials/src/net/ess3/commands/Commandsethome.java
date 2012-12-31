@@ -1,8 +1,8 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.util.Locale;
 import java.util.regex.Pattern;
-import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 
@@ -31,8 +31,7 @@ public class Commandsethome extends EssentialsCommand
 					{
 						throw new NotEnoughArgumentsException();
 					}
-					if ((user.getHomes().size() < ess.getRanks().getHomeLimit(user))
-						|| (user.getHomes().contains(args[0].toLowerCase(Locale.ENGLISH))))
+					if ((user.getHomes().size() < ess.getRanks().getHomeLimit(user)) || (user.getHomes().contains(args[0].toLowerCase(Locale.ENGLISH))))
 					{
 						user.getData().addHome(args[0].toLowerCase(Locale.ENGLISH), user.getPlayer().getLocation());
 						user.queueSave();
@@ -77,7 +76,10 @@ public class Commandsethome extends EssentialsCommand
 			user.getData().addHome("home", user.getPlayer().getLocation());
 			user.queueSave();
 		}
-		user.sendMessage(_("homeSet", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(), user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
+		user.sendMessage(
+				_(
+						"homeSet", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(),
+						user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
 
 	}
 }

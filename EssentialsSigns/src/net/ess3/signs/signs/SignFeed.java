@@ -14,14 +14,14 @@ public class SignFeed extends EssentialsSign
 	{
 		super("Feed");
 	}
-	
+
 	@Override
 	protected boolean onSignCreate(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
 	{
 		validateTrade(sign, 1, ess);
 		return true;
 	}
-	
+
 	@Override
 	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException, ChargeException
 	{

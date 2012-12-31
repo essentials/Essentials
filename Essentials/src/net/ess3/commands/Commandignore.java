@@ -15,17 +15,23 @@ public class Commandignore extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		IUser player;
-		try {
+		try
+		{
 			player = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
-		} catch(Exception e) {
-			if (args[0].equalsIgnoreCase("list")) {
+		}
+		catch (Exception e)
+		{
+			if (args[0].equalsIgnoreCase("list"))
+			{
 				user.sendMessage(Util.joinList(user.getData().getIgnore()));
 				throw new NoChargeException();
-			} else {
+			}
+			else
+			{
 				throw e;
 			}
 		}
-			
+
 		if (user.isIgnoringPlayer(player))
 		{
 			user.setIgnoredPlayer(player, false);

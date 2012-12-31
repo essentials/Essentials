@@ -1,19 +1,14 @@
 package net.ess3.bukkit;
 
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 import static net.ess3.I18n._;
+import java.util.*;
 import org.bukkit.entity.EntityType;
 
 
 public class LivingEntities
 {
 	final private static Map<String, EntityType> entities = new HashMap<String, EntityType>();
-	
+
 	final private static EnumMap<EntityType, String> entityI18n = new EnumMap<EntityType, String>(EntityType.class);
 	final private static EnumMap<EntityType, String> entityI18nPlural = new EnumMap<EntityType, String>(EntityType.class);
 
@@ -26,7 +21,7 @@ public class LivingEntities
 				String entityName = entityType.name().toLowerCase(Locale.ENGLISH).replace("_", "");
 				entities.put(entityName, entityType);
 				entityI18n.put(entityType, entityName);
-				entityI18nPlural.put(entityType,entityName+"Plural");
+				entityI18nPlural.put(entityType, entityName + "Plural");
 			}
 		}
 	}
@@ -41,10 +36,11 @@ public class LivingEntities
 		return entities.get(name.toLowerCase(Locale.ENGLISH));
 	}
 
-	public static String getName(int count, EntityType type) {
-		return count == 1? _(entityI18n.get(type)):_(entityI18nPlural.get(type));
+	public static String getName(int count, EntityType type)
+	{
+		return count == 1 ? _(entityI18n.get(type)) : _(entityI18nPlural.get(type));
 	}
-	
+
 	public static class MobException extends Exception
 	{
 		private static final long serialVersionUID = 1L;

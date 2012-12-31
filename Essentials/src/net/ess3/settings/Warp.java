@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import net.ess3.storage.StorageObject;
 import net.ess3.storage.StoredLocation;
 
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Warp implements StorageObject

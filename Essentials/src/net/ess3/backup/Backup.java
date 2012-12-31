@@ -1,16 +1,16 @@
 package net.ess3.backup;
 
+import static net.ess3.I18n._;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
-import static net.ess3.I18n._;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import net.ess3.api.IBackup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
-import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 
 public class Backup implements Runnable, IBackup
@@ -54,28 +54,28 @@ public class Backup implements Runnable, IBackup
 		{
 			return;
 		}
-		
+
 		final ISettings settings = ess.getSettings();
-		
+
 		final net.ess3.settings.Backup backupSettings = settings.getData().getGeneral().getBackup();
-		
-		String backupCommand = backupSettings.getCommand() == null || backupSettings.getCommand().isEmpty()
-				? ("NORUN")  : backupSettings.getCommand();
+
+		String backupCommand = backupSettings.getCommand() == null || backupSettings.getCommand().isEmpty() ? ("NORUN") : backupSettings.getCommand();
 		
 		/*if (backupCommand.equals("NORUN")) { TODO: Un-comment if you do not want commands to be run if there is no backup command
 			return;
 		}*/
-		
+
 		ess.getLogger().log(Level.INFO, _("backupStarted"));
-		
-		if (!backupSettings.getCommandsBeforeBackup().isEmpty()) 
+
+		if (!backupSettings.getCommandsBeforeBackup().isEmpty())
 		{
 			final CommandSender consoleSender = server.getConsoleSender();
-			for (String command : backupSettings.getCommandsBeforeBackup()) {
+			for (String command : backupSettings.getCommandsBeforeBackup())
+			{
 				server.dispatchCommand(consoleSender, command);
 			}
 		}
-		
+
 		ess.getPlugin().scheduleAsyncDelayedTask(new BackupRunner(backupCommand));
 	}
 

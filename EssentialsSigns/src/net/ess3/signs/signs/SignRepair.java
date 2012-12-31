@@ -40,9 +40,8 @@ public class SignRepair extends EssentialsSign
 
 		Commandrepair command = new Commandrepair();
 		command.init(ess, "repair");
-		String[] args = new String[]
-		{
-			sign.getLine(1)
+		String[] args = new String[]{
+				sign.getLine(1)
 		};
 		try
 		{

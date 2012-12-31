@@ -10,6 +10,7 @@ public interface IPermission
 
 	/**
 	 * Checks to see if a user can use this permission
+	 *
 	 * @param sender - CommandSender to check on
 	 * @return - True if they have that permission
 	 */

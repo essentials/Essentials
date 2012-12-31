@@ -1,14 +1,14 @@
 package net.ess3.user;
 
+import static net.ess3.I18n._;
 import java.util.Collections;
 import java.util.Set;
-import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 
 
 public class TooManyMatchesException extends Exception
 {
-    private static final long serialVersionUID = -1458262878150217201L;
+	private static final long serialVersionUID = -1458262878150217201L;
 	private final Set<IUser> matches;
 
 	public TooManyMatchesException()

@@ -1,6 +1,5 @@
 package net.ess3.update;
 
-import net.ess3.update.chat.*;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -13,6 +12,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
+import net.ess3.update.chat.*;
 
 
 public class EssentialsHelp implements Listener
@@ -50,7 +50,8 @@ public class EssentialsHelp implements Listener
 				chatUser = (Player)sender;
 				ircBot = null;
 				sender.sendMessage("You will be connected to the Essentials Help Chat.");
-				sender.sendMessage("All your chat messages will be forwarded to the channel. You can't chat with other players on your server while in help chat, but you can use commands.");
+				sender.sendMessage(
+						"All your chat messages will be forwarded to the channel. You can't chat with other players on your server while in help chat, but you can use commands.");
 				sender.sendMessage("Please be patient, if noone is available, check back later.");
 				sender.sendMessage("Type !help to get a list of all commands.");
 				sender.sendMessage("Type !quit to leave the channel.");

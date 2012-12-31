@@ -1,9 +1,9 @@
 package net.ess3.economy.register.methods;
 
+import org.bukkit.plugin.Plugin;
 import me.ashtheking.currency.Currency;
 import me.ashtheking.currency.CurrencyList;
 import net.ess3.economy.register.Method;
-import org.bukkit.plugin.Plugin;
 
 
 /**
@@ -104,9 +104,8 @@ public class MCUR implements Method
 	@Override
 	public boolean isCompatible(Plugin plugin)
 	{
-		return (plugin.getDescription().getName().equalsIgnoreCase("Currency")
-				|| plugin.getDescription().getName().equalsIgnoreCase("MultiCurrency"))
-			   && plugin instanceof Currency;
+		return (plugin.getDescription().getName().equalsIgnoreCase("Currency") || plugin.getDescription().getName().equalsIgnoreCase(
+				"MultiCurrency")) && plugin instanceof Currency;
 	}
 
 	@Override

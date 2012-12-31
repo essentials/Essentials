@@ -24,6 +24,8 @@ package net.ess3.utils.gnu.inet.encoding;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
  * USA
  */
+
+
 /**
  * This class offers static methods for encoding/decoding strings
  * using the Punycode algorithm.
@@ -55,13 +57,12 @@ public class Punycode
 	final static char DELIMITER = '-';
 
 	/**
-   * Punycodes a unicode string.
-   *
-   * @param input Unicode string.
-   * @return Punycoded string.
-   */
-	public static String encode(String input)
-			throws PunycodeException
+	 * Punycodes a unicode string.
+	 *
+	 * @param input Unicode string.
+	 * @return Punycoded string.
+	 */
+	public static String encode(String input) throws PunycodeException
 	{
 		int n = INITIAL_N;
 		int delta = 0;
@@ -123,7 +124,7 @@ public class Punycode
 				{
 					int q = delta;
 
-					for (int k = BASE;; k += BASE)
+					for (int k = BASE; ; k += BASE)
 					{
 						int t;
 						if (k <= bias)
@@ -161,13 +162,12 @@ public class Punycode
 	}
 
 	/**
-   * Decode a punycoded string.
-   *
-   * @param input Punycode string
-   * @return Unicode string.
-   */
-	public static String decode(String input)
-			throws PunycodeException
+	 * Decode a punycoded string.
+	 *
+	 * @param input Punycode string
+	 * @return Unicode string.
+	 */
+	public static String decode(String input) throws PunycodeException
 	{
 		int n = INITIAL_N;
 		int i = 0;
@@ -176,7 +176,8 @@ public class Punycode
 
 		int d = input.lastIndexOf(DELIMITER);
 		// Change start by snowleo
-		if (d < 0) {
+		if (d < 0)
+		{
 			return input;
 		}
 		else if (d > 0) // Change end by snowleo
@@ -202,7 +203,7 @@ public class Punycode
 			int oldi = i;
 			int w = 1;
 
-			for (int k = BASE;; k += BASE)
+			for (int k = BASE; ; k += BASE)
 			{
 				if (d == input.length())
 				{
@@ -281,8 +282,7 @@ public class Punycode
 		return c < 0x80;
 	}
 
-	public final static int digit2codepoint(int d)
-			throws PunycodeException
+	public final static int digit2codepoint(int d) throws PunycodeException
 	{
 		if (d < 26)
 		{
@@ -300,8 +300,7 @@ public class Punycode
 		}
 	}
 
-	public final static int codepoint2digit(int c)
-			throws PunycodeException
+	public final static int codepoint2digit(int c) throws PunycodeException
 	{
 		if (c - '0' < 10 && c >= '0') // Changed by snowleo
 		{

@@ -1,9 +1,8 @@
 package net.ess3.update;
 
-import net.ess3.update.Version.Type;
 import java.util.TreeSet;
 import junit.framework.TestCase;
-import net.ess3.update.Version;
+import net.ess3.update.Version.Type;
 import org.junit.Test;
 
 

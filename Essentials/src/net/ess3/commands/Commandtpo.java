@@ -1,9 +1,9 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Commandtpo extends EssentialsCommand

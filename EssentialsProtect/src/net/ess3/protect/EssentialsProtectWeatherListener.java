@@ -22,9 +22,7 @@ public class EssentialsProtectWeatherListener implements Listener
 	{
 		final ProtectHolder settings = prot.getSettings();
 
-		if (!event.isCancelled()
-			&& settings.getData().isDisableStorm()
-			&& event.toWeatherState())
+		if (!event.isCancelled() && settings.getData().isDisableStorm() && event.toWeatherState())
 		{
 			event.setCancelled(true);
 		}
@@ -35,8 +33,7 @@ public class EssentialsProtectWeatherListener implements Listener
 	{
 		final ProtectHolder settings = prot.getSettings();
 
-		if (!event.isCancelled()
-			&& settings.getData().isDisableLighting())
+		if (!event.isCancelled() && settings.getData().isDisableLighting())
 		{
 			event.setCancelled(true);
 		}
@@ -47,9 +44,7 @@ public class EssentialsProtectWeatherListener implements Listener
 	{
 		final ProtectHolder settings = prot.getSettings();
 
-		if (!event.isCancelled()
-			&& settings.getData().isDisableThunder()
-			&& event.toThunderState())
+		if (!event.isCancelled() && settings.getData().isDisableThunder() && event.toThunderState())
 		{
 			event.setCancelled(true);
 		}

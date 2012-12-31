@@ -10,12 +10,12 @@ import org.bukkit.plugin.PluginManager;
  * The
  * <code>Methods</code> initializes Methods that utilize the Method interface based on a "first come, first served"
  * basis.
- *
+ * <p/>
  * Allowing you to check whether a payment method exists or not.
- *
+ * <p/>
  * Methods also allows you to set a preferred method of payment before it captures payment plugins in the initialization
  * process.
- *
+ * <p/>
  * in
  * <code>bukkit.yml</code>: <blockquote><pre>
  *  economy:
@@ -90,8 +90,7 @@ public class Methods
 	 * Returns an array of payment method names that have been loaded through the
 	 * <code>_init</code> method.
 	 *
-	 * @return
-	 * <code>Set<String></code> - Array of payment methods that are loaded.
+	 * @return <code>Set<String></code> - Array of payment methods that are loaded.
 	 * @see #setMethod(org.bukkit.plugin.Plugin)
 	 */
 	public static Set<String> getDependencies()
@@ -129,8 +128,7 @@ public class Methods
 	/**
 	 * Verifies if Register has set a payment method for usage yet.
 	 *
-	 * @return
-	 * <code>boolean</code>
+	 * @return <code>boolean</code>
 	 * @see #setMethod(org.bukkit.plugin.Plugin)
 	 * @see #checkDisabled(org.bukkit.plugin.Plugin)
 	 */
@@ -143,8 +141,7 @@ public class Methods
 	 * Checks Plugin Class against a multitude of checks to verify it's usability as a payment method.
 	 *
 	 * @param <code>PluginManager</code> the plugin manager for the server
-	 * @return
-	 * <code>boolean</code> True on success, False on failure.
+	 * @return <code>boolean</code> True on success, False on failure.
 	 */
 	public static boolean setMethod(PluginManager manager)
 	{
@@ -245,8 +242,7 @@ public class Methods
 	/**
 	 * Sets the preferred economy
 	 *
-	 * @return
-	 * <code>boolean</code>
+	 * @return <code>boolean</code>
 	 */
 	public static boolean setPreferred(String check)
 	{
@@ -262,9 +258,8 @@ public class Methods
 	/**
 	 * Grab the existing and initialized (hopefully) Method Class.
 	 *
-	 * @return
-	 * <code>Method</code> <em>or</em>
-	 * <code>Null</code>
+	 * @return <code>Method</code> <em>or</em>
+	 *         <code>Null</code>
 	 */
 	public static Method getMethod()
 	{
@@ -275,8 +270,7 @@ public class Methods
 	 * Verify is a plugin is disabled, only does this if we there is an existing payment method initialized in Register.
 	 *
 	 * @param method Plugin data from bukkit, Internal Class file.
-	 * @return
-	 * <code>boolean</code>
+	 * @return <code>boolean</code>
 	 */
 	public static boolean checkDisabled(Plugin method)
 	{

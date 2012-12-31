@@ -1,13 +1,11 @@
 package net.ess3.update.states;
 
-import net.ess3.update.AbstractWorkListener;
-import net.ess3.update.UpdateCheck;
 import java.util.Iterator;
-
-import net.ess3.update.UpdateCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import net.ess3.update.AbstractWorkListener;
+import net.ess3.update.UpdateCheck;
 
 
 public class StateMachine extends AbstractWorkListener implements Runnable
@@ -16,6 +14,8 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 	{
 		ABORT, WAIT, DONE, NONE
 	}
+
+
 	private final transient StateMap states = new StateMap();
 	private transient AbstractState current;
 	private transient Player player;
@@ -84,6 +84,7 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 		}
 		return result;
 	}
+
 	private transient Iterator<AbstractState> iterator;
 
 	public void startWork()
@@ -97,7 +98,8 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 	{
 		if (!iterator.hasNext())
 		{
-			Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), new Runnable()
+			Bukkit.getScheduler().scheduleSyncDelayedTask(
+					getPlugin(), new Runnable()
 			{
 				@Override
 				public void run()
@@ -120,7 +122,8 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 	public void onWorkAbort(final String message)
 	{
 		finish();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), new Runnable()
+		Bukkit.getScheduler().scheduleSyncDelayedTask(
+				getPlugin(), new Runnable()
 		{
 			@Override
 			public void run()
@@ -136,7 +139,8 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 	@Override
 	public void onWorkDone(final String message)
 	{
-		Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), new Runnable()
+		Bukkit.getScheduler().scheduleSyncDelayedTask(
+				getPlugin(), new Runnable()
 		{
 			@Override
 			public void run()

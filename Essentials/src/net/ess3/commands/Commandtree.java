@@ -1,10 +1,10 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-import net.ess3.api.IUser;
-import net.ess3.utils.LocationUtil;
 import org.bukkit.Location;
 import org.bukkit.TreeType;
+import net.ess3.api.IUser;
+import net.ess3.utils.LocationUtil;
 
 
 public class Commandtree extends EssentialsCommand
@@ -44,7 +44,7 @@ public class Commandtree extends EssentialsCommand
 		else if (args[0].equalsIgnoreCase("junglebush"))
 		{
 			tree = TreeType.JUNGLE_BUSH;
-					}
+		}
 		else if (args[0].equalsIgnoreCase("swamp"))
 		{
 			tree = TreeType.SWAMP;

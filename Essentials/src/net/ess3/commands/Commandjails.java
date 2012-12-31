@@ -1,9 +1,8 @@
 package net.ess3.commands;
 
-import net.ess3.utils.Util;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import net.ess3.utils.Util;
 
 
 public class Commandjails extends EssentialsCommand

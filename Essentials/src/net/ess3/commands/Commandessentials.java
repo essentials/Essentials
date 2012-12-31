@@ -1,14 +1,14 @@
 package net.ess3.commands;
 
-import java.util.Map;
 import static net.ess3.I18n._;
+import java.util.Map;
 import org.bukkit.command.CommandSender;
 
 
 public class Commandessentials extends EssentialsCommand
 {
 	private transient int taskid; // TODO: Needed?
-	
+
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{

@@ -156,8 +156,9 @@ public class UtilTest extends EssentialsTest
 		b = new GregorianCalendar(2000, 3, 7, 10, 0, 0);
 		assertEquals(" 10 years 6 months 10 days 13 hours 45 minutes 45 seconds", DateUtil.formatDateDiff(a, b));
 	}
-	
-	public void filenameTest() {
+
+	public void filenameTest()
+	{
 		try
 		{
 			assertEquals("_-", Util.sanitizeFileName("\u0000"));
@@ -170,12 +171,12 @@ public class UtilTest extends EssentialsTest
 			assertEquals("_-", Util.sanitizeFileName("\""));
 			assertEquals("_-", Util.sanitizeFileName("<>?:*."));
 			assertEquals("a-0fa", Util.sanitizeFileName("aä"));
-			
+
 		}
 		catch (InvalidNameException ex)
 		{
 			Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
+
 	}
 }

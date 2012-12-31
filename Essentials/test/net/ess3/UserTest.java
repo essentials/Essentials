@@ -10,7 +10,7 @@ public class UserTest extends EssentialsTest
 	public UserTest(String testName)
 	{
 		super(testName);
-		
+
 		addPlayer("testPlayer1");
 		base1 = ess.getUserMap().getUser("testPlayer1");
 	}
@@ -63,7 +63,7 @@ public class UserTest extends EssentialsTest
 		IUser user = ess.getUserMap().getUser(base1);
 		//assertEquals(user.getGroup(), "default");
 	}*/
-	
+
 	public void testNoop()
 	{
 		assertTrue(true);

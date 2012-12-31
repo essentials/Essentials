@@ -1,13 +1,13 @@
 package net.ess3.commands;
 
+import static net.ess3.I18n._;
 import java.util.Locale;
 import java.util.Set;
-import static net.ess3.I18n._;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.permissions.Permissions;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 
 public class Commandunlimited extends EssentialsCommand
@@ -20,7 +20,7 @@ public class Commandunlimited extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		
+
 		IUser target = user;
 
 		if (args.length > 1 && Permissions.UNLIMITED_OTHERS.isAuthorized(user))

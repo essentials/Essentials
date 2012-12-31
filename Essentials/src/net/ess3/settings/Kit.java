@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import org.bukkit.inventory.ItemStack;
+import lombok.*;
 import net.ess3.storage.ListType;
 import net.ess3.storage.StorageObject;
-import org.bukkit.inventory.ItemStack;
 
 
 @Data
@@ -26,12 +22,11 @@ public class Kit implements StorageObject
 
 	public List<ItemStack> getItems()
 	{
-		return items == null
-			   ? Collections.<ItemStack>emptyList()
-			   : Collections.unmodifiableList(items);
+		return items == null ? Collections.<ItemStack>emptyList() : Collections.unmodifiableList(items);
 	}
-	
-	public void setItems(Collection<ItemStack> items) {
+
+	public void setItems(Collection<ItemStack> items)
+	{
 		this.items = new ArrayList<ItemStack>(items);
 	}
 }

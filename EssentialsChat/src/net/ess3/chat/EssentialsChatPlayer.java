@@ -1,23 +1,19 @@
 package net.ess3.chat;
 
+import static net.ess3.I18n._;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
-import static net.ess3.I18n._;
-import net.ess3.api.ChargeException;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IRanks;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import net.ess3.api.*;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.FormatUtil;
-import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+
 
 public abstract class EssentialsChatPlayer implements Listener
 {
@@ -26,9 +22,8 @@ public abstract class EssentialsChatPlayer implements Listener
 	protected final transient Server server;
 	protected final transient Map<AsyncPlayerChatEvent, ChatStore> chatStorage;
 
-	public EssentialsChatPlayer(final Server server,
-								final IEssentials ess,
-								final Map<AsyncPlayerChatEvent, ChatStore> chatStorage)
+	public EssentialsChatPlayer(
+			final Server server, final IEssentials ess, final Map<AsyncPlayerChatEvent, ChatStore> chatStorage)
 	{
 		this.ess = ess;
 		this.server = server;
@@ -84,12 +79,13 @@ public abstract class EssentialsChatPlayer implements Listener
 
 		IRanks groupSettings = ess.getRanks();
 		MessageFormat format = groupSettings.getChatFormat(user);
-		synchronized(format)
+		synchronized (format)
 		{
-		event.setFormat(format.format(new Object[]
-				{
-					group, world, world.substring(0, 1).toUpperCase(Locale.ENGLISH)
-				}));
+			event.setFormat(
+					format.format(
+							new Object[]{
+									group, world, world.substring(0, 1).toUpperCase(Locale.ENGLISH)
+							}));
 		}
 	}
 
