@@ -3,8 +3,11 @@ package net.ess3.listener;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.bukkit.BukkitMaterial;
+import net.ess3.craftbukkit.InventoryWorkaround;
+
 import org.bukkit.GameMode;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -32,11 +35,11 @@ public class EssentialsBlockListener implements Listener
 			return;
 		}
 		
-		
-		final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final Player player = event.getPlayer();
+		final IUser user = ess.getUserMap().getUser(player);
 
 		final boolean unlimitedForUser = user.getData().hasUnlimited(itemstack.getType());
-		if (unlimitedForUser && user.getPlayer().getGameMode() != GameMode.CREATIVE)
+		if (unlimitedForUser && player.getGameMode() != GameMode.CREATIVE)
 		{
 			ess.getPlugin().scheduleSyncDelayedTask(
 					new Runnable()
@@ -44,8 +47,8 @@ public class EssentialsBlockListener implements Listener
 						@Override
 						public void run()
 						{
-							user.getPlayer().getInventory().addItem(itemstack);
-							user.getPlayer().updateInventory();
+							player.getInventory().addItem(itemstack);
+							player.updateInventory();
 						}
 					});
 		}

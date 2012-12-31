@@ -14,8 +14,16 @@ import org.bukkit.inventory.ItemStack;
 
 public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolder<UserData>, IReload, IReplyTo, Comparable<IUser>
 {
+	/**
+	 * Get the ammount of money in a users account
+	 * @return
+	 */
 	double getMoney();
 
+	/**
+	 * Remove money from the account
+	 * @param value
+	 */
 	void takeMoney(double value);
 
 	void takeMoney(double value, CommandSender initiator);

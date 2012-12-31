@@ -131,8 +131,9 @@ public class Commandptime extends EssentialsCommand
 			// Set
 			for (IUser user : users)
 			{
-				final World world = user.getPlayer().getWorld();
-				long time = user.getPlayer().getPlayerTime();
+				final Player player = user.getPlayer();
+				final World world = player.getWorld();
+				long time = player.getPlayerTime();
 				time -= time % 24000;
 				time += 24000 + ticks;
 				if (relative)

@@ -80,47 +80,50 @@ public final class Util
 
 	public static ItemStack convertBlockToItem(final Block block)
 	{
-		final ItemStack is = new ItemStack(block.getType(), 1, (short)0, block.getData());
+		final ItemStack is = new ItemStack(block.getType(), 1/*, (short)0, block.getData()*/); // TODO: Do we need block.getData? that constructor is depreciated
+		
+		short s = 0;
+		
 		switch (is.getType())
 		{
 		case WOODEN_DOOR:
 			is.setType(Material.WOOD_DOOR);
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case IRON_DOOR_BLOCK:
 			is.setType(Material.IRON_DOOR);
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case SIGN_POST:
 		case WALL_SIGN:
 			is.setType(Material.SIGN);
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case CROPS:
 			is.setType(Material.SEEDS);
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case CAKE_BLOCK:
 			is.setType(Material.CAKE);
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case BED_BLOCK:
 			is.setType(Material.BED);
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case REDSTONE_WIRE:
 			is.setType(Material.REDSTONE);
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case REDSTONE_TORCH_OFF:
 		case REDSTONE_TORCH_ON:
 			is.setType(Material.REDSTONE_TORCH_ON);
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case DIODE_BLOCK_OFF:
 		case DIODE_BLOCK_ON:
 			is.setType(Material.DIODE);
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case DOUBLE_STEP:
 			is.setType(Material.STEP);
@@ -146,7 +149,7 @@ public final class Util
 		case FENCE:
 		case FENCE_GATE:
 		case NETHER_FENCE:
-			is.setDurability((short)0);
+			is.setDurability(s);
 			break;
 		case FIRE:
 			return null;
@@ -195,7 +198,7 @@ public final class Util
 
 			if (each instanceof Collection)
 			{
-				buf.append(joinList(seperator, ((Collection)each).toArray()));
+				buf.append(joinList(seperator, ((Collection<?>)each).toArray()));
 			}
 			else
 			{
@@ -211,4 +214,5 @@ public final class Util
 		}
 		return buf.toString();
 	}
+	
 }

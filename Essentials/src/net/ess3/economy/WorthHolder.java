@@ -1,7 +1,6 @@
 package net.ess3.economy;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IWorth;

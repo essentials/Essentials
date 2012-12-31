@@ -7,6 +7,7 @@ import net.ess3.economy.Trade;
 import net.ess3.permissions.Permissions;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -56,21 +57,22 @@ public class Commandworld extends EssentialsCommand
 			throw new NoChargeException();
 		}
 
-		double factor;
-		if (user.getPlayer().getWorld().getEnvironment() == World.Environment.NETHER && world.getEnvironment() == World.Environment.NORMAL)
+		final double factor;
+		final Player player = user.getPlayer();
+		if (player.getWorld().getEnvironment() == World.Environment.NETHER && world.getEnvironment() == World.Environment.NORMAL)
 		{
-			factor = 8.0;
+			factor = 8d;
 		}
-		else if (user.getPlayer().getWorld().getEnvironment() == World.Environment.NORMAL && world.getEnvironment() == World.Environment.NETHER)
+		else if (player.getWorld().getEnvironment() == World.Environment.NORMAL && world.getEnvironment() == World.Environment.NETHER)
 		{
-			factor = 1.0 / 8.0;
+			factor = 1d / 8d;
 		}
 		else
 		{
-			factor = 1.0;
+			factor = 1d;
 		}
 
-		final Location loc = user.getPlayer().getLocation();
+		final Location loc = player.getLocation();
 		final Location target = new Location(world, loc.getBlockX() * factor + .5, loc.getBlockY(), loc.getBlockZ() * factor + .5);
 
 		final Trade charge = new Trade(commandName, ess);

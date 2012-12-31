@@ -41,10 +41,10 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	@Override
 	public IUser load(final String name) throws Exception
 	{
-		String lowercaseName = name.toLowerCase(Locale.ENGLISH);
+		final String lowercaseName = name.toLowerCase(Locale.ENGLISH);
 		if (!lowercaseName.equals(name))
 		{
-			IUser user = getUser(lowercaseName);
+			final IUser user = getUser(lowercaseName);
 			if (user == null)
 			{
 				throw new Exception(_("userNotFound"));

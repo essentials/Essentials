@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 
-
 public class Commandbreak extends EssentialsCommand
 {
 	//TODO: Switch to use util class

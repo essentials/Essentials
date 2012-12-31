@@ -3,11 +3,9 @@ package net.ess3.commands;
 import static net.ess3.I18n._;
 
 import net.ess3.api.IUser;
-import net.ess3.user.User;
 import net.ess3.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 
 import java.util.HashMap;
@@ -74,12 +72,12 @@ public class Commandrecipe extends EssentialsCommand
 
 	public void shapedRecipe(CommandSender sender, ShapedRecipe recipe)
 	{
-		Map<Character, ItemStack> recipeMap = recipe.getIngredientMap();
+		final Map<Character, ItemStack> recipeMap = recipe.getIngredientMap();
 		if (sender instanceof IUser)
 		{
-			IUser user = getUser(sender);
+			final IUser user = getUser(sender);
 			user.setRecipeSee(true);
-			InventoryView view = user.getPlayer().openWorkbench(null, true);
+			final InventoryView view = user.getPlayer().openWorkbench(null, true);
 			for (Map.Entry<Character, ItemStack> e : recipe.getIngredientMap().entrySet())
 			{
 				view.setItem(" abcdefghi".indexOf(e.getKey()), e.getValue());
@@ -87,9 +85,9 @@ public class Commandrecipe extends EssentialsCommand
 		}
 		else
 		{
-			HashMap<ItemStack, String> colorMap = new HashMap<ItemStack, String>();
+			final HashMap<ItemStack, String> colorMap = new HashMap<ItemStack, String>();
 			int i = 1;
-			for (Character c : "abcdefghi".toCharArray())
+			for (Character c : "abcdefghi".toCharArray()) // TODO: Faster to use new char[] { 'a','b','c','d','e','f','g','h','i' } ?
 			{
 				if (!colorMap.containsKey(recipeMap.get(c)))
 				{
@@ -100,7 +98,7 @@ public class Commandrecipe extends EssentialsCommand
 			sender.sendMessage(_("recipeGrid", colorMap.get(recipeMap.get('d')), colorMap.get(recipeMap.get('e')), colorMap.get(recipeMap.get('f'))));
 			sender.sendMessage(_("recipeGrid", colorMap.get(recipeMap.get('g')), colorMap.get(recipeMap.get('h')), colorMap.get(recipeMap.get('i'))));
 
-			StringBuilder s = new StringBuilder();
+			final StringBuilder s = new StringBuilder();
 			for (ItemStack items : colorMap.keySet().toArray(new ItemStack[colorMap.size()]))
 			{
 				s.append(_("recipeGridItem", colorMap.get(items), getMaterialName(items)));
@@ -111,12 +109,12 @@ public class Commandrecipe extends EssentialsCommand
 
 	public void shapelessRecipe(CommandSender sender, ShapelessRecipe recipe)
 	{
-		List<ItemStack> ingredients = recipe.getIngredientList();
+		final List<ItemStack> ingredients = recipe.getIngredientList();
 		if (sender instanceof IUser)
 		{
-			IUser user = getUser(sender);
+			final IUser user = getUser(sender);
 			user.setRecipeSee(true);
-			InventoryView view = user.getPlayer().openWorkbench(null, true);
+			final InventoryView view = user.getPlayer().openWorkbench(null, true);
 			for (int i = 0; i < ingredients.size(); i++)
 			{
 				view.setItem(i + 1, ingredients.get(i));
@@ -125,7 +123,7 @@ public class Commandrecipe extends EssentialsCommand
 		else
 		{
 			ess.getLogger().info(sender.getClass().getName());
-			StringBuilder s = new StringBuilder();
+			final StringBuilder s = new StringBuilder();
 			for (int i = 0; i < ingredients.size(); i++)
 			{
 				s.append(getMaterialName(ingredients.get(i)));

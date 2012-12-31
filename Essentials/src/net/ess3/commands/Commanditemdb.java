@@ -2,6 +2,8 @@ package net.ess3.commands;
 
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
+
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 
@@ -28,13 +30,13 @@ public class Commanditemdb extends EssentialsCommand
 		{
 			itemStack = ess.getItemDb().get(args[0]);
 		}
-		sender.sendMessage(itemStack.getType().toString() + "- " + itemStack.getTypeId() + ":" + Integer.toString(itemStack.getData().getData()));
-
-
-		if (itemStack.getTypeId() != 0)
+		final Material itemType = itemStack.getType();
+		final int id = itemType.getId();
+		sender.sendMessage(itemStack.getType().toString() + "- " + id + ":" + Integer.toString(itemStack.getData().getData()));
+		if (id != 0)
 		{
-			int maxuses = itemStack.getType().getMaxDurability();
-			int durability = ((maxuses + 1) - itemStack.getDurability());
+			final int maxuses = itemType.getMaxDurability();
+			final int durability = ((maxuses + 1) - itemStack.getDurability());
 			if (maxuses != 0)
 			{
 				sender.sendMessage(_("durability", Integer.toString(durability)));

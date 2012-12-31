@@ -35,17 +35,27 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		registerListeners();
 	}
 
+	/**
+	 * Sets a spawn location
+	 * @param loc - Location you want to set as spawn
+	 * @param group - Group to save it undr in the config
+	 */
 	public void setSpawn(final Location loc, final String group)
 	{
 		getData().addSpawn(group, loc);
 		queueSave();
 
-		if ("default".equalsIgnoreCase(group))
+		if (group.equalsIgnoreCase("default"))
 		{
 			loc.getWorld().setSpawnLocation(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 		}
 	}
 
+	/**
+	 * Get the spawn for a group from the config
+	 * @param group - Group name
+	 * @return
+	 */
 	public Location getSpawn(final String group)
 	{
 		if (getData().getSpawns() == null || group == null)
@@ -72,6 +82,10 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		}
 	}
 
+	/**
+	 * Gets the World spawn location
+	 * @return
+	 */
 	private Location getWorldSpawn()
 	{
 		for (World world : ess.getServer().getWorlds())
@@ -85,6 +99,10 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		return ess.getServer().getWorlds().get(0).getSpawnLocation();
 	}
 
+	/**
+	 * Get re-spawn listen priority
+	 * @return
+	 */
 	public EventPriority getRespawnPriority()
 	{
 		for (EventPriority priority : EventPriority.values())
@@ -97,6 +115,10 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		return EventPriority.NORMAL;
 	}
 
+	/**
+	 * Get the newbie spawn from the config
+	 * @return
+	 */
 	public Location getNewbieSpawn()
 	{
 		if (getData().getNewbieSpawn() == null || getData().getNewbieSpawn().isEmpty()
@@ -140,7 +162,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 	}
 
 
-	private class SpawnPlayerListener implements Listener
+	private class SpawnPlayerListener implements Listener // TODO: What is this for?
 	{
 		private final transient IEssentials ess;
 		private final transient SpawnsHolder spawns;

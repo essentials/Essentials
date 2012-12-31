@@ -31,7 +31,8 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 	protected final transient Cache<String, I> cache = CacheBuilder.newBuilder().softValues().build(this);
 	protected final transient ConcurrentSkipListSet<String> keys = new ConcurrentSkipListSet<String>();
 	protected final transient ConcurrentSkipListMap<String, File> zippedfiles = new ConcurrentSkipListMap<String, File>();
-
+	private final Pattern zipCheck = Pattern.compile("^[a-zA-Z0-9]*-?[a-zA-Z0-9]+\\.yml$");
+	
 	public StorageObjectMap(final IEssentials ess, final String folderName)
 	{
 		super();
@@ -90,25 +91,23 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 				}
 			}
 			
-			private final Pattern zipCheck = Pattern.compile("^[a-zA-Z0-9]*-?[a-zA-Z0-9]+\\.yml$");
-
 			private void addZipFile(File file)
 			{
 				try
 				{
-					ZipFile zipFile = new ZipFile(file);
+					final ZipFile zipFile = new ZipFile(file);
 					try
 					{
-						Enumeration<ZipArchiveEntry> entries = zipFile.getEntriesInPhysicalOrder();
+						final Enumeration<ZipArchiveEntry> entries = zipFile.getEntriesInPhysicalOrder();
 						while (entries.hasMoreElements())
 						{
-							ZipArchiveEntry entry = entries.nextElement();
-							String name = entry.getName();
+							final ZipArchiveEntry entry = entries.nextElement();
+							final String name = entry.getName();
 							if (entry.isDirectory() || entry.getSize() == 0 || !zipCheck.matcher(name).matches())
 							{
 								continue;
 							}
-							String shortName = name.substring(0, name.length() - 4);
+							final String shortName = name.substring(0, name.length() - 4);
 							addFileToKeys(shortName);
 							zippedfiles.put(name, file);
 						}

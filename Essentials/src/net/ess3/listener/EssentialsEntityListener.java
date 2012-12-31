@@ -6,7 +6,6 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
-import net.ess3.user.User;
 import net.ess3.user.UserData.TimestampType;
 import org.bukkit.Material;
 import org.bukkit.entity.Ageable;
@@ -102,19 +101,22 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onEntityDamage(final EntityDamageEvent event)
 	{
-		if (event.getEntity() instanceof Player && ess.getUserMap().getUser((Player)event.getEntity()).isGodModeEnabled())
-		{
-			final Player player = (Player)event.getEntity();
-			player.setFireTicks(0);
-			player.setRemainingAir(player.getMaximumAir());
-			event.setCancelled(true);
+		final Entity entity = event.getEntity();
+		if (entity instanceof Player) {
+			final Player player = (Player)entity;
+			if (ess.getUserMap().getUser(player).isGodModeEnabled()) {
+				player.setFireTicks(0);
+				player.setRemainingAir(player.getMaximumAir());
+				event.setCancelled(true);
+			}
 		}
 	}
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onEntityCombust(final EntityCombustEvent event)
 	{
-		if (event.getEntity() instanceof Player && ess.getUserMap().getUser((Player)event.getEntity()).isGodModeEnabled())
+		final Entity entity = event.getEntity();
+		if (entity instanceof Player && ess.getUserMap().getUser((Player)entity).isGodModeEnabled())
 		{
 			event.setCancelled(true);
 		}
@@ -151,7 +153,8 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onFoodLevelChange(final FoodLevelChangeEvent event)
 	{
-		if (event.getEntity() instanceof Player && ess.getUserMap().getUser((Player)event.getEntity()).isGodModeEnabled())
+		final Entity entity = event.getEntity();
+		if (entity instanceof Player && ess.getUserMap().getUser((Player)entity).isGodModeEnabled())
 		{
 			event.setCancelled(true);
 		}
@@ -201,7 +204,7 @@ public class EssentialsEntityListener implements Listener
 		{
 			if (entity instanceof Player)
 			{
-				IUser user = ess.getUserMap().getUser((Player)entity);
+				final IUser user = ess.getUserMap().getUser((Player)entity);
 				if (user.isGodModeEnabled())
 				{
 					event.setIntensity(entity, 0d);

@@ -37,11 +37,21 @@ public class WorldOptions implements StorageObject
 	@Setter(AccessLevel.NONE)
 	private Map<EntityType, Boolean> creatureSpawn = new EnumMap<EntityType, Boolean>(EntityType.class);
 
+	/**
+	 * Checks if a entity can be spawned.
+	 * @param creatureName - Name of the {@link EntityType}
+	 * @return
+	 */
 	public boolean getPreventSpawn(String creatureName)
 	{
 		return getPreventSpawn(EntityType.fromName(creatureName));
 	}
 
+	/**
+	 * Checks if an {@link EntityType} is allowed to be spawned
+	 * @param creature - {@link EntityType} to check
+	 * @return
+	 */
 	public boolean getPreventSpawn(EntityType creature)
 	{
 		if (creatureSpawn == null)

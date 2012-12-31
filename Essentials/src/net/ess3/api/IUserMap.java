@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Set;
 import net.ess3.user.PlayerNotFoundException;
 import net.ess3.user.TooManyMatchesException;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 

@@ -25,7 +25,7 @@ public class BukkitConstructor extends Constructor
 	private final transient Pattern WORD = Pattern.compile("\\W");
 	private final transient IPlugin plugin;
 
-	public BukkitConstructor(final Class clazz, final IPlugin plugin)
+	public BukkitConstructor(final Class<?> clazz, final IPlugin plugin)
 	{
 		super(clazz);
 		this.plugin = plugin;

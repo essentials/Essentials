@@ -69,7 +69,7 @@ public class EssentialsPluginListener implements Listener, IReload
 
 		if (storage == General.GroupStorage.GROUPMANAGER)
 		{
-			Plugin groupManager = ess.getServer().getPluginManager().getPlugin("GroupManager");
+			final Plugin groupManager = ess.getServer().getPluginManager().getPlugin("GroupManager");
 			if (groupManager != null && groupManager.isEnabled() && !(ess.getRanks() instanceof GMGroups))
 			{
 				if (ess.getRanks() instanceof RanksStorage)
@@ -82,7 +82,7 @@ public class EssentialsPluginListener implements Listener, IReload
 		}
 		if (storage == General.GroupStorage.VAULT)
 		{
-			Plugin vault = ess.getServer().getPluginManager().getPlugin("Vault");
+			final Plugin vault = ess.getServer().getPluginManager().getPlugin("Vault");
 			if (vault != null && vault.isEnabled() && !(ess.getRanks() instanceof VaultGroups))
 			{
 				if (ess.getRanks() instanceof RanksStorage)

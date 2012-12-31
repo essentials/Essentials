@@ -16,7 +16,7 @@ public class Commandpay extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		double amount = Double.parseDouble(args[1].replaceAll("[^0-9\\.]", ""));
+		final double amount = Double.parseDouble(args[1].replaceAll("[^0-9\\.]", ""));
 		
 		if (amount <= 0 || Double.isNaN(amount) || Double.isInfinite(amount)) {
 			user.sendMessage(_("invalidAmount"));
