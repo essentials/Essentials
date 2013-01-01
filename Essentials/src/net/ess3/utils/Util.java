@@ -81,51 +81,50 @@ public final class Util
 
 	public static ItemStack convertBlockToItem(final Block block)
 	{
-		final ItemStack is = new ItemStack(
-				block.getType(), 1/*, (short)0, block.getData()*/); // TODO: Do we need block.getData? that constructor is depreciated
-
-		short s = 0;
+		final ItemStack is = new ItemStack(block.getType(), 1);
+		
+		final short durability = 0;
 
 		switch (is.getType())
 		{
 		case WOODEN_DOOR:
 			is.setType(Material.WOOD_DOOR);
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case IRON_DOOR_BLOCK:
 			is.setType(Material.IRON_DOOR);
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case SIGN_POST:
 		case WALL_SIGN:
 			is.setType(Material.SIGN);
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case CROPS:
 			is.setType(Material.SEEDS);
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case CAKE_BLOCK:
 			is.setType(Material.CAKE);
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case BED_BLOCK:
 			is.setType(Material.BED);
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case REDSTONE_WIRE:
 			is.setType(Material.REDSTONE);
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case REDSTONE_TORCH_OFF:
 		case REDSTONE_TORCH_ON:
 			is.setType(Material.REDSTONE_TORCH_ON);
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case DIODE_BLOCK_OFF:
 		case DIODE_BLOCK_ON:
 			is.setType(Material.DIODE);
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case DOUBLE_STEP:
 			is.setType(Material.STEP);
@@ -151,7 +150,7 @@ public final class Util
 		case FENCE:
 		case FENCE_GATE:
 		case NETHER_FENCE:
-			is.setDurability(s);
+			is.setDurability(durability);
 			break;
 		case FIRE:
 			return null;

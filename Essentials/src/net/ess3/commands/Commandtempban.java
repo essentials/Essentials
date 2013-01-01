@@ -41,11 +41,11 @@ public class Commandtempban extends EssentialsCommand
 		final long banTimestamp = DateUtil.parseDateDiff(time, true);
 
 		final String banReason = _("tempBanned", DateUtil.formatDateDiff(banTimestamp));
-		UserData userData = user.getData();
-		userData.setBan(new Ban());
-		Ban ban = userData.getBan();
+		final Ban ban = new Ban();
+		final UserData userData = user.getData();
 		ban.setReason(banReason);
 		ban.setTimeout(banTimestamp);
+		userData.setBan(ban);
 		user.setBanned(true);
 		user.queueSave();
 		user.getPlayer().kickPlayer(banReason);
