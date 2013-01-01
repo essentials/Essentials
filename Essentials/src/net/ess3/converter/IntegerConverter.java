@@ -20,6 +20,7 @@ public class IntegerConverter implements ArgumentsParser<Integer>, Serializer<In
 	public ParserResult<Integer> parse(final String... args)
 	{
 		Validate.notEmpty(args);
+		Validate.notEmpty(args[0]);
 		try
 		{
 			final int number = Integer.parseInt(args[0]);

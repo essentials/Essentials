@@ -33,11 +33,12 @@ public class Commandbigtree extends EssentialsCommand
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
-		final TreeType tree = BIGTREE_PARSER.parse(args).getValue().getBukkitType();
+		final BigTree bigTree = BIGTREE_PARSER.parse(args).getValue();
+		final TreeType bukkitTree = bigTree.getBukkitType();
 
 		final Location loc = LocationUtil.getTarget(user.getPlayer());
 		final Location safeLocation = LocationUtil.getSafeDestination(loc);
-		final boolean success = user.getPlayer().getWorld().generateTree(safeLocation, tree);
+		final boolean success = user.getPlayer().getWorld().generateTree(safeLocation, bukkitTree);
 		if (success)
 		{
 			user.sendMessage(_("bigTreeSuccess"));
