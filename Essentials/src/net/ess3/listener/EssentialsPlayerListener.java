@@ -53,7 +53,11 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerRespawn(final PlayerRespawnEvent event)
 	{
-		final IUser user = userMap.getUser(event.getPlayer());
+		final Player player = event.getPlayer();
+		if (!player.isOnline()) {
+			return;
+		}
+		final IUser user = userMap.getUser(player);
 		user.updateCompass();
 		user.updateDisplayName();
 	}
