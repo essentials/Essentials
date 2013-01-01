@@ -81,7 +81,7 @@ public final class Util
 
 	public static ItemStack convertBlockToItem(final Block block)
 	{
-		final ItemStack is = new ItemStack(block.getType(), 1);
+		final ItemStack is = new ItemStack(block.getType(), 1, block.getData());
 		
 		final short durability = 0;
 
