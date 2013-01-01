@@ -4,12 +4,14 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 import org.apache.commons.lang.Validate;
 
 
 public class EnumConverter<E extends Enum<E>> implements ArgumentsParser<E>, Serializer<E>
 {
 	private static final Map<Class, EnumConverter> converterMap = new HashMap<Class, EnumConverter>();
+	private static final Pattern REPLACE = Pattern.compile("[_-]");
 	private final Map<String, E> enumMap = new HashMap<String, E>();
 	private final Map<E, String> serializedMap;
 
@@ -18,8 +20,8 @@ public class EnumConverter<E extends Enum<E>> implements ArgumentsParser<E>, Ser
 		serializedMap = new EnumMap<E, String>(enumClass);
 		for (E t : enumClass.getEnumConstants())
 		{
-			enumMap.put(t.name().replaceAll("[_-]", "").toLowerCase(Locale.ENGLISH), t);
-			serializedMap.put(t, t.name().replace("_", "-").toLowerCase(Locale.ENGLISH));
+			enumMap.put(cleanString(t.name()), t);
+			serializedMap.put(t, prettifyString(t.name()));
 		}
 	}
 
@@ -41,7 +43,8 @@ public class EnumConverter<E extends Enum<E>> implements ArgumentsParser<E>, Ser
 	public ParserResult<E> parse(final String... args)
 	{
 		Validate.notEmpty(args);
-		final E e = enumMap.get(args[0].replaceAll("[_-]", "").toLowerCase(Locale.ENGLISH));
+		Validate.notEmpty(args[0]);
+		final E e = enumMap.get(cleanString(args[0]));
 		if (e == null)
 		{
 			throw new IllegalArgumentException();
@@ -53,5 +56,13 @@ public class EnumConverter<E extends Enum<E>> implements ArgumentsParser<E>, Ser
 	public String serialize(final E input)
 	{
 		return serializedMap.get(input);
+	}
+	
+	private String cleanString(final String input) {
+		return REPLACE.matcher(input).replaceAll("").toLowerCase(Locale.ENGLISH);
+	}
+	
+	private String prettifyString(final String input) {
+		return input.replace("_", "-").toLowerCase(Locale.ENGLISH);
 	}
 }
