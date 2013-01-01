@@ -280,7 +280,7 @@ public class Trade
 		{
 			if (pay.getItemStack() != null)
 			{
-				ItemStack is = pay.getItemStack();
+				final ItemStack is = pay.getItemStack();
 				sb.append(is.getAmount()).append(",");
 				sb.append(is.getType().toString()).append(",");
 				sb.append(is.getDurability());

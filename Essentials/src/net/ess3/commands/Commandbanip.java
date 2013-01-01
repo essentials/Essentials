@@ -29,7 +29,7 @@ public class Commandbanip extends EssentialsCommand
 			{
 				throw new Exception(_("playerNotFound"));
 			}
-			ess.getServer().banIP(ipAddress /*TODO: This shouldnt be needed, test player.getData().getIpAddress()*/);
+			ess.getServer().banIP(ipAddress);
 			sender.sendMessage(_("banIpAddress"));
 		}
 	}
