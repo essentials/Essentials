@@ -183,7 +183,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	@Override
 	public void cancelTask(BukkitTask taskId)
 	{
-		getServer().getScheduler().cancelTask(taskId.getTaskId());
+		taskId.cancel();
 	}
 
 	@Override
