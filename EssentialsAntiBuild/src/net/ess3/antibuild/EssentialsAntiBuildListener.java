@@ -1,6 +1,8 @@
 package net.ess3.antibuild;
 
 import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -13,14 +15,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.painting.PaintingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
 
 
 public class EssentialsAntiBuildListener implements Listener
@@ -39,7 +39,7 @@ public class EssentialsAntiBuildListener implements Listener
 	{
 		final Player user = event.getPlayer();
 		final Block block = event.getBlockPlaced();
-		final int typeId = block.getTypeId();
+		//final int typeId = block.getTypeId(); unused?
 		final Material type = block.getType();
 
 		if (antib.getSettings().getData().isDisableBuild() && !Permissions.BUILD.isAuthorized(user) && !Permissions.PLACEMENT.isAuthorized(user, block))
@@ -73,7 +73,7 @@ public class EssentialsAntiBuildListener implements Listener
 	{
 		final Player user = event.getPlayer();
 		final Block block = event.getBlock();
-		final int typeId = block.getTypeId();
+		//final int typeId = block.getTypeId(); unused?
 		final Material type = block.getType();
 
 		if (antib.getSettings().getData().isDisableBuild() && !Permissions.BUILD.isAuthorized(user) && !Permissions.BREAK.isAuthorized(user, block))
@@ -103,7 +103,7 @@ public class EssentialsAntiBuildListener implements Listener
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onPaintingBreak(final PaintingBreakByEntityEvent event)
+	public void onHangingBreak(final HangingBreakByEntityEvent event)
 	{
 		final Entity entity = event.getRemover();
 		if (entity instanceof Player)
@@ -242,7 +242,7 @@ public class EssentialsAntiBuildListener implements Listener
 
 		if (antib.getSettings().getData().isDisableUse() && !Permissions.BUILD.isAuthorized(user))
 		{
-			;
+			return;
 		}
 		{
 			if (!Permissions.DROP.isAuthorized(user, item.getType(), item.getData()))
