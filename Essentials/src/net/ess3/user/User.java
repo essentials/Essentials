@@ -542,11 +542,11 @@ public class User extends UserBase implements IUser
 			final ISettings settings = ess.getSettings();
 			int oversizedStackSize = settings.getData().getGeneral().getOversizedStacksize();
 
-			overfilled = InventoryWorkaround.addItem(getPlayer().getInventory(), true, oversizedStackSize, itemStack);
+			overfilled = InventoryWorkaround.addOversizedItems(getPlayer().getInventory(), oversizedStackSize, itemStack);
 		}
 		else
 		{
-			overfilled = InventoryWorkaround.addItem(getPlayer().getInventory(), true, itemStack);
+			overfilled = InventoryWorkaround.addItems(getPlayer().getInventory(), itemStack);
 		}
 		if (canSpew)
 		{

@@ -90,9 +90,10 @@ public class Commandunlimited extends EssentialsCommand
 		{
 			message = "enableUnlimited";
 			enableUnlimited = true;
-			if (!InventoryWorkaround.containsItem(target.getPlayer().getInventory(), true, true, stack))
+
+			if (!target.getPlayer().getInventory().contains(stack))
 			{
-				InventoryWorkaround.addItem(target.getPlayer().getInventory(), false, stack);
+				InventoryWorkaround.addItems(target.getPlayer().getInventory(), stack);
 			}
 		}
 
