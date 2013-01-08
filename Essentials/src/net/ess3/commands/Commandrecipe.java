@@ -74,31 +74,50 @@ public class Commandrecipe extends EssentialsCommand
 		final Map<Character, ItemStack> recipeMap = recipe.getIngredientMap();
 		if (sender instanceof IUser)
 		{
-			final IUser user = getUser(sender);
+			final IUser user = (IUser)sender;
 			user.setRecipeSee(true);
 			final InventoryView view = user.getPlayer().openWorkbench(null, true);
-			for (Map.Entry<Character, ItemStack> e : recipe.getIngredientMap().entrySet())
+			for (int j = 0; j < recipe.getShape().length; j++)
 			{
-				view.setItem(" abcdefghi".indexOf(e.getKey()), e.getValue());
+				for (int k = 0; k < recipe.getShape()[j].length(); k++)
+				{
+					ItemStack item = recipe.getIngredientMap().get(recipe.getShape()[j].toCharArray()[k]);
+					if(item == null)
+					{
+						continue;
+					}
+					item.setAmount(0);
+					view.getTopInventory().setItem(j * 3 + k + 1, item);
+				}
 			}
 		}
 		else
 		{
-			final HashMap<ItemStack, String> colorMap = new HashMap<ItemStack, String>();
+			final HashMap<Material, String> colorMap = new HashMap<Material, String>();
 			int i = 1;
 			for (Character c : "abcdefghi".toCharArray()) // TODO: Faster to use new char[] { 'a','b','c','d','e','f','g','h','i' } ?
 			{
-				if (!colorMap.containsKey(recipeMap.get(c)))
+				final ItemStack item = recipeMap.get(c);
+				if (!colorMap.containsKey(item == null ? null : item.getType()))
 				{
-					colorMap.put(recipeMap.get(c), String.valueOf(i++));
+					colorMap.put(item == null ? null : item.getType(), String.valueOf(i++));
 				}
 			}
-			sender.sendMessage(_("recipeGrid", colorMap.get(recipeMap.get('a')), colorMap.get(recipeMap.get('b')), colorMap.get(recipeMap.get('c'))));
-			sender.sendMessage(_("recipeGrid", colorMap.get(recipeMap.get('d')), colorMap.get(recipeMap.get('e')), colorMap.get(recipeMap.get('f'))));
-			sender.sendMessage(_("recipeGrid", colorMap.get(recipeMap.get('g')), colorMap.get(recipeMap.get('h')), colorMap.get(recipeMap.get('i'))));
+			final Material[][] materials = new Material[3][3];
+			for (int j = 0; j < recipe.getShape().length; j++)
+			{
+				for (int k = 0; k < recipe.getShape()[j].length(); k++)
+				{
+					final ItemStack item = recipe.getIngredientMap().get(recipe.getShape()[j].toCharArray()[k]);
+					materials[j][k] = item == null ? null : item.getType();
+				}
+			}
+			sender.sendMessage(_("recipeGrid", colorMap.get(materials[0][0]), colorMap.get(materials[0][1]), colorMap.get(materials[0][2])));
+			sender.sendMessage(_("recipeGrid", colorMap.get(materials[1][0]), colorMap.get(materials[1][1]), colorMap.get(materials[1][2])));
+			sender.sendMessage(_("recipeGrid", colorMap.get(materials[2][0]), colorMap.get(materials[2][1]), colorMap.get(materials[2][2])));
 
 			final StringBuilder s = new StringBuilder();
-			for (ItemStack items : colorMap.keySet().toArray(new ItemStack[colorMap.size()]))
+			for (Material items : colorMap.keySet().toArray(new Material[colorMap.size()]))
 			{
 				s.append(_("recipeGridItem", colorMap.get(items), getMaterialName(items)));
 			}
@@ -121,7 +140,6 @@ public class Commandrecipe extends EssentialsCommand
 		}
 		else
 		{
-			ess.getLogger().info(sender.getClass().getName());
 			final StringBuilder s = new StringBuilder();
 			for (int i = 0; i < ingredients.size(); i++)
 			{
