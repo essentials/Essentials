@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import net.ess3.utils.FormatUtil;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class KeywordReplacer implements IText
 			userName = player.getName();
 			ipAddress = player.getAddress() == null || player.getAddress().getAddress() == null ? "" : player.getAddress().getAddress().toString();
 			address = player.getAddress() == null ? "" : player.getAddress().toString();
-			balance = Double.toString(user.getMoney());
+			balance = FormatUtil.displayCurrency(user.getMoney(), ess);
 			mails = Integer.toString(user.getData().getMails() == null ? 0 : user.getData().getMails().size());
 			world = player.getLocation() == null || player.getLocation().getWorld() == null ? "" : player.getLocation().getWorld().getName();
 			worldTime12 = DescParseTickFormat.format12(player.getWorld() == null ? 0 : player.getWorld().getTime());
