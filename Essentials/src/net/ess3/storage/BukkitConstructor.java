@@ -13,12 +13,13 @@ import net.ess3.Essentials;
 import net.ess3.api.IPlugin;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.introspector.Property;
 import org.yaml.snakeyaml.nodes.*;
 
 
-public class BukkitConstructor extends Constructor
+public class BukkitConstructor extends CustomClassLoaderConstructor
 {
 	private final transient Pattern NUMPATTERN = Pattern.compile("\\d+");
 	private final transient Pattern DATAPATTERN = Pattern.compile("[:+',;.]");
@@ -27,7 +28,7 @@ public class BukkitConstructor extends Constructor
 
 	public BukkitConstructor(final Class<?> clazz, final IPlugin plugin)
 	{
-		super(clazz);
+		super(clazz, plugin.getClass().getClassLoader());
 		this.plugin = plugin;
 		yamlClassConstructors.put(NodeId.scalar, new ConstructBukkitScalar());
 		yamlClassConstructors.put(NodeId.mapping, new ConstructBukkitMapping());
