@@ -8,6 +8,8 @@ import java.util.TreeSet;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.Material;
 import net.ess3.api.IUser;
 import net.ess3.bukkit.Enchantments;
 import net.ess3.permissions.Permissions;
@@ -57,21 +59,58 @@ public class Commandenchant extends EssentialsCommand
 		{
 			level = enchantment.getMaxLevel();
 		}
-		if (level == 0)
+		
+		
+		if (stack.getType().equals(Material.ENCHANTED_BOOK))
 		{
-			stack.removeEnchantment(enchantment);
-		}
-		else
-		{
-			if (allowUnsafe)
+			EnchantmentStorageMeta meta = (EnchantmentStorageMeta) stack.getItemMeta();
+			
+			if (level == 0)
 			{
-				stack.addUnsafeEnchantment(enchantment, level);
+				if (meta.hasStoredEnchant(enchantment))
+				{
+					meta.removeStoredEnchant(enchantment);
+					stack.setItemMeta(meta);
+				}
 			}
 			else
 			{
-				stack.addEnchantment(enchantment, level);
+				// Enchanted Books only allowed to have one enchantment
+				if (meta.hasStoredEnchants())
+				{
+					// Although there should be only one, don't make assumptions
+					Iterator<Map.Entry<Enchantment, Integer>> entries = meta.getStoredEnchants().entrySet().iterator();
+					while (entries.hasNext())
+					{
+						Map.Entry<Enchantment, Integer> entry = entries.next();
+						Enchantment ench = entry.getKey();
+						meta.removeStoredEnchant(ench);
+					}
+				}
+				
+				meta.addStoredEnchant(enchantment, level, allowUnsafe);
+				stack.setItemMeta(meta);
 			}
 		}
+		else // any other material beside Enchanted Book
+		{
+			if (level == 0)
+			{
+				stack.removeEnchantment(enchantment);
+			}
+			else
+			{
+				if (allowUnsafe)
+				{
+					stack.addUnsafeEnchantment(enchantment, level);
+				}
+				else
+				{
+					stack.addEnchantment(enchantment, level);
+				}
+			}
+		}
+		
 		final Player player = user.getPlayer();
 		player.getInventory().setItemInHand(stack);
 		player.updateInventory();
