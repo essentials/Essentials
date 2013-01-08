@@ -1,6 +1,7 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
