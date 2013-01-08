@@ -34,7 +34,7 @@ public class SignFree extends EssentialsSign
 		}
 
 		item.setAmount(item.getType().getMaxStackSize());
-		InventoryWorkaround.addItem(player.getPlayer().getInventory(), true, item);
+		InventoryWorkaround.addItems(player.getPlayer().getInventory(), item);
 		player.sendMessage("Item added to your inventory.");
 		player.getPlayer().updateInventory();
 		//TODO: wait for a fix in bukkit
