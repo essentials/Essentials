@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import net.ess3.api.IUser;
-import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.economy.Trade;
 import net.ess3.utils.FormatUtil;
 
@@ -143,7 +142,7 @@ public class Commandsell extends EssentialsCommand
 		//TODO: Prices for Enchantments
 		final ItemStack ris = is.clone();
 		ris.setAmount(amount);
-		InventoryWorkaround.removeItem(player.getInventory(), true, true, ris);
+		player.getInventory().removeItem(ris);
 		player.updateInventory();
 		Trade.log("Command", "Sell", "Item", user.getName(), new Trade(ris, ess), user.getName(), new Trade(worth * amount, ess), player.getLocation(), ess);
 		user.giveMoney(worth * amount);
