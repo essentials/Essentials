@@ -426,7 +426,14 @@ public class BukkitConstructor extends Constructor
 		}
 		else
 		{
-			clazz = plugin.getClassByName(name);
+			try // TODO Is there a better way to to this?
+			{
+				clazz = plugin.getClass().getClassLoader().loadClass(name);
+			}
+			catch (Exception e)
+			{
+				clazz = null;
+			}
 		}
 
 		if (clazz == null)
