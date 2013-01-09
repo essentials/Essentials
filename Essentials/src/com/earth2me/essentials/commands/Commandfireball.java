@@ -38,6 +38,14 @@ public class Commandfireball extends EssentialsCommand
 			{
 				type = Egg.class;
 			}
+			else if(args[0].equalsIgnoreCase("snowball"))
+			{
+				type = Snowball.class;
+			}
+			else if(args[0].equalsIgnoreCase("bottle"))
+			{
+				type = ThrownExpBottle.class;
+			}
 		}
 		final Vector direction = user.getEyeLocation().getDirection().multiply(speed);
 		projectile = (Projectile)user.getWorld().spawn(user.getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), type);
