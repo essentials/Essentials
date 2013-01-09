@@ -1,6 +1,9 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+
+import net.ess3.api.ChargeException;
+import net.ess3.utils.Util;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
@@ -44,13 +47,21 @@ public class Commandtpaccept extends EssentialsCommand
 		user.sendMessage(_("requestAccepted"));
 		target.sendMessage(_("requestAcceptedFrom", user.getPlayer().getDisplayName()));
 
-		if (user.isTpRequestHere())
+		try
 		{
-			target.getTeleport().teleportToMe(user, charge, TeleportCause.COMMAND);
+			if (user.isTpRequestHere())
+			{
+				target.getTeleport().teleportToMe(user, charge, TeleportCause.COMMAND);
+			}
+			else
+			{
+				target.getTeleport().teleport(user.getPlayer(), charge, TeleportCause.COMMAND);
+			}
 		}
-		else
+		catch (ChargeException ex)
 		{
-			target.getTeleport().teleport(user.getPlayer(), charge, TeleportCause.COMMAND);
+			user.sendMessage(_("pendingTeleportCancelled"));
+			//ess.showError(target, ex, commandLabel); TODO: equivalent to ess.showError() could not be found?
 		}
 		user.requestTeleport(null, false);
 		throw new NoChargeException();
