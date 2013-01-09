@@ -1,13 +1,14 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import net.ess3.Console;
+import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.user.Ban;
 import net.ess3.user.UserData;
+import net.ess3.utils.FormatUtil;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandban extends EssentialsCommand
@@ -44,7 +45,7 @@ public class Commandban extends EssentialsCommand
 		if (args.length > 1)
 		{
 
-			banReason = _("banFormat", getFinalArg(args, 1), senderName);
+			banReason = _("banFormat", FormatUtil.replaceFormat(getFinalArg(args, 1).replace("\\n", "\n")), senderName);
 			userData.getBan().setReason(banReason);
 		}
 		else
@@ -55,6 +56,7 @@ public class Commandban extends EssentialsCommand
 
 		user.setBanned(true);
 		user.queueSave();
+		user.getData().getBan().setTimeout(0);
 		user.getPlayer().kickPlayer(banReason);
 		for (Player player : server.getOnlinePlayers())
 		{

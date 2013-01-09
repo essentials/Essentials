@@ -4,6 +4,7 @@ import net.ess3.Console;
 import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import net.ess3.utils.FormatUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -24,7 +25,7 @@ public class Commandkick extends EssentialsCommand
 			throw new Exception(_("kickExempt"));
 		}
 		String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("kickDefault");
-		kickReason = kickReason.replace("\\n", "\n");
+		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n"));
 		user.getPlayer().kickPlayer(kickReason);
 		final String senderName = sender instanceof IUser ? ((IUser)sender).getPlayer().getDisplayName() : Console.NAME;
 
