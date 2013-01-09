@@ -1,5 +1,6 @@
 package net.ess3.signs.signs;
 
+import static net.ess3.I18n._;
 import java.util.Locale;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
@@ -72,6 +73,9 @@ public class SignKit extends EssentialsSign
 			}
 			return true;
 		}
-		return false;
+		else
+		{
+			throw new SignException(_("noKitPermission", "essentials.kits." + kitName));
+		}
 	}
 }
