@@ -2,10 +2,9 @@ package net.ess3.xmpp;
 
 import java.io.File;
 import java.util.*;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
+import java.util.logging.*;
+
+import com.avaje.ebeaninternal.server.transaction.log.SimpleLogger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import net.ess3.api.IReload;
@@ -21,6 +20,7 @@ import org.jivesoftware.smack.util.StringUtils;
 public final class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IReload
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
+	private static final SimpleFormatter formatter = new SimpleFormatter();
 	private transient YamlConfiguration config = null;
 	private transient XMPPConnection connection;
 	private transient ChatManager chatManager;
@@ -261,8 +261,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 										XMPPManager.this.startChat(user);
 										for (LogRecord logRecord : copy)
 										{
-											final String message = String.format(
-													"[" + logRecord.getLevel().getLocalizedName() + "] " + logRecord.getMessage(), logRecord.getParameters());
+											final String message = formatter.format(logRecord);
 											if (!XMPPManager.this.sendMessage(user, message))
 											{
 												failedUsers.add(user);
