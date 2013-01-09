@@ -45,9 +45,18 @@ public class Commandspawner extends EssentialsCommand
 			{
 				throw new Exception(_("unableToSpawnMob"));
 			}
+			int delay = 0;
+			if(args.length > 1 && Util.isInt(args[1]))
+			{
+				delay = Integer.parseInt(args[1]);
+			}
 			final Trade charge = new Trade("spawner-" + mob.getName().toLowerCase(Locale.ENGLISH), ess);
 			charge.isAffordableFor(user);
-			((CreatureSpawner)target.getBlock().getState()).setSpawnedType(mob);
+
+			CreatureSpawner spawner = ((CreatureSpawner)target.getBlock().getState());
+			spawner.setSpawnedType(mob);
+			spawner.setDelay(delay);
+
 			charge.charge(user);
 			user.sendMessage(_("setSpawner", mob.getName()));
 		}

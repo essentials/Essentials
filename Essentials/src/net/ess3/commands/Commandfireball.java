@@ -29,6 +29,18 @@ public class Commandfireball extends EssentialsCommand
 			{
 				clazz = Egg.class;
 			}
+			else if(args[0].equalsIgnoreCase("snowball"))
+			{
+				clazz = Snowball.class;
+			}
+			else if(args[0].equalsIgnoreCase("expbottle"))
+			{
+				clazz = ThrownExpBottle.class;
+			}
+			else if(args[0].equalsIgnoreCase("large"))
+			{
+				clazz = LargeFireball.class;
+			}
 		}
 
 		final Player player = user.getPlayer();
