@@ -6,6 +6,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.Util;
 import java.util.Locale;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -34,6 +35,7 @@ public class Commandspawner extends EssentialsCommand
 		}
 
 		String name = args[0];
+		Integer delay = 0;
 
 		Mob mob = null;
 		mob = Mob.fromName(name);
@@ -49,11 +51,23 @@ public class Commandspawner extends EssentialsCommand
 		{
 			throw new Exception(_("noPermToSpawnMob"));
 		}
+		if(args.length > 1)
+		{
+			try
+			{
+				delay = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException e) 
+			{
+				delay = 0;
+			}
+		}
 		final Trade charge = new Trade("spawner-" + mob.name.toLowerCase(Locale.ENGLISH), ess);
 		charge.isAffordableFor(user);
 		try
 		{
 			((CreatureSpawner)target.getBlock().getState()).setSpawnedType(mob.getType());
+			((CreatureSpawner)target.getBlock().getState()).setDelay(delay);
 		}
 		catch (Throwable ex)
 		{
