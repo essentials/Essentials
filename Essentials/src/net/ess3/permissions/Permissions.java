@@ -39,6 +39,7 @@ public enum Permissions implements IPermission
 	FEED_OTHERS,
 	FLY_EXEMPT,
 	FLY_OTHERS,
+	FLY_SAFELOGIN,
 	GAMEMODE_EXEMPT,
 	GAMEMODE_OTHERS,
 	GEOIP_HIDE(PermissionDefault.FALSE),

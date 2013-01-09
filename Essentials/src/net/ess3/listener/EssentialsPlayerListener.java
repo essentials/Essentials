@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -328,6 +329,25 @@ public class EssentialsPlayerListener implements Listener
 				user.sendMessage(_("youHaveNewMail", mail.size()));
 			}
 		}
+		if(Permissions.FLY_SAFELOGIN.isAuthorized(user))
+		{
+			final Location loc = user.getPlayer().getLocation();
+			final World world = loc.getWorld();
+			final int x = loc.getBlockX();
+			int y = loc.getBlockY();
+			final int z = loc.getBlockZ();
+			while(LocationUtil.isBlockUnsafe(world, x, y, z) && y > -1)
+			{
+				y--;
+			}
+
+			if(loc.getBlockY() - y > 1 || y < 0)
+			{
+				user.getPlayer().setAllowFlight(true);
+				user.getPlayer().setFlying(true);
+				user.sendMessage(_("flyMode", _("enabled"), user.getPlayer().getDisplayName()));
+			}
+		}
 	}
 
 
@@ -592,7 +612,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 		if (event.getView().getTopInventory().getType() == InventoryType.WORKBENCH)
 		{
-			final IUser user = userMap.getUser((Player)event.getWhoClicked());
+			final IUser user = userMap.getUser((Player) event.getWhoClicked());
 			if (user.isRecipeSee())
 			{
 				event.setCancelled(true);
