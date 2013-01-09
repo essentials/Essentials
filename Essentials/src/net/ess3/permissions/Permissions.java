@@ -112,6 +112,7 @@ public enum Permissions implements IPermission
 	WARP_LIST(PermissionDefault.TRUE),
 	WARP_HIDDEN,
 	WARP_OTHERS,
+	VANISH_EFFECT,
 	VANISH_EXEMPT,
 	VANISH_SEE_OTHERS,
 	VANISH_PVP,

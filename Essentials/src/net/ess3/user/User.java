@@ -22,6 +22,8 @@ import net.ess3.economy.register.Method;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.FormatUtil;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 
 public class User extends UserBase implements IUser
@@ -635,6 +637,10 @@ public class User extends UserBase implements IUser
 				}
 			}
 			ess.getVanishedPlayers().add(getName());
+			if(Permissions.VANISH_EFFECT.isAuthorized(this))
+			{
+				getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false));
+			}
 		}
 		else
 		{
@@ -643,6 +649,10 @@ public class User extends UserBase implements IUser
 				p.showPlayer(getPlayer());
 			}
 			ess.getVanishedPlayers().remove(getName());
+			if(Permissions.VANISH_EFFECT.isAuthorized(this))
+			{
+				getPlayer().removePotionEffect(PotionEffectType.INVISIBILITY);
+			}
 		}
 	}
 
