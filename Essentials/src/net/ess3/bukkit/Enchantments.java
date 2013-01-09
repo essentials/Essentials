@@ -5,7 +5,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.regex.Pattern;
+
+import net.ess3.utils.Util;
 import org.bukkit.enchantments.Enchantment;
 
 
@@ -16,7 +17,6 @@ public final class Enchantments
 	{
 	}
 
-	private static final transient Pattern NUMPATTERN = Pattern.compile("\\d+");
 	private static final Map<String, Enchantment> ENCHANTMENTS = new HashMap<String, Enchantment>();
 
 	static
@@ -116,7 +116,7 @@ public final class Enchantments
 	public static Enchantment getByName(final String name)
 	{
 		Enchantment enchantment;
-		if (NUMPATTERN.matcher(name).matches())
+		if (Util.isInt(name))
 		{
 			enchantment = Enchantment.getById(Integer.parseInt(name));
 		}

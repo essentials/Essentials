@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public class PastieUpload
 {
 	private final transient PostToUrl connection;
+	private final Pattern pattern = Pattern.compile("(?s).*\\?key=([a-z0-9]+).*");
 
 	public PastieUpload() throws MalformedURLException
 	{
@@ -26,7 +27,7 @@ public class PastieUpload
 		map.put("paste[body]", data);
 		map.put("paste[restricted]", "1");
 		final String html = connection.send(map);
-		final Matcher matcher = Pattern.compile("(?s).*\\?key=([a-z0-9]+).*").matcher(html);
+		final Matcher matcher = pattern.matcher(html);
 		if (matcher.matches())
 		{
 			final String key = matcher.group(1);

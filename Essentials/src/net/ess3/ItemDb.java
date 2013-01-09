@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import net.ess3.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import net.ess3.api.IEssentials;
@@ -95,7 +97,6 @@ public class ItemDb implements IItemDb
 
 	private final Pattern idMatch = Pattern.compile("^\\d+[:+',;.]\\d+$");
 	private final Pattern metaSplit = Pattern.compile("[:+',;.]");
-	private final Pattern number = Pattern.compile("^\\d+$");
 	private final Pattern conjoined = Pattern.compile("^[^:+',;.]+[:+',;.]\\d+$");
 
 	@Override
@@ -110,7 +111,7 @@ public class ItemDb implements IItemDb
 			itemid = Integer.parseInt(split[0]);
 			metaData = Short.parseShort(split[1]);
 		}
-		else if (number.matcher(id).matches())
+		else if (Util.isInt(id))
 		{
 			itemid = Integer.parseInt(id);
 		}
