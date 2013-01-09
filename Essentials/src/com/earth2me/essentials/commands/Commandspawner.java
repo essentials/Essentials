@@ -34,6 +34,7 @@ public class Commandspawner extends EssentialsCommand
 		}
 
 		String name = args[0];
+		Integer delay = 0;
 
 		Mob mob = null;
 		mob = Mob.fromName(name);
@@ -49,11 +50,19 @@ public class Commandspawner extends EssentialsCommand
 		{
 			throw new Exception(_("noPermToSpawnMob"));
 		}
+		if(args.length > 1)
+		{
+			if(Util.isInt(args[1])){
+				delay = Integer.parseInt(args[1]);
+			}
+		}
 		final Trade charge = new Trade("spawner-" + mob.name.toLowerCase(Locale.ENGLISH), ess);
 		charge.isAffordableFor(user);
 		try
 		{
-			((CreatureSpawner)target.getBlock().getState()).setSpawnedType(mob.getType());
+			CreatureSpawner spawner = (CreatureSpawner)target.getBlock().getState();
+			spawner.setSpawnedType(mob.getType());
+			spawner.setDelay(delay);
 		}
 		catch (Throwable ex)
 		{
