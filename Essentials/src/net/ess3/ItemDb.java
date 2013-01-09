@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import net.ess3.api.ISettings;
 import net.ess3.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -68,7 +69,7 @@ public class ItemDb implements IItemDb
 	{
 		final ItemStack stack = get(id.toLowerCase(Locale.ENGLISH));
 
-		net.ess3.api.ISettings settings = ess.getSettings();
+		ISettings settings = ess.getSettings();
 
 		final int defaultStackSize = settings.getData().getGeneral().getDefaultStacksize();
 
