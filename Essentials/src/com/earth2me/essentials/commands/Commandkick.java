@@ -3,6 +3,7 @@ package com.earth2me.essentials.commands;
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
+import com.earth2me.essentials.Util;
 import java.util.logging.Level;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -25,9 +26,11 @@ public class Commandkick extends EssentialsCommand
 		}
 
 		final User target = getPlayer(server, args, 0, true);
-		if (sender instanceof Player) {
+		if (sender instanceof Player)
+		{
 			User user = ess.getUser(sender);
-			if (target.isHidden() && !user.isAuthorized("essentials.list.hidden")) {
+			if (target.isHidden() && !user.isAuthorized("essentials.list.hidden"))
+			{
 				throw new PlayerNotFoundException();
 			}
 			if (target.isAuthorized("essentials.kick.exempt"))
@@ -35,10 +38,13 @@ public class Commandkick extends EssentialsCommand
 				throw new Exception(_("kickExempt"));
 			}
 		}
-		final String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("kickDefault");
+
+		String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("kickDefault");
+		kickReason = Util.replaceFormat(kickReason.replace("\\n", "\n"));
+
 		target.kickPlayer(kickReason);
 		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
-		
+
 		server.getLogger().log(Level.INFO, _("playerKicked", senderName, target.getName(), kickReason));
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
