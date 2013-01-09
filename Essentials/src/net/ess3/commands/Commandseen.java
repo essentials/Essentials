@@ -32,7 +32,19 @@ public class Commandseen extends EssentialsCommand
 		try
 		{
 			final IUser u = ess.getUserMap().matchUserExcludingHidden(args[0], getPlayerOrNull(sender));
+			u.setDisplayNick();
 			sender.sendMessage(_("seenOnline", u.getPlayer().getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
+			sender.sendMessage(_("whoisAFK", (u.getData().isAfk() ? _("true") : _("false"))));
+			sender.sendMessage(_("whoisJail", (u.getData().isJailed()
+								? u.getTimestamp(TimestampType.JAIL) > 0
+								? DateUtil.formatDateDiff(u.getTimestamp(TimestampType.JAIL))
+								: _("true")
+								: _("false"))));
+			sender.sendMessage(_("whoisMuted", (u.getData().isMuted()
+					? u.getTimestamp(TimestampType.MUTE) > 0
+					? DateUtil.formatDateDiff(u.getTimestamp(TimestampType.MUTE))
+					: _("true")
+					: _("false"))));
 		}
 		catch (PlayerNotFoundException e)
 		{
