@@ -14,7 +14,7 @@ public class Teleport implements StorageObject
 			{
 					"Set timeout in seconds for players to accept tpa before request is cancelled.", "Set to 0 for no timeout."
 			})
-	private int requestTimeout = 0;
+	private int requestTimeout = 120;
 	@Comment({"Cancels a request made by tpa / tphere on world change to prevent cross world tp"})
 	private boolean cancelRequestsOnWorldChange = false;
 	@Comment(
