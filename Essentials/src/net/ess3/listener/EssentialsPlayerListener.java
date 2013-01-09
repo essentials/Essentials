@@ -31,8 +31,10 @@ import net.ess3.api.IUserMap;
 import net.ess3.permissions.Permissions;
 import net.ess3.settings.Commands;
 import net.ess3.user.UserData.TimestampType;
+import net.ess3.utils.DateUtil;
 import net.ess3.utils.FormatUtil;
 import net.ess3.utils.LocationUtil;
+import net.ess3.utils.Util;
 import net.ess3.utils.textreader.*;
 
 
@@ -376,9 +378,17 @@ public class EssentialsPlayerListener implements Listener
 
 		if (!banExpired && (user.isBanned() || event.getResult() == Result.KICK_BANNED))
 		{
-			final String banReason = user.getData().getBan() == null ? "" : user.getData().getBan().getReason();
-			event.disallow(
-					Result.KICK_BANNED, banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban") ? _("defaultBanReason") : banReason);
+			String banReason = user.getData().getBan().getReason();
+			if (banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban"))
+			{
+				banReason = _("defaultBanReason");
+			}
+			if (user.getData().getBan().getTimeout() > 0)
+			{
+				//TODO: TL This
+				banReason += "\n\n" + "Expires in " + DateUtil.formatDateDiff(user.getData().getBan().getTimeout());
+			}
+			event.disallow(Result.KICK_BANNED, banReason);
 			return;
 		}
 
