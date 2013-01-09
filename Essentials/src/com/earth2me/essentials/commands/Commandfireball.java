@@ -42,7 +42,7 @@ public class Commandfireball extends EssentialsCommand
 			{
 				type = Snowball.class;
 			}
-			else if(args[0].equalsIgnoreCase("bottle"))
+			else if(args[0].equalsIgnoreCase("expbottle"))
 			{
 				type = ThrownExpBottle.class;
 			}
