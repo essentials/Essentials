@@ -117,8 +117,8 @@ commands:
     aliases: [eitemdb,itemno,eitemno,durability,dura,edura,edurability]
   fireball:
     description: Throw a fireball.
-    usage: /<command> [small]
-    aliases: [efireball]
+    usage: /<command> [small|skull]
+    aliases: [efireball,fireskull,efireskull,fireentity,efireentity]
   gamemode:
     description: Change player gamemode.
     usage: /<command> [player]
