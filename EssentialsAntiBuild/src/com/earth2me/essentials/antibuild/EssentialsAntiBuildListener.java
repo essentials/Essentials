@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -151,12 +152,21 @@ public class EssentialsAntiBuildListener implements Listener
 		if (entity instanceof Player)
 		{
 			final User user = ess.getUser(entity);
-			if (prot.getSettingBool(AntiBuildConfig.disable_build) && !user.canBuild() && !user.isAuthorized("essentials.build")
+			if (event.getEntity().getType() == EntityType.PAINTING && prot.getSettingBool(AntiBuildConfig.disable_build) && !user.canBuild() && !user.isAuthorized("essentials.build")
 				&& !metaPermCheck(user, "break", Material.PAINTING.getId()))
 			{
 				if (ess.getSettings().warnOnBuildDisallow())
 				{
 					user.sendMessage(_("antiBuildBreak", Material.PAINTING.toString()));
+				}
+				event.setCancelled(true);
+			}
+			else if (event.getEntity().getType() == EntityType.ITEM_FRAME && prot.getSettingBool(AntiBuildConfig.disable_build) && !user.canBuild() && !user.isAuthorized("essentials.build")
+				&& !metaPermCheck(user, "break", Material.ITEM_FRAME.getId()))
+			{
+				if (ess.getSettings().warnOnBuildDisallow())
+				{
+					user.sendMessage(_("antiBuildBreak", Material.ITEM_FRAME.toString()));
 				}
 				event.setCancelled(true);
 			}
