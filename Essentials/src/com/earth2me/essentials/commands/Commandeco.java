@@ -52,6 +52,7 @@ public class Commandeco extends EssentialsCommand
 					}					
 					break;
 
+				case SET:
 				case RESET:
 					player.setMoney(amount == 0 ? ess.getSettings().getStartingBalance() : amount);
 					break;
@@ -77,6 +78,7 @@ public class Commandeco extends EssentialsCommand
 					player.takeMoney(amount);
 					break;
 
+				case SET:
 				case RESET:
 					player.setMoney(amount == 0 ? ess.getSettings().getStartingBalance() : amount);
 					break;
@@ -100,6 +102,7 @@ public class Commandeco extends EssentialsCommand
 				player.takeMoney(amount, sender);
 				break;
 
+			case SET:
 			case RESET:
 				player.setMoney(amount == 0 ? ess.getSettings().getStartingBalance() : amount);
 				break;
