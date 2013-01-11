@@ -21,7 +21,7 @@ import net.ess3.utils.FormatUtil;
 
 public class EssentialsSign
 {
-	private static final Set<Material> EMPTY_SET = new HashSet<Material>();
+	private static final Set<Material> EMPTY_SET = new HashSet<Material>(); // Would an Enum be better here?
 	protected transient final String signName;
 
 	public EssentialsSign(final String signName)
@@ -254,7 +254,7 @@ public class EssentialsSign
 	{
 		return EMPTY_SET;
 	}
-
+	
 	protected final void validateTrade(final ISign sign, final int index, final IEssentials ess) throws SignException
 	{
 		final String line = sign.getLine(index).trim();

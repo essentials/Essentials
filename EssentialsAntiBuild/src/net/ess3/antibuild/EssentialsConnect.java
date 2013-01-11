@@ -1,13 +1,13 @@
 package net.ess3.antibuild;
 
-import static net.ess3.I18n._;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.bukkit.BukkitPlugin;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import net.ess3.api.IEssentials;
-import net.ess3.bukkit.BukkitPlugin;
 
 
 public class EssentialsConnect

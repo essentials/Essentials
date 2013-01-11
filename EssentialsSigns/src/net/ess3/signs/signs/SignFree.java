@@ -1,13 +1,13 @@
 package net.ess3.signs.signs;
 
 import static net.ess3.I18n._;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.economy.Trade;
 import net.ess3.signs.EssentialsSign;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 
 public class SignFree extends EssentialsSign
@@ -34,7 +34,7 @@ public class SignFree extends EssentialsSign
 		}
 
 		item.setAmount(item.getType().getMaxStackSize());
-		InventoryWorkaround.addItems(player.getPlayer().getInventory(), item);
+		InventoryWorkaround.addItems(player.getPlayer().getInventory(), item); //Netbeans doesn't seem to like the addItems call, even though it appears valid.
 		player.sendMessage("Item added to your inventory.");
 		player.getPlayer().updateInventory();
 		//TODO: wait for a fix in bukkit

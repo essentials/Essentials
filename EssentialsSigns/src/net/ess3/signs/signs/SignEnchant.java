@@ -1,15 +1,15 @@
 package net.ess3.signs.signs;
 
-import static net.ess3.I18n._;
 import java.util.Locale;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
+import static net.ess3.I18n._;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.bukkit.Enchantments;
 import net.ess3.economy.Trade;
 import net.ess3.signs.EssentialsSign;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 
 
 public class SignEnchant extends EssentialsSign
@@ -66,7 +66,6 @@ public class SignEnchant extends EssentialsSign
 	protected boolean onSignInteract(ISign sign, IUser player, String username, IEssentials ess) throws SignException, ChargeException
 	{
 		final ItemStack search = sign.getLine(1).equals("*") || sign.getLine(1).equalsIgnoreCase("any") ? null : getItemStack(sign.getLine(1), 1, ess);
-		int slot = -1;
 		final Trade charge = getTrade(sign, 3, ess);
 		charge.isAffordableFor(player);
 		final String[] enchantLevel = sign.getLine(2).split(":");

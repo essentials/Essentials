@@ -1,7 +1,12 @@
 package net.ess3.listener;
 
-import static net.ess3.I18n._;
 import java.util.List;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
+import net.ess3.user.UserData.TimestampType;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -10,11 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.inventory.ItemStack;
-import net.ess3.api.IEssentials;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
-import net.ess3.user.UserData.TimestampType;
 
 
 public class EssentialsEntityListener implements Listener
@@ -34,11 +34,8 @@ public class EssentialsEntityListener implements Listener
 
 		if (eDefend instanceof Player && eAttack instanceof Player)
 		{
-
 			final IUser attacker = ess.getUserMap().getUser((Player)eAttack);
-
 			final IUser defender = ess.getUserMap().getUser((Player)eDefend);
-
 			ISettings settings = ess.getSettings();
 
 			attacker.updateActivity(true);

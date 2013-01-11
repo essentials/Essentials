@@ -1,5 +1,8 @@
 package net.ess3.signs.listeners;
 
+import net.ess3.api.IEssentials;
+import net.ess3.signs.EssentialsSign;
+import net.ess3.signs.ISignsPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -7,9 +10,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import net.ess3.api.IEssentials;
-import net.ess3.signs.EssentialsSign;
-import net.ess3.signs.ISignsPlugin;
 
 
 public class SignEntityListener implements Listener

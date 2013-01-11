@@ -2,9 +2,9 @@ package net.ess3.signs;
 
 import java.io.File;
 import java.util.*;
-import org.bukkit.plugin.Plugin;
 import net.ess3.api.IEssentials;
 import net.ess3.storage.AsyncStorageObjectHolder;
+import org.bukkit.plugin.Plugin;
 
 
 public class SignsConfigHolder extends AsyncStorageObjectHolder<SignConfig>

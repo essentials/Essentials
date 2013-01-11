@@ -1,6 +1,5 @@
 package net.ess3.antibuild;
 
-import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,7 +7,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsAntiBuild extends JavaPlugin implements IAntiBuild
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private transient EssentialsConnect ess = null;
 	private transient AntiBuildHolder settings = null;
 

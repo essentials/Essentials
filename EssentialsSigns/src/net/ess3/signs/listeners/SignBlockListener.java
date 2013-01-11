@@ -2,6 +2,13 @@ package net.ess3.signs.listeners;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
+import net.ess3.signs.EssentialsSign;
+import net.ess3.signs.ISignsPlugin;
+import net.ess3.signs.Signs;
+import net.ess3.utils.FormatUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -10,14 +17,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
-import net.ess3.api.IEssentials;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
-import net.ess3.signs.EssentialsSign;
-import net.ess3.signs.ISignsPlugin;
-import net.ess3.signs.Signs;
-import net.ess3.utils.FormatUtil;
 
 
 public class SignBlockListener implements Listener
@@ -37,7 +36,6 @@ public class SignBlockListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockBreak(final BlockBreakEvent event)
 	{
-		ISettings settings = ess.getSettings();
 		if (plugin.getSettings().areSignsDisabled())
 		{
 			return;

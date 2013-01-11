@@ -106,6 +106,7 @@ public class EssentialsAntiBuildListener implements Listener
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onHangingBreak(final HangingBreakByEntityEvent event)
 	{
+		//TODO: This code is not currently working, needs testing when ess3 is more stable.
 		final Entity entity = event.getRemover();
 		if (entity instanceof Player)
 		{
