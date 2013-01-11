@@ -15,8 +15,6 @@
         <module>EssentialsChat</module>
         <module>EssentialsExtra</module>
         <module>EssentialsGeoIP</module>
-        <module>EssentialsGroupBridge</module>
-        <module>EssentialsGroupManager</module>
         <module>EssentialsProtect</module>
         <module>EssentialsSigns</module>
         <module>EssentialsUpdate</module>
