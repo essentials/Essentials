@@ -12,6 +12,7 @@ build.xml
 # maven
 target
 jars
+dependency-reduced-pom.xml
 
 # vim
 .*.sw[a-p]
@@ -30,6 +31,3 @@ manifest.mf
 *.ipr
 *.iws
 .idea/
-
-EssentialsRelease/
-/Essentials/dependency-reduced-pom.xml
