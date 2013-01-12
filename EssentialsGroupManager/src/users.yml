@@ -1,0 +1,15 @@
+# "For a more advanced configuration example utilizing the advanced features of GroupManager, see http://pastebin.com/a8ZA0j5G"
+users:
+  snowleo:
+    subgroups: []
+    permissions: []
+    group: Builder
+  KHobbits:
+    subgroups: []
+    permissions: []
+    group: Moderator
+  ElgarL:
+    subgroups: []
+    permissions: []
+    group: Moderator
+

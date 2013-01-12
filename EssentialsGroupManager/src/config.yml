@@ -1,0 +1,42 @@
+settings:
+  config:
+    # With this enabled anyone set as op has full permissions when managing GroupManager
+    # The user will be able to promote players to the same group or even above.
+    opOverrides: true
+    
+    # Default setting for 'mantoglevalidate'
+    # true will cause GroupManager to attempt name matching by default.
+    validate_toggle: true
+    
+  data:
+    save:
+      # How often GroupManager will save it's data back to groups and users.yml
+      minutes: 10
+      # Number of hours to retain backups (plugins/GroupManager/backup)
+      hours: 24
+      
+  logging:
+    # level of detail GroupManager will use when logging.
+    # Acceptable entries are - ALL,CONFIG,FINE,FINER,FINEST,INFO,OFF,SEVERE,WARNING
+    level: INFO
+    
+  mirrors:
+        # Worlds listed here have their settings mirrored in their children.
+        # The first element 'world' is the main worlds name
+        # subsequent elements 'world_nether' and 'world_the_end' are worlds which will use
+        # the same user/groups files as the parent.
+        # Each child world can be configured to mirror the 'groups', 'users' or both files from it's parent.
+        world:
+          world_nether:
+          - users
+          - groups
+          world_the_end:
+          - users
+          - groups
+    #  world2:      (World2 would have it's own set of user and groups files)
+    #    world3:
+    #    - users    (World3 would use the users.yml from world2, but it's own groups.yml)
+    #    world4:
+    #    - groups   (World4 would use the groups.yml from world2, but it's own users.yml)
+    #  world5:
+    #    - world6   (this would cause world6 to mirror both files from world5)
