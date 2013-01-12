@@ -1,16 +1,16 @@
 package net.ess3.user;
 
-import static net.ess3.I18n._;
 import java.io.File;
 import java.util.*;
 import java.util.regex.Pattern;
-import org.bukkit.entity.Player;
+import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.api.IUserMap;
 import net.ess3.api.InvalidNameException;
 import net.ess3.storage.StorageObjectMap;
 import net.ess3.utils.FormatUtil;
+import org.bukkit.entity.Player;
 
 
 public class UserMap extends StorageObjectMap<IUser> implements IUserMap

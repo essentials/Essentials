@@ -1,8 +1,8 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-import org.bukkit.entity.Player;
 import net.ess3.api.IUser;
+import org.bukkit.entity.Player;
 
 
 public class Commandsuicide extends EssentialsCommand

@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 /*
  * This class can be removed when https://github.com/Bukkit/CraftBukkit/pull/193 is accepted to CraftBukkit
+ * TODO: make sure this is up-to date
  */
 
 

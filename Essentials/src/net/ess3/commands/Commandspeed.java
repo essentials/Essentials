@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import net.ess3.api.IUser;
+import net.ess3.permissions.Permissions;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import net.ess3.api.IUser;
-import net.ess3.permissions.Permissions;
 
 
 public class Commandspeed extends EssentialsCommand

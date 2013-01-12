@@ -1,11 +1,11 @@
 package net.ess3.update.states;
 
 import java.util.Iterator;
+import net.ess3.update.AbstractWorkListener;
+import net.ess3.update.UpdateCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import net.ess3.update.AbstractWorkListener;
-import net.ess3.update.UpdateCheck;
 
 
 public class StateMachine extends AbstractWorkListener implements Runnable
@@ -90,7 +90,7 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 	public void startWork()
 	{
 		iterator = states.values().iterator();
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(getPlugin(), this);
+		Bukkit.getScheduler().scheduleAsyncDelayedTask(getPlugin(), this); //Should this be async? (method deprecated)
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 				{
 					StateMachine.this.player.sendMessage(message);
 				}
-				Bukkit.getScheduler().scheduleAsyncDelayedTask(getPlugin(), StateMachine.this);
+				Bukkit.getScheduler().scheduleAsyncDelayedTask(getPlugin(), StateMachine.this); //Should this be async? (method deprecated)
 			}
 		});
 	}

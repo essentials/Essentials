@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import org.bukkit.inventory.ItemStack;
 import lombok.*;
 import net.ess3.storage.ListType;
 import net.ess3.storage.StorageObject;
+import org.bukkit.inventory.ItemStack;
 
 
 @Data

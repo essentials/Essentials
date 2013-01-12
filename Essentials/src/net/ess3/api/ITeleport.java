@@ -1,10 +1,10 @@
 package net.ess3.api;
 
+import net.ess3.economy.Trade;
+import net.ess3.utils.Target;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-import net.ess3.economy.Trade;
-import net.ess3.utils.Target;
 
 
 public interface ITeleport

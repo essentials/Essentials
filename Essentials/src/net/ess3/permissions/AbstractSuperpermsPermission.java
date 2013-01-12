@@ -1,9 +1,9 @@
 package net.ess3.permissions;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.PermissionDefault;
 import net.ess3.api.IPermission;
 import net.ess3.bukkit.PermissionFactory;
+import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.PermissionDefault;
 
 
 public abstract class AbstractSuperpermsPermission implements IPermission

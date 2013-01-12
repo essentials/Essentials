@@ -1,12 +1,12 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.Locale;
+import static net.ess3.I18n._;
+import net.ess3.api.IUser;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
-import net.ess3.api.IUser;
 
 
 //Todo: Fix this up

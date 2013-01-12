@@ -53,7 +53,6 @@ public class UpdateFile
 		catch (Exception ex)
 		{
 			LOGGER.log(Level.SEVERE, "Could not load update.yml!");
-			return;
 		}
 	}
 

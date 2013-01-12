@@ -1,9 +1,15 @@
 package net.ess3.signs;
 
-import static net.ess3.I18n._;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import static net.ess3.I18n._;
+import net.ess3.api.ChargeException;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.economy.Trade;
+import net.ess3.signs.signs.SignException;
+import net.ess3.utils.FormatUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -11,12 +17,6 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.ItemStack;
-import net.ess3.api.ChargeException;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
-import net.ess3.economy.Trade;
-import net.ess3.signs.signs.SignException;
-import net.ess3.utils.FormatUtil;
 
 
 public class EssentialsSign

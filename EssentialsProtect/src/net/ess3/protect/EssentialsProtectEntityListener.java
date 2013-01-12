@@ -8,7 +8,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 
-
+//TODO: remove unnecessary return statements
 public class EssentialsProtectEntityListener implements Listener
 {
 	private final transient IProtect prot;
@@ -143,7 +143,7 @@ public class EssentialsProtectEntityListener implements Listener
 			}
 		}
 	}
-
+    // return statements are probably not needed here
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityExplode(final EntityExplodeEvent event)
 	{

@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.Locale;
-import org.bukkit.command.CommandSender;
+import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.utils.Util;
 import net.ess3.utils.textreader.*;
+import org.bukkit.command.CommandSender;
 
 
 public class Commandhelp extends EssentialsCommand

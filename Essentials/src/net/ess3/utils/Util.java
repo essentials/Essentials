@@ -3,12 +3,12 @@ package net.ess3.utils;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.regex.Pattern;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
 import net.ess3.api.InvalidNameException;
 import net.ess3.utils.gnu.inet.encoding.Punycode;
 import net.ess3.utils.gnu.inet.encoding.PunycodeException;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 
 
 public final class Util

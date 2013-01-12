@@ -2,12 +2,12 @@ package com.earth2me.essentials;
 
 import java.io.File;
 import java.util.*;
+import net.ess3.api.IEssentials;
+import net.ess3.storage.StoredLocation;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.inventory.ItemStack;
-import net.ess3.api.IEssentials;
-import net.ess3.storage.StoredLocation;
 
 
 public class UserData
@@ -581,7 +581,7 @@ public class UserData
 		return lastLogin;
 	}
 
-	private void _setLastLogin(long time)
+	private void _setLastLogin(long time) //unused method
 	{
 		lastLogin = time;
 		config.setProperty("timestamps.login", time);
@@ -619,7 +619,7 @@ public class UserData
 		return lastLoginAddress;
 	}
 
-	private void _setLastLoginAddress(String address)
+	private void _setLastLoginAddress(String address) //unused method
 	{
 		lastLoginAddress = address;
 		config.setProperty("ipAddress", address);
@@ -651,7 +651,7 @@ public class UserData
 		return ret;
 	}
 
-	private boolean newplayer;
+	private boolean newplayer; //unused variable
 	private String geolocation;
 
 	private String _getGeoLocation()

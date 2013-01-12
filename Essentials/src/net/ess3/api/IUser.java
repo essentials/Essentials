@@ -2,20 +2,20 @@ package net.ess3.api;
 
 import java.util.List;
 import java.util.Set;
+import net.ess3.storage.IStorageObjectHolder;
+import net.ess3.user.CooldownException;
+import net.ess3.user.UserData;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import net.ess3.storage.IStorageObjectHolder;
-import net.ess3.user.CooldownException;
-import net.ess3.user.UserData;
 
 
 public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolder<UserData>, IReload, IReplyTo, Comparable<IUser>
 {
 	/**
-	 * Get the ammount of money in a users account
+	 * Get the amount of money in a users account
 	 *
 	 * @return
 	 */

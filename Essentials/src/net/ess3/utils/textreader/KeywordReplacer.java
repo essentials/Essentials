@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.utils.DescParseTickFormat;
 import net.ess3.utils.FormatUtil;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
-import net.ess3.utils.DescParseTickFormat;
 
 
 public class KeywordReplacer implements IText
@@ -34,7 +34,7 @@ public class KeywordReplacer implements IText
 		String displayName, ipAddress, balance, mails, world;
 		String worlds, online, unique, playerlist, date, time;
 		String worldTime12, worldTime24, worldDate, plugins;
-		String userName, address, version;
+		String userName, address, version; //unused?
 		if (sender instanceof IUser)
 		{
 			final IUser user = (IUser)sender;

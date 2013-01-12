@@ -1,21 +1,20 @@
 package net.ess3;
 
-import static net.ess3.I18n._;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import net.ess3.api.ISettings;
-import net.ess3.utils.Util;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IItemDb;
+import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
 import net.ess3.storage.ManagedFile;
+import net.ess3.utils.Util;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 
 public class ItemDb implements IItemDb
@@ -65,6 +64,7 @@ public class ItemDb implements IItemDb
 		}
 	}
 
+	@Override
 	public ItemStack get(final String id, final IUser user) throws Exception
 	{
 		final ItemStack stack = get(id.toLowerCase(Locale.ENGLISH));

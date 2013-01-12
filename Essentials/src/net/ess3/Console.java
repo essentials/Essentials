@@ -1,7 +1,7 @@
 package net.ess3;
 
-import org.bukkit.command.CommandSender;
 import net.ess3.api.IReplyTo;
+import org.bukkit.command.CommandSender;
 
 
 public final class Console implements IReplyTo

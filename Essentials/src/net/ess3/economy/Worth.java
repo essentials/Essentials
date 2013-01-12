@@ -3,13 +3,13 @@ package net.ess3.economy;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import org.bukkit.Material;
-import org.bukkit.material.MaterialData;
 import lombok.*;
 import net.ess3.storage.EnchantmentLevel;
 import net.ess3.storage.MapKeyType;
 import net.ess3.storage.MapValueType;
 import net.ess3.storage.StorageObject;
+import org.bukkit.Material;
+import org.bukkit.material.MaterialData;
 
 
 @Data

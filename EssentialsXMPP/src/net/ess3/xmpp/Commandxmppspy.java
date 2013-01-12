@@ -1,10 +1,10 @@
 package net.ess3.xmpp;
 
 import java.util.List;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import net.ess3.commands.EssentialsCommand;
 import net.ess3.commands.NotEnoughArgumentsException;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandxmppspy extends EssentialsCommand

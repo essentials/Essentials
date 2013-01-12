@@ -1,6 +1,8 @@
 package net.ess3.chat;
 
 import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
@@ -8,8 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
 
 
 public class EssentialsLocalChatEventListener implements Listener

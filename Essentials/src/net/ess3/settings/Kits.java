@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import lombok.*;
 import net.ess3.storage.MapValueType;
 import net.ess3.storage.StorageObject;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 
 @Data

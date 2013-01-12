@@ -1,8 +1,8 @@
 package net.ess3.metrics;
 
-import static net.ess3.I18n._;
 import java.util.Locale;
 import java.util.logging.Level;
+import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.economy.register.Method;
@@ -20,8 +20,12 @@ public class MetricsStarter implements Runnable
 	private enum Modules
 	{
 		Essentials,
-		EssentialsAntiCheat,
+		Essentials2Compat,
 		EssentialsChat,
+		EssentialsExtra,
+		EssentialsSigns,
+		EssentialsUpdate,
+		EssentialsAntiBuild,
 		EssentialsSpawn,
 		EssentialsProtect,
 		EssentialsGeoIP,
@@ -55,7 +59,6 @@ public class MetricsStarter implements Runnable
 					ess.getLogger().info(_("metrics4"));
 					start = false;
 				}
-				return;
 			}
 		}
 		catch (Exception ex)

@@ -1,8 +1,8 @@
 package net.ess3.economy.register.methods;
 
-import org.bukkit.plugin.Plugin;
 import cosine.boseconomy.BOSEconomy;
 import net.ess3.economy.register.Method;
+import org.bukkit.plugin.Plugin;
 
 
 /**

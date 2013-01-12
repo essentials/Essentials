@@ -1,14 +1,14 @@
 package com.earth2me.essentials;
 
+import com.google.common.io.PatternFilenameFilter;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
-import org.bukkit.Material;
-import com.google.common.io.PatternFilenameFilter;
 import net.ess3.api.*;
 import net.ess3.user.User;
+import org.bukkit.Material;
 
 
 class UpdateUserFiles

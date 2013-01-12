@@ -310,6 +310,7 @@ public class EssentialsConf extends YamlConfiguration
 		set(path, map);
 	}
 
+	@Override
 	public long getLong(final String path, final long def)
 	{
 		try

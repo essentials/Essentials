@@ -49,7 +49,7 @@ public class UpdateCheck
 
 	public void scheduleUpdateTask()
 	{
-		plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(
+		plugin.getServer().getScheduler().scheduleAsyncRepeatingTask( //should probably not be async
 				plugin, new Runnable()
 		{
 			@Override

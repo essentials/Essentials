@@ -1,19 +1,19 @@
 package net.ess3.chat;
 
-import static net.ess3.I18n._;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
+import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IPlugin;
 import net.ess3.chat.listenerlevel.EssentialsChatPlayerListenerHighest;
 import net.ess3.chat.listenerlevel.EssentialsChatPlayerListenerLowest;
 import net.ess3.chat.listenerlevel.EssentialsChatPlayerListenerNormal;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class EssentialsChat extends JavaPlugin

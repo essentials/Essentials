@@ -1,6 +1,5 @@
 package net.ess3.listener;
 
-import static net.ess3.I18n._;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +7,18 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.ISettings;
+import net.ess3.api.IUser;
+import net.ess3.api.IUserMap;
+import net.ess3.permissions.Permissions;
+import net.ess3.settings.Commands;
+import net.ess3.user.UserData.TimestampType;
+import net.ess3.utils.DateUtil;
+import net.ess3.utils.FormatUtil;
+import net.ess3.utils.LocationUtil;
+import net.ess3.utils.textreader.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -24,18 +35,6 @@ import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import net.ess3.api.IEssentials;
-import net.ess3.api.ISettings;
-import net.ess3.api.IUser;
-import net.ess3.api.IUserMap;
-import net.ess3.permissions.Permissions;
-import net.ess3.settings.Commands;
-import net.ess3.user.UserData.TimestampType;
-import net.ess3.utils.DateUtil;
-import net.ess3.utils.FormatUtil;
-import net.ess3.utils.LocationUtil;
-import net.ess3.utils.Util;
-import net.ess3.utils.textreader.*;
 
 
 public class EssentialsPlayerListener implements Listener

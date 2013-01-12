@@ -132,7 +132,7 @@ public interface IPlugin extends Plugin
 	public void onPluginDisable(Plugin plugin);
 
 	/**
-	 * Register a module with Essentils
+	 * Register a module with Essentials
 	 *
 	 * @param module - Your plugin instance
 	 */

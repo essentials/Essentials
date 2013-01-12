@@ -1,10 +1,10 @@
 package net.ess3.economy.register.methods;
 
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import net.ess3.economy.register.Method;
 import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 
 public class VaultEco implements Method

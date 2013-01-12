@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.Locale;
-import org.bukkit.GameMode;
-import org.bukkit.command.CommandSender;
+import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.permissions.Permissions;
+import org.bukkit.GameMode;
+import org.bukkit.command.CommandSender;
 
 
 public class Commandgamemode extends EssentialsSettingsCommand
@@ -25,6 +25,7 @@ public class Commandgamemode extends EssentialsSettingsCommand
 		return player.getPlayer().getGameMode();
 	}
 
+	@Override
 	protected void informSender(final CommandSender sender, final boolean value, final IUser player)
 	{
 		if (value)
@@ -37,27 +38,32 @@ public class Commandgamemode extends EssentialsSettingsCommand
 		}
 	}
 
+	@Override
 	protected void informPlayer(final IUser player)
 	{
 		final String message = _("gameMode", getValue(player).toString().toLowerCase(Locale.ENGLISH), player.getPlayer().getDisplayName());
 		player.sendMessage(message);
 	}
 
+	@Override
 	protected boolean canEditOthers(final IUser user)
 	{
 		return Permissions.GAMEMODE_OTHERS.isAuthorized(user);
 	}
 
+	@Override
 	protected boolean isExempt(final CommandSender sender, final IUser player)
 	{
 		return Permissions.GAMEMODE_EXEMPT.isAuthorized(player);
 	}
 
+	@Override
 	protected boolean toggleOfflinePlayers()
 	{
 		return false;
 	}
 
+	@Override
 	protected boolean canMatch(final String arg)
 	{
 		try
@@ -71,6 +77,7 @@ public class Commandgamemode extends EssentialsSettingsCommand
 		}
 	}
 
+	@Override
 	protected void playerMatch(final IUser player, final String arg) throws NotEnoughArgumentsException
 	{
 		if (arg == null)

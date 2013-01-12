@@ -1,9 +1,9 @@
 package net.ess3.update.states;
 
 import java.util.List;
-import org.bukkit.entity.Player;
 import net.ess3.update.UpdateCheck;
 import net.ess3.update.VersionInfo;
+import org.bukkit.entity.Player;
 
 
 public class Changelog extends AbstractState

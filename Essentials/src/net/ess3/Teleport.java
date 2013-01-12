@@ -1,11 +1,8 @@
 package net.ess3;
 
-import static net.ess3.I18n._;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ITeleport;
 import net.ess3.api.IUser;
@@ -16,6 +13,9 @@ import net.ess3.user.UserData.TimestampType;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.LocationUtil;
 import net.ess3.utils.Target;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
 public class Teleport implements Runnable, ITeleport
@@ -253,6 +253,7 @@ public class Teleport implements Runnable, ITeleport
 	}
 
 	//The teleportToMe function is a wrapper used to handle teleporting players to them, like /tphere
+	@Override
 	public void teleportToMe(IUser otherUser, Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		final Target target = new Target(user.getPlayer());

@@ -1,8 +1,8 @@
 package net.ess3.commands;
 
+import net.ess3.api.IUser;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
-import net.ess3.api.IUser;
 
 
 public class Commandfireball extends EssentialsCommand

@@ -1,10 +1,10 @@
 package net.ess3.utils;
 
-import static net.ess3.I18n._;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.regex.Pattern;
+import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;

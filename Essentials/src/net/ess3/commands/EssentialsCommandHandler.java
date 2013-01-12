@@ -1,15 +1,15 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static net.ess3.I18n._;
+import net.ess3.api.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import net.ess3.api.*;
 
 
 public class EssentialsCommandHandler implements ICommandHandler, TabExecutor

@@ -1,7 +1,7 @@
 package net.ess3.bukkit;
 
-import static net.ess3.I18n._;
 import java.util.*;
+import static net.ess3.I18n._;
 import org.bukkit.entity.EntityType;
 
 

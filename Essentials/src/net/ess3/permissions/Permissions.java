@@ -1,10 +1,10 @@
 package net.ess3.permissions;
 
 import java.util.Locale;
-import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.PermissionDefault;
 import net.ess3.api.IPermission;
 import net.ess3.bukkit.PermissionFactory;
+import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.PermissionDefault;
 
 
 public enum Permissions implements IPermission

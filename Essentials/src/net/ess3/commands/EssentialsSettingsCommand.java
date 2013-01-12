@@ -1,9 +1,9 @@
 package net.ess3.commands;
 
 import java.util.Set;
+import net.ess3.api.IUser;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
-import net.ess3.api.IUser;
 
 
 public abstract class EssentialsSettingsCommand extends EssentialsCommand

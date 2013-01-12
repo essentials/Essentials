@@ -12,6 +12,9 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
+import net.ess3.api.IEssentials;
+import net.ess3.bukkit.BukkitPlugin;
+import net.ess3.commands.EssentialsCommandHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -20,9 +23,6 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import net.ess3.api.IEssentials;
-import net.ess3.bukkit.BukkitPlugin;
-import net.ess3.commands.EssentialsCommandHandler;
 
 
 public class EssentialsExtra extends JavaPlugin

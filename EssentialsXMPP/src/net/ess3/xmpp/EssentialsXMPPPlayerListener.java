@@ -1,14 +1,14 @@
 package net.ess3.xmpp;
 
+import net.ess3.api.IEssentials;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import net.ess3.api.IEssentials;
 
-
+//TODO: port 2.9 changes and verify thread safety.
 class EssentialsXMPPPlayerListener implements Listener
 {
 	private final transient IEssentials ess;
@@ -26,7 +26,7 @@ class EssentialsXMPPPlayerListener implements Listener
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerChat(final PlayerChatEvent event)
+	public void onPlayerChat(final AsyncPlayerChatEvent event)
 	{
 		sendMessageToSpyUsers(String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage()));
 	}

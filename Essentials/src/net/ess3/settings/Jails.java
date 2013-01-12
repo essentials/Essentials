@@ -3,11 +3,11 @@ package net.ess3.settings;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import org.bukkit.Location;
 import lombok.*;
 import net.ess3.storage.MapValueType;
 import net.ess3.storage.StorageObject;
 import net.ess3.storage.StoredLocation;
+import org.bukkit.Location;
 
 
 @Data

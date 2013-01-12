@@ -3,13 +3,11 @@ package net.ess3.xmpp;
 import java.io.File;
 import java.util.*;
 import java.util.logging.*;
-
-import com.avaje.ebeaninternal.server.transaction.log.SimpleLogger;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import net.ess3.api.IReload;
 import net.ess3.api.IUser;
 import net.ess3.utils.FormatUtil;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.Roster.SubscriptionMode;
 import org.jivesoftware.smack.packet.Message;

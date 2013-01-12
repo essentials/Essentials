@@ -1,10 +1,10 @@
 package net.ess3.bukkit;
 
-import static net.ess3.I18n._;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static net.ess3.I18n._;
 import org.bukkit.plugin.PluginManager;
 
 

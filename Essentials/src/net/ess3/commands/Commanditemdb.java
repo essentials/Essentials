@@ -1,10 +1,10 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
+import net.ess3.api.IUser;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
-import net.ess3.api.IUser;
 
 
 public class Commanditemdb extends EssentialsCommand

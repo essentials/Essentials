@@ -1,10 +1,10 @@
 package net.ess3.update.states;
 
+import net.ess3.update.AbstractWorkListener;
+import net.ess3.update.tasks.InstallModule;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import net.ess3.update.AbstractWorkListener;
-import net.ess3.update.tasks.InstallModule;
 
 
 public class EssentialsGeoIP extends AbstractYesNoState

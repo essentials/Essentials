@@ -1,6 +1,5 @@
 package net.ess3.economy;
 
-import static net.ess3.I18n._;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,14 +9,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
+import static net.ess3.I18n._;
 import net.ess3.api.ChargeException;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.permissions.Permissions;
+import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Trade

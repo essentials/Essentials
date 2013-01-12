@@ -1,12 +1,21 @@
 package net.ess3.bukkit;
 
-import static net.ess3.I18n._;
 import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import net.ess3.Essentials;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IPlugin;
+import net.ess3.listener.EssentialsBlockListener;
+import net.ess3.listener.EssentialsEntityListener;
+import net.ess3.listener.EssentialsPlayerListener;
+import net.ess3.listener.EssentialsPluginListener;
+import net.ess3.metrics.MetricsListener;
+import net.ess3.metrics.MetricsStarter;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -22,15 +31,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import org.bukkit.scheduler.BukkitTask;
-import net.ess3.Essentials;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IPlugin;
-import net.ess3.listener.EssentialsBlockListener;
-import net.ess3.listener.EssentialsEntityListener;
-import net.ess3.listener.EssentialsPlayerListener;
-import net.ess3.listener.EssentialsPluginListener;
-import net.ess3.metrics.MetricsListener;
-import net.ess3.metrics.MetricsStarter;
 
 
 public class BukkitPlugin extends JavaPlugin implements IPlugin

@@ -10,6 +10,7 @@ public abstract class EssentialsToggleCommand extends EssentialsSettingsCommand
 
 	abstract protected boolean getValue(final IUser player);
 
+	@Override
 	protected boolean canMatch(final String arg)
 	{
 		if (arg.equalsIgnoreCase("on") || arg.startsWith("enable") || arg.equalsIgnoreCase("1"))
@@ -23,6 +24,7 @@ public abstract class EssentialsToggleCommand extends EssentialsSettingsCommand
 		return false;
 	}
 
+	@Override
 	protected void playerMatch(final IUser player, final String arg)
 	{
 		if (arg == null)

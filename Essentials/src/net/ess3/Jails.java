@@ -1,6 +1,5 @@
 package net.ess3;
 
-import static net.ess3.I18n._;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +7,11 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static net.ess3.I18n._;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IJails;
+import net.ess3.api.IUser;
+import net.ess3.storage.AsyncStorageObjectHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -22,10 +26,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.plugin.PluginManager;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IJails;
-import net.ess3.api.IUser;
-import net.ess3.storage.AsyncStorageObjectHolder;
 
 
 public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> implements IJails

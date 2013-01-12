@@ -1,7 +1,7 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.Map;
+import static net.ess3.I18n._;
 import org.bukkit.command.CommandSender;
 
 

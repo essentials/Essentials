@@ -1,10 +1,10 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.Arrays;
-import org.bukkit.inventory.ItemStack;
+import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.user.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commandinvsee extends EssentialsCommand

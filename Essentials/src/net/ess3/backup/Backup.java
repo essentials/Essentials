@@ -1,16 +1,16 @@
 package net.ess3.backup;
 
-import static net.ess3.I18n._;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
-import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import static net.ess3.I18n._;
 import net.ess3.api.IBackup;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 
 
 public class Backup implements Runnable, IBackup

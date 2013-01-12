@@ -1,11 +1,11 @@
 package com.earth2me.essentials;
 
 import java.io.File;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IItemDb;
 import net.ess3.api.IPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class Essentials extends JavaPlugin

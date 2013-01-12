@@ -1,7 +1,7 @@
 package net.ess3.update.states;
 
-import org.bukkit.entity.Player;
 import net.ess3.update.UpdateCheck;
+import org.bukkit.entity.Player;
 
 
 public class UpdateOrInstallation extends AbstractState

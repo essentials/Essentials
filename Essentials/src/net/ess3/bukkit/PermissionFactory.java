@@ -1,12 +1,12 @@
 package net.ess3.bukkit;
 
 import java.util.StringTokenizer;
+import net.ess3.api.IPermission;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
-import net.ess3.api.IPermission;
 
 
 public class PermissionFactory

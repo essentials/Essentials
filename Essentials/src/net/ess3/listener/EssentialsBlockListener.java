@@ -1,5 +1,8 @@
 package net.ess3.listener;
 
+import net.ess3.api.IEssentials;
+import net.ess3.api.IUser;
+import net.ess3.bukkit.BukkitMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -8,9 +11,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import net.ess3.api.IEssentials;
-import net.ess3.api.IUser;
-import net.ess3.bukkit.BukkitMaterial;
 
 
 public class EssentialsBlockListener implements Listener

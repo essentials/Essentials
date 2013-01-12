@@ -2,8 +2,8 @@ package net.ess3.update.chat;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import org.bukkit.plugin.Plugin;
 import net.ess3.update.PastieUpload;
+import org.bukkit.plugin.Plugin;
 
 
 public abstract class AbstractFileCommand implements Command

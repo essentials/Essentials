@@ -4,11 +4,11 @@ import java.io.*;
 import java.lang.ref.SoftReference;
 import java.util.*;
 import java.util.logging.Level;
-import org.bukkit.command.CommandSender;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.api.InvalidNameException;
 import net.ess3.utils.Util;
+import org.bukkit.command.CommandSender;
 
 
 public class TextInput implements IText

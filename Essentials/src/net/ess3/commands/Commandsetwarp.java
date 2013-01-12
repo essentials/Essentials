@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
 import static net.ess3.I18n._;
-import org.bukkit.Location;
 import net.ess3.api.IUser;
 import net.ess3.api.IWarps;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.Util;
+import org.bukkit.Location;
 
 
 public class Commandsetwarp extends EssentialsCommand

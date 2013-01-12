@@ -2,10 +2,10 @@ package net.ess3.settings;
 
 import java.util.EnumMap;
 import java.util.Map;
-import org.bukkit.entity.EntityType;
 import lombok.*;
 import net.ess3.storage.Comment;
 import net.ess3.storage.StorageObject;
+import org.bukkit.entity.EntityType;
 
 
 @Data

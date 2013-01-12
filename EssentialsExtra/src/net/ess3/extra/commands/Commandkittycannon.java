@@ -2,12 +2,12 @@ package net.ess3.extra.commands;
 
 
 import java.util.Random;
-import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Ocelot;
 import net.ess3.api.IUser;
 import net.ess3.commands.EssentialsCommand;
 import net.ess3.extra.AnnotatedCommand;
+import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Ocelot;
 
 
 @AnnotatedCommand(description = "Throw an exploding kitten at your opponent", usage = "/<command>")

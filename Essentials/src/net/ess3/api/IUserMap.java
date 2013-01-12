@@ -2,9 +2,9 @@ package net.ess3.api;
 
 import java.io.File;
 import java.util.Set;
-import org.bukkit.entity.Player;
 import net.ess3.user.PlayerNotFoundException;
 import net.ess3.user.TooManyMatchesException;
+import org.bukkit.entity.Player;
 
 
 public interface IUserMap extends IReload

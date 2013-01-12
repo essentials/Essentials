@@ -1,20 +1,15 @@
 package net.ess3.user;
 
-import static net.ess3.I18n._;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import lombok.Getter;
 import lombok.Setter;
 import net.ess3.Console;
+import static net.ess3.I18n._;
 import net.ess3.Teleport;
 import net.ess3.api.*;
 import net.ess3.craftbukkit.InventoryWorkaround;
@@ -22,6 +17,11 @@ import net.ess3.economy.register.Method;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.FormatUtil;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 

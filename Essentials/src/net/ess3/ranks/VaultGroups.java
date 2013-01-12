@@ -1,12 +1,12 @@
 package net.ess3.ranks;
 
 import java.util.logging.Level;
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IRanks;
 import net.ess3.api.ISettings;
 import net.milkbowl.vault.chat.Chat;
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 
 public class VaultGroups extends AbstractRanks implements IRanks

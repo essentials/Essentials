@@ -1,10 +1,10 @@
 package net.ess3.ranks;
 
 import java.text.MessageFormat;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import net.ess3.api.IUser;
 import net.ess3.utils.FormatUtil;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public abstract class AbstractRanks

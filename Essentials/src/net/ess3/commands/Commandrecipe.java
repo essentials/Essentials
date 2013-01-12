@@ -1,15 +1,15 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import static net.ess3.I18n._;
+import net.ess3.api.IUser;
+import net.ess3.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.*;
-import net.ess3.api.IUser;
-import net.ess3.utils.Util;
 
 
 public class Commandrecipe extends EssentialsCommand
@@ -100,7 +100,7 @@ public class Commandrecipe extends EssentialsCommand
 		}
 		else
 		{
-			final HashMap<Material, String> colorMap = new HashMap<Material, String>();
+			final HashMap<Material, String> colorMap = new HashMap<Material, String>(); //Might be better as an Enum
 			int i = 1;
 			for (Character c : "abcdefghi".toCharArray()) // TODO: Faster to use new char[] { 'a','b','c','d','e','f','g','h','i' } ?
 			{

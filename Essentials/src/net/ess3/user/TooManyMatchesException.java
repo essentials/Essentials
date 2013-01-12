@@ -1,8 +1,8 @@
 package net.ess3.user;
 
-import static net.ess3.I18n._;
 import java.util.Collections;
 import java.util.Set;
+import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 
 

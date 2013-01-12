@@ -1,11 +1,11 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.Locale;
-import org.bukkit.command.CommandSender;
-import org.bukkit.inventory.ItemStack;
+import static net.ess3.I18n._;
 import net.ess3.api.IUser;
 import net.ess3.utils.FormatUtil;
+import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commandworth extends EssentialsCommand
