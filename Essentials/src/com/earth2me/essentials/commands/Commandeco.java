@@ -113,6 +113,6 @@ public class Commandeco extends EssentialsCommand
 
 	private enum EcoCommands
 	{
-		GIVE, TAKE, RESET
+		GIVE, TAKE, RESET, SET
 	}
 }
