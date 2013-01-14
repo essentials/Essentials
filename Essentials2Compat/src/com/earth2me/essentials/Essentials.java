@@ -18,6 +18,7 @@ public class Essentials extends JavaPlugin
 		Bukkit.getLogger().info("You can remove this compatibility plugin, when all plugins are updated to Essentials-3");
 		//TODO: Update files to new 3.0 format
 		//TODO: Move Eco Api here
+		//TODO: write update methods for itemmeta
 		IPlugin plugin = (IPlugin)getServer().getPluginManager().getPlugin("Essentials-3");
 		ess = plugin.getEssentials();
 		updateSettings();

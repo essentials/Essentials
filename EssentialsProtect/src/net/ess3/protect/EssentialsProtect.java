@@ -43,9 +43,9 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 
 		for (Player player : getServer().getOnlinePlayers())
 		{
-			player.sendMessage("Essentials Protect is in emergency mode. Check your log for errors.");
+			player.sendMessage("Essentials Protect is in emergency mode. Check your log for errors."); //TODO: tl this
 		}
-		LOGGER.log(Level.SEVERE, "Essentials not installed or failed to load. Essenials Protect is in emergency mode now.");
+		LOGGER.log(Level.SEVERE, "Essentials not installed or failed to load. Essenials Protect is in emergency mode now."); //TODO: tl this
 	}
 
 	@Override

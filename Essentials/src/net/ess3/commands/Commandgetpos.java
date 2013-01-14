@@ -18,7 +18,7 @@ public class Commandgetpos extends EssentialsCommand
 		final Location mainPlayerLoc = mainPlayer.getLocation();
 		if (args.length > 0 && Permissions.GETPOS_OTHERS.isAuthorized(user))
 		{
-			//todo permissions
+			//TODO: permissions
 			final IUser otherUser = ess.getUserMap().matchUser(args[0], false);
 			if (mainPlayer.canSee(otherUser.getPlayer()) || Permissions.LIST_HIDDEN.isAuthorized(user))
 			{

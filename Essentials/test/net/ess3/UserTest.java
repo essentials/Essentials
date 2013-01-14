@@ -15,7 +15,7 @@ public class UserTest extends EssentialsTest
 		base1 = ess.getUserMap().getUser("testPlayer1");
 	}
 
-	private void should(String what)
+	private void should(String what) //TODO: unused/implement this?
 	{
 		System.out.println(getName() + " should " + what);
 	}

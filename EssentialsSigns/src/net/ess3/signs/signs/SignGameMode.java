@@ -43,7 +43,7 @@ public class SignGameMode extends EssentialsSign
 		}
 		charge.isAffordableFor(player);
 
-		//this needs to be fixed
+		//TODO: this needs to be fixed
 		player.getPlayer().setGameMode(player.getPlayer().getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
 		player.sendMessage(_("gameMode", _(player.getPlayer().getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getPlayer().getDisplayName()));
 		charge.charge(player);

@@ -48,7 +48,7 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	Location getHome(Location loc);
 
-	//boolean isHidden();
+	//boolean isHidden(); TODO: implement this?
 	ITeleport getTeleport();
 
 	void checkCooldown(UserData.TimestampType cooldownType, double cooldown, boolean set, IPermission bypassPermission) throws CooldownException;

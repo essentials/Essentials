@@ -1,7 +1,6 @@
 package net.ess3;
 
 import java.io.*;
-import org.bukkit.Location;
 import net.ess3.settings.Settings;
 import net.ess3.settings.geoip.GeoIP;
 import net.ess3.storage.ObjectLoadException;
@@ -9,6 +8,7 @@ import net.ess3.storage.StorageObject;
 import net.ess3.storage.YamlStorageReader;
 import net.ess3.storage.YamlStorageWriter;
 import net.ess3.utils.ExecuteTimer;
+import org.bukkit.Location;
 import org.junit.Test;
 
 
@@ -33,7 +33,7 @@ public class StorageTest extends EssentialsTest
 			ext.mark("load empty settings");
 			final ByteArrayInputStream bais3 = new ByteArrayInputStream(new byte[0]);
 			final Reader reader3 = new InputStreamReader(bais3);
-			final Settings settings3 = new YamlStorageReader(reader3, null).load(Settings.class);
+			final Settings settings3 = new YamlStorageReader(reader3, null).load(Settings.class); //TODO: unused?
 			ext.mark("load empty settings (class cached)");
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			final PrintWriter writer = new PrintWriter(baos);
@@ -98,7 +98,7 @@ public class StorageTest extends EssentialsTest
 			ext.mark("reload file");
 			final ByteArrayInputStream bais4 = new ByteArrayInputStream(written);
 			final Reader reader4 = new InputStreamReader(bais4);
-			final net.ess3.user.UserData userdata4 = new YamlStorageReader(reader4, null).load(net.ess3.user.UserData.class);
+			final net.ess3.user.UserData userdata4 = new YamlStorageReader(reader4, null).load(net.ess3.user.UserData.class); //TODO: unused?
 			ext.mark("reload file (cached)");
 			System.out.println(userdata.toString());
 			System.out.println(userdata2.toString());
@@ -125,7 +125,7 @@ public class StorageTest extends EssentialsTest
 			ext.mark("load empty geoip");
 			final ByteArrayInputStream bais3 = new ByteArrayInputStream(new byte[0]);
 			final Reader reader3 = new InputStreamReader(bais3);
-			final GeoIP geoip3 = new YamlStorageReader(reader3, null).load(GeoIP.class);
+			final GeoIP geoip3 = new YamlStorageReader(reader3, null).load(GeoIP.class); //TODO: unused?
 			ext.mark("load empty geoip (class cached)");
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			final PrintWriter writer = new PrintWriter(baos);

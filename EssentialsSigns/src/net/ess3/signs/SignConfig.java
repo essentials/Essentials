@@ -35,6 +35,6 @@ public class SignConfig implements StorageObject
 	public int getSignUsePerSecond()
 	{
 
-		return signUsesPerSecond > 0 ? signUsesPerSecond : 1; //This needs to be ported from 2.9
+		return signUsesPerSecond > 0 ? signUsesPerSecond : 1; //TODO: This needs to be ported from 2.9
 	}
 }

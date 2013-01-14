@@ -619,7 +619,7 @@ public class UserData
 		return lastLoginAddress;
 	}
 
-	private void _setLastLoginAddress(String address) //unused method
+	private void _setLastLoginAddress(String address) //TODO: unused method?
 	{
 		lastLoginAddress = address;
 		config.setProperty("ipAddress", address);
@@ -651,7 +651,7 @@ public class UserData
 		return ret;
 	}
 
-	private boolean newplayer; //unused variable
+	private boolean newplayer; //TODO: unused variable?
 	private String geolocation;
 
 	private String _getGeoLocation()

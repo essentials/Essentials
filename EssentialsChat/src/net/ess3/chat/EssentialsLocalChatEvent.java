@@ -70,7 +70,7 @@ public class EssentialsLocalChatEvent extends Event implements Cancellable
 
 	public void setFormat(final String format)
 	{
-		// Oh for a better way to do this!
+		//TODO: Oh for a better way to do this!
 		try
 		{
 			String.format(format, player, message);

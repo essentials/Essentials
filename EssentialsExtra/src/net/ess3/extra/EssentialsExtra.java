@@ -102,7 +102,7 @@ public class EssentialsExtra extends JavaPlugin
 							return handler.onCommand(cs, this, label, args);
 						}
 					});
-					getLogger().info("Loaded command " + commandName);
+					getLogger().info("Loaded command " + commandName); //TODO: tl key?
 				}
 				catch (Exception ex)
 				{

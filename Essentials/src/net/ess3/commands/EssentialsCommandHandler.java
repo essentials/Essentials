@@ -409,7 +409,7 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 		final String altString = pc.getPlugin().getName() + ":" + pc.getLabel();
 		if (ess.getSettings().isDebug())
 		{
-			LOGGER.log(Level.INFO, "Essentials: Alternative command " + label + " found, using " + altString);
+			LOGGER.log(Level.INFO, "Essentials: Alternative command " + label + " found, using " + altString); //TODO: TL key?
 		}
 		disabledList.put(label, altString);
 	}

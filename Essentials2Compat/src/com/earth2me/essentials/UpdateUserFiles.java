@@ -29,7 +29,7 @@ class UpdateUserFiles
 				name = getRealName(name);
 				if (name.equals(BROKENNAME))
 				{
-					ess.getLogger().warning("Could not convert player " + origName);
+					ess.getLogger().log(Level.WARNING, "Could not convert player {0}", origName);
 					continue;
 				}
 			}

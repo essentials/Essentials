@@ -6,7 +6,6 @@ import net.ess3.storage.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-//maybe replace HashSets/HashMaps with Enums
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UserData implements StorageObject

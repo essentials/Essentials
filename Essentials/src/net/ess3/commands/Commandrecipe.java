@@ -100,7 +100,7 @@ public class Commandrecipe extends EssentialsCommand
 		}
 		else
 		{
-			final HashMap<Material, String> colorMap = new HashMap<Material, String>(); //Might be better as an Enum
+			final HashMap<Material, String> colorMap = new HashMap<Material, String>(); //TODO: Might be better as an Enum
 			int i = 1;
 			for (Character c : "abcdefghi".toCharArray()) // TODO: Faster to use new char[] { 'a','b','c','d','e','f','g','h','i' } ?
 			{

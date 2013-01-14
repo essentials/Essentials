@@ -34,7 +34,7 @@ public class KeywordReplacer implements IText
 		String displayName, ipAddress, balance, mails, world;
 		String worlds, online, unique, playerlist, date, time;
 		String worldTime12, worldTime24, worldDate, plugins;
-		String userName, address, version; //unused?
+		String userName, address, version; //TODO: unused?
 		if (sender instanceof IUser)
 		{
 			final IUser user = (IUser)sender;

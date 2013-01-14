@@ -41,7 +41,7 @@ public class EmergencyListener implements Listener
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		event.getPlayer().sendMessage("Essentials Protect is in emergency mode. Check your log for errors.");
+		event.getPlayer().sendMessage("Essentials Protect is in emergency mode. Check your log for errors."); //TODO: tl this
 	}
 
 	@EventHandler(priority = EventPriority.LOW)

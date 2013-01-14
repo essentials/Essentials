@@ -40,7 +40,7 @@ public class EssentialsAntiBuildListener implements Listener
 	{
 		final Player user = event.getPlayer();
 		final Block block = event.getBlockPlaced();
-		//final int typeId = block.getTypeId(); unused?
+		final int typeId = block.getTypeId(); //TODO: unused?
 		final Material type = block.getType();
 
 		if (antib.getSettings().getData().isDisableBuild() && !Permissions.BUILD.isAuthorized(user) && !Permissions.PLACEMENT.isAuthorized(user, block))
@@ -74,7 +74,7 @@ public class EssentialsAntiBuildListener implements Listener
 	{
 		final Player user = event.getPlayer();
 		final Block block = event.getBlock();
-		//final int typeId = block.getTypeId(); unused?
+		final int typeId = block.getTypeId(); //TODO: unused?
 		final Material type = block.getType();
 
 		if (antib.getSettings().getData().isDisableBuild() && !Permissions.BUILD.isAuthorized(user) && !Permissions.BREAK.isAuthorized(user, block))

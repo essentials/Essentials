@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsSign
 {
-	private static final Set<Material> EMPTY_SET = new HashSet<Material>(); // Would an Enum be better here?
+	private static final Set<Material> EMPTY_SET = new HashSet<Material>();
 	protected transient final String signName;
 
 	public EssentialsSign(final String signName)

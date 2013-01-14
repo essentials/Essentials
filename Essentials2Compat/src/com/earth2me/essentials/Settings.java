@@ -321,7 +321,7 @@ public final class Settings implements ISettings
 
 	private Map<String, MessageFormat> chatFormats = Collections.synchronizedMap(new HashMap<String, MessageFormat>());
 
-	/*@Override
+	/*@Override //TODO: implement this
 	public MessageFormat getChatFormat(String group)
 	{
 		MessageFormat mFormat = chatFormats.get(group);

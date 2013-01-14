@@ -14,6 +14,7 @@ import net.ess3.Teleport;
 import net.ess3.api.*;
 import net.ess3.craftbukkit.InventoryWorkaround;
 import net.ess3.economy.register.Method;
+import net.ess3.economy.register.Methods;
 import net.ess3.permissions.Permissions;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.FormatUtil;
@@ -238,7 +239,7 @@ public class User extends UserBase implements IUser
 		}
 		catch (IllegalArgumentException e)
 		{
-			ess.getLogger().info("Playerlist for " + name + " was not updated. Use a shorter displayname prefix.");
+			ess.getLogger().info("Playerlist for " + name + " was not updated. Use a shorter displayname prefix."); //TODO: TL key?
 		}
 	}
 
@@ -249,9 +250,6 @@ public class User extends UserBase implements IUser
 
 		if (isOnline() && (changeDisplayname == true || (changeDisplayname == null && ess.getPlugin().isModuleEnabled("Chat"))))
 		{
-			;
-		}
-		{
 			setDisplayNick();
 		}
 	}
@@ -259,16 +257,16 @@ public class User extends UserBase implements IUser
 	@Override
 	public double getMoney()
 	{
-		if (ess.getPaymentMethod().hasMethod())
+		if (Methods.hasMethod())
 		{
 			try
 			{
-				final Method method = ess.getPaymentMethod().getMethod();
+				final Method method = Methods.getMethod();
 				if (!method.hasAccount(this.getName()))
 				{
 					throw new Exception();
 				}
-				final Method.MethodAccount account = ess.getPaymentMethod().getMethod().getAccount(this.getName());
+				final Method.MethodAccount account = Methods.getMethod().getAccount(this.getName());
 				return account.balance();
 			}
 			catch (Throwable ex)
@@ -281,16 +279,16 @@ public class User extends UserBase implements IUser
 	@Override
 	public void setMoney(final double value)
 	{
-		if (ess.getPaymentMethod().hasMethod())
+		if (Methods.hasMethod())
 		{
 			try
 			{
-				final Method method = ess.getPaymentMethod().getMethod();
+				final Method method = Methods.getMethod();
 				if (!method.hasAccount(this.getName()))
 				{
 					throw new Exception();
 				}
-				final Method.MethodAccount account = ess.getPaymentMethod().getMethod().getAccount(this.getName());
+				final Method.MethodAccount account = Methods.getMethod().getAccount(this.getName());
 				account.set(value);
 			}
 			catch (Throwable ex)

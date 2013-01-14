@@ -27,7 +27,6 @@ public interface ISettings
 
 	int getChatRadius();
 
-
 	double getCommandCost(String label);
 
 	String getCurrencySymbol();
@@ -68,7 +67,6 @@ public interface ISettings
 
 	int getHomeLimit(String set);
 
-
 	boolean getSortListByGroups();
 
 	int getSpawnMobLimit();
@@ -80,7 +78,6 @@ public interface ISettings
 	double getTeleportDelay();
 
 	boolean hidePermissionlessHelp();
-
 
 	boolean isCommandDisabled(String label);
 

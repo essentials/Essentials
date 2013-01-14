@@ -34,7 +34,7 @@ public class SignFree extends EssentialsSign
 		}
 
 		item.setAmount(item.getType().getMaxStackSize());
-		InventoryWorkaround.addItems(player.getPlayer().getInventory(), item); //Netbeans doesn't seem to like the addItems call, even though it appears valid.
+		InventoryWorkaround.addItems(player.getPlayer().getInventory(), item); //TODO: Netbeans doesn't seem to like the addItems call, even though it appears valid.
 		player.sendMessage("Item added to your inventory.");
 		player.getPlayer().updateInventory();
 		//TODO: wait for a fix in bukkit

@@ -315,7 +315,7 @@ public abstract class UserBase extends AsyncStorageObjectHolder<UserData> implem
 		for (Location location : worldHomes)
 		{
 			final double d = loc.distanceSquared(location);
-			if (d < distance) // Shouldnt this just use Double.isInfinite(v); rather than create a new Double of maxval?
+			if (d < distance) // TODO: Shouldnt this just use Double.isInfinite(v); rather than create a new Double of maxval?
 			{
 				target = location;
 				distance = d;

@@ -48,7 +48,6 @@ public class Methods
 		addMethod("iConomy", new net.ess3.economy.register.methods.iCo6());
 		addMethod("iConomy", new net.ess3.economy.register.methods.iCo5());
 		addMethod("BOSEconomy", new net.ess3.economy.register.methods.BOSE7());
-		Dependencies.add("MultiCurrency");
 		addMethod("Vault", new net.ess3.economy.register.methods.VaultEco());
 	}
 
