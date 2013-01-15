@@ -22,19 +22,21 @@ import java.util.List;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.data.Group;
 
+
 /**
- * 
+ *
  * @author gabrielcouto
  */
-public abstract class Tasks {
-
+public abstract class Tasks
+{
 	/**
 	 * Gets the exception stack trace as a string.
-	 * 
+	 *
 	 * @param exception
 	 * @return stack trace as a string
 	 */
-	public static String getStackTraceAsString(Exception exception) {
+	public static String getStackTraceAsString(Exception exception)
+	{
 
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
@@ -42,7 +44,8 @@ public abstract class Tasks {
 		return sw.toString();
 	}
 
-	public static void copy(InputStream src, File dst) throws IOException {
+	public static void copy(InputStream src, File dst) throws IOException
+	{
 
 		InputStream in = src;
 		OutputStream out = new FileOutputStream(dst);
@@ -50,17 +53,22 @@ public abstract class Tasks {
 		// Transfer bytes from in to out
 		byte[] buf = new byte[1024];
 		int len;
-		while ((len = in.read(buf)) > 0) {
+		while ((len = in.read(buf)) > 0)
+		{
 			out.write(buf, 0, len);
 		}
 		out.close();
-		try {
+		try
+		{
 			in.close();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 		}
 	}
 
-	public static void copy(File src, File dst) throws IOException {
+	public static void copy(File src, File dst) throws IOException
+	{
 
 		InputStream in = new FileInputStream(src);
 		copy(in, dst);
@@ -68,11 +76,12 @@ public abstract class Tasks {
 
 	/**
 	 * Appends a string to a file
-	 * 
+	 *
 	 * @param data
 	 * @param file
 	 */
-	public static void appendStringToFile(String data, String file) throws IOException {
+	public static void appendStringToFile(String data, String file) throws IOException
+	{
 
 		FileWriter outStream = new FileWriter("." + System.getProperty("file.separator") + file, true);
 
@@ -88,16 +97,24 @@ public abstract class Tasks {
 		out.close();
 	}
 
-	public static void removeOldFiles(GroupManager gm, File folder) {
+	public static void removeOldFiles(GroupManager gm, File folder)
+	{
 
-		if (folder.isDirectory()) {
-			long oldTime = System.currentTimeMillis() - (((long) gm.getGMConfig().getBackupDuration() * 60 * 60) * 1000);
-			for (File olds : folder.listFiles()) {
-				if (olds.isFile()) {
-					if (olds.lastModified() < oldTime) {
-						try {
+		if (folder.isDirectory())
+		{
+			long oldTime = System.currentTimeMillis() - (((long)gm.getGMConfig().getBackupDuration() * 60 * 60) * 1000);
+			for (File olds : folder.listFiles())
+			{
+				if (olds.isFile())
+				{
+					if (olds.lastModified() < oldTime)
+					{
+						try
+						{
 							olds.delete();
-						} catch (Exception e) {
+						}
+						catch (Exception e)
+						{
 						}
 					}
 				}
@@ -105,7 +122,8 @@ public abstract class Tasks {
 		}
 	}
 
-	public static String getDateString() {
+	public static String getDateString()
+	{
 
 		GregorianCalendar now = new GregorianCalendar();
 		String date = "";
@@ -117,59 +135,75 @@ public abstract class Tasks {
 		return date;
 	}
 
-	public static String getStringListInString(List<String> list) {
+	public static String getStringListInString(List<String> list)
+	{
 
-		if (list == null) {
+		if (list == null)
+		{
 			return "";
 		}
 		String result = "";
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < list.size(); i++)
+		{
 			result += list.get(i);
-			if (i < list.size() - 1) {
+			if (i < list.size() - 1)
+			{
 				result += ", ";
 			}
 		}
 		return result;
 	}
 
-	public static String getStringArrayInString(String[] list) {
+	public static String getStringArrayInString(String[] list)
+	{
 
-		if (list == null) {
+		if (list == null)
+		{
 			return "";
 		}
 		String result = "";
-		for (int i = 0; i < list.length; i++) {
+		for (int i = 0; i < list.length; i++)
+		{
 			result += list[i];
-			if (i < ((list.length) - 1)) {
+			if (i < ((list.length) - 1))
+			{
 				result += ", ";
 			}
 		}
 		return result;
 	}
 
-	public static String getGroupListInString(List<Group> list) {
+	public static String getGroupListInString(List<Group> list)
+	{
 
-		if (list == null) {
+		if (list == null)
+		{
 			return "";
 		}
 		String result = "";
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < list.size(); i++)
+		{
 			result += list.get(i).getName();
-			if (i < list.size() - 1) {
+			if (i < list.size() - 1)
+			{
 				result += ", ";
 			}
 		}
 		return result;
 	}
 
-	public static String join(String[] arr, String separator) {
+	public static String join(String[] arr, String separator)
+	{
 
 		if (arr.length == 0)
+		{
 			return "";
+		}
 		String out = arr[0].toString();
 		for (int i = 1; i < arr.length; i++)
+		{
 			out += separator + arr[i];
+		}
 		return out;
 	}
-
 }

@@ -1,6 +1,5 @@
 package net.ess3.settings.commands;
 
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.ess3.storage.Comment;

@@ -13,15 +13,15 @@ import net.ess3.permissions.DotStarPermission;
 
 public class FormatUtil
 {
-	static final transient Pattern REPLACE_COLOR_PATTERN = Pattern.compile("&([0-9a-f])");
-	static final transient Pattern REPLACE_MAGIC_PATTERN = Pattern.compile("&(k)");
-	static final transient Pattern REPLACE_PATTERN = Pattern.compile("&([0-9a-fk-or])");
-	static final transient Pattern VANILLA_PATTERN = Pattern.compile("\u00a7+[0-9A-FK-ORa-fk-or]");
-	static final transient Pattern VANILLA_COLOR_PATTERN = Pattern.compile("\u00a7+[0-9A-Fa-f]");
-	static final transient Pattern REPLACE_FORMAT_PATTERN = Pattern.compile("&([l-or])");
-	static final transient Pattern VANILLA_FORMAT_PATTERN = Pattern.compile("\u00a7+[L-ORl-or]");
-	static final transient Pattern VANILLA_MAGIC_PATTERN = Pattern.compile("\u00a7+[Kk]");
-	static final transient Pattern URL_PATTERN = Pattern.compile("((?:(?:https?)://)?[\\w-_\\.]{2,})\\.([a-z]{2,3}(?:/\\S+)?)");
+	static final Pattern REPLACE_COLOR_PATTERN = Pattern.compile("&([0-9a-f])");
+	static final Pattern REPLACE_MAGIC_PATTERN = Pattern.compile("&(k)");
+	static final Pattern REPLACE_PATTERN = Pattern.compile("&([0-9a-fk-or])");
+	static final Pattern VANILLA_PATTERN = Pattern.compile("\u00a7+[0-9A-FK-ORa-fk-or]");
+	static final Pattern VANILLA_COLOR_PATTERN = Pattern.compile("\u00a7+[0-9A-Fa-f]");
+	static final Pattern REPLACE_FORMAT_PATTERN = Pattern.compile("&([l-or])");
+	static final Pattern VANILLA_FORMAT_PATTERN = Pattern.compile("\u00a7+[L-ORl-or]");
+	static final Pattern VANILLA_MAGIC_PATTERN = Pattern.compile("\u00a7+[Kk]");
+	static final Pattern URL_PATTERN = Pattern.compile("((?:(?:https?)://)?[\\w-_\\.]{2,})\\.([a-z]{2,3}(?:/\\S+)?)");
 	static DecimalFormat dFormat = new DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale.US));
 
 	static String stripColor(final String input, final Pattern pattern)

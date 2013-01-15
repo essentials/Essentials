@@ -6,6 +6,7 @@ import net.ess3.storage.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UserData implements StorageObject
@@ -14,8 +15,6 @@ public class UserData implements StorageObject
 	{
 		JAIL, MUTE, LASTHEAL, LASTTELEPORT, LOGIN, LOGOUT, KIT, COMMAND
 	}
-
-
 	private String nickname;
 	private Double money;
 	@MapValueType(StoredLocation.class)
@@ -27,7 +26,6 @@ public class UserData implements StorageObject
 	{
 		return homes == null ? Collections.<String, StoredLocation>emptyMap() : Collections.unmodifiableMap(homes);
 	}
-
 	@ListType(Material.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
@@ -37,7 +35,6 @@ public class UserData implements StorageObject
 	{
 		return unlimited == null ? Collections.<Material>emptySet() : Collections.unmodifiableSet(unlimited);
 	}
-
 	@MapValueType(List.class)
 	@MapKeyType(Material.class)
 	@Getter(AccessLevel.NONE)
@@ -48,7 +45,6 @@ public class UserData implements StorageObject
 	{
 		return powerTools == null ? Collections.<Material, List<String>>emptyMap() : Collections.unmodifiableMap(powerTools);
 	}
-
 	private StoredLocation lastLocation;
 	@MapKeyType(String.class)
 	@MapValueType(Long.class)
@@ -60,7 +56,6 @@ public class UserData implements StorageObject
 	{
 		return timestamps == null ? Collections.<String, Long>emptyMap() : Collections.unmodifiableMap(timestamps);
 	}
-
 	private String jail;
 	@ListType
 	@Getter(AccessLevel.NONE)
@@ -71,7 +66,6 @@ public class UserData implements StorageObject
 	{
 		return mails == null ? Collections.<String>emptyList() : Collections.unmodifiableList(mails);
 	}
-
 	private Inventory inventory;
 	private boolean teleportEnabled;
 	@ListType
@@ -83,7 +77,6 @@ public class UserData implements StorageObject
 	{
 		return ignore == null ? Collections.<String>emptySet() : Collections.unmodifiableSet(ignore);
 	}
-
 	private boolean godmode;
 	private boolean muted;
 	private boolean jailed;

@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 
 public abstract class AbstractState
 {
-	private transient boolean abortion = false;
-	private final transient StateMap stateMap;
+	private boolean abortion = false;
+	private final StateMap stateMap;
 
 	public AbstractState(final StateMap stateMap)
 	{

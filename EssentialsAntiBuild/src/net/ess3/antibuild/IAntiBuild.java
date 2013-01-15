@@ -1,6 +1,5 @@
 package net.ess3.antibuild;
 
-
 import org.bukkit.plugin.Plugin;
 
 

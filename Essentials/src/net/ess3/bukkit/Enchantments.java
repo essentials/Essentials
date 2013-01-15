@@ -11,11 +11,9 @@ import org.bukkit.enchantments.Enchantment;
 
 public final class Enchantments
 {
-
 	private Enchantments()
 	{
 	}
-
 	private static final Map<String, Enchantment> ENCHANTMENTS = new HashMap<String, Enchantment>();
 
 	static

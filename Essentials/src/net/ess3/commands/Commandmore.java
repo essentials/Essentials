@@ -24,8 +24,9 @@ public class Commandmore extends EssentialsCommand
 		}
 		else
 		{
-			stacks = new ItemStack[]{
-					player.getItemInHand()
+			stacks = new ItemStack[]
+			{
+				player.getItemInHand()
 			};
 		}
 		for (ItemStack stack : stacks)

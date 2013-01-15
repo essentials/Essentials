@@ -1,5 +1,6 @@
 package com.nijiko.permissions;
 
-public class User extends Entry {
-    
+
+public class User extends Entry
+{
 }

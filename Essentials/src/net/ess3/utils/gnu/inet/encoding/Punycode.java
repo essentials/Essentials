@@ -2,38 +2,26 @@ package net.ess3.utils.gnu.inet.encoding;
 
 
 /**
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Free Software
- * Foundation, Inc.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Free Software Foundation, Inc.
  *
  * Author: Oliver Hitz
  *
  * This file is part of GNU Libidn.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General
+ * Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
- * USA
+ * You should have received a copy of the GNU Lesser General Public License along with this library; if not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-
-
 /**
- * This class offers static methods for encoding/decoding strings
- * using the Punycode algorithm.
- * <ul>
- * <li>RFC3492 Punycode
- * </ul>
- * Note that this implementation only supports 16-bit Unicode code
- * points.
+ * This class offers static methods for encoding/decoding strings using the Punycode algorithm. <ul> <li>RFC3492
+ * Punycode </ul> Note that this implementation only supports 16-bit Unicode code points.
  */
 /*
  * Changes by snowleo: 
@@ -124,7 +112,7 @@ public class Punycode
 				{
 					int q = delta;
 
-					for (int k = BASE; ; k += BASE)
+					for (int k = BASE;; k += BASE)
 					{
 						int t;
 						if (k <= bias)
@@ -203,7 +191,7 @@ public class Punycode
 			int oldi = i;
 			int w = 1;
 
-			for (int k = BASE; ; k += BASE)
+			for (int k = BASE;; k += BASE)
 			{
 				if (d == input.length())
 				{

@@ -19,7 +19,7 @@ public enum Permissions implements IPermission
 	private static final String defaultBase = "essentials.build.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;
-	private transient String parent = null;
+	private String parent = null;
 
 	private Permissions()
 	{
@@ -67,12 +67,10 @@ public enum Permissions implements IPermission
 	{
 		return PermissionFactory.checkPermission(sender, this);
 	}
-
 	public static MaterialDotStarPermission PLACEMENT = new MaterialDotStarPermission("essentials.build.place");
 	public static MaterialDotStarPermission BREAK = new MaterialDotStarPermission("essentials.build.break");
 	public static MaterialDotStarPermission INTERACT = new MaterialDotStarPermission("essentials.build.interact");
 	public static MaterialDotStarPermission CRAFT = new MaterialDotStarPermission("essentials.build.craft");
 	public static MaterialDotStarPermission PICKUP = new MaterialDotStarPermission("essentials.build.pickup");
 	public static MaterialDotStarPermission DROP = new MaterialDotStarPermission("essentials.build.drop");
-
 }

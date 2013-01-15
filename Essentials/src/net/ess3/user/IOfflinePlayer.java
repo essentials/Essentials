@@ -10,7 +10,6 @@ public interface IOfflinePlayer
 	String getDisplayName();
 
 	//Location getBedSpawnLocation();
-
 	void setBanned(boolean bln);
 
 	boolean hasPermission(Permission perm);

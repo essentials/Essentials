@@ -22,8 +22,10 @@ import org.bukkit.plugin.PluginManager;
  *      preferred: "iConomy"
  * </pre></blockquote>
  *
- * @author: Nijikokun <nijikokun@shortmail.com> (@nijikokun) @copyright: Copyright (C) 2011 @license: AOL license
- * <http://aol.nexua.org>
+ * @author: Nijikokun <nijikokun@shortmail.com> (
+ * @nijikokun)
+ * @copyright: Copyright (C) 2011
+ * @license: AOL license <http://aol.nexua.org>
  */
 public class Methods
 {
@@ -255,8 +257,7 @@ public class Methods
 	/**
 	 * Grab the existing and initialized (hopefully) Method Class.
 	 *
-	 * @return <code>Method</code> <em>or</em>
-	 *         <code>Null</code>
+	 * @return <code>Method</code> <em>or</em> <code>Null</code>
 	 */
 	public static Method getMethod()
 	{

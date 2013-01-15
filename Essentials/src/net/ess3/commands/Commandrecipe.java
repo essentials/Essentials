@@ -14,7 +14,6 @@ import org.bukkit.inventory.*;
 
 public class Commandrecipe extends EssentialsCommand
 {
-
 	@Override
 	public void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
@@ -89,7 +88,7 @@ public class Commandrecipe extends EssentialsCommand
 				for (int k = 0; k < recipe.getShape()[j].length(); k++)
 				{
 					final ItemStack item = recipe.getIngredientMap().get(recipe.getShape()[j].toCharArray()[k]);
-					if(item == null)
+					if (item == null)
 					{
 						continue;
 					}

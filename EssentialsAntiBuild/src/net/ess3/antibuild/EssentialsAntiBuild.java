@@ -7,8 +7,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsAntiBuild extends JavaPlugin implements IAntiBuild
 {
-	private transient EssentialsConnect ess = null;
-	private transient AntiBuildHolder settings = null;
+	private EssentialsConnect ess = null;
+	private AntiBuildHolder settings = null;
 
 	@Override
 	public void onEnable()

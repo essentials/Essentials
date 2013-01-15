@@ -14,15 +14,15 @@ import org.bukkit.plugin.Plugin;
 
 public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 {
-	private final transient ClassLoader classLoader;
-	private final transient String commandPath;
-	private final transient String permissionPrefix;// TODO: Needed?
-	private final transient IEssentialsModule module;
-	private static final transient Logger LOGGER = Bukkit.getLogger();
-	private final transient Map<String, List<PluginCommand>> altcommands = new HashMap<String, List<PluginCommand>>();
-	private final transient Map<String, String> disabledList = new HashMap<String, String>();
-	private final transient Map<String, IEssentialsCommand> commands = new HashMap<String, IEssentialsCommand>();
-	private final transient IEssentials ess;
+	private final ClassLoader classLoader;
+	private final String commandPath;
+	private final String permissionPrefix; // TODO: Needed?
+	private final IEssentialsModule module;
+	private static final Logger LOGGER = Bukkit.getLogger();
+	private final Map<String, List<PluginCommand>> altcommands = new HashMap<String, List<PluginCommand>>();
+	private final Map<String, String> disabledList = new HashMap<String, String>();
+	private final Map<String, IEssentialsCommand> commands = new HashMap<String, IEssentialsCommand>();
+	private final IEssentials ess;
 
 	public EssentialsCommandHandler(ClassLoader classLoader, String commandPath, String permissionPrefix, IEssentials ess)
 	{

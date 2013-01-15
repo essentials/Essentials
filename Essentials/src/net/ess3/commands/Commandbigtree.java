@@ -10,13 +10,13 @@ import org.bukkit.TreeType;
 
 public class Commandbigtree extends EssentialsCommand
 {
-	private static enum BigTree {
+	private static enum BigTree
+	{
 		REDWOOD(TreeType.TALL_REDWOOD),
 		TREE(TreeType.BIG_TREE),
 		JUNGLE(TreeType.JUNGLE);
-
 		private final TreeType bukkitType;
-		
+
 		private BigTree(final TreeType bukkitType)
 		{
 			this.bukkitType = bukkitType;
@@ -27,9 +27,8 @@ public class Commandbigtree extends EssentialsCommand
 			return bukkitType;
 		}
 	}
-	
 	private final static EnumConverter<BigTree> BIGTREE_PARSER = EnumConverter.getInstance(BigTree.class);
-	
+
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{

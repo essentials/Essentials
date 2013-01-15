@@ -12,59 +12,74 @@ import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.WorldDataHolder;
 import org.anjocaido.groupmanager.utils.StringPermissionComparator;
 
+
 /**
- * 
+ *
  * @author gabrielcouto
  */
-public abstract class DataUnit {
-
+public abstract class DataUnit
+{
 	private WorldDataHolder dataSource;
 	private String name;
 	private boolean changed, sorted = false;
 	private ArrayList<String> permissions = new ArrayList<String>();
 
-	public DataUnit(WorldDataHolder dataSource, String name) {
+	public DataUnit(WorldDataHolder dataSource, String name)
+	{
 
 		this.dataSource = dataSource;
 		this.name = name;
 	}
 
-	public DataUnit(String name) {
+	public DataUnit(String name)
+	{
 
 		this.name = name;
 	}
 
 	/**
 	 * Every group is matched only by their names and DataSources names.
-	 * 
+	 *
 	 * @param o
 	 * @return true if they are equal. false if not.
 	 */
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(Object o)
+	{
 
-		if (o instanceof DataUnit) {
-			DataUnit go = (DataUnit) o;
-			if (this.getName().equalsIgnoreCase(go.getName())) {
+		if (o instanceof DataUnit)
+		{
+			DataUnit go = (DataUnit)o;
+			if (this.getName().equalsIgnoreCase(go.getName()))
+			{
 				// Global Group match.
 				if (this.dataSource == null && go.getDataSource() == null)
+				{
 					return true;
+				}
 				// This is a global group, the object to test isn't.
 				if (this.dataSource == null && go.getDataSource() != null)
+				{
 					return false;
+				}
 				// This is not a global group, but the object to test is.
 				if (this.dataSource != null && go.getDataSource() == null)
+				{
 					return false;
+				}
 				// Match on group name and world name.
 				if (this.dataSource.getName().equalsIgnoreCase(go.getDataSource().getName()))
+				{
 					return true;
+				}
 			}
 		}
 		return false;
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 
 		int hash = 5;
 		hash = 71 * hash + (this.name != null ? this.name.toLowerCase().hashCode() : 0);
@@ -73,20 +88,22 @@ public abstract class DataUnit {
 
 	/**
 	 * Set the data source to point to a different worldDataHolder
-	 * 
+	 *
 	 * @param source
 	 */
-	public void setDataSource(WorldDataHolder source) {
+	public void setDataSource(WorldDataHolder source)
+	{
 
 		this.dataSource = source;
 	}
 
 	/**
 	 * Get the current worldDataHolder this object is pointing to
-	 * 
+	 *
 	 * @return the dataSource
 	 */
-	public WorldDataHolder getDataSource() {
+	public WorldDataHolder getDataSource()
+	{
 
 		return dataSource;
 	}
@@ -94,20 +111,26 @@ public abstract class DataUnit {
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 
 		return name;
 	}
 
-	public void flagAsChanged() {
+	public void flagAsChanged()
+	{
 
 		WorldDataHolder testSource = getDataSource();
 		String source = "";
 
 		if (testSource == null)
+		{
 			source = "GlobalGroups";
+		}
 		else
+		{
 			source = testSource.getName();
+		}
 
 		GroupManager.logger.finest("DataSource: " + source + " - DataUnit: " + getName() + " flagged as changed!");
 		// for(StackTraceElement st: Thread.currentThread().getStackTrace()){
@@ -117,63 +140,76 @@ public abstract class DataUnit {
 		changed = true;
 	}
 
-	public boolean isChanged() {
+	public boolean isChanged()
+	{
 
 		return changed;
 	}
 
-	public void flagAsSaved() {
+	public void flagAsSaved()
+	{
 
 		WorldDataHolder testSource = getDataSource();
 		String source = "";
 
 		if (testSource == null)
+		{
 			source = "GlobalGroups";
+		}
 		else
+		{
 			source = testSource.getName();
+		}
 
 		GroupManager.logger.finest("DataSource: " + source + " - DataUnit: " + getName() + " flagged as saved!");
 		changed = false;
 	}
 
-	public boolean hasSamePermissionNode(String permission) {
+	public boolean hasSamePermissionNode(String permission)
+	{
 
 		return permissions.contains(permission);
 	}
 
-	public void addPermission(String permission) {
+	public void addPermission(String permission)
+	{
 
-		if (!hasSamePermissionNode(permission)) {
+		if (!hasSamePermissionNode(permission))
+		{
 			permissions.add(permission);
 		}
 		flagAsChanged();
 	}
 
-	public boolean removePermission(String permission) {
+	public boolean removePermission(String permission)
+	{
 
 		flagAsChanged();
 		return permissions.remove(permission);
 	}
 
 	/**
-	 * Use this only to list permissions.
-	 * You can't edit the permissions using the returned ArrayList instance
-	 * 
+	 * Use this only to list permissions. You can't edit the permissions using the returned ArrayList instance
+	 *
 	 * @return a copy of the permission list
 	 */
-	public List<String> getPermissionList() {
+	public List<String> getPermissionList()
+	{
 
 		return Collections.unmodifiableList(permissions);
 	}
 
-	public boolean isSorted() {
+	public boolean isSorted()
+	{
 
 		return this.sorted;
 	}
 
-	public void sortPermissions() {
+	public void sortPermissions()
+	{
 
-		if (!isSorted()) {
+		if (!isSorted())
+		{
 			Collections.sort(permissions, StringPermissionComparator.getInstance());
 			sorted = true;
 		}

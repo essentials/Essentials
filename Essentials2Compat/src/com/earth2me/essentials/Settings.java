@@ -16,9 +16,9 @@ import org.bukkit.inventory.ItemStack;
 
 public final class Settings implements ISettings
 {
-	private final transient EssentialsConf config;
+	private final EssentialsConf config;
 	private final static Logger logger = Logger.getLogger("Minecraft");
-	private final transient IEssentials ess;
+	private final IEssentials ess;
 	private boolean metricsEnabled = true;
 
 	public Settings(IEssentials ess, File file)
@@ -52,7 +52,6 @@ public final class Settings implements ISettings
 	{
 		return config.getInt("sethome-multiple." + set, config.getInt("sethome-multiple.default", 3));
 	}
-
 	private int chatRadius = 0;
 
 	private int _getChatRadius()
@@ -89,7 +88,6 @@ public final class Settings implements ISettings
 	{
 		return config.getInt("starting-balance", 0);
 	}
-
 	private Set<String> disabledCommands = new HashSet<String>();
 
 	@Override
@@ -142,9 +140,7 @@ public final class Settings implements ISettings
 		}
 		return config.getBoolean("override-" + name.toLowerCase(Locale.ENGLISH), false);
 	}
-
 	private ConfigurationSection commandCosts;
-
 
 	public ConfigurationSection _getCommandCosts()
 	{
@@ -178,7 +174,6 @@ public final class Settings implements ISettings
 		}
 		return 0.0;
 	}
-
 	private String nicknamePrefix = "~";
 
 	private String _getNicknamePrefix()
@@ -203,7 +198,6 @@ public final class Settings implements ISettings
 	{
 		return config.getDouble("heal-cooldown", 0);
 	}
-
 	private ConfigurationSection kits;
 
 	public ConfigurationSection _getKits()
@@ -244,7 +238,6 @@ public final class Settings implements ISettings
 		}
 		return null;
 	}
-
 	private ChatColor operatorColor = null;
 
 	@Override
@@ -318,31 +311,29 @@ public final class Settings implements ISettings
 	{
 		return config.getString("backup.command", null);
 	}
-
 	private Map<String, MessageFormat> chatFormats = Collections.synchronizedMap(new HashMap<String, MessageFormat>());
 
 	/*@Override //TODO: implement this
-	public MessageFormat getChatFormat(String group)
-	{
-		MessageFormat mFormat = chatFormats.get(group);
-		if (mFormat == null)
-		{
-			String format = config.getString("chat.group-formats." + (group == null ? "Default" : group),
-											 config.getString("chat.format", "&7[{GROUP}]&f {DISPLAYNAME}&7:&f {MESSAGE}"));
-			format = Util.replaceFormat(format);
-			format = format.replace("{DISPLAYNAME}", "%1$s");
-			format = format.replace("{GROUP}", "{0}");
-			format = format.replace("{MESSAGE}", "%2$s");
-			format = format.replace("{WORLDNAME}", "{1}");
-			format = format.replace("{SHORTWORLDNAME}", "{2}");
-			format = format.replaceAll("\\{(\\D*?)\\}", "\\[$1\\]");
-			format = "§r".concat(format);
-			mFormat = new MessageFormat(format);
-			chatFormats.put(group, mFormat);
-		}
-		return mFormat;
-	}*/
-
+	 public MessageFormat getChatFormat(String group)
+	 {
+	 MessageFormat mFormat = chatFormats.get(group);
+	 if (mFormat == null)
+	 {
+	 String format = config.getString("chat.group-formats." + (group == null ? "Default" : group),
+	 config.getString("chat.format", "&7[{GROUP}]&f {DISPLAYNAME}&7:&f {MESSAGE}"));
+	 format = Util.replaceFormat(format);
+	 format = format.replace("{DISPLAYNAME}", "%1$s");
+	 format = format.replace("{GROUP}", "{0}");
+	 format = format.replace("{MESSAGE}", "%2$s");
+	 format = format.replace("{WORLDNAME}", "{1}");
+	 format = format.replace("{SHORTWORLDNAME}", "{2}");
+	 format = format.replaceAll("\\{(\\D*?)\\}", "\\[$1\\]");
+	 format = "§r".concat(format);
+	 mFormat = new MessageFormat(format);
+	 chatFormats.put(group, mFormat);
+	 }
+	 return mFormat;
+	 }*/
 	public String getDefaultChatformat()
 	{
 		return config.getString("chat.format", "&7[{GROUP}]&f {DISPLAYNAME}&7:&f {MESSAGE}");
@@ -384,7 +375,6 @@ public final class Settings implements ISettings
 		return config.getBoolean("sort-list-by-groups", true);
 	}
 
-
 	public void reloadConfig()
 	{
 		config.load();
@@ -415,7 +405,6 @@ public final class Settings implements ISettings
 		warnOnBuildDisallow = _warnOnBuildDisallow();
 		mailsPerMinute = _getMailsPerMinute();
 	}
-
 	private List<Integer> itemSpawnBl = new ArrayList<Integer>();
 
 	@Override
@@ -451,7 +440,6 @@ public final class Settings implements ISettings
 		}
 		return epItemSpwn;
 	}
-
 	private List<String> enabledSigns = new ArrayList<String>();
 	private boolean signsEnabled = false;
 
@@ -490,7 +478,6 @@ public final class Settings implements ISettings
 		}
 		return newSigns;
 	}
-
 	private boolean warnOnBuildDisallow;
 
 	private boolean _warnOnBuildDisallow()
@@ -503,7 +490,6 @@ public final class Settings implements ISettings
 	{
 		return warnOnBuildDisallow;
 	}
-
 	private boolean debug = false;
 	private boolean configDebug = false;
 
@@ -596,7 +582,6 @@ public final class Settings implements ISettings
 	{
 		return config.getBoolean(configName, def);
 	}
-
 	private final static double MAXMONEY = 10000000000000.0;
 
 	@Override
@@ -609,7 +594,6 @@ public final class Settings implements ISettings
 		}
 		return max;
 	}
-
 	private final static double MINMONEY = -10000000000000.0;
 
 	@Override
@@ -644,7 +628,6 @@ public final class Settings implements ISettings
 	{
 		return config.getBoolean("remove-god-on-disconnect", false);
 	}
-
 	private boolean changeDisplayName = true;
 
 	private boolean _changeDisplayName()
@@ -657,7 +640,6 @@ public final class Settings implements ISettings
 	{
 		return changeDisplayName;
 	}
-
 	private boolean changePlayerListName = false;
 
 	private boolean _changePlayerListName()
@@ -676,7 +658,6 @@ public final class Settings implements ISettings
 	{
 		return config.getBoolean("use-bukkit-permissions", false);
 	}
-
 	private boolean prefixsuffixconfigured = false;
 	private boolean addprefixsuffix = false;
 	private boolean essentialsChatActive = false;
@@ -702,7 +683,6 @@ public final class Settings implements ISettings
 	{
 		return prefixsuffixconfigured ? addprefixsuffix : essentialsChatActive;
 	}
-
 	private boolean disablePrefix = false;
 
 	private boolean _disablePrefix()
@@ -715,7 +695,6 @@ public final class Settings implements ISettings
 	{
 		return disablePrefix;
 	}
-
 	private boolean disableSuffix = false;
 
 	private boolean _disableSuffix()
@@ -740,7 +719,6 @@ public final class Settings implements ISettings
 	{
 		return config.getLong("auto-afk-kick", -1);
 	}
-
 	private boolean getFreezeAfkPlayers;
 
 	@Override
@@ -753,7 +731,6 @@ public final class Settings implements ISettings
 	{
 		return config.getBoolean("freeze-afk-players", false);
 	}
-
 	private boolean cancelAfkOnMove;
 
 	@Override
@@ -772,7 +749,6 @@ public final class Settings implements ISettings
 	{
 		return config.getBoolean("death-messages", true);
 	}
-
 	private Set<String> noGodWorlds = new HashSet<String>();
 
 	@Override
@@ -804,7 +780,6 @@ public final class Settings implements ISettings
 	{
 		return config.getBoolean("world-home-permissions", false);
 	}
-
 	private boolean registerBackInListener;
 
 	@Override
@@ -817,7 +792,6 @@ public final class Settings implements ISettings
 	{
 		return config.getBoolean("register-back-in-listener", false);
 	}
-
 	private boolean disableItemPickupWhileAfk;
 
 	@Override
@@ -875,7 +849,6 @@ public final class Settings implements ISettings
 	{
 		this.metricsEnabled = metricsEnabled;
 	}
-
 	private boolean teleportInvulnerability;
 
 	@Override
@@ -894,7 +867,6 @@ public final class Settings implements ISettings
 	{
 		return teleportInvulnerability;
 	}
-
 	private long loginAttackDelay;
 
 	private long _getLoginAttackDelay()
@@ -907,7 +879,6 @@ public final class Settings implements ISettings
 	{
 		return loginAttackDelay;
 	}
-
 	private int signUsePerSecond;
 
 	private int _getSignUsePerSecond()
@@ -937,7 +908,6 @@ public final class Settings implements ISettings
 		double maxSpeed = config.getDouble("max-walk-speed", 0.8);
 		return maxSpeed > 1.0 ? 1.0 : Math.abs(maxSpeed);
 	}
-
 	private int mailsPerMinute;
 
 	private int _getMailsPerMinute()

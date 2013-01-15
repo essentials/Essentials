@@ -6,15 +6,17 @@ package org.anjocaido.groupmanager.data;
 
 import java.util.Map;
 
+
 /**
- * 
+ *
  * @author gabrielcouto
  */
-public class GroupVariables extends Variables implements Cloneable {
-
+public class GroupVariables extends Variables implements Cloneable
+{
 	private Group owner;
 
-	public GroupVariables(Group owner) {
+	public GroupVariables(Group owner)
+	{
 
 		super(owner);
 		this.owner = owner;
@@ -23,23 +25,27 @@ public class GroupVariables extends Variables implements Cloneable {
 		addVar("build", false);
 	}
 
-	public GroupVariables(Group owner, Map<String, Object> varList) {
+	public GroupVariables(Group owner, Map<String, Object> varList)
+	{
 
 		super(owner);
 		variables = varList;
-		if (variables.get("prefix") == null) {
+		if (variables.get("prefix") == null)
+		{
 			variables.put("prefix", "");
 			owner.flagAsChanged();
 		}
 		//thisGrp.prefix = infoNode.get("prefix").toString();
 
-		if (variables.get("suffix") == null) {
+		if (variables.get("suffix") == null)
+		{
 			variables.put("suffix", "");
 			owner.flagAsChanged();
 		}
 		//thisGrp.suffix = infoNode.get("suffix").toString();
 
-		if (variables.get("build") == null) {
+		if (variables.get("build") == null)
+		{
 			variables.put("build", false);
 			owner.flagAsChanged();
 		}
@@ -48,13 +54,15 @@ public class GroupVariables extends Variables implements Cloneable {
 
 	/**
 	 * A clone of all vars here.
-	 * 
+	 *
 	 * @return GroupVariables clone
 	 */
-	protected GroupVariables clone(Group newOwner) {
+	protected GroupVariables clone(Group newOwner)
+	{
 
 		GroupVariables clone = new GroupVariables(newOwner);
-		for (String key : variables.keySet()) {
+		for (String key : variables.keySet())
+		{
 			clone.variables.put(key, variables.get(key));
 		}
 		newOwner.flagAsChanged();
@@ -63,21 +71,30 @@ public class GroupVariables extends Variables implements Cloneable {
 
 	/**
 	 * Remove a var from the list
-	 * 
+	 *
 	 * @param name
 	 */
 	@Override
-	public void removeVar(String name) {
+	public void removeVar(String name)
+	{
 
-		try {
+		try
+		{
 			this.variables.remove(name);
-		} catch (Exception e) {
 		}
-		if (name.equals("prefix")) {
+		catch (Exception e)
+		{
+		}
+		if (name.equals("prefix"))
+		{
 			addVar("prefix", "");
-		} else if (name.equals("suffix")) {
+		}
+		else if (name.equals("suffix"))
+		{
 			addVar("suffix", "");
-		} else if (name.equals("build")) {
+		}
+		else if (name.equals("build"))
+		{
 			addVar("build", false);
 		}
 		owner.flagAsChanged();
@@ -87,7 +104,8 @@ public class GroupVariables extends Variables implements Cloneable {
 	 * @return the owner
 	 */
 	@Override
-	public Group getOwner() {
+	public Group getOwner()
+	{
 
 		return owner;
 	}

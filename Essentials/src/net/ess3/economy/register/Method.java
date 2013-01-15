@@ -6,7 +6,8 @@ import org.bukkit.plugin.Plugin;
 /**
  * Interface to be implemented by a payment method.
  *
- * @author Nijikokun <nijikokun@shortmail.com> (@nijikokun)
+ * @author Nijikokun <nijikokun@shortmail.com> (
+ * @nijikokun)
  * @copyright Copyright (C) 2011
  * @license AOL license <http://aol.nexua.org>
  */
@@ -16,7 +17,8 @@ public interface Method
 	 * Encodes the Plugin into an Object disguised as the Plugin. If you want the original Plugin Class you must cast it
 	 * to the correct Plugin, to do so you have to verify the name and or version then cast.
 	 * <p/>
-	 * <pre>
+	 * <
+	 * pre>
 	 *  if(method.getName().equalsIgnoreCase("iConomy"))
 	 *   iConomy plugin = ((iConomy)method.getPlugin());</pre>
 	 *
@@ -48,8 +50,7 @@ public interface Method
 	public String getVersion();
 
 	/**
-	 * Returns the amount of decimal places that get stored
-	 * NOTE: it will return -1 if there is no rounding
+	 * Returns the amount of decimal places that get stored NOTE: it will return -1 if there is no rounding
 	 *
 	 * @return <code>int</code> for each decimal place
 	 */
@@ -88,7 +89,9 @@ public interface Method
 	public boolean hasAccount(String name);
 
 	/**
-	 * Check to see if an account <code>name</code> is tied to a <code>bank</code>.
+	 * Check to see if an account
+	 * <code>name</code> is tied to a
+	 * <code>bank</code>.
 	 *
 	 * @param bank Bank name
 	 * @param name Account name
@@ -107,14 +110,16 @@ public interface Method
 	/**
 	 * Forces an account creation
 	 *
-	 * @param name    Account name
+	 * @param name Account name
 	 * @param balance Initial account balance
 	 * @return <code>boolean</code>
 	 */
 	public boolean createAccount(String name, Double balance);
 
 	/**
-	 * Returns a <code>MethodAccount</code> class for an account <code>name</code>.
+	 * Returns a
+	 * <code>MethodAccount</code> class for an account
+	 * <code>name</code>.
 	 *
 	 * @param name Account name
 	 * @return <code>MethodAccount</code> <em>or</em>  <code>Null</code>
@@ -122,7 +127,9 @@ public interface Method
 	public MethodAccount getAccount(String name);
 
 	/**
-	 * Returns a <code>MethodBankAccount</code> class for an account <code>name</code>.
+	 * Returns a
+	 * <code>MethodBankAccount</code> class for an account
+	 * <code>name</code>.
 	 *
 	 * @param bank Bank name
 	 * @param name Account name
@@ -131,8 +138,7 @@ public interface Method
 	public MethodBankAccount getBankAccount(String bank, String name);
 
 	/**
-	 * Checks to verify the compatibility between this Method and a plugin.
-	 * Internal usage only, for the most part.
+	 * Checks to verify the compatibility between this Method and a plugin. Internal usage only, for the most part.
 	 *
 	 * @param plugin Plugin
 	 * @return <code>boolean</code>

@@ -6,37 +6,37 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+
 /**
  * @author ElgarL
- * 
+ *
  */
-public class GMUserEvent extends Event {
-
+public class GMUserEvent extends Event
+{
 	/**
-	 * 
+	 *
 	 */
 	private static final HandlerList handlers = new HandlerList();
 
 	@Override
-	public HandlerList getHandlers() {
+	public HandlerList getHandlers()
+	{
 
 		return handlers;
 	}
 
-	public static HandlerList getHandlerList() {
+	public static HandlerList getHandlerList()
+	{
 
 		return handlers;
 	}
-
 	//////////////////////////////
-
 	protected User user;
-
 	protected String userName;
-
 	protected Action action;
 
-	public GMUserEvent(User user, Action action) {
+	public GMUserEvent(User user, Action action)
+	{
 
 		super();
 
@@ -45,7 +45,8 @@ public class GMUserEvent extends Event {
 		this.userName = user.getName();
 	}
 
-	public GMUserEvent(String userName, Action action) {
+	public GMUserEvent(String userName, Action action)
+	{
 
 		super();
 
@@ -53,35 +54,43 @@ public class GMUserEvent extends Event {
 		this.action = action;
 	}
 
-	public Action getAction() {
+	public Action getAction()
+	{
 
 		return this.action;
 	}
 
-	public User getUser() {
+	public User getUser()
+	{
 
 		return user;
 	}
 
-	public String getUserName() {
+	public String getUserName()
+	{
 
 		return userName;
 	}
 
-	public enum Action {
-		USER_PERMISSIONS_CHANGED, USER_INHERITANCE_CHANGED, USER_INFO_CHANGED, USER_GROUP_CHANGED, USER_SUBGROUP_CHANGED, USER_ADDED, USER_REMOVED,
-	}
 
-	public void schedule(final GMUserEvent event) {
+	public enum Action
+	{
+		USER_PERMISSIONS_CHANGED, USER_INHERITANCE_CHANGED, USER_INFO_CHANGED, USER_GROUP_CHANGED, USER_SUBGROUP_CHANGED, USER_ADDED, USER_REMOVED,}
 
-		if (Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("GroupManager"), new Runnable() {
+	public void schedule(final GMUserEvent event)
+	{
 
+		if (Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("GroupManager"), new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 
 				Bukkit.getServer().getPluginManager().callEvent(event);
 			}
 		}, 1) == -1)
+		{
 			GroupManager.logger.warning("Could not schedule GM Event.");
+		}
 	}
 }

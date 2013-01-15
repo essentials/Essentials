@@ -4,15 +4,13 @@ import net.ess3.utils.FormatUtil;
 
 
 /**
- * Instead of using this api directly, we recommend to use the register plugin:
- * http://bit.ly/RegisterMethod
+ * Instead of using this api directly, we recommend to use the register plugin: http://bit.ly/RegisterMethod
  */
 public final class Economy
 {
 	private Economy()
 	{
 	}
-
 	private static IEssentials ess;
 	private static final String noCallBeforeLoad = "Essentials API is called before Essentials is loaded.";
 
@@ -35,10 +33,10 @@ public final class Economy
 	/**
 	 * Sets the balance of a user
 	 *
-	 * @param name    Name of the user
+	 * @param name Name of the user
 	 * @param balance The balance you want to set
 	 * @throws UserDoesNotExistException If a user by that name does not exists
-	 * @throws NoLoanPermittedException  If the user is not allowed to have a negative balance
+	 * @throws NoLoanPermittedException If the user is not allowed to have a negative balance
 	 */
 	public static void setMoney(String name, double balance) throws UserDoesNotExistException, NoLoanPermittedException
 	{
@@ -52,10 +50,10 @@ public final class Economy
 	/**
 	 * Adds money to the balance of a user
 	 *
-	 * @param name   Name of the user
+	 * @param name Name of the user
 	 * @param amount The money you want to add
 	 * @throws UserDoesNotExistException If a user by that name does not exists
-	 * @throws NoLoanPermittedException  If the user is not allowed to have a negative balance
+	 * @throws NoLoanPermittedException If the user is not allowed to have a negative balance
 	 */
 	public static void add(String name, double amount) throws UserDoesNotExistException, NoLoanPermittedException
 	{
@@ -66,10 +64,10 @@ public final class Economy
 	/**
 	 * Substracts money from the balance of a user
 	 *
-	 * @param name   Name of the user
+	 * @param name Name of the user
 	 * @param amount The money you want to substract
 	 * @throws UserDoesNotExistException If a user by that name does not exists
-	 * @throws NoLoanPermittedException  If the user is not allowed to have a negative balance
+	 * @throws NoLoanPermittedException If the user is not allowed to have a negative balance
 	 */
 	public static void subtract(String name, double amount) throws UserDoesNotExistException, NoLoanPermittedException
 	{
@@ -80,10 +78,10 @@ public final class Economy
 	/**
 	 * Divides the balance of a user by a value
 	 *
-	 * @param name  Name of the user
+	 * @param name Name of the user
 	 * @param value The balance is divided by this value
 	 * @throws UserDoesNotExistException If a user by that name does not exists
-	 * @throws NoLoanPermittedException  If the user is not allowed to have a negative balance
+	 * @throws NoLoanPermittedException If the user is not allowed to have a negative balance
 	 */
 	public static void divide(String name, double value) throws UserDoesNotExistException, NoLoanPermittedException
 	{
@@ -94,10 +92,10 @@ public final class Economy
 	/**
 	 * Multiplies the balance of a user by a value
 	 *
-	 * @param name  Name of the user
+	 * @param name Name of the user
 	 * @param value The balance is multiplied by this value
 	 * @throws UserDoesNotExistException If a user by that name does not exists
-	 * @throws NoLoanPermittedException  If the user is not allowed to have a negative balance
+	 * @throws NoLoanPermittedException If the user is not allowed to have a negative balance
 	 */
 	public static void multiply(String name, double value) throws UserDoesNotExistException, NoLoanPermittedException
 	{
@@ -110,7 +108,7 @@ public final class Economy
 	 *
 	 * @param name Name of the user
 	 * @throws UserDoesNotExistException If a user by that name does not exists
-	 * @throws NoLoanPermittedException  If the user is not allowed to have a negative balance
+	 * @throws NoLoanPermittedException If the user is not allowed to have a negative balance
 	 */
 	public static void resetBalance(String name) throws UserDoesNotExistException, NoLoanPermittedException
 	{
@@ -122,7 +120,7 @@ public final class Economy
 	}
 
 	/**
-	 * @param name   Name of the user
+	 * @param name Name of the user
 	 * @param amount The amount of money the user should have
 	 * @return true, if the user has more or an equal amount of money
 	 * @throws UserDoesNotExistException If a user by that name does not exists
@@ -133,7 +131,7 @@ public final class Economy
 	}
 
 	/**
-	 * @param name   Name of the user
+	 * @param name Name of the user
 	 * @param amount The amount of money the user should have
 	 * @return true, if the user has more money
 	 * @throws UserDoesNotExistException If a user by that name does not exists
@@ -144,7 +142,7 @@ public final class Economy
 	}
 
 	/**
-	 * @param name   Name of the user
+	 * @param name Name of the user
 	 * @param amount The amount of money the user should not have
 	 * @return true, if the user has less money
 	 * @throws UserDoesNotExistException If a user by that name does not exists
@@ -167,8 +165,7 @@ public final class Economy
 	}
 
 	/**
-	 * Formats the amount of money like all other Essentials functions.
-	 * Example: $100000 or $12345.67
+	 * Formats the amount of money like all other Essentials functions. Example: $100000 or $12345.67
 	 *
 	 * @param amount The amount of money
 	 * @return Formatted money

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class SimpleTextInput implements IText
 {
-	private final transient List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<String>();
 
 	public SimpleTextInput(final String input)
 	{
@@ -32,5 +32,4 @@ public class SimpleTextInput implements IText
 	{
 		return Collections.emptyMap();
 	}
-
 }

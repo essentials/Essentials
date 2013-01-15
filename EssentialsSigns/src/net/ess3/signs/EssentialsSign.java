@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 public class EssentialsSign
 {
 	private static final Set<Material> EMPTY_SET = new HashSet<Material>();
-	protected transient final String signName;
+	protected final String signName;
 
 	public EssentialsSign(final String signName)
 	{
@@ -212,8 +212,9 @@ public class EssentialsSign
 		{
 			return true;
 		}
-		final BlockFace[] directions = new BlockFace[]{
-				BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
+		final BlockFace[] directions = new BlockFace[]
+		{
+			BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
 		};
 		for (BlockFace blockFace : directions)
 		{
@@ -254,7 +255,7 @@ public class EssentialsSign
 	{
 		return EMPTY_SET;
 	}
-	
+
 	protected final void validateTrade(final ISign sign, final int index, final IEssentials ess) throws SignException
 	{
 		final String line = sign.getLine(index).trim();
@@ -430,8 +431,8 @@ public class EssentialsSign
 
 	static class EventSign implements ISign
 	{
-		private final transient SignChangeEvent event;
-		private final transient Block block;
+		private final SignChangeEvent event;
+		private final Block block;
 
 		public EventSign(final SignChangeEvent event)
 		{
@@ -466,8 +467,8 @@ public class EssentialsSign
 
 	public static class BlockSign implements ISign
 	{
-		private final transient Sign sign;
-		private final transient Block block;
+		private final Sign sign;
+		private final Block block;
 
 		public BlockSign(final Block block)
 		{

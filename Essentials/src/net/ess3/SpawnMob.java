@@ -25,8 +25,8 @@ import org.bukkit.material.Colorable;
 
 public class SpawnMob
 {
-	private static transient Pattern colon = Pattern.compile(":");
-	private static transient Pattern comma = Pattern.compile(",");
+	private static Pattern colon = Pattern.compile(":");
+	private static Pattern comma = Pattern.compile(",");
 
 	public static String mobList(final IUser user) throws NotEnoughArgumentsException
 	{

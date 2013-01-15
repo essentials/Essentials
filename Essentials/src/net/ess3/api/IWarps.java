@@ -35,7 +35,7 @@ public interface IWarps extends IReload
 	 * Set a warp
 	 *
 	 * @param name - Name of warp
-	 * @param loc  - Location of warp
+	 * @param loc - Location of warp
 	 * @throws Exception
 	 */
 	void setWarp(String name, Location loc) throws Exception;

@@ -18,17 +18,16 @@ public class Backup implements StorageObject
 	@Comment("Add a command that backups your data, e.g. 'rdiff-backup World1 backups/World1'")
 	private String command;
 	@Comment(
-			{
-					"Runs these commands before a backup.", "This will run every time time (in minutes) you specify in the interval setting.",
-					"ex: say \"Hello World\" will make the server say Hello World"
-			})
+	{
+		"Runs these commands before a backup.", "This will run every time time (in minutes) you specify in the interval setting.",
+		"ex: say \"Hello World\" will make the server say Hello World"
+	})
 	private List<String> commandsBeforeBackup;
-
 	@Comment(
-			{
-					"Runs these commands after a backup.", "This will run every time time (in minutes) you specify in the interval setting.",
-					"ex: say \"Hello World\" will make the server say Hello World"
-			})
+	{
+		"Runs these commands after a backup.", "This will run every time time (in minutes) you specify in the interval setting.",
+		"ex: say \"Hello World\" will make the server say Hello World"
+	})
 	private List<String> commandsAfterBackup;
 
 	public Backup()
@@ -49,5 +48,4 @@ public class Backup implements StorageObject
 	{
 		return commandsAfterBackup == null ? Collections.<String>emptyList() : Collections.unmodifiableList(commandsAfterBackup);
 	}
-
 }

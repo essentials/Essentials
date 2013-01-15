@@ -1,6 +1,5 @@
 package net.ess3.extra.commands;
 
-
 import java.util.Random;
 import net.ess3.api.IUser;
 import net.ess3.commands.EssentialsCommand;

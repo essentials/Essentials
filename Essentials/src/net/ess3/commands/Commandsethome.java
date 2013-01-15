@@ -9,7 +9,7 @@ import net.ess3.permissions.Permissions;
 
 public class Commandsethome extends EssentialsCommand
 {
-	private final transient Pattern colon = Pattern.compile(":");
+	private final Pattern colon = Pattern.compile(":");
 
 	@Override
 	public void run(final IUser user, final String commandLabel, String[] args) throws Exception
@@ -78,8 +78,8 @@ public class Commandsethome extends EssentialsCommand
 		}
 		user.sendMessage(
 				_(
-						"homeSet", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(),
-						user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
+				"homeSet", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(),
+				user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
 
 	}
 }

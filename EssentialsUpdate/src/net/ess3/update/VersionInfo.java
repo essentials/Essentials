@@ -9,10 +9,10 @@ import org.bukkit.configuration.Configuration;
 
 public class VersionInfo
 {
-	private final transient List<String> changelog;
-	private final transient int minBukkit;
-	private final transient int maxBukkit;
-	private final transient Map<String, ModuleInfo> modules;
+	private final List<String> changelog;
+	private final int minBukkit;
+	private final int maxBukkit;
+	private final Map<String, ModuleInfo> modules;
 
 	public VersionInfo(final Configuration updateConfig, final String path)
 	{

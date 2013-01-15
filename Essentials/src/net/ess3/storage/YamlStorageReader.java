@@ -13,10 +13,10 @@ import org.yaml.snakeyaml.introspector.BeanAccess;
 
 public class YamlStorageReader implements IStorageReader
 {
-	private transient static final Map<Class<?>, Yaml> PREPARED_YAMLS = Collections.synchronizedMap(new HashMap<Class<?>, Yaml>());
-	private transient static final Map<Class<?>, ReentrantLock> LOCKS = new HashMap<Class<?>, ReentrantLock>();
-	private transient final Reader reader;
-	private transient final IPlugin plugin;
+	private static final Map<Class<?>, Yaml> PREPARED_YAMLS = Collections.synchronizedMap(new HashMap<Class<?>, Yaml>());
+	private static final Map<Class<?>, ReentrantLock> LOCKS = new HashMap<Class<?>, ReentrantLock>();
+	private final Reader reader;
+	private final IPlugin plugin;
 
 	public YamlStorageReader(final Reader reader, final IPlugin plugin)
 	{

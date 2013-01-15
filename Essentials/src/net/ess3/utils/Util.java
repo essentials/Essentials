@@ -16,7 +16,6 @@ public final class Util
 	private Util()
 	{
 	}
-
 	private final static Pattern INVALIDFILECHARS = Pattern.compile("[^\u0020-\u007E\u0085\u00A0-\uD7FF\uE000-\uFFFC]");
 	private final static Pattern INVALIDCHARS = Pattern.compile("[^\t\n\r\u0020-\u007E\u0085\u00A0-\uD7FF\uE000-\uFFFC]");
 
@@ -82,7 +81,7 @@ public final class Util
 	public static ItemStack convertBlockToItem(final Block block)
 	{
 		final ItemStack is = new ItemStack(block.getType(), 1, block.getData());
-		
+
 		final short durability = 0;
 
 		switch (is.getType())
@@ -215,5 +214,4 @@ public final class Util
 		}
 		return buf.toString();
 	}
-
 }

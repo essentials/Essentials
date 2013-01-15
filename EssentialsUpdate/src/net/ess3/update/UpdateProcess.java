@@ -18,10 +18,10 @@ import org.bukkit.plugin.Plugin;
 // TODO: This whole thing should make use of the conversations api
 public class UpdateProcess implements Listener
 {
-	private transient Player currentPlayer;
-	private final transient Plugin plugin;
-	private final transient UpdateCheck updateCheck;
-	private transient StateMachine stateMachine;
+	private Player currentPlayer;
+	private final Plugin plugin;
+	private final UpdateCheck updateCheck;
+	private StateMachine stateMachine;
 
 	public UpdateProcess(final Plugin plugin, final UpdateCheck updateCheck)
 	{
@@ -96,7 +96,8 @@ public class UpdateProcess implements Listener
 	{
 		UpdateProcess.this.currentPlayer = null;
 	}
-    //TODO: make sure this is threadsafe
+	//TODO: make sure this is threadsafe
+
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(final AsyncPlayerChatEvent event)
 	{

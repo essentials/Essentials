@@ -12,42 +12,53 @@ import java.util.logging.Level;
 import org.anjocaido.groupmanager.utils.Tasks;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+
 /**
- * 
+ *
  * @author gabrielcouto
  */
-public class GMConfiguration {
-
+public class GMConfiguration
+{
 	private GroupManager plugin;
 	private File configFile;
 	private YamlConfiguration GMconfig;
 
-	public GMConfiguration(GroupManager plugin) {
+	public GMConfiguration(GroupManager plugin)
+	{
 
 		this.plugin = plugin;
 		load();
 	}
 
-	public void load() {
+	public void load()
+	{
 
-		if (!plugin.getDataFolder().exists()) {
+		if (!plugin.getDataFolder().exists())
+		{
 			plugin.getDataFolder().mkdirs();
 		}
 		configFile = new File(plugin.getDataFolder(), "config.yml");
 
-		if (!configFile.exists()) {
-			try {
+		if (!configFile.exists())
+		{
+			try
+			{
 				Tasks.copy(plugin.getResourceAsStream("config.yml"), configFile);
-			} catch (IOException ex) {
+			}
+			catch (IOException ex)
+			{
 				GroupManager.logger.log(Level.SEVERE, null, ex);
 			}
 		}
 
 		GMconfig = new YamlConfiguration();
 
-		try {
+		try
+		{
 			GMconfig.load(configFile);
-		} catch (Exception ex) {
+		}
+		catch (Exception ex)
+		{
 			throw new IllegalArgumentException("The following file couldn't pass on Parser.\n" + configFile.getPath(), ex);
 		}
 
@@ -56,44 +67,56 @@ public class GMConfiguration {
 		plugin.setValidateOnlinePlayer(isToggleValidate());
 	}
 
-	public boolean isOpOverride() {
+	public boolean isOpOverride()
+	{
 
 		return GMconfig.getBoolean("settings.config.opOverrides", true);
 	}
 
-	public boolean isToggleValidate() {
+	public boolean isToggleValidate()
+	{
 
 		return GMconfig.getBoolean("settings.config.validate_toggle", true);
 	}
 
-	public Map<String, Object> getMirrorsMap() {
+	public Map<String, Object> getMirrorsMap()
+	{
 
 		// Try to fetch the old mirror path first
-		if (GMconfig.isConfigurationSection("settings.permission.world.mirror")) {
-			return (Map<String, Object>) GMconfig.getConfigurationSection("settings.permission.world.mirror").getValues(false);
-		} else if (GMconfig.isConfigurationSection("settings.mirrors")) {
-			return (Map<String, Object>) GMconfig.getConfigurationSection("settings.mirrors").getValues(false);
+		if (GMconfig.isConfigurationSection("settings.permission.world.mirror"))
+		{
+			return (Map<String, Object>)GMconfig.getConfigurationSection("settings.permission.world.mirror").getValues(false);
+		}
+		else if (GMconfig.isConfigurationSection("settings.mirrors"))
+		{
+			return (Map<String, Object>)GMconfig.getConfigurationSection("settings.mirrors").getValues(false);
 		}
 		return null;
 
 	}
 
-	public Integer getSaveInterval() {
+	public Integer getSaveInterval()
+	{
 
 		return GMconfig.getInt("settings.data.save.minutes", 10);
 	}
 
-	public Integer getBackupDuration() {
+	public Integer getBackupDuration()
+	{
 
 		return GMconfig.getInt("settings.data.save.hours", 24);
 	}
 
-	public void adjustLoggerLevel() {
+	public void adjustLoggerLevel()
+	{
 
-		try {
+		try
+		{
 			GroupManager.logger.setLevel(Level.parse(GMconfig.getString("settings.logging.level", "INFO")));
 			return;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 		}
 
 		GroupManager.logger.setLevel(Level.INFO);

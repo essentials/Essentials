@@ -17,9 +17,9 @@ import org.bukkit.plugin.Plugin;
 
 public class KeywordReplacer implements IText
 {
-	private final transient IText input;
-	private final transient List<String> replaced;
-	private final transient IEssentials ess;
+	private final IText input;
+	private final List<String> replaced;
+	private final IEssentials ess;
 
 	public KeywordReplacer(final IText input, final CommandSender sender, final IEssentials ess)
 	{
@@ -34,15 +34,15 @@ public class KeywordReplacer implements IText
 		String displayName, ipAddress, balance, mails, world;
 		String worlds, online, unique, playerlist, date, time;
 		String worldTime12, worldTime24, worldDate, plugins;
-		String userName, address, version; //TODO: unused?
+		String version;
 		if (sender instanceof IUser)
 		{
 			final IUser user = (IUser)sender;
 			final Player player = user.getPlayer();
 			displayName = player.getDisplayName();
-			userName = player.getName();
+			String userName = player.getName(); //TODO: unused
 			ipAddress = player.getAddress() == null || player.getAddress().getAddress() == null ? "" : player.getAddress().getAddress().toString();
-			address = player.getAddress() == null ? "" : player.getAddress().toString();
+			String address = player.getAddress() == null ? "" : player.getAddress().toString(); // TODO: unused
 			balance = FormatUtil.displayCurrency(user.getMoney(), ess);
 			mails = Integer.toString(user.getData().getMails() == null ? 0 : user.getData().getMails().size());
 			world = player.getLocation() == null || player.getLocation().getWorld() == null ? "" : player.getLocation().getWorld().getName();

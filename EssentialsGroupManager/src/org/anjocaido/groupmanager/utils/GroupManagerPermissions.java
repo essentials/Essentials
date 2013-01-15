@@ -4,13 +4,14 @@
  */
 package org.anjocaido.groupmanager.utils;
 
+
 /**
  * Just a list of commands for this plugin
- * 
+ *
  * @author gabrielcouto
  */
-public enum GroupManagerPermissions {
-
+public enum GroupManagerPermissions
+{
 	manuadd,
 	manudel,
 	manuaddsub,

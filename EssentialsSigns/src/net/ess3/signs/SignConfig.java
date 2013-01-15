@@ -23,13 +23,12 @@ public class SignConfig implements StorageObject
 	{
 		this.signs = signs;
 	}
-
 	@Comment(
-			{
-					"How many times per second can Essentials signs be interacted with.",
-					"Values should be between 1-20, 20 being virtually no lag protection.",
-					"Lower numbers will reduce the possiblity of lag, but may annoy players."
-			})
+	{
+		"How many times per second can Essentials signs be interacted with.",
+		"Values should be between 1-20, 20 being virtually no lag protection.",
+		"Lower numbers will reduce the possiblity of lag, but may annoy players."
+	})
 	private int signUsesPerSecond = 4;
 
 	public int getSignUsePerSecond()

@@ -30,7 +30,7 @@ import org.bukkit.plugin.PluginManager;
 
 public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> implements IJails
 {
-	private static final transient Logger LOGGER = Bukkit.getLogger();
+	private static final Logger LOGGER = Bukkit.getLogger();
 
 	public Jails(final IEssentials ess)
 	{
@@ -110,9 +110,9 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
+
 	private class JailBlockListener implements Listener
 	{
-
 		@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 		public void onBlockBreak(final BlockBreakEvent event)
 		{

@@ -47,8 +47,8 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author gabrielcouto, ElgarL
  */
-public class GroupManager extends JavaPlugin {
-
+public class GroupManager extends JavaPlugin
+{
 	private File backupFolder;
 	private Runnable commiter;
 	private ScheduledThreadPoolExecutor scheduler;
@@ -56,91 +56,103 @@ public class GroupManager extends JavaPlugin {
 	private Map<CommandSender, String> selectedWorlds = new HashMap<CommandSender, String>();
 	private WorldsHolder worldsHolder;
 	private boolean validateOnlinePlayer = true;
-	
 	private static boolean isLoaded = false;
 	protected GMConfiguration config;
-
 	protected static GlobalGroups globalGroups;
-
 	private GMLoggerHandler ch;
 	public static BukkitPermissions BukkitPermissions;
 	private static GMWorldListener WorldEvents;
 	public static final Logger logger = Logger.getLogger(GroupManager.class.getName());
-
 	// PERMISSIONS FOR COMMAND BEING LOADED
 	private OverloadedWorldHolder dataHolder = null;
 	private AnjoPermissionsHandler permissionHandler = null;
-
 	private String lastError = "";
 
 	@Override
-	public void onDisable() {
-		
+	public void onDisable()
+	{
+
 		onDisable(false);
 	}
-	
+
 	@Override
-	public void onEnable() {
-		
+	public void onEnable()
+	{
+
 		onEnable(false);
 	}
-	
-	public void onDisable(boolean restarting) {
+
+	public void onDisable(boolean restarting)
+	{
 
 		setLoaded(false);
 
-		if (!restarting) {
+		if (!restarting)
+		{
 			// Unregister this service if we are shutting down.
 			this.getServer().getServicesManager().unregister(this.worldsHolder);
 		}
 
 		disableScheduler(); // Shutdown before we save, so it doesn't interfere.
-		if (worldsHolder != null) {
-			try {
+		if (worldsHolder != null)
+		{
+			try
+			{
 				worldsHolder.saveChanges(false);
-			} catch (IllegalStateException ex) {
+			}
+			catch (IllegalStateException ex)
+			{
 				GroupManager.logger.log(Level.WARNING, ex.getMessage());
 			}
 		}
 
-		
+
 
 		// Remove all attachments before clearing
-		if (BukkitPermissions != null) {
+		if (BukkitPermissions != null)
+		{
 			BukkitPermissions.removeAllAttachments();
 		}
-		
-		if (!restarting) {
-			
+
+		if (!restarting)
+		{
+
 			if (WorldEvents != null)
+			{
 				WorldEvents = null;
+			}
 
 			BukkitPermissions = null;
-			
+
 		}
 
 		// EXAMPLE: Custom code, here we just output some info so we can check that all is well
 		PluginDescriptionFile pdfFile = this.getDescription();
 		System.out.println(pdfFile.getName() + " version " + pdfFile.getVersion() + " is disabled!");
-		
-		if (!restarting)
-			GroupManager.logger.removeHandler(ch);
-	}
-	
-	public void onEnable(boolean restarting) {
 
-		try {
+		if (!restarting)
+		{
+			GroupManager.logger.removeHandler(ch);
+		}
+	}
+
+	public void onEnable(boolean restarting)
+	{
+
+		try
+		{
 			/*
 			 * reset local variables.
 			 */
 			overloadedUsers = new HashMap<String, ArrayList<User>>();
 			selectedWorlds = new HashMap<CommandSender, String>();
 			lastError = "";
-			
+
 			/*
 			 * Setup our logger if we are not restarting.
 			 */
-			if (!restarting) {
+			if (!restarting)
+			{
 				GroupManager.logger.setUseParentHandlers(false);
 				ch = new GMLoggerHandler();
 				GroupManager.logger.addHandler(ch);
@@ -153,20 +165,25 @@ public class GroupManager extends JavaPlugin {
 			prepareConfig();
 			// Load the global groups
 			globalGroups = new GlobalGroups(this);
-			
+
 			/*
 			 * Configure the worlds holder.
 			 */
 			if (!restarting)
+			{
 				worldsHolder = new WorldsHolder(this);
+			}
 			else
+			{
 				worldsHolder.resetWorldsHolder();
+			}
 
 			/*
 			 * This should NEVER happen. No idea why it's still here.
 			 */
 			PluginDescriptionFile pdfFile = this.getDescription();
-			if (worldsHolder == null) {
+			if (worldsHolder == null)
+			{
 				GroupManager.logger.severe("Can't enable " + pdfFile.getName() + " version " + pdfFile.getVersion() + ", bad loading!");
 				this.getServer().getPluginManager().disablePlugin(this);
 				throw new IllegalStateException("An error ocurred while loading GroupManager");
@@ -186,10 +203,13 @@ public class GroupManager extends JavaPlugin {
 			 *  
 			 *  Reset bukkit perms.
 			 */
-			if (!restarting) {
+			if (!restarting)
+			{
 				WorldEvents = new GMWorldListener(this);
 				BukkitPermissions = new BukkitPermissions(this);
-			} else {
+			}
+			else
+			{
 				BukkitPermissions.reset();
 			}
 
@@ -203,7 +223,8 @@ public class GroupManager extends JavaPlugin {
 			 * All plugins will be loaded by then
 			 */
 
-			if (getServer().getScheduler().scheduleSyncDelayedTask(this, new BukkitPermsUpdateTask(), 1) == -1) {
+			if (getServer().getScheduler().scheduleSyncDelayedTask(this, new BukkitPermsUpdateTask(), 1) == -1)
+			{
 				GroupManager.logger.severe("Could not schedule superperms Update.");
 				/*
 				 * Flag that we are now loaded and should start processing events.
@@ -215,9 +236,13 @@ public class GroupManager extends JavaPlugin {
 
 			// Register as a service
 			if (!restarting)
+			{
 				this.getServer().getServicesManager().register(WorldsHolder.class, this.worldsHolder, this, ServicePriority.Lowest);
-			
-		} catch (Exception ex) {
+			}
+
+		}
+		catch (Exception ex)
+		{
 
 			/*
 			 * Store the error and write to the log.
@@ -234,12 +259,14 @@ public class GroupManager extends JavaPlugin {
 
 	/**
 	 * Write an error.log
-	 * 
+	 *
 	 * @param ex
 	 */
-	private void saveErrorLog(Exception ex) {
+	private void saveErrorLog(Exception ex)
+	{
 
-		if (!getDataFolder().exists()) {
+		if (!getDataFolder().exists())
+		{
 			getDataFolder().mkdirs();
 		}
 
@@ -257,23 +284,27 @@ public class GroupManager extends JavaPlugin {
 		GroupManager.logger.severe("===================================================");
 
 		// Append this error to the error log.
-		try {
+		try
+		{
 			String error = "=============================== GM ERROR LOG ===============================\n\n";
 			error += Tasks.getStackTraceAsString(ex);
 			error += "\n============================================================================\n";
 
 			Tasks.appendStringToFile(error, (getDataFolder() + System.getProperty("file.separator") + "ERROR.LOG"));
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			// Failed to write file.
 			e.printStackTrace();
 		}
 
 	}
-	
+
 	/**
 	 * @return the validateOnlinePlayer
 	 */
-	public boolean isValidateOnlinePlayer() {
+	public boolean isValidateOnlinePlayer()
+	{
 
 		return validateOnlinePlayer;
 	}
@@ -281,96 +312,120 @@ public class GroupManager extends JavaPlugin {
 	/**
 	 * @param validateOnlinePlayer the validateOnlinePlayer to set
 	 */
-	public void setValidateOnlinePlayer(boolean validateOnlinePlayer) {
+	public void setValidateOnlinePlayer(boolean validateOnlinePlayer)
+	{
 
 		this.validateOnlinePlayer = validateOnlinePlayer;
 	}
 
-	public static boolean isLoaded() {
+	public static boolean isLoaded()
+	{
 
 		return isLoaded;
 	}
 
-	public static void setLoaded(boolean isLoaded) {
+	public static void setLoaded(boolean isLoaded)
+	{
 
 		GroupManager.isLoaded = isLoaded;
 	}
 
-	public InputStream getResourceAsStream(String fileName) {
+	public InputStream getResourceAsStream(String fileName)
+	{
 
 		return this.getClassLoader().getResourceAsStream(fileName);
 	}
 
-	private void prepareFileFields() {
+	private void prepareFileFields()
+	{
 
 		backupFolder = new File(this.getDataFolder(), "backup");
-		if (!backupFolder.exists()) {
+		if (!backupFolder.exists())
+		{
 			getBackupFolder().mkdirs();
 		}
 	}
 
-	private void prepareConfig() {
+	private void prepareConfig()
+	{
 
 		config = new GMConfiguration(this);
 	}
 
-	public void enableScheduler() {
+	public void enableScheduler()
+	{
 
-		if (worldsHolder != null) {
+		if (worldsHolder != null)
+		{
 			disableScheduler();
-			commiter = new Runnable() {
-
+			commiter = new Runnable()
+			{
 				@Override
-				public void run() {
+				public void run()
+				{
 
-					try {
+					try
+					{
 						worldsHolder.saveChanges(false);
 						GroupManager.logger.log(Level.INFO, " Data files refreshed.");
-					} catch (IllegalStateException ex) {
+					}
+					catch (IllegalStateException ex)
+					{
 						GroupManager.logger.log(Level.WARNING, ex.getMessage());
 					}
 				}
 			};
 			scheduler = new ScheduledThreadPoolExecutor(1);
-			long minutes = (long) getGMConfig().getSaveInterval();
-			if (minutes > 0) {
+			long minutes = (long)getGMConfig().getSaveInterval();
+			if (minutes > 0)
+			{
 				scheduler.scheduleAtFixedRate(commiter, minutes, minutes, TimeUnit.MINUTES);
 				GroupManager.logger.info("Scheduled Data Saving is set for every " + minutes + " minutes!");
-			} else
+			}
+			else
+			{
 				GroupManager.logger.info("Scheduled Data Saving is Disabled!");
+			}
 
 			GroupManager.logger.info("Backups will be retained for " + getGMConfig().getBackupDuration() + " hours!");
 		}
 	}
 
-	public void disableScheduler() {
+	public void disableScheduler()
+	{
 
-		if (scheduler != null) {
-			try {
+		if (scheduler != null)
+		{
+			try
+			{
 				scheduler.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
 				scheduler.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
 				scheduler.shutdown();
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 			}
 			scheduler = null;
 			GroupManager.logger.info("Scheduled Data Saving is disabled!");
 		}
 	}
 
-	public WorldsHolder getWorldsHolder() {
+	public WorldsHolder getWorldsHolder()
+	{
 
 		return worldsHolder;
 	}
 
 	/**
 	 * Called when a command registered by this plugin is received.
-	 * 
+	 *
 	 * @param sender
 	 * @param cmd
 	 * @param args
 	 */
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
+	{
 
 		boolean playerCanDo = false;
 		boolean isConsole = false;
@@ -380,10 +435,12 @@ public class GroupManager extends JavaPlugin {
 		boolean isOpOverride = config.isOpOverride();
 
 		// DETERMINING PLAYER INFORMATION
-		if (sender instanceof Player) {
-			senderPlayer = (Player) sender;
+		if (sender instanceof Player)
+		{
+			senderPlayer = (Player)sender;
 
-			if (!lastError.isEmpty() && !commandLabel.equalsIgnoreCase("manload")) {
+			if (!lastError.isEmpty() && !commandLabel.equalsIgnoreCase("manload"))
+			{
 				sender.sendMessage(ChatColor.RED + "All commands are locked due to an error. Check the log and then try a '/manload'.)");
 				return true;
 			}
@@ -393,12 +450,16 @@ public class GroupManager extends JavaPlugin {
 			isOpOverride = (isOpOverride && (senderPlayer.isOp() || worldsHolder.getWorldPermissions(senderPlayer).has(senderPlayer, "groupmanager.op")));
 
 			System.out.println("[PLAYER_COMMAND] " + senderPlayer.getName() + ": /" + commandLabel + " " + Tasks.join(args, " "));
-			if (isOpOverride || worldsHolder.getWorldPermissions(senderPlayer).has(senderPlayer, "groupmanager." + cmd.getName())) {
+			if (isOpOverride || worldsHolder.getWorldPermissions(senderPlayer).has(senderPlayer, "groupmanager." + cmd.getName()))
+			{
 				playerCanDo = true;
 			}
-		} else if (sender instanceof ConsoleCommandSender) {
+		}
+		else if (sender instanceof ConsoleCommandSender)
+		{
 
-			if (!lastError.isEmpty() && !commandLabel.equalsIgnoreCase("manload")) {
+			if (!lastError.isEmpty() && !commandLabel.equalsIgnoreCase("manload"))
+			{
 				sender.sendMessage(ChatColor.RED + "All commands are locked due to an error. Check the log and then try a '/manload'.)");
 				return true;
 			}
@@ -410,16 +471,19 @@ public class GroupManager extends JavaPlugin {
 		dataHolder = null;
 		permissionHandler = null;
 
-		if (senderPlayer != null) {
+		if (senderPlayer != null)
+		{
 			dataHolder = worldsHolder.getWorldData(senderPlayer);
 		}
 
 		String selectedWorld = selectedWorlds.get(sender);
-		if (selectedWorld != null) {
+		if (selectedWorld != null)
+		{
 			dataHolder = worldsHolder.getWorldData(selectedWorld);
 		}
 
-		if (dataHolder != null) {
+		if (dataHolder != null)
+		{
 			permissionHandler = dataHolder.getPermissionsHandler();
 		}
 
@@ -435,9 +499,12 @@ public class GroupManager extends JavaPlugin {
 		Group auxGroup2 = null;
 
 		GroupManagerPermissions execCmd = null;
-		try {
+		try
+		{
 			execCmd = GroupManagerPermissions.valueOf(cmd.getName());
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// this error happened once with someone. now im prepared... i think
 			GroupManager.logger.severe("===================================================");
 			GroupManager.logger.severe("= ERROR REPORT START =");
@@ -449,13 +516,15 @@ public class GroupManager extends JavaPlugin {
 			GroupManager.logger.severe("An error occured while trying to execute command:");
 			GroupManager.logger.severe(cmd.getName());
 			GroupManager.logger.severe("With " + args.length + " arguments:");
-			for (String ar : args) {
+			for (String ar : args)
+			{
 				GroupManager.logger.severe(ar);
 			}
 			GroupManager.logger.severe("The field '" + cmd.getName() + "' was not found in enum.");
 			GroupManager.logger.severe("And could not be parsed.");
 			GroupManager.logger.severe("FIELDS FOUND IN ENUM:");
-			for (GroupManagerPermissions val : GroupManagerPermissions.values()) {
+			for (GroupManagerPermissions val : GroupManagerPermissions.values())
+			{
 				GroupManager.logger.severe(val.name());
 			}
 			GroupManager.logger.severe("===================================================");
@@ -464,57 +533,73 @@ public class GroupManager extends JavaPlugin {
 			sender.sendMessage("An error occurred. Ask the admin to take a look at the console.");
 		}
 
-		if (isConsole || playerCanDo) {
-			switch (execCmd) {
+		if (isConsole || playerCanDo)
+		{
+			switch (execCmd)
+			{
 			case manuadd:
 
 				// Validating arguments
-				if ((args.length != 2) && (args.length != 3)) {
+				if ((args.length != 2) && (args.length != 3))
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player> <group> | optional [world])");
 					return false;
 				}
 
 				// Select the relevant world (if specified)
-				if (args.length == 3) {
+				if (args.length == 3)
+				{
 					dataHolder = worldsHolder.getWorldData(args[2]);
 					permissionHandler = dataHolder.getPermissionsHandler();
 				}
 
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group not found!");
 					return false;
 				}
-				if (auxGroup.isGlobal()) {
+				if (auxGroup.isGlobal())
+				{
 					sender.sendMessage(ChatColor.RED + "Players may not be members of GlobalGroups directly.");
 					return false;
 				}
 
 				// Validating permissions
-				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "Can't modify a player with the same permissions as you, or higher.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (permissionHandler.hasGroupInInheritance(auxGroup, senderGroup.getName()))) {
+				if (!isConsole && !isOpOverride && (permissionHandler.hasGroupInInheritance(auxGroup, senderGroup.getName())))
+				{
 					sender.sendMessage(ChatColor.RED + "The destination group can't be the same as yours, or higher.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (!permissionHandler.inGroup(senderUser.getName(), auxUser.getGroupName()) || !permissionHandler.inGroup(senderUser.getName(), auxGroup.getName()))) {
+				if (!isConsole && !isOpOverride && (!permissionHandler.inGroup(senderUser.getName(), auxUser.getGroupName()) || !permissionHandler.inGroup(senderUser.getName(), auxGroup.getName())))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player involving a group that you don't inherit.");
 					return false;
 				}
@@ -522,32 +607,43 @@ public class GroupManager extends JavaPlugin {
 				// Seems OK
 				auxUser.setGroup(auxGroup);
 				if (!sender.hasPermission("groupmanager.notify.other") || (isConsole))
+				{
 					sender.sendMessage(ChatColor.YELLOW + "You changed player '" + auxUser.getName() + "' group to '" + auxGroup.getName() + "' in world '" + dataHolder.getName() + "'.");
+				}
 
 				return true;
 
 			case manudel:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 1) {
+				if (args.length != 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating permission
-				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player with same permissions as you, or higher.");
 					return false;
 				}
@@ -558,79 +654,104 @@ public class GroupManager extends JavaPlugin {
 				// If the player is online, this will create new data for the user.
 				targetPlayer = this.getServer().getPlayer(auxUser.getName());
 				if (targetPlayer != null)
+				{
 					BukkitPermissions.updatePermissions(targetPlayer);
+				}
 
 				return true;
 
 			case manuaddsub:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
-					if (!setDefaultWorldHandler(sender)) {
+				if (dataHolder == null || permissionHandler == null)
+				{
+					if (!setDefaultWorldHandler(sender))
+					{
 						sender.sendMessage(ChatColor.RED + "Couldn't retrieve your world. World selection is needed.");
 						sender.sendMessage(ChatColor.RED + "Use /manselect <world>");
 						return true;
 					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player> <group>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group not found!");
 					return false;
 				}
 				// Validating permission
-				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player with same permissions as you, or higher.");
 					return false;
 				}
 				// Seems OK
 				if (auxUser.addSubGroup(auxGroup))
+				{
 					sender.sendMessage(ChatColor.YELLOW + "You added subgroup '" + auxGroup.getName() + "' to player '" + auxUser.getName() + "'.");
+				}
 				else
+				{
 					sender.sendMessage(ChatColor.RED + "The subgroup '" + auxGroup.getName() + "' is already available to '" + auxUser.getName() + "'.");
+				}
 
 				return true;
 
 			case manudelsub:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/manudelsub <user> <group>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group not found!");
 					return false;
 				}
 
 				// Validating permission
-				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player with same permissions as you, or higher.");
 					return false;
 				}
@@ -646,17 +767,22 @@ public class GroupManager extends JavaPlugin {
 
 			case mangadd:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 1) {
+				if (args.length != 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup != null) {
+				if (auxGroup != null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group already exists!");
 					return false;
 				}
@@ -668,17 +794,22 @@ public class GroupManager extends JavaPlugin {
 
 			case mangdel:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 1) {
+				if (args.length != 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group not exists!");
 					return false;
 				}
@@ -692,54 +823,74 @@ public class GroupManager extends JavaPlugin {
 
 			case manuaddp:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player> <permission>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating your permissions
-				if (!isConsole && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "Can't modify player with same group than you, or higher.");
 					return false;
 				}
 				permissionResult = permissionHandler.checkFullUserPermission(senderUser, args[1]);
-				if (!isConsole && !isOpOverride && (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND) || permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))) {
+				if (!isConsole && !isOpOverride && (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND) || permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION)))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't add a permission you don't have.");
 					return false;
 				}
 				// Validating permissions of user
 				permissionResult = permissionHandler.checkUserOnlyPermission(auxUser, args[1]);
-				if (args[1].startsWith("+")) {
-					if (permissionResult.resultType.equals(PermissionCheckResult.Type.EXCEPTION)) {
+				if (args[1].startsWith("+"))
+				{
+					if (permissionResult.resultType.equals(PermissionCheckResult.Type.EXCEPTION))
+					{
 						sender.sendMessage(ChatColor.RED + "The user already has direct access to that permission.");
 						sender.sendMessage(ChatColor.RED + "Node: " + permissionResult.accessLevel);
 						return false;
 					}
-				} else if (args[1].startsWith("-")) {
-					if (permissionResult.resultType.equals(PermissionCheckResult.Type.EXCEPTION)) {
+				}
+				else if (args[1].startsWith("-"))
+				{
+					if (permissionResult.resultType.equals(PermissionCheckResult.Type.EXCEPTION))
+					{
 						sender.sendMessage(ChatColor.RED + "The user already has an exception for this node.");
 						sender.sendMessage(ChatColor.RED + "Node: " + permissionResult.accessLevel);
 						return false;
-					} else if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION)) {
+					}
+					else if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))
+					{
 						sender.sendMessage(ChatColor.RED + "The user already has a matching node ");
 						sender.sendMessage(ChatColor.RED + "Node: " + permissionResult.accessLevel);
 						return false;
 					}
-				} else {
-					if (permissionResult.resultType.equals(PermissionCheckResult.Type.FOUND)) {
+				}
+				else
+				{
+					if (permissionResult.resultType.equals(PermissionCheckResult.Type.FOUND))
+					{
 						sender.sendMessage(ChatColor.RED + "The user already has direct access to that permission.");
 						sender.sendMessage(ChatColor.RED + "Node: " + permissionResult.accessLevel);
 						return false;
@@ -751,47 +902,61 @@ public class GroupManager extends JavaPlugin {
 
 				targetPlayer = this.getServer().getPlayer(auxUser.getName());
 				if (targetPlayer != null)
+				{
 					BukkitPermissions.updatePermissions(targetPlayer);
+				}
 
 				return true;
 
 			case manudelp:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player> <permission>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating your permissions
-				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player with same group as you, or higher.");
 					return false;
 				}
 				permissionResult = permissionHandler.checkFullUserPermission(senderUser, args[1]);
-				if (!isConsole && !isOpOverride && (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND) || permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))) {
+				if (!isConsole && !isOpOverride && (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND) || permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION)))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't remove a permission you don't have.");
 					return false;
 				}
 				// Validating permissions of user
 				permissionResult = permissionHandler.checkUserOnlyPermission(auxUser, args[1]);
-				if (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND)) {
+				if (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND))
+				{
 					sender.sendMessage(ChatColor.RED + "The user doesn't have direct access to that permission.");
 					return false;
 				}
-				if (!auxUser.hasSamePermissionNode(args[1])) {
+				if (!auxUser.hasSamePermissionNode(args[1]))
+				{
 					sender.sendMessage(ChatColor.RED + "This permission node doesn't match any node.");
 					sender.sendMessage(ChatColor.RED + "But might match node: " + permissionResult.accessLevel);
 					return false;
@@ -802,69 +967,91 @@ public class GroupManager extends JavaPlugin {
 
 				targetPlayer = this.getServer().getPlayer(auxUser.getName());
 				if (targetPlayer != null)
+				{
 					BukkitPermissions.updatePermissions(targetPlayer);
+				}
 
 				return true;
 
 			case manulistp:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if ((args.length == 0) || (args.length > 2)) {
+				if ((args.length == 0) || (args.length > 2))
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player> (+))");
 					return false;
 				}
 
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating permission
 				// Seems OK
 				auxString = "";
-				for (String perm : auxUser.getPermissionList()) {
+				for (String perm : auxUser.getPermissionList())
+				{
 					auxString += perm + ", ";
 				}
-				if (auxString.lastIndexOf(",") > 0) {
+				if (auxString.lastIndexOf(",") > 0)
+				{
 					auxString = auxString.substring(0, auxString.lastIndexOf(","));
 					sender.sendMessage(ChatColor.YELLOW + "The player '" + auxUser.getName() + "' has following permissions: " + ChatColor.WHITE + auxString);
 					sender.sendMessage(ChatColor.YELLOW + "And all permissions from group: " + auxUser.getGroupName());
 					auxString = "";
-					for (String subGroup : auxUser.subGroupListStringCopy()) {
+					for (String subGroup : auxUser.subGroupListStringCopy())
+					{
 						auxString += subGroup + ", ";
 					}
-					if (auxString.lastIndexOf(",") > 0) {
+					if (auxString.lastIndexOf(",") > 0)
+					{
 						auxString = auxString.substring(0, auxString.lastIndexOf(","));
 						sender.sendMessage(ChatColor.YELLOW + "And all permissions from subgroups: " + auxString);
 					}
-				} else {
+				}
+				else
+				{
 					sender.sendMessage(ChatColor.YELLOW + "The player '" + auxUser.getName() + "' has no specific permissions.");
 					sender.sendMessage(ChatColor.YELLOW + "Only all permissions from group: " + auxUser.getGroupName());
 					auxString = "";
-					for (String subGroup : auxUser.subGroupListStringCopy()) {
+					for (String subGroup : auxUser.subGroupListStringCopy())
+					{
 						auxString += subGroup + ", ";
 					}
-					if (auxString.lastIndexOf(",") > 0) {
+					if (auxString.lastIndexOf(",") > 0)
+					{
 						auxString = auxString.substring(0, auxString.lastIndexOf(","));
 						sender.sendMessage(ChatColor.YELLOW + "And all permissions from subgroups: " + auxString);
 					}
 				}
 
 				// bukkit perms
-				if ((args.length == 2) && (args[1].equalsIgnoreCase("+"))) {
+				if ((args.length == 2) && (args[1].equalsIgnoreCase("+")))
+				{
 					targetPlayer = this.getServer().getPlayer(auxUser.getName());
-					if (targetPlayer != null) {
+					if (targetPlayer != null)
+					{
 						sender.sendMessage(ChatColor.YELLOW + "Superperms reports: ");
 						for (String line : BukkitPermissions.listPerms(targetPlayer))
+						{
 							sender.sendMessage(ChatColor.YELLOW + line);
+						}
 
 					}
 				}
@@ -873,46 +1060,66 @@ public class GroupManager extends JavaPlugin {
 
 			case manucheckp:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player> <permission>)");
 					return false;
 				}
 
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				targetPlayer = this.getServer().getPlayer(auxUser.getName());
 				// Validating permission
 				permissionResult = permissionHandler.checkFullGMPermission(auxUser, args[1], false);
 
-				if (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND)) {
+				if (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND))
+				{
 					// No permissions found in GM so fall through and check Bukkit.
 					sender.sendMessage(ChatColor.RED + "The player doesn't have access to that permission");
 
-				} else {
+				}
+				else
+				{
 					// This permission was found in groupmanager.
-					if (permissionResult.owner instanceof User) {
-						if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION)) {
+					if (permissionResult.owner instanceof User)
+					{
+						if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))
+						{
 							sender.sendMessage(ChatColor.RED + "The user has directly a negation node for that permission.");
-						} else {
+						}
+						else
+						{
 							sender.sendMessage(ChatColor.YELLOW + "The user has directly this permission.");
 						}
 						sender.sendMessage(ChatColor.YELLOW + "Permission Node: " + permissionResult.accessLevel);
-					} else if (permissionResult.owner instanceof Group) {
-						if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION)) {
+					}
+					else if (permissionResult.owner instanceof Group)
+					{
+						if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))
+						{
 							sender.sendMessage(ChatColor.RED + "The user inherits a negation permission from group: " + permissionResult.owner.getName());
-						} else {
+						}
+						else
+						{
 							sender.sendMessage(ChatColor.YELLOW + "The user inherits the permission from group: " + permissionResult.owner.getName());
 						}
 						sender.sendMessage(ChatColor.YELLOW + "Permission Node: " + permissionResult.accessLevel);
@@ -920,54 +1127,71 @@ public class GroupManager extends JavaPlugin {
 				}
 
 				// superperms
-				if (targetPlayer != null) {
-					sender.sendMessage(ChatColor.YELLOW + "SuperPerms reports Node: " + targetPlayer.hasPermission(args[1]) + ((!targetPlayer.hasPermission(args[1]) && targetPlayer.isPermissionSet(args[1])) ? " (Negated)": ""));
+				if (targetPlayer != null)
+				{
+					sender.sendMessage(ChatColor.YELLOW + "SuperPerms reports Node: " + targetPlayer.hasPermission(args[1]) + ((!targetPlayer.hasPermission(args[1]) && targetPlayer.isPermissionSet(args[1])) ? " (Negated)" : ""));
 				}
 
 				return true;
 
 			case mangaddp:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group> <permission>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "The specified group does not exist!");
 					return false;
 				}
 				// Validating your permissions
 				permissionResult = permissionHandler.checkFullUserPermission(senderUser, args[1]);
-				if (!isConsole && (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND) || permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))) {
+				if (!isConsole && (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND) || permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION)))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't add a permission you don't have.");
 					return false;
 				}
 				// Validating permissions of user
 				permissionResult = permissionHandler.checkGroupOnlyPermission(auxGroup, args[1]);
-				if (args[1].startsWith("+")) {
-					if (permissionResult.resultType.equals(PermissionCheckResult.Type.EXCEPTION)) {
+				if (args[1].startsWith("+"))
+				{
+					if (permissionResult.resultType.equals(PermissionCheckResult.Type.EXCEPTION))
+					{
 						sender.sendMessage(ChatColor.RED + "The group already has direct access to that permission.");
 						sender.sendMessage(ChatColor.RED + "Node: " + permissionResult.accessLevel);
 						return false;
 					}
-				} else if (args[1].startsWith("-")) {
-					if (permissionResult.resultType.equals(PermissionCheckResult.Type.EXCEPTION)) {
+				}
+				else if (args[1].startsWith("-"))
+				{
+					if (permissionResult.resultType.equals(PermissionCheckResult.Type.EXCEPTION))
+					{
 						sender.sendMessage(ChatColor.RED + "The group already has an exception for this node.");
 						sender.sendMessage(ChatColor.RED + "Node: " + permissionResult.accessLevel);
 						return false;
-					} else if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION)) {
+					}
+					else if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))
+					{
 						sender.sendMessage(ChatColor.RED + "The group already has a matching node.");
 						sender.sendMessage(ChatColor.RED + "Node: " + permissionResult.accessLevel);
 						return false;
 					}
-				} else {
-					if (permissionResult.resultType.equals(PermissionCheckResult.Type.FOUND)) {
+				}
+				else
+				{
+					if (permissionResult.resultType.equals(PermissionCheckResult.Type.FOUND))
+					{
 						sender.sendMessage(ChatColor.RED + "The group already has direct access to that permission.");
 						sender.sendMessage(ChatColor.RED + "Node: " + permissionResult.accessLevel);
 						return false;
@@ -983,33 +1207,41 @@ public class GroupManager extends JavaPlugin {
 
 			case mangdelp:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group> <permission>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "The specified group does not exist!");
 					return false;
 				}
 				// Validating your permissions
 				permissionResult = permissionHandler.checkFullUserPermission(senderUser, args[1]);
-				if (!isConsole && (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND) || permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))) {
+				if (!isConsole && (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND) || permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION)))
+				{
 					sender.sendMessage(ChatColor.RED + "Can't remove a permission you don't have.");
 					return false;
 				}
 				// Validating permissions of user
 				permissionResult = permissionHandler.checkGroupOnlyPermission(auxGroup, args[1]);
-				if (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND)) {
+				if (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND))
+				{
 					sender.sendMessage(ChatColor.RED + "The group doesn't have direct access to that permission.");
 					return false;
 				}
-				if (!auxGroup.hasSamePermissionNode(args[1])) {
+				if (!auxGroup.hasSamePermissionNode(args[1]))
+				{
 					sender.sendMessage(ChatColor.RED + "This permission node doesn't match any node.");
 					sender.sendMessage(ChatColor.RED + "But might match node: " + permissionResult.accessLevel);
 					return false;
@@ -1024,17 +1256,22 @@ public class GroupManager extends JavaPlugin {
 
 			case manglistp:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 1) {
+				if (args.length != 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "The specified group does not exist!");
 					return false;
 				}
@@ -1042,28 +1279,36 @@ public class GroupManager extends JavaPlugin {
 
 				// Seems OK
 				auxString = "";
-				for (String perm : auxGroup.getPermissionList()) {
+				for (String perm : auxGroup.getPermissionList())
+				{
 					auxString += perm + ", ";
 				}
-				if (auxString.lastIndexOf(",") > 0) {
+				if (auxString.lastIndexOf(",") > 0)
+				{
 					auxString = auxString.substring(0, auxString.lastIndexOf(","));
 					sender.sendMessage(ChatColor.YELLOW + "The group '" + auxGroup.getName() + "' has following permissions: " + ChatColor.WHITE + auxString);
 					auxString = "";
-					for (String grp : auxGroup.getInherits()) {
+					for (String grp : auxGroup.getInherits())
+					{
 						auxString += grp + ", ";
 					}
-					if (auxString.lastIndexOf(",") > 0) {
+					if (auxString.lastIndexOf(",") > 0)
+					{
 						auxString = auxString.substring(0, auxString.lastIndexOf(","));
 						sender.sendMessage(ChatColor.YELLOW + "And all permissions from groups: " + auxString);
 					}
 
-				} else {
+				}
+				else
+				{
 					sender.sendMessage(ChatColor.YELLOW + "The group '" + auxGroup.getName() + "' has no specific permissions.");
 					auxString = "";
-					for (String grp : auxGroup.getInherits()) {
+					for (String grp : auxGroup.getInherits())
+					{
 						auxString += grp + ", ";
 					}
-					if (auxString.lastIndexOf(",") > 0) {
+					if (auxString.lastIndexOf(",") > 0)
+					{
 						auxString = auxString.substring(0, auxString.lastIndexOf(","));
 						sender.sendMessage(ChatColor.YELLOW + "Only all permissions from groups: " + auxString);
 					}
@@ -1073,32 +1318,42 @@ public class GroupManager extends JavaPlugin {
 
 			case mangcheckp:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group> <permission>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "The specified group does not exist!");
 					return false;
 				}
 				// Validating permission
 				permissionResult = permissionHandler.checkGroupPermissionWithInheritance(auxGroup, args[1]);
-				if (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND)) {
+				if (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND))
+				{
 					sender.sendMessage(ChatColor.RED + "The group doesn't have access to that permission");
 					return false;
 				}
 				// Seems OK
 				// auxString = permissionHandler.checkUserOnlyPermission(auxUser, args[1]);
-				if (permissionResult.owner instanceof Group) {
-					if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION)) {
+				if (permissionResult.owner instanceof Group)
+				{
+					if (permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))
+					{
 						sender.sendMessage(ChatColor.RED + "The group inherits the a negation permission from group: " + permissionResult.owner.getName());
-					} else {
+					}
+					else
+					{
 						sender.sendMessage(ChatColor.YELLOW + "The user inherits the permission from group: " + permissionResult.owner.getName());
 					}
 					sender.sendMessage(ChatColor.YELLOW + "Permission Node: " + permissionResult.accessLevel);
@@ -1108,32 +1363,40 @@ public class GroupManager extends JavaPlugin {
 
 			case mangaddi:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group1> <group2>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group 1 does not exist!");
 					return false;
 				}
 				auxGroup2 = dataHolder.getGroup(args[1]);
-				if (auxGroup2 == null) {
+				if (auxGroup2 == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group 2 does not exist!");
 					return false;
 				}
-				if (auxGroup.isGlobal()) {
+				if (auxGroup.isGlobal())
+				{
 					sender.sendMessage(ChatColor.RED + "GlobalGroups do NOT support inheritance.");
 					return false;
 				}
 
 				// Validating permission
-				if (permissionHandler.hasGroupInInheritance(auxGroup, auxGroup2.getName())) {
+				if (permissionHandler.hasGroupInInheritance(auxGroup, auxGroup2.getName()))
+				{
 					sender.sendMessage(ChatColor.RED + "Group " + auxGroup.getName() + " already inherits " + auxGroup2.getName() + " (might not be directly)");
 					return false;
 				}
@@ -1147,36 +1410,45 @@ public class GroupManager extends JavaPlugin {
 
 			case mangdeli:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group1> <group2>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group 1 does not exist!");
 					return false;
 				}
 				auxGroup2 = dataHolder.getGroup(args[1]);
-				if (auxGroup2 == null) {
+				if (auxGroup2 == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group 2 does not exist!");
 					return false;
 				}
-				if (auxGroup.isGlobal()) {
+				if (auxGroup.isGlobal())
+				{
 					sender.sendMessage(ChatColor.RED + "GlobalGroups do NOT support inheritance.");
 					return false;
 				}
 
 				// Validating permission
-				if (!permissionHandler.hasGroupInInheritance(auxGroup, auxGroup2.getName())) {
+				if (!permissionHandler.hasGroupInInheritance(auxGroup, auxGroup2.getName()))
+				{
 					sender.sendMessage(ChatColor.RED + "Group " + auxGroup.getName() + " does not inherits " + auxGroup2.getName() + ".");
 					return false;
 				}
-				if (!auxGroup.getInherits().contains(auxGroup2.getName())) {
+				if (!auxGroup.getInherits().contains(auxGroup2.getName()))
+				{
 					sender.sendMessage(ChatColor.RED + "Group " + auxGroup.getName() + " does not inherits " + auxGroup2.getName() + " directly.");
 					return false;
 				}
@@ -1190,30 +1462,40 @@ public class GroupManager extends JavaPlugin {
 
 			case manuaddv:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length < 3) {
+				if (args.length < 3)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <user> <variable> <value>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating permission
 				// Seems OK
 				auxString = "";
-				for (int i = 2; i < args.length; i++) {
+				for (int i = 2; i < args.length; i++)
+				{
 					auxString += args[i];
-					if ((i + 1) < args.length) {
+					if ((i + 1) < args.length)
+					{
 						auxString += " ";
 					}
 				}
@@ -1224,26 +1506,35 @@ public class GroupManager extends JavaPlugin {
 
 			case manudelv:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <user> <variable>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
 
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating permission
-				if (!auxUser.getVariables().hasVar(args[1])) {
+				if (!auxUser.getVariables().hasVar(args[1]))
+				{
 					sender.sendMessage(ChatColor.RED + "The user doesn't have directly that variable!");
 				}
 				// Seems OK
@@ -1254,31 +1545,41 @@ public class GroupManager extends JavaPlugin {
 
 			case manulistv:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 1) {
+				if (args.length != 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <user>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating permission
 				// Seems OK
 				auxString = "";
-				for (String varKey : auxUser.getVariables().getVarKeyList()) {
+				for (String varKey : auxUser.getVariables().getVarKeyList())
+				{
 					Object o = auxUser.getVariables().getVarObject(varKey);
 					auxString += ChatColor.GOLD + varKey + ChatColor.WHITE + ":'" + ChatColor.GREEN + o.toString() + ChatColor.WHITE + "', ";
 				}
-				if (auxString.lastIndexOf(",") > 0) {
+				if (auxString.lastIndexOf(",") > 0)
+				{
 					auxString = auxString.substring(0, auxString.lastIndexOf(","));
 				}
 				sender.sendMessage(ChatColor.YELLOW + "Variables of user " + auxUser.getName() + ": ");
@@ -1289,47 +1590,64 @@ public class GroupManager extends JavaPlugin {
 
 			case manucheckv:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <user> <variable>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating permission
 				auxGroup = auxUser.getGroup();
 				auxGroup2 = permissionHandler.nextGroupWithVariable(auxGroup, args[1]);
 
-				if (!auxUser.getVariables().hasVar(args[1])) {
+				if (!auxUser.getVariables().hasVar(args[1]))
+				{
 					// Check sub groups
 					if (!auxUser.isSubGroupsEmpty() && auxGroup2 == null)
-						for (Group subGroup : auxUser.subGroupListCopy()) {
+					{
+						for (Group subGroup : auxUser.subGroupListCopy())
+						{
 							auxGroup2 = permissionHandler.nextGroupWithVariable(subGroup, args[1]);
 							if (auxGroup2 != null)
+							{
 								continue;
+							}
 						}
-					if (auxGroup2 == null) {
+					}
+					if (auxGroup2 == null)
+					{
 						sender.sendMessage(ChatColor.RED + "The user doesn't have access to that variable!");
 						return false;
 					}
 				}
 				// Seems OK
-				if (auxUser.getVariables().hasVar(auxString)) {
+				if (auxUser.getVariables().hasVar(auxString))
+				{
 					sender.sendMessage(ChatColor.YELLOW + "The value of variable '" + ChatColor.GOLD + args[1] + ChatColor.YELLOW + "' is: '" + ChatColor.GREEN + auxUser.getVariables().getVarObject(args[1]).toString() + ChatColor.WHITE + "'");
 					sender.sendMessage(ChatColor.YELLOW + "This user own directly the variable");
 				}
 				sender.sendMessage(ChatColor.YELLOW + "The value of variable '" + ChatColor.GOLD + args[1] + ChatColor.YELLOW + "' is: '" + ChatColor.GREEN + auxGroup2.getVariables().getVarObject(args[1]).toString() + ChatColor.WHITE + "'");
-				if (!auxGroup.equals(auxGroup2)) {
+				if (!auxGroup.equals(auxGroup2))
+				{
 					sender.sendMessage(ChatColor.YELLOW + "And the value was inherited from group: " + ChatColor.GREEN + auxGroup2.getName());
 				}
 
@@ -1337,30 +1655,38 @@ public class GroupManager extends JavaPlugin {
 
 			case mangaddv:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length < 3) {
+				if (args.length < 3)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group> <variable> <value>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "The specified group does not exist!");
 					return false;
 				}
-				if (auxGroup.isGlobal()) {
+				if (auxGroup.isGlobal())
+				{
 					sender.sendMessage(ChatColor.RED + "GlobalGroups do NOT support Info Nodes.");
 					return false;
 				}
 				// Validating permission
 				// Seems OK
 				auxString = "";
-				for (int i = 2; i < args.length; i++) {
+				for (int i = 2; i < args.length; i++)
+				{
 					auxString += args[i];
-					if ((i + 1) < args.length) {
+					if ((i + 1) < args.length)
+					{
 						auxString += " ";
 					}
 				}
@@ -1371,26 +1697,33 @@ public class GroupManager extends JavaPlugin {
 
 			case mangdelv:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group> <variable>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "The specified group does not exist!");
 					return false;
 				}
-				if (auxGroup.isGlobal()) {
+				if (auxGroup.isGlobal())
+				{
 					sender.sendMessage(ChatColor.RED + "GlobalGroups do NOT support Info Nodes.");
 					return false;
 				}
 				// Validating permission
-				if (!auxGroup.getVariables().hasVar(args[1])) {
+				if (!auxGroup.getVariables().hasVar(args[1]))
+				{
 					sender.sendMessage(ChatColor.RED + "The group doesn't have directly that variable!");
 				}
 				// Seems OK
@@ -1401,41 +1734,51 @@ public class GroupManager extends JavaPlugin {
 
 			case manglistv:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 1) {
+				if (args.length != 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "The specified group does not exist!");
 					return false;
 				}
-				if (auxGroup.isGlobal()) {
+				if (auxGroup.isGlobal())
+				{
 					sender.sendMessage(ChatColor.RED + "GlobalGroups do NOT support Info Nodes.");
 					return false;
 				}
 				// Validating permission
 				// Seems OK
 				auxString = "";
-				for (String varKey : auxGroup.getVariables().getVarKeyList()) {
+				for (String varKey : auxGroup.getVariables().getVarKeyList())
+				{
 					Object o = auxGroup.getVariables().getVarObject(varKey);
 					auxString += ChatColor.GOLD + varKey + ChatColor.WHITE + ":'" + ChatColor.GREEN + o.toString() + ChatColor.WHITE + "', ";
 				}
-				if (auxString.lastIndexOf(",") > 0) {
+				if (auxString.lastIndexOf(",") > 0)
+				{
 					auxString = auxString.substring(0, auxString.lastIndexOf(","));
 				}
 				sender.sendMessage(ChatColor.YELLOW + "Variables of group " + auxGroup.getName() + ": ");
 				sender.sendMessage(auxString + ".");
 				auxString = "";
-				for (String grp : auxGroup.getInherits()) {
+				for (String grp : auxGroup.getInherits())
+				{
 					auxString += grp + ", ";
 				}
-				if (auxString.lastIndexOf(",") > 0) {
+				if (auxString.lastIndexOf(",") > 0)
+				{
 					auxString = auxString.substring(0, auxString.lastIndexOf(","));
 					sender.sendMessage(ChatColor.YELLOW + "Plus all variables from groups: " + auxString);
 				}
@@ -1444,32 +1787,40 @@ public class GroupManager extends JavaPlugin {
 
 			case mangcheckv:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <group> <variable>)");
 					return false;
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "The specified group does not exist!");
 					return false;
 				}
-				if (auxGroup.isGlobal()) {
+				if (auxGroup.isGlobal())
+				{
 					sender.sendMessage(ChatColor.RED + "GlobalGroups do NOT support Info Nodes.");
 					return false;
 				}
 				// Validating permission
 				auxGroup2 = permissionHandler.nextGroupWithVariable(auxGroup, args[1]);
-				if (auxGroup2 == null) {
+				if (auxGroup2 == null)
+				{
 					sender.sendMessage(ChatColor.RED + "The group doesn't have access to that variable!");
 				}
 				// Seems OK
 				sender.sendMessage(ChatColor.YELLOW + "The value of variable '" + ChatColor.GOLD + args[1] + ChatColor.YELLOW + "' is: '" + ChatColor.GREEN + auxGroup2.getVariables().getVarObject(args[1]).toString() + ChatColor.WHITE + "'");
-				if (!auxGroup.equals(auxGroup2)) {
+				if (!auxGroup.equals(auxGroup2))
+				{
 					sender.sendMessage(ChatColor.YELLOW + "And the value was inherited from group: " + ChatColor.GREEN + auxGroup2.getName());
 				}
 
@@ -1477,21 +1828,29 @@ public class GroupManager extends JavaPlugin {
 
 			case manwhois:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 1) {
+				if (args.length != 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Seems OK
@@ -1499,17 +1858,20 @@ public class GroupManager extends JavaPlugin {
 				sender.sendMessage(ChatColor.YELLOW + "Group: " + ChatColor.GREEN + auxUser.getGroup().getName());
 				// Compile a list of subgroups
 				auxString = "";
-				for (String subGroup : auxUser.subGroupListStringCopy()) {
+				for (String subGroup : auxUser.subGroupListStringCopy())
+				{
 					auxString += subGroup + ", ";
 				}
-				if (auxString.lastIndexOf(",") > 0) {
+				if (auxString.lastIndexOf(",") > 0)
+				{
 					auxString = auxString.substring(0, auxString.lastIndexOf(","));
 					sender.sendMessage(ChatColor.YELLOW + "subgroups: " + auxString);
 				}
 
 				sender.sendMessage(ChatColor.YELLOW + "Overloaded: " + ChatColor.GREEN + dataHolder.isOverloaded(auxUser.getName()));
 				auxGroup = dataHolder.surpassOverload(auxUser.getName()).getGroup();
-				if (!auxGroup.equals(auxUser.getGroup())) {
+				if (!auxGroup.equals(auxUser.getGroup()))
+				{
 					sender.sendMessage(ChatColor.YELLOW + "Original Group: " + ChatColor.GREEN + auxGroup.getName());
 				}
 				// victim.permissions.add(args[1]);
@@ -1517,30 +1879,40 @@ public class GroupManager extends JavaPlugin {
 
 			case tempadd:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 1) {
+				if (args.length != 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating permission
-				if (!isConsole && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "Can't modify player with same permissions than you, or higher.");
 					return false;
 				}
 				// Seems OK
-				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null) {
+				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null)
+				{
 					overloadedUsers.put(dataHolder.getName().toLowerCase(), new ArrayList<User>());
 				}
 				dataHolder.overloadUser(auxUser.getName());
@@ -1551,34 +1923,45 @@ public class GroupManager extends JavaPlugin {
 
 			case tempdel:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 1) {
+				if (args.length != 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating permission
-				if (!isConsole && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player with same permissions as you, or higher.");
 					return false;
 				}
 				// Seems OK
-				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null) {
+				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null)
+				{
 					overloadedUsers.put(dataHolder.getName().toLowerCase(), new ArrayList<User>());
 				}
 				dataHolder.removeOverload(auxUser.getName());
-				if (overloadedUsers.get(dataHolder.getName().toLowerCase()).contains(auxUser)) {
+				if (overloadedUsers.get(dataHolder.getName().toLowerCase()).contains(auxUser))
+				{
 					overloadedUsers.get(dataHolder.getName().toLowerCase()).remove(auxUser);
 				}
 				sender.sendMessage(ChatColor.YELLOW + "You removed that player's overload. He's back to normal!");
@@ -1587,28 +1970,37 @@ public class GroupManager extends JavaPlugin {
 
 			case templist:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// WORKING
 				auxString = "";
 				removeList = new ArrayList<User>();
 				count = 0;
-				for (User u : overloadedUsers.get(dataHolder.getName().toLowerCase())) {
-					if (!dataHolder.isOverloaded(u.getName())) {
+				for (User u : overloadedUsers.get(dataHolder.getName().toLowerCase()))
+				{
+					if (!dataHolder.isOverloaded(u.getName()))
+					{
 						removeList.add(u);
-					} else {
+					}
+					else
+					{
 						auxString += u.getName() + ", ";
 						count++;
 					}
 				}
-				if (count == 0) {
+				if (count == 0)
+				{
 					sender.sendMessage(ChatColor.YELLOW + "There are no users in overload mode.");
 					return true;
 				}
 				auxString = auxString.substring(0, auxString.lastIndexOf(","));
-				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null) {
+				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null)
+				{
 					overloadedUsers.put(dataHolder.getName().toLowerCase(), new ArrayList<User>());
 				}
 				overloadedUsers.get(dataHolder.getName().toLowerCase()).removeAll(removeList);
@@ -1618,24 +2010,31 @@ public class GroupManager extends JavaPlugin {
 
 			case tempdelall:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// WORKING
 				removeList = new ArrayList<User>();
 				count = 0;
-				for (User u : overloadedUsers.get(dataHolder.getName().toLowerCase())) {
-					if (dataHolder.isOverloaded(u.getName())) {
+				for (User u : overloadedUsers.get(dataHolder.getName().toLowerCase()))
+				{
+					if (dataHolder.isOverloaded(u.getName()))
+					{
 						dataHolder.removeOverload(u.getName());
 						count++;
 					}
 				}
-				if (count == 0) {
+				if (count == 0)
+				{
 					sender.sendMessage(ChatColor.YELLOW + "There are no users in overload mode.");
 					return true;
 				}
-				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null) {
+				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null)
+				{
 					overloadedUsers.put(dataHolder.getName().toLowerCase(), new ArrayList<User>());
 				}
 				overloadedUsers.get(dataHolder.getName().toLowerCase()).clear();
@@ -1648,12 +2047,17 @@ public class GroupManager extends JavaPlugin {
 				boolean forced = false;
 
 				if ((args.length == 1) && (args[0].equalsIgnoreCase("force")))
+				{
 					forced = true;
+				}
 
-				try {
+				try
+				{
 					worldsHolder.saveChanges(forced);
 					sender.sendMessage(ChatColor.YELLOW + " All changes were saved.");
-				} catch (IllegalStateException ex) {
+				}
+				catch (IllegalStateException ex)
+				{
 					sender.sendMessage(ChatColor.RED + ex.getMessage());
 				}
 				return true;
@@ -1663,17 +2067,21 @@ public class GroupManager extends JavaPlugin {
 				/**
 				 * Attempt to reload a specific world
 				 */
-				if (args.length > 0) {
+				if (args.length > 0)
+				{
 
-					if (!lastError.isEmpty()) {
+					if (!lastError.isEmpty())
+					{
 						sender.sendMessage(ChatColor.RED + "All commands are locked due to an error. Check the log and then try a '/manload'.)");
 						return true;
 					}
 
 					auxString = "";
-					for (int i = 0; i < args.length; i++) {
+					for (int i = 0; i < args.length; i++)
+					{
 						auxString += args[i];
-						if ((i + 1) < args.length) {
+						if ((i + 1) < args.length)
+						{
 							auxString += " ";
 						}
 					}
@@ -1689,7 +2097,9 @@ public class GroupManager extends JavaPlugin {
 
 					BukkitPermissions.updateAllPlayers();
 
-				} else {
+				}
+				else
+				{
 
 					/**
 					 * Reload all settings and data as no world was specified.
@@ -1708,25 +2118,33 @@ public class GroupManager extends JavaPlugin {
 				 * Fire an event as none will have been triggered in the reload.
 				 */
 				if (GroupManager.isLoaded())
+				{
 					GroupManagerEventHandler.callEvent(GMSystemEvent.Action.RELOADED);
+				}
 
 				return true;
 
 			case listgroups:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// WORKING
 				auxString = "";
-				for (Group g : dataHolder.getGroupList()) {
+				for (Group g : dataHolder.getGroupList())
+				{
 					auxString += g.getName() + ", ";
 				}
-				for (Group g : getGlobalGroups().getGroupList()) {
+				for (Group g : getGlobalGroups().getGroupList())
+				{
 					auxString += g.getName() + ", ";
 				}
-				if (auxString.lastIndexOf(",") > 0) {
+				if (auxString.lastIndexOf(",") > 0)
+				{
 					auxString = auxString.substring(0, auxString.lastIndexOf(","));
 				}
 				sender.sendMessage(ChatColor.YELLOW + " Groups Available: " + ChatColor.WHITE + auxString);
@@ -1735,141 +2153,185 @@ public class GroupManager extends JavaPlugin {
 
 			case manpromote:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player> <group>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group not found!");
 					return false;
 				}
-				if (auxGroup.isGlobal()) {
+				if (auxGroup.isGlobal())
+				{
 					sender.sendMessage(ChatColor.RED + "Players may not be members of GlobalGroups directly.");
 					return false;
 				}
 				// Validating permission
-				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player with same permissions as you, or higher.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (permissionHandler.hasGroupInInheritance(auxGroup, senderGroup.getName()))) {
+				if (!isConsole && !isOpOverride && (permissionHandler.hasGroupInInheritance(auxGroup, senderGroup.getName())))
+				{
 					sender.sendMessage(ChatColor.RED + "The destination group can't be the same as yours, or higher.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (!permissionHandler.inGroup(senderUser.getName(), auxUser.getGroupName()) || !permissionHandler.inGroup(senderUser.getName(), auxGroup.getName()))) {
+				if (!isConsole && !isOpOverride && (!permissionHandler.inGroup(senderUser.getName(), auxUser.getGroupName()) || !permissionHandler.inGroup(senderUser.getName(), auxGroup.getName())))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player involving a group that you don't inherit.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (!permissionHandler.hasGroupInInheritance(auxUser.getGroup(), auxGroup.getName()) && !permissionHandler.hasGroupInInheritance(auxGroup, auxUser.getGroupName()))) {
+				if (!isConsole && !isOpOverride && (!permissionHandler.hasGroupInInheritance(auxUser.getGroup(), auxGroup.getName()) && !permissionHandler.hasGroupInInheritance(auxGroup, auxUser.getGroupName())))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player using groups with different heritage line.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (!permissionHandler.hasGroupInInheritance(auxGroup, auxUser.getGroupName()))) {
+				if (!isConsole && !isOpOverride && (!permissionHandler.hasGroupInInheritance(auxGroup, auxUser.getGroupName())))
+				{
 					sender.sendMessage(ChatColor.RED + "The new group must be a higher rank.");
 					return false;
 				}
 				// Seems OK
 				auxUser.setGroup(auxGroup);
 				if (!sender.hasPermission("groupmanager.notify.other") || (isConsole))
+				{
 					sender.sendMessage(ChatColor.YELLOW + "You changed " + auxUser.getName() + " group to " + auxGroup.getName() + ".");
+				}
 
 				return true;
 
 			case mandemote:
 				// Validating state of sender
-				if (dataHolder == null || permissionHandler == null) {
+				if (dataHolder == null || permissionHandler == null)
+				{
 					if (!setDefaultWorldHandler(sender))
+					{
 						return true;
+					}
 				}
 				// Validating arguments
-				if (args.length != 2) {
+				if (args.length != 2)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <player> <group>)");
 					return false;
 				}
-				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null)) {
+				if ((validateOnlinePlayer) && ((match = validatePlayer(args[0], sender)) == null))
+				{
 					return false;
 				}
-				if (match != null) {
+				if (match != null)
+				{
 					auxUser = dataHolder.getUser(match.get(0));
-				} else {
+				}
+				else
+				{
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
-				if (auxGroup == null) {
+				if (auxGroup == null)
+				{
 					sender.sendMessage(ChatColor.RED + "Group not found!");
 					return false;
 				}
-				if (auxGroup.isGlobal()) {
+				if (auxGroup.isGlobal())
+				{
 					sender.sendMessage(ChatColor.RED + "Players may not be members of GlobalGroups directly.");
 					return false;
 				}
 				// Validating permission
-				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false)) {
+				if (!isConsole && !isOpOverride && (senderGroup != null ? permissionHandler.inGroup(auxUser.getName(), senderGroup.getName()) : false))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player with same permissions as you, or higher.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (permissionHandler.hasGroupInInheritance(auxGroup, senderGroup.getName()))) {
+				if (!isConsole && !isOpOverride && (permissionHandler.hasGroupInInheritance(auxGroup, senderGroup.getName())))
+				{
 					sender.sendMessage(ChatColor.RED + "The destination group can't be the same as yours, or higher.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (!permissionHandler.inGroup(senderUser.getName(), auxUser.getGroupName()) || !permissionHandler.inGroup(senderUser.getName(), auxGroup.getName()))) {
+				if (!isConsole && !isOpOverride && (!permissionHandler.inGroup(senderUser.getName(), auxUser.getGroupName()) || !permissionHandler.inGroup(senderUser.getName(), auxGroup.getName())))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player involving a group that you don't inherit.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (!permissionHandler.hasGroupInInheritance(auxUser.getGroup(), auxGroup.getName()) && !permissionHandler.hasGroupInInheritance(auxGroup, auxUser.getGroupName()))) {
+				if (!isConsole && !isOpOverride && (!permissionHandler.hasGroupInInheritance(auxUser.getGroup(), auxGroup.getName()) && !permissionHandler.hasGroupInInheritance(auxGroup, auxUser.getGroupName())))
+				{
 					sender.sendMessage(ChatColor.RED + "You can't modify a player using groups with different heritage line.");
 					return false;
 				}
-				if (!isConsole && !isOpOverride && (permissionHandler.hasGroupInInheritance(auxGroup, auxUser.getGroupName()))) {
+				if (!isConsole && !isOpOverride && (permissionHandler.hasGroupInInheritance(auxGroup, auxUser.getGroupName())))
+				{
 					sender.sendMessage(ChatColor.RED + "The new group must be a lower rank.");
 					return false;
 				}
 				// Seems OK
 				auxUser.setGroup(auxGroup);
 				if (!sender.hasPermission("groupmanager.notify.other") || (isConsole))
+				{
 					sender.sendMessage(ChatColor.YELLOW + "You changed " + auxUser.getName() + " group to " + auxGroup.getName() + ".");
+				}
 
 				return true;
 
 			case mantogglevalidate:
 				validateOnlinePlayer = !validateOnlinePlayer;
 				sender.sendMessage(ChatColor.YELLOW + "Validade if player is online, now set to: " + Boolean.toString(validateOnlinePlayer));
-				if (!validateOnlinePlayer) {
+				if (!validateOnlinePlayer)
+				{
 					sender.sendMessage(ChatColor.GOLD + "From now on you can edit players not connected... BUT:");
 					sender.sendMessage(ChatColor.LIGHT_PURPLE + "From now on you should type the whole name of the player, correctly.");
 				}
 				return true;
 			case mantogglesave:
-				if (scheduler == null) {
+				if (scheduler == null)
+				{
 					enableScheduler();
 					sender.sendMessage(ChatColor.YELLOW + "The auto-saving is enabled!");
-				} else {
+				}
+				else
+				{
 					disableScheduler();
 					sender.sendMessage(ChatColor.YELLOW + "The auto-saving is disabled!");
 				}
 				return true;
 			case manworld:
 				auxString = selectedWorlds.get(sender);
-				if (auxString != null) {
+				if (auxString != null)
+				{
 					sender.sendMessage(ChatColor.YELLOW + "You have the world '" + dataHolder.getName() + "' in your selection.");
-				} else {
-					if (dataHolder == null) {
+				}
+				else
+				{
+					if (dataHolder == null)
+					{
 						sender.sendMessage(ChatColor.YELLOW + "There is no world selected. And no world is available now.");
-					} else {
+					}
+					else
+					{
 						sender.sendMessage(ChatColor.YELLOW + "You don't have a world in your selection..");
 						sender.sendMessage(ChatColor.YELLOW + "Working with the direct world where your player is.");
 						sender.sendMessage(ChatColor.YELLOW + "Your world now uses permissions of world name: '" + dataHolder.getName() + "' ");
@@ -1879,14 +2341,17 @@ public class GroupManager extends JavaPlugin {
 				return true;
 
 			case manselect:
-				if (args.length < 1) {
+				if (args.length < 1)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/<command> <world>)");
 					sender.sendMessage(ChatColor.YELLOW + "Worlds available: ");
 					ArrayList<OverloadedWorldHolder> worlds = worldsHolder.allWorldsDataList();
 					auxString = "";
-					for (int i = 0; i < worlds.size(); i++) {
+					for (int i = 0; i < worlds.size(); i++)
+					{
 						auxString += worlds.get(i).getName();
-						if ((i + 1) < worlds.size()) {
+						if ((i + 1) < worlds.size())
+						{
 							auxString += ", ";
 						}
 					}
@@ -1894,13 +2359,16 @@ public class GroupManager extends JavaPlugin {
 					return false;
 				}
 				auxString = "";
-				for (int i = 0; i < args.length; i++) {
-					if (args[i] == null) {
+				for (int i = 0; i < args.length; i++)
+				{
+					if (args[i] == null)
+					{
 						logger.warning("Bukkit gave invalid arguments array! Cmd: " + cmd.getName() + " args.length: " + args.length);
 						return false;
 					}
 					auxString += args[i];
-					if (i < (args.length - 1)) {
+					if (i < (args.length - 1))
+					{
 						auxString += " ";
 					}
 				}
@@ -1912,7 +2380,8 @@ public class GroupManager extends JavaPlugin {
 				return true;
 
 			case manclear:
-				if (args.length != 0) {
+				if (args.length != 0)
+				{
 					sender.sendMessage(ChatColor.RED + "Review your arguments count!");
 					return false;
 				}
@@ -1932,12 +2401,14 @@ public class GroupManager extends JavaPlugin {
 	/**
 	 * Sets up the default world for use.
 	 */
-	private boolean setDefaultWorldHandler(CommandSender sender) {
+	private boolean setDefaultWorldHandler(CommandSender sender)
+	{
 
 		dataHolder = worldsHolder.getWorldData(worldsHolder.getDefaultWorld().getName());
 		permissionHandler = dataHolder.getPermissionsHandler();
 
-		if ((dataHolder != null) && (permissionHandler != null)) {
+		if ((dataHolder != null) && (permissionHandler != null))
+		{
 			selectedWorlds.put(sender, dataHolder.getName());
 			sender.sendMessage(ChatColor.RED + "Couldn't retrieve your world. Default world '" + worldsHolder.getDefaultWorld().getName() + "' selected.");
 			return true;
@@ -1951,61 +2422,82 @@ public class GroupManager extends JavaPlugin {
 
 	/**
 	 * Send confirmation of a group change. using permission nodes...
-	 * 
+	 *
 	 * groupmanager.notify.self groupmanager.notify.other
-	 * 
+	 *
 	 * @param name
 	 * @param msg
 	 */
-	public static void notify(String name, String msg) {
+	public static void notify(String name, String msg)
+	{
 
 		Player player = Bukkit.getServer().getPlayerExact(name);
 
-		for (Player test : Bukkit.getServer().getOnlinePlayers()) {
-			if (!test.equals(player)) {
+		for (Player test : Bukkit.getServer().getOnlinePlayers())
+		{
+			if (!test.equals(player))
+			{
 				if (test.hasPermission("groupmanager.notify.other"))
+				{
 					test.sendMessage(ChatColor.YELLOW + name + " was" + msg);
-			} else if ((player != null) && ((player.hasPermission("groupmanager.notify.self")) || (player.hasPermission("groupmanager.notify.other"))))
+				}
+			}
+			else if ((player != null) && ((player.hasPermission("groupmanager.notify.self")) || (player.hasPermission("groupmanager.notify.other"))))
+			{
 				player.sendMessage(ChatColor.YELLOW + "You were" + msg);
+			}
 		}
 
 	}
 
 	/**
-	 * Load a List of players matching the name given. If none online, check
-	 * Offline.
-	 * 
+	 * Load a List of players matching the name given. If none online, check Offline.
+	 *
 	 * @param playerName, sender
 	 * @return true if a single match is found
 	 */
-	private List<String> validatePlayer(String playerName, CommandSender sender) {
+	private List<String> validatePlayer(String playerName, CommandSender sender)
+	{
 
 		List<Player> players = new ArrayList<Player>();
 		List<String> match = new ArrayList<String>();
 
 		players = this.getServer().matchPlayer(playerName);
-		if (players.isEmpty()) {
+		if (players.isEmpty())
+		{
 			// Check for an offline player (exact match).
-			if (Arrays.asList(this.getServer().getOfflinePlayers()).contains(Bukkit.getOfflinePlayer(playerName))) {
+			if (Arrays.asList(this.getServer().getOfflinePlayers()).contains(Bukkit.getOfflinePlayer(playerName)))
+			{
 				match.add(playerName);
-			} else {
+			}
+			else
+			{
 				// look for partial matches
-				for (OfflinePlayer offline : this.getServer().getOfflinePlayers()) {
+				for (OfflinePlayer offline : this.getServer().getOfflinePlayers())
+				{
 					if (offline.getName().toLowerCase().startsWith(playerName.toLowerCase()))
+					{
 						match.add(offline.getName());
+					}
 				}
 			}
 
-		} else {
-			for (Player player : players) {
+		}
+		else
+		{
+			for (Player player : players)
+			{
 				match.add(player.getName());
 			}
 		}
 
-		if (match.isEmpty() || match == null) {
+		if (match.isEmpty() || match == null)
+		{
 			sender.sendMessage(ChatColor.RED + "Player not found!");
 			return null;
-		} else if (match.size() > 1) {
+		}
+		else if (match.size() > 1)
+		{
 			sender.sendMessage(ChatColor.RED + "Too many matches found! (" + match.toString() + ")");
 			return null;
 		}
@@ -2017,7 +2509,8 @@ public class GroupManager extends JavaPlugin {
 	/**
 	 * @return the config
 	 */
-	public GMConfiguration getGMConfig() {
+	public GMConfiguration getGMConfig()
+	{
 
 		return config;
 	}
@@ -2025,12 +2518,14 @@ public class GroupManager extends JavaPlugin {
 	/**
 	 * @return the backupFolder
 	 */
-	public File getBackupFolder() {
+	public File getBackupFolder()
+	{
 
 		return backupFolder;
 	}
 
-	public static GlobalGroups getGlobalGroups() {
+	public static GlobalGroups getGlobalGroups()
+	{
 
 		return globalGroups;
 

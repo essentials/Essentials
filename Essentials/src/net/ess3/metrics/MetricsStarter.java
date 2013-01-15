@@ -14,7 +14,7 @@ import net.ess3.metrics.Metrics.Plotter;
 public class MetricsStarter implements Runnable
 {
 	private final IEssentials ess;
-	private transient Boolean start;
+	private Boolean start;
 
 
 	private enum Modules
@@ -30,10 +30,7 @@ public class MetricsStarter implements Runnable
 		EssentialsProtect,
 		EssentialsGeoIP,
 		EssentialsXMPP
-	}
-
-
-	;
+	};
 
 	public MetricsStarter(final IEssentials plugin)
 	{

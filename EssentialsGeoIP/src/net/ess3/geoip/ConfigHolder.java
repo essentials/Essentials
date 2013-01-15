@@ -9,8 +9,8 @@ import org.bukkit.plugin.Plugin;
 
 public class ConfigHolder extends AsyncStorageObjectHolder<GeoIP>
 {
-	private final transient Plugin geoip;
-	
+	private final Plugin geoip;
+
 	public ConfigHolder(final IEssentials ess, final Plugin geoip)
 	{
 		super(ess, GeoIP.class, new File(geoip.getDataFolder(), "config.yml"));
