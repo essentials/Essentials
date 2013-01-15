@@ -17,9 +17,9 @@ import org.bukkit.plugin.Plugin;
 
 public class KeywordReplacer implements IText
 {
-	private final transient IText input;
-	private final transient List<String> replaced;
-	private final transient IEssentials ess;
+	private final IText input;
+	private final List<String> replaced;
+	private final IEssentials ess;
 
 	public KeywordReplacer(final IText input, final CommandSender sender, final IEssentials ess)
 	{

@@ -19,7 +19,7 @@ import org.bukkit.plugin.Plugin;
 
 public class EssentialsPluginListener implements Listener, IReload
 {
-	private final transient IEssentials ess;
+	private final IEssentials ess;
 
 	public EssentialsPluginListener(final IEssentials ess)
 	{

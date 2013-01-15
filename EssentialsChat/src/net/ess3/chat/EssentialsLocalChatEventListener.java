@@ -14,8 +14,8 @@ import org.bukkit.event.Listener;
 
 public class EssentialsLocalChatEventListener implements Listener
 {
-	protected transient IEssentials ess;
-	protected final transient Server server;
+	protected IEssentials ess;
+	protected final Server server;
 
 	public EssentialsLocalChatEventListener(final Server server, final IEssentials ess)
 	{

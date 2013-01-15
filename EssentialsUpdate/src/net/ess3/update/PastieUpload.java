@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class PastieUpload
 {
-	private final transient PostToUrl connection;
+	private final PostToUrl connection;
 	private final Pattern pattern = Pattern.compile("(?s).*\\?key=([a-z0-9]+).*");
 
 	public PastieUpload() throws MalformedURLException

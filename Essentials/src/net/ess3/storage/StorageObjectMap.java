@@ -26,11 +26,11 @@ import org.apache.commons.io.IOUtils;
 
 public abstract class StorageObjectMap<I> extends CacheLoader<String, I> implements IStorageObjectMap<I>
 {
-	protected final transient IEssentials ess;
-	private final transient File folder;
-	protected final transient Cache<String, I> cache = CacheBuilder.newBuilder().softValues().build(this);
-	protected final transient ConcurrentSkipListSet<String> keys = new ConcurrentSkipListSet<String>();
-	protected final transient ConcurrentSkipListMap<String, File> zippedfiles = new ConcurrentSkipListMap<String, File>();
+	protected final IEssentials ess;
+	private final File folder;
+	protected final Cache<String, I> cache = CacheBuilder.newBuilder().softValues().build(this);
+	protected final ConcurrentSkipListSet<String> keys = new ConcurrentSkipListSet<String>();
+	protected final ConcurrentSkipListMap<String, File> zippedfiles = new ConcurrentSkipListMap<String, File>();
 	private final Pattern zipCheck = Pattern.compile("^[a-zA-Z0-9]*-?[a-zA-Z0-9]+\\.yml$");
 
 	public StorageObjectMap(final IEssentials ess, final String folderName)

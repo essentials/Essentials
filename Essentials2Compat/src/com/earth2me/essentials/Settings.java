@@ -16,9 +16,9 @@ import org.bukkit.inventory.ItemStack;
 
 public final class Settings implements ISettings
 {
-	private final transient EssentialsConf config;
+	private final EssentialsConf config;
 	private final static Logger logger = Logger.getLogger("Minecraft");
-	private final transient IEssentials ess;
+	private final IEssentials ess;
 	private boolean metricsEnabled = true;
 
 	public Settings(IEssentials ess, File file)

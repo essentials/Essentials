@@ -22,12 +22,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class Trade
 {
-	private final transient String command;
-	private final transient String fallbackCommand;
-	private final transient Double money;
-	private final transient ItemStack itemStack;
-	private final transient Integer exp;
-	private final transient IEssentials ess;
+	private final String command;
+	private final String fallbackCommand;
+	private final Double money;
+	private final ItemStack itemStack;
+	private final Integer exp;
+	private final IEssentials ess;
 
 	public Trade(final String command, final IEssentials ess)
 	{

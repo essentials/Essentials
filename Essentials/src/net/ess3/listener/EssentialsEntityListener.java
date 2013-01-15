@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsEntityListener implements Listener
 {
-	private final transient IEssentials ess;
+	private final IEssentials ess;
 
 	public EssentialsEntityListener(final IEssentials ess)
 	{

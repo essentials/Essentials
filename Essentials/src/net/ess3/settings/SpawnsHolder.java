@@ -174,8 +174,8 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	private class SpawnPlayerListener implements Listener // TODO: What is this for?
 	{
-		private final transient IEssentials ess;
-		private final transient SpawnsHolder spawns;
+		private final IEssentials ess;
+		private final SpawnsHolder spawns;
 
 		public SpawnPlayerListener(final IEssentials ess, final SpawnsHolder spawns)
 		{
@@ -240,7 +240,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 		private class NewPlayerTeleport implements Runnable
 		{
-			private final transient IUser user;
+			private final IUser user;
 
 			public NewPlayerTeleport(final IUser user)
 			{

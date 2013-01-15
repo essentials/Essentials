@@ -40,9 +40,9 @@ import org.bukkit.inventory.ItemStack;
 public class EssentialsPlayerListener implements Listener
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private final transient Server server;
-	private final transient IEssentials ess;
-	private final transient IUserMap userMap;
+	private final Server server;
+	private final IEssentials ess;
+	private final IUserMap userMap;
 
 	public EssentialsPlayerListener(final IEssentials parent)
 	{

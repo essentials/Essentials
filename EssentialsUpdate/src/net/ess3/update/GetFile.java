@@ -14,8 +14,8 @@ import org.bukkit.Bukkit;
 
 public class GetFile
 {
-	private transient URLConnection connection;
-	private transient MessageDigest digest;
+	private URLConnection connection;
+	private MessageDigest digest;
 
 	public GetFile(final String urlString) throws MalformedURLException, IOException
 	{

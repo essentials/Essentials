@@ -11,7 +11,7 @@ import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 //TODO: remove unnecessary return statements
 public class EssentialsProtectEntityListener implements Listener
 {
-	private final transient IProtect prot;
+	private final IProtect prot;
 
 	public EssentialsProtectEntityListener(final IProtect prot)
 	{

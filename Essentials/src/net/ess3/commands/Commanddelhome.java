@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 
 public class Commanddelhome extends EssentialsCommand
 {
-	private final transient Pattern colon = Pattern.compile(":");
+	private final Pattern colon = Pattern.compile(":");
 
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception

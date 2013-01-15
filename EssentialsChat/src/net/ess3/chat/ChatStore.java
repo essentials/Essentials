@@ -7,9 +7,9 @@ import net.ess3.economy.Trade;
 
 public class ChatStore
 {
-	private final transient IUser user;
-	private final transient String type;
-	private final transient Trade charge;
+	private final IUser user;
+	private final String type;
+	private final Trade charge;
 
 	public ChatStore(final IEssentials ess, final IUser user, final String type)
 	{

@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 
 public class SelfUpdate extends AbstractWorkListener implements Task, Runnable
 {
-	private final transient AbstractWorkListener listener;
+	private final AbstractWorkListener listener;
 
 	public SelfUpdate(final AbstractWorkListener listener)
 	{

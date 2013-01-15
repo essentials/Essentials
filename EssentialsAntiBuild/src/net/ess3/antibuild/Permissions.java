@@ -19,7 +19,7 @@ public enum Permissions implements IPermission
 	private static final String defaultBase = "essentials.build.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;
-	private transient String parent = null;
+	private String parent = null;
 
 	private Permissions()
 	{

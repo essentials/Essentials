@@ -11,8 +11,8 @@ public abstract class AbstractWorkListener
 		this.newVersionInfo = newVersionInfo;
 	}
 
-	private final transient Plugin plugin;
-	private final transient VersionInfo newVersionInfo;
+	private final Plugin plugin;
+	private final VersionInfo newVersionInfo;
 
 	public final void onWorkAbort()
 	{

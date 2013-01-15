@@ -30,7 +30,7 @@ import org.bukkit.plugin.PluginManager;
 
 public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> implements IJails
 {
-	private static final transient Logger LOGGER = Bukkit.getLogger();
+	private static final Logger LOGGER = Bukkit.getLogger();
 
 	public Jails(final IEssentials ess)
 	{

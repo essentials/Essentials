@@ -31,22 +31,22 @@ public class User extends UserBase implements IUser
 {
 	private CommandSender replyTo = null;
 	@Getter
-	private transient IUser teleportRequester;
+	private IUser teleportRequester;
 	@Getter
-	private transient boolean tpRequestHere;
+	private boolean tpRequestHere;
 	@Getter
-	private transient final ITeleport teleport;
+	private final ITeleport teleport;
 	@Getter
-	private transient long teleportRequestTime;
+	private long teleportRequestTime;
 	@Getter
 	@Setter
-	private transient long lastOnlineActivity;
-	private transient long lastActivity = System.currentTimeMillis();
+	private long lastOnlineActivity;
+	private long lastActivity = System.currentTimeMillis();
 	/*@Getter
 	 @Setter
 	 private boolean hidden = false;*/
 	@Getter
-	private transient boolean vanished;
+	private boolean vanished;
 	@Getter
 	@Setter
 	private boolean invSee = false;
@@ -54,7 +54,7 @@ public class User extends UserBase implements IUser
 	@Setter
 	private boolean enderSee = false;
 	private long lastThrottledAction;
-	private transient Location afkPosition;
+	private Location afkPosition;
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
 	private WeakReference<Player> playerCache;
 	@Getter
@@ -593,7 +593,7 @@ public class User extends UserBase implements IUser
 		return true;
 	}
 
-	private transient long teleportInvulnerabilityTimestamp = 0;
+	private long teleportInvulnerabilityTimestamp = 0;
 
 	public void enableInvulnerabilityAfterTeleport()
 	{

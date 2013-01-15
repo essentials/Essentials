@@ -11,7 +11,7 @@ import org.bukkit.plugin.Plugin;
 
 public class ErrorsCommand extends AbstractFileCommand implements Command
 {
-	private final transient Pattern pattern = Pattern.compile("^[0-9 :-]+\\[INFO\\].*");
+	private final Pattern pattern = Pattern.compile("^[0-9 :-]+\\[INFO\\].*");
 
 	public ErrorsCommand(final Plugin plugin)
 	{

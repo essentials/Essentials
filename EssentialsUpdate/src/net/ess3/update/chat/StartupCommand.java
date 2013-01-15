@@ -11,8 +11,8 @@ import org.bukkit.plugin.Plugin;
 
 public class StartupCommand extends AbstractFileCommand implements Command
 {
-	private final transient Pattern patternStart = Pattern.compile("^[0-9 :-]+\\[INFO\\] Starting minecraft server version.*");
-	private final transient Pattern patternEnd = Pattern.compile("^[0-9 :-]+\\[INFO\\] Done \\([0-9.,]+s\\)! For help, type \"help\".*");
+	private final Pattern patternStart = Pattern.compile("^[0-9 :-]+\\[INFO\\] Starting minecraft server version.*");
+	private final Pattern patternEnd = Pattern.compile("^[0-9 :-]+\\[INFO\\] Done \\([0-9.,]+s\\)! For help, type \"help\".*");
 
 	public StartupCommand(final Plugin plugin)
 	{

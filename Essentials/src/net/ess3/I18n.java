@@ -19,13 +19,13 @@ public class I18n implements II18n
 {
 	private static I18n instance;
 	private static final String MESSAGES = "messages";
-	private final transient Locale defaultLocale = Locale.getDefault();
-	private transient Locale currentLocale = defaultLocale;
-	private transient ResourceBundle customBundle;
-	private transient ResourceBundle localeBundle;
-	private final transient ResourceBundle defaultBundle;
-	private final transient Map<String, MessageFormat> messageFormatCache = new HashMap<String, MessageFormat>();
-	private final transient IEssentials ess;
+	private final Locale defaultLocale = Locale.getDefault();
+	private Locale currentLocale = defaultLocale;
+	private ResourceBundle customBundle;
+	private ResourceBundle localeBundle;
+	private final ResourceBundle defaultBundle;
+	private final Map<String, MessageFormat> messageFormatCache = new HashMap<String, MessageFormat>();
+	private final IEssentials ess;
 
 	public I18n(final IEssentials ess)
 	{
@@ -136,7 +136,7 @@ public class I18n implements II18n
 
 	private static class FileResClassLoader extends ClassLoader
 	{
-		private final transient File dataFolder;
+		private final File dataFolder;
 
 		public FileResClassLoader(final ClassLoader classLoader, final IEssentials ess)
 		{

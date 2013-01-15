@@ -18,9 +18,9 @@ public class HelpInput implements IText
 	private static final String DESCRIPTION = "description";
 	private static final String PERMISSION = "permission";
 	private static final String PERMISSIONS = "permissions";
-	private final transient List<String> lines = new ArrayList<String>();
-	private final transient List<String> chapters = new ArrayList<String>();
-	private final transient Map<String, Integer> bookmarks = new HashMap<String, Integer>();
+	private final List<String> lines = new ArrayList<String>();
+	private final List<String> chapters = new ArrayList<String>();
+	private final Map<String, Integer> bookmarks = new HashMap<String, Integer>();
 	private final static Logger logger = Logger.getLogger("Minecraft");
 
 	public HelpInput(final IUser user, final String match, final IEssentials ess) throws IOException

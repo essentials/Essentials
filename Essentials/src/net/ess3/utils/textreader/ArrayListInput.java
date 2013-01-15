@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ArrayListInput implements IText
 {
-	private final transient List<String> lines = new ArrayList<String>();
+	private final List<String> lines = new ArrayList<String>();
 
 	@Override
 	public List<String> getLines()

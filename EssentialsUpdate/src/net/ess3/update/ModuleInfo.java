@@ -7,9 +7,9 @@ import org.bukkit.configuration.Configuration;
 
 public class ModuleInfo
 {
-	private final transient String url;
-	private final transient String version;
-	private final transient String hash;
+	private final String url;
+	private final String version;
+	private final String hash;
 
 	public ModuleInfo(final Configuration updateConfig, final String path)
 	{

@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class ItemDb implements IItemDb
 {
-	private final transient IEssentials ess;
+	private final IEssentials ess;
 
 	public ItemDb(final IEssentials ess)
 	{
@@ -27,8 +27,8 @@ public class ItemDb implements IItemDb
 		file = new ManagedFile("items.csv", ess);
 	}
 
-	private final transient Map<String, Long> items = new HashMap<String, Long>();
-	private final transient ManagedFile file;
+	private final Map<String, Long> items = new HashMap<String, Long>();
+	private final ManagedFile file;
 	private static final Pattern SPLIT = Pattern.compile("[^a-zA-Z0-9]");
 
 	@Override

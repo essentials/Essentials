@@ -16,10 +16,10 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 	}
 
 
-	private final transient StateMap states = new StateMap();
-	private transient AbstractState current;
-	private transient Player player;
-	private transient MachineResult result = MachineResult.NONE;
+	private final StateMap states = new StateMap();
+	private AbstractState current;
+	private Player player;
+	private MachineResult result = MachineResult.NONE;
 
 	public StateMachine(final Plugin plugin, final Player player, final UpdateCheck updateCheck)
 	{
@@ -85,7 +85,7 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 		return result;
 	}
 
-	private transient Iterator<AbstractState> iterator;
+	private Iterator<AbstractState> iterator;
 
 	public void startWork()
 	{

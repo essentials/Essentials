@@ -21,8 +21,8 @@ import org.bukkit.event.block.*;
 
 public class SignBlockListener implements Listener
 {
-	private final transient IEssentials ess;
-	private final transient ISignsPlugin plugin;
+	private final IEssentials ess;
+	private final ISignsPlugin plugin;
 	private final static Logger LOGGER = Logger.getLogger("Minecraft");
 	private final static int WALL_SIGN = Material.WALL_SIGN.getId();
 	private final static int SIGN_POST = Material.SIGN_POST.getId();

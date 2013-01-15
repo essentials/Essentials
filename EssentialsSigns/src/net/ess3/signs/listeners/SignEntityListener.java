@@ -14,8 +14,8 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 
 public class SignEntityListener implements Listener
 {
-	private final transient IEssentials ess;
-	private final transient ISignsPlugin plugin;
+	private final IEssentials ess;
+	private final ISignsPlugin plugin;
 
 	public SignEntityListener(final IEssentials ess, final ISignsPlugin plugin)
 	{

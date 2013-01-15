@@ -27,7 +27,7 @@ public class Economy implements StorageObject
 		return currencySymbol == null || currencySymbol.isEmpty() ? "$" : currencySymbol.substring(0, 1);
 	}
 
-	private final transient static double MAXMONEY = 10000000000000.0;
+	private final static double MAXMONEY = 10000000000000.0;
 	@Comment(
 			{
 					"Set the maximum amount of money a player can have",

@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class UserData
 {
-	protected final transient IEssentials ess;
+	protected final IEssentials ess;
 	private EssentialsConf config;
 	private final File folder;
 

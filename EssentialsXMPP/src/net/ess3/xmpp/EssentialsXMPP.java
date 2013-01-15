@@ -20,10 +20,10 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private static EssentialsXMPP instance = null;
-	private transient UserManager users;
-	private transient XMPPManager xmpp;
-	private transient IEssentials ess;
-	private transient TabExecutor commandHandler;
+	private UserManager users;
+	private XMPPManager xmpp;
+	private IEssentials ess;
+	private TabExecutor commandHandler;
 
 	public static IEssentialsXMPP getInstance()
 	{

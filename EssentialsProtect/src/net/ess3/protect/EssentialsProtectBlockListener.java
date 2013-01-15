@@ -13,7 +13,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 
 public class EssentialsProtectBlockListener implements Listener
 {
-	final private transient IProtect prot;
+	final private IProtect prot;
 
 	public EssentialsProtectBlockListener(final IProtect parent)
 	{

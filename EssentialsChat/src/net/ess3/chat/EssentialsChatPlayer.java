@@ -17,10 +17,10 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public abstract class EssentialsChatPlayer implements Listener
 {
-	protected transient IEssentials ess;
+	protected IEssentials ess;
 	protected final static Logger LOGGER = Logger.getLogger("Minecraft");
-	protected final transient Server server;
-	protected final transient Map<AsyncPlayerChatEvent, ChatStore> chatStorage;
+	protected final Server server;
+	protected final Map<AsyncPlayerChatEvent, ChatStore> chatStorage;
 
 	public EssentialsChatPlayer(
 			final Server server, final IEssentials ess, final Map<AsyncPlayerChatEvent, ChatStore> chatStorage)

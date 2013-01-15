@@ -23,12 +23,12 @@ import org.mockito.stubbing.Answer;
 
 public abstract class EssentialsTest extends TestCase
 {
-	protected final transient Server server;
-	protected final transient IPlugin plugin;
-	protected final transient World world;
-	protected final transient Logger logger;
-	protected final transient Essentials ess;
-	protected final transient List<Player> playerList;
+	protected final Server server;
+	protected final IPlugin plugin;
+	protected final World world;
+	protected final Logger logger;
+	protected final Essentials ess;
+	protected final List<Player> playerList;
 
 	public EssentialsTest(final String testName)
 	{

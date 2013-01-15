@@ -15,11 +15,11 @@ import org.bukkit.command.CommandSender;
 
 public class Backup implements Runnable, IBackup
 {
-	private transient final Server server;
-	private transient final IEssentials ess;
-	private transient final AtomicBoolean running = new AtomicBoolean(false);
-	private transient int taskId = -1;
-	private transient final AtomicBoolean active = new AtomicBoolean(false);
+	private final Server server;
+	private final IEssentials ess;
+	private final AtomicBoolean running = new AtomicBoolean(false);
+	private int taskId = -1;
+	private final AtomicBoolean active = new AtomicBoolean(false);
 
 	public Backup(final IEssentials ess)
 	{
@@ -82,7 +82,7 @@ public class Backup implements Runnable, IBackup
 
 	private class BackupRunner implements Runnable
 	{
-		private final transient String command;
+		private final String command;
 
 		public BackupRunner(final String command)
 		{

@@ -9,7 +9,7 @@ import net.ess3.permissions.Permissions;
 
 public class Commandsethome extends EssentialsCommand
 {
-	private final transient Pattern colon = Pattern.compile(":");
+	private final Pattern colon = Pattern.compile(":");
 
 	@Override
 	public void run(final IUser user, final String commandLabel, String[] args) throws Exception
