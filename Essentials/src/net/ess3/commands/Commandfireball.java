@@ -13,31 +13,31 @@ public class Commandfireball extends EssentialsCommand
 		Class<? extends Entity> clazz = Fireball.class;
 		if (args.length > 0)
 		{
-			if (args[0].equalsIgnoreCase("small"))
+			if(args[0].equalsIgnoreCase("small"))
 			{
 				clazz = SmallFireball.class;
 			}
-			else if (args[0].equalsIgnoreCase("arrow"))
+			else if(args[0].equalsIgnoreCase("arrow"))
 			{
 				clazz = Arrow.class;
 			}
-			else if (args[0].equalsIgnoreCase("skull"))
+			else if(args[0].equalsIgnoreCase("skull"))
 			{
 				clazz = WitherSkull.class;
 			}
-			else if (args[0].equalsIgnoreCase("egg"))
+			else if(args[0].equalsIgnoreCase("egg"))
 			{
 				clazz = Egg.class;
 			}
-			else if (args[0].equalsIgnoreCase("snowball"))
+			else if(args[0].equalsIgnoreCase("snowball"))
 			{
 				clazz = Snowball.class;
 			}
-			else if (args[0].equalsIgnoreCase("expbottle"))
+			else if(args[0].equalsIgnoreCase("expbottle"))
 			{
 				clazz = ThrownExpBottle.class;
 			}
-			else if (args[0].equalsIgnoreCase("large"))
+			else if(args[0].equalsIgnoreCase("large"))
 			{
 				clazz = LargeFireball.class;
 			}

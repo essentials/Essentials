@@ -30,10 +30,11 @@ public class Version implements Comparable<Version>
 	{
 		return type;
 	}
-	private final int major;
-	private final int minor;
-	private final int build;
-	private final Type type;
+
+	private final transient int major;
+	private final transient int minor;
+	private final transient int build;
+	private final transient Type type;
 
 	public Version(final String versionString)
 	{

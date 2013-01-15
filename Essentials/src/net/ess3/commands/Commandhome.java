@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class Commandhome extends EssentialsCommand
 {
-	private final Pattern colon = Pattern.compile(":");
+	private final transient Pattern colon = Pattern.compile(":");
 
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception

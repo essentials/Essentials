@@ -26,6 +26,7 @@ public class Worth implements StorageObject
 	{
 		return sell == null ? Collections.<MaterialData, Double>emptyMap() : Collections.unmodifiableMap(sell);
 	}
+
 	@MapKeyType(MaterialData.class)
 	@MapValueType(Double.class)
 	@Getter(AccessLevel.NONE)
@@ -36,6 +37,7 @@ public class Worth implements StorageObject
 	{
 		return buy == null ? Collections.<MaterialData, Double>emptyMap() : Collections.unmodifiableMap(buy);
 	}
+
 	@MapKeyType(EnchantmentLevel.class)
 	@MapValueType(Double.class)
 	@Getter(AccessLevel.NONE)

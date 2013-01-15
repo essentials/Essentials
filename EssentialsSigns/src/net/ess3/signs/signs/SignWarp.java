@@ -53,7 +53,7 @@ public class SignWarp extends EssentialsSign
 		final String group = sign.getLine(2);
 
 		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getRanks().inGroup(player, group))) || (group.isEmpty() && Permissions.WARPS.isAuthorized(
-																											player, warpName)))
+				player, warpName)))
 		{
 			final Trade charge = getTrade(sign, 3, ess);
 			try

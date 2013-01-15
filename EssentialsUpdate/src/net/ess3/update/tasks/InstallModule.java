@@ -12,9 +12,9 @@ import org.bukkit.Bukkit;
 
 public class InstallModule implements Runnable, Task
 {
-	protected final AbstractWorkListener listener;
-	private final String moduleName;
-	private final String fileName;
+	protected final transient AbstractWorkListener listener;
+	private final transient String moduleName;
+	private final transient String fileName;
 
 	public InstallModule(final AbstractWorkListener listener, final String moduleName)
 	{

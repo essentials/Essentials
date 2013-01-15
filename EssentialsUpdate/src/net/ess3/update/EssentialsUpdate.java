@@ -9,8 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsUpdate extends JavaPlugin
 {
-	private EssentialsHelp essentialsHelp;
-	private UpdateProcess updateProcess;
+	private transient EssentialsHelp essentialsHelp;
+	private transient UpdateProcess updateProcess;
 
 	@Override
 	public void onEnable()

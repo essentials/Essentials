@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 //TODO: port 2.9 changes and verify thread safety.
 class EssentialsXMPPPlayerListener implements Listener
 {
-	private final IEssentials ess;
+	private final transient IEssentials ess;
 
 	EssentialsXMPPPlayerListener(final IEssentials ess)
 	{

@@ -17,11 +17,12 @@ public class Ranks implements StorageObject
 		final RankOptions defaultOptions = new RankOptions();
 		ranks.put("default", defaultOptions);
 	}
+
 	@Comment(
-	{
-		"The order of the ranks matters, the ranks are checked from top to bottom.", "All rank names have to be lower case.",
-		"The ranks can be connected to users using the permission essentials.ranks.rankname"
-	})
+			{
+					"The order of the ranks matters, the ranks are checked from top to bottom.", "All rank names have to be lower case.",
+					"The ranks can be connected to users using the permission essentials.ranks.rankname"
+			})
 	@MapValueType(RankOptions.class)
 	private LinkedHashMap<String, RankOptions> ranks = new LinkedHashMap<String, RankOptions>();
 }

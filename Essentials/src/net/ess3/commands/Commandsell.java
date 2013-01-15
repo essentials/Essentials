@@ -148,8 +148,8 @@ public class Commandsell extends EssentialsCommand
 		user.giveMoney(worth * amount);
 		user.sendMessage(
 				_(
-				"itemSold", FormatUtil.displayCurrency(worth * amount, ess), amount, is.getType().toString().toLowerCase(Locale.ENGLISH),
-				FormatUtil.displayCurrency(worth, ess)));
+						"itemSold", FormatUtil.displayCurrency(worth * amount, ess), amount, is.getType().toString().toLowerCase(Locale.ENGLISH),
+						FormatUtil.displayCurrency(worth, ess)));
 		logger.log(
 				Level.INFO, _(
 				"itemSoldConsole", player.getDisplayName(), is.getType().toString().toLowerCase(Locale.ENGLISH),

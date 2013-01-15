@@ -15,8 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsSignsPlugin extends JavaPlugin implements ISignsPlugin
 {
-	private static final Logger LOGGER = Bukkit.getLogger();
-	private SignsConfigHolder config;
+	private static final transient Logger LOGGER = Bukkit.getLogger();
+	private transient SignsConfigHolder config;
 
 	@Override
 	public void onEnable()

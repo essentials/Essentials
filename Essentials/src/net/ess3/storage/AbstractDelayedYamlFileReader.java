@@ -11,8 +11,8 @@ import org.bukkit.Bukkit;
 
 public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> implements Runnable
 {
-	private final Class<T> clazz;
-	private final IEssentials ess;
+	private final transient Class<T> clazz;
+	private final transient IEssentials ess;
 
 	public AbstractDelayedYamlFileReader(final IEssentials ess, final Class<T> clazz)
 	{

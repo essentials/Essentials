@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 
 public class Commandtptoggle extends EssentialsToggleCommand
 {
+
 	@Override
 	protected void setValue(final IUser player, final boolean value)
 	{

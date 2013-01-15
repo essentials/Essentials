@@ -141,6 +141,7 @@ public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 	{
 		return matchUsers(name, false, false, requester);
 	}
+
 	private final Pattern comma = Pattern.compile(",");
 
 	public Set<IUser> matchUsers(final String name, final boolean includeHidden, final boolean includeOffline, final Player requester)

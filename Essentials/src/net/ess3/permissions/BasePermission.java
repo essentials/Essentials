@@ -1,6 +1,5 @@
 package net.ess3.permissions;
 
-
 public class BasePermission extends AbstractSuperpermsPermission
 {
 	protected String permission;

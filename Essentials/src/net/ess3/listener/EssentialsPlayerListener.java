@@ -40,9 +40,9 @@ import org.bukkit.inventory.ItemStack;
 public class EssentialsPlayerListener implements Listener
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private final Server server;
-	private final IEssentials ess;
-	private final IUserMap userMap;
+	private final transient Server server;
+	private final transient IEssentials ess;
+	private final transient IUserMap userMap;
 
 	public EssentialsPlayerListener(final IEssentials parent)
 	{
@@ -56,8 +56,7 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerRespawn(final PlayerRespawnEvent event)
 	{
 		final Player player = event.getPlayer();
-		if (!player.isOnline())
-		{
+		if (!player.isOnline()) {
 			return;
 		}
 		final IUser user = userMap.getUser(player);
@@ -174,83 +173,83 @@ public class EssentialsPlayerListener implements Listener
 						delayedJoin(event.getPlayer());
 					}
 				});
-		/* TODO: Make sure my update is good
-		 if (!event.getPlayer().isOnline())
-		 {
-		 return;
-		 }
+/* TODO: Make sure my update is good
+		if (!event.getPlayer().isOnline())
+		{
+			return;
+		}
 
-		 ess.getBackup().startTask();
+		ess.getBackup().startTask();
 
-		 final String joinMessage = ess.getSettings().getData().getGeneral().getJoinMessage();
-		 if (joinMessage != null)
-		 {
-		 final IText itOutput = new KeywordReplacer(new SimpleTextInput(joinMessage), ess.getUserMap().getUser(event.getPlayer()), ess);
-		 final SimpleTextPager stPager = new SimpleTextPager(itOutput);
-		 event.setJoinMessage(FormatUtil.replaceFormat(stPager.getString(0)));
-		 }
-		 else
-		 {
-		 event.setJoinMessage(joinMessage);
-		 }
+		final String joinMessage = ess.getSettings().getData().getGeneral().getJoinMessage();
+		if (joinMessage != null)
+		{
+			final IText itOutput = new KeywordReplacer(new SimpleTextInput(joinMessage), ess.getUserMap().getUser(event.getPlayer()), ess);
+			final SimpleTextPager stPager = new SimpleTextPager(itOutput);
+			event.setJoinMessage(FormatUtil.replaceFormat(stPager.getString(0)));
+		}
+		else
+		{
+			event.setJoinMessage(joinMessage);
+		}
 
-		 final IUser user = ess.getUserMap().getUser(event.getPlayer());
+		final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
-		 user.updateDisplayName();
-		 user.getData().setIpAddress(user.getPlayer().getAddress().getAddress().getHostAddress());
-		 user.updateActivity(false);
+		user.updateDisplayName();
+		user.getData().setIpAddress(user.getPlayer().getAddress().getAddress().getHostAddress());
+		user.updateActivity(false);
 
-		 for (String p : ess.getVanishedPlayers())
-		 {
-		 if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(user))
-		 {
-		 user.getPlayer().hidePlayer(ess.getUserMap().getUser(p).getPlayer());
-		 }
-		 }
+		for (String p : ess.getVanishedPlayers())
+		{
+			if (!Permissions.VANISH_SEE_OTHERS.isAuthorized(user))
+			{
+				user.getPlayer().hidePlayer(ess.getUserMap().getUser(p).getPlayer());
+			}
+		}
 
-		 if (Permissions.SLEEPINGIGNORED.isAuthorized(user))
-		 {
-		 user.getPlayer().setSleepingIgnored(true);
-		 }
-		 user.queueSave();
+		if (Permissions.SLEEPINGIGNORED.isAuthorized(user))
+		{
+			user.getPlayer().setSleepingIgnored(true);
+		}
+		user.queueSave();
 
 
-		 final ISettings settings = ess.getSettings();
+		final ISettings settings = ess.getSettings();
 
-		 if (!settings.getData().getCommands().isDisabled("motd") && Permissions.MOTD.isAuthorized(user))
-		 {
-		 try
-		 {
-		 final IText input = new TextInput(user, "motd", true, ess);
-		 final IText output = new KeywordReplacer(input, user, ess);
-		 final TextPager pager = new TextPager(output, true);
-		 pager.showPage("1", null, "motd", user);
-		 }
-		 catch (IOException ex)
-		 {
-		 if (settings.getData().getGeneral().isDebug())
-		 {
-		 LOGGER.log(Level.WARNING, ex.getMessage(), ex);
-		 }
-		 else
-		 {
-		 LOGGER.log(Level.WARNING, ex.getMessage());
-		 }
-		 }
-		 }
+		if (!settings.getData().getCommands().isDisabled("motd") && Permissions.MOTD.isAuthorized(user))
+		{
+			try
+			{
+				final IText input = new TextInput(user, "motd", true, ess);
+				final IText output = new KeywordReplacer(input, user, ess);
+				final TextPager pager = new TextPager(output, true);
+				pager.showPage("1", null, "motd", user);
+			}
+			catch (IOException ex)
+			{
+				if (settings.getData().getGeneral().isDebug())
+				{
+					LOGGER.log(Level.WARNING, ex.getMessage(), ex);
+				}
+				else
+				{
+					LOGGER.log(Level.WARNING, ex.getMessage());
+				}
+			}
+		}
 
-		 if (!settings.getData().getCommands().isDisabled("mail") && Permissions.MAIL.isAuthorized(user))
-		 {
-		 final List<String> mail = user.getData().getMails();
-		 if (mail == null || mail.isEmpty())
-		 {
-		 user.sendMessage(_("noNewMail"));
-		 }
-		 else
-		 {
-		 user.sendMessage(_("youHaveNewMail", mail.size()));
-		 }
-		 }*/
+		if (!settings.getData().getCommands().isDisabled("mail") && Permissions.MAIL.isAuthorized(user))
+		{
+			final List<String> mail = user.getData().getMails();
+			if (mail == null || mail.isEmpty())
+			{
+				user.sendMessage(_("noNewMail"));
+			}
+			else
+			{
+				user.sendMessage(_("youHaveNewMail", mail.size()));
+			}
+		}*/
 	}
 
 	public void delayedJoin(final Player player)
@@ -331,19 +330,19 @@ public class EssentialsPlayerListener implements Listener
 				user.sendMessage(_("youHaveNewMail", mail.size()));
 			}
 		}
-		if (Permissions.FLY_SAFELOGIN.isAuthorized(user))
+		if(Permissions.FLY_SAFELOGIN.isAuthorized(user))
 		{
 			final Location loc = user.getPlayer().getLocation();
 			final World world = loc.getWorld();
 			final int x = loc.getBlockX();
 			int y = loc.getBlockY();
 			final int z = loc.getBlockZ();
-			while (LocationUtil.isBlockUnsafe(world, x, y, z) && y > -1)
+			while(LocationUtil.isBlockUnsafe(world, x, y, z) && y > -1)
 			{
 				y--;
 			}
 
-			if (loc.getBlockY() - y > 1 || y < 0)
+			if(loc.getBlockY() - y > 1 || y < 0)
 			{
 				user.getPlayer().setAllowFlight(true);
 				user.getPlayer().setFlying(true);
@@ -351,6 +350,7 @@ public class EssentialsPlayerListener implements Listener
 			}
 		}
 	}
+
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerLogin(final PlayerLoginEvent event)
@@ -449,6 +449,7 @@ public class EssentialsPlayerListener implements Listener
 					});
 		}
 	}
+
 	private final Pattern spaceSplit = Pattern.compile(" ");
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -612,7 +613,7 @@ public class EssentialsPlayerListener implements Listener
 			{
 				final IUser invOwner = userMap.getUser((Player)invHolder);
 				if (user.isInvSee() && (!Permissions.INVSEE_MODIFY.isAuthorized(user) || Permissions.INVSEE_PREVENT_MODIFY.isAuthorized(
-										invOwner) || !invOwner.isOnline()))
+						invOwner) || !invOwner.isOnline()))
 				{
 					event.setCancelled(true);
 				}
@@ -620,7 +621,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 		if (event.getView().getTopInventory().getType() == InventoryType.WORKBENCH)
 		{
-			final IUser user = userMap.getUser((Player)event.getWhoClicked());
+			final IUser user = userMap.getUser((Player) event.getWhoClicked());
 			if (user.isRecipeSee())
 			{
 				event.setCancelled(true);

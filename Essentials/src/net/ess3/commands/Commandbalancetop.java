@@ -109,7 +109,7 @@ public class Commandbalancetop extends EssentialsCommand
 
 	private class Calculator implements Runnable
 	{
-		private final Viewer viewer;
+		private final transient Viewer viewer;
 		private final boolean force;
 
 		public Calculator(final Viewer viewer, final boolean force)
@@ -176,9 +176,9 @@ public class Commandbalancetop extends EssentialsCommand
 
 	private class Viewer implements Runnable
 	{
-		private final CommandSender sender;
-		private final int page;
-		private final boolean force;
+		private final transient CommandSender sender;
+		private final transient int page;
+		private final transient boolean force;
 
 		public Viewer(final CommandSender sender, final int page, final boolean force)
 		{

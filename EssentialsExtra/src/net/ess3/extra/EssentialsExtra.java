@@ -68,9 +68,8 @@ public class EssentialsExtra extends JavaPlugin
 					}
 				}
 			}
-			urls = new URL[]
-			{
-				commandDir.toURI().toURL()
+			urls = new URL[]{
+					commandDir.toURI().toURL()
 			};
 		}
 		catch (Exception ex)

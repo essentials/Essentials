@@ -13,10 +13,10 @@ import org.bukkit.command.CommandSender;
 
 public class TextInput implements IText
 {
-	private final List<String> lines;
-	private final List<String> chapters;
-	private final Map<String, Integer> bookmarks;
-	private final long lastChange;
+	private final transient List<String> lines;
+	private final transient List<String> chapters;
+	private final transient Map<String, Integer> bookmarks;
+	private final transient long lastChange;
 	private final static HashMap<String, SoftReference<TextInput>> cache = new HashMap<String, SoftReference<TextInput>>();
 
 	public TextInput(final CommandSender sender, final String filename, final boolean createFile, final IEssentials ess) throws IOException

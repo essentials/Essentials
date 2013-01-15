@@ -7,6 +7,7 @@ import net.ess3.api.IUser;
 
 public class Commandspawnmob extends EssentialsCommand
 {
+
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{

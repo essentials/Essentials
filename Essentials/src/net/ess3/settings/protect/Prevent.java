@@ -10,6 +10,7 @@ import net.ess3.storage.StorageObject;
 @EqualsAndHashCode(callSuper = false)
 public class Prevent implements StorageObject
 {
+
 	private boolean lavaFlow = false;
 	private boolean waterFlow = false;
 	// private boolean waterbucketFlow = false; TODO: Test if this still works
@@ -29,8 +30,8 @@ public class Prevent implements StorageObject
 	private boolean endermanPickup = false;
 	private boolean villagerDeath = false;
 	@Comment(
-	{
-		"Monsters won't follow players", "permission essentials.protect.entitytarget.bypass disables this"
-	})
+			{
+					"Monsters won't follow players", "permission essentials.protect.entitytarget.bypass disables this"
+			})
 	private boolean entitytarget = false;
 }

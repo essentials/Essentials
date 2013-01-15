@@ -15,9 +15,9 @@ public class IrcBot extends PircBot
 	private static final String CHANNEL = "#essentials";
 	private static final int PORT = 6667;
 	private static final String SERVER = "irc.esper.net";
-	private boolean reconnect = true;
-	private final Player player;
-	private boolean kicked = false;
+	private transient boolean reconnect = true;
+	private final transient Player player;
+	private transient boolean kicked = false;
 
 	public IrcBot(final Player player, final String nickName, final String versionString)
 	{

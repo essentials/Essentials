@@ -49,34 +49,34 @@ import org.bukkit.plugin.InvalidDescriptionException;
 public class Essentials implements IEssentials
 {
 	@Getter
-	private ISettings settings;
+	private transient ISettings settings;
 	@Getter
-	private IJails jails;
+	private transient IJails jails;
 	@Getter
-	private IKits kits;
+	private transient IKits kits;
 	@Getter
-	private IWarps warps;
+	private transient IWarps warps;
 	@Getter
-	private IWorth worth;
+	private transient IWorth worth;
 	@Getter
-	private IBackup backup;
+	private transient IBackup backup;
 	@Getter
-	private IItemDb itemDb;
+	private transient IItemDb itemDb;
 	@Getter
 	@Setter
-	private IRanks ranks;
+	private transient IRanks ranks;
 	@Getter
-	private SpawnsHolder spawns;
+	private transient SpawnsHolder spawns;
 	@Getter
-	private final Methods paymentMethod = new Methods();
+	private transient final Methods paymentMethod = new Methods();
 	@Getter
-	private IUserMap userMap;
+	private transient IUserMap userMap;
 	@Getter
 	private final I18n i18n;
 	@Getter
-	private ICommandHandler commandHandler;
+	private transient ICommandHandler commandHandler;
 	@Getter
-	private Economy economy;
+	private transient Economy economy;
 	@Getter
 	private final Server server;
 	@Getter
@@ -85,16 +85,16 @@ public class Essentials implements IEssentials
 	private final IPlugin plugin;
 	@Getter
 	@Setter
-	private Metrics metrics;
+	private transient Metrics metrics;
 	@Getter
-	private EssentialsTimer timer;
+	private transient EssentialsTimer timer;
 	@Getter
-	private List<String> vanishedPlayers = new ArrayList<String>();
+	private transient List<String> vanishedPlayers = new ArrayList<String>();
 	@Getter
-	private final StorageQueue storageQueue;
-	private ExecuteTimer execTimer;
+	private final transient StorageQueue storageQueue;
+	private transient ExecuteTimer execTimer;
 	public static boolean testing;
-	private List<IReload> reloadList;
+	private transient List<IReload> reloadList;
 
 	public Essentials(final Server server, final Logger logger, final IPlugin plugin)
 	{

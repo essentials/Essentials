@@ -12,10 +12,10 @@ import org.bukkit.entity.Player;
 
 public class EssentialsTimer implements Runnable
 {
-	private final IEssentials ess;
-	private final Set<IUser> onlineUsers = new HashSet<IUser>();
-	private long lastPoll = System.currentTimeMillis();
-	private final LinkedList<Float> history = new LinkedList<Float>();
+	private final transient IEssentials ess;
+	private final transient Set<IUser> onlineUsers = new HashSet<IUser>();
+	private transient long lastPoll = System.currentTimeMillis();
+	private final transient LinkedList<Float> history = new LinkedList<Float>();
 
 	EssentialsTimer(final IEssentials ess)
 	{

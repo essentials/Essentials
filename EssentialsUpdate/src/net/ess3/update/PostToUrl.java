@@ -14,9 +14,9 @@ import java.util.Random;
 
 public class PostToUrl
 {
-	private final URL url;
-	private final String boundary;
-	private final Random random = new Random();
+	private final transient URL url;
+	private final transient String boundary;
+	private final transient Random random = new Random();
 	private final static String CRLF = "\r\n";
 	private final static Charset UTF8 = Charset.forName("utf-8");
 

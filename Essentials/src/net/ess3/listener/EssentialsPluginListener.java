@@ -19,7 +19,7 @@ import org.bukkit.plugin.Plugin;
 
 public class EssentialsPluginListener implements Listener, IReload
 {
-	private final IEssentials ess;
+	private final transient IEssentials ess;
 
 	public EssentialsPluginListener(final IEssentials ess)
 	{
@@ -36,10 +36,9 @@ public class EssentialsPluginListener implements Listener, IReload
 		if (!Methods.hasMethod() && Methods.setMethod(ess.getServer().getPluginManager()))
 		{
 			ess.getLogger().log(
-					Level.INFO, "Payment method found ({0} version: {1})", new Object[]
-					{
-						Methods.getMethod().getName(), Methods.getMethod().getVersion()
-					});
+					Level.INFO, "Payment method found ({0} version: {1})", new Object[]{
+					Methods.getMethod().getName(), Methods.getMethod().getVersion()
+			});
 		}
 	}
 

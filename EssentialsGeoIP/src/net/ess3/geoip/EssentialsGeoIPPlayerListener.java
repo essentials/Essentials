@@ -26,12 +26,12 @@ import org.bukkit.plugin.Plugin;
 
 public class EssentialsGeoIPPlayerListener implements Listener, IReload
 {
-	private LookupService ls = null;
+	private transient LookupService ls = null;
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private File databaseFile;
-	private final ConfigHolder config;
-	private final IEssentials ess;
-	private final Plugin geoip;
+	private transient File databaseFile;
+	private final transient ConfigHolder config;
+	private final transient IEssentials ess;
+	private final transient Plugin geoip;
 
 	public EssentialsGeoIPPlayerListener(final Plugin geoip, final IEssentials ess)
 	{

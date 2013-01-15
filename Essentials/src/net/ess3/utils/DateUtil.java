@@ -30,13 +30,11 @@ public class DateUtil
 		}
 
 		StringBuilder sb = new StringBuilder();
-		int[] types = new int[]
-		{
-			Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND
+		int[] types = new int[]{
+				Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND
 		};
-		String[] names = new String[]
-		{
-			_("year"), _("years"), _("month"), _("months"), _("day"), _("days"), _("hour"), _("hours"), _("minute"), _("minutes"), _("second"), _("seconds")
+		String[] names = new String[]{
+				_("year"), _("years"), _("month"), _("months"), _("day"), _("days"), _("hour"), _("hours"), _("minute"), _("minutes"), _("second"), _("seconds")
 		};
 		for (int i = 0; i < types.length; i++)
 		{

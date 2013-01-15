@@ -19,15 +19,16 @@ import org.bukkit.inventory.ItemStack;
 
 public class ItemDb implements IItemDb
 {
-	private final IEssentials ess;
+	private final transient IEssentials ess;
 
 	public ItemDb(final IEssentials ess)
 	{
 		this.ess = ess;
 		file = new ManagedFile("items.csv", ess);
 	}
-	private final Map<String, Long> items = new HashMap<String, Long>();
-	private final ManagedFile file;
+
+	private final transient Map<String, Long> items = new HashMap<String, Long>();
+	private final transient ManagedFile file;
 	private static final Pattern SPLIT = Pattern.compile("[^a-zA-Z0-9]");
 
 	@Override
@@ -94,6 +95,7 @@ public class ItemDb implements IItemDb
 		retval.setAmount(quantity);
 		return retval;
 	}
+
 	private final Pattern idMatch = Pattern.compile("^\\d+[:+',;.]\\d+$");
 	private final Pattern metaSplit = Pattern.compile("[:+',;.]");
 	private final Pattern conjoined = Pattern.compile("^[^:+',;.]+[:+',;.]\\d+$");

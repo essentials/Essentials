@@ -11,8 +11,8 @@ import org.bukkit.plugin.Plugin;
 public class EssentialsConnect
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private final IEssentials ess;
-	private final IProtect protect;
+	private final transient IEssentials ess;
+	private final transient IProtect protect;
 
 	public EssentialsConnect(final Plugin essPlugin, final Plugin essProtect)
 	{

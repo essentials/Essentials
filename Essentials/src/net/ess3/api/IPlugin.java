@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 public interface IPlugin extends Plugin
 {
+
 	/**
 	 * Get an instance of essentials
 	 *
@@ -35,7 +36,7 @@ public interface IPlugin extends Plugin
 	/**
 	 * Call an a-sync task to be run with a given delay
 	 *
-	 * @param run - Code to be run
+	 * @param run   - Code to be run
 	 * @param delay - Long that represents how long to wait
 	 * @return - BukkitTask for the task created
 	 */
@@ -44,7 +45,7 @@ public interface IPlugin extends Plugin
 	/**
 	 * Schedule a sync (ran in main thread) delayed task
 	 *
-	 * @param run - Code to run
+	 * @param run   - Code to run
 	 * @param delay - Long that represents how long to wait
 	 * @return - Integer of the task ID
 	 */
@@ -53,8 +54,8 @@ public interface IPlugin extends Plugin
 	/**
 	 * Schedule a sync (in the main thread) repeating task
 	 *
-	 * @param run - Code to run
-	 * @param delay - Delay for the first run
+	 * @param run    - Code to run
+	 * @param delay  - Delay for the first run
 	 * @param period - Time to wait between every run after the first
 	 * @return - int of the task ID
 	 */
@@ -63,8 +64,8 @@ public interface IPlugin extends Plugin
 	/**
 	 * Schedule an a-sync repeating task
 	 *
-	 * @param run - Code to run
-	 * @param delay - Delay for the first run
+	 * @param run    - Code to run
+	 * @param delay  - Delay for the first run
 	 * @param period - Time to wait between every run after the first
 	 * @return - int of the task ID
 	 */
@@ -104,8 +105,8 @@ public interface IPlugin extends Plugin
 	/**
 	 * Call a re-spawn event on a player
 	 *
-	 * @param player - Player to re-spawn
-	 * @param loc - Location to send
+	 * @param player   - Player to re-spawn
+	 * @param loc      - Location to send
 	 * @param bedSpawn - do you use bed?
 	 * @return - Location after event called
 	 */
@@ -136,4 +137,5 @@ public interface IPlugin extends Plugin
 	 * @param module - Your plugin instance
 	 */
 	void registerModule(Plugin module);
+
 }

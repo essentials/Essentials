@@ -21,6 +21,7 @@ public class SocialSpy implements StorageObject
 			socialspyCommands.addAll(Arrays.asList("msg", "r", "mail", "m", "t", "emsg", "tell", "er", "reply", "ereply", "email"));
 		}
 	}
+
 	@ListType
 	@Comment("Commands to listen for in socialspy")
 	private List<String> socialspyCommands = new ArrayList<String>();

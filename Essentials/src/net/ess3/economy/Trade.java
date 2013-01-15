@@ -22,12 +22,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class Trade
 {
-	private final String command;
-	private final String fallbackCommand;
-	private final Double money;
-	private final ItemStack itemStack;
-	private final Integer exp;
-	private final IEssentials ess;
+	private final transient String command;
+	private final transient String fallbackCommand;
+	private final transient Double money;
+	private final transient ItemStack itemStack;
+	private final transient Integer exp;
+	private final transient IEssentials ess;
 
 	public Trade(final String command, final IEssentials ess)
 	{
@@ -211,6 +211,7 @@ public class Trade
 		}
 		return cost;
 	}
+
 	private static FileWriter fw = null;
 
 	public static void log(String type, String subtype, String event, String sender, Trade charge, String receiver, Trade pay, Location loc, IEssentials ess)

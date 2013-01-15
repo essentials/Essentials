@@ -12,8 +12,8 @@ import org.bukkit.plugin.Plugin;
 
 public class GMGroups extends AbstractRanks implements IRanks
 {
-	private final IEssentials ess;
-	private final GroupManager groupManager;
+	private final transient IEssentials ess;
+	private final transient GroupManager groupManager;
 
 	public GMGroups(final IEssentials ess, final Plugin groupManager)
 	{

@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class Commandgive extends EssentialsCommand
 {
-	private final Pattern data = Pattern.compile("[:+',;.]");
+	private final transient Pattern data = Pattern.compile("[:+',;.]");
 
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception

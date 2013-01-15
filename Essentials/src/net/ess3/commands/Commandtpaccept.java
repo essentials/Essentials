@@ -21,7 +21,7 @@ public class Commandtpaccept extends EssentialsCommand
 
 		final IUser target = user.getTeleportRequester();
 		if (target == null || !target.isOnline() || (user.isTpRequestHere() && !Permissions.TPAHERE.isAuthorized(
-													 target)) || (!user.isTpRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
+				target)) || (!user.isTpRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}

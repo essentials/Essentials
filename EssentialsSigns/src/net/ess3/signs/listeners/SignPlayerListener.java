@@ -15,8 +15,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class SignPlayerListener implements Listener
 {
-	private final IEssentials ess;
-	private final ISignsPlugin plugin;
+	private final transient IEssentials ess;
+	private final transient ISignsPlugin plugin;
 
 	public SignPlayerListener(final IEssentials ess, final ISignsPlugin plugin)
 	{

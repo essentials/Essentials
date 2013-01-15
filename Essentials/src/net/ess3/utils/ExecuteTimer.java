@@ -9,8 +9,9 @@ import java.util.Locale;
 
 public class ExecuteTimer
 {
-	private final List<ExecuteRecord> times;
-	private final DecimalFormat decimalFormat = new DecimalFormat("#0.000", DecimalFormatSymbols.getInstance(Locale.US));
+	private final transient List<ExecuteRecord> times;
+	private final transient DecimalFormat decimalFormat = new DecimalFormat("#0.000", DecimalFormatSymbols.getInstance(Locale.US));
+
 
 	public ExecuteTimer()
 	{

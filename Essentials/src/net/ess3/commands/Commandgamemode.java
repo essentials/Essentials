@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 
 public class Commandgamemode extends EssentialsSettingsCommand
 {
+
 	protected void setValue(final IUser player, GameMode value)
 	{
 		if (value == null)
@@ -123,4 +124,5 @@ public class Commandgamemode extends EssentialsSettingsCommand
 		}
 		return mode;
 	}
+
 }

@@ -5,6 +5,7 @@ import net.ess3.api.IUser;
 
 public abstract class EssentialsToggleCommand extends EssentialsSettingsCommand
 {
+
 	abstract protected void setValue(final IUser player, final boolean value);
 
 	abstract protected boolean getValue(final IUser player);

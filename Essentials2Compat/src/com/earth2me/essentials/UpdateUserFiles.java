@@ -134,6 +134,7 @@ class UpdateUserFiles
 		String realname = getPlayer(name);
 		return realname == null ? BROKENNAME : realname;
 	}
+
 	private final Map<String, String> players = new HashMap<String, String>();
 
 	private String getPlayer(String check)

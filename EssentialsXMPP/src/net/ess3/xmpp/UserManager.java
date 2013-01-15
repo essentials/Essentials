@@ -11,9 +11,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class UserManager implements IReload
 {
-	private YamlConfiguration users;
-	private final File folder;
-	private final List<String> spyusers = new ArrayList<String>();
+	private transient YamlConfiguration users;
+	private final transient File folder;
+	private final transient List<String> spyusers = new ArrayList<String>();
 	private final static String ADDRESS = "address";
 	private final static String SPY = "spy";
 

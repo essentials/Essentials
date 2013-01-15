@@ -9,4 +9,5 @@ import net.ess3.storage.StorageObject;
 @EqualsAndHashCode(callSuper = false)
 public class Worlds implements StorageObject
 {
+
 }

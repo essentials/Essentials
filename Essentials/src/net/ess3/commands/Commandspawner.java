@@ -46,7 +46,7 @@ public class Commandspawner extends EssentialsCommand
 				throw new Exception(_("unableToSpawnMob"));
 			}
 			int delay = 0;
-			if (args.length > 1 && Util.isInt(args[1]))
+			if(args.length > 1 && Util.isInt(args[1]))
 			{
 				delay = Integer.parseInt(args[1]);
 			}

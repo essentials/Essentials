@@ -21,9 +21,9 @@ import org.yaml.snakeyaml.nodes.*;
 
 public class BukkitConstructor extends Constructor
 {
-	private final Pattern DATAPATTERN = Pattern.compile("[:+',;.]");
-	private final Pattern WORD = Pattern.compile("\\W");
-	private final IPlugin plugin;
+	private final transient Pattern DATAPATTERN = Pattern.compile("[:+',;.]");
+	private final transient Pattern WORD = Pattern.compile("\\W");
+	private final transient IPlugin plugin;
 
 	public BukkitConstructor(final Class<?> clazz, final IPlugin plugin)
 	{

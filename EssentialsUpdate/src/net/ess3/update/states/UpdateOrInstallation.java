@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 
 public class UpdateOrInstallation extends AbstractState
 {
-	private final UpdateCheck updateCheck;
-	private boolean update = false;
+	private final transient UpdateCheck updateCheck;
+	private transient boolean update = false;
 
 	public UpdateOrInstallation(final StateMap stateMap, final UpdateCheck updateCheck)
 	{

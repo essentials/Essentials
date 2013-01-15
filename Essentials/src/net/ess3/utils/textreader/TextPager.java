@@ -10,8 +10,8 @@ import org.bukkit.command.CommandSender;
 
 public class TextPager
 {
-	private final IText text;
-	private final boolean onePage;
+	private final transient IText text;
+	private final transient boolean onePage;
 
 	public TextPager(final IText text)
 	{

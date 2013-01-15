@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class Commandessentials extends EssentialsCommand
 {
-	private int taskid; // TODO: Needed?
+	private transient int taskid; // TODO: Needed?
 
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception

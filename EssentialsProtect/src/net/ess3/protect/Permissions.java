@@ -29,7 +29,7 @@ public enum Permissions implements IPermission
 	private static final String base = "essentials.protect.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;
-	private String parent = null;
+	private transient String parent = null;
 
 	private Permissions()
 	{
@@ -72,5 +72,6 @@ public enum Permissions implements IPermission
 	{
 		return PermissionFactory.checkPermission(sender, this);
 	}
+
 	public static DotStarPermission ENTITY_TARGET_BYPASS = new DotStarPermission("essentials.protect.entitytarget.bypass");
 }

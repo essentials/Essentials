@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 public class SimpleTextPager
 {
-	private final IText text;
+	private final transient IText text;
 
 	public SimpleTextPager(final IText text)
 	{

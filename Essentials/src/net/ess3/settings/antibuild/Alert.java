@@ -32,9 +32,8 @@ public class Alert implements StorageObject
 
 	public void setupDefaults()
 	{
-		Material[] mat =
-		{
-			Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
+		Material[] mat = {
+				Material.LAVA, Material.STATIONARY_LAVA, Material.TNT, Material.LAVA_BUCKET
 		};
 		alertOnPlacement.addAll(Arrays.asList(mat));
 		alertOnUse.add(Material.LAVA_BUCKET);

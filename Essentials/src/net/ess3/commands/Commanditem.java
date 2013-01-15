@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class Commanditem extends EssentialsCommand
 {
-	private final Pattern data = Pattern.compile("[:+',;.]");
+	private final transient Pattern data = Pattern.compile("[:+',;.]");
 
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception

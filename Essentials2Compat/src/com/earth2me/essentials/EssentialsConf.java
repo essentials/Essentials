@@ -29,9 +29,9 @@ import net.ess3.storage.StoredLocation;
 public class EssentialsConf extends YamlConfiguration
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private File configFile;
-	private String templateName = null;
-	private Class<?> resourceClass = EssentialsConf.class;
+	private transient File configFile;
+	private transient String templateName = null;
+	private transient Class<?> resourceClass = EssentialsConf.class;
 	private static final Charset UTF8 = Charset.forName("UTF-8");
 
 	public EssentialsConf(final File configFile)

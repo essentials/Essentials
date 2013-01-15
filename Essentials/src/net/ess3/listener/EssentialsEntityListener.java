@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsEntityListener implements Listener
 {
-	private final IEssentials ess;
+	private final transient IEssentials ess;
 
 	public EssentialsEntityListener(final IEssentials ess)
 	{
@@ -41,7 +41,7 @@ public class EssentialsEntityListener implements Listener
 			attacker.updateActivity(true);
 			if (settings.getData().getGeneral().getLoginAttackDelay() > 0 && !Permissions.PVPDELAY_EXEMPT.isAuthorized(
 					attacker) && (System.currentTimeMillis() < (attacker.getTimestamp(
-																TimestampType.LOGIN) + settings.getData().getGeneral().getLoginAttackDelay())))
+					TimestampType.LOGIN) + settings.getData().getGeneral().getLoginAttackDelay())))
 			{
 				event.setCancelled(true);
 			}

@@ -121,7 +121,7 @@ public enum Permissions implements IPermission
 	private static final String base = "essentials.";
 	private final String permission;
 	private final PermissionDefault defaultPerm;
-	private String parent = null;
+	private transient String parent = null;
 
 	private Permissions()
 	{
@@ -164,6 +164,7 @@ public enum Permissions implements IPermission
 	{
 		return PermissionFactory.checkPermission(sender, this);
 	}
+
 	public static DotStarPermission ENCHANT = new DotStarPermission("essentials.enchant");
 	public static MaterialDotStarPermission GIVE = new MaterialDotStarPermission("essentials.give", PermissionDefault.TRUE);
 	public static DotStarPermission RANKS = new DotStarPermission("essentials.ranks");

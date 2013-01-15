@@ -38,7 +38,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 	/**
 	 * Sets a spawn location
 	 *
-	 * @param loc - Location you want to set as spawn
+	 * @param loc   - Location you want to set as spawn
 	 * @param group - Group to save it undr in the config
 	 */
 	public void setSpawn(final Location loc, final String group)
@@ -174,8 +174,8 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 	private class SpawnPlayerListener implements Listener // TODO: What is this for?
 	{
-		private final IEssentials ess;
-		private final SpawnsHolder spawns;
+		private final transient IEssentials ess;
+		private final transient SpawnsHolder spawns;
 
 		public SpawnPlayerListener(final IEssentials ess, final SpawnsHolder spawns)
 		{
@@ -187,6 +187,8 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		public void onPlayerRespawn(final PlayerRespawnEvent event)
 		{
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
+
+			final ISettings settings = ess.getSettings();
 			boolean respawnAtHome = ess.getSettings().getData().getCommands().getHome().isRespawnAtHome();
 			if (respawnAtHome)
 			{
@@ -238,7 +240,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 
 		private class NewPlayerTeleport implements Runnable
 		{
-			private final IUser user;
+			private final transient IUser user;
 
 			public NewPlayerTeleport(final IUser user)
 			{

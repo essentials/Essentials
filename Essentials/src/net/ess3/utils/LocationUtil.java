@@ -69,6 +69,7 @@ public class LocationUtil
 		}
 		return block.getLocation();
 	}
+
 	public final static int RADIUS = 3;
 	public final static Vector3D[] VOLUME;
 
@@ -81,10 +82,12 @@ public class LocationUtil
 			this.y = y;
 			this.z = z;
 		}
+
 		public int x;
 		public int y;
 		public int z;
 	}
+
 
 	static
 	{
@@ -210,7 +213,7 @@ public class LocationUtil
 		}
 
 		if ((!AIR_MATERIALS.contains(world.getBlockAt(x, y, z).getType().getId())) || (!AIR_MATERIALS.contains(
-																					   world.getBlockAt(x, y + 1, z).getType().getId())))
+				world.getBlockAt(x, y + 1, z).getType().getId())))
 		{
 			return true;
 		}

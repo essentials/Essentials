@@ -9,7 +9,7 @@ import org.bukkit.plugin.Plugin;
 
 public class SignsConfigHolder extends AsyncStorageObjectHolder<SignConfig>
 {
-	private final Plugin plugin;
+	private final transient Plugin plugin;
 	private Set<EssentialsSign> enabledSigns = new HashSet<EssentialsSign>();
 	private boolean signsEnabled = false;
 

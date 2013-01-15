@@ -4,8 +4,8 @@ package net.ess3.update.states;
 public abstract class AbstractYesNoState extends AbstractState
 {
 	private boolean answer = false;
-	private final Class<? extends AbstractState> yesState;
-	private final Class<? extends AbstractState> noState;
+	private final transient Class<? extends AbstractState> yesState;
+	private final transient Class<? extends AbstractState> noState;
 
 	public AbstractYesNoState(final StateMap states, final Class<? extends AbstractState> nextState)
 	{

@@ -1,5 +1,6 @@
 package com.earth2me.essentials;
 
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +24,7 @@ public interface ISettings
 	long getBackupInterval();
 
 	//MessageFormat getChatFormat(String group);
+
 	int getChatRadius();
 
 	double getCommandCost(String label);

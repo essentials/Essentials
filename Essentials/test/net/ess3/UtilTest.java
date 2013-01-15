@@ -11,6 +11,7 @@ import net.ess3.utils.Util;
 
 public class UtilTest extends EssentialsTest
 {
+
 	public UtilTest(String name)
 	{
 		super(name);

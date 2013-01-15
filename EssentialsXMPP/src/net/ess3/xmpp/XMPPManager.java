@@ -19,17 +19,17 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private static final SimpleFormatter formatter = new SimpleFormatter();
-	private YamlConfiguration config = null;
-	private XMPPConnection connection;
-	private ChatManager chatManager;
-	private final Map<String, Chat> chats = Collections.synchronizedMap(new HashMap<String, Chat>());
-	private final Set<LogRecord> logrecords = Collections.synchronizedSet(new HashSet<LogRecord>());
-	private final IEssentialsXMPP parent;
-	private List<String> logUsers;
-	private Level logLevel;
-	private boolean ignoreLagMessages = true;
-	private Thread loggerThread;
-	private boolean threadrunning = true;
+	private transient YamlConfiguration config = null;
+	private transient XMPPConnection connection;
+	private transient ChatManager chatManager;
+	private final transient Map<String, Chat> chats = Collections.synchronizedMap(new HashMap<String, Chat>());
+	private final transient Set<LogRecord> logrecords = Collections.synchronizedSet(new HashSet<LogRecord>());
+	private final transient IEssentialsXMPP parent;
+	private transient List<String> logUsers;
+	private transient Level logLevel;
+	private transient boolean ignoreLagMessages = true;
+	private transient Thread loggerThread;
+	private transient boolean threadrunning = true;
 
 	public XMPPManager(final IEssentialsXMPP parent)
 	{

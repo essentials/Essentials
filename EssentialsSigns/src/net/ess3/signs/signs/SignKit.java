@@ -55,7 +55,7 @@ public class SignKit extends EssentialsSign
 		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH);
 		final String group = sign.getLine(2);
 		if ((!group.isEmpty() && ("§2Everyone".equals(group) || ess.getRanks().inGroup(player, group))) || (group.isEmpty() && Permissions.KITS.isAuthorized(
-																											player, kitName)))
+				player, kitName)))
 		{
 			final Trade charge = getTrade(sign, 3, ess);
 			charge.isAffordableFor(player);

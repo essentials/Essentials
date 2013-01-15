@@ -16,12 +16,12 @@ import org.bukkit.entity.Player;
 
 public abstract class EssentialsCommand extends AbstractSuperpermsPermission implements IEssentialsCommand
 {
-	protected String commandName;
-	protected IEssentials ess;
-	protected IEssentialsModule module;
-	protected Server server;
-	protected Logger logger;
-	private String permission;
+	protected transient String commandName;
+	protected transient IEssentials ess;
+	protected transient IEssentialsModule module;
+	protected transient Server server;
+	protected transient Logger logger;
+	private transient String permission;
 
 	@Override
 	public void init(final IEssentials ess, final String commandName)

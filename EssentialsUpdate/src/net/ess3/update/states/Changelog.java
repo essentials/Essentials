@@ -9,10 +9,10 @@ import org.bukkit.entity.Player;
 public class Changelog extends AbstractState
 {
 	private static final int CHANGES_PER_PAGE = 5;
-	private int page = 0;
-	private boolean confirmed = false;
-	private final List<String> changes;
-	private final int pages;
+	private transient int page = 0;
+	private transient boolean confirmed = false;
+	private transient final List<String> changes;
+	private transient final int pages;
 
 	public Changelog(final StateMap stateMap)
 	{

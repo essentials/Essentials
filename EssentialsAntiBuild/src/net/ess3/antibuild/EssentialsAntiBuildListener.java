@@ -26,8 +26,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsAntiBuildListener implements Listener
 {
-	final private IAntiBuild antib;
-	final private IEssentials ess;
+	final private transient IAntiBuild antib;
+	final private transient IEssentials ess;
 
 	public EssentialsAntiBuildListener(final IAntiBuild parent)
 	{

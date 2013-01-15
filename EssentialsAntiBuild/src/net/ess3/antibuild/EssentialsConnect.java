@@ -13,8 +13,8 @@ import org.bukkit.plugin.Plugin;
 public class EssentialsConnect
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private final IEssentials ess;
-	private final IAntiBuild antib;
+	private final transient IEssentials ess;
+	private final transient IAntiBuild antib;
 
 	public EssentialsConnect(Plugin essPlugin, Plugin essProtect)
 	{

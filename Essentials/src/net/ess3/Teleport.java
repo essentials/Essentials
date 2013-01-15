@@ -21,6 +21,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 public class Teleport implements Runnable, ITeleport
 {
 	private static final double MOVE_CONSTANT = 0.3;
+
 	private IUser user;
 	private IUser teleportUser;
 	private int teleTimer = -1;
@@ -74,9 +75,9 @@ public class Teleport implements Runnable, ITeleport
 		}
 
 		if (!Permissions.TELEPORT_TIMER_MOVE.isAuthorized(user) && (Math.round(
-																	teleportUser.getPlayer().getLocation().getX() * MOVE_CONSTANT) != initX || Math.round(
-																	teleportUser.getPlayer().getLocation().getY() * MOVE_CONSTANT) != initY || Math.round(
-																	teleportUser.getPlayer().getLocation().getZ() * MOVE_CONSTANT) != initZ || teleportUser.getPlayer().getHealth() < health))
+				teleportUser.getPlayer().getLocation().getX() * MOVE_CONSTANT) != initX || Math.round(
+				teleportUser.getPlayer().getLocation().getY() * MOVE_CONSTANT) != initY || Math.round(
+				teleportUser.getPlayer().getLocation().getZ() * MOVE_CONSTANT) != initZ || teleportUser.getPlayer().getHealth() < health))
 		{    // user moved, cancel teleport
 			cancel(true);
 			return;
@@ -121,6 +122,7 @@ public class Teleport implements Runnable, ITeleport
 		this.user = user;
 		this.ess = ess;
 	}
+
 
 	public void cooldown(boolean check) throws Exception
 	{
@@ -230,6 +232,7 @@ public class Teleport implements Runnable, ITeleport
 		}
 		now(new Target(loc), cause);
 	}
+
 
 	@Override
 	//The now function is used when you want to skip tp delay when teleporting someone to a location or player.

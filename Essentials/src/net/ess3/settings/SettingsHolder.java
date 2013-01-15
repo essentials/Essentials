@@ -8,7 +8,7 @@ import net.ess3.storage.AsyncStorageObjectHolder;
 
 public class SettingsHolder extends AsyncStorageObjectHolder<Settings> implements ISettings
 {
-	private volatile boolean debug = false;
+	private transient volatile boolean debug = false;
 
 	public SettingsHolder(final IEssentials ess)
 	{

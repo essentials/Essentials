@@ -30,3 +30,4 @@ public class Target
 		return location;
 	}
 }
+

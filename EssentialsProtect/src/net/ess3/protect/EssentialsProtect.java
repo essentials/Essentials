@@ -11,8 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class EssentialsProtect extends JavaPlugin implements IProtect
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private EssentialsConnect ess = null;
-	private ProtectHolder settings = null;
+	private transient EssentialsConnect ess = null;
+	private transient ProtectHolder settings = null;
 
 	@Override
 	public void onEnable()

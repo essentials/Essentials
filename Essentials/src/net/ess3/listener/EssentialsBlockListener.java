@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsBlockListener implements Listener
 {
-	private final IEssentials ess;
+	private final transient IEssentials ess;
 
 	public EssentialsBlockListener(final IEssentials ess)
 	{

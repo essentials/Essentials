@@ -31,22 +31,22 @@ public class User extends UserBase implements IUser
 {
 	private CommandSender replyTo = null;
 	@Getter
-	private IUser teleportRequester;
+	private transient IUser teleportRequester;
 	@Getter
-	private boolean tpRequestHere;
+	private transient boolean tpRequestHere;
 	@Getter
-	private final ITeleport teleport;
+	private transient final ITeleport teleport;
 	@Getter
-	private long teleportRequestTime;
+	private transient long teleportRequestTime;
 	@Getter
 	@Setter
-	private long lastOnlineActivity;
-	private long lastActivity = System.currentTimeMillis();
+	private transient long lastOnlineActivity;
+	private transient long lastActivity = System.currentTimeMillis();
 	/*@Getter
 	 @Setter
 	 private boolean hidden = false;*/
 	@Getter
-	private boolean vanished;
+	private transient boolean vanished;
 	@Getter
 	@Setter
 	private boolean invSee = false;
@@ -54,7 +54,7 @@ public class User extends UserBase implements IUser
 	@Setter
 	private boolean enderSee = false;
 	private long lastThrottledAction;
-	private Location afkPosition;
+	private transient Location afkPosition;
 	private AtomicBoolean gotMailInfo = new AtomicBoolean(false);
 	private WeakReference<Player> playerCache;
 	@Getter
@@ -592,7 +592,8 @@ public class User extends UserBase implements IUser
 	{
 		return true;
 	}
-	private long teleportInvulnerabilityTimestamp = 0;
+
+	private transient long teleportInvulnerabilityTimestamp = 0;
 
 	public void enableInvulnerabilityAfterTeleport()
 	{
@@ -634,7 +635,7 @@ public class User extends UserBase implements IUser
 				}
 			}
 			ess.getVanishedPlayers().add(getName());
-			if (Permissions.VANISH_EFFECT.isAuthorized(this))
+			if(Permissions.VANISH_EFFECT.isAuthorized(this))
 			{
 				getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false));
 			}
@@ -646,7 +647,7 @@ public class User extends UserBase implements IUser
 				p.showPlayer(getPlayer());
 			}
 			ess.getVanishedPlayers().remove(getName());
-			if (Permissions.VANISH_EFFECT.isAuthorized(this))
+			if(Permissions.VANISH_EFFECT.isAuthorized(this))
 			{
 				getPlayer().removePotionEffect(PotionEffectType.INVISIBILITY);
 			}

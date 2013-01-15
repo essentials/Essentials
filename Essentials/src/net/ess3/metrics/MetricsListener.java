@@ -14,8 +14,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class MetricsListener implements Listener
 {
-	private final IEssentials ess;
-	private final MetricsStarter starter;
+	private final transient IEssentials ess;
+	private final transient MetricsStarter starter;
 
 	public MetricsListener(final IEssentials parent, final MetricsStarter starter)
 	{
@@ -30,7 +30,7 @@ public class MetricsListener implements Listener
 
 		ISettings settings = ess.getSettings();
 		if (settings.getData().getGeneral().getMetricsEnabled() == null && (Permissions.ESSENTIALS.isAuthorized(
-																			event.getPlayer()) || event.getPlayer().hasPermission("bukkit.broadcast.admin")))
+				event.getPlayer()) || event.getPlayer().hasPermission("bukkit.broadcast.admin")))
 		{
 			player.sendMessage(_("metrics1"));
 			player.sendMessage(_("metrics2"));
