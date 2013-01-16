@@ -55,10 +55,9 @@ public class Commandfirework extends EssentialsCommand
 				{
 					if (args[0].equalsIgnoreCase("clear"))
 					{
-						ItemStack newstack = new ItemStack(Material.FIREWORK, stack.getAmount());
 						fmeta.clearEffects();
-						newstack.setItemMeta(fmeta);
-						user.setItemInHand(newstack);
+						stack.setItemMeta(fmeta);
+						user.setItemInHand(stack);
 					}
 					else
 					{
@@ -133,16 +132,16 @@ public class Commandfirework extends EssentialsCommand
 								}
 								catch (NumberFormatException e)
 								{
+									user.sendMessage(_("invalidNumber"));
 								}
 							}
 						}
 						if (valid)
 						{
 							final FireworkEffect effect = builder.build();
-							ItemStack newfirework = new ItemStack(Material.FIREWORK, stack.getAmount());
 							fmeta.addEffect(effect);
-							newfirework.setItemMeta(fmeta);
-							user.setItemInHand(newfirework);
+							stack.setItemMeta(fmeta);
+							user.setItemInHand(stack);
 						}
 						else
 						{
