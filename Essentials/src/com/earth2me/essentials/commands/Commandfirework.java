@@ -57,7 +57,6 @@ public class Commandfirework extends EssentialsCommand
 					{
 						fmeta.clearEffects();
 						stack.setItemMeta(fmeta);
-						user.setItemInHand(stack);
 					}
 					else
 					{
@@ -157,7 +156,6 @@ public class Commandfirework extends EssentialsCommand
 							final FireworkEffect effect = builder.build();
 							fmeta.addEffect(effect);
 							stack.setItemMeta(fmeta);
-							user.setItemInHand(stack);
 						}
 						else
 						{
