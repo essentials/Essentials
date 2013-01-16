@@ -69,7 +69,7 @@ public class Commandfirework extends EssentialsCommand
 						for (String arg : args)
 						{
 							final String[] split = splitPattern.split(arg, 2);
-							if (split[0].equalsIgnoreCase("color") || split[0].equalsIgnoreCase("c"))
+							if (split[0].equalsIgnoreCase("color") || split[0].equalsIgnoreCase("colour") || split[0].equalsIgnoreCase("c"))
 							{
 								String[] colors = split[1].split(",");
 								for (String color : colors)
@@ -79,15 +79,23 @@ public class Commandfirework extends EssentialsCommand
 										valid = true;
 										primaryColors.add(colorMap.get(color.toUpperCase()).getFireworkColor());
 									}
+									else
+									{
+										user.sendMessage(_("invalidFireworkFormat", split[1], split[0]));
+									}
 								}
 								builder.withColor(primaryColors);
 							}
-							if (split[0].equalsIgnoreCase("shape") || split[0].equalsIgnoreCase("s"))
+							if (split[0].equalsIgnoreCase("shape") || split[0].equalsIgnoreCase("s") || split[0].equalsIgnoreCase("type") || split[0].equalsIgnoreCase("t"))
 							{
 								split[1] = (split[1].equalsIgnoreCase("large") ? "BALL_LARGE" : split[1]);
 								if (fireworkShape.containsKey(split[1].toUpperCase()))
 								{
 									finalEffect = fireworkShape.get(split[1].toUpperCase());
+								}
+								else
+								{
+									user.sendMessage(_("invalidFireworkFormat", split[1], split[0]));
 								}
 								if (finalEffect != null)
 								{
@@ -102,6 +110,10 @@ public class Commandfirework extends EssentialsCommand
 									if (colorMap.containsKey(color.toUpperCase()))
 									{
 										fadeColors.add(colorMap.get(color.toUpperCase()).getFireworkColor());
+									}
+									else
+									{
+										user.sendMessage(_("invalidFireworkFormat", split[1], split[0]));
 									}
 								}
 								if (!fadeColors.isEmpty())
@@ -118,9 +130,13 @@ public class Commandfirework extends EssentialsCommand
 									{
 										builder.flicker(true);
 									}
-									if (effect.equalsIgnoreCase("trail"))
+									else if (effect.equalsIgnoreCase("trail"))
 									{
 										builder.trail(true);
+									}
+									else
+									{
+										user.sendMessage(_("invalidFireworkFormat", split[1], split[0]));
 									}
 								}
 							}
@@ -132,7 +148,7 @@ public class Commandfirework extends EssentialsCommand
 								}
 								catch (NumberFormatException e)
 								{
-									user.sendMessage(_("invalidNumber"));
+									user.sendMessage(_("invalidFireworkFormat", split[1], split[0]));
 								}
 							}
 						}
