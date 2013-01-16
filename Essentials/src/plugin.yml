@@ -40,7 +40,7 @@ commands:
     usage: /<command> <address>
     aliases: [ebanip]
   book:
-    description: Allows reopening and editing written books.
+    description: Allows reopening and editing of written books.
     usage: /<command> [title|author] [name]
     aliases: [ebook]
   break:
