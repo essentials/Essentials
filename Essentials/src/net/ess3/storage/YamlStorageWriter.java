@@ -51,7 +51,7 @@ public class YamlStorageWriter implements IStorageWriter
 		for (Field field : clazz.getDeclaredFields())
 		{
 			final int modifier = field.getModifiers();
-			if (Modifier.isPrivate(modifier) && !Modifier.isTransient(modifier) && !Modifier.isStatic(modifier))
+			if (Modifier.isPrivate(modifier) && !Modifier.isStatic(modifier))
 			{
 				field.setAccessible(true);
 
