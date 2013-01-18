@@ -41,7 +41,7 @@ commands:
     aliases: [ebanip]
   book:
     description: Allows reopening and editing of sealed books.
-    usage: /<command> [title|author] [name]
+    usage: /<command> [title|author [name]]
     aliases: [ebook]
   break:
     description: Breaks the block you are looking at.
