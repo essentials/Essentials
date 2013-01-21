@@ -102,7 +102,8 @@ public class Commandfirework extends EssentialsCommand
 						}
 						else if (!mStack.isValidFirework())
 						{
-							user.sendMessage(_("fireworkColor"));
+							throw new Exception(_("fireworkColor"))
+							user.sendMessage(_("fireworkSyntax"));
 						}
 						else
 						{
@@ -116,7 +117,7 @@ public class Commandfirework extends EssentialsCommand
 			}
 			else
 			{
-				user.sendMessage(_("holdFirework"));
+				throw new Exception(_("holdFirework"))
 			}
 		}
 		else
