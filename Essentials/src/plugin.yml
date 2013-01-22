@@ -123,7 +123,7 @@ commands:
     description: Allows you to modify a stack of fireworks
     usage: |
            /<command> [(clear|(fire|power):amount)]
-           /<command> [itemmeta]
+           /<command> [itemmeta:value]
     aliases: [efirework]
   gamemode:
     description: Change player gamemode.
@@ -139,7 +139,7 @@ commands:
     aliases: [coords,egetpos,position,eposition,whereami,ewhereami]
   give:
     description: Give a player an item.
-    usage: /<command> <player> <item|numeric> [amount <itemmeta>]
+    usage: /<command> <player> <item|numeric> [amount <itemmeta:value>]
     aliases: [egive]
   god:
     description: Enables your godly powers.
@@ -179,7 +179,7 @@ commands:
     aliases: [einvsee]
   item:
     description: Spawn an item.
-    usage: /<command> <item|numeric> [amount <itemmeta>]
+    usage: /<command> <item|numeric> [amount <itemmeta:value>]
     aliases: [i,eitem]
   itemdb:
     description: Searches for an item.
