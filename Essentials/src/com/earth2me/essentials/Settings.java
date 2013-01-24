@@ -410,13 +410,15 @@ public class Settings implements ISettings
 			String format = config.getString("chat.group-formats." + (group == null ? "Default" : group),
 											 config.getString("chat.format", "&7[{GROUP}]&f {DISPLAYNAME}&7:&f {MESSAGE}"));
 			format = Util.replaceFormat(format);
+			format = format.replaceAll("'", "''"); // escape quotes
+			format = format.replaceAll("\\{(\\d+)\\}", "'{'$1'}'"); // quote {\d+} sequences
 			format = format.replace("{DISPLAYNAME}", "%1$s");
 			format = format.replace("{GROUP}", "{0}");
 			format = format.replace("{MESSAGE}", "%2$s");
 			format = format.replace("{WORLDNAME}", "{1}");
 			format = format.replace("{SHORTWORLDNAME}", "{2}");
-			format = format.replaceAll("'", "''");
-			format = format.replaceAll("\\{(\\D*?)\\}", "\\'{$1\\}'");
+			format = format.replaceAll("(?:^|(?<=[^\\d'])|(?<=\\d'\\}'))([{}][{}']*)(?:$|(?=[^\\d'])|(?<='\\{'\\d))", "'$1'"); // quote the rest of the braces
+			format = format.replaceAll("'([}{])''('*)([}{])'", "'$1$2$3'"); // cleanup extra ''
 			format = "§r".concat(format);
 			mFormat = new MessageFormat(format);
 			chatFormats.put(group, mFormat);
