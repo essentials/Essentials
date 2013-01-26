@@ -7,6 +7,7 @@ import net.ess3.permissions.Permissions;
 import net.ess3.user.UserData.TimestampType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 
 public class Commandheal extends EssentialsCommand
@@ -26,10 +27,14 @@ public class Commandheal extends EssentialsCommand
 		user.checkCooldown(TimestampType.LASTHEAL, ess.getRanks().getHealCooldown(user), true, Permissions.HEAL_COOLDOWN_BYPASS);
 
 		final Player player = user.getPlayer();
-		player.setHealth(20);
+		player.setHealth(player.getMaxHealth());
 		player.setFireTicks(0);
 		player.setFoodLevel(20);
 		user.sendMessage(_("heal"));
+		for (PotionEffect effect : player.getActivePotionEffects())
+		{
+			player.removePotionEffect(effect.getType());
+		}
 	}
 
 	@Override
