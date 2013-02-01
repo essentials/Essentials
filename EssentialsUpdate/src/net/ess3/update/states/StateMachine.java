@@ -90,7 +90,7 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 	public void startWork()
 	{
 		iterator = states.values().iterator();
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(getPlugin(), this); //Should this be async? (method deprecated)
+		Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), this); //Should this be async? (method deprecated)
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 				{
 					StateMachine.this.player.sendMessage(message);
 				}
-				Bukkit.getScheduler().scheduleAsyncDelayedTask(getPlugin(), StateMachine.this); //Should this be async? (method deprecated)
+				Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), StateMachine.this); //Should this be async? (method deprecated)
 			}
 		});
 	}

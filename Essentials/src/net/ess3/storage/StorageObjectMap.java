@@ -47,7 +47,7 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 
 	private void loadAllObjectsAsync()
 	{
-		ess.getPlugin().scheduleAsyncDelayedTask(
+		ess.getPlugin().runTaskAsynchronously(
 				new Runnable()
 				{
 					@Override

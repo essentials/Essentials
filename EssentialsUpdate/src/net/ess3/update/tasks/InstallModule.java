@@ -31,7 +31,7 @@ public class InstallModule implements Runnable, Task
 	@Override
 	public void start()
 	{
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(listener.getPlugin(), this); //Should this be async? (method deprecated)
+		Bukkit.getScheduler().runTaskAsynchronously(listener.getPlugin(), this); //Should this be async? (method deprecated)
 	}
 
 	@Override

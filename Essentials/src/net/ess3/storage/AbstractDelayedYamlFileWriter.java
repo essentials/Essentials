@@ -21,7 +21,7 @@ public abstract class AbstractDelayedYamlFileWriter implements Runnable
 
 	public void schedule()
 	{
-		ess.getPlugin().scheduleAsyncDelayedTask(this);
+		ess.getPlugin().runTaskAsynchronously(this);
 	}
 
 	public abstract File getFile();

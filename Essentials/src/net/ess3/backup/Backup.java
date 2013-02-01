@@ -76,7 +76,7 @@ public class Backup implements Runnable, IBackup
 			}
 		}
 
-		ess.getPlugin().scheduleAsyncDelayedTask(new BackupRunner(backupCommand));
+		ess.getPlugin().runTaskAsynchronously(new BackupRunner(backupCommand));
 	}
 
 

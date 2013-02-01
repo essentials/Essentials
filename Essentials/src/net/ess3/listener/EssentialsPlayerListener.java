@@ -164,7 +164,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
-		ess.getPlugin().scheduleAsyncDelayedTask(
+		ess.getPlugin().runTaskAsynchronously(
 				new Runnable()
 				{
 					@Override

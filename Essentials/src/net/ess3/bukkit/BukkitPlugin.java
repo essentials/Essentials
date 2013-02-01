@@ -133,7 +133,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public BukkitTask scheduleAsyncDelayedTask(final Runnable run)
+	public BukkitTask runTaskAsynchronously(final Runnable run)
 	{
 		return getServer().getScheduler().runTaskAsynchronously(this, run);
 	}
@@ -145,7 +145,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	}
 
 	@Override
-	public BukkitTask scheduleAsyncDelayedTask(final Runnable run, final long delay)
+	public BukkitTask runTaskLaterAsynchronously(final Runnable run, final long delay)
 	{
 		return getServer().getScheduler().runTaskLaterAsynchronously(this, run, delay);
 	}

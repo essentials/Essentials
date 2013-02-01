@@ -23,7 +23,7 @@ public interface IPlugin extends Plugin
 	 * @param run - Code to call later
 	 * @return - BukkitTask for the task created
 	 */
-	BukkitTask scheduleAsyncDelayedTask(final Runnable run);
+	BukkitTask runTaskAsynchronously(final Runnable run);
 
 	/**
 	 * Schedule a sync task (ran in main thread) to be run
@@ -40,7 +40,7 @@ public interface IPlugin extends Plugin
 	 * @param delay - Long that represents how long to wait
 	 * @return - BukkitTask for the task created
 	 */
-	BukkitTask scheduleAsyncDelayedTask(final Runnable run, final long delay);
+	BukkitTask runTaskLaterAsynchronously(final Runnable run, final long delay);
 
 	/**
 	 * Schedule a sync (ran in main thread) delayed task

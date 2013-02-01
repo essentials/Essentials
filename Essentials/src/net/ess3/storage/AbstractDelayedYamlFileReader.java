@@ -28,7 +28,7 @@ public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> imp
 		}
 		else
 		{
-			ess.getPlugin().scheduleAsyncDelayedTask(this);
+			ess.getPlugin().runTaskAsynchronously(this);
 		}
 	}
 

@@ -44,7 +44,7 @@ public class SelfUpdate extends AbstractWorkListener implements Task, Runnable
 	@Override
 	public void run()
 	{
-		Bukkit.getScheduler().scheduleAsyncDelayedTask( //Should this be async? (method deprecated)
+		Bukkit.getScheduler().runTaskAsynchronously( //Should this be async? (method deprecated)
 				getPlugin(), new Runnable()
 		{
 			@Override

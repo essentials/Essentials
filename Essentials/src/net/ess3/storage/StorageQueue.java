@@ -44,7 +44,7 @@ public class StorageQueue implements Runnable
 						}
 						else if (state == RequestState.SCHEDULE)
 						{
-							plugin.scheduleAsyncDelayedTask(request.getRunnable());
+							plugin.runTaskAsynchronously(request.getRunnable());
 						}
 					}
 					requests.clear();
@@ -74,7 +74,7 @@ public class StorageQueue implements Runnable
 	{
 		synchronized (lock)
 		{
-			plugin.scheduleAsyncDelayedTask(this);
+			plugin.runTaskAsynchronously(this);
 		}
 	}
 

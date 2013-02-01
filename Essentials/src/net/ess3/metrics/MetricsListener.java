@@ -37,7 +37,7 @@ public class MetricsListener implements Listener
 			ess.getLogger().log(Level.INFO, _("metrics3"));
 			settings.getData().getGeneral().setMetricsEnabled(true);
 			settings.queueSave();
-			ess.getPlugin().scheduleAsyncDelayedTask(starter, 5 * 1200);
+			ess.getPlugin().runTaskLaterAsynchronously(starter, 5 * 1200);
 		}
 	}
 }
