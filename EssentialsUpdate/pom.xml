@@ -12,9 +12,9 @@
   <artifactId>EssentialsUpdate</artifactId>
   <dependencies>
     <dependency>
-      <groupId>org.pircbotx</groupId>
-      <artifactId>pircbotx</artifactId>
-      <version>1.8</version>
+      <groupId>pircbot</groupId>
+      <artifactId>pircbot</artifactId>
+      <version>1.5.0</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -38,7 +38,7 @@
             <configuration>
                 <artifactSet>
                     <includes>
-                        <include>org.pircbotx:pircbotx</include>
+                        <include>pircbot:pircbot</include>
                     </includes>
                 </artifactSet>
             </configuration>
