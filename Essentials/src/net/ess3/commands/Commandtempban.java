@@ -10,6 +10,8 @@ import net.ess3.utils.DateUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Calendar;
+
 
 public class Commandtempban extends EssentialsCommand
 {
@@ -31,7 +33,7 @@ public class Commandtempban extends EssentialsCommand
 		}
 		else
 		{
-			if (Permissions.TEMPBAN_EXEMPT.isAuthorized(user))
+			if (Permissions.TEMPBAN_EXEMPT.isAuthorized(user) && sender instanceof Player)
 			{
 				sender.sendMessage(_("tempbanExempt"));
 				return;
@@ -39,6 +41,13 @@ public class Commandtempban extends EssentialsCommand
 		}
 		final String time = getFinalArg(args, 1);
 		final long banTimestamp = DateUtil.parseDateDiff(time, true);
+
+		final long max = ess.getSettings().getData().getCommands().getTempban().getMaxTempbanTime();
+		if(max != -1 && banTimestamp - Calendar.getInstance().getTimeInMillis() > max && !Permissions.TEMPBAN_UNLIMITED.isAuthorized(sender))
+		{
+			sender.sendMessage(_("tempbanOversized"));
+			return;
+		}
 
 		final String banReason = _("tempBanned", DateUtil.formatDateDiff(banTimestamp));
 		final Ban ban = new Ban();

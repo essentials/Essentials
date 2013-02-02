@@ -23,6 +23,7 @@ public class Commands implements StorageObject
 	private SocialSpy socialspy = new SocialSpy();
 	private Spawnmob spawnmob = new Spawnmob();
 	private Teleport teleport = new Teleport();
+	private Tempban tempban = new Tempban();
 	private Speed speed = new Speed();
 	@ListType
 	@Comment(
