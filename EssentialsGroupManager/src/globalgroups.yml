@@ -132,7 +132,6 @@ groups:
     - essentials.getpos
     - essentials.hat
     - essentials.home
-    - essentials.home.bed
     - essentials.ignore
     - essentials.itemdb
     - essentials.kit
