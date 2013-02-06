@@ -1,5 +1,3 @@
-per-group-teleport: true
-
 ############################################################
 # +------------------------------------------------------+ #
 # |                       Notes                          | #
@@ -291,9 +289,6 @@ no-god-in-worlds:
 # Give someone permission to teleport to a world with essentials.worlds.<worldname>
 # This does not affect the /home command, there is a separate toggle below for this.
 world-teleport-permissions: false
-
-#Set to true to enable per-group teleporting permissions.
-perGroupTeleport: false
 
 # The number of items given if the quantity parameter is left out in /item or /give.
 # If this number is below 1, the maximum stack size size is given. If over-sized stacks

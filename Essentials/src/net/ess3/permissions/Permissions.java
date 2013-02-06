@@ -167,7 +167,6 @@ public enum Permissions implements IPermission
 	}
 
 	public static DotStarPermission ENCHANT = new DotStarPermission("essentials.enchant");
-	public static DotStarPermission PERGROUPTELEPORT = new DotStarPermission("essentials.tp");
 	public static MaterialDotStarPermission GIVE = new MaterialDotStarPermission("essentials.give", PermissionDefault.TRUE);
 	public static DotStarPermission RANKS = new DotStarPermission("essentials.ranks");
 	public static DotStarPermission HELP = new DotStarPermission("essentials.help");

@@ -59,8 +59,6 @@ public class General implements StorageObject
 			})
 	private boolean worldTeleportPermissions = false;
 	private boolean worldHomePermissions = false;
-	@Comment("Set to true to enable per-group teleporting permissions.")
-	private boolean perGroupTeleport = false;
 	@Comment("Delay to wait before people can cause attack damage after logging in ")
 	private long loginAttackDelay = 0;
 
