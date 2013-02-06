@@ -24,6 +24,11 @@ public class Commandtpahere extends EssentialsCommand
 		}
 
 		ISettings settings = ess.getSettings();
+		if (settings.getData().getGeneral().isPerGroupTeleport() && !Permissions.PERGROUPTELEPORT.isAuthorized(
+					user, ess.getRanks().getMainGroup(user)))
+			{
+				throw new Exception(_("noPerm", "essentials.tp." + player));
+			}
 		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions() && !Permissions.WORLD.isAuthorized(
 				user, user.getPlayer().getWorld().getName()))
 		{
