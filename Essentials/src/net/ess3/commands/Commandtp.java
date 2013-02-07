@@ -27,6 +27,11 @@ public class Commandtp extends EssentialsCommand
 			{
 				throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
 			}
+			if (settings.getData().getGeneral().isPerGroupTeleport() && !Permissions.PERGROUPTELEPORT.isAuthorized(
+					user, ess.getRanks().getMainGroup(player)))
+			{
+				throw new Exception(_("noPerm", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
+			}
 			if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions() && !Permissions.WORLD.isAuthorized(
 					user, player.getPlayer().getWorld().getName()))
 			{
