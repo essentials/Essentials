@@ -140,7 +140,10 @@ public class EssentialsPlayerListener implements Listener
 		}
 		if (!user.isJailed())
 		{
-			user.setLastLocation();
+			if (user.isAuthorized("essentials.back.ondeath") || user.isAlive)
+			{
+				user.setLastLocation();
+			}
 		}
 		if (user.isRecipeSee())
 		{
