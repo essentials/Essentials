@@ -85,7 +85,7 @@ public class Commandfirework extends EssentialsCommand
 					}
 					stack.setItemMeta(fmeta);
 				}
-				else if ((args[0].equalsIgnoreCase("fire") || (args[0].equalsIgnoreCase("p")))
+				else if (args.length > 1 && (args[0].equalsIgnoreCase("fire") || (args[0].equalsIgnoreCase("f")))
 						 && user.isAuthorized("essentials.firework.fire"))
 				{
 					int amount = 1;
@@ -138,8 +138,8 @@ public class Commandfirework extends EssentialsCommand
 					}
 					else
 					{
-						user.sendMessage(_("fireworkSyntax"));
-						throw new Exception(_("fireworkColor"));
+						user.sendMessage(_("fireworkColor"));
+						throw new Exception(_("fireworkSyntax"));
 					}
 				}
 			}
