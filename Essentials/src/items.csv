@@ -15,6 +15,7 @@ land,3,0
 cobblestone,4,0
 cstone,4,0
 cobble,4,0
+wood,5,0
 plank,5,0
 woodenplank,5,0
 woodplank,5,0
@@ -281,7 +282,6 @@ core,16,0
 tree,17,0
 log,17,0
 trunk,17,0
-wood,17,0
 oak,17,0
 oaktree,17,0
 oaklog,17,0
