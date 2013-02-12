@@ -894,9 +894,20 @@ public abstract class UserData extends PlayerExtension implements IConf
         config.save();
     }
 	
-	public Map<String, Object> getConfigMap(){
-		if (config.isConfigurationSection("info")){
-			return config.getConfigurationSection("info").getValues(true);
+	public Set<String> getConfigKeys()
+	{
+		if (config.isConfigurationSection("info"))
+		{
+			return config.getConfigurationSection("info").getKeys(true);
+		}
+		return new HashSet<String>();
+	}
+	
+	public Map<String, Object> getConfigMap(String node)
+	{
+		if (config.isConfigurationSection("info."+node))
+		{
+			return config.getConfigurationSection("info."+node).getValues(true);
 		}
 		return new HashMap<String, Object>();
 	}
