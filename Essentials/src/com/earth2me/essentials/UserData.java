@@ -877,7 +877,7 @@ public abstract class UserData extends PlayerExtension implements IConf
         }
         else if (object instanceof List)
         {
-            config.setProperty(node, (List) object);
+            config.setProperty(node, (List<String>) object);
         }
         else if (object instanceof Location)
         {
