@@ -867,6 +867,33 @@ public abstract class UserData extends PlayerExtension implements IConf
 		config.save();
 	}
 
+	public void setConfigProperty(String node, Object object)
+    {
+        final String prefix = "info.";
+        node = prefix+node;
+        if (object instanceof Map)
+        {
+            config.setProperty(node, (Map) object);
+        }
+        else if (object instanceof List)
+        {
+            config.setProperty(node, (List) object);
+        }
+        else if (object instanceof Location)
+        {
+            config.setProperty(node, (Location) object);
+        }
+        else if (object instanceof ItemStack)
+        {
+            config.setProperty(node, (ItemStack) object);
+        }
+        else
+        {
+            config.setProperty(node, object);
+        }
+        config.save();
+    }
+	
 	public void save()
 	{
 		config.save();

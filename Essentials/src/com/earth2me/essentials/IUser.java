@@ -52,4 +52,6 @@ public interface IUser extends Player
 	void setLogoutLocation();
 	
 	Location getLogoutLocation();
+	
+	void setConfigProperty(String node, Object object);
 }
