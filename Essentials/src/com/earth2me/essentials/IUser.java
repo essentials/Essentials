@@ -60,4 +60,6 @@ public interface IUser extends Player
 	Set<String> getConfigKeys();
 	
 	Map<String, Object> getConfigMap();
+	
+	Map<String, Object> getConfigMap(String node);
 }
