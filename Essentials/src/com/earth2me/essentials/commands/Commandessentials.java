@@ -213,31 +213,59 @@ public class Commandessentials extends EssentialsCommand
 	}
 	private void run_cleanup(final Server server, final CommandSender sender, final String command, final String args[]) throws Exception
 	{
+		
 		if (args.length < 2 || !Util.isInt(args[1]))
 		{
 			throw new NotEnoughArgumentsException("/<command> cleanup <days> [money] [homes] [bans]");
 		}
-		int daysArg = Integer.parseInt(args[1]);
-		double moneyArg = args.length >= 3 ? Double.parseDouble(args[2].replaceAll("[^0-9\\.]", "")) : 0;
-		int homesArg = args.length >= 4 && Util.isInt(args[3]) ? Integer.parseInt(args[3]) : 0;
-		int bansArg = args.length >= 5 && Util.isInt(args[4]) ? Integer.parseInt(args[4]) : 0;
 		sender.sendMessage(_("cleaning"));
+
+		final int daysArg = Integer.parseInt(args[1]);
+		final double moneyArg = args.length >= 3 ? Double.parseDouble(args[2].replaceAll("[^0-9\\.]", "")) : 0;
+		final int homesArg = args.length >= 4 && Util.isInt(args[3]) ? Integer.parseInt(args[3]) : 0;
+		final int bansArg = args.length >= 5 && Util.isInt(args[4]) ? Integer.parseInt(args[4]) : 0;	
 		final UserMap userMap = ess.getUserMap();
-		for (String userString : userMap.getAllUniqueUsers())
+		
+			
+		ess.runTaskAsynchronously( new Runnable() 
 		{
-			final User user = ess.getUser(userString);
-			int ban = user.isBanned() ? 1 : 0;
-			long lastLogout = user.getLastLogout();
-			long timeNow = System.currentTimeMillis();
-			long timeDiff = lastLogout - timeNow;
-			long milliDays = daysArg*24*60*60;
-			int homes = user.getHomes().size();
-			double money = user.getMoney();
-			if (timeDiff <= milliDays && money <= moneyArg && homes <= homesArg && ban <= bansArg)
+			@Override
+			public void run()
 			{
-				user.delete();
+				for (String u : userMap.getAllUniqueUsers())
+				{
+					final User user = ess.getUserMap().getUser(u);
+					if (user == null)
+					{
+						continue;
+					}
+					int ban = user.getBanReason().equals("") ? 0 : 1;
+					if (!(ban <= bansArg))
+					{
+						continue;
+					}
+					long lastLogout = user.getLastLogout();
+					long timeNow = System.currentTimeMillis();
+					long timeDiff = timeNow - lastLogout;
+					long milliDays = daysArg * 24 * 60 * 60;
+					if (!(timeDiff >= milliDays))
+					{
+						continue;
+					}
+					int homes = user.getHomes().size();
+					if (!(homes <= homesArg))
+					{
+						continue;
+					}
+					double money = user.getMoney();
+					if (!(money <= moneyArg))
+					{
+						continue;
+					}
+					user.delete();
+				}
 			}
-		}
+		});
 		userMap.reloadConfig();
 		sender.sendMessage(_("cleaned"));
 	}
