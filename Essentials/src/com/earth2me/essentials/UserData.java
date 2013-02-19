@@ -34,6 +34,11 @@ public abstract class UserData extends PlayerExtension implements IConf
 		config = new EssentialsConf(new File(folder, Util.sanitizeFileName(base.getName()) + ".yml"));
 		reloadConfig();
 	}
+	
+	public final void delete()
+	{
+		config.getFile().delete();
+	}
 
 	@Override
 	public final void reloadConfig()
