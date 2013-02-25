@@ -7,6 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakEvent;
 
 //TODO: remove unnecessary return statements
 public class EssentialsProtectEntityListener implements Listener
@@ -227,4 +229,17 @@ public class EssentialsProtectEntityListener implements Listener
 			return;
 		}
 	}
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled=true)
+    public void onPaintingBreak(final HangingBreakByEntityEvent event)
+    {
+        final ProtectHolder settings = prot.getSettings();
+        if (event.getCause() == HangingBreakEvent.RemoveCause.ENTITY
+            && event.getRemover() instanceof Creeper
+            && settings.getData().getPrevent().isCreeperBlockdamage() )
+        {
+            event.setCancelled(true);
+            return;
+        }
+    }
 }
