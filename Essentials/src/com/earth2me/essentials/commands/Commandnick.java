@@ -95,7 +95,7 @@ public class Commandnick extends EssentialsCommand
 		{
 			throw new Exception(_("nickNamesAlpha"));
 		}
-		else if ("off".equalsIgnoreCase(nick) || (!usernick == null && !usernick.isEmpty() &&  target.getName().equalsIgnoreCase(nick)))
+		else if ("off".equalsIgnoreCase(nick) || (usernick != null && !usernick.isEmpty() &&  target.getName().equalsIgnoreCase(nick)))
 		{
 			target.setNickname(null);
 			target.setDisplayNick();
