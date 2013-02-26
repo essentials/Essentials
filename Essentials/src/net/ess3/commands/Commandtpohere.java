@@ -27,6 +27,11 @@ public class Commandtpohere extends EssentialsCommand
 		{
 			throw new Exception(_("noPerm", "essentials.world." + user.getPlayer().getWorld().getName()));
 		}
+		if (settings.getData().getGeneral().isPerGroupTeleport() && !Permissions.PERGROUPTELEPORT.isAuthorized(
+					user, ess.getRanks().getMainGroup(player)))
+			{
+				throw new Exception(_("noPerm", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
+			}
 
 
 		// Verify permission
