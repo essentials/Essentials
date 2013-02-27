@@ -1,9 +1,13 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.OfflinePlayer;
 import com.earth2me.essentials.User;
+import java.util.logging.Level;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 
 public class Commandbanip extends EssentialsCommand
@@ -36,6 +40,7 @@ public class Commandbanip extends EssentialsCommand
 				throw new Exception(_("playerNotFound"));
 			}
 			ess.getServer().banIP(ipAddress);
+			server.getLogger().log(Level.INFO, _("banIpAddress"), ipAddress));
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
 				final User player = ess.getUser(onlinePlayer);
