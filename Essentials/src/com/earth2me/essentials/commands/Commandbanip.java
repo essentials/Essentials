@@ -36,7 +36,14 @@ public class Commandbanip extends EssentialsCommand
 				throw new Exception(_("playerNotFound"));
 			}
 			ess.getServer().banIP(ipAddress);
-			sender.sendMessage(_("banIpAddress"), ipAddress);
+			for (Player onlinePlayer : server.getOnlinePlayers())
+			{
+				final User player = ess.getUser(onlinePlayer);
+				if (onlinePlayer == sender || player.isAuthorized("essentials.ban.notify"))
+				{
+					sender.sendMessage(_("banIpAddress"), ipAddress);
+				}
+			}
 		}
 	}
 }
