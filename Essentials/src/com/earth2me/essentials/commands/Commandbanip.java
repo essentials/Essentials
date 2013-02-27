@@ -26,7 +26,7 @@ public class Commandbanip extends EssentialsCommand
 		if (player == null)
 		{
 			ess.getServer().banIP(args[0]);
-			sender.sendMessage(_("banIpAddress"));
+			sender.sendMessage(_("banIpAddress"), args[0]);
 		}
 		else
 		{
@@ -36,7 +36,7 @@ public class Commandbanip extends EssentialsCommand
 				throw new Exception(_("playerNotFound"));
 			}
 			ess.getServer().banIP(player.getLastLoginAddress());
-			sender.sendMessage(_("banIpAddress"));
+			sender.sendMessage(_("banIpAddress"), args[0]);
 		}
 	}
 }
