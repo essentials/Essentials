@@ -30,7 +30,7 @@ public class Commandbanip extends EssentialsCommand
 		if (player == null)
 		{
 			ess.getServer().banIP(args[0]);
-			sender.sendMessage(_("banIpAddress"), args[0]);
+			sender.sendMessage(_("banIpAddress"), senderName, args[0]);
 		}
 		else
 		{
