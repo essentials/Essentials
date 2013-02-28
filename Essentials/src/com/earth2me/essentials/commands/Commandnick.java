@@ -90,12 +90,12 @@ public class Commandnick extends EssentialsCommand
 
 	private void setNickname(final Server server, final User target, final String nick) throws Exception
 	{
-		final String usernick = User.getNickname();
+		final String targetnick = target.getNickname();
 		if (!nick.matches("^[a-zA-Z_0-9\u00a7]+$"))
 		{
 			throw new Exception(_("nickNamesAlpha"));
 		}
-		else if ("off".equalsIgnoreCase(nick) || (usernick != null && !usernick.isEmpty() &&  target.getName().equalsIgnoreCase(nick)))
+		else if ("off".equalsIgnoreCase(nick) || (targetnick != null && !targetnick.isEmpty() && target.getName().equalsIgnoreCase(nick)))
 		{
 			target.setNickname(null);
 			target.setDisplayNick();
