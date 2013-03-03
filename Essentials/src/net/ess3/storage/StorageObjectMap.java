@@ -166,7 +166,8 @@ public abstract class StorageObjectMap<I> extends CacheLoader<String, I> impleme
 		String sanitizedFilename = Util.sanitizeFileName(name) + ".yml";
 		if (zippedfiles.containsKey(sanitizedFilename))
 		{
-			zippedfiles.put(sanitizedFilename, null);
+			//TODO: Handle zip files correctly, files are never deleted from zip files.
+			zippedfiles.remove(sanitizedFilename);
 		}
 	}
 

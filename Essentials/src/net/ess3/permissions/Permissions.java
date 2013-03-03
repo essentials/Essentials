@@ -166,22 +166,22 @@ public enum Permissions implements IPermission
 		return PermissionFactory.checkPermission(sender, this);
 	}
 
-	public static DotStarPermission ENCHANT = new DotStarPermission("essentials.enchant");
-	public static DotStarPermission PERGROUPTELEPORT = new DotStarPermission("essentials.teleport.groups");
-	public static MaterialDotStarPermission GIVE = new MaterialDotStarPermission("essentials.give", PermissionDefault.TRUE);
-	public static DotStarPermission RANKS = new DotStarPermission("essentials.ranks");
-	public static DotStarPermission HELP = new DotStarPermission("essentials.help");
-	public static MaterialDotStarPermission ITEMSPAWN = new MaterialDotStarPermission("essentials.itemspawn", PermissionDefault.TRUE);
-	public static DotStarPermission KITS = new DotStarPermission("essentials.kits", PermissionDefault.TRUE);
-	public static DotStarPermission NOCOMMANDCOST = new DotStarPermission("essentials.nocommandcost");
-	public static DotStarPermission SPAWNER = new DotStarPermission("essentials.spawner");
-	public static DotStarPermission SPAWNMOB = new DotStarPermission("essentials.spawnmob");
-	public static MaterialDotStarPermission UNLIMITED = new MaterialDotStarPermission("essentials.unlimited.items");
-	public static DotStarPermission WARPS = new DotStarPermission("essentials.warps", PermissionDefault.TRUE);
-	public static DotStarPermission WARP_OVERWRITE = new DotStarPermission("essentials.warp.overwrite");
-	public static DotStarPermission WORLD = new DotStarPermission("essentials.world");
-	public static DotStarPermission NICK = new DotStarPermission("essentials.nick");
-	public static DotStarPermission SIGNS = new DotStarPermission("essentials.signs");
-	public static DotStarPermission CHAT = new DotStarPermission("essentials.chat");
-	public static DotStarPermission TIME_WORLDS = new DotStarPermission("essentials.time.worlds", PermissionDefault.TRUE);
+	public static final DotStarPermission ENCHANT = new DotStarPermission("essentials.enchant");
+	public static final DotStarPermission PERGROUPTELEPORT = new DotStarPermission("essentials.teleport.groups");
+	public static final MaterialDotStarPermission GIVE = new MaterialDotStarPermission("essentials.give", PermissionDefault.TRUE);
+	public static final DotStarPermission RANKS = new DotStarPermission("essentials.ranks");
+	public static final DotStarPermission HELP = new DotStarPermission("essentials.help");
+	public static final MaterialDotStarPermission ITEMSPAWN = new MaterialDotStarPermission("essentials.itemspawn", PermissionDefault.TRUE);
+	public static final DotStarPermission KITS = new DotStarPermission("essentials.kits", PermissionDefault.TRUE);
+	public static final DotStarPermission NOCOMMANDCOST = new DotStarPermission("essentials.nocommandcost");
+	public static final DotStarPermission SPAWNER = new DotStarPermission("essentials.spawner");
+	public static final DotStarPermission SPAWNMOB = new DotStarPermission("essentials.spawnmob");
+	public static final MaterialDotStarPermission UNLIMITED = new MaterialDotStarPermission("essentials.unlimited.items");
+	public static final DotStarPermission WARPS = new DotStarPermission("essentials.warps", PermissionDefault.TRUE);
+	public static final DotStarPermission WARP_OVERWRITE = new DotStarPermission("essentials.warp.overwrite");
+	public static final DotStarPermission WORLD = new DotStarPermission("essentials.world");
+	public static final DotStarPermission NICK = new DotStarPermission("essentials.nick");
+	public static final DotStarPermission SIGNS = new DotStarPermission("essentials.signs");
+	public static final DotStarPermission CHAT = new DotStarPermission("essentials.chat");
+	public static final DotStarPermission TIME_WORLDS = new DotStarPermission("essentials.time.worlds", PermissionDefault.TRUE);
 }

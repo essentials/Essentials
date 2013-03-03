@@ -101,7 +101,7 @@ public class Teleport implements Runnable, ITeleport
 						chargeFor.charge(user);
 					}
 				}
-				catch (Throwable ex)
+				catch (Exception ex)
 				{
 					ess.getCommandHandler().showCommandError(user, "teleport", ex);
 				}

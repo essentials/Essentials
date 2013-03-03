@@ -105,11 +105,11 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	List<String> getMails();
 
-	public boolean canAfford(double money);
+	boolean canAfford(double money);
 
-	public void updateMoneyCache(double userMoney);
+	void updateMoneyCache(double userMoney);
 
-	public boolean canAfford(double amount, boolean b);
+	boolean canAfford(double amount, boolean b);
 
 	boolean isVanished();
 
@@ -133,9 +133,9 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	boolean checkSignThrottle(int throttle);
 
-	public boolean isRecipeSee();
+	boolean isRecipeSee();
 
-	public void setRecipeSee(boolean recipeSee);
+	void setRecipeSee(boolean recipeSee);
 
 	/**
 	 * Since the Player object should not be stored for a long time, this method should be called again with a null

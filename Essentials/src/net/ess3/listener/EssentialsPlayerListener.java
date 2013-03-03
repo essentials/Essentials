@@ -131,7 +131,7 @@ public class EssentialsPlayerListener implements Listener
 		}
 		else
 		{
-			event.setQuitMessage(quitMessage);
+			event.setQuitMessage(null);
 		}
 
 

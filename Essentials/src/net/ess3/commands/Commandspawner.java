@@ -60,7 +60,7 @@ public class Commandspawner extends EssentialsCommand
 			charge.charge(user);
 			user.sendMessage(_("setSpawner", mob.getName()));
 		}
-		catch (Throwable ex)
+		catch (Exception ex)
 		{
 			throw new Exception(_("mobSpawnError"), ex);
 		}

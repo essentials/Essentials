@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
-import net.ess3.api.IEssentialsModule;
-import net.ess3.api.ISettings;
 import net.ess3.api.IUser;
 import net.ess3.storage.AsyncStorageObjectHolder;
 import net.ess3.storage.StoredLocation.WorldNotLoadedException;
@@ -26,7 +24,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.EventExecutor;
 
 
-public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IEssentialsModule
+public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns>
 {
 	public SpawnsHolder(final IEssentials ess)
 	{
@@ -188,7 +186,6 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 		{
 			final IUser user = ess.getUserMap().getUser(event.getPlayer());
 
-			final ISettings settings = ess.getSettings();
 			boolean respawnAtHome = ess.getSettings().getData().getCommands().getHome().isRespawnAtHome();
 			if (respawnAtHome)
 			{
@@ -250,7 +247,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns> implements IE
 			@Override
 			public void run()
 			{
-				if (user.getPlayer() instanceof OfflinePlayer)
+				if (!user.getPlayer().isOnline())
 				{
 					return;
 				}

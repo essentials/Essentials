@@ -35,7 +35,7 @@ public interface IWarps extends IReload
 	 * Set a warp
 	 *
 	 * @param name - Name of warp
-	 * @param loc  - Location of warp
+	 * @param loc - Location of warp
 	 * @throws Exception
 	 */
 	void setWarp(String name, Location loc) throws Exception;
@@ -45,7 +45,7 @@ public interface IWarps extends IReload
 	 *
 	 * @return
 	 */
-	public boolean isEmpty();
+	boolean isEmpty();
 
 	/**
 	 * Get a warp file
@@ -54,5 +54,5 @@ public interface IWarps extends IReload
 	 * @return - an instance of the file
 	 * @throws InvalidNameException - When the file is not found
 	 */
-	public File getWarpFile(String name) throws InvalidNameException;
+	File getWarpFile(String name) throws InvalidNameException;
 }

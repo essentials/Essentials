@@ -49,7 +49,7 @@ public interface IUserMap extends IReload
 
 	Set<IUser> matchUsersExcludingHidden(final String name, final Player requester);
 
-	public void addPrejoinedPlayer(Player player);
+	void addPrejoinedPlayer(Player player);
 
-	public void removePrejoinedPlayer(Player player);
+	void removePrejoinedPlayer(Player player);
 }

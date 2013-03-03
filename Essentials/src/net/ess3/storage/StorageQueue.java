@@ -15,7 +15,6 @@ public class StorageQueue implements Runnable
 	private DelayQueue<WriteRequest> queue = new DelayQueue<WriteRequest>();
 	public final static long DELAY = TimeUnit.NANOSECONDS.convert(1, TimeUnit.SECONDS);
 	private final AtomicBoolean enabled = new AtomicBoolean(false);
-	private final Object lock = new Object();
 	private final IPlugin plugin;
 
 	public StorageQueue(IPlugin plugin)
@@ -26,34 +25,27 @@ public class StorageQueue implements Runnable
 	@Override
 	public void run()
 	{
-		synchronized (lock)
+		if (enabled.get() || !queue.isEmpty())
 		{
-			final List<WriteRequest> requests = new ArrayList<WriteRequest>();
-			while (enabled.get() || !queue.isEmpty())
+			work();
+		}
+	}
+
+	private void work()
+	{
+		final List<WriteRequest> requests = new ArrayList<WriteRequest>();
+		queue.drainTo(requests);
+		for (WriteRequest request : requests)
+		{
+			final RequestState state = request.getRequestState();
+			if (state == RequestState.REQUEUE)
 			{
-				try
-				{
-					queue.drainTo(requests);
-					for (WriteRequest request : requests)
-					{
-						final RequestState state = request.getRequestState();
-						if (state == RequestState.REQUEUE)
-						{
-							queue.add(request);
-							continue;
-						}
-						else if (state == RequestState.SCHEDULE)
-						{
-							plugin.runTaskAsynchronously(request.getRunnable());
-						}
-					}
-					requests.clear();
-					Thread.sleep(100);
-				}
-				catch (InterruptedException ex)
-				{
-					continue;
-				}
+				queue.add(request);
+				continue;
+			}
+			else if (state == RequestState.SCHEDULE)
+			{
+				plugin.runTaskAsynchronously(request.getRunnable());
 			}
 		}
 	}
@@ -72,18 +64,29 @@ public class StorageQueue implements Runnable
 
 	private void startThread()
 	{
-		synchronized (lock)
-		{
-			plugin.runTaskAsynchronously(this);
-		}
+		plugin.runTaskTimerAsynchronously(this, 5, 5);
 	}
 
 	public void setEnabled(boolean enabled)
 	{
-		if (this.enabled.getAndSet(enabled) != enabled && enabled)
+		if (this.enabled.getAndSet(enabled) != enabled)
 		{
-			startThread();
+			if (enabled) {
+				startThread();
+			} else {
+				while (queue.size() > 0) {
+					work();
+					try
+					{
+						Thread.sleep(50);
+					}
+					catch (InterruptedException ex)
+					{
+					}
+				}
+			}
 		}
+		
 	}
 
 	public int getQueueSize()
@@ -92,7 +95,7 @@ public class StorageQueue implements Runnable
 	}
 
 
-	private class WriteRequest implements Delayed
+	private static class WriteRequest implements Delayed
 	{
 		private final AsyncStorageObjectHolder objectHolder;
 		private final long timestamp;

@@ -2,7 +2,6 @@ package net.ess3.commands;
 
 import java.util.List;
 import net.ess3.api.IEssentials;
-import net.ess3.api.IEssentialsModule;
 import net.ess3.api.IPermission;
 import net.ess3.api.IUser;
 import org.bukkit.command.Command;
@@ -20,6 +19,4 @@ public interface IEssentialsCommand extends IPermission
 	List<String> tabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args);
 
 	void init(IEssentials ess, String commandLabel);
-
-	void setEssentialsModule(IEssentialsModule module);
 }

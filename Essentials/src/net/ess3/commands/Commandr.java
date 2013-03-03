@@ -32,7 +32,7 @@ public class Commandr extends EssentialsCommand
 			}
 			else
 			{
-				message = FormatUtil.replaceFormat(message);
+				message = FormatUtil.stripFormat(message);
 			}
 			replyTo = user;
 			senderName = user.getPlayer().getDisplayName();

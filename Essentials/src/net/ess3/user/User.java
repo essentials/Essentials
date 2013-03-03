@@ -248,7 +248,7 @@ public class User extends UserBase implements IUser
 	{
 		final Boolean changeDisplayname = ess.getSettings().getData().getChat().getChangeDisplayname();
 
-		if (isOnline() && (changeDisplayname == true || (changeDisplayname == null && ess.getPlugin().isModuleEnabled("Chat"))))
+		if (isOnline() && ((changeDisplayname == null && ess.getPlugin().isModuleEnabled("Chat")) || changeDisplayname == true))
 		{
 			setDisplayNick();
 		}
@@ -269,7 +269,7 @@ public class User extends UserBase implements IUser
 				final Method.MethodAccount account = Methods.getMethod().getAccount(this.getName());
 				return account.balance();
 			}
-			catch (Throwable ex)
+			catch (Exception ex)
 			{
 			}
 		}
@@ -291,7 +291,7 @@ public class User extends UserBase implements IUser
 				final Method.MethodAccount account = Methods.getMethod().getAccount(this.getName());
 				account.set(value);
 			}
-			catch (Throwable ex)
+			catch (Exception ex)
 			{
 			}
 		}

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
-import net.ess3.api.IEssentialsModule;
 import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.permissions.AbstractSuperpermsPermission;
@@ -18,7 +17,6 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 {
 	protected String commandName;
 	protected IEssentials ess;
-	protected IEssentialsModule module;
 	protected Server server;
 	protected Logger logger;
 	private String permission;
@@ -31,12 +29,6 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 		this.server = ess.getServer();
 		this.commandName = commandName;
 		this.permission = "essentials." + commandName;
-	}
-
-	@Override
-	public void setEssentialsModule(final IEssentialsModule module)
-	{
-		this.module = module;
 	}
 
 	@Override

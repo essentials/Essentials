@@ -20,7 +20,7 @@ public class Commandpowertool extends EssentialsCommand
 		String command = getFinalArg(args, 0);
 		UserData userData = user.getData();
 		// check to see if this is a clear all command
-		if (command != null && command.equalsIgnoreCase("d:"))
+		if (command.equalsIgnoreCase("d:"))
 		{
 			userData.clearAllPowertools();
 			user.queueSave();
@@ -36,7 +36,7 @@ public class Commandpowertool extends EssentialsCommand
 
 		final String itemName = itemStack.getType().toString().toLowerCase(Locale.ENGLISH).replaceAll("_", " ");
 		List<String> powertools = userData.getPowertool(itemStack.getType());
-		if (command != null && !command.isEmpty())
+		if (!command.isEmpty())
 		{
 			if (command.equalsIgnoreCase("l:"))
 			{

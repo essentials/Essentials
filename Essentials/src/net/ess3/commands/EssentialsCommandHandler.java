@@ -17,7 +17,6 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 	private final ClassLoader classLoader;
 	private final String commandPath;
 	private final String permissionPrefix;// TODO: Needed?
-	private final IEssentialsModule module;
 	private static final Logger LOGGER = Bukkit.getLogger();
 	private final Map<String, List<PluginCommand>> altcommands = new HashMap<String, List<PluginCommand>>();
 	private final Map<String, String> disabledList = new HashMap<String, String>();
@@ -26,15 +25,9 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 
 	public EssentialsCommandHandler(ClassLoader classLoader, String commandPath, String permissionPrefix, IEssentials ess)
 	{
-		this(classLoader, commandPath, permissionPrefix, null, ess);
-	}
-
-	public EssentialsCommandHandler(ClassLoader classLoader, String commandPath, String permissionPrefix, IEssentialsModule module, IEssentials ess)
-	{
 		this.classLoader = classLoader;
 		this.commandPath = commandPath;
 		this.permissionPrefix = permissionPrefix;
-		this.module = module;
 		this.ess = ess;
 		for (Plugin plugin : ess.getServer().getPluginManager().getPlugins())
 		{
@@ -104,7 +97,6 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 				{
 					cmd = (IEssentialsCommand)classLoader.loadClass(commandPath + commandName).newInstance();
 					cmd.init(ess, commandName);
-					cmd.setEssentialsModule(module);
 					commands.put(commandName, cmd);
 					if (command instanceof PluginCommand)
 					{
@@ -163,13 +155,13 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 				}
 				return true;
 			}
-			catch (Throwable ex)
+			catch (Exception ex)
 			{
 				showCommandError(sender, commandLabel, ex);
 				return true;
 			}
 		}
-		catch (Throwable ex)
+		catch (Exception ex)
 		{
 			LOGGER.log(Level.SEVERE, _("commandFailed", commandLabel), ex);
 			return true;
@@ -236,7 +228,6 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 				{
 					cmd = (IEssentialsCommand)classLoader.loadClass(commandPath + commandName).newInstance();
 					cmd.init(ess, commandName);
-					cmd.setEssentialsModule(module);
 					commands.put(commandName, cmd);
 					if (command instanceof PluginCommand)
 					{
@@ -280,13 +271,13 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 					}
 				}
 			}
-			catch (Throwable ex)
+			catch (Exception ex)
 			{
 				showCommandError(sender, commandLabel, ex);
 				return null;
 			}
 		}
-		catch (Throwable ex)
+		catch (Exception ex)
 		{
 			LOGGER.log(Level.SEVERE, _("commandFailed", commandLabel), ex);
 			return null;

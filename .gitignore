@@ -31,3 +31,5 @@ manifest.mf
 *.ipr
 *.iws
 .idea/
+
+/EssentialsRelease/

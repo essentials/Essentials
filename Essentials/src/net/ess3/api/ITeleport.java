@@ -12,9 +12,9 @@ public interface ITeleport
 	/**
 	 * Teleport to a location now
 	 *
-	 * @param loc      - location to send to
+	 * @param loc - location to send to
 	 * @param cooldown - To check cooldown
-	 * @param cause    - Why was the send caused? Use a {@link TeleportCause}
+	 * @param cause - Why was the send caused? Use a {@link TeleportCause}
 	 * @throws Exception
 	 */
 	void now(Location loc, boolean cooldown, TeleportCause cause) throws Exception;
@@ -37,5 +37,5 @@ public interface ITeleport
 
 	void back() throws Exception;
 
-	public void warp(String name, Trade charge, TeleportCause teleportCause) throws Exception;
+	void warp(String name, Trade charge, TeleportCause teleportCause) throws Exception;
 }

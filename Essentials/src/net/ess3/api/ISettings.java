@@ -6,9 +6,9 @@ import net.ess3.storage.IStorageObjectHolder;
 
 public interface ISettings extends IStorageObjectHolder<Settings>
 {
-	public String getLocale();
+	String getLocale();
 
-	public boolean isDebug();
+	boolean isDebug();
 
-	public void setDebug(boolean b);
+	void setDebug(boolean b);
 }
