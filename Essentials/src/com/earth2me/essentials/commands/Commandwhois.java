@@ -67,7 +67,7 @@ public class Commandwhois extends EssentialsCommand
 			sender.sendMessage(_("whoisIPAddress", user.getAddress().getAddress().toString()));
 			final String location = user.getGeoLocation();
 			if (location != null
-				&& (sender instanceof Player ? ess.getUser(sender).isAuthorized("essentials.geoip.show") : true))
+				&& (sender instanceof Player ? ess.getUser(sender).isAuthorized("essentials.geoip.show") : false))
 			{
 				sender.sendMessage(_("whoisGeoLocation", location));
 			}
