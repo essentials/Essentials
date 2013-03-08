@@ -23,7 +23,7 @@ groups:
       build: false
       suffix: ''
   Builder:
-    default: false
+    default: true
     permissions: []
     inheritance:
     - default
