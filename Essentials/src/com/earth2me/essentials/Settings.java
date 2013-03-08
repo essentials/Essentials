@@ -700,6 +700,30 @@ public class Settings implements ISettings
 		}
 		return min;
 	}
+	
+	private final static double BUYSCALE = 1.0 ;
+	
+	@Override
+	public double getBuyScale()
+	{
+		double scale = config.getDouble("buy-scale", BUYSCALE) ;
+		if (scale < 0.0 || scale > 1000.0)
+			scale = BUYSCALE ;
+		
+		return scale ;
+	}
+	
+	private final static double SELLSCALE = 0.8 ;
+	
+	@Override
+	public double getSellScale()
+	{
+		double scale = config.getDouble("sell-scale", SELLSCALE) ;
+		if (scale < 0.0 || scale> 1000.0)
+			scale = SELLSCALE ;
+		
+		return scale ;
+	}
 
 	@Override
 	public boolean isEcoLogEnabled()
