@@ -280,9 +280,11 @@ public class EssentialsSign
 		}
 	}
 	
-	protected final void validateTrade(final ISign sign, final int costindex, final ItemStack item, final double scale, final IEssentials ess) throws SignException
+	protected final void validateTrade(final ISign sign, final int costIndex, final int amountIndex, 
+									   final ItemStack item, final double scale, 
+									   final IEssentials ess) throws SignException
 	{	
-		final String line = sign.getLine(costindex).trim();
+		final String line = sign.getLine(costIndex).trim();
 		if (line.isEmpty())
 		{
 			return;
@@ -298,16 +300,18 @@ public class EssentialsSign
 			else
 			{
 				price = Math.round(price * scale * 100) / 100.0 ;
-				sign.setLine(costindex, "<" + Util.shortCurrency(price, ess) + ">") ;
+				int amount = getIntegerPositive(sign.getLine(amountIndex));				
+				price *= amount ;
+				sign.setLine(costIndex, "<" + Util.shortCurrency(price, ess) + ">") ;
 			}
 		}
 		else
 		{
-			final Trade trade = getTrade(sign, costindex, 0, ess);
+			final Trade trade = getTrade(sign, costIndex, 0, ess);
 			final Double money = trade.getMoney();
 			if (money != null)
 			{
-				sign.setLine(costindex, Util.shortCurrency(money, ess));
+				sign.setLine(costIndex, Util.shortCurrency(money, ess));
 			}
 		}
 	}	
@@ -337,7 +341,8 @@ public class EssentialsSign
 			return new Trade(amount, ess);
 		}
 		final ItemStack item = getItemStack(sign.getLine(itemIndex), 1, ess);
-		final int amount = Math.min(getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * player.getInventory().getSize());
+		final int amount = Math.min(getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * 
+																				   player.getInventory().getSize());
 		if (item.getTypeId() == 0 || amount < 1)
 		{
 			throw new SignException(_("moreThanZero"));
@@ -347,7 +352,8 @@ public class EssentialsSign
 	}
 	
 	
-	protected final Trade getTrade(final ISign sign, final int index, final ItemStack item, final double scale, final IEssentials ess) throws SignException
+	protected final Trade getTrade(final ISign sign, final int index, final int amountIndex, final ItemStack item, 
+								   final double scale, final IEssentials ess) throws SignException
 	{
 		Trade t = null ;
 		
@@ -369,7 +375,10 @@ public class EssentialsSign
 				worth = money ;
 			}
 			else
-				worth = Math.round(worth * scale * 100) / 100.0 ;
+			{
+				int amount = getIntegerPositive(sign.getLine(amountIndex));		
+				worth = Math.round(worth * scale * 100) / 100.0  * amount ;
+			}
 			
 			if (Math.abs(worth - money) >= 0.01)
 			{

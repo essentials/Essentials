@@ -20,7 +20,7 @@ public class SignSell extends EssentialsSign
 		final double scale = ess.getSettings().getSellScale();
 		final ItemStack item = getItemStack(sign.getLine(2), 1, ess);
 		validateTrade(sign, 1, 2, player, ess);
-		validateTrade(sign, 3, item, scale, ess);
+		validateTrade(sign, 3, 1, item, scale, ess);
 		return true;
 	}
 
@@ -31,7 +31,7 @@ public class SignSell extends EssentialsSign
 	
 		final ItemStack item = getItemStack(sign.getLine(2), 1, ess);	
 		final Trade charge = getTrade(sign, 1, 2, player, ess);
-		final Trade money = getTrade(sign, 3, item, scale, ess);
+		final Trade money = getTrade(sign, 3, 1, item, scale, ess);
 		charge.isAffordableFor(player);
 		money.pay(player);
 		charge.charge(player);
