@@ -16,11 +16,13 @@ public class Commandafk extends EssentialsCommand
 			if (afkUser != null)
 			{
 				toggleAfk(afkUser);
+				user.sendMessage("Set user as afk")
 			}
 		}
 		else
 		{
 			toggleAfk(user);
+			user.sendMessage("You are now set as afk!")
 		}
 	}
 
