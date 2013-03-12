@@ -706,7 +706,7 @@ public class Settings implements ISettings
 	@Override
 	public double getBuyScale()
 	{
-		double scale = config.getDouble("buy-scale", BUYSCALE) ;
+		double scale = config.getDouble("worth-scale-factor.buy", BUYSCALE) ;
 		if (scale < 0.0 || scale > 1000.0)
 			scale = BUYSCALE ;
 		
@@ -718,7 +718,7 @@ public class Settings implements ISettings
 	@Override
 	public double getSellScale()
 	{
-		double scale = config.getDouble("sell-scale", SELLSCALE) ;
+		double scale = config.getDouble("worth-scale-factor.sell", SELLSCALE) ;
 		if (scale < 0.0 || scale> 1000.0)
 			scale = SELLSCALE ;
 		

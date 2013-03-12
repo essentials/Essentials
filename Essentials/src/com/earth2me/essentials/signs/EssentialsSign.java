@@ -302,7 +302,10 @@ public class EssentialsSign
 				price = Math.round(price * scale * 100) / 100.0 ;
 				int amount = getIntegerPositive(sign.getLine(amountIndex));				
 				price *= amount ;
-				sign.setLine(costIndex, "<" + Util.shortCurrency(price, ess) + ">") ;
+				String linestr = "<" + Util.shortCurrency(price, ess) + ">";
+				if (linestr.length() > 15)
+					throw new SignException("price is too large to print on sign") ;
+				sign.setLine(costIndex, linestr) ;
 			}
 		}
 		else
@@ -386,7 +389,11 @@ public class EssentialsSign
 				// The price has changed since the sign was updated.  We don't do the transation, but
 				// update the sign and tell the user the price has changed
 				//
-				sign.setLine(index, "<" + Util.shortCurrency(worth, ess) + ">") ;
+				String linestr = "<" + Util.shortCurrency(worth, ess) + ">" ;
+				if (linestr.length() > 15)
+					throw new SignException("the price is too large, will not fit on sign") ;
+				
+				sign.setLine(index, linestr) ;
 				sign.updateSign();
 				throw new SignException("the price of the item has changed") ;
 			}
