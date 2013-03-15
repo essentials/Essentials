@@ -279,6 +279,45 @@ public class EssentialsSign
 			sign.setLine(index, Util.shortCurrency(money, ess));
 		}
 	}
+	
+	protected final void validateTrade(final ISign sign, final int costIndex, final int amountIndex, 
+									   final ItemStack item, final double scale, 
+									   final IEssentials ess) throws SignException
+	{	
+		final String line = sign.getLine(costIndex).trim();
+		if (line.isEmpty())
+		{
+			return;
+		}
+		
+		if (line.equalsIgnoreCase("$$"))
+		{
+			double price = ess.getWorth().getPrice(item) ;
+			if (Double.isNaN(price))
+			{
+				throw new SignException("no price set for item") ;
+			}
+			else
+			{
+				price = Math.round(price * scale * 100) / 100.0 ;
+				int amount = getIntegerPositive(sign.getLine(amountIndex));				
+				price *= amount ;
+				String linestr = "<" + Util.shortCurrency(price, ess) + ">";
+				if (linestr.length() > 15)
+					throw new SignException("price is too large to print on sign") ;
+				sign.setLine(costIndex, linestr) ;
+			}
+		}
+		else
+		{
+			final Trade trade = getTrade(sign, costIndex, 0, ess);
+			final Double money = trade.getMoney();
+			if (money != null)
+			{
+				sign.setLine(costIndex, Util.shortCurrency(money, ess));
+			}
+		}
+	}	
 
 	protected final void validateTrade(final ISign sign, final int amountIndex, final int itemIndex,
 									   final User player, final IEssentials ess) throws SignException
@@ -305,7 +344,8 @@ public class EssentialsSign
 			return new Trade(amount, ess);
 		}
 		final ItemStack item = getItemStack(sign.getLine(itemIndex), 1, ess);
-		final int amount = Math.min(getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * player.getInventory().getSize());
+		final int amount = Math.min(getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * 
+																				   player.getInventory().getSize());
 		if (item.getTypeId() == 0 || amount < 1)
 		{
 			throw new SignException(_("moreThanZero"));
@@ -313,6 +353,58 @@ public class EssentialsSign
 		item.setAmount(amount);
 		return new Trade(item, ess);
 	}
+	
+	
+	protected final Trade getTrade(final ISign sign, final int index, final int amountIndex, final ItemStack item, 
+								   final double scale, final IEssentials ess) throws SignException
+	{
+		Trade t = null ;
+		
+		String line = sign.getLine(index).trim();
+		if (line.startsWith("<") && line.endsWith(">"))
+		{
+			line = line.substring(1, line.length() - 1) ;
+			Double money = getMoney(line);
+			Double worth = ess.getWorth().getPrice(item) ;
+			if (worth.isInfinite() || worth.isNaN())
+			{
+				//
+				// If the worth (e.g. setworth) has disappeared since we put a price
+				// on the sign, we just trust the price on the sign.  Note since the sign
+				// also has to be valid, meaning the right prefix to the [BUY] or [SELL] message
+				// the sign had to be valid to start.  Maybe there is a way to cheat and if so
+				// we may need to invalidate the sign if the worth of an item disappears.
+				//
+				worth = money ;
+			}
+			else
+			{
+				int amount = getIntegerPositive(sign.getLine(amountIndex));		
+				worth = Math.round(worth * scale * 100) / 100.0  * amount ;
+			}
+			
+			if (Math.abs(worth - money) >= 0.01)
+			{
+				//
+				// The price has changed since the sign was updated.  We don't do the transation, but
+				// update the sign and tell the user the price has changed
+				//
+				String linestr = "<" + Util.shortCurrency(worth, ess) + ">" ;
+				if (linestr.length() > 15)
+					throw new SignException("the price is too large, will not fit on sign") ;
+				
+				sign.setLine(index, linestr) ;
+				sign.updateSign();
+				throw new SignException("the price of the item has changed") ;
+			}
+			
+			t = new Trade(money, ess) ;
+		}
+		else
+			t = getTrade(sign, index, 1, ess) ;
+		
+		return t ;
+	}	
 
 	protected final void validateInteger(final ISign sign, final int index) throws SignException
 	{

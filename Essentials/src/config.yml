@@ -446,6 +446,12 @@ min-money: -10000
 # Enable this to log all interactions with trade/buy/sell signs and sell command.
 economy-log-enabled: false
 
+# The amount to scale and item's worth when performing a buy or sell via a sign
+# that is configured to get the price from an items worth
+worth-scale-factor:
+  buy: 1.0
+  sell: 0.85
+
 ############################################################
 # +------------------------------------------------------+ #
 # |                   EssentialsHelp                     | #

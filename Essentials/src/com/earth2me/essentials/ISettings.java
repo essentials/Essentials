@@ -115,6 +115,10 @@ public interface ISettings extends IConf
 	double getMaxMoney();
 
 	double getMinMoney();
+	
+	double getBuyScale();
+	
+	double getSellScale();
 
 	boolean isEcoLogEnabled();
 
