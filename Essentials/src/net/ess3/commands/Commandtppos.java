@@ -21,7 +21,8 @@ public class Commandtppos extends EssentialsCommand
 		final int x = Integer.parseInt(args[0]);
 		final int y = Integer.parseInt(args[1]);
 		final int z = Integer.parseInt(args[2]);
-		final Location location = new Location(user.getPlayer().getWorld(), x, y, z);
+		final Location playerLocation = user.getPlayer().getLocation();
+		final Location location = new Location(user.getPlayer().getWorld(), x, y, z, playerLocation.getYaw(), playerLocation.getPitch());
 		if (args.length > 3)
 		{
 			location.setYaw((Float.parseFloat(args[3]) + 180 + 360) % 360);
@@ -53,7 +54,8 @@ public class Commandtppos extends EssentialsCommand
 		final int x = Integer.parseInt(args[1]);
 		final int y = Integer.parseInt(args[2]);
 		final int z = Integer.parseInt(args[3]);
-		final Location location = new Location(user.getPlayer().getWorld(), x, y, z);
+		final Location playerLocation = user.getPlayer().getLocation();
+		final Location location = new Location(user.getPlayer().getWorld(), x, y, z, playerLocation.getYaw(), playerLocation.getPitch());
 		if (args.length > 4)
 		{
 			location.setYaw((Float.parseFloat(args[4]) + 180 + 360) % 360);
