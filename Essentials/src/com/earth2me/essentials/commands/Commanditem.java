@@ -66,6 +66,11 @@ public class Commanditem extends EssentialsCommand
 		}
 
 
+		if (stack.getType() == Material.WOOL && (stack.getDurability() < 0 || stack.getDurability() > 15))
+		{
+			throw new Exception(_("cantSpawnItem", "Wool"));
+		}
+		
 		if (stack.getType() == Material.AIR)
 		{
 			throw new Exception(_("cantSpawnItem", "Air"));
