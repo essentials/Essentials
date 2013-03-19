@@ -33,6 +33,7 @@ public class Commandkick extends EssentialsCommand
 			{
 				throw new PlayerNotFoundException();
 			}
+
 			if (target.isAuthorized("essentials.kick.exempt"))
 			{
 				throw new Exception(_("kickExempt"));
