@@ -4,6 +4,7 @@ import static com.earth2me.essentials.I18n._;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import com.earth2me.essentials.User;
 
 
 public class Commandburn extends EssentialsCommand
