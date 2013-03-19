@@ -30,6 +30,6 @@ public class Commandburn extends EssentialsCommand
 
 		User user = getPlayer(server, args, 0);
 		user.setFireTicks(Integer.parseInt(args[1]) * 20);
-		sender.sendMessage(_("burnMsg", p.getDisplayName(), Integer.parseInt(args[1])));
+		sender.sendMessage(_("burnMsg", user.getDisplayName(), Integer.parseInt(args[1])));
 	}
 }
