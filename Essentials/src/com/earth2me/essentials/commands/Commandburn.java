@@ -27,10 +27,8 @@ public class Commandburn extends EssentialsCommand
 			throw new NotEnoughArgumentsException("You need to specify a player to burn.");
 		}
 
-		for (Player p : server.matchPlayer(args[0]))
-		{
-			p.setFireTicks(Integer.parseInt(args[1]) * 20);
-			sender.sendMessage(_("burnMsg", p.getDisplayName(), Integer.parseInt(args[1])));
-		}
+		User user = getPlayer(server, args, 0);
+		user.setFireTicks(Integer.parseInt(args[1]) * 20);
+		sender.sendMessage(_("burnMsg", p.getDisplayName(), Integer.parseInt(args[1])));
 	}
 }
