@@ -16,15 +16,12 @@ public class Commandsetjail extends EssentialsCommand
 	@Override
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length < 1)
+		if (args.length < 1 || args[0].isEmpty())
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		if (!args[0].isEmpty())
-		{
-			ess.getJails().setJail(args[0], user.getLocation());
-			user.sendMessage(_("jailSet", Util.sanitizeString(args[0])));
-		}
+		ess.getJails().setJail(args[0], user.getLocation());
+		user.sendMessage(_("jailSet", Util.sanitizeString(args[0])));
 
 	}
 }
