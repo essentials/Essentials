@@ -74,34 +74,36 @@ public class Commandwarp extends EssentialsCommand
 		}
 		final List<String> warpNameList = new ArrayList<String>(warps.getWarpNames());
 
-		if (sender instanceof User)
+		if (sender instanceof User && ess.getSettings().getPerWarpPermission())
 		{
 			final Iterator<String> iterator = warpNameList.iterator();
 			while (iterator.hasNext())
 			{
 				final String warpName = iterator.next();
-				if (ess.getSettings().getPerWarpPermission() && !((User)sender).isAuthorized("essentials.warps." + warpName))
+				if (!((User)sender).isAuthorized("essentials.warps." + warpName))
 				{
 					iterator.remove();
 				}
 			}
 		}
-		int page = 1;
-		if (args.length > 0 && Util.isInt(args[0]))
-		{
-			page = Integer.parseInt(args[0]);
-		}
-
-		final int warpPage = (page - 1) * WARPS_PER_PAGE;
-		final String warpList = Util.joinList(warpNameList.subList(warpPage, warpPage + Math.min(warpNameList.size() - warpPage, WARPS_PER_PAGE)));
-
+		
+		final String warpList;
 		if (warpNameList.size() > WARPS_PER_PAGE)
 		{
+			int page = 1;
+			if (args.length > 0 && Util.isInt(args[0]))
+			{
+				page = Integer.parseInt(args[0]);
+			}
+
+			final int warpPage = (page - 1) * WARPS_PER_PAGE;
+			warpList = Util.joinList(warpNameList.subList(warpPage, warpPage + Math.min(warpNameList.size() - warpPage, WARPS_PER_PAGE)));
 			sender.sendMessage(_("warpsCount", warpNameList.size(), page, (int)Math.ceil(warpNameList.size() / (double)WARPS_PER_PAGE)));
 			sender.sendMessage(_("warpList", warpList));
 		}
 		else
 		{
+			warpList = Util.joinList(", ", warpNameList)
 			sender.sendMessage(_("warps", warpList));
 		}
 	}
