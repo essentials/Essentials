@@ -31,24 +31,8 @@ public class Commandpay extends EssentialsCommand
 
 		double amount = Double.parseDouble(args[1].replaceAll("[^0-9\\.]", ""));
 
-		boolean skipHidden = !user.isAuthorized("essentials.vanish.interact");
-		boolean foundUser = false;
-		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
-		for (Player matchPlayer : matchedPlayers)
-		{
-			User player = ess.getUser(matchPlayer);
-			if (skipHidden && player.isHidden())
-			{
-				continue;
-			}
-			foundUser = true;
-			user.payUser(player, amount);
-			Trade.log("Command", "Pay", "Player", user.getName(), new Trade(amount, ess), player.getName(), new Trade(amount, ess), user.getLocation(), ess);
-		}
-
-		if (!foundUser)
-		{
-			throw new NotEnoughArgumentsException(_("playerNotFound"));
-		}
+		final User target = getPlayer(server, user, args, 0);
+		user.payUser(target, amount);
+		Trade.log("Command", "Pay", "Player", user.getName(), new Trade(amount, ess), target.getName(), new Trade(amount, ess), user.getLocation(), ess);
 	}
 }
