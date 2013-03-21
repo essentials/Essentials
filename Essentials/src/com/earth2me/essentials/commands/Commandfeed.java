@@ -32,7 +32,7 @@ public class Commandfeed extends EssentialsCommand
 
 	private void feedOtherPlayers(final Server server, final CommandSender sender, final String name) throws NotEnoughArgumentsException
 	{
-		User target = getPlayer(server, args, 0, (!sender instanceof player || user.isAuthorized("essentials.vanish.interact")), false);
+		User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
 		target.setFoodLevel(20);
 		target.setSaturation(10);
 		sender.sendMessage(_("feedOther", target.getDisplayName()));
