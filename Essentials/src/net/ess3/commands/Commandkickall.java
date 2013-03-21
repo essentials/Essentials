@@ -13,7 +13,7 @@ public class Commandkickall extends EssentialsCommand
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("kickDefault");
-		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n"));
+		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n").replace("|", "\n"));
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			if (sender instanceof IUser && onlinePlayer.getName().equalsIgnoreCase(((Player)sender).getName()))

@@ -25,7 +25,7 @@ public class Commandkick extends EssentialsCommand
 			throw new Exception(_("kickExempt"));
 		}
 		String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("kickDefault");
-		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n"));
+		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n").replace("|", "\n"));
 		user.getPlayer().kickPlayer(kickReason);
 		final String senderName = sender instanceof IUser ? ((IUser)sender).getPlayer().getDisplayName() : Console.NAME;
 
