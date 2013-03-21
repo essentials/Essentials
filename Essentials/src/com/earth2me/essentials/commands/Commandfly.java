@@ -63,7 +63,7 @@ public class Commandfly extends EssentialsCommand
 
 	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
 	{
-		User target = getPlayer(server, args, 0, (!sender instanceof player || user.isAuthorized("essentials.vanish.interact")), false);
+		User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
 		if (args.length > 1)
 		{
 			if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
