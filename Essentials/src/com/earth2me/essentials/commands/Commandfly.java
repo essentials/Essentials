@@ -63,42 +63,27 @@ public class Commandfly extends EssentialsCommand
 
 	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
 	{
-		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
-		boolean foundUser = false;
-		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
-		for (Player matchPlayer : matchedPlayers)
+		User target = getPlayer(server, args, 0, (!sender instanceof player || user.isAuthorized("essentials.vanish.interact")), false);
+		if (args.length > 1)
 		{
-			final User player = ess.getUser(matchPlayer);
-			if (skipHidden && player.isHidden())
+			if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
 			{
-				continue;
-			}
-			foundUser = true;
-			if (args.length > 1)
-			{
-				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
-				{
-					player.setAllowFlight(true);
-				}
-				else
-				{
-					player.setAllowFlight(false);
-				}
+				target.setAllowFlight(true);
 			}
 			else
 			{
-				player.setAllowFlight(!player.getAllowFlight());
+				target.setAllowFlight(false);
 			}
-
-			if (!player.getAllowFlight())
-			{
-				player.setFlying(false);
-			}
-			sender.sendMessage(_("flyMode", _(player.getAllowFlight() ? "enabled" : "disabled"), player.getDisplayName()));
 		}
-		if (!foundUser)
+		else
 		{
-			throw new NotEnoughArgumentsException(_("playerNotFound"));
+			target.setAllowFlight(!player.getAllowFlight());
 		}
+
+		if (!target.getAllowFlight())
+		{
+			target.setFlying(false);
+		}
+		sender.sendMessage(_("flyMode", _(target.getAllowFlight() ? "enabled" : "disabled"), target.getDisplayName()));
 	}
 }
