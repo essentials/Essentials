@@ -50,41 +50,26 @@ public class Commandgod extends EssentialsCommand
 
 	private void godOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
 	{
-		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
-		boolean foundUser = false;
-		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
-		for (Player matchPlayer : matchedPlayers)
+		final User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
+		boolean enabled;
+		if (args.length > 1)
 		{
-			final User player = ess.getUser(matchPlayer);
-			if (skipHidden && player.isHidden())
+			if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
 			{
-				continue;
-			}
-			foundUser = true;
-			boolean enabled;
-			if (args.length > 1)
-			{
-				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
-				{
-					enabled = true;
-				}
-				else
-				{
-					enabled = false;
-				}
+				enabled = true;
 			}
 			else
 			{
-				enabled = !player.isGodModeEnabled();
+				enabled = false;
 			}
-
-			godPlayer(player, enabled);
-			player.sendMessage(_("godMode", (enabled ? _("enabled") : _("disabled"))));
-			sender.sendMessage(_("godMode", _(enabled ? "godEnabledFor" : "godDisabledFor", matchPlayer.getDisplayName())));
 		}
-		if (!foundUser)
+		else
 		{
-			throw new NotEnoughArgumentsException(_("playerNotFound"));
+			enabled = !player.isGodModeEnabled();
 		}
+
+		godPlayer(target, enabled);
+		target.sendMessage(_("godMode", (enabled ? _("enabled") : _("disabled"))));
+		sender.sendMessage(_("godMode", _(enabled ? "godEnabledFor" : "godDisabledFor", target.getDisplayName())));
 	}
 }
