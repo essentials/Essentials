@@ -16,7 +16,6 @@
     <module>EssentialsExtra</module>
     <module>EssentialsGeoIP</module>
     <module>EssentialsGroupBridge</module>
-    <module>EssentialsGroupManager</module>
     <module>EssentialsProtect</module>
     <module>EssentialsSigns</module>
     <module>EssentialsUpdate</module>
@@ -27,7 +26,7 @@
   <repositories>
     <repository>
       <id>essentials-repo</id>
-      <url>http://ess.ementalo.com/nexus/content/groups/public/</url>
+      <url>http://ci.ess3.net/nexus/content/groups/public/</url>
     </repository>
   </repositories>
 
@@ -75,7 +74,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <bukkit.version>1.4.7-R1.0</bukkit.version>
+    <bukkit.version>1.5.1-R0.1-SNAPSHOT</bukkit.version>
     <build.number>Unknown</build.number>
     <org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>true</org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>
     <org-netbeans-modules-editor-indent.CodeStyle.project.indent-shift-width>2</org-netbeans-modules-editor-indent.CodeStyle.project.indent-shift-width>

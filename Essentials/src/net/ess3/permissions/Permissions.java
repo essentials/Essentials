@@ -21,6 +21,9 @@ public enum Permissions implements IPermission
 	BAN_EXEMPT,
 	BAN_NOTIFY,
 	BAN_OFFLINE,
+    BOOK_AUTHOR,
+    BOOK_OTHERS,
+    BOOK_TITLE,
 	BREAK_BEDROCK,
 	CHAT_COLOR,
 	CHAT_IGNORE_EXEMPT,
@@ -30,7 +33,6 @@ public enum Permissions implements IPermission
 	ECO_LOAN(PermissionDefault.FALSE),
 	ENCHANT_UNSAFE(PermissionDefault.FALSE),
 	ENDERCHEST_OTHERS,
-	ESSENTIALS,
 	EXP_GIVE,
 	EXP_GIVE_OTHERS,
 	EXP_SET,
@@ -166,6 +168,7 @@ public enum Permissions implements IPermission
 		return PermissionFactory.checkPermission(sender, this);
 	}
 
+    public static final DotStarPermission ESSENTIALS = new DotStarPermission("essentials.");
 	public static final DotStarPermission ENCHANT = new DotStarPermission("essentials.enchant");
 	public static final DotStarPermission PERGROUPTELEPORT = new DotStarPermission("essentials.teleport.groups");
 	public static final MaterialDotStarPermission GIVE = new MaterialDotStarPermission("essentials.give", PermissionDefault.TRUE);
