@@ -32,24 +32,9 @@ public class Commandfeed extends EssentialsCommand
 
 	private void feedOtherPlayers(final Server server, final CommandSender sender, final String name) throws NotEnoughArgumentsException
 	{
-		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
-		boolean foundUser = false;
-		final List<Player> matchedPlayers = server.matchPlayer(name);
-		for (Player matchPlayer : matchedPlayers)
-		{
-			final User player = ess.getUser(matchPlayer);
-			if (skipHidden && player.isHidden())
-			{
-				continue;
-			}
-			foundUser = true;
-			matchPlayer.setFoodLevel(20);
-			matchPlayer.setSaturation(10);
-			sender.sendMessage(_("feedOther", matchPlayer.getDisplayName()));
-		}
-		if (!foundUser)
-		{
-			throw new NotEnoughArgumentsException(_("playerNotFound"));
-		}
+		User target = getPlayer(server, args, 0, (!sender instanceof player || user.isAuthorized("essentials.vanish.interact")), false);
+		target.setFoodLevel(20);
+		target.setSaturation(10);
+		sender.sendMessage(_("feedOther", target.getDisplayName()));
 	}
 }
