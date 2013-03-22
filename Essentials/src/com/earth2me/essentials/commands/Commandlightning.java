@@ -43,7 +43,7 @@ public class Commandlightning extends EssentialsCommand
 			}
 		}
 
-		final User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
+		final User target = getPlayer(server, sender, args, 0);
 		sender.sendMessage(_("lightningUse", target.getDisplayName()));
 
 		final LightningStrike strike = matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
