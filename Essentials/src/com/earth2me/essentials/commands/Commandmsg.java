@@ -65,7 +65,8 @@ public class Commandmsg extends EssentialsCommand
 		sender.sendMessage(_("msgFormat", translatedMe, target.getDisplayName(), message));
 		if (sender instanceof Player && target.isIgnoredPlayer(ess.getUser(sender)))
 		{
-			continue;
+			//TODO: TL this:
+			throw new Exception("That Player is ignoring you!");
 		}
 
 		target.sendMessage(_("msgFormat", senderName, translatedMe, message));
