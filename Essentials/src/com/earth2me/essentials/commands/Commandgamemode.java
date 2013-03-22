@@ -85,7 +85,7 @@ public class Commandgamemode extends EssentialsCommand
 			throw new NotEnoughArgumentsException("You need to specify a valid player/mode.");
 		}
 		
-		User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
+		final User target = getPlayer(server, sender, args, 1);
 		target.setGameMode(gameMode);
 		sender.sendMessage(_("gameMode", _(target.getGameMode().toString().toLowerCase(Locale.ENGLISH)), target.getDisplayName()));
 		}
