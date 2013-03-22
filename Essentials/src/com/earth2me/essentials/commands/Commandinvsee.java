@@ -22,7 +22,7 @@ public class Commandinvsee extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User invUser = getPlayer(server, args, 0, user.isAuthorized("essentials.vanish.interact"), false);
+		final User invUser = getPlayer(server, sender, args, 0);
 		Inventory inv;
 
 		if (args.length > 1 && user.isAuthorized("essentials.invsee.equip"))
