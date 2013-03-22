@@ -117,14 +117,14 @@ public class Commandexp extends EssentialsCommand
 
 	private void showMatch(final Server server, final CommandSender sender, final String match) throws NotEnoughArgumentsException
 	{
-		User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
+		final User target = getPlayer(server, sender, args, 0);
 		showExp(sender, target);
 	}
 
 	private void expMatch(final Server server, final CommandSender sender, final String match, String amount, final boolean give) throws NotEnoughArgumentsException
 	{
-		User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
-		setExp(sender, player, amount, give);
+		final User target = getPlayer(server, sender, args, 0);
+		setExp(sender, target, amount, give);
 	}
 
 	private void showExp(final CommandSender sender, final User target)
