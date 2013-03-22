@@ -23,7 +23,7 @@ public class Commandtogglejail extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User player = getPlayer(server, args, 0, (!sender instanceof Player || user.isAuthorized("essentials.vanish.interact")), true);
+		final User player = getPlayer(server, args, 0, (!(sender instanceof Player) || sender.isAuthorized("essentials.vanish.interact")), true);
 
 		if (args.length >= 2 && !player.isJailed())
 		{
