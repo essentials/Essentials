@@ -77,7 +77,7 @@ public class Commandfly extends EssentialsCommand
 		}
 		else
 		{
-			target.setAllowFlight(!player.getAllowFlight());
+			target.setAllowFlight(!target.getAllowFlight());
 		}
 
 		if (!target.getAllowFlight())
