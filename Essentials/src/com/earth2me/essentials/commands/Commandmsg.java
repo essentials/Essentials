@@ -56,7 +56,7 @@ public class Commandmsg extends EssentialsCommand
 			return;
 		}
 
-		final User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
+		final User target = getPlayer(server, sender, args, 0);
 		if (target.isAfk())
 		{
 			sender.sendMessage(_("userAFK", target.getDisplayName()));
