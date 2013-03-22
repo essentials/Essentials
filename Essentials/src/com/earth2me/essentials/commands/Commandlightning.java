@@ -30,6 +30,10 @@ public class Commandlightning extends EssentialsCommand
 				return;
 			}
 		}
+		else if (args.length == 0)
+		{
+			return false;
+		}
 
 		int power = 5;
 		if (args.length > 1)
