@@ -65,7 +65,7 @@ public class Commandgod extends EssentialsCommand
 		}
 		else
 		{
-			enabled = !player.isGodModeEnabled();
+			enabled = !target.isGodModeEnabled();
 		}
 
 		godPlayer(target, enabled);
