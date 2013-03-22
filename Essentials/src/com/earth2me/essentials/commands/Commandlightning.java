@@ -46,7 +46,7 @@ public class Commandlightning extends EssentialsCommand
 		final User target = getPlayer(server, sender, args, 0);
 		sender.sendMessage(_("lightningUse", target.getDisplayName()));
 
-		final LightningStrike strike = matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
+		final LightningStrike strike = target.getWorld().strikeLightningEffect(target.getLocation());
 
 		if (target.isGodModeEnabled())
 		{
