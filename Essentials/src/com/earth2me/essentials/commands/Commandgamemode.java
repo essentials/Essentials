@@ -88,7 +88,6 @@ public class Commandgamemode extends EssentialsCommand
 		final User target = getPlayer(server, sender, args, 1);
 		target.setGameMode(gameMode);
 		sender.sendMessage(_("gameMode", _(target.getGameMode().toString().toLowerCase(Locale.ENGLISH)), target.getDisplayName()));
-		}
 	}
 
 	private GameMode matchGameMode(String modeString) throws NotEnoughArgumentsException
