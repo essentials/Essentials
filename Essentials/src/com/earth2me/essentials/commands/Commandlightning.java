@@ -32,7 +32,7 @@ public class Commandlightning extends EssentialsCommand
 		}
 		else if (args.length == 0)
 		{
-			return false;
+			throw new NotEnoughArgumentsException();
 		}
 
 		int power = 5;
