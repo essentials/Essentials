@@ -50,7 +50,7 @@ public class Commandgod extends EssentialsCommand
 
 	private void godOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
 	{
-		final User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
+		final User target = getPlayer(server, sender, args, 0);
 		boolean enabled;
 		if (args.length > 1)
 		{
