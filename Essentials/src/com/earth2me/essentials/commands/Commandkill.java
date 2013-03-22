@@ -5,6 +5,7 @@ import java.util.List;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import com.earth2me.essentials.User;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 
@@ -34,7 +35,8 @@ public class Commandkill extends EssentialsCommand
 		server.getPluginManager().callEvent(ede);
 		if (ede.isCancelled() && sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.kill.force"))
 		{
-			continue;
+			//TODO: TL this
+			throw new Exception("you cannot kill that player!");
 		}
 		target.damage(Short.MAX_VALUE);
 
