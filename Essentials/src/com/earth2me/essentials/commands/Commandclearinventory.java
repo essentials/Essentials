@@ -84,7 +84,7 @@ public class Commandclearinventory extends EssentialsCommand
 
 	private void cleanInventoryOthers(Server server, CommandSender user, String[] args) throws Exception
 	{
-		User target = getPlayer(server, args, 0, (!user instanceof player || user.isAuthorized("essentials.vanish.interact")), false);
+		User target = getPlayer(server, sender, args, 0);
 		if (args.length > 1)
 		{
 			clearInventory(target, args[1]);
