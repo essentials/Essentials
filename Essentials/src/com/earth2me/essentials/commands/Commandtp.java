@@ -99,7 +99,7 @@ public class Commandtp extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User target = getPlayer(server, args, 0, true);
+		final User target = getPlayer(server, args, 0, true, false);
 		if (args.length == 2)
 		{
 			final User toPlayer = getPlayer(server, args, 1);
