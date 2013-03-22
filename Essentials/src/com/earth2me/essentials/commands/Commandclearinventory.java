@@ -93,7 +93,7 @@ public class Commandclearinventory extends EssentialsCommand
 		{
 			target.getInventory().clear();
 		}
-		user.sendMessage(_("inventoryClearedOthers", target.getDisplayName()));
+		sender.sendMessage(_("inventoryClearedOthers", target.getDisplayName()));
 	}
 
 	private void cleanInventorySelf(Server server, User user, String[] args) throws Exception
