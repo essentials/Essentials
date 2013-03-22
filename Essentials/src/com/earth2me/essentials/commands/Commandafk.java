@@ -25,6 +25,20 @@ public class Commandafk extends EssentialsCommand
 			toggleAfk(user);
 		}
 	}
+	
+	@Override
+	public void run(Server server, CommandSender sender, String commandLabel, String[] args) throws Exception
+	{
+		if (args.length > 0)
+		{
+			User afkUser = getPlayer(server, args, 0, true, false);
+			toggleAfk(afkUser);
+		}
+		else
+		{
+			throw new NotEnoughArgumentsException();
+		}
+	}
 
 	private void toggleAfk(User user)
 	{
