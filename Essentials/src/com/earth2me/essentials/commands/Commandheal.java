@@ -50,7 +50,7 @@ public class Commandheal extends EssentialsCommand
 
 	private void healOtherPlayers(final Server server, final CommandSender sender, final String name) throws Exception
 	{
-		final User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
+		final User target = getPlayer(server, sender, args, 0);
 		healPlayer(target);
 		sender.sendMessage(_("healOther", target.getDisplayName()));
 	}
