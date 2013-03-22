@@ -55,7 +55,7 @@ public abstract class EssentialsCommand implements IEssentialsCommand
 	
 	protected User getPlayer(final Server server, final CommandSender sender, final String[] args, final int pos) throws NoSuchFieldException, NotEnoughArgumentsException
 	{
-		return getPlayer(server, args, pos, (!sender instanceof Player || sender.isAuthorized("essentials.vanish.interact")), false);
+		return getPlayer(server, args, pos, (!(sender instanceof Player) || ess.getUser(sender).isAuthorized("essentials.vanish.interact")), false);
 	}
 
 	protected User getPlayer(final Server server, final String[] args, final int pos, boolean getHidden, final boolean getOffline) throws NoSuchFieldException, NotEnoughArgumentsException
