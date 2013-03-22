@@ -1,0 +1,17 @@
+language: java
+jdk:
+  - oraclejdk7
+  - openjdk7
+  - openjdk6
+script: mvn clean test
+notifications:
+  irc: 
+    channels: 
+      - "irc.esper.net#lain"
+    on_success: change
+    on_failure: always
+  email:
+    recipients:
+      - "team@ess3.net"
+    on_success: change
+    on_failure: always
