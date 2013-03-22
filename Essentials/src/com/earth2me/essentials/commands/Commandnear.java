@@ -32,7 +32,7 @@ public class Commandnear extends EssentialsCommand
 			{
 				try
 				{
-					otherUser = getPlayer(server, args, 0, user.isAuthorized("essentials.vanish.interact"), false);
+					otherUser = getPlayer(server, user, args, 0);
 				}
 				catch (Exception ex)
 				{
