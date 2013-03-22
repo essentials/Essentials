@@ -29,11 +29,23 @@ public class Commandfeed extends EssentialsCommand
 			user.sendMessage(_("feed"));
 		}
 	}
+	
+	@Override
+	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	{
+		if (args.length > 0)
+		{
+			feedOtherPlayers(server, sender, args[0]);
+		}
+		else
+		{
+			throw new NotEnoughArgumentsException();
+		}
+	}
 
 	private void feedOtherPlayers(final Server server, final CommandSender sender, final String name) throws NotEnoughArgumentsException
 	{
-		User target = getPlayer(server, args, 0, (!sender instanceof player || sender.isAuthorized("essentials.vanish.interact")), false);
-		target.setFoodLevel(20);
+		final User target = getPlayer(server, sender, args, 0);
 		target.setSaturation(10);
 		sender.sendMessage(_("feedOther", target.getDisplayName()));
 	}
