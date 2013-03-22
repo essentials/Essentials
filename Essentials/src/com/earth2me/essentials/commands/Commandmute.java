@@ -38,10 +38,10 @@ public class Commandmute extends EssentialsCommand
 		}
 		else
 		{
-			target.setMuted(!player.getMuted());
+			target.setMuted(!target.getMuted());
 		}
 		target.setMuteTimeout(muteTimestamp);
-		final boolean muted = player.getMuted();
+		final boolean muted = target.getMuted();
 		if (muted)
 		{
 			if (muteTimestamp > 0)
