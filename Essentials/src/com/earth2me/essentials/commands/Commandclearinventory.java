@@ -82,29 +82,18 @@ public class Commandclearinventory extends EssentialsCommand
 		}
 	}
 
-	private void cleanInventoryOthers(Server server, CommandSender user, String[] args) throws Exception
+	private void cleanInventoryOthers(Server server, CommandSender sender, String[] args) throws Exception
 	{
-		List<Player> online = server.matchPlayer(args[0]);
-
-		if (!online.isEmpty())
+		User target = getPlayer(server, sender, args, 0);
+		if (args.length > 1)
 		{
-			for (Player p : online)
-			{
-				if (args.length > 1)
-				{
-					clearInventory(p, args[1]);
-				}
-				else
-				{
-					p.getInventory().clear();
-				}
-				user.sendMessage(_("inventoryClearedOthers", p.getDisplayName()));
-			}
+			clearInventory(target, args[1]);
 		}
 		else
 		{
-			throw new Exception(_("playerNotFound"));
+			target.getInventory().clear();
 		}
+		sender.sendMessage(_("inventoryClearedOthers", target.getDisplayName()));
 	}
 
 	private void cleanInventorySelf(Server server, User user, String[] args) throws Exception

@@ -31,24 +31,35 @@ public class Commandremove extends EssentialsCommand
 	@Override
 	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length < 1)
+		if (args.length < 2)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 		ToRemove toRemove;
-		final World world = user.getWorld();
-		int radius = 0;
-
-		if (args.length < 2)
+		
+		World world;
+		if (args.length > 2)
 		{
-			try
+			world = ess.getWorld(args[2]);
+
+			if (world == null)
 			{
-				radius = Integer.parseInt(args[1]);
+				throw new Exception(_("invalidWorld"));
 			}
-			catch (NumberFormatException e)
-			{
-				throw new Exception(_("numberRequired"), e);
-			}
+		}
+		else
+		{
+			world = user.getWorld();
+		}
+		
+		int radius = 0;
+		try
+		{
+			radius = Integer.parseInt(args[1]);
+		}
+		catch (NumberFormatException e)
+		{
+			throw new Exception(_("numberRequired"), e);
 		}
 
 		try
@@ -66,12 +77,24 @@ public class Commandremove extends EssentialsCommand
 	@Override
 	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length < 2)
+		if (args.length < 3)
 		{
 			throw new NotEnoughArgumentsException();
 		}
+		
+		int radius = 0;
+		
+		try
+		{
+			radius = Integer.parseInt(args[1]);
+		}
+		catch (NumberFormatException e)
+		{
+			throw new Exception(_("numberRequired"), e);
+		}
+		
 		World world;
-		world = ess.getWorld(args[1]);
+		world = ess.getWorld(args[2]);
 
 		if (world == null)
 		{

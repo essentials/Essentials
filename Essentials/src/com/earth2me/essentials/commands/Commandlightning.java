@@ -30,6 +30,10 @@ public class Commandlightning extends EssentialsCommand
 				return;
 			}
 		}
+		else if (args.length == 0)
+		{
+			throw new NotEnoughArgumentsException();
+		}
 
 		int power = 5;
 		if (args.length > 1)
@@ -43,21 +47,18 @@ public class Commandlightning extends EssentialsCommand
 			}
 		}
 
-		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
-		for (Player matchPlayer : matchedPlayers)
+		final User target = getPlayer(server, sender, args, 0);
+		sender.sendMessage(_("lightningUse", target.getDisplayName()));
+
+		final LightningStrike strike = target.getWorld().strikeLightningEffect(target.getLocation());
+
+		if (target.isGodModeEnabled())
 		{
-			sender.sendMessage(_("lightningUse", matchPlayer.getDisplayName()));
-
-			final LightningStrike strike = matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
-
-			if (!ess.getUser(matchPlayer).isGodModeEnabled())
-			{
-				matchPlayer.damage(power, strike);
-			}
-			if (ess.getSettings().warnOnSmite())
-			{
-				matchPlayer.sendMessage(_("lightningSmited"));
-			}
+			target.damage(power, strike);
+		}
+		if (ess.getSettings().warnOnSmite())
+		{
+			target.sendMessage(_("lightningSmited"));
 		}
 	}
 }

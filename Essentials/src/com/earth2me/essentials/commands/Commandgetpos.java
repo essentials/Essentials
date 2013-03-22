@@ -19,7 +19,7 @@ public class Commandgetpos extends EssentialsCommand
 	{
 		if (args.length > 0 && user.isAuthorized("essentials.getpos.others"))
 		{
-			final User otherUser = getPlayer(server, args, 0, true, false);
+			final User otherUser = getPlayer(server, user, args, 0);
 			if (!otherUser.isHidden() || user.isAuthorized("essentials.list.hidden"))
 			{
 				outputPosition(user, otherUser.getLocation(), user.getLocation());

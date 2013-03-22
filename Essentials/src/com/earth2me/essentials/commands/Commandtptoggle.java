@@ -40,42 +40,27 @@ public class Commandtptoggle extends EssentialsCommand
 
 	private void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
 	{
-		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.teleport.hidden");
-		boolean foundUser = false;
-		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
-		for (Player matchPlayer : matchedPlayers)
+		final User target = getPlayer(server, sender, args, 0);
+		if (args.length > 1)
 		{
-			final User player = ess.getUser(matchPlayer);
-			if (skipHidden && player.isHidden())
+			if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
 			{
-				continue;
-			}
-			foundUser = true;
-			if (args.length > 1)
-			{
-				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
-				{
-					player.setTeleportEnabled(true);
-				}
-				else
-				{
-					player.setTeleportEnabled(false);
-				}
+				target.setTeleportEnabled(true);
 			}
 			else
 			{
-				player.toggleTeleportEnabled();
+				target.setTeleportEnabled(false);
 			}
-
-			final boolean enabled = player.isTeleportEnabled();
-
-
-			player.sendMessage(enabled ? _("teleportationEnabled") : _("teleportationDisabled"));
-			sender.sendMessage(enabled ? _("teleportationEnabledFor", matchPlayer.getDisplayName()) : _("teleportationDisabledFor", matchPlayer.getDisplayName()));
 		}
-		if (!foundUser)
+		else
 		{
-			throw new NotEnoughArgumentsException(_("playerNotFound"));
+			target.toggleTeleportEnabled();
 		}
+
+		final boolean enabled = target.isTeleportEnabled();
+
+
+		target.sendMessage(enabled ? _("teleportationEnabled") : _("teleportationDisabled"));
+		sender.sendMessage(enabled ? _("teleportationEnabledFor", target.getDisplayName()) : _("teleportationDisabledFor", target.getDisplayName()));
 	}
 }

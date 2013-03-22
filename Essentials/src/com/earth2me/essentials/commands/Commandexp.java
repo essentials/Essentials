@@ -117,43 +117,14 @@ public class Commandexp extends EssentialsCommand
 
 	private void showMatch(final Server server, final CommandSender sender, final String match) throws NotEnoughArgumentsException
 	{
-		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
-		boolean foundUser = false;
-		final List<Player> matchedPlayers = server.matchPlayer(match);
-		for (Player matchPlayer : matchedPlayers)
-		{
-			final User player = ess.getUser(matchPlayer);
-			if (skipHidden && player.isHidden())
-			{
-				continue;
-			}
-			foundUser = true;
-			showExp(sender, player);
-		}
-		if (!foundUser)
-		{
-			throw new NotEnoughArgumentsException(_("playerNotFound"));
-		}
+		final User target = getPlayer(server, sender, args, 0);
+		showExp(sender, target);
 	}
 
 	private void expMatch(final Server server, final CommandSender sender, final String match, String amount, final boolean give) throws NotEnoughArgumentsException
 	{
-		boolean foundUser = false;
-		final List<Player> matchedPlayers = server.matchPlayer(match);
-		for (Player matchPlayer : matchedPlayers)
-		{
-			final User player = ess.getUser(matchPlayer);
-			if (player.isHidden())
-			{
-				continue;
-			}
-			foundUser = true;
-			setExp(sender, player, amount, give);
-		}
-		if (!foundUser)
-		{
-			throw new NotEnoughArgumentsException(_("playerNotFound"));
-		}
+		final User target = getPlayer(server, sender, args, 0);
+		setExp(sender, target, amount, give);
 	}
 
 	private void showExp(final CommandSender sender, final User target)

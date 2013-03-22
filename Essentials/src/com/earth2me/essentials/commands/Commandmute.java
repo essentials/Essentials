@@ -23,8 +23,8 @@ public class Commandmute extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User player = getPlayer(server, args, 0, true, true);
-		if (sender instanceof Player && !player.isMuted() && player.isAuthorized("essentials.mute.exempt"))
+		final User target = getPlayer(server, sender, args, 0);
+		if (sender instanceof Player && !target.isMuted() && target.isAuthorized("essentials.mute.exempt"))
 		{
 			throw new Exception(_("muteExempt"));
 		}
@@ -34,39 +34,39 @@ public class Commandmute extends EssentialsCommand
 		{
 			final String time = getFinalArg(args, 1);
 			muteTimestamp = Util.parseDateDiff(time, true);
-			player.setMuted(true);
+			target.setMuted(true);
 		}
 		else
 		{
-			player.setMuted(!player.getMuted());
+			target.setMuted(!target.getMuted());
 		}
-		player.setMuteTimeout(muteTimestamp);
-		final boolean muted = player.getMuted();
+		target.setMuteTimeout(muteTimestamp);
+		final boolean muted = target.getMuted();
 		if (muted)
 		{
 			if (muteTimestamp > 0)
 			{
-				sender.sendMessage(_("mutedPlayerFor", player.getDisplayName(), Util.formatDateDiff(muteTimestamp)));
-				player.sendMessage(_("playerMutedFor", Util.formatDateDiff(muteTimestamp)));
+				sender.sendMessage(_("mutedPlayerFor", target.getDisplayName(), Util.formatDateDiff(muteTimestamp)));
+				target.sendMessage(_("playerMutedFor", Util.formatDateDiff(muteTimestamp)));
 			}
 			else
 			{
-				sender.sendMessage(_("mutedPlayer", player.getDisplayName()));
-				player.sendMessage(_("playerMuted"));
+				sender.sendMessage(_("mutedPlayer", target.getDisplayName()));
+				target.sendMessage(_("playerMuted"));
 			}
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
 				final User user = ess.getUser(onlinePlayer);
 				if (onlinePlayer != sender && user.isAuthorized("essentials.mute.notify"))
 				{
-					onlinePlayer.sendMessage(_("muteNotify", sender.getName(), player.getName()));
+					onlinePlayer.sendMessage(_("muteNotify", sender.getName(), target.getName()));
 				}
 			}
 		}
 		else
 		{
-			sender.sendMessage(_("unmutedPlayer", player.getDisplayName()));
-			player.sendMessage(_("playerUnmuted"));
+			sender.sendMessage(_("unmutedPlayer", target.getDisplayName()));
+			target.sendMessage(_("playerUnmuted"));
 		}
 	}
 }

@@ -24,7 +24,7 @@ public class Commandtempban extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final User user = getPlayer(server, args, 0, true, true);
+		final User user = getPlayer(server, args, 0, (!(sender instanceof Player) || ess.getUser(sender).isAuthorized("essentials.vanish.interact")), true);
 		if (!user.isOnline())
 		{
 			if (sender instanceof Player

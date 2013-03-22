@@ -56,38 +56,21 @@ public class Commandmsg extends EssentialsCommand
 			return;
 		}
 
-		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
-		boolean foundUser = false;
-		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
-
-		for (Player matchPlayer : matchedPlayers)
+		final User target = getPlayer(server, sender, args, 0);
+		if (target.isAfk())
 		{
-			final User matchedUser = ess.getUser(matchPlayer);
-
-			if (skipHidden && matchedUser.isHidden())
-			{
-				continue;
-			}
-			foundUser = true;
-			if (matchedUser.isAfk())
-			{
-				sender.sendMessage(_("userAFK", matchPlayer.getDisplayName()));
-			}
-
-			sender.sendMessage(_("msgFormat", translatedMe, matchPlayer.getDisplayName(), message));
-			if (sender instanceof Player && matchedUser.isIgnoredPlayer(ess.getUser(sender)))
-			{
-				continue;
-			}
-
-			matchPlayer.sendMessage(_("msgFormat", senderName, translatedMe, message));
-			replyTo.setReplyTo(matchedUser);
-			ess.getUser(matchPlayer).setReplyTo(sender);
+			sender.sendMessage(_("userAFK", target.getDisplayName()));
 		}
 
-		if (!foundUser)
+		sender.sendMessage(_("msgFormat", translatedMe, target.getDisplayName(), message));
+		if (sender instanceof Player && target.isIgnoredPlayer(ess.getUser(sender)))
 		{
-			throw new Exception(_("playerNotFound"));
+			//TODO: TL this:
+			throw new Exception("That Player is ignoring you!");
 		}
+
+		target.sendMessage(_("msgFormat", senderName, translatedMe, message));
+		replyTo.setReplyTo(target);
+		target.setReplyTo(sender);
 	}
 }

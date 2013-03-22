@@ -50,24 +50,9 @@ public class Commandheal extends EssentialsCommand
 
 	private void healOtherPlayers(final Server server, final CommandSender sender, final String name) throws Exception
 	{
-		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
-		boolean foundUser = false;
-		final List<Player> matchedPlayers = server.matchPlayer(name);
-		for (Player matchPlayer : matchedPlayers)
-		{
-			final User player = ess.getUser(matchPlayer);
-			if (skipHidden && player.isHidden())
-			{
-				continue;
-			}
-			foundUser = true;
-			healPlayer(matchPlayer);
-			sender.sendMessage(_("healOther", matchPlayer.getDisplayName()));
-		}
-		if (!foundUser)
-		{
-			throw new NotEnoughArgumentsException(_("playerNotFound"));
-		}
+		final User target = getPlayer(server, sender, args, 0);
+		healPlayer(target);
+		sender.sendMessage(_("healOther", target.getDisplayName()));
 	}
 
 	private void healPlayer(final Player player) throws Exception
