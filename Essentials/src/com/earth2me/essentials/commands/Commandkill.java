@@ -43,7 +43,6 @@ public class Commandkill extends EssentialsCommand
 			target.setHealth(0);
 		}
 
-			sender.sendMessage(_("kill", target.getDisplayName()));
-		}
+		sender.sendMessage(_("kill", target.getDisplayName()));
 	}
 }
