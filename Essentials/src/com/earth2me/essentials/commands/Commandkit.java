@@ -52,7 +52,7 @@ public class Commandkit extends EssentialsCommand
 		}
 		else
 		{
-			final User userTo = getPlayer(server, args, 1, true, false);
+			final User userTo = getPlayer(server, sender, args, 1);
 			final String kitName = args[0].toLowerCase(Locale.ENGLISH);
 
 			final Map<String, Object> kit = ess.getSettings().getKit(kitName);
