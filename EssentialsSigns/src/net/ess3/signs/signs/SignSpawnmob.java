@@ -7,6 +7,8 @@ import net.ess3.api.IUser;
 import net.ess3.economy.Trade;
 import net.ess3.signs.EssentialsSign;
 
+import java.util.List;
+
 
 public class SignSpawnmob extends EssentialsSign
 {
@@ -30,8 +32,9 @@ public class SignSpawnmob extends EssentialsSign
 		charge.isAffordableFor(player);
 		try
 		{
-			String[] mobData = SpawnMob.mobData(sign.getLine(2));
-			SpawnMob.spawnmob(ess, ess.getServer(), player, player, mobData, Integer.parseInt(sign.getLine(1)));
+            List<String> mobParts = SpawnMob.mobParts(sign.getLine(2));
+            List<String> mobData = SpawnMob.mobData(sign.getLine(2));
+			SpawnMob.spawnmob(ess, ess.getServer(), player, player, mobParts, mobData, Integer.parseInt(sign.getLine(1)));
 		}
 		catch (Exception ex)
 		{
