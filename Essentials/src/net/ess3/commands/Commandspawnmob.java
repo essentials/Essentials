@@ -4,6 +4,8 @@ import static net.ess3.I18n._;
 import net.ess3.SpawnMob;
 import net.ess3.api.IUser;
 
+import java.util.List;
+
 
 public class Commandspawnmob extends EssentialsCommand
 {
@@ -17,7 +19,8 @@ public class Commandspawnmob extends EssentialsCommand
 			throw new NotEnoughArgumentsException(_("mobsAvailable", mobList));
 		}
 
-		String[] mobData = SpawnMob.mobData(args[0]);
+		List<String> mobParts = SpawnMob.mobParts(args[0]);
+        List<String> mobData = SpawnMob.mobData(args[0]);
 
 		int mobCount = 1;
 		if (args.length >= 2)
@@ -28,9 +31,9 @@ public class Commandspawnmob extends EssentialsCommand
 		if (args.length >= 3)
 		{
 			IUser target = ess.getUserMap().getUser(args[2]);
-			SpawnMob.spawnmob(ess, server, user, target, mobData, mobCount);
+			SpawnMob.spawnmob(ess, server, user, target, mobParts, mobData, mobCount);
 		}
 
-		SpawnMob.spawnmob(ess, server, user, mobData, mobCount);
+		SpawnMob.spawnmob(ess, server, user, mobParts, mobData, mobCount);
 	}
 }
