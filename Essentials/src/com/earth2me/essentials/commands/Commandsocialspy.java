@@ -32,7 +32,7 @@ public class Commandsocialspy extends EssentialsCommand
 	{
 		if (args.length > 1)
 		{
-			User target = getPlayer(server, args, 0, true);
+			User target = getPlayer(server, args, 0, true, false);
 			sender.sendMessage("§7SocialSpy " + (target.toggleSocialSpy() ? _("enabled") : _("disabled")));
 			
 		}
