@@ -68,4 +68,4 @@ public class Commandafk extends EssentialsCommand
 		}
 	}
 }
-}
+
