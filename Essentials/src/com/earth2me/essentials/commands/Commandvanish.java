@@ -42,16 +42,6 @@ public class Commandvanish extends EssentialsCommand
 			}
 	}
 
-	private void godPlayer(User player, boolean enabled)
-	{
-		player.setGodModeEnabled(enabled);
-		if (enabled && player.getHealth() != 0)
-		{
-			player.setHealth(player.getMaxHealth());
-			player.setFoodLevel(20);
-		}
-	}
-
 	private void vanishOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
 	{
 		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
