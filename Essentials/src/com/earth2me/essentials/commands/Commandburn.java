@@ -15,6 +15,24 @@ public class Commandburn extends EssentialsCommand
 	}
 
 	@Override
+	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
+	{
+		if (args.length < 2)
+		{
+			throw new NotEnoughArgumentsException();
+		}
+		
+		//TODO: TL this
+		if (args[0].trim().length() < 2)
+		{
+			throw new NotEnoughArgumentsException("You need to specify a player to burn.");
+		}
+
+		User target = getPlayer(server, user, args, 0);
+		user.setFireTicks(Integer.parseInt(args[1]) * 20);
+		user.sendMessage(_("burnMsg", target.getDisplayName(), Integer.parseInt(args[1])));
+	}
+	@Override
 	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
@@ -28,8 +46,8 @@ public class Commandburn extends EssentialsCommand
 			throw new NotEnoughArgumentsException("You need to specify a player to burn.");
 		}
 
-		User user = getPlayer(server, args, 0);
+		User target = getPlayer(server, args, 0, true);
 		user.setFireTicks(Integer.parseInt(args[1]) * 20);
-		sender.sendMessage(_("burnMsg", user.getDisplayName(), Integer.parseInt(args[1])));
+		sender.sendMessage(_("burnMsg", target.getDisplayName(), Integer.parseInt(args[1])));
 	}
 }
