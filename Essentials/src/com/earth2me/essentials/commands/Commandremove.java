@@ -36,7 +36,7 @@ public class Commandremove extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		ToRemove toRemove;
-		final World world = user.getWorld();
+		World world = user.getWorld();
 		int radius = 0;
 
 		if (args.length >= 2)
@@ -53,7 +53,7 @@ public class Commandremove extends EssentialsCommand
 		
 		if (args.length >= 3)
 		{
-			world = ess.getworld(args[3]);
+			world = ess.getworld(args[2]);
 		}
 
 		try
