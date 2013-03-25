@@ -39,7 +39,7 @@ public class Commandremove extends EssentialsCommand
 		final World world = user.getWorld();
 		int radius = 0;
 
-		if (args.length < 2)
+		if (args.length >= 2)
 		{
 			try
 			{
@@ -49,6 +49,11 @@ public class Commandremove extends EssentialsCommand
 			{
 				throw new Exception(_("numberRequired"), e);
 			}
+		}
+		
+		if (args.length >= 3)
+		{
+			world = ess.getworld(args[3]);
 		}
 
 		try
