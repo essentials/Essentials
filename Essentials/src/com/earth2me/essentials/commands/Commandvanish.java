@@ -4,6 +4,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import org.bukkit.command.CommandSender;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 
 public class Commandvanish extends EssentialsCommand
@@ -57,7 +58,7 @@ public class Commandvanish extends EssentialsCommand
 			}
 			foundUser = true;
 			player.toggleVanished();
-			if (user.isVanished())
+			if (player.isVanished())
 			{
 				player.sendMessage(_("vanished"));
 				//TODO: TL this
