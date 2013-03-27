@@ -53,7 +53,7 @@ public class Commandremove extends EssentialsCommand
 		
 		if (args.length >= 3)
 		{
-			world = ess.getworld(args[2]);
+			world = ess.getWorld(args[2]);
 		}
 
 		try
