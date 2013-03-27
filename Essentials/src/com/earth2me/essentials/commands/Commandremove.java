@@ -75,13 +75,8 @@ public class Commandremove extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		World world;
-		world = ess.getWorld(args[1]);
+		World world = ess.getWorld(args[1]);
 
-		if (world == null)
-		{
-			throw new Exception(_("invalidWorld"));
-		}
 		ToRemove toRemove;
 		try
 		{
