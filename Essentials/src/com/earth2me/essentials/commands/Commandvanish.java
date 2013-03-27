@@ -56,7 +56,7 @@ public class Commandvanish extends EssentialsCommand
 				continue;
 			}
 			foundUser = true;
-			user.toggleVanished();
+			player.toggleVanished();
 			if (user.isVanished())
 			{
 				player.sendMessage(_("vanished"));
