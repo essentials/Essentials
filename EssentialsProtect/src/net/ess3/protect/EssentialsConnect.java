@@ -22,7 +22,9 @@ public class EssentialsConnect
 		}
 		ess = ((BukkitPlugin)essPlugin).getEssentials();
 		protect = (IProtect)essProtect;
-		protect.setSettings(new ProtectHolder(ess));
+		ProtectHolder settings = new ProtectHolder(ess);
+		protect.setSettings(settings);
+		ess.addReloadListener(settings);
 	}
 
 	public IEssentials getEssentials()
