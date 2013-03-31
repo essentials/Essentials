@@ -49,6 +49,10 @@ public class Commandmail extends EssentialsCommand
 			{
 				throw new Exception(_("playerNeverOnServer", args[1]));
 			}
+			if (u.isBusy() && !user.isAuthorized("essentials.busy.bypass"))
+			{
+				throw new Exception(_("userIsBusy", args[1]));
+			}
 			if (!u.isIgnoredPlayer(user))
 			{
 				final String mail = user.getName() + ": " + Util.sanitizeString(Util.stripFormat(getFinalArg(args, 2)));
@@ -149,9 +153,13 @@ public class Commandmail extends EssentialsCommand
 			for (String username : ess.getUserMap().getAllUniqueUsers())
 			{
 				User user = ess.getUserMap().getUser(username);
+
 				if (user != null)
 				{
-					user.addMail(message);
+					if (!user.isBusy() && user.isAuthorized("essentials.busy.bypass"))
+					{
+						user.addMail(message);
+					}
 				}
 			}
 		}

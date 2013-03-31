@@ -64,9 +64,15 @@ public class Commandmsg extends EssentialsCommand
 		{
 			final User matchedUser = ess.getUser(matchPlayer);
 
+
 			if (skipHidden && matchedUser.isHidden())
 			{
 				continue;
+			}
+			User user = ess.getUser(sender);
+			if (matchedUser.isBusy() && !user.isAuthorized("essentals.busy.bypass"))
+			{
+				throw new Exception(_("userIsBusy"));
 			}
 			foundUser = true;
 			if (matchedUser.isAfk())

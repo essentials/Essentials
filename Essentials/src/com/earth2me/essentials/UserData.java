@@ -66,6 +66,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		nickname = _getNickname();
 		setIgnoredPlayers(_getIgnoredPlayers());
 		logoutLocation = _getLogoutLocation();
+		busy = _getBusy();
 	}
 	private double money;
 
@@ -123,11 +124,11 @@ public abstract class UserData extends PlayerExtension implements IConf
 		}
 		return search;
 	}
-		
+
 	public Location getHome(String name) throws Exception
 	{
 		String search = getHomeName(name);
-		return config.getLocation("homes." + search, getServer());	
+		return config.getLocation("homes." + search, getServer());
 	}
 
 	public Location getHome(final Location world)
@@ -319,7 +320,6 @@ public abstract class UserData extends PlayerExtension implements IConf
 		config.setProperty("lastlocation", loc);
 		config.save();
 	}
-	
 	private Location logoutLocation;
 
 	private Location _getLogoutLocation()
@@ -338,7 +338,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 	{
 		return logoutLocation;
 	}
-	
+
 	public void setLogoutLocation(Location loc)
 	{
 		if (loc == null || loc.getWorld() == null)
@@ -349,7 +349,6 @@ public abstract class UserData extends PlayerExtension implements IConf
 		config.setProperty("logoutlocation", loc);
 		config.save();
 	}
-	
 	private long lastTeleportTimestamp;
 
 	private long _getLastTeleportTimestamp()
@@ -550,7 +549,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 	{
 		return config.getBoolean("muted", false);
 	}
-	
+
 	public boolean getMuted()
 	{
 		return muted;
@@ -730,6 +729,31 @@ public abstract class UserData extends PlayerExtension implements IConf
 		config.setProperty("afk", set);
 		config.save();
 	}
+	private boolean busy;
+
+	private boolean _getBusy()
+	{
+		return config.getBoolean("busy", false);
+	}
+
+	public boolean isBusy()
+	{
+		return busy;
+	}
+
+	public void setBusy(boolean set)
+	{
+		busy = set;
+		config.setProperty("busy", set);
+		config.save();
+	}
+
+	public boolean toggleBusy()
+	{
+		boolean ret = !isBusy();
+		setAfk(ret);
+		return ret;
+	}
 
 	public boolean toggleAfk()
 	{
@@ -826,10 +850,10 @@ public abstract class UserData extends PlayerExtension implements IConf
 		return config.getBoolean("powertoolsenabled", true);
 	}
 	private Map<String, Long> kitTimestamps;
-	
+
 	private Map<String, Long> _getKitTimestamps()
 	{
-		
+
 		if (config.isConfigurationSection("timestamps.kits"))
 		{
 			final ConfigurationSection section = config.getConfigurationSection("timestamps.kits");
@@ -849,7 +873,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		}
 		return new HashMap<String, Long>();
 	}
-	
+
 	public long getKitTimestamp(String name)
 	{
 		name = name.replace('.', '_').replace('/', '_');
@@ -868,32 +892,32 @@ public abstract class UserData extends PlayerExtension implements IConf
 	}
 
 	public void setConfigProperty(String node, Object object)
-    {
-        final String prefix = "info.";
-        node = prefix+node;
-        if (object instanceof Map)
-        {
-            config.setProperty(node, (Map) object);
-        }
-        else if (object instanceof List)
-        {
-            config.setProperty(node, (List<String>) object);
-        }
-        else if (object instanceof Location)
-        {
-            config.setProperty(node, (Location) object);
-        }
-        else if (object instanceof ItemStack)
-        {
-            config.setProperty(node, (ItemStack) object);
-        }
-        else
-        {
-            config.setProperty(node, object);
-        }
-        config.save();
-    }
-	
+	{
+		final String prefix = "info.";
+		node = prefix + node;
+		if (object instanceof Map)
+		{
+			config.setProperty(node, (Map)object);
+		}
+		else if (object instanceof List)
+		{
+			config.setProperty(node, (List<String>)object);
+		}
+		else if (object instanceof Location)
+		{
+			config.setProperty(node, (Location)object);
+		}
+		else if (object instanceof ItemStack)
+		{
+			config.setProperty(node, (ItemStack)object);
+		}
+		else
+		{
+			config.setProperty(node, object);
+		}
+		config.save();
+	}
+
 	public Set<String> getConfigKeys()
 	{
 		if (config.isConfigurationSection("info"))
@@ -902,7 +926,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		}
 		return new HashSet<String>();
 	}
-	
+
 	public Map<String, Object> getConfigMap()
 	{
 		if (config.isConfigurationSection("info"))
@@ -911,16 +935,16 @@ public abstract class UserData extends PlayerExtension implements IConf
 		}
 		return new HashMap<String, Object>();
 	}
-	
+
 	public Map<String, Object> getConfigMap(String node)
 	{
-		if (config.isConfigurationSection("info."+node))
+		if (config.isConfigurationSection("info." + node))
 		{
-			return config.getConfigurationSection("info."+node).getValues(true);
+			return config.getConfigurationSection("info." + node).getValues(true);
 		}
 		return new HashMap<String, Object>();
 	}
-	
+
 	public void save()
 	{
 		config.save();
