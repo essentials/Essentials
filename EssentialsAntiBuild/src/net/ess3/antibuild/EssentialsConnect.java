@@ -24,7 +24,9 @@ public class EssentialsConnect
 		}
 		ess = ((BukkitPlugin)essPlugin).getEssentials();
 		antib = (IAntiBuild)essProtect;
-		antib.setSettings(new AntiBuildHolder(ess));
+		AntiBuildHolder settings = new AntiBuildHolder(ess);
+		antib.setSettings(settings);
+		ess.addReloadListener(settings);
 	}
 
 	public void onDisable()
