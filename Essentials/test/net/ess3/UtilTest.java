@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import net.ess3.api.InvalidNameException;
 import net.ess3.utils.DateUtil;
 import net.ess3.utils.Util;
+import static net.ess3.I18n._;
 
 
 public class UtilTest extends EssentialsTest
@@ -15,6 +16,11 @@ public class UtilTest extends EssentialsTest
 	public UtilTest(String name)
 	{
 		super(name);
+	}
+	
+	public void testI18n()
+	{
+		_("Hello {0}, how are you?");
 	}
 
 	public void testFDDnow()

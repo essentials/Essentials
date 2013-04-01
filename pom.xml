@@ -38,6 +38,16 @@
       <version>${bukkit.version}</version>
     </dependency>
   </dependencies>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>gettext-commons-site</id>
+      <url>http://gettext-commons-maven-repository.googlecode.com/svn/repository/</url>
+      <releases>
+        <updatePolicy>daily</updatePolicy>
+      </releases>
+    </pluginRepository>
+  </pluginRepositories>
 
   <build>
     <finalName>${project.name}</finalName>
@@ -64,13 +74,31 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.0</version>
         <configuration>
           <source>1.6</source>
           <target>1.6</target>
         </configuration>
       </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.xnap.commons</groupId>
+          <artifactId>maven-gettext-plugin</artifactId>
+          <version>1.2.3</version>
+          <executions>
+            <execution>
+              <phase>compile</phase>
+              <goals>
+                <goal>merge</goal>
+                <goal>dist</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
   <properties>

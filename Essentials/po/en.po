@@ -1,0 +1,2109 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-01 23:18+0200\n"
+"PO-Revision-Date: 2013-04-01 23:17+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+
+#: Essentials/src/net/ess3/api/NoLoanPermittedException.java:15
+msgid "negativeBalanceError"
+msgstr "§4User is not allowed to have a negative balance."
+
+#: Essentials/src/net/ess3/api/UserDoesNotExistException.java:15
+msgid "userDoesNotExist"
+msgstr ""
+
+#: Essentials/src/net/ess3/backup/Backup.java:68
+#: Essentials/src/net/ess3/commands/Commandbackup.java:15
+msgid "backupStarted"
+msgstr ""
+
+#: Essentials/src/net/ess3/backup/Backup.java:156
+msgid "backupFinished"
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/BukkitPlugin.java:58
+msgid "essentialsHelp1"
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/BukkitPlugin.java:62
+msgid "essentialsHelp2"
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/VersionCheck.java:26
+msgid "versionMismatch"
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/VersionCheck.java:35
+msgid "notRecommendedBukkit"
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/VersionCheck.java:36
+msgid "requiredBukkit"
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/VersionCheck.java:42
+msgid "bukkitFormatChanged"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandafk.java:32
+#: Essentials/src/net/ess3/user/User.java:385
+msgid "userIsNotAway"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandafk.java:38
+#: Essentials/src/net/ess3/user/User.java:418
+msgid "userIsAway"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandback.java:15
+msgid "backUsageMsg"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalance.java:19
+#: Essentials/src/net/ess3/commands/Commandbalance.java:26
+#: EssentialsSigns/src/net/ess3/signs/signs/SignBalance.java:20
+msgid "balance"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:46
+msgid "baltopHidden"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:46
+msgid "baltopShown"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:55
+msgid "userBaltopHidden"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:55
+msgid "userBaltopShown"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:80
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:93
+msgid "orderBalances"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:105
+msgid "balanceTop"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:158
+msgid "serverTotal"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandban.java:28
+#: Essentials/src/net/ess3/commands/Commandban.java:36
+msgid "banExempt"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandban.java:48
+#: Essentials/src/net/ess3/commands/Commandban.java:53
+msgid "banFormat"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandban.java:53
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:383
+msgid "defaultBanReason"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandban.java:65
+#: Essentials/src/net/ess3/commands/Commandtempban.java:68
+msgid "playerBanned"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbanip.java:23
+#: Essentials/src/net/ess3/commands/Commandbanip.java:33
+msgid "banIpAddress"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbanip.java:30
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:27
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:58
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:70
+#: Essentials/src/net/ess3/commands/Commandexp.java:97
+#: Essentials/src/net/ess3/commands/Commandexp.java:111
+#: Essentials/src/net/ess3/commands/Commandfeed.java:34
+#: Essentials/src/net/ess3/commands/Commandheal.java:56
+#: Essentials/src/net/ess3/commands/Commandlightning.java:32
+#: Essentials/src/net/ess3/commands/Commandmsg.java:66
+#: Essentials/src/net/ess3/commands/Commandmsg.java:83
+#: Essentials/src/net/ess3/commands/Commandpay.java:37
+#: Essentials/src/net/ess3/commands/Commandptime.java:224
+#: Essentials/src/net/ess3/commands/Commandrealname.java:42
+#: Essentials/src/net/ess3/commands/Commandsethome.java:57
+#: Essentials/src/net/ess3/commands/Commandtpo.java:37
+#: Essentials/src/net/ess3/commands/Commandtpohere.java:45
+#: Essentials/src/net/ess3/commands/Commandwarp.java:65
+#: Essentials/src/net/ess3/commands/Commandwhois.java:89
+#: Essentials/src/net/ess3/user/PlayerNotFoundException.java:13
+msgid "playerNotFound"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbigtree.java:44
+msgid "bigTreeSuccess"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbigtree.java:48
+msgid "bigTreeFailure"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:33
+msgid "bookAuthorSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:37
+msgid "denyChangeAuthor"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:46
+msgid "bookTitleSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:50
+msgid "denyChangeTitle"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:60
+msgid "editBookContents"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:64
+msgid "denyBookEdit"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:78
+msgid "bookLocked"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:82
+msgid "holdBook"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbreak.java:28
+msgid "noBreakBedrock"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbroadcast.java:17
+msgid "broadcast"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandburn.java:23
+msgid "burnMsg"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:23
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:54
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:66
+msgid "inventoryClearedOthers"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:33
+msgid "inventoryCleared"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandcompass.java:50
+msgid "compassBearing"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddelhome.java:53
+msgid "vanillaHome"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddelhome.java:57
+msgid "deleteHome"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddeljail.java:17
+msgid "deleteJail"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddelwarp.java:17
+msgid "deleteWarp"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddepth.java:15
+msgid "depthAboveSea"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddepth.java:19
+msgid "depthBelowSea"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddepth.java:23
+msgid "depth"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandeco.java:60
+msgid "ecoResetAll"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandeco.java:81
+#: Essentials/src/net/ess3/commands/Commandeco.java:109
+#: Essentials/src/net/ess3/economy/Trade.java:71
+#: Essentials/src/net/ess3/economy/Trade.java:83
+#: Essentials/src/net/ess3/economy/Trade.java:149
+#: Essentials/src/net/ess3/economy/Trade.java:170
+#: Essentials/src/net/ess3/user/User.java:147
+msgid "notEnoughMoney"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandeco.java:94
+msgid "ecoResetAllOnline"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:26
+msgid "nothingInHand"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:40
+msgid "enchantments"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:81
+msgid "enchantmentRemoved"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:85
+msgid "enchantmentApplied"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:95
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:34
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:79
+msgid "enchantmentNotFound"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:100
+#: Essentials/src/net/ess3/MetaItemStack.java:502
+msgid "enchantmentPerm"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandessentials.java:33
+msgid "blockList"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandessentials.java:49
+#: Essentials/src/net/ess3/commands/Commandfly.java:34
+#: Essentials/src/net/ess3/commands/Commandfly.java:45
+#: Essentials/src/net/ess3/commands/Commandgod.java:29
+#: Essentials/src/net/ess3/commands/Commandgod.java:40
+#: Essentials/src/net/ess3/commands/Commandsocialspy.java:30
+#: Essentials/src/net/ess3/commands/Commandsocialspy.java:41
+#: Essentials/src/net/ess3/commands/Commandthunder.java:25
+#: Essentials/src/net/ess3/commands/Commandthunder.java:31
+#: Essentials/src/net/ess3/commands/Commandtptoggle.java:30
+#: Essentials/src/net/ess3/commands/Commandtptoggle.java:41
+#: Essentials/src/net/ess3/commands/Commandvanish.java:28
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:349
+msgid "enabled"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandessentials.java:49
+msgid "debugToggle"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandessentials.java:55
+msgid "essentialsReload"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandexp.java:121
+msgid "exp"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandexp.java:136
+msgid "expSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandext.java:28
+msgid "extinguish"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandext.java:41
+msgid "extinguishOthers"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfeed.java:25
+#: EssentialsSigns/src/net/ess3/signs/signs/SignFeed.java:31
+msgid "feed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfeed.java:42
+msgid "feedOther"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:55
+msgid "fireworkEffectsCleared"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:67
+#: Essentials/src/net/ess3/MetaItemStack.java:282
+#: Essentials/src/net/ess3/MetaItemStack.java:297
+#: Essentials/src/net/ess3/MetaItemStack.java:316
+#: Essentials/src/net/ess3/MetaItemStack.java:339
+msgid "invalidFireworkFormat"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:86
+#: Essentials/src/net/ess3/SpawnMob.java:127
+msgid "mobSpawnLimit"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:121
+#: Essentials/src/net/ess3/commands/Commandfirework.java:139
+msgid "fireworkSyntax"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:132
+#: Essentials/src/net/ess3/MetaItemStack.java:121
+#: Essentials/src/net/ess3/MetaItemStack.java:265
+msgid "multipleCharges"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:140
+msgid "fireworkColor"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:151
+msgid "holdFirework"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfly.java:34
+#: Essentials/src/net/ess3/commands/Commandfly.java:45
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:349
+msgid "flyMode"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfly.java:38
+msgid "flyFailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgamemode.java:33
+#: Essentials/src/net/ess3/commands/Commandgamemode.java:44
+#: EssentialsSigns/src/net/ess3/signs/signs/SignGameMode.java:48
+msgid "gameMode"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgamemode.java:37
+msgid "gamemodeFailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:31
+msgid "uptime"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:32
+msgid "tps"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:33
+msgid "gcmax"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:34
+msgid "gctotal"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:35
+msgid "gcfree"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:36
+msgid "gcquene"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:56
+msgid "gcchunks"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:56
+msgid "gcentities"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgetpos.java:47
+msgid "getposWorld"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgetpos.java:48
+msgid "getposX"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgetpos.java:49
+msgid "getposY"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgetpos.java:50
+msgid "getposZ"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgetpos.java:51
+msgid "getposYaw"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgetpos.java:52
+msgid "getposPitch"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgetpos.java:55
+msgid "getposDistance"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgive.java:33
+#: Essentials/src/net/ess3/commands/Commandgive.java:78
+#: Essentials/src/net/ess3/commands/Commanditem.java:35
+#: Essentials/src/net/ess3/commands/Commanditem.java:75
+#: Essentials/src/net/ess3/commands/Commandmore.java:37
+#: Essentials/src/net/ess3/commands/Commandmore.java:67
+#: EssentialsSigns/src/net/ess3/signs/signs/SignFree.java:33
+msgid "cantSpawnItem"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgive.java:84
+msgid "give"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgod.java:29
+#: Essentials/src/net/ess3/commands/Commandgod.java:40
+msgid "godMode"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgod.java:33
+msgid "godFailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:23
+msgid "hatEmpty"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:30
+msgid "hatRemoved"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:47
+msgid "hatPlaced"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:51
+msgid "hatArmor"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:56
+msgid "hatFail"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandheal.java:33
+#: Essentials/src/net/ess3/commands/Commandheal.java:64
+msgid "heal"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandheal.java:65
+msgid "healOther"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhelp.java:51
+msgid "helpConsole"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhelpop.java:20
+msgid "helpOp"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhome.java:77
+msgid "noHomeSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhome.java:77
+msgid "noHomeSetPlayer"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhome.java:89
+msgid "homes"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhome.java:105
+#: Essentials/src/net/ess3/commands/Commandmail.java:37
+#: Essentials/src/net/ess3/commands/Commandmail.java:57
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:71
+#: Essentials/src/net/ess3/commands/Commandtp.java:33
+#: Essentials/src/net/ess3/commands/Commandtp.java:38
+#: Essentials/src/net/ess3/commands/Commandtp.java:68
+#: Essentials/src/net/ess3/commands/Commandtpa.java:29
+#: Essentials/src/net/ess3/commands/Commandtpa.java:34
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:30
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:35
+#: Essentials/src/net/ess3/commands/Commandtphere.java:25
+#: Essentials/src/net/ess3/commands/Commandtpo.java:27
+#: Essentials/src/net/ess3/commands/Commandtpohere.java:28
+#: Essentials/src/net/ess3/commands/Commandtpohere.java:33
+msgid "noPerm"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandignore.java:38
+msgid "unignorePlayer"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandignore.java:43
+msgid "ignorePlayer"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandinvsee.java:30
+msgid "invRestored"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandinvsee.java:46
+msgid "invBigger"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandinvsee.java:49
+msgid "invSee"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandinvsee.java:50
+msgid "invSeeHelp"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanditem.java:81
+msgid "itemSpawn"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanditemdb.java:40
+msgid "durability"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandjump.java:28
+msgid "jumpError"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkick.java:25
+msgid "kickExempt"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkick.java:27
+#: Essentials/src/net/ess3/commands/Commandkickall.java:15
+msgid "kickDefault"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkick.java:36
+#: Essentials/src/net/ess3/user/User.java:409
+msgid "playerKicked"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkill.java:34
+#: Essentials/src/net/ess3/commands/Commandkillall.java:152
+msgid "kill"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkillall.java:48
+#: Essentials/src/net/ess3/commands/Commandremove.java:44
+#: Essentials/src/net/ess3/SpawnMob.java:145
+msgid "numberRequired"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkillall.java:81
+#: Essentials/src/net/ess3/commands/Commandspawner.java:41
+#: Essentials/src/net/ess3/SpawnMob.java:195
+msgid "invalidMob"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkit.java:23
+msgid "noKits"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkit.java:34
+msgid "kits"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkit.java:45
+#: EssentialsSigns/src/net/ess3/signs/signs/SignKit.java:77
+msgid "noKitPermission"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkit.java:58
+msgid "kitGive"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlightning.java:50
+msgid "lightningUse"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlightning.java:59
+msgid "lightningSmited"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:38
+msgid "listAmountHidden"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:42
+#: Essentials/src/net/ess3/commands/Commandlist.java:47
+msgid "listAmount"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:84
+msgid "listGroupTag"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:101
+#: Essentials/src/net/ess3/commands/Commandlist.java:148
+msgid "listAfkTag"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:106
+#: Essentials/src/net/ess3/commands/Commandlist.java:153
+msgid "listHiddenTag"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:133
+msgid "connectedPlayers"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:23
+msgid "noMail"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:30
+msgid "mailClear"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:43
+msgid "playerNeverOnServer"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:50
+#: Essentials/src/net/ess3/commands/Commandmail.java:60
+#: Essentials/src/net/ess3/commands/Commandmail.java:88
+#: Essentials/src/net/ess3/commands/Commandmail.java:100
+msgid "mailSent"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:67
+msgid "mailCleared"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:78
+#: Essentials/src/net/ess3/commands/Commandmail.java:82
+#: Essentials/src/net/ess3/commands/EssentialsCommand.java:56
+msgid "onlyPlayers"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandme.java:16
+#: Essentials/src/net/ess3/commands/Commandmsg.java:30
+msgid "voiceSilenced"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandme.java:34
+msgid "action"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmsg.java:46
+#: Essentials/src/net/ess3/commands/Commandr.java:54
+#: Essentials/src/net/ess3/commands/Commandr.java:62
+msgid "me"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmsg.java:53
+#: Essentials/src/net/ess3/commands/Commandmsg.java:55
+#: Essentials/src/net/ess3/commands/Commandmsg.java:90
+#: Essentials/src/net/ess3/commands/Commandmsg.java:95
+#: Essentials/src/net/ess3/commands/Commandr.java:54
+#: Essentials/src/net/ess3/commands/Commandr.java:62
+msgid "msgFormat"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:24
+msgid "muteExempt"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:41
+msgid "mutedPlayerFor"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:42
+msgid "mutedPlayer"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:43
+msgid "unmutedPlayer"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:45
+msgid "playerMutedFor"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:45
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:74
+msgid "playerMuted"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:45
+msgid "playerUnmuted"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnear.java:50
+#: Essentials/src/net/ess3/commands/Commandnear.java:77
+msgid "nearbyPlayers"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnear.java:54
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:118
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:249
+msgid "noAccessCommand"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnear.java:109
+#: Essentials/src/net/ess3/commands/Commandunlimited.java:60
+#: Essentials/src/net/ess3/SpawnMob.java:44
+msgid "none"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:26
+#: Essentials/src/net/ess3/commands/Commandnick.java:51
+msgid "nickDisplayName"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:32
+msgid "nickOthersPermission"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:35
+#: Essentials/src/net/ess3/commands/Commandnick.java:61
+msgid "nickChanged"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:94
+msgid "nickNamesAlpha"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:99
+msgid "nickTooLong"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:105
+msgid "nickNoMore"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:120
+msgid "nickInUse"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:126
+msgid "nickSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpay.java:22
+msgid "invalidAmount"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandping.java:15
+msgid "pong"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:27
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:160
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:507
+msgid "powerToolClearAll"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:34
+msgid "powerToolAir"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:45
+msgid "powerToolListEmpty"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:49
+msgid "powerToolList"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:58
+msgid "powerToolNoSuchCommandAssigned"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:63
+msgid "powerToolRemove"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:76
+msgid "powerToolAlreadySet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:86
+msgid "powerToolAttach"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:92
+msgid "powerToolRemoveAll"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:98
+#: Essentials/src/net/ess3/commands/Commandpowertooltoggle.java:22
+msgid "powerToolsEnabled"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertooltoggle.java:16
+msgid "noPowerTools"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertooltoggle.java:22
+msgid "powerToolsDisabled"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:46
+msgid "pTimeOthersPermission"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:91
+msgid "pTimePlayers"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:98
+msgid "pTimeNormal"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:105
+msgid "pTimeCurrentFixed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:109
+msgid "pTimeCurrent"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:161
+msgid "pTimeReset"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:168
+msgid "pTimeSetFixed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:172
+msgid "pTimeSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandr.java:50
+msgid "foreverAlone"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrealname.java:37
+msgid "is"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:37
+msgid "invalidNumber"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:44
+msgid "recipeNone"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:49
+msgid "recipeBadIndex"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:53
+msgid "recipe"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:70
+msgid "recipeMore"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:76
+msgid "recipeFurnace"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:122
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:123
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:124
+msgid "recipeGrid"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:129
+msgid "recipeGridItem"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:131
+msgid "recipeWhere"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:160
+msgid "recipeShapeless"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:168
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:177
+msgid "recipeNothing"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandremove.java:71
+#: Essentials/src/net/ess3/commands/Commandtime.java:162
+#: Essentials/src/net/ess3/commands/Commandworld.java:46
+msgid "invalidWorld"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandremove.java:152
+msgid "removed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:31
+#: Essentials/src/net/ess3/commands/Commandrepair.java:84
+msgid "repairInvalidType"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:36
+msgid "repairEnchanted"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:48
+#: Essentials/src/net/ess3/commands/Commandrepair.java:68
+msgid "repair"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:64
+msgid "repairNone"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:89
+msgid "repairAlreadyFixed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:36
+msgid "seenOnline"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:39
+#: Essentials/src/net/ess3/commands/Commandseen.java:45
+#: Essentials/src/net/ess3/commands/Commandseen.java:51
+#: Essentials/src/net/ess3/commands/Commandseen.java:60
+#: Essentials/src/net/ess3/commands/Commandwhois.java:74
+#: Essentials/src/net/ess3/commands/Commandwhois.java:75
+#: Essentials/src/net/ess3/commands/Commandwhois.java:76
+#: Essentials/src/net/ess3/commands/Commandwhois.java:77
+#: Essentials/src/net/ess3/commands/Commandwhois.java:81
+#: Essentials/src/net/ess3/commands/Commandwhois.java:85
+msgid "true"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:39
+#: Essentials/src/net/ess3/commands/Commandwhois.java:77
+msgid "whoisAFK"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:43
+#: Essentials/src/net/ess3/commands/Commandwhois.java:80
+msgid "whoisJail"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:49
+msgid "whoisMuted"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:57
+msgid "seenOffline"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:60
+msgid "whoisBanned"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:75
+msgid "itemSellAir"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:91
+#: Essentials/src/net/ess3/commands/Commandworth.java:41
+#: Essentials/src/net/ess3/commands/Commandworth.java:79
+msgid "itemCannotBeSold"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:130
+msgid "itemNotEnough1"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:131
+msgid "itemNotEnough2"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:132
+msgid "itemNotEnough3"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:151
+msgid "itemSold"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:155
+msgid "itemSoldConsole"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsethome.java:41
+#: Essentials/src/net/ess3/commands/Commandsethome.java:47
+msgid "maxHomes"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsethome.java:66
+msgid "invalidHomeName"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsethome.java:81
+msgid "homeSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetjail.java:18
+msgid "jailSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetspawn.java:14
+msgid "spawnSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetwarp.java:23
+msgid "invalidWarpName"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetwarp.java:45
+msgid "warpOverwrite"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetwarp.java:48
+msgid "warpSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetworth.java:34
+#: Essentials/src/net/ess3/commands/Commandsetworth.java:47
+msgid "worthSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsocialspy.java:30
+#: Essentials/src/net/ess3/commands/Commandsocialspy.java:41
+msgid "socialSpyMode"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsocialspy.java:34
+msgid "socialSpyFailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawn.java:25
+#: Essentials/src/net/ess3/commands/Commandspawn.java:44
+#: Essentials/src/net/ess3/commands/Commandtp.java:71
+#: Essentials/src/net/ess3/commands/Commandtp.java:88
+msgid "teleportAtoB"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawn.java:26
+#: Essentials/src/net/ess3/commands/Commandspawn.java:45
+#: Essentials/src/net/ess3/commands/Commandtp.java:40
+#: Essentials/src/net/ess3/commands/Commandtp.java:51
+#: Essentials/src/net/ess3/commands/Commandtp.java:84
+#: Essentials/src/net/ess3/commands/Commandtphere.java:29
+#: Essentials/src/net/ess3/commands/Commandtphere.java:30
+#: Essentials/src/net/ess3/commands/Commandtpo.java:33
+#: Essentials/src/net/ess3/commands/Commandtpohere.java:41
+#: Essentials/src/net/ess3/commands/Commandtppos.java:40
+#: Essentials/src/net/ess3/commands/Commandtppos.java:71
+#: Essentials/src/net/ess3/commands/Commandtppos.java:72
+msgid "teleporting"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:24
+#: Essentials/src/net/ess3/commands/Commandspawnmob.java:19
+msgid "mobsAvailable"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:30
+msgid "mobSpawnTarget"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:46
+#: Essentials/src/net/ess3/SpawnMob.java:93
+#: Essentials/src/net/ess3/SpawnMob.java:141
+msgid "unableToSpawnMob"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:61
+msgid "setSpawner"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:65
+msgid "mobSpawnError"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspeed.java:64
+#: Essentials/src/net/ess3/commands/Commandspeed.java:80
+#: Essentials/src/net/ess3/commands/Commandwhois.java:76
+msgid "flying"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspeed.java:64
+#: Essentials/src/net/ess3/commands/Commandspeed.java:80
+msgid "moveSpeed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsudo.java:32
+msgid "sudoExempt"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsudo.java:36
+msgid "sudoRun"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsuicide.java:16
+msgid "suicideMessage"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsuicide.java:17
+msgid "suicideSuccess"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtempban.java:30
+#: Essentials/src/net/ess3/commands/Commandtempban.java:38
+msgid "tempbanExempt"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtempban.java:48
+msgid "tempbanOversized"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtempban.java:52
+msgid "tempBanned"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandthunder.java:25
+#: Essentials/src/net/ess3/commands/Commandthunder.java:31
+msgid "disabled"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandthunder.java:25
+msgid "thunderDuration"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandthunder.java:31
+msgid "thunder"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtime.java:48
+msgid "timeSetPermission"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtime.java:80
+msgid "timeWorldCurrent"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtime.java:97
+msgid "timeWorldFailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtime.java:123
+msgid "timeWorldSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:29
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:37
+msgid "mayNotJail"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:51
+msgid "userJailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:62
+msgid "playerJailedFor"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:62
+msgid "playerJailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:68
+msgid "jailAlreadyIncarcerated"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:78
+msgid "jailSentenceExtended"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:90
+msgid "jailReleasedPlayerNotify"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:97
+msgid "jailReleased"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtop.java:24
+msgid "teleportTop"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtp.java:28
+#: Essentials/src/net/ess3/commands/Commandtp.java:59
+#: Essentials/src/net/ess3/commands/Commandtp.java:63
+#: Essentials/src/net/ess3/commands/Commandtpa.java:23
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:23
+#: Essentials/src/net/ess3/commands/Commandtphere.java:19
+msgid "teleportDisabled"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtp.java:49
+msgid "needTpohere"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:39
+msgid "teleportRequest"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:40
+#: Essentials/src/net/ess3/commands/Commandtpaall.java:56
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:39
+msgid "typeTpaccept"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:41
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:40
+msgid "typeTpdeny"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:46
+#: Essentials/src/net/ess3/commands/Commandtpaall.java:61
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:47
+msgid "teleportRequestTimeoutInfo"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:49
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:49
+msgid "requestSent"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaall.java:32
+msgid "teleportAAll"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaall.java:55
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:38
+msgid "teleportHereRequest"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:19
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:26
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:31
+#: Essentials/src/net/ess3/commands/Commandtpdeny.java:15
+msgid "noPendingRequest"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:41
+msgid "requestTimedOut"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:45
+msgid "requestAccepted"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:46
+msgid "requestAcceptedFrom"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:61
+#: Essentials/src/net/ess3/Teleport.java:152
+#: Essentials/src/net/ess3/Teleport.java:155
+msgid "pendingTeleportCancelled"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpall.java:33
+msgid "teleportAll"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpdeny.java:18
+msgid "requestDenied"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpdeny.java:19
+msgid "requestDeniedFrom"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtppos.java:36
+#: Essentials/src/net/ess3/commands/Commandtppos.java:69
+msgid "tpposTooFar"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtptoggle.java:30
+#: Essentials/src/net/ess3/commands/Commandtptoggle.java:41
+msgid "teleportMode"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtptoggle.java:34
+msgid "tptoggleFailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtree.java:62
+msgid "treeSpawned"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtree.java:66
+msgid "treeFailure"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandunban.java:24
+msgid "unbannedPlayer"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandunbanip.java:26
+msgid "unbannedIP"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandunlimited.java:55
+msgid "unlimitedItems"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandunlimited.java:84
+msgid "unlimitedItemPermission"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandvanish.java:28
+msgid "vanishMode"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandvanish.java:32
+msgid "vanishFailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandvanish.java:39
+msgid "vanished"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandvanish.java:39
+msgid "unvanished"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:28
+msgid "warpListPermission"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:78
+msgid "noWarpsDefined"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:105
+msgid "warpsCount"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:110
+msgid "warps"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:126
+msgid "warpUsePermission"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:28
+#: Essentials/src/net/ess3/commands/Commandweather.java:58
+msgid "weatherStormFor"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:28
+#: Essentials/src/net/ess3/commands/Commandweather.java:58
+msgid "weatherSunFor"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:34
+#: Essentials/src/net/ess3/commands/Commandweather.java:64
+msgid "weatherStorm"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:34
+#: Essentials/src/net/ess3/commands/Commandweather.java:64
+msgid "weatherSun"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:43
+msgid "weatherConsole"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:50
+msgid "worldnameNotFound"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:58
+msgid "whoisTop"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:59
+msgid "whoisIs"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:60
+msgid "whoisHealth"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:61
+msgid "whoisExp"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:64
+msgid "whoisLocation"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:66
+msgid "whoisMoney"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:67
+msgid "whoisIPAddress"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:71
+msgid "whoisGeoLocation"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:73
+msgid "whoisGamemode"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:74
+#: Essentials/src/net/ess3/commands/Commandwhois.java:75
+#: Essentials/src/net/ess3/commands/Commandwhois.java:76
+#: Essentials/src/net/ess3/commands/Commandwhois.java:77
+#: Essentials/src/net/ess3/commands/Commandwhois.java:81
+#: Essentials/src/net/ess3/commands/Commandwhois.java:85
+msgid "false"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:74
+msgid "whoisGod"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:75
+msgid "whoisOP"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:76
+msgid "notFlying"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:76
+msgid "whoisFly"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:84
+msgid "whoisMute"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandworld.java:47
+msgid "possibleWorlds"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandworld.java:48
+msgid "typeWorldName"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandworld.java:56
+msgid "deniedWorldAccess"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandworth.java:46
+#: Essentials/src/net/ess3/commands/Commandworth.java:84
+msgid "worthMeta"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandworth.java:48
+#: Essentials/src/net/ess3/commands/Commandworth.java:86
+msgid "worth"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:108
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:109
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:239
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:240
+msgid "commandNotLoaded"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:117
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:248
+msgid "deniedAccessCommand"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:166
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:282
+msgid "commandFailed"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:290
+msgid "errorWithMessage"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:293
+msgid "errorCallingCommand"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/WarpNotFoundException.java:12
+#: Essentials/src/net/ess3/Warps.java:52
+msgid "warpNotExist"
+msgstr ""
+
+#: Essentials/src/net/ess3/economy/Trade.java:77
+#: Essentials/src/net/ess3/economy/Trade.java:158
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:95
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:99
+msgid "missingItems"
+msgstr ""
+
+#: Essentials/src/net/ess3/economy/Trade.java:88
+#: Essentials/src/net/ess3/economy/Trade.java:179
+msgid "notEnoughExperience"
+msgstr ""
+
+#: Essentials/src/net/ess3/Essentials.java:122
+msgid "usingTempFolderForTesting"
+msgstr ""
+
+#: Essentials/src/net/ess3/Essentials.java:196
+msgid "unvanishedReload"
+msgstr ""
+
+#: Essentials/src/net/ess3/EssentialsTimer.java:69
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:330
+msgid "youHaveNewMail"
+msgstr ""
+
+#: Essentials/src/net/ess3/ItemDb.java:148
+msgid "unknownItemName"
+msgstr ""
+
+#: Essentials/src/net/ess3/ItemDb.java:155
+msgid "unknownItemId"
+msgstr ""
+
+#: Essentials/src/net/ess3/Jails.java:56 Essentials/src/net/ess3/Jails.java:61
+msgid "jailNotExist"
+msgstr ""
+
+#: Essentials/src/net/ess3/Jails.java:177
+#: Essentials/src/net/ess3/Jails.java:181
+#: Essentials/src/net/ess3/Jails.java:203
+#: Essentials/src/net/ess3/Jails.java:207
+#: Essentials/src/net/ess3/Jails.java:230
+#: Essentials/src/net/ess3/Jails.java:234
+msgid "returnPlayerToJailError"
+msgstr ""
+
+#: Essentials/src/net/ess3/Jails.java:210
+#: Essentials/src/net/ess3/Jails.java:237
+msgid "jailMessage"
+msgstr ""
+
+#: Essentials/src/net/ess3/Kits.java:30 Essentials/src/net/ess3/Kits.java:35
+msgid "kitError2"
+msgstr ""
+
+#: Essentials/src/net/ess3/Kits.java:101
+msgid "kitTimed"
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsEntityListener.java:130
+msgid "backAfterDeath"
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:75
+msgid "mutedUserSpeaks"
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:322
+#: EssentialsSigns/src/net/ess3/signs/signs/SignMail.java:23
+msgid "noNewMail"
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:396
+msgid "serverFull"
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:492
+msgid "noGodWorldWarning"
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:500
+msgid "teleportRequestsCancelledWorldChange"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:114
+#: Essentials/src/net/ess3/MetaItemStack.java:258
+msgid "noMetaFirework"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:164
+msgid "onlyPlayerSkulls"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:181
+msgid "noChapterMeta"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:232
+msgid "leatherSyntax"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:368
+msgid "noPotionEffectPerm"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:373
+#: Essentials/src/net/ess3/MetaItemStack.java:389
+#: Essentials/src/net/ess3/MetaItemStack.java:401
+msgid "invalidPotionMeta"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:411
+msgid "multiplePotionEffects"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:528
+msgid "noMetaPerm"
+msgstr ""
+
+#: Essentials/src/net/ess3/metrics/MetricsListener.java:35
+#: Essentials/src/net/ess3/metrics/MetricsStarter.java:57
+msgid "metrics1"
+msgstr ""
+
+#: Essentials/src/net/ess3/metrics/MetricsListener.java:36
+#: Essentials/src/net/ess3/metrics/MetricsStarter.java:58
+msgid "metrics2"
+msgstr ""
+
+#: Essentials/src/net/ess3/metrics/MetricsListener.java:37
+msgid "metrics3"
+msgstr ""
+
+#: Essentials/src/net/ess3/metrics/MetricsStarter.java:59
+msgid "metrics4"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/SpawnsHolder.java:265
+msgid "teleportNewPlayerError"
+msgstr ""
+
+#: Essentials/src/net/ess3/SpawnMob.java:137
+msgid "spawned"
+msgstr ""
+
+#: Essentials/src/net/ess3/SpawnMob.java:149
+msgid "soloMob"
+msgstr ""
+
+#: Essentials/src/net/ess3/SpawnMob.java:200
+msgid "noPermToSpawnMob"
+msgstr ""
+
+#: Essentials/src/net/ess3/SpawnMob.java:216
+msgid "slimeMalformedSize"
+msgstr ""
+
+#: Essentials/src/net/ess3/SpawnMob.java:241
+msgid "sheepMalformedColor"
+msgstr ""
+
+#: Essentials/src/net/ess3/storage/ManagedFile.java:50
+msgid "itemsCsvNotLoaded"
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:94
+msgid "teleportationCommencing"
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:111
+#: Essentials/src/net/ess3/Teleport.java:114
+msgid "cooldownWithMessage"
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:135
+msgid "timeBeforeTeleport"
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:291
+msgid "dontMoveMessage"
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:307
+msgid "warpingTo"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/TooManyMatchesException.java:40
+msgid "tooManyMatchesWithList"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/TooManyMatchesException.java:44
+msgid "tooManyMatches"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:123
+msgid "addedToAccount"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:126
+msgid "addedToOthersAccount"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:142
+msgid "moneySentTo"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:143
+msgid "moneyRecievedFrom"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:165
+msgid "takenFromAccount"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:168
+msgid "takenFromOthersAccount"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:331
+msgid "haveBeenReleased"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:354
+msgid "canTalkAgain"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:400
+msgid "autoAfkKickReason"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:507
+#: Essentials/src/net/ess3/user/User.java:525
+msgid "InvFull"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/UserMap.java:46
+#: Essentials/src/net/ess3/user/UserMap.java:68
+msgid "userNotFound"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:25
+msgid "now"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "year"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "years"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "month"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "months"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "day"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "days"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "hour"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "hours"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "minute"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "minutes"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "second"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:37
+msgid "seconds"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:132
+msgid "illegalDate"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DescParseTickFormat.java:231
+msgid "timeFormat"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/FormatUtil.java:135
+msgid "currency"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/LocationUtil.java:121
+msgid "destinationNotSet"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/LocationUtil.java:176
+msgid "holeInFloor"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/BookPager.java:29
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:169
+msgid "infoUnknownChapter"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:35
+msgid "helpMatching"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:51
+msgid "helpFrom"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:70
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:89
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:104
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:111
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:118
+msgid "helpLine"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:138
+msgid "helpPlugin"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:150
+msgid "commandHelpFailedForPlugin"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:69
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:136
+msgid "infoPages"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:77
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:144
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:196
+msgid "readNextPage"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:90
+msgid "infoChapter"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:188
+msgid "infoChapterPages"
+msgstr ""
+
+#: Essentials/test/net/ess3/UtilTest.java:23
+#, java-format
+msgid "Hello {0}, how are you?"
+msgstr "§fHello §4{0}§f, how are you?"
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:50
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:103
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:108
+msgid "failedToCreateConfig"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:93
+msgid "creatingConfigFromTemplate"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:100
+msgid "creatingEmptyConfig"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:178
+msgid "couldNotFindTemplate"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:193
+msgid "failedToWriteConfig"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:217
+msgid "failedToCloseConfig"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/Settings.java:449
+#: Essentials2Compat/src/com/earth2me/essentials/Settings.java:486
+#: Essentials2Compat/src/com/earth2me/essentials/Settings.java:582
+msgid "unknownItemInList"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:50
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:60
+msgid "antiBuildPlace"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:68
+msgid "alertPlaced"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:84
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:94
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:122
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:130
+msgid "antiBuildBreak"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:102
+msgid "alertBroke"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:176
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:194
+msgid "antiBuildUse"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:184
+msgid "alertUsed"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:203
+msgid "antiBuildInteract"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:226
+msgid "antiBuildCraft"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:268
+msgid "antiBuildDrop"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsConnect.java:23
+#: EssentialsChat/src/net/ess3/chat/EssentialsChat.java:31
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIP.java:21
+#: EssentialsProtect/src/net/ess3/protect/EssentialsConnect.java:21
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSignsPlugin.java:29
+#: EssentialsXMPP/src/net/ess3/xmpp/EssentialsXMPP.java:43
+msgid "versionMismatchAll"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsConnect.java:45
+msgid "alertFormat"
+msgstr ""
+
+#: EssentialsChat/src/net/ess3/chat/EssentialsLocalChatEventListener.java:35
+msgid "chatTypeLocal"
+msgstr ""
+
+#: EssentialsChat/src/net/ess3/chat/EssentialsLocalChatEventListener.java:60
+msgid "chatTypeSpy"
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:97
+msgid "geoipJoinFormat"
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:130
+msgid "cantFindGeoIpDB"
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:140
+msgid "cantReadGeoIpDB"
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:148
+msgid "geoIpUrlEmpty"
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:159
+msgid "downloadingGeoIp"
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:182
+msgid "geoIpUrlInvalid"
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:186
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:198
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:209
+msgid "connectionFailed"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:42
+msgid "signFormatFail"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:66
+msgid "signFormatSuccess"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:71
+msgid "signFormatTemplate"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:300
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:322
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:366
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:160
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:173
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:177
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:195
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:199
+msgid "moreThanZero"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:402
+msgid "invalidCharge"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:29
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:74
+#: EssentialsSigns/src/net/ess3/signs/signs/SignGameMode.java:42
+#: EssentialsSigns/src/net/ess3/signs/signs/SignRepair.java:29
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:204
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:260
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:357
+msgid "invalidSignLine"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignHeal.java:33
+msgid "youAreHealed"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignMail.java:30
+msgid "markMailAsRead"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTime.java:34
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTime.java:58
+msgid "onlyDayNight"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:52
+msgid "tradeSignEmptyOwner"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:229
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:242
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:254
+msgid "tradeSignEmpty"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignWeather.java:34
+#: EssentialsSigns/src/net/ess3/signs/signs/SignWeather.java:56
+msgid "onlySunStorm"
+msgstr ""
