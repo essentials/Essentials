@@ -28,7 +28,7 @@ public abstract class EssentialsTest extends TestCase
 	protected final IPlugin plugin;
 	protected final World world;
 	protected final Logger logger;
-	protected final Essentials ess;
+	protected Essentials ess;
 	protected final List<Player> playerList;
 	private File folder;
 
@@ -91,7 +91,7 @@ public abstract class EssentialsTest extends TestCase
 		folder = new File(folder, "Essentials-" + System.currentTimeMillis());
 		when(plugin.getDataFolder()).thenReturn(folder);
 		when(world.getName()).thenReturn("world");
-		ess = new Essentials(server, logger, plugin);
+		
 	}
 
 	protected void createFolder()
@@ -115,6 +115,7 @@ public abstract class EssentialsTest extends TestCase
 		super.setUp();
 		createFolder();
 
+		ess = new Essentials(server, logger, plugin);
 		ess.getI18n().updateLocale("en_US");
 		Essentials.testing = true;
 		ess.onEnable();

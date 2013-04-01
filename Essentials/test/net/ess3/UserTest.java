@@ -5,14 +5,14 @@ import net.ess3.api.IUser;
 
 public class UserTest extends EssentialsTest
 {
-	private final IUser base1;
+	//private final IUser base1;
 
 	public UserTest(String testName)
 	{
 		super(testName);
 
 		addPlayer("testPlayer1");
-		base1 = ess.getUserMap().getUser("testPlayer1");
+		//base1 = ess.getUserMap().getUser("testPlayer1");
 	}
 
 	private void should(String what) //TODO: unused/implement this?

@@ -39,7 +39,7 @@ public class EconomyTest extends EssentialsTest
 		try
 		{
 
-			assertTrue("Player exists", ess.getEconomy().playerExists(PLAYERNAME));
+			assertTrue("Player exists (1)", ess.getEconomy().playerExists(PLAYERNAME));
 			ess.getEconomy().resetBalance(PLAYERNAME);
 			assertEquals("Player has no money", 0.0, ess.getEconomy().getMoney(PLAYERNAME));
 			ess.getEconomy().setMoney(PLAYERNAME, 10.0);
@@ -65,7 +65,7 @@ public class EconomyTest extends EssentialsTest
 		//test Exceptions
 		try
 		{
-			assertTrue("Player exists", ess.getEconomy().playerExists(PLAYERNAME));
+			assertTrue("Player exists (2)", ess.getEconomy().playerExists(PLAYERNAME));
 			ess.getEconomy().resetBalance(PLAYERNAME);
 			assertEquals("Reset balance", 0.0, ess.getEconomy().getMoney(PLAYERNAME));
 			ess.getEconomy().setMoney(PLAYERNAME, -5.0);
