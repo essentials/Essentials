@@ -33,3 +33,5 @@ manifest.mf
 .idea/
 
 /EssentialsRelease/
+*.mo
+*.po.~*~
