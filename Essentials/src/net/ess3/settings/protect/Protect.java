@@ -10,7 +10,7 @@ import net.ess3.storage.StorageObject;
 @EqualsAndHashCode(callSuper = false)
 public class Protect implements StorageObject
 {
-	@Comment("General physics/behavior modifications")
+	@Comment("General entity/physics behavior.")
 	private Prevent prevent = new Prevent();
 	@Comment(
 			{
