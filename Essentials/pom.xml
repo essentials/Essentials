@@ -109,15 +109,9 @@
         <configuration>
           <poDirectory>${basedir}/po/</poDirectory>
           <targetBundle>messages2</targetBundle>
-          <keywords>-k_ -k</keywords>
+          <keywords>-k_ -k -s --package-name=Essentials --package-version=${project.version} --copyright-holder="Essentials Team"</keywords>
           <outputFormat>properties</outputFormat>
           <sourceDirectory>${basedir}/../</sourceDirectory>
-          <!--extraSourceFiles>
-            <directory>${basedir}/../</directory>
-              <includes>
-                <include>Essentials*/**/*.java</include>
-              </includes>
-          </extraSourceFiles-->
         </configuration>
       </plugin>
     </plugins>
