@@ -157,21 +157,22 @@ public class UtilTest extends EssentialsTest
 		assertEquals(" 10 years 6 months 10 days 13 hours 45 minutes 45 seconds", DateUtil.formatDateDiff(a, b));
 	}
 
-	public void filenameTest()
+	public void testSanitizeFilenames()
 	{
 		try
 		{
-			assertEquals("_-", Util.sanitizeFileName("\u0000"));
-			assertEquals("_-", Util.sanitizeFileName("\u0001"));
-			assertEquals("_-", Util.sanitizeFileName("\u001f"));
-			assertEquals(" -", Util.sanitizeFileName(" "));
-			assertEquals("_-", Util.sanitizeFileName(".."));
-			assertEquals("_-", Util.sanitizeFileName("..\\"));
-			assertEquals("_-", Util.sanitizeFileName("../"));
-			assertEquals("_-", Util.sanitizeFileName("\""));
-			assertEquals("_-", Util.sanitizeFileName("<>?:*."));
+			assertEquals("", Util.sanitizeFileName("\u0000"));
+			assertEquals("", Util.sanitizeFileName("\u0001"));
+			assertEquals("", Util.sanitizeFileName("\u001f"));
+			assertEquals(" ", Util.sanitizeFileName(" "));
+			assertEquals("aa-9q5l", Util.sanitizeFileName("a-a"));
+			assertEquals("-yf1ca", Util.sanitizeFileName(".."));
+			assertEquals("-yf1ca2l", Util.sanitizeFileName("..\\"));
+			assertEquals("-yf1cad", Util.sanitizeFileName("../"));
+			assertEquals("-mf1c", Util.sanitizeFileName("\""));
+			assertEquals("-uf1cia8ahkg", Util.sanitizeFileName("<>?:*."));
 			assertEquals("a-0fa", Util.sanitizeFileName("aä"));
-
+			assertEquals("aä", Util.decodeFileName(Util.sanitizeFileName("aä")));
 		}
 		catch (InvalidNameException ex)
 		{
