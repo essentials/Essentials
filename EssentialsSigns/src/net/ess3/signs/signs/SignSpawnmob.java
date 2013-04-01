@@ -32,8 +32,8 @@ public class SignSpawnmob extends EssentialsSign
 		charge.isAffordableFor(player);
 		try
 		{
-            List<String> mobParts = SpawnMob.mobParts(sign.getLine(2));
-            List<String> mobData = SpawnMob.mobData(sign.getLine(2));
+			List<String> mobParts = SpawnMob.mobParts(sign.getLine(2));
+			List<String> mobData = SpawnMob.mobData(sign.getLine(2));
 			SpawnMob.spawnmob(ess, ess.getServer(), player, player, mobParts, mobData, Integer.parseInt(sign.getLine(1)));
 		}
 		catch (Exception ex)

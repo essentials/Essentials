@@ -20,7 +20,7 @@ public class Commandspawnmob extends EssentialsCommand
 		}
 
 		List<String> mobParts = SpawnMob.mobParts(args[0]);
-        List<String> mobData = SpawnMob.mobData(args[0]);
+		List<String> mobData = SpawnMob.mobData(args[0]);
 
 		int mobCount = 1;
 		if (args.length >= 2)
