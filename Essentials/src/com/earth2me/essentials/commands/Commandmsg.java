@@ -70,7 +70,7 @@ public class Commandmsg extends EssentialsCommand
 				continue;
 			}
 			User user = ess.getUser(sender);
-			if (matchedUser.isBusy() && !user.isAuthorized("essentals.busy.bypass"))
+			if (matchedUser.isBusy() && !user.isAuthorized("essentials.busy.bypass"))
 			{
 				throw new Exception(_("userIsBusy"));
 			}

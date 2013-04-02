@@ -156,10 +156,7 @@ public class Commandmail extends EssentialsCommand
 
 				if (user != null)
 				{
-					if (!user.isBusy() && user.isAuthorized("essentials.busy.bypass"))
-					{
-						user.addMail(message);
-					}
+					user.addMail(message);
 				}
 			}
 		}
