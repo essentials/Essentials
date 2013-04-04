@@ -47,7 +47,7 @@ public class Commandrepair extends EssentialsCommand
 
 			user.sendMessage(_("repair", itemName.replace('_', ' ')));
 		}
-		else if (args[0].equalsIgnoreCase("all"))
+		else if (args[0].equalsIgnoreCase("all") && Permissions.REPAIR_ALL.isAuthorized(user))
 		{
 			final Trade charge = new Trade("repair-all", ess);
 			charge.isAffordableFor(user);
