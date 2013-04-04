@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Calendar;
+import net.ess3.utils.FormatUtil;
 
 
 public class Commandtempban extends EssentialsCommand
@@ -49,16 +50,27 @@ public class Commandtempban extends EssentialsCommand
 			return;
 		}
 
-		final String banReason = _("tempBanned", DateUtil.formatDateDiff(banTimestamp));
+		String banReason;
+		final String senderName = isUser(sender) ? getPlayer(sender).getDisplayName() : Console.NAME;;
 		final Ban ban = new Ban();
 		final UserData userData = user.getData();
+		
+		if (args.length > 2)
+		{
+
+			banReason = _("tempBanned", DateUtil.formatDateDiff(banTimestamp)) + _("tempbanCustomReason", FormatUtil.replaceFormat(getFinalArg(args, 2).replace("\\n", "\n").replace("|", "\n")));
+		}
+		else
+		{
+			banReason = _("tempBanned", DateUtil.formatDateDiff(banTimestamp));
+		}
+		
 		ban.setReason(banReason);
 		ban.setTimeout(banTimestamp);
 		userData.setBan(ban);
 		user.setBanned(true);
 		user.queueSave();
 		user.getPlayer().kickPlayer(banReason);
-		final String senderName = isUser(sender) ? getPlayer(sender).getDisplayName() : Console.NAME;
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
