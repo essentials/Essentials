@@ -48,17 +48,18 @@ public class MetricsStarter implements Runnable
 			ISettings settings = ess.getSettings();
 			if (!metrics.isOptOut())
 			{
-				if (settings.getData().getGeneral().getMetricsEnabled() == true)
-				{
-					start = true;
-				}
-				else if (settings.getData().getGeneral().getMetricsEnabled() == null)
+
+				if (settings.getData().getGeneral().getMetricsEnabled() == null)
 				{
 					ess.getLogger().info(_("metrics1"));
 					ess.getLogger().info(_("metrics2"));
 					ess.getLogger().info(_("metrics4"));
 					start = false;
 				}
+                else if (settings.getData().getGeneral().getMetricsEnabled() == true)
+                {
+                    start = true;
+                }
 			}
 		}
 		catch (Exception ex)
