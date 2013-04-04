@@ -59,6 +59,10 @@ commands:
     description: Set a player on fire.
     usage: /<command> <player> <seconds>
     aliases: [eburn]
+  busy:
+    description: Mark a player as busy.
+    usage: /<command> <player>
+    aliases: [ebusy]
   clearinventory:
     description: Clear all items in your inventory.
     usage: /<command> [player|*] [item[:<data>]|*|**]

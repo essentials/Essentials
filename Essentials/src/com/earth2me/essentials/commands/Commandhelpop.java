@@ -32,6 +32,10 @@ public class Commandhelpop extends EssentialsCommand
 			{
 				continue;
 			}
+			if (player.isBusy() && !user.isAuthorized("essentials.busy.bypass"))
+			{
+				continue;
+			}
 			player.sendMessage(message);
 		}
 	}
