@@ -67,6 +67,15 @@ public class I18n implements II18n
 			return string;
 		}
 	}
+	
+	public static String _(final String string)
+	{
+		if (instance == null)
+		{
+			return "";
+		}
+		return instance.translate(string);
+	}
 
 	public static String _(final String string, final Object... objects)
 	{
