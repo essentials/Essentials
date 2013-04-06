@@ -10,7 +10,7 @@ import org.bukkit.plugin.PluginManager;
 
 public class VersionCheck
 {
-	public static final int BUKKIT_VERSION = 2543;
+	public static final int BUKKIT_VERSION = 2735;
 	private static final Pattern bukkitVersionPattern = Pattern.compile(
 			"git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*");
 
