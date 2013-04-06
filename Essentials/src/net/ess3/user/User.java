@@ -129,7 +129,7 @@ public class User extends UserBase implements IUser
 	}
 
 	@Override
-	public void payUser(final IUser reciever, final double value) throws Exception
+	public void payUser(final IUser receiver, final double value) throws Exception
 	{
 		if (value == 0)
 		{
@@ -138,9 +138,9 @@ public class User extends UserBase implements IUser
 		if (canAfford(value))
 		{
 			setMoney(getMoney() - value);
-			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("{0} has been sent to {1}.", FormatUtil.displayCurrency(value, ess), reciever.getPlayer().getDisplayName()));
-			reciever.sendMessage(_("{0} has been received from {1}.", FormatUtil.displayCurrency(value, ess), getPlayer().getDisplayName()));
+			receiver.setMoney(receiver.getMoney() + value);
+			sendMessage(_("{0} has been sent to {1}.", FormatUtil.displayCurrency(value, ess), receiver.getPlayer().getDisplayName()));
+			receiver.sendMessage(_("{0} has been received from {1}.", FormatUtil.displayCurrency(value, ess), getPlayer().getDisplayName()));
 		}
 		else
 		{

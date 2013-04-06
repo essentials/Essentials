@@ -90,7 +90,7 @@ public class Kits extends AsyncStorageObjectHolder<net.ess3.settings.Kits> imple
 		else if (lastTime > time.getTimeInMillis())
 		{
 			// This is to make sure time didn't get messed up on last kit use.
-			// If this happens, let's give the user the benifit of the doubt.
+			// If this happens, let's give the user the benefit of the doubt.
 			user.setTimestamp(TimestampType.KIT, time.getTimeInMillis());
 		}
 		else

@@ -54,7 +54,7 @@ public class InstallModule implements Runnable, Task
 		catch (Exception ex)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "Failed to download module " + moduleName + " to " + fileName, ex);
-			listener.onWorkAbort("An error occured, please check your server log.");
+			listener.onWorkAbort("An error occurred, please check your server log.");
 		}
 	}
 }

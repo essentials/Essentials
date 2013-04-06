@@ -279,7 +279,7 @@ public final class DescParseTickFormat
 		// How many seconds on the last day?
 		final long seconds = (long)Math.floor(dticks / ticksPerSecond);
 
-		// Now we create an english GMT calendar (We wan't no daylight savings)
+		// Now we create an english GMT calendar (We want no daylight savings)
 		final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.ENGLISH);
 		cal.setLenient(true);
 

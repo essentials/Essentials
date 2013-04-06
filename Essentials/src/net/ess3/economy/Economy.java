@@ -28,10 +28,10 @@ public class Economy implements IEconomy
 		return balance;
 	}
 
-	private void setNPCBalance(String name, double balance, boolean checkExistance) throws UserDoesNotExistException
+	private void setNPCBalance(String name, double balance, boolean checkExistence) throws UserDoesNotExistException
 	{
 		Map<String, Double> balances = npcs.getData().getBalances();
-		if (checkExistance && !balances.containsKey(name.toLowerCase(Locale.ENGLISH)))
+		if (checkExistence && !balances.containsKey(name.toLowerCase(Locale.ENGLISH)))
 		{
 			throw new UserDoesNotExistException(name);
 		}

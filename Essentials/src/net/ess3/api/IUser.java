@@ -40,7 +40,7 @@ public interface IUser extends OfflinePlayer, CommandSender, IStorageObjectHolde
 
 	void setMoney(double value);
 
-	void payUser(final IUser reciever, final double value) throws Exception;
+	void payUser(final IUser receiver, final double value) throws Exception;
 
 	void setLastLocation();
 

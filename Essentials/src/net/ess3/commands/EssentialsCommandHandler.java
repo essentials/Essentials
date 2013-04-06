@@ -89,7 +89,7 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 				return true;
 			}
 
-			final String commandName = command.getName().toLowerCase(Locale.ENGLISH); // TODO: Isn't this just the commandLable
+			final String commandName = command.getName().toLowerCase(Locale.ENGLISH); // TODO: Isn't this just the commandLabel
 			IEssentialsCommand cmd = commands.get(commandName);
 			if (cmd == null)
 			{

@@ -18,7 +18,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.util.Vector;
 
 
-//This command has quite a complicated syntax, in theory it has 4 seperate syntaxes which are all variable:
+//This command has quite a complicated syntax, in theory it has 4 separate syntaxes which are all variable:
 //
 //1: /firework clear             - This clears all of the effects on a firework stack
 //
@@ -118,7 +118,7 @@ public class Commandfirework extends EssentialsCommand
                         }
                         catch (Exception e)
                         {
-                            user.sendMessage(_("Firework parameters: color:<color> [fade:<color>] [shape:<shape>] [effect:<effect>]nTo use multiple colors/effects, seperate values with commas: red,blue,pinknShapes: star, ball, large, creeper, burst Effects: trail, twinkle."));
+                            user.sendMessage(_("Firework parameters: color:<color> [fade:<color>] [shape:<shape>] [effect:<effect>]nTo use multiple colors/effects, separate values with commas: red,blue,pinknShapes: star, ball, large, creeper, burst Effects: trail, twinkle."));
                             throw e;
                         }
                     }
@@ -136,7 +136,7 @@ public class Commandfirework extends EssentialsCommand
                     }
                     else
                     {
-                        user.sendMessage(_("Firework parameters: color:<color> [fade:<color>] [shape:<shape>] [effect:<effect>]nTo use multiple colors/effects, seperate values with commas: red,blue,pinknShapes: star, ball, large, creeper, burst Effects: trail, twinkle."));
+                        user.sendMessage(_("Firework parameters: color:<color> [fade:<color>] [shape:<shape>] [effect:<effect>]nTo use multiple colors/effects, separate values with commas: red,blue,pinknShapes: star, ball, large, creeper, burst Effects: trail, twinkle."));
                         throw new Exception(_("Invalid firework charge parameters inserted, must set a color first."));
                     }
                 }

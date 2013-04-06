@@ -26,7 +26,7 @@ public class SignConfig implements StorageObject
 	@Comment(
 			"How many times per second can Essentials signs be interacted with.\n"
 			 + "Values should be between 1-20, 20 being virtually no lag protection.\n"
-			 + "Lower numbers will reduce the possiblity of lag, but may annoy players.")
+			 + "Lower numbers will reduce the possibility of lag, but may annoy players.")
 	private int signUsesPerSecond = 4;
 
 	public int getSignUsePerSecond()

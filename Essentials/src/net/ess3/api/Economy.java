@@ -64,10 +64,10 @@ public final class Economy
 	}
 
 	/**
-	 * Substracts money from the balance of a user
+	 * Subtracts money from the balance of a user
 	 *
 	 * @param name   Name of the user
-	 * @param amount The money you want to substract
+	 * @param amount The money you want to subtract
 	 * @throws UserDoesNotExistException If a user by that name does not exists
 	 * @throws NoLoanPermittedException  If the user is not allowed to have a negative balance
 	 */
