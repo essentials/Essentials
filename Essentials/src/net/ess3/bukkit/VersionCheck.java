@@ -32,8 +32,8 @@ public class VersionCheck
 			final int versionNumber = Integer.parseInt(versionMatch.group(1));
 			if (versionNumber < BUKKIT_VERSION && versionNumber > 100)
 			{
-				log.log(Level.SEVERE, _(" §4* ! * Bukkit version is not the recommended build for Essentials."));
-				log.log(Level.SEVERE, _(" §6* ! * You need atleast build {0} of CraftBukkit, download it from http://dl.bukkit.org/downloads/craftbukkit/", Integer.toString(BUKKIT_VERSION)));
+				log.log(Level.SEVERE, _("§4* ! * Bukkit version is not the recommended build for Essentials."));
+				log.log(Level.SEVERE, _("§6* ! * You need atleast build {0} of CraftBukkit, download it from http://dl.bukkit.org/downloads/craftbukkit/", Integer.toString(BUKKIT_VERSION)));
 				return false;
 			}
 		}

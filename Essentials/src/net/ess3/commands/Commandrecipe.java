@@ -119,14 +119,14 @@ public class Commandrecipe extends EssentialsCommand
 					materials[j][k] = item == null ? null : item.getType();
 				}
 			}
-			sender.sendMessage(_("u00a7{0}X §6| u00a7{1}X §6| u00a7{2}X", colorMap.get(materials[0][0]), colorMap.get(materials[0][1]), colorMap.get(materials[0][2])));
-			sender.sendMessage(_("u00a7{0}X §6| u00a7{1}X §6| u00a7{2}X", colorMap.get(materials[1][0]), colorMap.get(materials[1][1]), colorMap.get(materials[1][2])));
-			sender.sendMessage(_("u00a7{0}X §6| u00a7{1}X §6| u00a7{2}X", colorMap.get(materials[2][0]), colorMap.get(materials[2][1]), colorMap.get(materials[2][2])));
+			sender.sendMessage(_("§{0}X §6| §{1}X §6| §{2}X", colorMap.get(materials[0][0]), colorMap.get(materials[0][1]), colorMap.get(materials[0][2])));
+			sender.sendMessage(_("§{0}X §6| §{1}X §6| §{2}X", colorMap.get(materials[1][0]), colorMap.get(materials[1][1]), colorMap.get(materials[1][2])));
+			sender.sendMessage(_("§{0}X §6| §{1}X §6| §{2}X", colorMap.get(materials[2][0]), colorMap.get(materials[2][1]), colorMap.get(materials[2][2])));
 
 			final StringBuilder s = new StringBuilder();
 			for (Material items : colorMap.keySet().toArray(new Material[colorMap.size()]))
 			{
-				s.append(_(" u00a7{0}X §6is §c{1}", colorMap.get(items), getMaterialName(items)));
+				s.append(_("§{0}X §6is §c{1}", colorMap.get(items), getMaterialName(items)));
 			}
 			sender.sendMessage(_("§6Where: {0}", s.toString()));
 		}

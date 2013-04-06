@@ -499,7 +499,7 @@ public class MetaItemStack
 
         if (!hasMetaPermission(user, "enchantments." + enchantmentName, true, false))
         {
-            throw new Exception(_(" §4You do not have the permission for§c {0}§4.", enchantmentName));
+            throw new Exception(_("§4You do not have the permission for§c {0}§4.", enchantmentName));
         }
         return enchantment;
     }

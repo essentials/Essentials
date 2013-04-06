@@ -31,7 +31,7 @@ public class SignEnchant extends EssentialsSign
 		final Enchantment enchantment = Enchantments.getByName(enchantLevel[0]);
 		if (enchantment == null)
 		{
-			throw new SignException(_(" §4Enchantment not found!"));
+			throw new SignException(_("§4Enchantment not found!"));
 		}
 		int level;
 		try
@@ -76,7 +76,7 @@ public class SignEnchant extends EssentialsSign
 		final Enchantment enchantment = Enchantments.getByName(enchantLevel[0]);
 		if (enchantment == null)
 		{
-			throw new SignException(_(" §4Enchantment not found!"));
+			throw new SignException(_("§4Enchantment not found!"));
 		}
 		int level;
 		try

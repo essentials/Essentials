@@ -35,16 +35,16 @@ public class Commandlist extends EssentialsCommand
 
 			if (showhidden && playerHidden > 0)
 			{
-				online = _(" §6There are §c{0}§6/{1}§6 out of maximum §c{2}§6 players online.", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
+				online = _("§6There are §c{0}§6/{1}§6 out of maximum §c{2}§6 players online.", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
 			}
 			else
 			{
-				online = _(" §6There are §c{0}§6 out of maximum §c{1}§6 players online.", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
+				online = _("§6There are §c{0}§6 out of maximum §c{1}§6 players online.", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
 			}
 		}
 		else
 		{
-			online = _(" §6There are §c{0}§6 out of maximum §c{1}§6 players online.", server.getOnlinePlayers().length, server.getMaxPlayers());
+			online = _("§6There are §c{0}§6 out of maximum §c{1}§6 players online.", server.getOnlinePlayers().length, server.getMaxPlayers());
 		}
 
 		sender.sendMessage(online);
@@ -98,12 +98,12 @@ public class Commandlist extends EssentialsCommand
 
 					if (user.getData().isAfk())
 					{
-						groupString.append(_(" §7[AFK]§r"));
+						groupString.append(' ').append(_("§7[AFK]§r"));
 					}
 
 					if (hiddenPlayers.contains(user.getName()))
 					{
-						groupString.append(_(" §7[HIDDEN]§r"));
+						groupString.append(' ').append(_("§7[HIDDEN]§r"));
 					}
 					groupString.append(user.getPlayer().getDisplayName());
 					groupString.append("§f");
@@ -145,12 +145,12 @@ public class Commandlist extends EssentialsCommand
 
 				if (user.getData().isAfk())
 				{
-					onlineUsers.append(_(" §7[AFK]§r"));
+					onlineUsers.append(' ').append(_("§7[AFK]§r"));
 				}
 
 				if (hiddenPlayers.contains(user.getName()))
 				{
-					onlineUsers.append(_(" §7[HIDDEN]§r"));
+					onlineUsers.append(' ').append(_("§7[HIDDEN]§r"));
 				}
 				onlineUsers.append(user.getPlayer().getDisplayName());
 				onlineUsers.append("§f");

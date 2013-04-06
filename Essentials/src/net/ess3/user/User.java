@@ -138,9 +138,9 @@ public class User extends UserBase implements IUser
 		if (canAfford(value))
 		{
 			setMoney(getMoney() - value);
-			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("§a{0} has been sent to {1}.", FormatUtil.displayCurrency(value, ess), reciever.getPlayer().getDisplayName()));
-			reciever.sendMessage(_("§a{0} has been received from {1}.", FormatUtil.displayCurrency(value, ess), getPlayer().getDisplayName()));
+			receiver.setMoney(receiver.getMoney() + value);
+			sendMessage(_("§a{0} has been sent to {1}.", FormatUtil.displayCurrency(value, ess), receiver.getPlayer().getDisplayName()));
+			receiver.sendMessage(_("§a{0} has been received from {1}.", FormatUtil.displayCurrency(value, ess), getPlayer().getDisplayName()));
 		}
 		else
 		{

@@ -59,7 +59,7 @@ public class Commandtogglejail extends EssentialsCommand
 			}
 			player.queueSave();
 			sender.sendMessage(
-					(timeDiff > 0 ? _(" §6Player§c {0} §6jailed for {1}.", player.getName(), DateUtil.formatDateDiff(timeDiff)) : _("§6Player§c {0} §6jailed.", player.getName())));
+					(timeDiff > 0 ? _("§6Player§c {0} §6jailed for {1}.", player.getName(), DateUtil.formatDateDiff(timeDiff)) : _("§6Player§c {0} §6jailed.", player.getName())));
 			return;
 		}
 
