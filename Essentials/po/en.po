@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-06 03:51+0200\n"
+"POT-Creation-Date: 2013-04-06 04:18+0200\n"
 "PO-Revision-Date: 2013-04-01 23:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -316,8 +316,8 @@ msgstr ""
 msgid "Balance: {0}"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandbanip.java:23
-#: Essentials/src/net/ess3/commands/Commandbanip.java:33
+#: Essentials/src/net/ess3/commands/Commandbanip.java:25
+#: Essentials/src/net/ess3/commands/Commandbanip.java:40
 msgid "Banned IP address"
 msgstr ""
 
@@ -647,7 +647,7 @@ msgstr ""
 msgid "Goodbye cruel world..."
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandheal.java:65
+#: Essentials/src/net/ess3/commands/Commandheal.java:66
 #, java-format
 msgid "Healed {0}."
 msgstr ""
@@ -681,6 +681,13 @@ msgstr ""
 #: Essentials/src/net/ess3/commands/Commandhome.java:89
 #, java-format
 msgid "Homes: {0}"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/SignConfig.java:27
+msgid ""
+"How many times per second can Essentials signs be interacted with.\n"
+"Values should be between 1-20, 20 being virtually no lag protection.\n"
+"Lower numbers will reduce the possiblity of lag, but may annoy players."
 msgstr ""
 
 #: Essentials/src/net/ess3/settings/Chat.java:21
@@ -918,7 +925,7 @@ msgstr ""
 msgid "Player has not set a home."
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandbanip.java:30
+#: Essentials/src/net/ess3/commands/Commandbanip.java:37
 #: Essentials/src/net/ess3/commands/Commandclearinventory.java:27
 #: Essentials/src/net/ess3/commands/Commandclearinventory.java:58
 #: Essentials/src/net/ess3/commands/Commandclearinventory.java:70
@@ -1283,7 +1290,7 @@ msgstr ""
 
 #: Essentials/src/net/ess3/Teleport.java:291
 #, java-format
-msgid "Teleportation will commence in {0}. Don''t move."
+msgid "Teleportation will commence in {0}. Don't move."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtpall.java:33
@@ -1809,8 +1816,7 @@ msgid "You can talk again."
 msgstr ""
 
 #: Essentials/src/net/ess3/Kits.java:101
-#, java-format
-msgid "You can''t use that kit again for another {0}."
+msgid "You can't use that kit again for another {0}."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandsetwarp.java:45
@@ -1925,7 +1931,7 @@ msgid "You extinguished {0}."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandheal.java:33
-#: Essentials/src/net/ess3/commands/Commandheal.java:64
+#: Essentials/src/net/ess3/commands/Commandheal.java:65
 #: EssentialsSigns/src/net/ess3/signs/signs/SignHeal.java:33
 msgid "You have been healed."
 msgstr ""
@@ -2342,6 +2348,10 @@ msgstr ""
 msgid "invalidFireworkFormat"
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandbanip.java:29
+msgid "invalidIpAddress"
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandrecipe.java:37
 msgid "invalidNumber"
 msgstr ""
@@ -2375,12 +2385,12 @@ msgid "me"
 msgstr ""
 
 #: Essentials/src/net/ess3/metrics/MetricsListener.java:35
-#: Essentials/src/net/ess3/metrics/MetricsStarter.java:57
+#: Essentials/src/net/ess3/metrics/MetricsStarter.java:54
 msgid "metrics1"
 msgstr ""
 
 #: Essentials/src/net/ess3/metrics/MetricsListener.java:36
-#: Essentials/src/net/ess3/metrics/MetricsStarter.java:58
+#: Essentials/src/net/ess3/metrics/MetricsStarter.java:55
 msgid "metrics2"
 msgstr ""
 
@@ -2388,7 +2398,7 @@ msgstr ""
 msgid "metrics3"
 msgstr ""
 
-#: Essentials/src/net/ess3/metrics/MetricsStarter.java:59
+#: Essentials/src/net/ess3/metrics/MetricsStarter.java:56
 msgid "metrics4"
 msgstr ""
 
@@ -2775,17 +2785,17 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandptime.java:105
 #, java-format
-msgid "{0}''s time is fixed to {1}."
+msgid "{0}'s time is fixed to {1}."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandptime.java:98
 #, java-format
-msgid "{0}''s time is normal and matches the server."
+msgid "{0}'s time is normal and matches the server."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandptime.java:109
 #, java-format
-msgid "{0}''s time is {1}."
+msgid "{0}'s time is {1}."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandlist.java:84
