@@ -446,7 +446,7 @@ public final class Settings implements ISettings
 			}
 			catch (Exception ex)
 			{
-				logger.log(Level.SEVERE, _("unknownItemInList", itemName, "item-spawn-blacklist"));
+				logger.log(Level.SEVERE, _("Unknown item {0} in {1} list.", itemName, "item-spawn-blacklist"));
 			}
 		}
 		return epItemSpwn;
@@ -483,7 +483,7 @@ public final class Settings implements ISettings
 			}
 			catch (Exception ex)
 			{
-				logger.log(Level.SEVERE, _("unknownItemInList", signName, "enabledSigns"));
+				logger.log(Level.SEVERE, _("Unknown item {0} in {1} list.", signName, "enabledSigns"));
 				continue;
 			}
 			signsEnabled = true;
@@ -579,7 +579,7 @@ public final class Settings implements ISettings
 			}
 			catch (Exception ex)
 			{
-				logger.log(Level.SEVERE, _("unknownItemInList", itemName, configName));
+				logger.log(Level.SEVERE, _("Unknown item {0} in {1} list.", itemName, configName));
 			}
 		}
 		return list;

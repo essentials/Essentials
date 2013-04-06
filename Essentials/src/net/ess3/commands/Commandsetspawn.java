@@ -11,6 +11,6 @@ public class Commandsetspawn extends EssentialsCommand
 	{
 		final String group = args.length > 0 ? getFinalArg(args, 0) : "default";
 		ess.getSpawns().setSpawn(user.getPlayer().getLocation(), group);
-		user.sendMessage(_("spawnSet", group));
+		user.sendMessage(_("Spawn location set for group {0}.", group));
 	}
 }

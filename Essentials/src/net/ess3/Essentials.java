@@ -119,7 +119,7 @@ public class Essentials implements IEssentials
 			throw new IOException();
 		}
 
-		logger.log(Level.INFO, _("usingTempFolderForTesting"));
+		logger.log(Level.INFO, _("Using temp folder for testing:"));
 		logger.log(Level.INFO, dataFolder.toString());
 		storageQueue.setEnabled(true);
 		settings = new SettingsHolder(this);
@@ -193,7 +193,7 @@ public class Essentials implements IEssentials
 			if (user.isVanished())
 			{
 				user.toggleVanished();
-				p.sendMessage(_("unvanishedReload"));
+				p.sendMessage(_("A reload has forced you to become visible."));
 			}
 		}
 		i18n.onDisable();

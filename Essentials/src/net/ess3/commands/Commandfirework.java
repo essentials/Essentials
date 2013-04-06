@@ -83,7 +83,7 @@ public class Commandfirework extends EssentialsCommand
                             if (amount > serverLimit)
                             {
                                 amount = serverLimit;
-                                user.sendMessage(_("mobSpawnLimit"));
+                                user.sendMessage(_("Mob quantity limited to server limit."));
                             }
                         }
                         else

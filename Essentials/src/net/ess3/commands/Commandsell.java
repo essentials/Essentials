@@ -72,7 +72,7 @@ public class Commandsell extends EssentialsCommand
 	{
 		if (is == null || is.getType() == Material.AIR)
 		{
-			throw new Exception(_("itemSellAir"));
+			throw new Exception(_("You really tried to sell Air? Put an item in your hand."));
 		}
 		int amount = 0;
 		if (args.length > 1)
@@ -88,7 +88,7 @@ public class Commandsell extends EssentialsCommand
 
 		if (Double.isNaN(worth))
 		{
-			throw new Exception(_("itemCannotBeSold"));
+			throw new Exception(_("That item cannot be sold to the server."));
 		}
 
 
@@ -127,9 +127,9 @@ public class Commandsell extends EssentialsCommand
 		{
 			if (!isBulkSell)
 			{
-				user.sendMessage(_("itemNotEnough1"));
-				user.sendMessage(_("itemNotEnough2"));
-				throw new Exception(_("itemNotEnough3"));
+				user.sendMessage(_("You do not have enough of that item to sell."));
+				user.sendMessage(_("If you meant to sell all of your items of that type, use /sell itemname."));
+				throw new Exception(_("/sell itemname -1 will sell all but one item, etc."));
 			}
 			else
 			{

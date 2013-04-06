@@ -38,13 +38,13 @@ public class Commandsethome extends EssentialsCommand
 					}
 					else
 					{
-						throw new Exception(_("maxHomes", ess.getRanks().getHomeLimit(user)));
+						throw new Exception(_("You cannot set more than {0} homes.", ess.getRanks().getHomeLimit(user)));
 					}
 
 				}
 				else
 				{
-					throw new Exception(_("maxHomes", 1));
+					throw new Exception(_("You cannot set more than {0} homes.", 1));
 				}
 			}
 			else
@@ -54,7 +54,7 @@ public class Commandsethome extends EssentialsCommand
 					IUser usersHome = ess.getUserMap().getUser(ess.getServer().getPlayer(args[0]));
 					if (usersHome == null)
 					{
-						throw new NoSuchFieldException(_("playerNotFound"));
+						throw new NoSuchFieldException(_("Player not found."));
 					}
 					String name = args[1].toLowerCase(Locale.ENGLISH);
 					if (!Permissions.SETHOME_MULTIPLE.isAuthorized(user))
@@ -63,7 +63,7 @@ public class Commandsethome extends EssentialsCommand
 					}
 					if ("bed".equals(name.toLowerCase(Locale.ENGLISH)))
 					{
-						throw new NoSuchFieldException(_("invalidHomeName"));
+						throw new NoSuchFieldException(_("Invalid home name"));
 					}
 
 					usersHome.getData().addHome(name, user.getPlayer().getLocation());

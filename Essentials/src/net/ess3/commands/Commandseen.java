@@ -33,20 +33,20 @@ public class Commandseen extends EssentialsCommand
 		{
 			final IUser u = ess.getUserMap().matchUserExcludingHidden(args[0], getPlayerOrNull(sender));
 			u.setDisplayNick();
-			sender.sendMessage(_("seenOnline", u.getPlayer().getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
+			sender.sendMessage(_("Player {0} is online since {1}.", u.getPlayer().getDisplayName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGIN))));
 			if(u.getData().isAfk())
 			{
-				sender.sendMessage(_("whoisAFK", _("true")));
+				sender.sendMessage(_(" - AFK: {0}", _("true")));
 			}
 			if(u.getData().isJailed())
 			{
-				sender.sendMessage(_("whoisJail", u.getTimestamp(TimestampType.JAIL) > 0
+				sender.sendMessage(_(" - Jail: {0}", u.getTimestamp(TimestampType.JAIL) > 0
 								   ? DateUtil.formatDateDiff(u.getTimestamp(TimestampType.JAIL))
 								   : _("true")));
 			}
 			if(u.getData().isMuted())
 			{
-				sender.sendMessage(_("whoisMuted", u.getTimestamp(TimestampType.MUTE) > 0
+				sender.sendMessage(_(" - Muted: {0}", u.getTimestamp(TimestampType.MUTE) > 0
 								   ? DateUtil.formatDateDiff(u.getTimestamp(TimestampType.MUTE))
 								   : _("true")));
 			}
@@ -54,10 +54,10 @@ public class Commandseen extends EssentialsCommand
 		catch (PlayerNotFoundException e)
 		{
 			final IUser u = ess.getUserMap().matchUser(args[0], true);
-			sender.sendMessage(_("seenOffline", u.getName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
+			sender.sendMessage(_("Player {0} is offline since {1}.", u.getName(), DateUtil.formatDateDiff(u.getTimestamp(TimestampType.LOGOUT))));
 			if (u.isBanned())
 			{
-				sender.sendMessage(_("whoisBanned", show ? u.getData().getBan().getReason() : _("true")));
+				sender.sendMessage(_(" - Banned: {0}", show ? u.getData().getBan().getReason() : _("true")));
 			}
 		}
 	}

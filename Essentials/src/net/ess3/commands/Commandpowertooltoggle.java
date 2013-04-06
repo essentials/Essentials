@@ -13,12 +13,12 @@ public class Commandpowertooltoggle extends EssentialsCommand
 		final UserData userData = user.getData();
 		if (!userData.hasPowerTools())
 		{
-			user.sendMessage(_("noPowerTools"));
+			user.sendMessage(_("You have no power tools assigned."));
 			return;
 		}
 		userData.setPowerToolsEnabled(!userData.isPowerToolsEnabled());
 		user.queueSave();
 		user.sendMessage(
-				userData.isPowerToolsEnabled() ? _("powerToolsEnabled") : _("powerToolsDisabled"));
+				userData.isPowerToolsEnabled() ? _("All of your power tools have been enabled.") : _("All of your power tools have been disabled."));
 	}
 }

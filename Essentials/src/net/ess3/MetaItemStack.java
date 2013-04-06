@@ -499,7 +499,7 @@ public class MetaItemStack
 
         if (!hasMetaPermission(user, "enchantments." + enchantmentName, true, false))
         {
-            throw new Exception(_("enchantmentPerm", enchantmentName));
+            throw new Exception(_(" You do not have the permission for {0}.", enchantmentName));
         }
         return enchantment;
     }

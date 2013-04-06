@@ -20,14 +20,14 @@ public class Commandhat extends EssentialsCommand
 			final ItemStack head = inv.getHelmet();
 			if (head == null || head.getType() == Material.AIR)
 			{
-				user.sendMessage(_("hatEmpty"));
+				user.sendMessage(_("You are not wearing a hat."));
 			}
 			else
 			{
 				final ItemStack air = new ItemStack(Material.AIR);
 				inv.setHelmet(air);
 				InventoryWorkaround.addItems(user.getPlayer().getInventory(), head);
-				user.sendMessage(_("hatRemoved"));
+				user.sendMessage(_("Your hat has been removed."));
 			}
 		}
 		else
@@ -44,16 +44,16 @@ public class Commandhat extends EssentialsCommand
 					inv.remove(hand);
 					inv.setHelmet(hand);
 					inv.setItemInHand(head);
-					user.sendMessage(_("hatPlaced"));
+					user.sendMessage(_("Enjoy your new hat!"));
 				}
 				else
 				{
-					user.sendMessage(_("hatArmor"));
+					user.sendMessage(_("Error, you cannot use this item as a hat!"));
 				}
 			}
 			else
 			{
-				user.sendMessage(_("hatFail"));
+				user.sendMessage(_("You must have something to wear in your hand."));
 			}
 		}
 	}

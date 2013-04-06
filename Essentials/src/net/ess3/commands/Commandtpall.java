@@ -30,7 +30,7 @@ public class Commandtpall extends EssentialsCommand
 	
 	private void teleportAllPlayers(CommandSender sender, IUser user)
 	{
-		sender.sendMessage(_("teleportAll"));
+		sender.sendMessage(_("Teleporting all players..."));
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			final IUser player = ess.getUserMap().getUser(onlinePlayer);

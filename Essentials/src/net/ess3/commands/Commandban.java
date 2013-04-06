@@ -25,7 +25,7 @@ public class Commandban extends EssentialsCommand
 		{
 			if (isUser(sender) && Permissions.BAN_OFFLINE.isAuthorized(sender))
 			{
-				sender.sendMessage(_("banExempt"));
+				sender.sendMessage(_("You can not ban that player."));
 				return;
 			}
 		}
@@ -33,7 +33,7 @@ public class Commandban extends EssentialsCommand
 		{
 			if (isUser(sender) && Permissions.BAN_EXEMPT.isAuthorized(user))
 			{
-				sender.sendMessage(_("banExempt"));
+				sender.sendMessage(_("You can not ban that player."));
 				return;
 			}
 		}
@@ -45,12 +45,12 @@ public class Commandban extends EssentialsCommand
 		if (args.length > 1)
 		{
 
-			banReason = _("banFormat", FormatUtil.replaceFormat(getFinalArg(args, 1).replace("\\n", "\n").replace("|", "\n")), senderName);
+			banReason = _("Banned: {0}", FormatUtil.replaceFormat(getFinalArg(args, 1).replace("\\n", "\n").replace("|", "\n")), senderName);
 			userData.getBan().setReason(banReason);
 		}
 		else
 		{
-			banReason = _("banFormat", _("defaultBanReason"), senderName);
+			banReason = _("Banned: {0}", _("The Ban Hammer has spoken!"), senderName);
 			userData.getBan().setReason("");
 		}
 
@@ -62,7 +62,7 @@ public class Commandban extends EssentialsCommand
 		{
 			if (Permissions.BAN_NOTIFY.isAuthorized(player))
 			{
-				player.sendMessage(_("playerBanned", senderName, user.getName(), banReason));
+				player.sendMessage(_("Player {0} banned {1} for {2}.", senderName, user.getName(), banReason));
 			}
 		}
 	}

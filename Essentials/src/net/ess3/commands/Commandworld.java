@@ -43,9 +43,9 @@ public class Commandworld extends EssentialsCommand
 			world = ess.getWorld(getFinalArg(args, 0));
 			if (world == null)
 			{
-				user.sendMessage(_("invalidWorld"));
-				user.sendMessage(_("possibleWorlds", server.getWorlds().size() - 1));
-				user.sendMessage(_("typeWorldName"));
+				user.sendMessage(_("Invalid world."));
+				user.sendMessage(_("Possible worlds are the numbers 0 through {0}.", server.getWorlds().size() - 1));
+				user.sendMessage(_("You can also type the name of a specific world."));
 				throw new NoChargeException();
 			}
 		}

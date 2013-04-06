@@ -30,7 +30,7 @@ public class Commandheal extends EssentialsCommand
 		player.setHealth(player.getMaxHealth());
 		player.setFireTicks(0);
 		player.setFoodLevel(20);
-		user.sendMessage(_("heal"));
+		user.sendMessage(_("You have been healed."));
 		for (PotionEffect effect : player.getActivePotionEffects())
 		{
 			player.removePotionEffect(effect.getType());
@@ -53,7 +53,7 @@ public class Commandheal extends EssentialsCommand
 		final Set<IUser> users = ess.getUserMap().matchUsersExcludingHidden(name, getPlayerOrNull(sender));
 		if (users.isEmpty())
 		{
-			sender.sendMessage(_("playerNotFound"));
+			sender.sendMessage(_("Player not found."));
 			return;
 		}
 		for (IUser p : users)
@@ -62,8 +62,8 @@ public class Commandheal extends EssentialsCommand
 			player.setHealth(20);
 			player.setFoodLevel(20);
 			player.setFireTicks(0);
-			player.sendMessage(_("heal"));
-			sender.sendMessage(_("healOther", player.getDisplayName()));
+			player.sendMessage(_("You have been healed."));
+			sender.sendMessage(_("Healed {0}.", player.getDisplayName()));
 		}
 	}
 }

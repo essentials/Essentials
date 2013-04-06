@@ -26,7 +26,7 @@ public class Commandtogglejail extends EssentialsCommand
 			{
 				if (Permissions.TOGGLEJAIL_OFFLINE.isAuthorized(sender))
 				{
-					sender.sendMessage(_("mayNotJail"));
+					sender.sendMessage(_("You may not jail that person."));
 					return;
 				}
 			}
@@ -34,7 +34,7 @@ public class Commandtogglejail extends EssentialsCommand
 			{
 				if (Permissions.JAIL_EXEMPT.isAuthorized(player))
 				{
-					sender.sendMessage(_("mayNotJail"));
+					sender.sendMessage(_("You may not jail that person."));
 					return;
 				}
 			}
@@ -48,7 +48,7 @@ public class Commandtogglejail extends EssentialsCommand
 				ess.getJails().getJail(args[1]);
 			}
 			player.getData().setJailed(true);
-			player.sendMessage(_("userJailed"));
+			player.sendMessage(_("You have been jailed."));
 			player.getData().setJail(args[1]);
 			long timeDiff = 0;
 			if (args.length > 2)
@@ -59,13 +59,13 @@ public class Commandtogglejail extends EssentialsCommand
 			}
 			player.queueSave();
 			sender.sendMessage(
-					(timeDiff > 0 ? _("playerJailedFor", player.getName(), DateUtil.formatDateDiff(timeDiff)) : _("playerJailed", player.getName())));
+					(timeDiff > 0 ? _(" Player {0} jailed for {1}.", player.getName(), DateUtil.formatDateDiff(timeDiff)) : _("Player {0} jailed.", player.getName())));
 			return;
 		}
 
 		if (args.length >= 2 && player.getData().isJailed() && !args[1].equalsIgnoreCase(player.getData().getJail()))
 		{
-			sender.sendMessage(_("jailAlreadyIncarcerated", player.getData().getJail()));
+			sender.sendMessage(_("Person is already in jail: {0}", player.getData().getJail()));
 			return;
 		}
 
@@ -75,7 +75,7 @@ public class Commandtogglejail extends EssentialsCommand
 			final long timeDiff = DateUtil.parseDateDiff(time, true);
 			player.setTimestamp(TimestampType.JAIL, timeDiff);
 			player.queueSave();
-			sender.sendMessage(_("jailSentenceExtended", DateUtil.formatDateDiff(timeDiff)));
+			sender.sendMessage(_("Jail time extend to: {0}", DateUtil.formatDateDiff(timeDiff)));
 			return;
 		}
 
@@ -87,14 +87,14 @@ public class Commandtogglejail extends EssentialsCommand
 			}
 			player.getData().setJailed(false);
 			player.setTimestamp(TimestampType.JAIL, 0);
-			player.sendMessage(_("jailReleasedPlayerNotify"));
+			player.sendMessage(_("You have been released!"));
 			player.getData().setJail(null);
 			if (player.isOnline())
 			{
 				player.getTeleport().back();
 			}
 			player.queueSave();
-			sender.sendMessage(_("jailReleased", player.getName()));
+			sender.sendMessage(_("Player {0} unjailed.", player.getName()));
 		}
 	}
 }

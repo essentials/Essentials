@@ -34,7 +34,7 @@ public class Commandmore extends EssentialsCommand
 			{
 				if (stacks.length == 1)
 				{
-					throw new Exception(_("cantSpawnItem", "Air"));
+					throw new Exception(_("You are not allowed to spawn the item {0}.", "Air"));
 				}
 				else
 				{
@@ -64,7 +64,7 @@ public class Commandmore extends EssentialsCommand
 			{
 				if (stacks.length == 1)
 				{
-					throw new Exception(_("cantSpawnItem", itemname));
+					throw new Exception(_("You are not allowed to spawn the item {0}.", itemname));
 				}
 				else
 				{

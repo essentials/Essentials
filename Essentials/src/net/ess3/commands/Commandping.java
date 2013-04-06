@@ -12,7 +12,7 @@ public class Commandping extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			user.sendMessage(_("pong"));
+			user.sendMessage(_("Pong!"));
 		}
 		else
 		{

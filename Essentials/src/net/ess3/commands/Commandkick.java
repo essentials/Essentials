@@ -22,9 +22,9 @@ public class Commandkick extends EssentialsCommand
 		final IUser user = ess.getUserMap().matchUserExcludingHidden(args[0], getPlayerOrNull(sender));
 		if (Permissions.KICK_EXEMPT.isAuthorized(user))
 		{
-			throw new Exception(_("kickExempt"));
+			throw new Exception(_("You can not kick that person."));
 		}
-		String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("kickDefault");
+		String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("Kicked from server");
 		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n").replace("|", "\n"));
 		user.getPlayer().kickPlayer(kickReason);
 		final String senderName = sender instanceof IUser ? ((IUser)sender).getPlayer().getDisplayName() : Console.NAME;
@@ -33,7 +33,7 @@ public class Commandkick extends EssentialsCommand
 		{
 			if (Permissions.KICK_NOTIFY.isAuthorized(onlinePlayer))
 			{
-				onlinePlayer.sendMessage(_("playerKicked", senderName, user.getName(), kickReason));
+				onlinePlayer.sendMessage(_("Player {0} kicked {1} for {2}.", senderName, user.getName(), kickReason));
 			}
 		}
 	}

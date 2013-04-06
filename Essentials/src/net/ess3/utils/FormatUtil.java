@@ -132,7 +132,7 @@ public class FormatUtil
 	public static String displayCurrency(final double value, final IEssentials ess)
 	{
 		final ISettings settings = ess.getSettings();
-		return _("currency", settings.getData().getEconomy().getCurrencySymbol(), formatAsCurrency(value));
+		return _("{0}{1}", settings.getData().getEconomy().getCurrencySymbol(), formatAsCurrency(value));
 	}
 
 	public static String formatAsCurrency(final double value)

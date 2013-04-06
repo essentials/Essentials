@@ -228,7 +228,7 @@ public final class DescParseTickFormat
 	// --------------------------------------------
 	public static String format(final long ticks)
 	{
-		return _("timeFormat", format24(ticks), format12(ticks), formatTicks(ticks));
+		return _("{0} or {1} or {2}", format24(ticks), format12(ticks), formatTicks(ticks));
 	}
 
 	public static String formatTicks(final long ticks)

@@ -26,7 +26,7 @@ public class Commandgod extends EssentialsToggleCommand
 	{
 		if (value)
 		{
-			sender.sendMessage(_("godMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
+			sender.sendMessage(_("God mode {0}.", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
 		else
 		{
@@ -37,7 +37,7 @@ public class Commandgod extends EssentialsToggleCommand
 	@Override
 	protected void informPlayer(final IUser player)
 	{
-		final String message = _("godMode", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName());
+		final String message = _("God mode {0}.", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName());
 		player.sendMessage(message);
 	}
 

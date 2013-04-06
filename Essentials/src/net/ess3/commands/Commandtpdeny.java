@@ -12,11 +12,11 @@ public class Commandtpdeny extends EssentialsCommand
 		final IUser player = user.getTeleportRequester();
 		if (player == null)
 		{
-			throw new Exception(_("noPendingRequest"));
+			throw new Exception(_("You do not have a pending request."));
 		}
 
-		user.sendMessage(_("requestDenied"));
-		player.sendMessage(_("requestDeniedFrom", user.getPlayer().getDisplayName()));
+		user.sendMessage(_("Teleport request denied."));
+		player.sendMessage(_("{0} denied your teleport request.", user.getPlayer().getDisplayName()));
 		user.requestTeleport(null, false);
 	}
 }

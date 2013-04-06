@@ -129,7 +129,7 @@ public class DateUtil
 		}
 		if (!found)
 		{
-			throw new Exception(_("illegalDate"));
+			throw new Exception(_("Illegal date format."));
 		}
 		Calendar c = new GregorianCalendar();
 		if (years > 0)

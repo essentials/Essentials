@@ -29,7 +29,7 @@ public class Commandtpaall extends EssentialsCommand
 
 	private void teleportAAllPlayers(final CommandSender sender, final IUser user)
 	{
-		sender.sendMessage(_("teleportAAll"));
+		sender.sendMessage(_("Teleporting request sent to all players..."));
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 
@@ -52,13 +52,13 @@ public class Commandtpaall extends EssentialsCommand
 			try
 			{
 				player.requestTeleport(user, true);
-				player.sendMessage(_("teleportHereRequest", user.getPlayer().getDisplayName()));
-				player.sendMessage(_("typeTpaccept"));
+				player.sendMessage(_("{0} has requested that you teleport to them.", user.getPlayer().getDisplayName()));
+				player.sendMessage(_("To teleport, type /tpaccept."));
 				int tpaAcceptCancellation = 0;
 				tpaAcceptCancellation = settings.getData().getCommands().getTeleport().getRequestTimeout();
 				if (tpaAcceptCancellation != 0)
 				{
-					player.sendMessage(_("teleportRequestTimeoutInfo", tpaAcceptCancellation));
+					player.sendMessage(_("This request will timeout after {0} seconds.", tpaAcceptCancellation));
 				}
 			}
 			catch (Exception ex)

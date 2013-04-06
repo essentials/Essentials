@@ -94,7 +94,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 				}
 				if (Permissions.GEOIP_SHOW.isAuthorized(player))
 				{
-					player.sendMessage(_("geoipJoinFormat", player.getDisplayName(), builder.toString()));
+					player.sendMessage(_("Player {0} comes from {1}", player.getDisplayName(), builder.toString()));
 				}
 			}
 		}
@@ -127,7 +127,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 			}
 			else
 			{
-				LOGGER.log(Level.SEVERE, _("cantFindGeoIpDB"));
+				LOGGER.log(Level.SEVERE, _("Can't find GeoIP database!"));
 				return;
 			}
 		}
@@ -137,7 +137,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 		}
 		catch (IOException ex)
 		{
-			LOGGER.log(Level.SEVERE, _("cantReadGeoIpDB"), ex);
+			LOGGER.log(Level.SEVERE, _("Failed to read GeoIP database!"), ex);
 		}
 	}
 
@@ -145,7 +145,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 	{
 		if (url == null || url.isEmpty())
 		{
-			LOGGER.log(Level.SEVERE, _("geoIpUrlEmpty"));
+			LOGGER.log(Level.SEVERE, _("GeoIP download url is empty."));
 			return;
 		}
 		if (!databaseFile.getAbsoluteFile().getParentFile().exists())
@@ -156,7 +156,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 		OutputStream output = null;
 		try
 		{
-			LOGGER.log(Level.INFO, _("downloadingGeoIp"));
+			LOGGER.log(Level.INFO, _("Downloading GeoIP database ... this might take a while (country: 0.6 MB, city: 20MB)"));
 			final URL downloadUrl = new URL(url);
 			final URLConnection conn = downloadUrl.openConnection();
 			conn.setConnectTimeout(10000);
@@ -179,11 +179,11 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 		}
 		catch (MalformedURLException ex)
 		{
-			LOGGER.log(Level.SEVERE, _("geoIpUrlInvalid"), ex);
+			LOGGER.log(Level.SEVERE, _("GeoIP download url is invalid."), ex);
 		}
 		catch (IOException ex)
 		{
-			LOGGER.log(Level.SEVERE, _("connectionFailed"), ex);
+			LOGGER.log(Level.SEVERE, _("Failed to open connection."), ex);
 		}
 		finally
 		{
@@ -195,7 +195,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 				}
 				catch (IOException ex)
 				{
-					LOGGER.log(Level.SEVERE, _("connectionFailed"), ex);
+					LOGGER.log(Level.SEVERE, _("Failed to open connection."), ex);
 				}
 			}
 			if (input != null)
@@ -206,7 +206,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 				}
 				catch (IOException ex)
 				{
-					LOGGER.log(Level.SEVERE, _("connectionFailed"), ex);
+					LOGGER.log(Level.SEVERE, _("Failed to open connection."), ex);
 				}
 			}
 		}

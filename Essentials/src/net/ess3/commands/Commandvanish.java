@@ -36,7 +36,7 @@ public class Commandvanish extends EssentialsToggleCommand
 	@Override
 	protected void informPlayer(final IUser player)
 	{
-		player.sendMessage(getValue(player) ? _("vanished") : _("unvanished"));
+		player.sendMessage(getValue(player) ? _("You have now been vanished.") : _("You are once again visible."));
 	}
 
 	@Override

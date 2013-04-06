@@ -47,7 +47,7 @@ public class EssentialsConf extends YamlConfiguration
 		{
 			if (!configFile.getParentFile().mkdirs())
 			{
-				LOGGER.log(Level.SEVERE, _("failedToCreateConfig", configFile.toString()));
+				LOGGER.log(Level.SEVERE, _("Failed to create config {0}", configFile.toString()));
 			}
 		}
 		// This will delete files where the first character is 0. In most cases they are broken.
@@ -90,22 +90,22 @@ public class EssentialsConf extends YamlConfiguration
 		{
 			if (templateName != null)
 			{
-				LOGGER.log(Level.INFO, _("creatingConfigFromTemplate", configFile.toString()));
+				LOGGER.log(Level.INFO, _("Creating config from template: {0}", configFile.toString()));
 				createFromTemplate();
 			}
 			else
 			{
 				try
 				{
-					LOGGER.log(Level.INFO, _("creatingEmptyConfig", configFile.toString()));
+					LOGGER.log(Level.INFO, _("Creating empty config: {0}", configFile.toString()));
 					if (!configFile.createNewFile())
 					{
-						LOGGER.log(Level.SEVERE, _("failedToCreateConfig", configFile.toString()));
+						LOGGER.log(Level.SEVERE, _("Failed to create config {0}", configFile.toString()));
 					}
 				}
 				catch (IOException ex)
 				{
-					LOGGER.log(Level.SEVERE, _("failedToCreateConfig", configFile.toString()), ex);
+					LOGGER.log(Level.SEVERE, _("Failed to create config {0}", configFile.toString()), ex);
 				}
 			}
 		}
@@ -175,7 +175,7 @@ public class EssentialsConf extends YamlConfiguration
 			istr = resourceClass.getResourceAsStream(templateName);
 			if (istr == null)
 			{
-				LOGGER.log(Level.SEVERE, _("couldNotFindTemplate", templateName));
+				LOGGER.log(Level.SEVERE, _("Could not find template {0}", templateName));
 				return;
 			}
 			ostr = new FileOutputStream(configFile);
@@ -190,7 +190,7 @@ public class EssentialsConf extends YamlConfiguration
 		}
 		catch (IOException ex)
 		{
-			LOGGER.log(Level.SEVERE, _("failedToWriteConfig", configFile.toString()), ex);
+			LOGGER.log(Level.SEVERE, _("Failed to write config {0}", configFile.toString()), ex);
 		}
 		finally
 		{
@@ -214,7 +214,7 @@ public class EssentialsConf extends YamlConfiguration
 			}
 			catch (IOException ex)
 			{
-				LOGGER.log(Level.SEVERE, _("failedToCloseConfig", configFile.toString()), ex);
+				LOGGER.log(Level.SEVERE, _("Failed to close config {0}", configFile.toString()), ex);
 			}
 		}
 	}

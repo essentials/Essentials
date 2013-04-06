@@ -120,10 +120,10 @@ public class User extends UserBase implements IUser
 			return;
 		}
 		setMoney(getMoney() + value);
-		sendMessage(_("addedToAccount", FormatUtil.displayCurrency(value, ess)));
+		sendMessage(_("{0} has been added to your account.", FormatUtil.displayCurrency(value, ess)));
 		if (initiator != null)
 		{
-			initiator.sendMessage(_("addedToOthersAccount", FormatUtil.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
+			initiator.sendMessage(_("{0} added to {1} account. New balance: {2}", FormatUtil.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
 		}
 		queueSave();
 	}
@@ -139,12 +139,12 @@ public class User extends UserBase implements IUser
 		{
 			setMoney(getMoney() - value);
 			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("moneySentTo", FormatUtil.displayCurrency(value, ess), reciever.getPlayer().getDisplayName()));
-			reciever.sendMessage(_("moneyRecievedFrom", FormatUtil.displayCurrency(value, ess), getPlayer().getDisplayName()));
+			sendMessage(_("{0} has been sent to {1}", FormatUtil.displayCurrency(value, ess), reciever.getPlayer().getDisplayName()));
+			reciever.sendMessage(_("{0} has been received from {1}", FormatUtil.displayCurrency(value, ess), getPlayer().getDisplayName()));
 		}
 		else
 		{
-			throw new Exception(_("notEnoughMoney"));
+			throw new Exception(_("You do not have sufficient funds."));
 		}
 	}
 
@@ -162,10 +162,10 @@ public class User extends UserBase implements IUser
 			return;
 		}
 		setMoney(getMoney() - value);
-		sendMessage(_("takenFromAccount", FormatUtil.displayCurrency(value, ess)));
+		sendMessage(_("{0} has been taken from your account.", FormatUtil.displayCurrency(value, ess)));
 		if (initiator != null)
 		{
-			initiator.sendMessage(_("takenFromOthersAccount", FormatUtil.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
+			initiator.sendMessage(_("{0} taken from {1} account. New balance: {2}", FormatUtil.displayCurrency(value, ess), this.getPlayer().getDisplayName()));
 		}
 	}
 
@@ -328,7 +328,7 @@ public class User extends UserBase implements IUser
 
 			setTimestamp(UserData.TimestampType.JAIL, 0);
 			getData().setJailed(false);
-			sendMessage(_("haveBeenReleased"));
+			sendMessage(_("You have been released."));
 			getData().setJail(null);
 			queueSave();
 
@@ -351,7 +351,7 @@ public class User extends UserBase implements IUser
 		if (getTimestamp(UserData.TimestampType.MUTE) > 0 && getTimestamp(UserData.TimestampType.MUTE) < currentTime && getData().isMuted())
 		{
 			setTimestamp(UserData.TimestampType.MUTE, 0);
-			sendMessage(_("canTalkAgain"));
+			sendMessage(_("You can talk again."));
 			getData().setMuted(false);
 			queueSave();
 			return true;
@@ -382,7 +382,7 @@ public class User extends UserBase implements IUser
 			queueSave();
 			if (broadcast)
 			{
-				ess.broadcastMessage(this, _("userIsNotAway", getPlayer().getDisplayName()));
+				ess.broadcastMessage(this, _("{0} is no longer AFK.", getPlayer().getDisplayName()));
 			}
 		}
 		lastActivity = System.currentTimeMillis();
@@ -397,7 +397,7 @@ public class User extends UserBase implements IUser
 			//&& !hidden
 			&& !Permissions.KICK_EXEMPT.isAuthorized(this) && !Permissions.AFK_KICKEXEMPT.isAuthorized(this))
 		{
-			final String kickReason = _("autoAfkKickReason", autoafkkick / 60.0);
+			final String kickReason = _("You have been kicked for idling more than {0} minutes.", autoafkkick / 60.0);
 			lastActivity = 0;
 			getPlayer().kickPlayer(kickReason);
 
@@ -406,7 +406,7 @@ public class User extends UserBase implements IUser
 			{
 				if (Permissions.KICK_NOTIFY.isAuthorized(player))
 				{
-					player.sendMessage(_("playerKicked", Console.NAME, getName(), kickReason));
+					player.sendMessage(_("Player {0} kicked {1} for {2}.", Console.NAME, getName(), kickReason));
 				}
 			}
 		}
@@ -415,7 +415,7 @@ public class User extends UserBase implements IUser
 		if (!getData().isAfk() && autoafk > 0 && lastActivity + autoafk * 1000 < System.currentTimeMillis() && Permissions.AFK_AUTO.isAuthorized(this))
 		{
 			setAfk(true);
-			ess.broadcastMessage(this, _("userIsAway", getPlayer().getDisplayName()));
+			ess.broadcastMessage(this, _("{0} is now AFK.", getPlayer().getDisplayName()));
 		}
 	}
 

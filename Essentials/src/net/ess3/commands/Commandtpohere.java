@@ -25,12 +25,12 @@ public class Commandtpohere extends EssentialsCommand
 		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions() && !Permissions.WORLD.isAuthorized(
 				player, user.getPlayer().getWorld().getName()))
 		{
-			throw new Exception(_("noPerm", "essentials.world." + user.getPlayer().getWorld().getName()));
+			throw new Exception(_("You do not have the {0} permission.", "essentials.world." + user.getPlayer().getWorld().getName()));
 		}
 		if (settings.getData().getGeneral().isPerGroupTeleport() && !Permissions.PERGROUPTELEPORT.isAuthorized(
 					user, ess.getRanks().getMainGroup(player)))
 			{
-				throw new Exception(_("noPerm", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
+				throw new Exception(_("You do not have the {0} permission.", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
 			}
 
 
@@ -38,11 +38,11 @@ public class Commandtpohere extends EssentialsCommand
 		if (user.getPlayer().canSee(player.getPlayer()) || Permissions.TELEPORT_HIDDEN.isAuthorized(user))
 		{
 			player.getTeleport().now(user.getPlayer(), false, TeleportCause.COMMAND);
-			user.sendMessage(_("teleporting"));
+			user.sendMessage(_("Teleporting..."));
 		}
 		else
 		{
-			throw new NoSuchFieldException(_("playerNotFound"));
+			throw new NoSuchFieldException(_("Player not found."));
 		}
 	}
 }

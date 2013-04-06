@@ -118,7 +118,7 @@ public class LocationUtil
 	{
 		if (loc == null || loc.getWorld() == null)
 		{
-			throw new Exception(_("destinationNotSet"));
+			throw new Exception(_("Destination not set."));
 		}
 		final World world = loc.getWorld();
 		int x = loc.getBlockX();
@@ -173,7 +173,7 @@ public class LocationUtil
 				y = world.getHighestBlockYAt(x, z);
 				if (x - 48 > loc.getBlockX())
 				{
-					throw new Exception(_("holeInFloor"));
+					throw new Exception(_("Hole in floor"));
 				}
 			}
 		}

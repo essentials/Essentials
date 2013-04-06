@@ -43,7 +43,7 @@ public class Commandptime extends EssentialsCommand
 		IUser user = isUser(sender) ? getUser(sender) : null;
 		if (user != null && (!users.contains(user) || users.size() > 1) && !Permissions.PTIME_OTHERS.isAuthorized(user))
 		{
-			user.sendMessage(_("pTimeOthersPermission"));
+			user.sendMessage(_("You are not authorized to set other players' time."));
 			return;
 		}
 
@@ -88,25 +88,25 @@ public class Commandptime extends EssentialsCommand
 	{
 		if (users.size() > 1)
 		{
-			sender.sendMessage(_("pTimePlayers"));
+			sender.sendMessage(_("These players have their own time:"));
 		}
 
 		for (IUser user : users)
 		{
 			if (user.getPlayer().getPlayerTimeOffset() == 0)
 			{
-				sender.sendMessage(_("pTimeNormal", user.getName()));
+				sender.sendMessage(_("{0}'s time is normal and matches the server.", user.getName()));
 			}
 			else
 			{
 				String time = DescParseTickFormat.format(user.getPlayer().getPlayerTime());
 				if (!user.getPlayer().isPlayerTimeRelative())
 				{
-					sender.sendMessage(_("pTimeCurrentFixed", user.getName(), time));
+					sender.sendMessage(_("{0}'s time is fixed to {1}.", user.getName(), time));
 				}
 				else
 				{
-					sender.sendMessage(_("pTimeCurrent", user.getName(), time));
+					sender.sendMessage(_("{0}'s time is {1}.", user.getName(), time));
 				}
 			}
 		}
@@ -158,18 +158,18 @@ public class Commandptime extends EssentialsCommand
 		// Inform the sender of the change
 		if (ticks == null)
 		{
-			sender.sendMessage(_("pTimeReset", msg.toString()));
+			sender.sendMessage(_("Player time has been reset for: {0}.", msg.toString()));
 		}
 		else
 		{
 			String time = DescParseTickFormat.format(ticks);
 			if (!relative)
 			{
-				sender.sendMessage(_("pTimeSetFixed", time, msg.toString()));
+				sender.sendMessage(_("Player time is fixed to {0} for: {1}.", time, msg.toString()));
 			}
 			else
 			{
-				sender.sendMessage(_("pTimeSet", time, msg.toString()));
+				sender.sendMessage(_("Player time is set to {0} for: {1}.", time, msg.toString()));
 			}
 		}
 	}
@@ -221,7 +221,7 @@ public class Commandptime extends EssentialsCommand
 		// We failed to understand the world target...
 		else
 		{
-			throw new Exception(_("playerNotFound"));
+			throw new Exception(_("Player not found."));
 		}
 
 		return users;

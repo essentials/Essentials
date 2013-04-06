@@ -16,13 +16,13 @@ public class Commandbalance extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		sender.sendMessage(_("balance", FormatUtil.displayCurrency(ess.getUserMap().matchUser(args[0], true).getMoney(), ess)));
+		sender.sendMessage(_("Balance: {0}", FormatUtil.displayCurrency(ess.getUserMap().matchUser(args[0], true).getMoney(), ess)));
 	}
 
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
 		final double bal = (args.length < 1 || !Permissions.BALANCE_OTHERS.isAuthorized(user) ? user : ess.getUserMap().matchUser(args[0], true)).getMoney();
-		user.sendMessage(_("balance", FormatUtil.displayCurrency(bal, ess)));
+		user.sendMessage(_("Balance: {0}", FormatUtil.displayCurrency(bal, ess)));
 	}
 }

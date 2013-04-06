@@ -9,9 +9,9 @@ import net.ess3.storage.StorageObject;
 @EqualsAndHashCode(callSuper = false)
 public class Tempban implements StorageObject
 {
-	@Comment({
-			"Set to the maximum time in seconds a player can be tempbanned for.",
+	@Comment(
+			"Set to the maximum time in seconds a player can be tempbanned for.\n"+
 			"Set to -1 to disable, and override with essentials.tempban.unlimited"
-	})
+	)
 	private long maxTempbanTime = -1;
 }

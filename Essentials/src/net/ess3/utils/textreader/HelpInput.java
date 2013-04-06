@@ -32,7 +32,7 @@ public class HelpInput implements IText
 		String pluginNameLow = "";
 		if (!match.equalsIgnoreCase(""))
 		{
-			lines.add(_("helpMatching", match));
+			lines.add(_("Commands matching \"{0}\":", match));
 		}
 
 		for (Plugin p : ess.getServer().getPluginManager().getPlugins())
@@ -48,7 +48,7 @@ public class HelpInput implements IText
 				{
 					lines.clear();
 					newLines.clear();
-					lines.add(_("helpFrom", p.getDescription().getName()));
+					lines.add(_("Commands from {0}:", p.getDescription().getName()));
 				}
 
 				for (Map.Entry<String, Map<String, Object>> k : cmds.entrySet())
@@ -67,7 +67,7 @@ public class HelpInput implements IText
 							final String node = "essentials." + k.getKey();
 							if (!settings.getData().getCommands().isDisabled(k.getKey()) && user.hasPermission(node))
 							{
-								pluginLines.add(_("helpLine", k.getKey(), k.getValue().get(DESCRIPTION)));
+								pluginLines.add(_("/{0}: {1}", k.getKey(), k.getValue().get(DESCRIPTION)));
 							}
 						}
 						else
@@ -86,7 +86,7 @@ public class HelpInput implements IText
 								}
 								if (Permissions.HELP.isAuthorized(user, pluginNameLow))
 								{
-									pluginLines.add(_("helpLine", k.getKey(), value.get(DESCRIPTION)));
+									pluginLines.add(_("/{0}: {1}", k.getKey(), value.get(DESCRIPTION)));
 								}
 								else if (permissions instanceof List && !((List<Object>)permissions).isEmpty())
 								{
@@ -101,21 +101,21 @@ public class HelpInput implements IText
 									}
 									if (enabled)
 									{
-										pluginLines.add(_("helpLine", k.getKey(), value.get(DESCRIPTION)));
+										pluginLines.add(_("/{0}: {1}", k.getKey(), value.get(DESCRIPTION)));
 									}
 								}
 								else if (permissions instanceof String && !"".equals(permissions))
 								{
 									if (user.hasPermission(permissions.toString()))
 									{
-										pluginLines.add(_("helpLine", k.getKey(), value.get(DESCRIPTION)));
+										pluginLines.add(_("/{0}: {1}", k.getKey(), value.get(DESCRIPTION)));
 									}
 								}
 								else
 								{
 									if (!settings.getData().getCommands().getHelp().isHidePermissionlessCommands())
 									{
-										pluginLines.add(_("helpLine", k.getKey(), value.get(DESCRIPTION)));
+										pluginLines.add(_("/{0}: {1}", k.getKey(), value.get(DESCRIPTION)));
 									}
 								}
 							}
@@ -135,7 +135,7 @@ public class HelpInput implements IText
 					}
 					if (match.equalsIgnoreCase(""))
 					{
-						lines.add(_("helpPlugin", pluginName, pluginNameLow));
+						lines.add(_("{0}: Plugin Help: /help {1}", pluginName, pluginNameLow));
 					}
 				}
 			}
@@ -147,7 +147,7 @@ public class HelpInput implements IText
 			{
 				if (!reported)
 				{
-					logger.log(Level.WARNING, _("commandHelpFailedForPlugin", pluginNameLow), ex);
+					logger.log(Level.WARNING, _("Error getting help for: {0}", pluginNameLow), ex);
 				}
 				reported = true;
 				continue;

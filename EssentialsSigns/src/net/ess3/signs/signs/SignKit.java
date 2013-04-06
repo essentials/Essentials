@@ -74,7 +74,7 @@ public class SignKit extends EssentialsSign
 		}
 		else
 		{
-			throw new SignException(_("noKitPermission", "essentials.kits." + kitName));
+			throw new SignException(_("You need the {0} permission to use that kit.", "essentials.kits." + kitName));
 		}
 	}
 }

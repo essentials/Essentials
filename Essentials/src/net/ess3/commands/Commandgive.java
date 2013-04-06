@@ -30,7 +30,7 @@ public class Commandgive extends EssentialsCommand
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
 		if (!Permissions.GIVE.isAuthorized(sender, stack))
 		{
-			throw new Exception(_("cantSpawnItem", itemname));
+			throw new Exception(_("You are not allowed to spawn the item {0}.", itemname));
 		}
 
 		if (args.length > 3 && Util.isInt(args[2]) && Util.isInt(args[3]))
@@ -75,7 +75,7 @@ public class Commandgive extends EssentialsCommand
 
 		if (stack.getTypeId() == 0)
 		{
-			throw new Exception(_("cantSpawnItem", "Air"));
+			throw new Exception(_("You are not allowed to spawn the item {0}.", "Air"));
 		}
 
 		giveTo.giveItems(stack, false);

@@ -29,11 +29,11 @@ public class Commandsudo extends EssentialsCommand
 
 		if (Permissions.SUDO_EXEMPT.isAuthorized(user))
 		{
-			throw new Exception(_("sudoExempt"));
+			throw new Exception(_("You cannot sudo this user."));
 		}
 
 		final Player player = user.getPlayer();
-		sender.sendMessage(_("sudoRun", player.getDisplayName(), command, getFinalArg(arguments, 0)));
+		sender.sendMessage(_("Forcing {0} to run: /{1} {2}.", player.getDisplayName(), command, getFinalArg(arguments, 0)));
 
 		final Server server = ess.getServer();
 		server.dispatchCommand(user, command);

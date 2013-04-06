@@ -16,18 +16,18 @@ public class Commandtphere extends EssentialsCommand
 		final IUser player = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 		if (!player.getData().isTeleportEnabled())
 		{
-			throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
+			throw new Exception(_("{0} has teleportation disabled.", player.getPlayer().getDisplayName()));
 		}
 		ISettings settings = ess.getSettings();
 		if (settings.getData().getGeneral().isPerGroupTeleport() && !Permissions.PERGROUPTELEPORT.isAuthorized(
 					user, ess.getRanks().getMainGroup(player)))
 			{
-				throw new Exception(_("noPerm", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
+				throw new Exception(_("You do not have the {0} permission.", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
 			}
 
 		user.getTeleport().teleportToMe(player, new Trade(commandName, ess), TeleportCause.COMMAND);
-		user.sendMessage(_("teleporting"));
-		player.sendMessage(_("teleporting"));
+		user.sendMessage(_("Teleporting..."));
+		player.sendMessage(_("Teleporting..."));
 		throw new NoChargeException();
 	}
 }

@@ -29,7 +29,7 @@ public class Commandlightning extends EssentialsCommand
 
 		if (ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)).isEmpty())
 		{
-			throw new Exception(_("playerNotFound"));
+			throw new Exception(_("Player not found."));
 		}
 
 		int power = 5;
@@ -47,7 +47,7 @@ public class Commandlightning extends EssentialsCommand
 		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
 		{
 			final Player player = matchPlayer.getPlayer();
-			sender.sendMessage(_("lightningUse", player.getDisplayName()));
+			sender.sendMessage(_("Smiting {0}", player.getDisplayName()));
 			final LightningStrike strike = player.getWorld().strikeLightningEffect(player.getLocation());
 			if (!matchPlayer.isGodModeEnabled())
 			{
@@ -56,7 +56,7 @@ public class Commandlightning extends EssentialsCommand
 			final ISettings settings = ess.getSettings();
 			if (settings.getData().getCommands().getLightning().isWarnPlayer())
 			{
-				matchPlayer.sendMessage(_("lightningSmited"));
+				matchPlayer.sendMessage(_("Thou hast been smitten!"));
 			}
 		}
 	}

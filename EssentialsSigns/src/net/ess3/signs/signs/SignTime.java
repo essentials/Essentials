@@ -31,7 +31,7 @@ public class SignTime extends EssentialsSign
 			sign.setLine(1, "§2Night");
 			return true;
 		}
-		throw new SignException(_("onlyDayNight"));
+		throw new SignException(_("/time only supports day/night."));
 	}
 
 	@Override
@@ -55,6 +55,6 @@ public class SignTime extends EssentialsSign
 			charge.charge(player);
 			return true;
 		}
-		throw new SignException(_("onlyDayNight"));
+		throw new SignException(_("/time only supports day/night."));
 	}
 }

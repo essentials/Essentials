@@ -21,6 +21,6 @@ public class Commandtop extends EssentialsCommand
 		user.getTeleport().teleport(
 				new Location(player.getWorld(), topX, topY + 1, topZ, playerLocation.getYaw(), playerLocation.getPitch()), new Trade(commandName, ess),
 				TeleportCause.COMMAND);
-		user.sendMessage(_("teleportTop"));
+		user.sendMessage(_("Teleporting to top."));
 	}
 }

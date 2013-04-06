@@ -55,11 +55,11 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 			{
 				if (pm.getPlugin("EssentialsUpdate") == null)
 				{
-					getLogger().log(Level.SEVERE, _("essentialsHelp1"));
+					getLogger().log(Level.SEVERE, _("The file is broken and Essentials can't open it. Essentials is now disabled. If you can't fix the file yourself, go to http://tiny.cc/EssentialsChat"));
 				}
 				else
 				{
-					getLogger().log(Level.SEVERE, _("essentialsHelp2"));
+					getLogger().log(Level.SEVERE, _("The file is broken and Essentials can't open it. Essentials is now disabled. If you can't fix the file yourself, either type /essentialshelp in game or go to http://tiny.cc/EssentialsChat"));
 				}
 				getLogger().log(Level.SEVERE, ex.toString());
 				pm.registerEvents(

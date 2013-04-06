@@ -77,7 +77,7 @@ public class Commandbalancetop extends EssentialsCommand
 				}
 				if (ess.getUserMap().getUniqueUsers() > MINUSERS)
 				{
-					sender.sendMessage(_("orderBalances", ess.getUserMap().getUniqueUsers()));
+					sender.sendMessage(_("Ordering balances of {0} users, please wait ...", ess.getUserMap().getUniqueUsers()));
 				}
 			}
 			finally
@@ -90,7 +90,7 @@ public class Commandbalancetop extends EssentialsCommand
 		{
 			if (ess.getUserMap().getUniqueUsers() > MINUSERS)
 			{
-				sender.sendMessage(_("orderBalances", ess.getUserMap().getUniqueUsers()));
+				sender.sendMessage(_("Ordering balances of {0} users, please wait ...", ess.getUserMap().getUniqueUsers()));
 			}
 			ess.getPlugin().runTaskAsynchronously(new Viewer(sender, page, force));
 		}
@@ -102,7 +102,7 @@ public class Commandbalancetop extends EssentialsCommand
 		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(cacheage);
 		final DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-		sender.sendMessage(_("balanceTop", format.format(cal.getTime())));
+		sender.sendMessage(_("Top balances ({0})", format.format(cal.getTime())));
 		new TextPager(cache).showPage(Integer.toString(page), "", "balancetop", sender);
 	}
 
@@ -155,7 +155,7 @@ public class Commandbalancetop extends EssentialsCommand
 						}
 					});
 
-					cache.getLines().add(_("serverTotal", FormatUtil.displayCurrency(totalMoney, ess)));
+					cache.getLines().add(_("Server Total: {0}", FormatUtil.displayCurrency(totalMoney, ess)));
 					int pos = 1;
 					for (Map.Entry<String, Double> entry : sortedEntries)
 					{

@@ -28,7 +28,7 @@ public class SignFeed extends EssentialsSign
 		final Trade charge = getTrade(sign, 1, ess);
 		charge.isAffordableFor(player);
 		player.getPlayer().setFoodLevel(20);
-		player.sendMessage(_("feed"));
+		player.sendMessage(_("Your appetite was sated."));
 		charge.charge(player);
 		return true;
 	}

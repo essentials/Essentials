@@ -91,7 +91,7 @@ public class Teleport implements Runnable, ITeleport
 			try
 			{
 				cooldown(false);
-				teleportUser.sendMessage(_("teleportationCommencing"));
+				teleportUser.sendMessage(_("Teleportation commencing..."));
 				try
 				{
 
@@ -108,10 +108,10 @@ public class Teleport implements Runnable, ITeleport
 			}
 			catch (Exception ex)
 			{
-				user.sendMessage(_("cooldownWithMessage", ex.getMessage()));
+				user.sendMessage(_("Cooldown: {0}", ex.getMessage()));
 				if (user != teleportUser)
 				{
-					teleportUser.sendMessage(_("cooldownWithMessage", ex.getMessage()));
+					teleportUser.sendMessage(_("Cooldown: {0}", ex.getMessage()));
 				}
 			}
 		}
@@ -132,7 +132,7 @@ public class Teleport implements Runnable, ITeleport
 		}
 		catch (CooldownException ex)
 		{
-			throw new Exception(_("timeBeforeTeleport", ex.getMessage()));
+			throw new Exception(_("Time before next teleport: {0}", ex.getMessage()));
 
 		}
 	}
@@ -149,10 +149,10 @@ public class Teleport implements Runnable, ITeleport
 			ess.getPlugin().cancelTask(teleTimer);
 			if (notifyUser)
 			{
-				user.sendMessage(_("pendingTeleportCancelled"));
+				user.sendMessage(_("Pending teleportation request cancelled."));
 				if (teleportUser != user)
 				{
-					teleportUser.sendMessage(_("pendingTeleportCancelled"));
+					teleportUser.sendMessage(_("Pending teleportation request cancelled."));
 				}
 			}
 		}
@@ -288,7 +288,7 @@ public class Teleport implements Runnable, ITeleport
 		final Calendar c = new GregorianCalendar();
 		c.add(Calendar.SECOND, (int)delay);
 		c.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
-		user.sendMessage(_("dontMoveMessage", DateUtil.formatDateDiff(c.getTimeInMillis())));
+		user.sendMessage(_("Teleportation will commence in {0}. Don't move.", DateUtil.formatDateDiff(c.getTimeInMillis())));
 	}
 
 	@Override
@@ -304,7 +304,7 @@ public class Teleport implements Runnable, ITeleport
 	public void warp(String warp, Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		final Location loc = ess.getWarps().getWarp(warp);
-		user.sendMessage(_("warpingTo", warp));
+		user.sendMessage(_("Warping to {0}.", warp));
 		teleport(new Target(loc), chargeFor, cause);
 	}
 

@@ -22,8 +22,8 @@ public class Commandspawn extends EssentialsCommand
 			respawn(otherUser, null);
 			if (!otherUser.equals(user))
 			{
-				otherUser.sendMessage(_("teleportAtoB", user.getPlayer().getDisplayName(), "spawn"));
-				user.sendMessage(_("teleporting"));
+				otherUser.sendMessage(_("{0} teleported you to {1}.", user.getPlayer().getDisplayName(), "spawn"));
+				user.sendMessage(_("Teleporting..."));
 			}
 		}
 		else
@@ -41,8 +41,8 @@ public class Commandspawn extends EssentialsCommand
 		}
 		final IUser user = ess.getUserMap().matchUser(args[0], false);
 		respawn(user, null);
-		user.sendMessage(_("teleportAtoB", user.getPlayer().getDisplayName(), "spawn"));
-		sender.sendMessage(_("teleporting"));
+		user.sendMessage(_("{0} teleported you to {1}.", user.getPlayer().getDisplayName(), "spawn"));
+		sender.sendMessage(_("Teleporting..."));
 	}
 
 	private void respawn(final IUser user, final Trade charge) throws Exception

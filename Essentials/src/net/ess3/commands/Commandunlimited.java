@@ -52,7 +52,7 @@ public class Commandunlimited extends EssentialsCommand
 	private String getList(final IUser target)
 	{
 		final StringBuilder output = new StringBuilder();
-		output.append(_("unlimitedItems")).append(" ");
+		output.append(_("Unlimited items:")).append(" ");
 		boolean first = true;
 		final Set<Material> items = target.getData().getUnlimited();
 		if (items.isEmpty())
@@ -81,7 +81,7 @@ public class Commandunlimited extends EssentialsCommand
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
 		if (!Permissions.UNLIMITED.isAuthorized(user, stack))
 		{
-			throw new Exception(_("unlimitedItemPermission", itemname));
+			throw new Exception(_("No permission for unlimited item {0}.", itemname));
 		}
 
 		String message = "disableUnlimited";

@@ -26,7 +26,7 @@ public class BookPager
         //This checks to see if we have the chapter in the index
         if (!bookmarks.containsKey(pageStr.toLowerCase(Locale.ENGLISH)))
         {
-            throw new Exception(_("infoUnknownChapter"));
+            throw new Exception(_("Unknown chapter."));
         }
 
         //Since we have a valid chapter, count the number of lines in the chapter

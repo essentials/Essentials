@@ -20,7 +20,7 @@ public class Commandkit extends EssentialsCommand
 			Collection<String> kitList = ess.getKits().getList();
 			if (kitList.isEmpty())
 			{
-				user.sendMessage(_("noKits"));
+				user.sendMessage(_("There are no kits available yet."));
 			}
 			else
 			{
@@ -31,7 +31,7 @@ public class Commandkit extends EssentialsCommand
 						kitList.remove(kitName);
 					}
 				}
-				user.sendMessage(_("kits", Util.joinList(kitList)));
+				user.sendMessage(_("Kits: {0}", Util.joinList(kitList)));
 			}
 			throw new NoChargeException();
 		}
@@ -42,7 +42,7 @@ public class Commandkit extends EssentialsCommand
 
 			if (!Permissions.KITS.isAuthorized(user, kitName))
 			{
-				throw new Exception(_("noKitPermission", "essentials.kit." + kitName));
+				throw new Exception(_("You need the {0} permission to use that kit.", "essentials.kit." + kitName));
 			}
 
 			//TODO: Check kit delay
@@ -55,7 +55,7 @@ public class Commandkit extends EssentialsCommand
 			//TODO: Merge kit changes from 2.9
 
 			charge.charge(user);
-			user.sendMessage(_("kitGive", kitName));
+			user.sendMessage(_("Giving kit {0}.", kitName));
 
 		}
 	}

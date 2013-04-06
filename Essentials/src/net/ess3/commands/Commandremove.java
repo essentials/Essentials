@@ -41,7 +41,7 @@ public class Commandremove extends EssentialsCommand
 			}
 			catch (NumberFormatException e)
 			{
-				throw new Exception(_("numberRequired"), e);
+				throw new Exception(_("A number goes there, silly."), e);
 			}
 		}
 
@@ -68,7 +68,7 @@ public class Commandremove extends EssentialsCommand
 
 		if (world == null)
 		{
-			throw new Exception(_("invalidWorld"));
+			throw new Exception(_("Invalid world."));
 		}
 		final ToRemove toRemove;
 		try
@@ -149,6 +149,6 @@ public class Commandremove extends EssentialsCommand
 
 			}
 		}
-		sender.sendMessage(_("removed", removed));
+		sender.sendMessage(_("Removed {0} entities.", removed));
 	}
 }

@@ -22,7 +22,7 @@ public class Commandfeed extends EssentialsCommand
 			final Player player = user.getPlayer();
 			player.setFoodLevel(20);
 			player.setSaturation(10);
-			user.sendMessage(_("feed"));
+			user.sendMessage(_("Your appetite was sated."));
 		}
 	}
 
@@ -31,7 +31,7 @@ public class Commandfeed extends EssentialsCommand
 		final Set<IUser> users = ess.getUserMap().matchUsersExcludingHidden(name, getPlayerOrNull(sender));
 		if (users.isEmpty())
 		{
-			sender.sendMessage(_("playerNotFound"));
+			sender.sendMessage(_("Player not found."));
 			return;
 		}
 		for (IUser player : users)
@@ -39,7 +39,7 @@ public class Commandfeed extends EssentialsCommand
 			final Player realPlayer = player.getPlayer();
 			realPlayer.setFoodLevel(20);
 			realPlayer.setSaturation(10);
-			sender.sendMessage(_("feedOther", realPlayer.getDisplayName()));
+			sender.sendMessage(_("Satisfied {0}.", realPlayer.getDisplayName()));
 		}
 	}
 }

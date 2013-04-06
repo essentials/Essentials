@@ -35,12 +35,12 @@ public class Commandignore extends EssentialsCommand
 		if (user.isIgnoringPlayer(player))
 		{
 			user.setIgnoredPlayer(player, false);
-			user.sendMessage(_("unignorePlayer", player.getName()));
+			user.sendMessage(_("You are not ignoring player {0} anymore.", player.getName()));
 		}
 		else
 		{
 			user.setIgnoredPlayer(player, true);
-			user.sendMessage(_("ignorePlayer", player.getName()));
+			user.sendMessage(_("You ignore player {0} from now on.", player.getName()));
 		}
 		user.queueSave();
 	}

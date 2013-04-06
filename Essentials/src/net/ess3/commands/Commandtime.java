@@ -45,7 +45,7 @@ public class Commandtime extends EssentialsCommand
 
 		if (!Permissions.TIME_SET.isAuthorized(sender))
 		{
-			sender.sendMessage(_("timeSetPermission"));
+			sender.sendMessage(_("You are not authorized to set the time."));
 			return;
 		}
 
@@ -77,7 +77,7 @@ public class Commandtime extends EssentialsCommand
 
 		for (World world : worlds)
 		{
-			sender.sendMessage(_("timeWorldCurrent", world.getName(), DescParseTickFormat.format(world.getTime())));
+			sender.sendMessage(_("The current time in {0} is {1}.", world.getName(), DescParseTickFormat.format(world.getTime())));
 		}
 	}
 
@@ -120,7 +120,7 @@ public class Commandtime extends EssentialsCommand
 			output.append(world.getName());
 		}
 
-		sender.sendMessage(_("timeWorldSet", DescParseTickFormat.format(ticks), output.toString()));
+		sender.sendMessage(_("The time was set to {0} in: {1}.", DescParseTickFormat.format(ticks), output.toString()));
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class Commandtime extends EssentialsCommand
 		// We failed to understand the world target...
 		else
 		{
-			throw new Exception(_("invalidWorld"));
+			throw new Exception(_("Invalid world."));
 		}
 
 		return worlds;

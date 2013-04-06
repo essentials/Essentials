@@ -25,7 +25,7 @@ public class Commandjump extends EssentialsCommand
 		}
 		catch (NullPointerException ex)
 		{
-			throw new Exception(_("jumpError"), ex);
+			throw new Exception(_("That would hurt your computer's brain."), ex);
 		}
 
 		final Trade charge = new Trade(commandName, ess);

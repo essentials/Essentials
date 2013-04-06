@@ -27,12 +27,12 @@ public class Kits extends AsyncStorageObjectHolder<net.ess3.settings.Kits> imple
 	{
 		if (getData().getKits() == null || kitName == null || !getData().getKits().containsKey(kitName.toLowerCase(Locale.ENGLISH)))
 		{
-			throw new Exception(_("kitError2"));
+			throw new Exception(_("That kit does not exist or is improperly defined."));
 		}
 		final Kit kit = getData().getKits().get(kitName.toLowerCase(Locale.ENGLISH));
 		if (kit == null)
 		{
-			throw new Exception(_("kitError2"));
+			throw new Exception(_("That kit does not exist or is improperly defined."));
 		}
 		return kit;
 	}
@@ -98,7 +98,7 @@ public class Kits extends AsyncStorageObjectHolder<net.ess3.settings.Kits> imple
 			time.setTimeInMillis(lastTime);
 			time.add(Calendar.SECOND, (int)delay);
 			time.add(Calendar.MILLISECOND, (int)((delay * 1000.0) % 1000.0));
-			user.sendMessage(_("kitTimed", DateUtil.formatDateDiff(time.getTimeInMillis())));
+			user.sendMessage(_("You can't use that kit again for another {0}.", DateUtil.formatDateDiff(time.getTimeInMillis())));
 			throw new NoChargeException();
 		}
 	}

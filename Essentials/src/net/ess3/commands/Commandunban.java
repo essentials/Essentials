@@ -21,6 +21,6 @@ public class Commandunban extends EssentialsCommand
 		player.setBanned(false);
 		player.getData().getBan().setTimeout(0);
 		player.queueSave();
-		sender.sendMessage(_("unbannedPlayer"));
+		sender.sendMessage(_("Unbanned player."));
 	}
 }

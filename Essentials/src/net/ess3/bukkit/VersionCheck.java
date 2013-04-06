@@ -23,7 +23,7 @@ public class VersionCheck
 		{
 			if (p.getDescription().getName().startsWith("Essentials") && !p.getDescription().getVersion().equals(pluginVersion))
 			{
-				p.getLogger().log(Level.WARNING, _("versionMismatch", p.getDescription().getName()));
+				p.getLogger().log(Level.WARNING, _("Version mismatch! Please update {0} to the same version.", p.getDescription().getName()));
 			}
 		}
 		final Matcher versionMatch = bukkitVersionPattern.matcher(plugin.getServer().getVersion());
@@ -32,14 +32,14 @@ public class VersionCheck
 			final int versionNumber = Integer.parseInt(versionMatch.group(1));
 			if (versionNumber < BUKKIT_VERSION && versionNumber > 100)
 			{
-				log.log(Level.SEVERE, _("notRecommendedBukkit"));
-				log.log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
+				log.log(Level.SEVERE, _(" * ! * Bukkit version is not the recommended build for Essentials."));
+				log.log(Level.SEVERE, _(" * ! * You need atleast build {0} of CraftBukkit, download it from http://dl.bukkit.org/downloads/craftbukkit/", Integer.toString(BUKKIT_VERSION)));
 				return false;
 			}
 		}
 		else
 		{
-			log.log(Level.INFO, _("bukkitFormatChanged"));
+			log.log(Level.INFO, _("Bukkit version format changed. Version not checked."));
 			log.log(Level.INFO, plugin.getServer().getVersion());
 			log.log(Level.INFO, plugin.getServer().getBukkitVersion());
 		}

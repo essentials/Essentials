@@ -109,7 +109,7 @@
         <configuration>
           <poDirectory>${basedir}/po/</poDirectory>
           <targetBundle>messages2</targetBundle>
-          <keywords>-k_ -k -s --package-name=Essentials --package-version=${project.version} --copyright-holder="Essentials Team"</keywords>
+          <keywords>-k_ -kComment -k -s --package-name=Essentials --package-version=${project.version} --copyright-holder="Essentials Team"</keywords>
           <outputFormat>properties</outputFormat>
           <sourceDirectory>${basedir}/../</sourceDirectory>
         </configuration>

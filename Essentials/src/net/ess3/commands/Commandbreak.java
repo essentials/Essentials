@@ -25,7 +25,7 @@ public class Commandbreak extends EssentialsCommand
 		}
 		if (block.getType() == Material.BEDROCK && !Permissions.BREAK_BEDROCK.isAuthorized(user))
 		{
-			throw new Exception(_("noBreakBedrock"));
+			throw new Exception(_("You are not allowed to destroy bedrock."));
 		}
 		//final List<ItemStack> list = (List<ItemStack>)block.getDrops();		
 		//final BlockBreakEvent event = new BlockBreakEvent(block, user.getBase(), list);

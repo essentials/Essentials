@@ -16,22 +16,19 @@ import org.bukkit.Location;
 public class Spawns implements StorageObject
 {
 	@Comment(
-			{
-					"Should we announce to the server when someone logs in for the first time?",
-					"If so, use this format, replacing {DISPLAYNAME} with the player name.", "If not, set to ''"
-			})
+			"Should we announce to the server when someone logs in for the first time?\n"
+			 + "If so, use this format, replacing {DISPLAYNAME} with the player name.\n"
+			 + "If not, set to ''")
 	private String newPlayerAnnouncement = "&dWelcome {DISPLAYNAME} to the server!";
 	@Comment(
-			{
-					"Priority of the respawn event listener", "Set this to lowest, if you want e.g. Multiverse to handle the respawning",
-					"Set this to normal, if you want EssentialsSpawn to handle the respawning",
-					"Set this to highest, if you want to force EssentialsSpawn to handle the respawning"
-			})
+			"Priority of the respawn event listener\n"
+			 + "Set this to lowest, if you want e.g. Multiverse to handle the respawning\n"
+			 + "Set this to normal, if you want EssentialsSpawn to handle the respawning\n"
+			 + "Set this to highest, if you want to force EssentialsSpawn to handle the respawning")
 	private String respawnPriority = "normal";
 	@Comment(
-			{
-					"When we spawn for the first time, which spawnpoint do we use?", "Set to none if you want to use the spawn point of the world."
-			})
+			"When we spawn for the first time, which spawnpoint do we use?\n"
+			 + "Set to none if you want to use the spawn point of the world.")
 	private String newbieSpawn = "none";
 	@Comment("List of all spawnpoints")
 	@MapValueType(StoredLocation.class)

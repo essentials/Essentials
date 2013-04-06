@@ -45,7 +45,7 @@ public class Commandkillall extends EssentialsCommand
 				}
 				catch (NumberFormatException e)
 				{
-					throw new Exception(_("numberRequired"), e);
+					throw new Exception(_("A number goes there, silly."), e);
 				}
 			}
 		}
@@ -78,7 +78,7 @@ public class Commandkillall extends EssentialsCommand
 		{
 			if (LivingEntities.fromName(killType) == null)
 			{
-				throw new Exception(_("invalidMob"));
+				throw new Exception(_("Invalid mob type."));
 			}
 			entityClass = LivingEntities.fromName(killType).getEntityClass();
 		}
@@ -149,6 +149,6 @@ public class Commandkillall extends EssentialsCommand
 				}
 			}
 		}
-		sender.sendMessage(_("kill", numKills));
+		sender.sendMessage(_("Killed {0}.", numKills));
 	}
 }

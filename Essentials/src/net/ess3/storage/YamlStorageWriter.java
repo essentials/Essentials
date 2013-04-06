@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import static net.ess3.I18n._;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -116,16 +117,15 @@ public class YamlStorageWriter implements IStorageWriter
 		if (commentPresent)
 		{
 			final Comment comments = field.getAnnotation(Comment.class);
-			for (String comment : comments.value())
+			for (String comment : _(comments.value()).split("\n"))
 			{
-				final String trimmed = comment.trim();
-				if (trimmed.isEmpty())
+				if (comment.isEmpty())
 				{
 					continue;
 				}
 				writeIndention(depth);
 				writer.print("# ");
-				writer.print(trimmed);
+				writer.print(comment);
 				writer.println();
 			}
 		}

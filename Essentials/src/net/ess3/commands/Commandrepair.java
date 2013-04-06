@@ -28,12 +28,12 @@ public class Commandrepair extends EssentialsCommand
 			final ItemStack item = user.getPlayer().getItemInHand();
 			if (item == null)
 			{
-				throw new Exception(_("repairInvalidType"));
+				throw new Exception(_("This item cannot be repaired."));
 			}
 
 			if (!item.getEnchantments().isEmpty() && !Permissions.REPAIR_ENCHANTED.isAuthorized(user))
 			{
-				throw new Exception(_("repairEnchanted"));
+				throw new Exception(_("You are not allowed to repair enchanted items."));
 			}
 
 			final String itemName = item.getType().toString().toLowerCase(Locale.ENGLISH);
@@ -45,7 +45,7 @@ public class Commandrepair extends EssentialsCommand
 
 			charge.charge(user);
 
-			user.sendMessage(_("repair", itemName.replace('_', ' ')));
+			user.sendMessage(_("You have successfully repaired your: {0}.", itemName.replace('_', ' ')));
 		}
 		else if (args[0].equalsIgnoreCase("all") && Permissions.REPAIR_ALL.isAuthorized(user))
 		{
@@ -61,11 +61,11 @@ public class Commandrepair extends EssentialsCommand
 
 			if (repaired.isEmpty())
 			{
-				throw new Exception(_("repairNone"));
+				throw new Exception(_("There were no items that needing repairing."));
 			}
 			else
 			{
-				user.sendMessage(_("repair", Util.joinList(repaired)));
+				user.sendMessage(_("You have successfully repaired your: {0}.", Util.joinList(repaired)));
 			}
 			charge.charge(user);
 
@@ -81,12 +81,12 @@ public class Commandrepair extends EssentialsCommand
 		final Material material = Material.getMaterial(item.getTypeId());
 		if (material.isBlock() || material.getMaxDurability() < 1)
 		{
-			throw new Exception(_("repairInvalidType"));
+			throw new Exception(_("This item cannot be repaired."));
 		}
 
 		if (item.getDurability() == 0)
 		{
-			throw new Exception(_("repairAlreadyFixed"));
+			throw new Exception(_("This item does not need repairing."));
 		}
 
 		item.setDurability((short)0);

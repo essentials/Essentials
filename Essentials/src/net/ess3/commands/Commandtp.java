@@ -25,19 +25,19 @@ public class Commandtp extends EssentialsCommand
 			final IUser player = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 			if (!player.getData().isTeleportEnabled())
 			{
-				throw new Exception(_("teleportDisabled", player.getPlayer().getDisplayName()));
+				throw new Exception(_("{0} has teleportation disabled.", player.getPlayer().getDisplayName()));
 			}
 			if (settings.getData().getGeneral().isPerGroupTeleport() && !Permissions.PERGROUPTELEPORT.isAuthorized(
 					user, ess.getRanks().getMainGroup(player)))
 			{
-				throw new Exception(_("noPerm", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
+				throw new Exception(_("You do not have the {0} permission.", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
 			}
 			if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions() && !Permissions.WORLD.isAuthorized(
 					user, player.getPlayer().getWorld().getName()))
 			{
-				throw new Exception(_("noPerm", "essentials.world." + player.getPlayer().getWorld().getName()));
+				throw new Exception(_("You do not have the {0} permission.", "essentials.world." + player.getPlayer().getWorld().getName()));
 			}
-			user.sendMessage(_("teleporting"));
+			user.sendMessage(_("Teleporting..."));
 			final Trade charge = new Trade(commandName, ess);
 			charge.isAffordableFor(user);
 			user.getTeleport().teleport(player.getPlayer(), charge, TeleportCause.COMMAND);
@@ -48,7 +48,7 @@ public class Commandtp extends EssentialsCommand
 			{
 				throw new Exception(_("needTpohere"));
 			}
-			user.sendMessage(_("teleporting"));
+			user.sendMessage(_("Teleporting..."));
 
 			final IUser target = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 
@@ -56,19 +56,19 @@ public class Commandtp extends EssentialsCommand
 
 			if (!target.getData().isTeleportEnabled())
 			{
-				throw new Exception(_("teleportDisabled", target.getPlayer().getDisplayName()));
+				throw new Exception(_("{0} has teleportation disabled.", target.getPlayer().getDisplayName()));
 			}
 			if (!toPlayer.getData().isTeleportEnabled())
 			{
-				throw new Exception(_("teleportDisabled", toPlayer.getPlayer().getDisplayName()));
+				throw new Exception(_("{0} has teleportation disabled.", toPlayer.getPlayer().getDisplayName()));
 			}
 			if (target.getPlayer().getWorld() != toPlayer.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions() && !Permissions.WORLD.isAuthorized(
 					user, toPlayer.getPlayer().getWorld().getName()))
 			{
-				throw new Exception(_("noPerm", "essentials.world." + toPlayer.getPlayer().getWorld().getName()));
+				throw new Exception(_("You do not have the {0} permission.", "essentials.world." + toPlayer.getPlayer().getWorld().getName()));
 			}
 			target.getTeleport().now(toPlayer.getPlayer(), false, TeleportCause.COMMAND);
-			target.sendMessage(_("teleportAtoB", user.getPlayer().getDisplayName(), toPlayer.getPlayer().getDisplayName()));
+			target.sendMessage(_("{0} teleported you to {1}.", user.getPlayer().getDisplayName(), toPlayer.getPlayer().getDisplayName()));
 			break;
 		}
 	}
@@ -81,10 +81,10 @@ public class Commandtp extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		sender.sendMessage(_("teleporting"));
+		sender.sendMessage(_("Teleporting..."));
 		final IUser target = ess.getUserMap().getUser(args[0]);
 		final IUser toPlayer = ess.getUserMap().getUser(args[1]);
 		target.getTeleport().now(toPlayer.getPlayer(), false, TeleportCause.COMMAND);
-		target.sendMessage(_("teleportAtoB", Console.NAME, toPlayer.getPlayer().getDisplayName()));
+		target.sendMessage(_("{0} teleported you to {1}.", Console.NAME, toPlayer.getPlayer().getDisplayName()));
 	}
 }

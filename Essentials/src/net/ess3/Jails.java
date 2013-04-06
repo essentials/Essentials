@@ -53,12 +53,12 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 	{
 		if (getData().getJails() == null || jailName == null || !getData().getJails().containsKey(jailName.toLowerCase(Locale.ENGLISH)))
 		{
-			throw new Exception(_("jailNotExist"));
+			throw new Exception(_("That jail does not exist."));
 		}
 		Location loc = getData().getJails().get(jailName.toLowerCase(Locale.ENGLISH)).getStoredLocation();
 		if (loc == null || loc.getWorld() == null)
 		{
-			throw new Exception(_("jailNotExist"));
+			throw new Exception(_("That jail does not exist."));
 		}
 		return loc;
 	}
@@ -174,11 +174,11 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 		}
@@ -200,14 +200,14 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
-			user.sendMessage(_("jailMessage"));
+			user.sendMessage(_("You do the crime, you do the time."));
 		}
 
 		@EventHandler(priority = EventPriority.HIGHEST)
@@ -227,14 +227,14 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()), ex);
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("returnPlayerToJailError", user.getName(), ex.getLocalizedMessage()));
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
-			user.sendMessage(_("jailMessage"));
+			user.sendMessage(_("You do the crime, you do the time."));
 		}
 	}
 }

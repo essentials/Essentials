@@ -26,7 +26,7 @@ public class EssentialsSignsPlugin extends JavaPlugin implements ISignsPlugin
 		final IEssentials ess = (IEssentials)plugin.getEssentials();
 		if (!this.getDescription().getVersion().equals(plugin.getDescription().getVersion()))
 		{
-			LOGGER.log(Level.WARNING, _("versionMismatchAll"));
+			LOGGER.log(Level.WARNING, _("Version mismatch! Please update all Essentials jars to the same version."));
 		}
 		if (!plugin.isEnabled())
 		{

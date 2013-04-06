@@ -32,7 +32,7 @@ public class EssentialsLocalChatEventListener implements Listener
 
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			String type = _("chatTypeLocal");
+			String type = _("[L]");
 			final IUser user = ess.getUserMap().getUser(onlinePlayer);
 			if (user.isIgnoringPlayer(ess.getUserMap().getUser(sender)))
 			{
@@ -57,7 +57,7 @@ public class EssentialsLocalChatEventListener implements Listener
 				{
 					if (ChatPermissions.getPermission("spy").isAuthorized(user))
 					{
-						type = type.concat(_("chatTypeSpy"));
+						type = type.concat(_("[Spy]"));
 					}
 				}
 			}

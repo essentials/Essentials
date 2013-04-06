@@ -22,7 +22,7 @@ public class Commandbanip extends EssentialsCommand
 			if(args[0].matches("\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b"))
 				{
 				    ess.getServer().banIP(args[0]);
-				    sender.sendMessage(_("banIpAddress"));
+        			sender.sendMessage(_("Banned IP address"));
 				}
 				else
 				{
@@ -34,10 +34,10 @@ public class Commandbanip extends EssentialsCommand
 			final String ipAddress = player.getData().getIpAddress();
 			if (ipAddress.length() == 0)
 			{
-				throw new Exception(_("playerNotFound"));
+				throw new Exception(_("Player not found."));
 			}
 			ess.getServer().banIP(ipAddress);
-			sender.sendMessage(_("banIpAddress"));
+			sender.sendMessage(_("Banned IP address"));
 		}
 	}
 }

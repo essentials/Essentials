@@ -32,7 +32,7 @@ public class Commanditem extends EssentialsCommand
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
 		if (!Permissions.ITEMSPAWN.isAuthorized(user, stack))
 		{
-			throw new Exception(_("cantSpawnItem", itemname));
+			throw new Exception(_("You are not allowed to spawn the item {0}.", itemname));
 		}
 
 		if (args.length > 1 && Integer.parseInt(args[1]) > 0)
@@ -72,12 +72,12 @@ public class Commanditem extends EssentialsCommand
 
 		if (stack.getTypeId() == 0)
 		{
-			throw new Exception(_("cantSpawnItem", "Air"));
+			throw new Exception(_("You are not allowed to spawn the item {0}.", "Air"));
 		}
 
 		user.giveItems(stack, false);
 
 		final String displayName = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');
-		user.sendMessage(_("itemSpawn", stack.getAmount(), displayName));
+		user.sendMessage(_("Giving {0} of {1}", stack.getAmount(), displayName));
 	}
 }

@@ -48,6 +48,6 @@ public class Commandhelp extends EssentialsCommand
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		sender.sendMessage(_("helpConsole"));
+		sender.sendMessage(_("To view help from the console, type ?."));
 	}
 }

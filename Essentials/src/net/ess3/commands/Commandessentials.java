@@ -30,7 +30,7 @@ public class Commandessentials extends EssentialsCommand
 	{
 		sender.sendMessage("Essentials " + ess.getPlugin().getVersion());
 		sender.sendMessage("/<command> <reload/debug>");
-		sender.sendMessage(_("blockList"));
+		sender.sendMessage(_("Essentials relayed the following commands to another plugin:"));
 		final StringBuilder disabledCommands = new StringBuilder();
 		for (Map.Entry<String, String> entry : ess.getCommandHandler().disabledCommands().entrySet())
 		{
@@ -52,6 +52,6 @@ public class Commandessentials extends EssentialsCommand
 	private void run_reload(final CommandSender sender, final String[] args) throws Exception
 	{
 		ess.onReload();
-		sender.sendMessage(_("essentialsReload", ess.getPlugin().getVersion()));
+		sender.sendMessage(_("Essentials Reloaded {0}", ess.getPlugin().getVersion()));
 	}
 }

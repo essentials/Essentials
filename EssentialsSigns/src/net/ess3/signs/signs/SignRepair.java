@@ -26,7 +26,7 @@ public class SignRepair extends EssentialsSign
 		}
 		else if (!repairTarget.equalsIgnoreCase("all") && !repairTarget.equalsIgnoreCase("hand"))
 		{
-			throw new SignException(_("invalidSignLine", 2));
+			throw new SignException(_("Line {0} on sign is invalid.", 2));
 		}
 		validateTrade(sign, 2, ess);
 		return true;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Essentials 3.0-SNAPSHOT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-01 23:59+0200\n"
+"POT-Creation-Date: 2013-04-06 03:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,702 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: Essentials/src/net/ess3/commands/Commandwhois.java:58
+msgid " "
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/VersionCheck.java:35
+msgid " * ! * Bukkit version is not the recommended build for Essentials."
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/VersionCheck.java:36
+#, java-format
+msgid ""
+" * ! * You need atleast build {0} of CraftBukkit, download it from http://dl."
+"bukkit.org/downloads/craftbukkit/"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:39
+#: Essentials/src/net/ess3/commands/Commandwhois.java:77
+#, java-format
+msgid " - AFK: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:60
+#, java-format
+msgid " - Banned: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:61
+#, java-format
+msgid " - Exp: {0} (Level {1})"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:76
+#, java-format
+msgid " - Fly mode: {0} ({1})"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:73
+#, java-format
+msgid " - Gamemode: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:74
+#, java-format
+msgid " - God mode: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:60
+#, java-format
+msgid " - Health: {0}/20"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:67
+#, java-format
+msgid " - IP Address: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:43
+#, java-format
+msgid " - Jail: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:71
+#, java-format
+msgid " - Location: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:66
+#, java-format
+msgid " - Money: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:49
+#, java-format
+msgid " - Muted: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:69
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:136
+#, java-format
+msgid " ---- {2} -- Page {0}/{1} ----"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbigtree.java:44
+msgid " Big tree spawned."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:95
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:34
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:79
+msgid " Enchantment not found"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:40
+#, java-format
+msgid " Enchantments: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:62
+#, java-format
+msgid " Player {0} jailed for {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:85
+#, java-format
+msgid " The enchantment {0} has been applied to your item in hand."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:81
+#, java-format
+msgid " The enchantment {0} has been removed from your item in hand."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:42
+#: Essentials/src/net/ess3/commands/Commandlist.java:47
+#, java-format
+msgid " There are {0} out of maximum {1} players online."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:38
+#, java-format
+msgid " There are {0}/{1} out of maximum {2} players online."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:100
+#: Essentials/src/net/ess3/MetaItemStack.java:502
+#, java-format
+msgid " You do not have the permission for {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandthunder.java:31
+#, java-format
+msgid " You {0} thunder in your world."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:101
+#: Essentials/src/net/ess3/commands/Commandlist.java:148
+msgid " [AFK]"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:106
+#: Essentials/src/net/ess3/commands/Commandlist.java:153
+msgid " [HIDDEN]"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsuicide.java:17
+#, java-format
+msgid " {0} took their own life"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Settings.java:22
+msgid ""
+"##########################################################\n"
+"+------------------------------------------------------+ #\n"
+"|                  Chat Settings                       | #\n"
+"+------------------------------------------------------+ #\n"
+"##########################################################"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Settings.java:43
+msgid ""
+"##########################################################\n"
+"+------------------------------------------------------+ #\n"
+"|                  Worlds Settings                     | #\n"
+"+------------------------------------------------------+ #\n"
+"##########################################################"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Settings.java:36
+msgid ""
+"##########################################################\n"
+"+------------------------------------------------------+ #\n"
+"|                 Commands Settings                    | #\n"
+"+------------------------------------------------------+ #\n"
+"##########################################################"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Settings.java:29
+msgid ""
+"##########################################################\n"
+"+------------------------------------------------------+ #\n"
+"|                 Economy Settings                     | #\n"
+"+------------------------------------------------------+ #\n"
+"##########################################################"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Settings.java:15
+msgid ""
+"##########################################################\n"
+"+------------------------------------------------------+ #\n"
+"|                 General Settings                     | #\n"
+"+------------------------------------------------------+ #\n"
+"##########################################################"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:132
+msgid "/sell itemname -1 will sell all but one item, etc."
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTime.java:34
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTime.java:58
+msgid "/time only supports day/night."
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignWeather.java:34
+#: EssentialsSigns/src/net/ess3/signs/signs/SignWeather.java:56
+msgid "/weather only supports sun/storm."
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:70
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:89
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:104
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:111
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:118
+#, java-format
+msgid "/{0}: {1}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkillall.java:48
+#: Essentials/src/net/ess3/commands/Commandremove.java:44
+#: Essentials/src/net/ess3/SpawnMob.java:145
+msgid "A number goes there, silly."
+msgstr ""
+
+#: Essentials/src/net/ess3/Essentials.java:196
+msgid "A reload has forced you to become visible."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Backup.java:18
+msgid ""
+"Add a command that backups your data, e.g. 'rdiff-backup World1 backups/"
+"World1'"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Afk.java:14
+msgid ""
+"After this timeout in seconds, the user will be set as afk.\n"
+"Set to -1 for no timeout."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:92
+#, java-format
+msgid "All commands removed from {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertooltoggle.java:22
+msgid "All of your power tools have been disabled."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:98
+#: Essentials/src/net/ess3/commands/Commandpowertooltoggle.java:22
+msgid "All of your power tools have been enabled."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:27
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:160
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:507
+msgid "All powertool commands have been cleared."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:34
+#, java-format
+msgid "Allocated memory: {0} MB"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Home.java:22
+msgid "Allows people to set their bed at daytime"
+msgstr ""
+
+#: Essentials/src/net/ess3/ranks/RankOptions.java:19
+msgid "Amount of homes a player can have"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Afk.java:18
+msgid ""
+"Auto-AFK Kick\n"
+"After this timeout in seconds, the user will be kicked from the server.\n"
+"Set to -1 for no timeout."
+msgstr ""
+
+#: Essentials/src/net/ess3/backup/Backup.java:156
+msgid "Backup finished."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:13
+msgid "Backup runs a command while saving is disabled"
+msgstr ""
+
+#: Essentials/src/net/ess3/backup/Backup.java:68
+#: Essentials/src/net/ess3/commands/Commandbackup.java:15
+msgid "Backup started."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalance.java:19
+#: Essentials/src/net/ess3/commands/Commandbalance.java:26
+#: EssentialsSigns/src/net/ess3/signs/signs/SignBalance.java:20
+#, java-format
+msgid "Balance: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbanip.java:23
+#: Essentials/src/net/ess3/commands/Commandbanip.java:33
+msgid "Banned IP address"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandban.java:48
+#: Essentials/src/net/ess3/commands/Commandban.java:53
+#, java-format
+msgid "Banned: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandcompass.java:50
+#, java-format
+msgid "Bearing:  {0} ({1} degrees)."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbigtree.java:48
+msgid "Big tree generation failure. Try again on grass or dirt."
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/VersionCheck.java:42
+msgid "Bukkit version format changed. Version not checked."
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:130
+msgid "Can't find GeoIP database!"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Teleport.java:17
+msgid ""
+"Cancels a request made by tpa / tphere on world change to prevent cross "
+"world tp"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:61
+#, java-format
+msgid "Changed spawner type to {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:188
+#, java-format
+msgid "Chapter {0}, page {1} of {2}:"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:34
+msgid "Command can't be attached to air."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:166
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:282
+#, java-format
+msgid "Command {0} failed:"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:58
+#, java-format
+msgid "Command {0} has not been assigned to {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:76
+#, java-format
+msgid "Command {0} is already assigned to {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:108
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:109
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:239
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:240
+#, java-format
+msgid "Command {0} is improperly loaded."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:63
+#, java-format
+msgid "Command {0} removed from {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:51
+#, java-format
+msgid "Commands from {0}:"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:35
+#, java-format
+msgid "Commands matching \"{0}\":"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/SocialSpy.java:26
+msgid "Commands to listen for in socialspy"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:133
+msgid "Connected players: "
+msgstr ""
+
+#: Essentials/src/net/ess3/ranks/RankOptions.java:25
+msgid "Cooldown between heals"
+msgstr ""
+
+#: Essentials/src/net/ess3/ranks/RankOptions.java:21
+msgid "Cooldown between teleports"
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:111
+#: Essentials/src/net/ess3/Teleport.java:114
+#, java-format
+msgid "Cooldown: {0}"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:178
+#, java-format
+msgid "Could not find template {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/storage/ManagedFile.java:50
+msgid "Could not load items.csv."
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:93
+#, java-format
+msgid "Creating config from template: {0}"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:100
+#, java-format
+msgid "Creating empty config: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:32
+msgid "Current TPS "
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Economy.java:15
+msgid "Defines the balance with which new players begin. Defaults to 0."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Economy.java:18
+msgid "Defines the cost to use the given commands PER USE"
+msgstr ""
+
+#: Essentials/src/net/ess3/ranks/RankOptions.java:23
+msgid "Delay before teleport"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:54
+msgid "Delay to wait before people can cause attack damage after logging in "
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/LocationUtil.java:121
+msgid "Destination not set."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Chat.java:16
+msgid ""
+"Disable this if you have any other plugin, that modifies the displayname of "
+"a user.\n"
+"If it is not set, it will be enabled if EssentialsChat is installed, "
+"otherwise not."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/protect/Protect.java:19
+msgid "Disable weather options"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Commands.java:42
+msgid "Disabled commands will be completely unavailable on the server."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/WorldOptions.java:30
+msgid "Disables godmode for all players if they teleport to this world."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Back.java:14
+msgid ""
+"Do you want essentials to keep track of previous location for /back in the "
+"teleport listener? \n"
+"If you set this to true any plugin that uses teleport will have the previous "
+"location registered."
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:159
+msgid ""
+"Downloading GeoIP database ... this might take a while (country: 0.6 MB, "
+"city: 20MB)"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:73
+msgid "Enable this to clear powertools when a player changes worlds."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:71
+msgid "Enable this to clear powertools when a player disconnects."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Economy.java:48
+msgid ""
+"Enable this to log all interactions with trade/buy/sell signs and sell "
+"command"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:47
+msgid "Enjoy your new hat!"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:293
+#, java-format
+msgid "Error calling command /{0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:150
+#, java-format
+msgid "Error getting help for: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/Jails.java:177
+#: Essentials/src/net/ess3/Jails.java:181
+#: Essentials/src/net/ess3/Jails.java:203
+#: Essentials/src/net/ess3/Jails.java:207
+#: Essentials/src/net/ess3/Jails.java:230
+#: Essentials/src/net/ess3/Jails.java:234
+#, java-format
+msgid "Error occurred when trying to return player {0} to jail: {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:65
+msgid "Error while changing mob spawner."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:51
+msgid "Error, you cannot use this item as a hat!"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:290
+#, java-format
+msgid "Error: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandessentials.java:55
+#, java-format
+msgid "Essentials Reloaded {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandessentials.java:33
+msgid "Essentials relayed the following commands to another plugin:"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:217
+#, java-format
+msgid "Failed to close config {0}"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:50
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:103
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:108
+#, java-format
+msgid "Failed to create config {0}"
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:186
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:198
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:209
+msgid "Failed to open connection."
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:140
+msgid "Failed to read GeoIP database!"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/SpawnsHolder.java:265
+msgid "Failed to teleport new player."
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:193
+#, java-format
+msgid "Failed to write config {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/Alert.java:27
+msgid "For which block types would you like to be alerted when broken?"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/Alert.java:17
+msgid "For which block types would you like to be alerted when placed?"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/Alert.java:22
+msgid "For which block types would you like to be alerted when used?"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsudo.java:36
+#, java-format
+msgid "Forcing {0} to run: /{1} {2}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:35
+#, java-format
+msgid "Free memory: {0} MB"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/protect/Protect.java:13
+msgid "General entity/physics behavior."
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:148
+msgid "GeoIP download url is empty."
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:182
+msgid "GeoIP download url is invalid."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkit.java:58
+#, java-format
+msgid "Giving kit {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanditem.java:81
+#, java-format
+msgid "Giving {0} of {1}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgod.java:29
+#: Essentials/src/net/ess3/commands/Commandgod.java:40
+#, java-format
+msgid "God mode {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsuicide.java:16
+msgid "Goodbye cruel world..."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandheal.java:65
+#, java-format
+msgid "Healed {0}."
+msgstr ""
+
 #: Essentials/test/net/ess3/UtilTest.java:23
 #, java-format
 msgid "Hello {0}, how are you?"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Help.java:16
+msgid ""
+"Hide plugins which don't give a permission in their plugin.yml for each "
+"command.\n"
+"You can override a true value here for a single plugin by adding a "
+"permission to a user/group.\n"
+"The individual permission is: essentials.help.<plugin>, anyone with "
+"essentials.* or '*' will see all help this setting reguardless.\n"
+"You can use negative permissions to remove access to just a single plugins "
+"help if the following is enabled."
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/LocationUtil.java:176
+msgid "Hole in floor"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddelhome.java:57
+#, java-format
+msgid "Home {0} has been removed."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhome.java:89
+#, java-format
+msgid "Homes: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Chat.java:21
+msgid ""
+"If EssentialsChat is installed, this will define how far a player's voice "
+"travels, in blocks.  Set to 0 to make all chat global.\n"
+"Note that users with the \"essentials.chat.spy\" permission will hear "
+"everything, regardless of this setting.\n"
+"Users with essentials.chat.shout can override this by prefixing text with an "
+"exclamation mark (!)\n"
+"Or with essentials.chat.question can override this by prefixing text with a "
+"question mark (?)\n"
+"You can add command costs for shout/question by adding chat-shout and chat-"
+"question to the command costs section.\n"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Home.java:20
+msgid ""
+"If no home is set, should the player be send to spawn, when /home is used."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:131
+msgid ""
+"If you meant to sell all of your items of that type, use /sell itemname."
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DateUtil.java:132
+msgid "Illegal date format."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Backup.java:16
+msgid "Interval in minutes"
 msgstr ""
 
 #: Essentials/src/net/ess3/user/User.java:507
@@ -27,92 +720,1425 @@ msgstr ""
 msgid "InvFull"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandme.java:34
-msgid "action"
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:402
+msgid "Invalid charge."
 msgstr ""
 
-#: Essentials/src/net/ess3/user/User.java:123
-msgid "addedToAccount"
+#: Essentials/src/net/ess3/commands/Commandsethome.java:66
+msgid "Invalid home name"
 msgstr ""
 
-#: Essentials/src/net/ess3/user/User.java:126
-msgid "addedToOthersAccount"
+#: Essentials/src/net/ess3/commands/Commandkillall.java:81
+#: Essentials/src/net/ess3/commands/Commandspawner.java:41
+#: Essentials/src/net/ess3/SpawnMob.java:195
+msgid "Invalid mob type."
 msgstr ""
 
-#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:102
-msgid "alertBroke"
+#: Essentials/src/net/ess3/commands/Commandsetwarp.java:23
+msgid "Invalid warp name"
 msgstr ""
 
-#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsConnect.java:45
-msgid "alertFormat"
+#: Essentials/src/net/ess3/commands/Commandremove.java:71
+#: Essentials/src/net/ess3/commands/Commandtime.java:162
+#: Essentials/src/net/ess3/commands/Commandworld.java:46
+msgid "Invalid world."
 msgstr ""
 
-#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:68
-msgid "alertPlaced"
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:33
+msgid "Inventory Cleared."
 msgstr ""
 
-#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:184
-msgid "alertUsed"
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:23
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:54
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:66
+#, java-format
+msgid "Inventory of {0} cleared."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:45
+#, java-format
+msgid "Item {0} has no commands assigned."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:49
+#, java-format
+msgid "Item {1} has the following commands: {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:78
+#, java-format
+msgid "Jail time extend to: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddeljail.java:17
+#, java-format
+msgid "Jail {0} has been removed."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetjail.java:18
+#, java-format
+msgid "Jail {0} has been set."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkick.java:27
+#: Essentials/src/net/ess3/commands/Commandkickall.java:15
+msgid "Kicked from server"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkill.java:34
+#: Essentials/src/net/ess3/commands/Commandkillall.java:152
+#, java-format
+msgid "Killed {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkit.java:34
+#, java-format
+msgid "Kits: {0}"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:29
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:74
+#: EssentialsSigns/src/net/ess3/signs/signs/SignGameMode.java:42
+#: EssentialsSigns/src/net/ess3/signs/signs/SignRepair.java:29
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:204
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:260
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:357
+#, java-format
+msgid "Line {0} on sign is invalid."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Spawns.java:33
+msgid "List of all spawnpoints"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:67
+msgid "Mail Cleared!"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:50
+#: Essentials/src/net/ess3/commands/Commandmail.java:60
+#: Essentials/src/net/ess3/commands/Commandmail.java:88
+#: Essentials/src/net/ess3/commands/Commandmail.java:100
+msgid "Mail sent!"
+msgstr ""
+
+#: Essentials/src/net/ess3/SpawnMob.java:241
+msgid "Malformed color."
+msgstr ""
+
+#: Essentials/src/net/ess3/SpawnMob.java:216
+msgid "Malformed size."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/protect/Protect.java:16
+msgid ""
+"Maximum height the creeper should explode. -1 allows them to explode "
+"everywhere.\n"
+"Set prevent.creeper-explosion to true, if you want to disable creeper "
+"explosions."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:33
+#, java-format
+msgid "Maximum memory: {0} MB"
+msgstr ""
+
+#: Essentials/src/net/ess3/ranks/RankOptions.java:13
+msgid "Message format of chat messages"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:86
+#: Essentials/src/net/ess3/SpawnMob.java:127
+msgid "Mob quantity limited to server limit."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:24
+#: Essentials/src/net/ess3/commands/Commandspawnmob.java:19
+#, java-format
+msgid "Mobs: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/protect/Prevent.java:38
+msgid ""
+"Monsters won't follow players\n"
+"permission essentials.protect.entitytarget.bypass disables this"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:35
+#: Essentials/src/net/ess3/commands/Commandnick.java:61
+msgid "Nickname changed."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:94
+msgid "Nicknames must be alphanumeric."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandunlimited.java:84
+#, java-format
+msgid "No permission for unlimited item {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:78
+msgid "No warps defined"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:78
+#: Essentials/src/net/ess3/commands/Commandmail.java:82
+#: Essentials/src/net/ess3/commands/EssentialsCommand.java:56
+#, java-format
+msgid "Only in-game players can use {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:80
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:93
+#, java-format
+msgid "Ordering balances of {0} users, please wait ..."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:30
+msgid ""
+"Oversized stacks are stacks that ignore the normal max stacksize.\n"
+"They can be obtained using /give and /item, if the player has essentials."
+"oversizedstacks permission.\n"
+"How many items should be in a oversized stack?"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:61
+#: Essentials/src/net/ess3/Teleport.java:152
+#: Essentials/src/net/ess3/Teleport.java:155
+msgid "Pending teleportation request cancelled."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:68
+#, java-format
+msgid "Person is already in jail: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhome.java:77
+msgid "Player has not set a home."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbanip.java:30
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:27
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:58
+#: Essentials/src/net/ess3/commands/Commandclearinventory.java:70
+#: Essentials/src/net/ess3/commands/Commandexp.java:97
+#: Essentials/src/net/ess3/commands/Commandexp.java:111
+#: Essentials/src/net/ess3/commands/Commandfeed.java:34
+#: Essentials/src/net/ess3/commands/Commandheal.java:56
+#: Essentials/src/net/ess3/commands/Commandlightning.java:32
+#: Essentials/src/net/ess3/commands/Commandmsg.java:66
+#: Essentials/src/net/ess3/commands/Commandmsg.java:83
+#: Essentials/src/net/ess3/commands/Commandpay.java:37
+#: Essentials/src/net/ess3/commands/Commandptime.java:224
+#: Essentials/src/net/ess3/commands/Commandrealname.java:42
+#: Essentials/src/net/ess3/commands/Commandsethome.java:57
+#: Essentials/src/net/ess3/commands/Commandtpo.java:37
+#: Essentials/src/net/ess3/commands/Commandtpohere.java:45
+#: Essentials/src/net/ess3/commands/Commandwarp.java:65
+#: Essentials/src/net/ess3/commands/Commandwhois.java:89
+#: Essentials/src/net/ess3/user/PlayerNotFoundException.java:13
+msgid "Player not found."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:161
+#, java-format
+msgid "Player time has been reset for: {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:168
+#, java-format
+msgid "Player time is fixed to {0} for: {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:172
+#, java-format
+msgid "Player time is set to {0} for: {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandban.java:65
+#: Essentials/src/net/ess3/commands/Commandtempban.java:68
+#, java-format
+msgid "Player {0} banned {1} for {2}."
+msgstr ""
+
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:97
+#, java-format
+msgid "Player {0} comes from {1}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:57
+#, java-format
+msgid "Player {0} is offline since {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandseen.java:36
+#, java-format
+msgid "Player {0} is online since {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:62
+#, java-format
+msgid "Player {0} jailed."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkick.java:36
+#: Essentials/src/net/ess3/user/User.java:409
+#, java-format
+msgid "Player {0} kicked {1} for {2}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:41
+#, java-format
+msgid "Player {0} muted for {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:97
+#, java-format
+msgid "Player {0} unjailed."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:43
+#, java-format
+msgid "Player {0} was never on this server."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnear.java:50
+#: Essentials/src/net/ess3/commands/Commandnear.java:77
+#, java-format
+msgid "Players nearby: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandping.java:15
+msgid "Pong!"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandworld.java:47
+#, java-format
+msgid "Possible worlds are the numbers 0 through {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/ranks/RankOptions.java:15
+msgid "Prefix for name"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/WorldOptions.java:32
+msgid "Prevent creatures spawning"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Spawns.java:24
+msgid ""
+"Priority of the respawn event listener\n"
+"Set this to lowest, if you want e.g. Multiverse to handle the respawning\n"
+"Set this to normal, if you want EssentialsSpawn to handle the respawning\n"
+"Set this to highest, if you want to force EssentialsSpawn to handle the "
+"respawning"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:300
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:322
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:366
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:160
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:173
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:177
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:195
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:199
+msgid "Quantities must be greater than 0."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Near.java:13
+msgid "Radius of the near command, if no number is given."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandremove.java:152
+#, java-format
+msgid "Removed {0} entities."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:49
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:49
+#, java-format
+msgid "Request sent to {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandback.java:15
+msgid "Returning to previous location."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Backup.java:26
+msgid ""
+"Runs these commands after a backup.\n"
+"This will run every time time (in minutes) you specify in the interval "
+"setting.\n"
+"ex: say \"Hello World\" will make the server say Hello World"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Backup.java:21
+msgid ""
+"Runs these commands before a backup.\n"
+"This will run every time time (in minutes) you specify in the interval "
+"setting.\n"
+"ex: say \"Hello World\" will make the server say Hello World"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfeed.java:42
+#, java-format
+msgid "Satisfied {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:90
+msgid "Select chapter:"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:158
+#, java-format
+msgid "Server Total: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:396
+msgid "Server is full."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfly.java:34
+#: Essentials/src/net/ess3/commands/Commandfly.java:45
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:349
+#, java-format
+msgid "Set fly mode {0} for {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgamemode.java:33
+#: Essentials/src/net/ess3/commands/Commandgamemode.java:44
+#: EssentialsSigns/src/net/ess3/signs/signs/SignGameMode.java:48
+#, java-format
+msgid "Set game mode {0} for {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Chat.java:27
+msgid ""
+"Set the default chat format here, it will be overwritten by group specific "
+"chat formats."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:20
+msgid ""
+"Set the locale here, if you want to change the language of Essentials.\n"
+"If this is not set, Essentials will use the language of your computer.\n"
+"Available locales: da, de, en, fr, nl"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Speed.java:13
+msgid "Set the max fly speed, values range from 0.2 to 1.0"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Speed.java:16
+msgid "Set the max walk speed, values range from 0.1 to 1.0"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Economy.java:31
+msgid ""
+"Set the maximum amount of money a player can have\n"
+"The amount is always limited to 10 trillions because of the limitations of a "
+"java double"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Chat.java:29
+msgid ""
+"Set the maximum length a nick can be. Set to -1 to disable. Note: formatting "
+"characters do not count."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Economy.java:40
+msgid ""
+"Set the minimum amount of money a player can have (must be above the "
+"negative of max-money).\n"
+"Setting this to 0, will disable overdrafts/loans completely.  Users need "
+"'essentials.eco.loan' perm to go below 0."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Economy.java:22
+msgid "Set this to a currency symbol you want to use."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Afk.java:23
+msgid ""
+"Set this to true, if you want to freeze the player, if he is afk.\n"
+"Other players or monsters can't push him out of afk mode then.\n"
+"This will also enable temporary god mode for the afk player.\n"
+"The player has to use the command /afk to leave the afk mode.\n"
+"You have to add a message to your welcome message or help page,\n"
+"since the player will not get a message, if he tries to move."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Teleport.java:14
+msgid ""
+"Set timeout in seconds for players to accept tpa before request is "
+"cancelled.\n"
+"Set to 0 for no timeout."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Tempban.java:13
+msgid ""
+"Set to the maximum time in seconds a player can be tempbanned for.\n"
+"Set to -1 to disable, and override with essentials.tempban.unlimited"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:52
+msgid "Set to true to enable per-group teleporting permissions."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:47
+msgid ""
+"Set to true to enable per-world permissions for teleporting between worlds "
+"with essentials commands\n"
+"This applies to /world, /back, /tp[a|o][here|all], but not warps.\n"
+"Give someone permission to teleport to a world with essentials.world."
+"<worldname>"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspeed.java:64
+#: Essentials/src/net/ess3/commands/Commandspeed.java:80
+#, java-format
+msgid "Set {0} speed to {1} for {2}."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:41
+msgid ""
+"Sets the place where group options should be stored:\n"
+" FILE: Options are stored inside groups.yml in the Essentials folder\n"
+" GROUPMANAGER: Options are stored using the GroupManager groups\n"
+" VAULT: Options are stored using a permissions plugin supported by Vault"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Lightning.java:13
+msgid "Shall we notify users when using /lightning"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/AntiBuild.java:14
+msgid ""
+"Should people with build: false in permissions be allowed to build\n"
+"Set true to disable building for those people\n"
+"Setting to false means EssentialsAntiBuild will never prevent you from "
+"building"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/AntiBuild.java:19
+msgid ""
+"Should people with build: false in permissions be allowed to use items\n"
+"Set true to disable using for those people\n"
+"Setting to false means EssentialsAntiBuild will never prevent you from using"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Spawns.java:19
+msgid ""
+"Should we announce to the server when someone logs in for the first time?\n"
+"If so, use this format, replacing {DISPLAYNAME} with the player name.\n"
+"If not, set to ''"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/AntiBuild.java:23
+msgid "Should we tell people they are not allowed to build"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Help.java:13
+msgid "Show other plugins commands in help"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlightning.java:50
+#, java-format
+msgid "Smiting {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/List.java:14
+msgid "Sort output of /list command by groups"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetspawn.java:14
+#, java-format
+msgid "Spawn location set for group {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/ranks/RankOptions.java:17
+msgid "Suffix for name"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:30
+msgid "Target block must be a mob spawner."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:45
+msgid "Teleport request accepted."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpdeny.java:18
+msgid "Teleport request denied."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:41
+msgid "Teleport request has timed out."
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:94
+msgid "Teleportation commencing..."
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:291
+#, java-format
+msgid "Teleportation will commence in {0}. Don''t move."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpall.java:33
+msgid "Teleporting all players..."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaall.java:32
+msgid "Teleporting request sent to all players..."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtop.java:24
+msgid "Teleporting to top."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawn.java:26
+#: Essentials/src/net/ess3/commands/Commandspawn.java:45
+#: Essentials/src/net/ess3/commands/Commandtp.java:40
+#: Essentials/src/net/ess3/commands/Commandtp.java:51
+#: Essentials/src/net/ess3/commands/Commandtp.java:84
+#: Essentials/src/net/ess3/commands/Commandtphere.java:29
+#: Essentials/src/net/ess3/commands/Commandtphere.java:30
+#: Essentials/src/net/ess3/commands/Commandtpo.java:33
+#: Essentials/src/net/ess3/commands/Commandtpohere.java:41
+#: Essentials/src/net/ess3/commands/Commandtppos.java:40
+#: Essentials/src/net/ess3/commands/Commandtppos.java:71
+#: Essentials/src/net/ess3/commands/Commandtppos.java:72
+msgid "Teleporting..."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtempban.java:52
+#, java-format
+msgid "Temporarily banned from server for {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:91
+#: Essentials/src/net/ess3/commands/Commandworth.java:41
+#: Essentials/src/net/ess3/commands/Commandworth.java:79
+msgid "That item cannot be sold to the server."
+msgstr ""
+
+#: Essentials/src/net/ess3/Jails.java:56 Essentials/src/net/ess3/Jails.java:61
+msgid "That jail does not exist."
+msgstr ""
+
+#: Essentials/src/net/ess3/Kits.java:30 Essentials/src/net/ess3/Kits.java:35
+msgid "That kit does not exist or is improperly defined."
+msgstr ""
+
+#: Essentials/src/net/ess3/SpawnMob.java:149
+msgid "That mob likes to be alone."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:120
+msgid "That name is already in use."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/WarpNotFoundException.java:12
+#: Essentials/src/net/ess3/Warps.java:52
+msgid "That warp does not exist."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandjump.java:28
+msgid "That would hurt your computer's brain."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandban.java:53
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:383
+msgid "The Ban Hammer has spoken!"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Chat.java:13
+msgid ""
+"The character(s) to prefix all nicknames, so that you know they are not true "
+"usernames."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtime.java:80
+#, java-format
+msgid "The current time in {0} is {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Teleport.java:20
+msgid ""
+"The delay, in seconds, a player can't be attacked by other players after he "
+"has been teleported by a command\n"
+"This will also prevent that the player can attack other players"
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/BukkitPlugin.java:62
+msgid ""
+"The file is broken and Essentials can't open it. Essentials is now disabled. "
+"If you can't fix the file yourself, either type /essentialshelp in game or "
+"go to http://tiny.cc/EssentialsChat"
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/BukkitPlugin.java:58
+msgid ""
+"The file is broken and Essentials can't open it. Essentials is now disabled. "
+"If you can't fix the file yourself, go to http://tiny.cc/EssentialsChat"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:67
+msgid "The join message when players join the server"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Spawnmob.java:13
+msgid ""
+"The maximum amount of monsters, a player can spawn with a call of /spawnmob."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:25
+msgid ""
+"The number of items given, if the quantity parameter is left out in /item "
+"or /give.\n"
+"If this number is below 1, the maximum stack size size is given. If "
+"oversized stacks\n"
+"is not enabled, any number higher then the maximum stack size results in "
+"more than one stack."
+msgstr ""
+
+#: Essentials/src/net/ess3/ranks/Ranks.java:21
+msgid ""
+"The order of the ranks matters, the ranks are checked from top to bottom.\n"
+"All rank names have to be lower case.\n"
+"The ranks can be connected to users using the permission essentials.ranks."
+"rankname"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandinvsee.java:46
+msgid "The other users inventory is bigger than yours."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:69
+msgid "The quit message when players leave the server"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtime.java:123
+#, java-format
+msgid "The time was set to {0} in: {1}."
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:229
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:242
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:254
+msgid "The trade sign has nothing available for you."
+msgstr ""
+
+#: Essentials/src/net/ess3/api/UserDoesNotExistException.java:15
+#, java-format
+msgid "The user {0} does not exist."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkit.java:23
+msgid "There are no kits available yet."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:105
+#, java-format
+msgid "There are {0} warps. Showing page {1} of {2}."
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:52
+msgid "There is nothing to collect from this trade sign."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:64
+msgid "There were no items that needing repairing."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:91
+msgid "These players have their own time:"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:31
+#: Essentials/src/net/ess3/commands/Commandrepair.java:84
+msgid "This item cannot be repaired."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:89
+msgid "This item does not need repairing."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:46
+#: Essentials/src/net/ess3/commands/Commandtpaall.java:61
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:47
+#, java-format
+msgid "This request will timeout after {0} seconds."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanditemdb.java:40
+#, java-format
+msgid "This tool has {0} uses left."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlightning.java:59
+msgid "Thou hast been smitten!"
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:135
+#, java-format
+msgid "Time before next teleport: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:41
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:40
+msgid "To deny this request, type /tpdeny."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:30
+#: EssentialsSigns/src/net/ess3/signs/signs/SignMail.java:30
+msgid "To mark your mail as read, type /mail clear."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:40
+#: Essentials/src/net/ess3/commands/Commandtpaall.java:56
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:39
+msgid "To teleport, type /tpaccept."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhelp.java:51
+msgid "To view help from the console, type ?."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbalancetop.java:105
+#, java-format
+msgid "Top balances ({0})"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtree.java:66
+msgid "Tree generation failure. Try again on grass or dirt."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtree.java:62
+msgid "Tree spawned."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/God.java:13
+msgid "Turn off god mode when people exit"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:17
+msgid ""
+"Turn this on, if you want to see more error messages, if something goes "
+"wrong."
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:77
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:144
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:196
+#, java-format
+msgid "Type /{0} {1} to read the next page."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawner.java:46
+#: Essentials/src/net/ess3/SpawnMob.java:93
+#: Essentials/src/net/ess3/SpawnMob.java:141
+msgid "Unable to spawn mob."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandunbanip.java:26
+msgid "Unbanned IP address."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandunban.java:24
+msgid "Unbanned player."
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/BookPager.java:29
+#: Essentials/src/net/ess3/utils/textreader/TextPager.java:169
+msgid "Unknown chapter."
+msgstr ""
+
+#: Essentials/src/net/ess3/ItemDb.java:155
+#, java-format
+msgid "Unknown item id: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/ItemDb.java:148
+#, java-format
+msgid "Unknown item name: {0}"
+msgstr ""
+
+#: Essentials2Compat/src/com/earth2me/essentials/Settings.java:449
+#: Essentials2Compat/src/com/earth2me/essentials/Settings.java:486
+#: Essentials2Compat/src/com/earth2me/essentials/Settings.java:582
+#, java-format
+msgid "Unknown item {0} in {1} list."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandunlimited.java:55
+msgid "Unlimited items:"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgc.java:31
+#, java-format
+msgid "Uptime: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandinvsee.java:50
+msgid "Use /invsee to restore your inventory."
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsEntityListener.java:130
+msgid "Use the /back command to return to your death point."
+msgstr ""
+
+#: Essentials/src/net/ess3/api/NoLoanPermittedException.java:15
+msgid "User is not allowed to have a negative balance."
+msgstr ""
+
+#: Essentials/src/net/ess3/Essentials.java:122
+msgid "Using temp folder for testing:"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsConnect.java:23
+#: EssentialsChat/src/net/ess3/chat/EssentialsChat.java:31
+#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIP.java:21
+#: EssentialsProtect/src/net/ess3/protect/EssentialsConnect.java:21
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSignsPlugin.java:29
+#: EssentialsXMPP/src/net/ess3/xmpp/EssentialsXMPP.java:43
+msgid ""
+"Version mismatch! Please update all Essentials jars to the same version."
+msgstr ""
+
+#: Essentials/src/net/ess3/bukkit/VersionCheck.java:26
+#, java-format
+msgid "Version mismatch! Please update {0} to the same version."
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:492
+msgid "Warning! God mode in this world disabled."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddelwarp.java:17
+#, java-format
+msgid "Warp {0} has been removed."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetwarp.java:48
+#, java-format
+msgid "Warp {0} set."
+msgstr ""
+
+#: Essentials/src/net/ess3/Teleport.java:307
+#, java-format
+msgid "Warping to {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:110
+#, java-format
+msgid "Warps: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Commands.java:30
+msgid ""
+"When a command conflicts with another plugin, by default, Essentials will "
+"try to force the OTHER plugin to take\n"
+"priority.  If a command is in this list, Essentials will try to give ITSELF "
+"priority.  This does not always work:\n"
+"usually whichever plugin was updated most recently wins out.  However, the "
+"full name of the command will always work.\n"
+"For example, if WorldGuard and Essentials are both enabled, and WorldGuard "
+"takes control over /god, /essentials:god\n"
+"will still map to Essentials, whereas it might normally get forced upon "
+"WorldGuard.  Commands prefixed with an \"e\",\n"
+"such as /egod, will always grant Essentials priority.\n"
+"We should try to take priority over /god.  If this doesn't work, use /"
+"essentials:god or /egod.\n"
+"If god is set using WorldGuard, use /ungod to remove then use whichever you "
+"see fit."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Home.java:16
+msgid ""
+"When a player interacts with a bed, should their home be set to that "
+"location?\n"
+"If you enable this and remove default player access to the /sethome "
+"command, \n"
+"you can make beds the only way for players to set their home location."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/commands/Home.java:13
+msgid ""
+"When players die, should they respawn at their homes, instead of the "
+"spawnpoint?"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/Spawns.java:30
+msgid ""
+"When we spawn for the first time, which spawnpoint do we use?\n"
+"Set to none if you want to use the spawn point of the world."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/BlackList.java:32
+msgid "Which blocks should not be pushed by pistons"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/BlackList.java:27
+msgid "Which blocks should people be prevented from breaking"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/BlackList.java:17
+msgid "Which blocks should people be prevented from placing"
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/antibuild/BlackList.java:22
+msgid "Which items should people be prevented from using"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetworth.java:34
+#: Essentials/src/net/ess3/commands/Commandsetworth.java:47
+msgid "Worth value set."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddepth.java:23
+msgid "You are at sea level."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbreak.java:28
+msgid "You are not allowed to destroy bedrock."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:36
+msgid "You are not allowed to repair enchanted items."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandgive.java:33
+#: Essentials/src/net/ess3/commands/Commandgive.java:78
+#: Essentials/src/net/ess3/commands/Commanditem.java:35
+#: Essentials/src/net/ess3/commands/Commanditem.java:75
+#: Essentials/src/net/ess3/commands/Commandmore.java:37
+#: Essentials/src/net/ess3/commands/Commandmore.java:67
+#: EssentialsSigns/src/net/ess3/signs/signs/SignFree.java:33
+#, java-format
+msgid "You are not allowed to spawn the item {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:46
+msgid "You are not authorized to set other players' time."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtime.java:48
+msgid "You are not authorized to set the time."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandignore.java:38
+#, java-format
+msgid "You are not ignoring player {0} anymore."
 msgstr ""
 
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:84
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:94
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:122
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:130
-msgid "antiBuildBreak"
+#, java-format
+msgid "You are not permitted to break {0} blocks here."
 msgstr ""
 
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:226
-msgid "antiBuildCraft"
+#, java-format
+msgid "You are not permitted to create {0}."
 msgstr ""
 
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:268
-msgid "antiBuildDrop"
+#, java-format
+msgid "You are not permitted to drop {0}."
 msgstr ""
 
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:203
-msgid "antiBuildInteract"
+#, java-format
+msgid "You are not permitted to interact with {0}."
 msgstr ""
 
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:50
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:60
-msgid "antiBuildPlace"
+#, java-format
+msgid "You are not permitted to place {0} here."
 msgstr ""
 
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:176
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:194
-msgid "antiBuildUse"
+#, java-format
+msgid "You are not permitted to use {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:23
+msgid "You are not wearing a hat."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandvanish.java:39
+msgid "You are once again visible."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddepth.java:15
+#, java-format
+msgid "You are {0} block(s) above sea level."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commanddepth.java:19
+#, java-format
+msgid "You are {0} block(s) below sea level."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandworld.java:48
+msgid "You can also type the name of a specific world."
+msgstr ""
+
+#: Essentials/src/net/ess3/settings/General.java:15
+msgid "You can disable the death messages of minecraft."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandban.java:28
+#: Essentials/src/net/ess3/commands/Commandban.java:36
+msgid "You can not ban that player."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkick.java:25
+msgid "You can not kick that person."
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:354
+msgid "You can talk again."
+msgstr ""
+
+#: Essentials/src/net/ess3/Kits.java:101
+#, java-format
+msgid "You can''t use that kit again for another {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsetwarp.java:45
+msgid "You cannot overwrite that warp."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:99
+msgid "You cannot set a nick that long."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsethome.java:41
+#: Essentials/src/net/ess3/commands/Commandsethome.java:47
+#, java-format
+msgid "You cannot set more than {0} homes."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsudo.java:32
+msgid "You cannot sudo this user."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:28
+msgid "You do not have Permission to list warps."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwarp.java:126
+msgid "You do not have Permission to use that warp."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:19
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:26
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:31
+#: Essentials/src/net/ess3/commands/Commandtpdeny.java:15
+msgid "You do not have a pending request."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnear.java:54
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:118
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:249
+msgid "You do not have access to that command."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmail.java:23
+msgid "You do not have any mail."
+msgstr ""
+
+#: Essentials/src/net/ess3/economy/Trade.java:88
+#: Essentials/src/net/ess3/economy/Trade.java:179
+msgid "You do not have enough experience."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:130
+msgid "You do not have enough of that item to sell."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:32
+msgid "You do not have permission to change the nickname of others."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandeco.java:81
+#: Essentials/src/net/ess3/commands/Commandeco.java:109
+#: Essentials/src/net/ess3/economy/Trade.java:71
+#: Essentials/src/net/ess3/economy/Trade.java:83
+#: Essentials/src/net/ess3/economy/Trade.java:149
+#: Essentials/src/net/ess3/economy/Trade.java:170
+#: Essentials/src/net/ess3/user/User.java:147
+msgid "You do not have sufficient funds."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhome.java:105
+#: Essentials/src/net/ess3/commands/Commandmail.java:37
+#: Essentials/src/net/ess3/commands/Commandmail.java:57
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:71
+#: Essentials/src/net/ess3/commands/Commandtp.java:33
+#: Essentials/src/net/ess3/commands/Commandtp.java:38
+#: Essentials/src/net/ess3/commands/Commandtp.java:68
+#: Essentials/src/net/ess3/commands/Commandtpa.java:29
+#: Essentials/src/net/ess3/commands/Commandtpa.java:34
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:30
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:35
+#: Essentials/src/net/ess3/commands/Commandtphere.java:25
+#: Essentials/src/net/ess3/commands/Commandtpo.java:27
+#: Essentials/src/net/ess3/commands/Commandtpohere.java:28
+#: Essentials/src/net/ess3/commands/Commandtpohere.java:33
+#, java-format
+msgid "You do not have the {0} permission."
+msgstr ""
+
+#: Essentials/src/net/ess3/economy/Trade.java:77
+#: Essentials/src/net/ess3/economy/Trade.java:158
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:95
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:99
+#, java-format
+msgid "You do not have {0}x {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/Jails.java:210
+#: Essentials/src/net/ess3/Jails.java:237
+msgid "You do the crime, you do the time."
+msgstr ""
+
+#: Essentials/src/net/ess3/SpawnMob.java:200
+msgid "You don't have permission to spawn this mob."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandext.java:28
+msgid "You extinguished yourself."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandext.java:41
+#, java-format
+msgid "You extinguished {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandheal.java:33
+#: Essentials/src/net/ess3/commands/Commandheal.java:64
+#: EssentialsSigns/src/net/ess3/signs/signs/SignHeal.java:33
+msgid "You have been healed."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:51
+msgid "You have been jailed."
 msgstr ""
 
 #: Essentials/src/net/ess3/user/User.java:400
-msgid "autoAfkKickReason"
+#, java-format
+msgid "You have been kicked for idling more than {0} minutes."
 msgstr ""
 
-#: Essentials/src/net/ess3/listener/EssentialsEntityListener.java:130
-msgid "backAfterDeath"
+#: Essentials/src/net/ess3/commands/Commandmute.java:45
+#, java-format
+msgid "You have been muted for {0}."
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandback.java:15
-msgid "backUsageMsg"
+#: Essentials/src/net/ess3/commands/Commandmute.java:45
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:74
+msgid "You have been muted."
 msgstr ""
 
-#: Essentials/src/net/ess3/backup/Backup.java:156
-msgid "backupFinished"
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:90
+msgid "You have been released!"
 msgstr ""
 
-#: Essentials/src/net/ess3/backup/Backup.java:68
-#: Essentials/src/net/ess3/commands/Commandbackup.java:15
-msgid "backupStarted"
+#: Essentials/src/net/ess3/user/User.java:331
+msgid "You have been released."
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandbalance.java:19
-#: Essentials/src/net/ess3/commands/Commandbalance.java:26
-#: EssentialsSigns/src/net/ess3/signs/signs/SignBalance.java:20
-msgid "balance"
+#: Essentials/src/net/ess3/commands/Commandmute.java:45
+msgid "You have been unmuted"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandbalancetop.java:105
-msgid "balanceTop"
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:322
+#: EssentialsSigns/src/net/ess3/signs/signs/SignMail.java:23
+msgid "You have no new mail."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertooltoggle.java:16
+msgid "You have no power tools assigned."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandr.java:50
+msgid "You have nobody to whom you can reply."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhome.java:77
+msgid "You have not set a home."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:26
+msgid "You have nothing in your hand."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandvanish.java:39
+msgid "You have now been vanished."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrepair.java:48
+#: Essentials/src/net/ess3/commands/Commandrepair.java:68
+#, java-format
+msgid "You have successfully repaired your: {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:26
+#: Essentials/src/net/ess3/commands/Commandnick.java:51
+msgid "You have to enable change-displayname in Essentials config."
+msgstr ""
+
+#: Essentials/src/net/ess3/EssentialsTimer.java:69
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:330
+#, java-format
+msgid "You have {0} messages! Type /mail read to view your mail."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandignore.java:43
+#, java-format
+msgid "You ignore player {0} from now on."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:29
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:37
+msgid "You may not jail that person."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:24
+msgid "You may not mute that player."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtempban.java:30
+#: Essentials/src/net/ess3/commands/Commandtempban.java:38
+msgid "You may not tempban that player."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:56
+msgid "You must have something to wear in your hand."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandkit.java:45
+#: EssentialsSigns/src/net/ess3/signs/signs/SignKit.java:77
+#, java-format
+msgid "You need the {0} permission to use that kit."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:105
+msgid "You no longer have a nickname."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandsell.java:75
+msgid "You really tried to sell Air? Put an item in your hand."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandinvsee.java:49
+#, java-format
+msgid "You see the inventory of {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:28
+#: Essentials/src/net/ess3/commands/Commandweather.java:58
+#, java-format
+msgid "You set the weather to storm in {0} for {1} seconds."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:34
+#: Essentials/src/net/ess3/commands/Commandweather.java:64
+#, java-format
+msgid "You set the weather to storm in {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:28
+#: Essentials/src/net/ess3/commands/Commandweather.java:58
+#, java-format
+msgid "You set the weather to sun in {0} for {1} seconds."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandweather.java:34
+#: Essentials/src/net/ess3/commands/Commandweather.java:64
+#, java-format
+msgid "You set the weather to sun in {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandburn.java:23
+#, java-format
+msgid "You set {0} on fire for {1} seconds."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandthunder.java:25
+#, java-format
+msgid "You {0} thunder in your world for {1} seconds."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfeed.java:25
+#: EssentialsSigns/src/net/ess3/signs/signs/SignFeed.java:31
+msgid "Your appetite was sated."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:30
+msgid "Your hat has been removed."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandinvsee.java:30
+msgid "Your inventory has been restored."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandnick.java:126
+#, java-format
+msgid "Your nickname is now {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandme.java:16
+#: Essentials/src/net/ess3/commands/Commandmsg.java:30
+msgid "Your voice has been silenced."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbroadcast.java:17
+#, java-format
+msgid "[Broadcast] {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhelpop.java:20
+#, java-format
+msgid "[HelpOp] {0}: {1}"
+msgstr ""
+
+#: EssentialsChat/src/net/ess3/chat/EssentialsLocalChatEventListener.java:35
+msgid "[L]"
+msgstr ""
+
+#: EssentialsChat/src/net/ess3/chat/EssentialsLocalChatEventListener.java:60
+msgid "[Spy]"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmsg.java:53
+#: Essentials/src/net/ess3/commands/Commandmsg.java:55
+#: Essentials/src/net/ess3/commands/Commandmsg.java:90
+#: Essentials/src/net/ess3/commands/Commandmsg.java:95
+#: Essentials/src/net/ess3/commands/Commandr.java:54
+#: Essentials/src/net/ess3/commands/Commandr.java:62
+#, java-format
+msgid "[{0} -> {1}] {2}"
+msgstr ""
+
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:42
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:66
+#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:71
+#, java-format
+msgid "[{0}]"
+msgstr ""
+
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsConnect.java:45
+msgid "alertFormat"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandbalancetop.java:46
@@ -121,33 +2147,6 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandbalancetop.java:46
 msgid "baltopShown"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandban.java:28
-#: Essentials/src/net/ess3/commands/Commandban.java:36
-msgid "banExempt"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandban.java:48
-#: Essentials/src/net/ess3/commands/Commandban.java:53
-msgid "banFormat"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbanip.java:23
-#: Essentials/src/net/ess3/commands/Commandbanip.java:33
-msgid "banIpAddress"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbigtree.java:48
-msgid "bigTreeFailure"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbigtree.java:44
-msgid "bigTreeSuccess"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandessentials.java:33
-msgid "blockList"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandbook.java:33
@@ -162,97 +2161,8 @@ msgstr ""
 msgid "bookTitleSet"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandbroadcast.java:17
-msgid "broadcast"
-msgstr ""
-
-#: Essentials/src/net/ess3/bukkit/VersionCheck.java:42
-msgid "bukkitFormatChanged"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandburn.java:23
-msgid "burnMsg"
-msgstr ""
-
-#: Essentials/src/net/ess3/user/User.java:354
-msgid "canTalkAgain"
-msgstr ""
-
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:130
-msgid "cantFindGeoIpDB"
-msgstr ""
-
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:140
-msgid "cantReadGeoIpDB"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandgive.java:33
-#: Essentials/src/net/ess3/commands/Commandgive.java:78
-#: Essentials/src/net/ess3/commands/Commanditem.java:35
-#: Essentials/src/net/ess3/commands/Commanditem.java:75
-#: Essentials/src/net/ess3/commands/Commandmore.java:37
-#: Essentials/src/net/ess3/commands/Commandmore.java:67
-#: EssentialsSigns/src/net/ess3/signs/signs/SignFree.java:33
-msgid "cantSpawnItem"
-msgstr ""
-
-#: EssentialsChat/src/net/ess3/chat/EssentialsLocalChatEventListener.java:35
-msgid "chatTypeLocal"
-msgstr ""
-
-#: EssentialsChat/src/net/ess3/chat/EssentialsLocalChatEventListener.java:60
-msgid "chatTypeSpy"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:166
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:282
-msgid "commandFailed"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:150
-msgid "commandHelpFailedForPlugin"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:108
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:109
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:239
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:240
-msgid "commandNotLoaded"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandcompass.java:50
-msgid "compassBearing"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:133
-msgid "connectedPlayers"
-msgstr ""
-
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:186
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:198
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:209
-msgid "connectionFailed"
-msgstr ""
-
-#: Essentials/src/net/ess3/Teleport.java:111
-#: Essentials/src/net/ess3/Teleport.java:114
-msgid "cooldownWithMessage"
-msgstr ""
-
-#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:178
-msgid "couldNotFindTemplate"
-msgstr ""
-
-#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:93
-msgid "creatingConfigFromTemplate"
-msgstr ""
-
-#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:100
-msgid "creatingEmptyConfig"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/FormatUtil.java:135
-msgid "currency"
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:102
+msgid "broke:"
 msgstr ""
 
 #: Essentials/src/net/ess3/utils/DateUtil.java:37
@@ -265,28 +2175,6 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandessentials.java:49
 msgid "debugToggle"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandban.java:53
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:383
-msgid "defaultBanReason"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commanddelhome.java:57
-msgid "deleteHome"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commanddeljail.java:17
-msgid "deleteJail"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commanddelwarp.java:17
-msgid "deleteWarp"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:117
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:248
-msgid "deniedAccessCommand"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandworld.java:56
@@ -305,37 +2193,9 @@ msgstr ""
 msgid "denyChangeTitle"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commanddepth.java:23
-msgid "depth"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commanddepth.java:15
-msgid "depthAboveSea"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commanddepth.java:19
-msgid "depthBelowSea"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/LocationUtil.java:121
-msgid "destinationNotSet"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandthunder.java:25
 #: Essentials/src/net/ess3/commands/Commandthunder.java:31
 msgid "disabled"
-msgstr ""
-
-#: Essentials/src/net/ess3/Teleport.java:291
-msgid "dontMoveMessage"
-msgstr ""
-
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:159
-msgid "downloadingGeoIp"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commanditemdb.java:40
-msgid "durability"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandeco.java:60
@@ -366,79 +2226,6 @@ msgstr ""
 msgid "enabled"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandenchant.java:85
-msgid "enchantmentApplied"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandenchant.java:95
-#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:34
-#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:79
-msgid "enchantmentNotFound"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandenchant.java:100
-#: Essentials/src/net/ess3/MetaItemStack.java:502
-msgid "enchantmentPerm"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandenchant.java:81
-msgid "enchantmentRemoved"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandenchant.java:40
-msgid "enchantments"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:293
-msgid "errorCallingCommand"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:290
-msgid "errorWithMessage"
-msgstr ""
-
-#: Essentials/src/net/ess3/bukkit/BukkitPlugin.java:58
-msgid "essentialsHelp1"
-msgstr ""
-
-#: Essentials/src/net/ess3/bukkit/BukkitPlugin.java:62
-msgid "essentialsHelp2"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandessentials.java:55
-msgid "essentialsReload"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandexp.java:121
-msgid "exp"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandexp.java:136
-msgid "expSet"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandext.java:28
-msgid "extinguish"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandext.java:41
-msgid "extinguishOthers"
-msgstr ""
-
-#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:217
-msgid "failedToCloseConfig"
-msgstr ""
-
-#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:50
-#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:103
-#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:108
-msgid "failedToCreateConfig"
-msgstr ""
-
-#: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:193
-msgid "failedToWriteConfig"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandwhois.java:74
 #: Essentials/src/net/ess3/commands/Commandwhois.java:75
 #: Essentials/src/net/ess3/commands/Commandwhois.java:76
@@ -446,15 +2233,6 @@ msgstr ""
 #: Essentials/src/net/ess3/commands/Commandwhois.java:81
 #: Essentials/src/net/ess3/commands/Commandwhois.java:85
 msgid "false"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandfeed.java:25
-#: EssentialsSigns/src/net/ess3/signs/signs/SignFeed.java:31
-msgid "feed"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandfeed.java:42
-msgid "feedOther"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandfirework.java:140
@@ -474,26 +2252,10 @@ msgstr ""
 msgid "flyFailed"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandfly.java:34
-#: Essentials/src/net/ess3/commands/Commandfly.java:45
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:349
-msgid "flyMode"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandspeed.java:64
 #: Essentials/src/net/ess3/commands/Commandspeed.java:80
 #: Essentials/src/net/ess3/commands/Commandwhois.java:76
 msgid "flying"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandr.java:50
-msgid "foreverAlone"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandgamemode.java:33
-#: Essentials/src/net/ess3/commands/Commandgamemode.java:44
-#: EssentialsSigns/src/net/ess3/signs/signs/SignGameMode.java:48
-msgid "gameMode"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandgamemode.java:37
@@ -508,32 +2270,8 @@ msgstr ""
 msgid "gcentities"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandgc.java:35
-msgid "gcfree"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandgc.java:33
-msgid "gcmax"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandgc.java:36
 msgid "gcquene"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandgc.java:34
-msgid "gctotal"
-msgstr ""
-
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:148
-msgid "geoIpUrlEmpty"
-msgstr ""
-
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:182
-msgid "geoIpUrlInvalid"
-msgstr ""
-
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:97
-msgid "geoipJoinFormat"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandgetpos.java:55
@@ -572,72 +2310,6 @@ msgstr ""
 msgid "godFailed"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandgod.java:29
-#: Essentials/src/net/ess3/commands/Commandgod.java:40
-msgid "godMode"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhat.java:51
-msgid "hatArmor"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhat.java:23
-msgid "hatEmpty"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhat.java:56
-msgid "hatFail"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhat.java:47
-msgid "hatPlaced"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhat.java:30
-msgid "hatRemoved"
-msgstr ""
-
-#: Essentials/src/net/ess3/user/User.java:331
-msgid "haveBeenReleased"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandheal.java:33
-#: Essentials/src/net/ess3/commands/Commandheal.java:64
-msgid "heal"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandheal.java:65
-msgid "healOther"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhelp.java:51
-msgid "helpConsole"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:51
-msgid "helpFrom"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:70
-#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:89
-#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:104
-#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:111
-#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:118
-msgid "helpLine"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:35
-msgid "helpMatching"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhelpop.java:20
-msgid "helpOp"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:138
-msgid "helpPlugin"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandbook.java:82
 msgid "holdBook"
 msgstr ""
@@ -646,16 +2318,8 @@ msgstr ""
 msgid "holdFirework"
 msgstr ""
 
-#: Essentials/src/net/ess3/utils/LocationUtil.java:176
-msgid "holeInFloor"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandsethome.java:81
 msgid "homeSet"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhome.java:89
-msgid "homes"
 msgstr ""
 
 #: Essentials/src/net/ess3/utils/DateUtil.java:37
@@ -666,54 +2330,8 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandignore.java:43
-msgid "ignorePlayer"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/DateUtil.java:132
-msgid "illegalDate"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/TextPager.java:90
-msgid "infoChapter"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/TextPager.java:188
-msgid "infoChapterPages"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/TextPager.java:69
-#: Essentials/src/net/ess3/utils/textreader/TextPager.java:136
-msgid "infoPages"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/BookPager.java:29
-#: Essentials/src/net/ess3/utils/textreader/TextPager.java:169
-msgid "infoUnknownChapter"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandinvsee.java:46
-msgid "invBigger"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandinvsee.java:30
-msgid "invRestored"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandinvsee.java:49
-msgid "invSee"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandinvsee.java:50
-msgid "invSeeHelp"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandpay.java:22
 msgid "invalidAmount"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:402
-msgid "invalidCharge"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandfirework.java:67
@@ -722,16 +2340,6 @@ msgstr ""
 #: Essentials/src/net/ess3/MetaItemStack.java:316
 #: Essentials/src/net/ess3/MetaItemStack.java:339
 msgid "invalidFireworkFormat"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsethome.java:66
-msgid "invalidHomeName"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandkillall.java:81
-#: Essentials/src/net/ess3/commands/Commandspawner.java:41
-#: Essentials/src/net/ess3/SpawnMob.java:195
-msgid "invalidMob"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandrecipe.java:37
@@ -744,60 +2352,8 @@ msgstr ""
 msgid "invalidPotionMeta"
 msgstr ""
 
-#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:29
-#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:74
-#: EssentialsSigns/src/net/ess3/signs/signs/SignGameMode.java:42
-#: EssentialsSigns/src/net/ess3/signs/signs/SignRepair.java:29
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:204
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:260
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:357
-msgid "invalidSignLine"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsetwarp.java:23
-msgid "invalidWarpName"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandremove.java:71
-#: Essentials/src/net/ess3/commands/Commandtime.java:162
-#: Essentials/src/net/ess3/commands/Commandworld.java:46
-msgid "invalidWorld"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandclearinventory.java:33
-msgid "inventoryCleared"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandclearinventory.java:23
-#: Essentials/src/net/ess3/commands/Commandclearinventory.java:54
-#: Essentials/src/net/ess3/commands/Commandclearinventory.java:66
-msgid "inventoryClearedOthers"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandrealname.java:37
 msgid "is"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsell.java:91
-#: Essentials/src/net/ess3/commands/Commandworth.java:41
-#: Essentials/src/net/ess3/commands/Commandworth.java:79
-msgid "itemCannotBeSold"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsell.java:130
-msgid "itemNotEnough1"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsell.java:131
-msgid "itemNotEnough2"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsell.java:132
-msgid "itemNotEnough3"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsell.java:75
-msgid "itemSellAir"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandsell.java:151
@@ -808,139 +2364,8 @@ msgstr ""
 msgid "itemSoldConsole"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commanditem.java:81
-msgid "itemSpawn"
-msgstr ""
-
-#: Essentials/src/net/ess3/storage/ManagedFile.java:50
-msgid "itemsCsvNotLoaded"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:68
-msgid "jailAlreadyIncarcerated"
-msgstr ""
-
-#: Essentials/src/net/ess3/Jails.java:210
-#: Essentials/src/net/ess3/Jails.java:237
-msgid "jailMessage"
-msgstr ""
-
-#: Essentials/src/net/ess3/Jails.java:56 Essentials/src/net/ess3/Jails.java:61
-msgid "jailNotExist"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:97
-msgid "jailReleased"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:90
-msgid "jailReleasedPlayerNotify"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:78
-msgid "jailSentenceExtended"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsetjail.java:18
-msgid "jailSet"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandjump.java:28
-msgid "jumpError"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandkick.java:27
-#: Essentials/src/net/ess3/commands/Commandkickall.java:15
-msgid "kickDefault"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandkick.java:25
-msgid "kickExempt"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandkill.java:34
-#: Essentials/src/net/ess3/commands/Commandkillall.java:152
-msgid "kill"
-msgstr ""
-
-#: Essentials/src/net/ess3/Kits.java:30 Essentials/src/net/ess3/Kits.java:35
-msgid "kitError2"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandkit.java:58
-msgid "kitGive"
-msgstr ""
-
-#: Essentials/src/net/ess3/Kits.java:101
-msgid "kitTimed"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandkit.java:34
-msgid "kits"
-msgstr ""
-
 #: Essentials/src/net/ess3/MetaItemStack.java:232
 msgid "leatherSyntax"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlightning.java:59
-msgid "lightningSmited"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlightning.java:50
-msgid "lightningUse"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:101
-#: Essentials/src/net/ess3/commands/Commandlist.java:148
-msgid "listAfkTag"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:42
-#: Essentials/src/net/ess3/commands/Commandlist.java:47
-msgid "listAmount"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:38
-msgid "listAmountHidden"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:84
-msgid "listGroupTag"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:106
-#: Essentials/src/net/ess3/commands/Commandlist.java:153
-msgid "listHiddenTag"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmail.java:30
-msgid "mailClear"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmail.java:67
-msgid "mailCleared"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmail.java:50
-#: Essentials/src/net/ess3/commands/Commandmail.java:60
-#: Essentials/src/net/ess3/commands/Commandmail.java:88
-#: Essentials/src/net/ess3/commands/Commandmail.java:100
-msgid "mailSent"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/signs/SignMail.java:30
-msgid "markMailAsRead"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsethome.java:41
-#: Essentials/src/net/ess3/commands/Commandsethome.java:47
-msgid "maxHomes"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:29
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:37
-msgid "mayNotJail"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandmsg.java:46
@@ -975,70 +2400,12 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
-#: Essentials/src/net/ess3/economy/Trade.java:77
-#: Essentials/src/net/ess3/economy/Trade.java:158
-#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:95
-#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:99
-msgid "missingItems"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandspawner.java:65
-msgid "mobSpawnError"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandfirework.java:86
-#: Essentials/src/net/ess3/SpawnMob.java:127
-msgid "mobSpawnLimit"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandspawner.java:30
-msgid "mobSpawnTarget"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandspawner.java:24
-#: Essentials/src/net/ess3/commands/Commandspawnmob.java:19
-msgid "mobsAvailable"
-msgstr ""
-
-#: Essentials/src/net/ess3/user/User.java:143
-msgid "moneyRecievedFrom"
-msgstr ""
-
-#: Essentials/src/net/ess3/user/User.java:142
-msgid "moneySentTo"
-msgstr ""
-
 #: Essentials/src/net/ess3/utils/DateUtil.java:37
 msgid "month"
 msgstr ""
 
 #: Essentials/src/net/ess3/utils/DateUtil.java:37
 msgid "months"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:300
-#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:322
-#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:366
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:160
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:173
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:177
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:195
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:199
-msgid "moreThanZero"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandspeed.java:64
-#: Essentials/src/net/ess3/commands/Commandspeed.java:80
-msgid "moveSpeed"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmsg.java:53
-#: Essentials/src/net/ess3/commands/Commandmsg.java:55
-#: Essentials/src/net/ess3/commands/Commandmsg.java:90
-#: Essentials/src/net/ess3/commands/Commandmsg.java:95
-#: Essentials/src/net/ess3/commands/Commandr.java:54
-#: Essentials/src/net/ess3/commands/Commandr.java:62
-msgid "msgFormat"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandfirework.java:132
@@ -1051,106 +2418,16 @@ msgstr ""
 msgid "multiplePotionEffects"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandmute.java:24
-msgid "muteExempt"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandmute.java:42
 msgid "mutedPlayer"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmute.java:41
-msgid "mutedPlayerFor"
-msgstr ""
-
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:75
-msgid "mutedUserSpeaks"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnear.java:50
-#: Essentials/src/net/ess3/commands/Commandnear.java:77
-msgid "nearbyPlayers"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtp.java:49
 msgid "needTpohere"
 msgstr ""
 
-#: Essentials/src/net/ess3/api/NoLoanPermittedException.java:15
-msgid "negativeBalanceError"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnick.java:35
-#: Essentials/src/net/ess3/commands/Commandnick.java:61
-msgid "nickChanged"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnick.java:26
-#: Essentials/src/net/ess3/commands/Commandnick.java:51
-msgid "nickDisplayName"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnick.java:120
-msgid "nickInUse"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnick.java:94
-msgid "nickNamesAlpha"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnick.java:105
-msgid "nickNoMore"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnick.java:32
-msgid "nickOthersPermission"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnick.java:126
-msgid "nickSet"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnick.java:99
-msgid "nickTooLong"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandnear.java:54
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:118
-#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:249
-msgid "noAccessCommand"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbreak.java:28
-msgid "noBreakBedrock"
-msgstr ""
-
 #: Essentials/src/net/ess3/MetaItemStack.java:181
 msgid "noChapterMeta"
-msgstr ""
-
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:492
-msgid "noGodWorldWarning"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhome.java:77
-msgid "noHomeSet"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhome.java:77
-msgid "noHomeSetPlayer"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandkit.java:45
-#: EssentialsSigns/src/net/ess3/signs/signs/SignKit.java:77
-msgid "noKitPermission"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandkit.java:23
-msgid "noKits"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmail.java:23
-msgid "noMail"
 msgstr ""
 
 #: Essentials/src/net/ess3/MetaItemStack.java:114
@@ -1162,50 +2439,8 @@ msgstr ""
 msgid "noMetaPerm"
 msgstr ""
 
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:322
-#: EssentialsSigns/src/net/ess3/signs/signs/SignMail.java:23
-msgid "noNewMail"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpaccept.java:19
-#: Essentials/src/net/ess3/commands/Commandtpaccept.java:26
-#: Essentials/src/net/ess3/commands/Commandtpaccept.java:31
-#: Essentials/src/net/ess3/commands/Commandtpdeny.java:15
-msgid "noPendingRequest"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhome.java:105
-#: Essentials/src/net/ess3/commands/Commandmail.java:37
-#: Essentials/src/net/ess3/commands/Commandmail.java:57
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:71
-#: Essentials/src/net/ess3/commands/Commandtp.java:33
-#: Essentials/src/net/ess3/commands/Commandtp.java:38
-#: Essentials/src/net/ess3/commands/Commandtp.java:68
-#: Essentials/src/net/ess3/commands/Commandtpa.java:29
-#: Essentials/src/net/ess3/commands/Commandtpa.java:34
-#: Essentials/src/net/ess3/commands/Commandtpahere.java:30
-#: Essentials/src/net/ess3/commands/Commandtpahere.java:35
-#: Essentials/src/net/ess3/commands/Commandtphere.java:25
-#: Essentials/src/net/ess3/commands/Commandtpo.java:27
-#: Essentials/src/net/ess3/commands/Commandtpohere.java:28
-#: Essentials/src/net/ess3/commands/Commandtpohere.java:33
-msgid "noPerm"
-msgstr ""
-
-#: Essentials/src/net/ess3/SpawnMob.java:200
-msgid "noPermToSpawnMob"
-msgstr ""
-
 #: Essentials/src/net/ess3/MetaItemStack.java:368
 msgid "noPotionEffectPerm"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertooltoggle.java:16
-msgid "noPowerTools"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwarp.java:78
-msgid "noWarpsDefined"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandnear.java:109
@@ -1214,223 +2449,20 @@ msgstr ""
 msgid "none"
 msgstr ""
 
-#: Essentials/src/net/ess3/economy/Trade.java:88
-#: Essentials/src/net/ess3/economy/Trade.java:179
-msgid "notEnoughExperience"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandeco.java:81
-#: Essentials/src/net/ess3/commands/Commandeco.java:109
-#: Essentials/src/net/ess3/economy/Trade.java:71
-#: Essentials/src/net/ess3/economy/Trade.java:83
-#: Essentials/src/net/ess3/economy/Trade.java:149
-#: Essentials/src/net/ess3/economy/Trade.java:170
-#: Essentials/src/net/ess3/user/User.java:147
-msgid "notEnoughMoney"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandwhois.java:76
-msgid "notFlying"
-msgstr ""
-
-#: Essentials/src/net/ess3/bukkit/VersionCheck.java:35
-msgid "notRecommendedBukkit"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandenchant.java:26
-msgid "nothingInHand"
+msgid "not flying"
 msgstr ""
 
 #: Essentials/src/net/ess3/utils/DateUtil.java:25
 msgid "now"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandkillall.java:48
-#: Essentials/src/net/ess3/commands/Commandremove.java:44
-#: Essentials/src/net/ess3/SpawnMob.java:145
-msgid "numberRequired"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTime.java:34
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTime.java:58
-msgid "onlyDayNight"
-msgstr ""
-
 #: Essentials/src/net/ess3/MetaItemStack.java:164
 msgid "onlyPlayerSkulls"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandmail.java:78
-#: Essentials/src/net/ess3/commands/Commandmail.java:82
-#: Essentials/src/net/ess3/commands/EssentialsCommand.java:56
-msgid "onlyPlayers"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/signs/SignWeather.java:34
-#: EssentialsSigns/src/net/ess3/signs/signs/SignWeather.java:56
-msgid "onlySunStorm"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbalancetop.java:80
-#: Essentials/src/net/ess3/commands/Commandbalancetop.java:93
-msgid "orderBalances"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandptime.java:109
-msgid "pTimeCurrent"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandptime.java:105
-msgid "pTimeCurrentFixed"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandptime.java:98
-msgid "pTimeNormal"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandptime.java:46
-msgid "pTimeOthersPermission"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandptime.java:91
-msgid "pTimePlayers"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandptime.java:161
-msgid "pTimeReset"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandptime.java:172
-msgid "pTimeSet"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandptime.java:168
-msgid "pTimeSetFixed"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpaccept.java:61
-#: Essentials/src/net/ess3/Teleport.java:152
-#: Essentials/src/net/ess3/Teleport.java:155
-msgid "pendingTeleportCancelled"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandban.java:65
-#: Essentials/src/net/ess3/commands/Commandtempban.java:68
-msgid "playerBanned"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:62
-msgid "playerJailed"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:62
-msgid "playerJailedFor"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandkick.java:36
-#: Essentials/src/net/ess3/user/User.java:409
-msgid "playerKicked"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmute.java:45
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:74
-msgid "playerMuted"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmute.java:45
-msgid "playerMutedFor"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmail.java:43
-msgid "playerNeverOnServer"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbanip.java:30
-#: Essentials/src/net/ess3/commands/Commandclearinventory.java:27
-#: Essentials/src/net/ess3/commands/Commandclearinventory.java:58
-#: Essentials/src/net/ess3/commands/Commandclearinventory.java:70
-#: Essentials/src/net/ess3/commands/Commandexp.java:97
-#: Essentials/src/net/ess3/commands/Commandexp.java:111
-#: Essentials/src/net/ess3/commands/Commandfeed.java:34
-#: Essentials/src/net/ess3/commands/Commandheal.java:56
-#: Essentials/src/net/ess3/commands/Commandlightning.java:32
-#: Essentials/src/net/ess3/commands/Commandmsg.java:66
-#: Essentials/src/net/ess3/commands/Commandmsg.java:83
-#: Essentials/src/net/ess3/commands/Commandpay.java:37
-#: Essentials/src/net/ess3/commands/Commandptime.java:224
-#: Essentials/src/net/ess3/commands/Commandrealname.java:42
-#: Essentials/src/net/ess3/commands/Commandsethome.java:57
-#: Essentials/src/net/ess3/commands/Commandtpo.java:37
-#: Essentials/src/net/ess3/commands/Commandtpohere.java:45
-#: Essentials/src/net/ess3/commands/Commandwarp.java:65
-#: Essentials/src/net/ess3/commands/Commandwhois.java:89
-#: Essentials/src/net/ess3/user/PlayerNotFoundException.java:13
-msgid "playerNotFound"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandmute.java:45
-msgid "playerUnmuted"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandping.java:15
-msgid "pong"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandworld.java:47
-msgid "possibleWorlds"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:34
-msgid "powerToolAir"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:76
-msgid "powerToolAlreadySet"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:86
-msgid "powerToolAttach"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:27
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:160
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:507
-msgid "powerToolClearAll"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:49
-msgid "powerToolList"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:45
-msgid "powerToolListEmpty"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:58
-msgid "powerToolNoSuchCommandAssigned"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:63
-msgid "powerToolRemove"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:92
-msgid "powerToolRemoveAll"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertooltoggle.java:22
-msgid "powerToolsDisabled"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandpowertool.java:98
-#: Essentials/src/net/ess3/commands/Commandpowertooltoggle.java:22
-msgid "powerToolsEnabled"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/textreader/TextPager.java:77
-#: Essentials/src/net/ess3/utils/textreader/TextPager.java:144
-#: Essentials/src/net/ess3/utils/textreader/TextPager.java:196
-msgid "readNextPage"
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:68
+msgid "placed:"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandrecipe.java:53
@@ -1476,116 +2508,12 @@ msgstr ""
 msgid "recipeWhere"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandremove.java:152
-msgid "removed"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrepair.java:48
-#: Essentials/src/net/ess3/commands/Commandrepair.java:68
-msgid "repair"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrepair.java:89
-msgid "repairAlreadyFixed"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrepair.java:36
-msgid "repairEnchanted"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrepair.java:31
-#: Essentials/src/net/ess3/commands/Commandrepair.java:84
-msgid "repairInvalidType"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrepair.java:64
-msgid "repairNone"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpaccept.java:45
-msgid "requestAccepted"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpaccept.java:46
-msgid "requestAcceptedFrom"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpdeny.java:18
-msgid "requestDenied"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpdeny.java:19
-msgid "requestDeniedFrom"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpa.java:49
-#: Essentials/src/net/ess3/commands/Commandtpahere.java:49
-msgid "requestSent"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpaccept.java:41
-msgid "requestTimedOut"
-msgstr ""
-
-#: Essentials/src/net/ess3/bukkit/VersionCheck.java:36
-msgid "requiredBukkit"
-msgstr ""
-
-#: Essentials/src/net/ess3/Jails.java:177
-#: Essentials/src/net/ess3/Jails.java:181
-#: Essentials/src/net/ess3/Jails.java:203
-#: Essentials/src/net/ess3/Jails.java:207
-#: Essentials/src/net/ess3/Jails.java:230
-#: Essentials/src/net/ess3/Jails.java:234
-msgid "returnPlayerToJailError"
-msgstr ""
-
 #: Essentials/src/net/ess3/utils/DateUtil.java:37
 msgid "second"
 msgstr ""
 
 #: Essentials/src/net/ess3/utils/DateUtil.java:37
 msgid "seconds"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandseen.java:57
-msgid "seenOffline"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandseen.java:36
-msgid "seenOnline"
-msgstr ""
-
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:396
-msgid "serverFull"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbalancetop.java:158
-msgid "serverTotal"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandspawner.java:61
-msgid "setSpawner"
-msgstr ""
-
-#: Essentials/src/net/ess3/SpawnMob.java:241
-msgid "sheepMalformedColor"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:42
-msgid "signFormatFail"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:66
-msgid "signFormatSuccess"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:71
-msgid "signFormatTemplate"
-msgstr ""
-
-#: Essentials/src/net/ess3/SpawnMob.java:216
-msgid "slimeMalformedSize"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandsocialspy.java:34
@@ -1597,69 +2525,8 @@ msgstr ""
 msgid "socialSpyMode"
 msgstr ""
 
-#: Essentials/src/net/ess3/SpawnMob.java:149
-msgid "soloMob"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsetspawn.java:14
-msgid "spawnSet"
-msgstr ""
-
 #: Essentials/src/net/ess3/SpawnMob.java:137
 msgid "spawned"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsudo.java:32
-msgid "sudoExempt"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsudo.java:36
-msgid "sudoRun"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsuicide.java:16
-msgid "suicideMessage"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsuicide.java:17
-msgid "suicideSuccess"
-msgstr ""
-
-#: Essentials/src/net/ess3/user/User.java:165
-msgid "takenFromAccount"
-msgstr ""
-
-#: Essentials/src/net/ess3/user/User.java:168
-msgid "takenFromOthersAccount"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpaall.java:32
-msgid "teleportAAll"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpall.java:33
-msgid "teleportAll"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandspawn.java:25
-#: Essentials/src/net/ess3/commands/Commandspawn.java:44
-#: Essentials/src/net/ess3/commands/Commandtp.java:71
-#: Essentials/src/net/ess3/commands/Commandtp.java:88
-msgid "teleportAtoB"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtp.java:28
-#: Essentials/src/net/ess3/commands/Commandtp.java:59
-#: Essentials/src/net/ess3/commands/Commandtp.java:63
-#: Essentials/src/net/ess3/commands/Commandtpa.java:23
-#: Essentials/src/net/ess3/commands/Commandtpahere.java:23
-#: Essentials/src/net/ess3/commands/Commandtphere.java:19
-msgid "teleportDisabled"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpaall.java:55
-#: Essentials/src/net/ess3/commands/Commandtpahere.java:38
-msgid "teleportHereRequest"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtptoggle.java:30
@@ -1667,90 +2534,16 @@ msgstr ""
 msgid "teleportMode"
 msgstr ""
 
-#: Essentials/src/net/ess3/settings/SpawnsHolder.java:265
-msgid "teleportNewPlayerError"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpa.java:39
-msgid "teleportRequest"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpa.java:46
-#: Essentials/src/net/ess3/commands/Commandtpaall.java:61
-#: Essentials/src/net/ess3/commands/Commandtpahere.java:47
-msgid "teleportRequestTimeoutInfo"
-msgstr ""
-
 #: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:500
 msgid "teleportRequestsCancelledWorldChange"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtop.java:24
-msgid "teleportTop"
-msgstr ""
-
-#: Essentials/src/net/ess3/Teleport.java:94
-msgid "teleportationCommencing"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandspawn.java:26
-#: Essentials/src/net/ess3/commands/Commandspawn.java:45
-#: Essentials/src/net/ess3/commands/Commandtp.java:40
-#: Essentials/src/net/ess3/commands/Commandtp.java:51
-#: Essentials/src/net/ess3/commands/Commandtp.java:84
-#: Essentials/src/net/ess3/commands/Commandtphere.java:29
-#: Essentials/src/net/ess3/commands/Commandtphere.java:30
-#: Essentials/src/net/ess3/commands/Commandtpo.java:33
-#: Essentials/src/net/ess3/commands/Commandtpohere.java:41
-#: Essentials/src/net/ess3/commands/Commandtppos.java:40
-#: Essentials/src/net/ess3/commands/Commandtppos.java:71
-#: Essentials/src/net/ess3/commands/Commandtppos.java:72
-msgid "teleporting"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtempban.java:52
-msgid "tempBanned"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtempban.java:30
-#: Essentials/src/net/ess3/commands/Commandtempban.java:38
-msgid "tempbanExempt"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtempban.java:48
 msgid "tempbanOversized"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandthunder.java:31
-msgid "thunder"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandthunder.java:25
-msgid "thunderDuration"
-msgstr ""
-
-#: Essentials/src/net/ess3/Teleport.java:135
-msgid "timeBeforeTeleport"
-msgstr ""
-
-#: Essentials/src/net/ess3/utils/DescParseTickFormat.java:231
-msgid "timeFormat"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtime.java:48
-msgid "timeSetPermission"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtime.java:80
-msgid "timeWorldCurrent"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandtime.java:97
 msgid "timeWorldFailed"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtime.java:123
-msgid "timeWorldSet"
 msgstr ""
 
 #: Essentials/src/net/ess3/user/TooManyMatchesException.java:44
@@ -1766,30 +2559,8 @@ msgstr ""
 msgid "tpposTooFar"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandgc.java:32
-msgid "tps"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandtptoggle.java:34
 msgid "tptoggleFailed"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:229
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:242
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:254
-msgid "tradeSignEmpty"
-msgstr ""
-
-#: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:52
-msgid "tradeSignEmptyOwner"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtree.java:66
-msgid "treeFailure"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtree.java:62
-msgid "treeSpawned"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandseen.java:39
@@ -1805,75 +2576,12 @@ msgstr ""
 msgid "true"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandtpa.java:40
-#: Essentials/src/net/ess3/commands/Commandtpaall.java:56
-#: Essentials/src/net/ess3/commands/Commandtpahere.java:39
-msgid "typeTpaccept"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtpa.java:41
-#: Essentials/src/net/ess3/commands/Commandtpahere.java:40
-msgid "typeTpdeny"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandworld.java:48
-msgid "typeWorldName"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandspawner.java:46
-#: Essentials/src/net/ess3/SpawnMob.java:93
-#: Essentials/src/net/ess3/SpawnMob.java:141
-msgid "unableToSpawnMob"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandunbanip.java:26
-msgid "unbannedIP"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandunban.java:24
-msgid "unbannedPlayer"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandignore.java:38
-msgid "unignorePlayer"
-msgstr ""
-
-#: Essentials/src/net/ess3/ItemDb.java:155
-msgid "unknownItemId"
-msgstr ""
-
-#: Essentials2Compat/src/com/earth2me/essentials/Settings.java:449
-#: Essentials2Compat/src/com/earth2me/essentials/Settings.java:486
-#: Essentials2Compat/src/com/earth2me/essentials/Settings.java:582
-msgid "unknownItemInList"
-msgstr ""
-
-#: Essentials/src/net/ess3/ItemDb.java:148
-msgid "unknownItemName"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandunlimited.java:84
-msgid "unlimitedItemPermission"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandunlimited.java:55
-msgid "unlimitedItems"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandmute.java:43
 msgid "unmutedPlayer"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandvanish.java:39
-msgid "unvanished"
-msgstr ""
-
-#: Essentials/src/net/ess3/Essentials.java:196
-msgid "unvanishedReload"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandgc.java:31
-msgid "uptime"
+#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:184
+msgid "used:"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandbalancetop.java:55
@@ -1884,31 +2592,9 @@ msgstr ""
 msgid "userBaltopShown"
 msgstr ""
 
-#: Essentials/src/net/ess3/api/UserDoesNotExistException.java:15
-msgid "userDoesNotExist"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandafk.java:38
-#: Essentials/src/net/ess3/user/User.java:418
-msgid "userIsAway"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandafk.java:32
-#: Essentials/src/net/ess3/user/User.java:385
-msgid "userIsNotAway"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:51
-msgid "userJailed"
-msgstr ""
-
 #: Essentials/src/net/ess3/user/UserMap.java:46
 #: Essentials/src/net/ess3/user/UserMap.java:68
 msgid "userNotFound"
-msgstr ""
-
-#: Essentials/src/net/ess3/Essentials.java:122
-msgid "usingTempFolderForTesting"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commanddelhome.java:53
@@ -1923,127 +2609,10 @@ msgstr ""
 msgid "vanishMode"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandvanish.java:39
-msgid "vanished"
-msgstr ""
-
-#: Essentials/src/net/ess3/bukkit/VersionCheck.java:26
-msgid "versionMismatch"
-msgstr ""
-
-#: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsConnect.java:23
-#: EssentialsChat/src/net/ess3/chat/EssentialsChat.java:31
-#: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIP.java:21
-#: EssentialsProtect/src/net/ess3/protect/EssentialsConnect.java:21
-#: EssentialsSigns/src/net/ess3/signs/EssentialsSignsPlugin.java:29
-#: EssentialsXMPP/src/net/ess3/xmpp/EssentialsXMPP.java:43
-msgid "versionMismatchAll"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandme.java:16
-#: Essentials/src/net/ess3/commands/Commandmsg.java:30
-msgid "voiceSilenced"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwarp.java:28
-msgid "warpListPermission"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/WarpNotFoundException.java:12
-#: Essentials/src/net/ess3/Warps.java:52
-msgid "warpNotExist"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsetwarp.java:45
-msgid "warpOverwrite"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsetwarp.java:48
-msgid "warpSet"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwarp.java:126
-msgid "warpUsePermission"
-msgstr ""
-
-#: Essentials/src/net/ess3/Teleport.java:307
-msgid "warpingTo"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwarp.java:110
-msgid "warps"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwarp.java:105
-msgid "warpsCount"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandweather.java:43
 msgid "weatherConsole"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandweather.java:34
-#: Essentials/src/net/ess3/commands/Commandweather.java:64
-msgid "weatherStorm"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandweather.java:28
-#: Essentials/src/net/ess3/commands/Commandweather.java:58
-msgid "weatherStormFor"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandweather.java:34
-#: Essentials/src/net/ess3/commands/Commandweather.java:64
-msgid "weatherSun"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandweather.java:28
-#: Essentials/src/net/ess3/commands/Commandweather.java:58
-msgid "weatherSunFor"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandseen.java:39
-#: Essentials/src/net/ess3/commands/Commandwhois.java:77
-msgid "whoisAFK"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandseen.java:60
-msgid "whoisBanned"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwhois.java:61
-msgid "whoisExp"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwhois.java:76
-msgid "whoisFly"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwhois.java:73
-msgid "whoisGamemode"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwhois.java:71
-msgid "whoisGeoLocation"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwhois.java:74
-msgid "whoisGod"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwhois.java:60
-msgid "whoisHealth"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwhois.java:67
-msgid "whoisIPAddress"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwhois.java:59
-msgid "whoisIs"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandseen.java:43
 #: Essentials/src/net/ess3/commands/Commandwhois.java:80
 msgid "whoisJail"
 msgstr ""
@@ -2052,24 +2621,12 @@ msgstr ""
 msgid "whoisLocation"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandwhois.java:66
-msgid "whoisMoney"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandwhois.java:84
 msgid "whoisMute"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandseen.java:49
-msgid "whoisMuted"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandwhois.java:75
 msgid "whoisOP"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandwhois.java:58
-msgid "whoisTop"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandweather.java:50
@@ -2086,11 +2643,6 @@ msgstr ""
 msgid "worthMeta"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandsetworth.java:34
-#: Essentials/src/net/ess3/commands/Commandsetworth.java:47
-msgid "worthSet"
-msgstr ""
-
 #: Essentials/src/net/ess3/utils/DateUtil.java:37
 msgid "year"
 msgstr ""
@@ -2099,11 +2651,154 @@ msgstr ""
 msgid "years"
 msgstr ""
 
-#: EssentialsSigns/src/net/ess3/signs/signs/SignHeal.java:33
-msgid "youAreHealed"
+#: Essentials/src/net/ess3/commands/Commandme.java:34
+#, java-format
+msgid "{0}"
 msgstr ""
 
-#: Essentials/src/net/ess3/EssentialsTimer.java:69
-#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:330
-msgid "youHaveNewMail"
+#: Essentials/src/net/ess3/commands/Commandtpaccept.java:46
+#, java-format
+msgid "{0} accepted your teleport request."
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:126
+#, java-format
+msgid "{0} added to {1} account. New balance: {2}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandpowertool.java:86
+#, java-format
+msgid "{0} command assigned to {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpdeny.java:19
+#, java-format
+msgid "{0} denied your teleport request."
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:123
+#, java-format
+msgid "{0} has been added to your account."
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:143
+#, java-format
+msgid "{0} has been received from {1}"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:142
+#, java-format
+msgid "{0} has been sent to {1}"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:165
+#, java-format
+msgid "{0} has been taken from your account."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpaall.java:55
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:38
+#, java-format
+msgid "{0} has requested that you teleport to them."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtpa.java:39
+#, java-format
+msgid "{0} has requested to teleport to you."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtp.java:28
+#: Essentials/src/net/ess3/commands/Commandtp.java:59
+#: Essentials/src/net/ess3/commands/Commandtp.java:63
+#: Essentials/src/net/ess3/commands/Commandtpa.java:23
+#: Essentials/src/net/ess3/commands/Commandtpahere.java:23
+#: Essentials/src/net/ess3/commands/Commandtphere.java:19
+#, java-format
+msgid "{0} has teleportation disabled."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandexp.java:121
+#, java-format
+msgid "{0} has {1} exp (level {2}) and needs {3} more exp to level up."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandafk.java:32
+#: Essentials/src/net/ess3/user/User.java:385
+#, java-format
+msgid "{0} is no longer AFK."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandafk.java:38
+#: Essentials/src/net/ess3/user/User.java:418
+#, java-format
+msgid "{0} is now AFK."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandwhois.java:59
+#, java-format
+msgid "{0} is {1}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandexp.java:136
+#, java-format
+msgid "{0} now has {1} exp."
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/DescParseTickFormat.java:231
+#, java-format
+msgid "{0} or {1} or {2}"
+msgstr ""
+
+#: Essentials/src/net/ess3/user/User.java:168
+#, java-format
+msgid "{0} taken from {1} account. New balance: {2}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandspawn.java:25
+#: Essentials/src/net/ess3/commands/Commandspawn.java:44
+#: Essentials/src/net/ess3/commands/Commandtp.java:71
+#: Essentials/src/net/ess3/commands/Commandtp.java:88
+#, java-format
+msgid "{0} teleported you to {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:75
+#, java-format
+msgid "{0} tried to speak, but is muted."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:117
+#: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:248
+#, java-format
+msgid "{0} was denied access to command."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:105
+#, java-format
+msgid "{0}''s time is fixed to {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:98
+#, java-format
+msgid "{0}''s time is normal and matches the server."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandptime.java:109
+#, java-format
+msgid "{0}''s time is {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:84
+#, java-format
+msgid "{0}: "
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/textreader/HelpInput.java:138
+#, java-format
+msgid "{0}: Plugin Help: /help {1}"
+msgstr ""
+
+#: Essentials/src/net/ess3/utils/FormatUtil.java:135
+#, java-format
+msgid "{0}{1}"
 msgstr ""

@@ -23,6 +23,6 @@ public class Commandunbanip extends EssentialsCommand
 		{
 		}
 		ess.getServer().unbanIP(args[0]);
-		sender.sendMessage(_("unbannedIP"));
+		sender.sendMessage(_("Unbanned IP address."));
 	}
 }

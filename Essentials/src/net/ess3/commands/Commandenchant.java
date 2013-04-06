@@ -23,7 +23,7 @@ public class Commandenchant extends EssentialsCommand
 		final ItemStack stack = user.getPlayer().getItemInHand();
 		if (stack == null)
 		{
-			throw new Exception(_("nothingInHand"));
+			throw new Exception(_("You have nothing in your hand."));
 		}
 		if (args.length == 0)
 		{
@@ -37,7 +37,7 @@ public class Commandenchant extends EssentialsCommand
 					//enchantmentslist.add(enchantmentName);
 				}
 			}
-			throw new NotEnoughArgumentsException(_("enchantments", Util.joinList(enchantmentslist.toArray())));
+			throw new NotEnoughArgumentsException(_(" Enchantments: {0}", Util.joinList(enchantmentslist.toArray())));
 		}
 		int level = -1;
 		if (args.length > 1)
@@ -78,11 +78,11 @@ public class Commandenchant extends EssentialsCommand
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
 		if (level == 0)
 		{
-			user.sendMessage(_("enchantmentRemoved", enchantmentName.replace('_', ' ')));
+			user.sendMessage(_(" The enchantment {0} has been removed from your item in hand.", enchantmentName.replace('_', ' ')));
 		}
 		else
 		{
-			user.sendMessage(_("enchantmentApplied", enchantmentName.replace('_', ' ')));
+			user.sendMessage(_(" The enchantment {0} has been applied to your item in hand.", enchantmentName.replace('_', ' ')));
 		}
 	}
 
@@ -92,12 +92,12 @@ public class Commandenchant extends EssentialsCommand
 		final Enchantment enchantment = Enchantments.getByName(name);
 		if (enchantment == null)
 		{
-			throw new Exception(_("enchantmentNotFound"));
+			throw new Exception(_(" Enchantment not found"));
 		}
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
 		if (user != null && !Permissions.ENCHANT.isAuthorized(user, enchantmentName))
 		{
-			throw new Exception(_("enchantmentPerm", enchantmentName));
+			throw new Exception(_(" You do not have the permission for {0}.", enchantmentName));
 		}
 		return enchantment;
 	}

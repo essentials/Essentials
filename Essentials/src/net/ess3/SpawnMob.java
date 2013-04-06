@@ -90,7 +90,7 @@ public class SpawnMob
 		final Block block = LocationUtil.getTarget(user.getPlayer()).getBlock();
 		if (block == null)
 		{
-			throw new Exception(_("unableToSpawnMob"));
+			throw new Exception(_("Unable to spawn mob."));
 		}
 		spawnmob(ess, server, user, user, block.getLocation(), parts, data, mobCount);
 	}
@@ -124,7 +124,7 @@ public class SpawnMob
 		if (mobCount > serverLimit)
 		{
 			mobCount = serverLimit;
-			sender.sendMessage(_("mobSpawnLimit"));
+			sender.sendMessage(_("Mob quantity limited to server limit."));
 		}
 
 		EntityType mob = LivingEntities.fromName(parts.get(0));
@@ -138,15 +138,15 @@ public class SpawnMob
 		}
 		catch (MobException e1)
 		{
-			throw new Exception(_("unableToSpawnMob"), e1);
+			throw new Exception(_("Unable to spawn mob."), e1);
 		}
 		catch (NumberFormatException e2)
 		{
-			throw new Exception(_("numberRequired"), e2);
+			throw new Exception(_("A number goes there, silly."), e2);
 		}
 		catch (NullPointerException np)
 		{
-			throw new Exception(_("soloMob"), np);
+			throw new Exception(_("That mob likes to be alone."), np);
 		}
 	}
 
@@ -192,12 +192,12 @@ public class SpawnMob
 	{
 		if (mob == null)
 		{
-			throw new Exception(_("invalidMob"));
+			throw new Exception(_("Invalid mob type."));
 		}
 
 		if (!Permissions.SPAWNMOB.isAuthorized((User) sender, mob.getName()))
 		{
-			throw new Exception(_("noPermToSpawnMob"));
+			throw new Exception(_("You don't have permission to spawn this mob."));
 		}
 	}
 
@@ -213,7 +213,7 @@ public class SpawnMob
 			}
 			catch (Exception e)
 			{
-				throw new Exception(_("slimeMalformedSize"), e);
+				throw new Exception(_("Malformed size."), e);
 			}
 		}
 		if (spawned instanceof Ageable && data.contains("baby"))
@@ -238,7 +238,7 @@ public class SpawnMob
 			}
 			catch (Exception e)
 			{
-				throw new Exception(_("sheepMalformedColor"), e);
+				throw new Exception(_("Malformed color."), e);
 			}
 		}
 		if (spawned instanceof Tameable && data.contains("tamed") && target != null)
