@@ -35,16 +35,16 @@ public class Commandlist extends EssentialsCommand
 
 			if (showhidden && playerHidden > 0)
 			{
-				online = _(" There are {0}/{1} out of maximum {2} players online.", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
+				online = _("There are {0}/{1} out of maximum {2} players online.", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
 			}
 			else
 			{
-				online = _(" There are {0} out of maximum {1} players online.", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
+				online = _("There are {0} out of maximum {1} players online.", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
 			}
 		}
 		else
 		{
-			online = _(" There are {0} out of maximum {1} players online.", server.getOnlinePlayers().length, server.getMaxPlayers());
+			online = _("There are {0} out of maximum {1} players online.", server.getOnlinePlayers().length, server.getMaxPlayers());
 		}
 
 		sender.sendMessage(online);
@@ -98,12 +98,12 @@ public class Commandlist extends EssentialsCommand
 
 					if (user.getData().isAfk())
 					{
-						groupString.append(_(" [AFK]"));
+						groupString.append(" ").append(_("[AFK]"));
 					}
 
 					if (hiddenPlayers.contains(user.getName()))
 					{
-						groupString.append(_(" [HIDDEN]"));
+						groupString.append(" ").append(_("[HIDDEN]"));
 					}
 					groupString.append(user.getPlayer().getDisplayName());
 					groupString.append("§f");
@@ -145,12 +145,12 @@ public class Commandlist extends EssentialsCommand
 
 				if (user.getData().isAfk())
 				{
-					onlineUsers.append(_(" [AFK]"));
+					onlineUsers.append(" ").append(_("[AFK]"));
 				}
 
 				if (hiddenPlayers.contains(user.getName()))
 				{
-					onlineUsers.append(_(" [HIDDEN]"));
+					onlineUsers.append(" ").append(_("[HIDDEN]"));
 				}
 				onlineUsers.append(user.getPlayer().getDisplayName());
 				onlineUsers.append("§f");

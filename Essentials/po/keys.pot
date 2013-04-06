@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Essentials 3.0-SNAPSHOT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-06 05:43+0200\n"
+"POT-Creation-Date: 2013-04-06 13:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,62 +97,6 @@ msgstr ""
 #: Essentials/src/net/ess3/utils/textreader/TextPager.java:136
 #, java-format
 msgid " ---- {2} -- Page {0}/{1} ----"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbigtree.java:44
-msgid " Big tree spawned."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandenchant.java:40
-#, java-format
-msgid " Enchantments: {0}"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandtogglejail.java:62
-#, java-format
-msgid " Player {0} jailed for {1}."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandenchant.java:85
-#, java-format
-msgid " The enchantment {0} has been applied to your item in hand."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandenchant.java:81
-#, java-format
-msgid " The enchantment {0} has been removed from your item in hand."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:42
-#: Essentials/src/net/ess3/commands/Commandlist.java:47
-#, java-format
-msgid " There are {0} out of maximum {1} players online."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:38
-#, java-format
-msgid " There are {0}/{1} out of maximum {2} players online."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandenchant.java:100
-#: Essentials/src/net/ess3/MetaItemStack.java:502
-#, java-format
-msgid " You do not have the permission for {0}."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandthunder.java:31
-#, java-format
-msgid " You {0} thunder in your world."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:101
-#: Essentials/src/net/ess3/commands/Commandlist.java:148
-msgid " [AFK]"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandlist.java:106
-#: Essentials/src/net/ess3/commands/Commandlist.java:153
-msgid " [HIDDEN]"
 msgstr ""
 
 #: Essentials/src/net/ess3/settings/Settings.java:22
@@ -328,6 +272,10 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandbigtree.java:48
 msgid "Big tree generation failure. Try again on grass or dirt."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbigtree.java:44
+msgid "Big tree spawned."
 msgstr ""
 
 #: Essentials/src/net/ess3/bukkit/VersionCheck.java:42
@@ -519,6 +467,11 @@ msgstr ""
 #: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:34
 #: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:79
 msgid "Enchantment not found!"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:40
+#, java-format
+msgid "Enchantments: {0}"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandhat.java:47
@@ -1018,6 +971,11 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtogglejail.java:62
 #, java-format
+msgid "Player {0} jailed for {1}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandtogglejail.java:62
+#, java-format
 msgid "Player {0} jailed."
 msgstr ""
 
@@ -1425,6 +1383,16 @@ msgid ""
 "This will also prevent that the player can attack other players"
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandenchant.java:85
+#, java-format
+msgid "The enchantment {0} has been applied to your item in hand."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandenchant.java:81
+#, java-format
+msgid "The enchantment {0} has been removed from your item in hand."
+msgstr ""
+
 #: Essentials/src/net/ess3/bukkit/BukkitPlugin.java:62
 msgid ""
 "The file is broken and Essentials can't open it. Essentials is now disabled. "
@@ -1502,9 +1470,20 @@ msgstr ""
 msgid "There are no kits available yet."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandlist.java:42
+#: Essentials/src/net/ess3/commands/Commandlist.java:47
+#, java-format
+msgid "There are {0} out of maximum {1} players online."
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandwarp.java:105
 #, java-format
 msgid "There are {0} warps. Showing page {1} of {2}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:38
+#, java-format
+msgid "There are {0}/{1} out of maximum {2} players online."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandrecipe.java:49
@@ -2022,6 +2001,12 @@ msgstr ""
 msgid "You do not have sufficient funds."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandenchant.java:100
+#: Essentials/src/net/ess3/MetaItemStack.java:502
+#, java-format
+msgid "You do not have the permission for {0}."
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandhome.java:105
 #: Essentials/src/net/ess3/commands/Commandmail.java:37
 #: Essentials/src/net/ess3/commands/Commandmail.java:57
@@ -2229,6 +2214,11 @@ msgstr ""
 msgid "You {0} thunder in your world for {1} seconds."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandthunder.java:31
+#, java-format
+msgid "You {0} thunder in your world."
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandfeed.java:25
 #: EssentialsSigns/src/net/ess3/signs/signs/SignFeed.java:31
 msgid "Your appetite was sated."
@@ -2252,9 +2242,19 @@ msgstr ""
 msgid "Your voice has been silenced!"
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandlist.java:101
+#: Essentials/src/net/ess3/commands/Commandlist.java:148
+msgid "[AFK]"
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandbroadcast.java:17
 #, java-format
 msgid "[Broadcast] {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandlist.java:106
+#: Essentials/src/net/ess3/commands/Commandlist.java:153
+msgid "[HIDDEN]"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandhelpop.java:20

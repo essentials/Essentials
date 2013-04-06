@@ -28,7 +28,7 @@ public class Commandthunder extends EssentialsCommand
 		else
 		{
 			world.setThundering(setThunder ? true : false);
-			user.sendMessage(_(" You {0} thunder in your world.", setThunder ? _("enabled") : _("disabled")));
+			user.sendMessage(_("You {0} thunder in your world.", setThunder ? _("enabled") : _("disabled")));
 		}
 
 	}

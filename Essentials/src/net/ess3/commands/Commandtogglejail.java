@@ -59,7 +59,7 @@ public class Commandtogglejail extends EssentialsCommand
 			}
 			player.queueSave();
 			sender.sendMessage(
-					(timeDiff > 0 ? _(" Player {0} jailed for {1}.", player.getName(), DateUtil.formatDateDiff(timeDiff)) : _("Player {0} jailed.", player.getName())));
+					(timeDiff > 0 ? _("Player {0} jailed for {1}.", player.getName(), DateUtil.formatDateDiff(timeDiff)) : _("Player {0} jailed.", player.getName())));
 			return;
 		}
 
