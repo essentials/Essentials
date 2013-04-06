@@ -38,7 +38,7 @@ public class Commandworth extends EssentialsCommand
 		final double worth = ess.getWorth().getPrice(iStack);
 		if (Double.isNaN(worth))
 		{
-			throw new Exception(_("That item cannot be sold to the server."));
+			throw new Exception(_("§4That item cannot be sold to the server."));
 		}
 
 		user.sendMessage(
@@ -76,7 +76,7 @@ public class Commandworth extends EssentialsCommand
 		final double worth = ess.getWorth().getPrice(iStack);
 		if (Double.isNaN(worth))
 		{
-			throw new Exception(_("That item cannot be sold to the server."));
+			throw new Exception(_("§4That item cannot be sold to the server."));
 		}
 
 		sender.sendMessage(

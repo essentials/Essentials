@@ -12,6 +12,6 @@ public class Commandbackup extends EssentialsCommand
 	{
 		final IBackup backup = ess.getBackup();
 		backup.run();
-		sender.sendMessage(_("Backup started."));
+		sender.sendMessage(_("§6Backup started."));
 	}
 }

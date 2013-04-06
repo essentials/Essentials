@@ -66,7 +66,7 @@ public class TextPager
 				{
 					content.append(I18n.capitalCase(commandName));
 				}
-				sender.sendMessage(_(" ---- {2} -- Page {0}/{1} ----", page, pages, content));
+				sender.sendMessage(_("§e ---- §6{2} §e--§6 Page §c{0}§6/§c{1} §e----", page, pages, content));
 			}
 			for (int i = start; i < lines.size() && i < start + (onePage ? 20 : 9); i++)
 			{
@@ -74,7 +74,7 @@ public class TextPager
 			}
 			if (!onePage && page < pages)
 			{
-				sender.sendMessage(_("Type /{0} {1} to read the next page.", commandName, page + 1));
+				sender.sendMessage(_("§6Type§c /{0} {1} §6to read the next page.", commandName, page + 1));
 			}
 			return;
 		}
@@ -133,7 +133,7 @@ public class TextPager
 				if (!onePage)
 				{
 
-					sender.sendMessage(_(" ---- {2} -- Page {0}/{1} ----", page, pages, I18n.capitalCase(commandName)));
+					sender.sendMessage(_("§e ---- §6{2} §e--§6 Page §c{0}§6/§c{1} §e----", page, pages, I18n.capitalCase(commandName)));
 				}
 				for (int i = start; i < end && i < start + (onePage ? 20 : 9); i++)
 				{
@@ -141,7 +141,7 @@ public class TextPager
 				}
 				if (!onePage && page < pages)
 				{
-					sender.sendMessage(_("Type /{0} {1} to read the next page.", commandName, page + 1));
+					sender.sendMessage(_("§6Type§c /{0} {1} §6to read the next page.", commandName, page + 1));
 				}
 				return;
 			}
@@ -185,7 +185,7 @@ public class TextPager
 		final int pages = (chapterend - chapterstart) / 9 + ((chapterend - chapterstart) % 9 > 0 ? 1 : 0);
 		if (!onePage)
 		{
-			sender.sendMessage(_("Chapter {0}, page {1} of {2}:", pageStr, page, pages));
+			sender.sendMessage(_("§6Chapter {0}, page §c{1}§6 of §c{2}§6:", pageStr, page, pages));
 		}
 		for (int i = start; i < chapterend && i < start + (onePage ? 20 : 9); i++)
 		{
@@ -193,7 +193,7 @@ public class TextPager
 		}
 		if (!onePage && page < pages)
 		{
-			sender.sendMessage(_("Type /{0} {1} to read the next page.", commandName, pageStr + " " + (page + 1)));
+			sender.sendMessage(_("§6Type§c /{0} {1} §6to read the next page.", commandName, pageStr + " " + (page + 1)));
 		}
 	}
 }

@@ -94,7 +94,7 @@ public class Commandexp extends EssentialsCommand
 		}
 		if (!foundUser)
 		{
-			throw new NotEnoughArgumentsException(_("Player not found."));
+			throw new NotEnoughArgumentsException(_("§4Player not found."));
 		}
 	}
 
@@ -108,7 +108,7 @@ public class Commandexp extends EssentialsCommand
 		}
 		if (!foundUser)
 		{
-			throw new NotEnoughArgumentsException(_("Player not found."));
+			throw new NotEnoughArgumentsException(_("§4Player not found."));
 		}
 	}
 
@@ -118,7 +118,7 @@ public class Commandexp extends EssentialsCommand
 		final int expLeft = (int)Util.roundDouble(
 				((((3.5 * target.getPlayer().getLevel()) + 6.7) - (totalExp - ((1.75 * (target.getPlayer().getLevel() * target.getPlayer().getLevel())) + (5.00 * target.getPlayer().getLevel())))) + 1));
 		sender.sendMessage(
-				_("{0} has {1} exp (level {2}) and needs {3} more exp to level up.", target.getPlayer().getDisplayName(), SetExpFix.getTotalExperience(target.getPlayer()), target.getPlayer().getLevel(), expLeft));
+				_("§c{0} §6has§c {1} §6exp (level§c {2}§6) and needs§c {3} §6more exp to level up.", target.getPlayer().getDisplayName(), SetExpFix.getTotalExperience(target.getPlayer()), target.getPlayer().getLevel(), expLeft));
 	}
 
 	private void setExp(final CommandSender sender, final IUser target, final String strAmount, final boolean give)
@@ -133,6 +133,6 @@ public class Commandexp extends EssentialsCommand
 			amount = (long)Integer.MAX_VALUE;
 		}
 		SetExpFix.setTotalExperience(target.getPlayer(), amount.intValue());
-		sender.sendMessage(_("{0} now has {1} exp.", target.getPlayer().getDisplayName(), amount));
+		sender.sendMessage(_("§c{0} §6now has§c {1} §6exp.", target.getPlayer().getDisplayName(), amount));
 	}
 }

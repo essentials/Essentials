@@ -30,7 +30,7 @@ public class SignHeal extends EssentialsSign
 		player.getPlayer().setHealth(20);
 		player.getPlayer().setFoodLevel(20);
 		player.getPlayer().setFireTicks(0);
-		player.sendMessage(_("You have been healed."));
+		player.sendMessage(_("§6You have been healed."));
 		charge.charge(player);
 		return true;
 	}

@@ -24,14 +24,14 @@ public class Commandpowertool extends EssentialsCommand
 		{
 			userData.clearAllPowertools();
 			user.queueSave();
-			user.sendMessage(_("All powertool commands have been cleared."));
+			user.sendMessage(_("§6All powertool commands have been cleared."));
 			return;
 		}
 
 		final ItemStack itemStack = user.getPlayer().getItemInHand();
 		if (itemStack == null || itemStack.getType() == Material.AIR)
 		{
-			throw new Exception(_("Command can't be attached to air."));
+			throw new Exception(_("§4Command can't be attached to air."));
 		}
 
 		final String itemName = itemStack.getType().toString().toLowerCase(Locale.ENGLISH).replaceAll("_", " ");
@@ -42,11 +42,11 @@ public class Commandpowertool extends EssentialsCommand
 			{
 				if (powertools == null || powertools.isEmpty())
 				{
-					throw new Exception(_("Item {0} has no commands assigned.", itemName));
+					throw new Exception(_("§4Item §c{0} §4has no commands assigned.", itemName));
 				}
 				else
 				{
-					user.sendMessage(_("Item {1} has the following commands: {0}.", Util.joinList(powertools), itemName));
+					user.sendMessage(_("§6Item §c{1} §6has the following commands: §c{0}§6.", Util.joinList(powertools), itemName));
 				}
 				throw new NoChargeException();
 			}
@@ -55,12 +55,12 @@ public class Commandpowertool extends EssentialsCommand
 				command = command.substring(2);
 				if (!powertools.contains(command))
 				{
-					throw new Exception(_("Command {0} has not been assigned to {1}.", command, itemName));
+					throw new Exception(_("§4Command §c{0}§4 has not been assigned to {1}.", command, itemName));
 				}
 
 				powertools = new ArrayList<String>(powertools);
 				powertools.remove(command);
-				user.sendMessage(_("Command {0} removed from {1}.", command, itemName));
+				user.sendMessage(_("§6Command §c{0}§6 removed from {1}.", command, itemName));
 			}
 			else
 			{
@@ -68,12 +68,12 @@ public class Commandpowertool extends EssentialsCommand
 				{
 					if (!Permissions.POWERTOOL_APPEND.isAuthorized(user))
 					{
-						throw new Exception(_("You do not have the {0} permission.", "essentials.powertool.append"));
+						throw new Exception(_("§4You do not have the §c{0}§4 permission.", "essentials.powertool.append"));
 					}
 					command = command.substring(2);
 					if (powertools.contains(command))
 					{
-						throw new Exception(_("Command {0} is already assigned to {1}.", command, itemName));
+						throw new Exception(_("§4Command §c{0}§4 is already assigned to {1}.", command, itemName));
 					}
 					powertools = new ArrayList<String>(powertools);
 				}
@@ -83,19 +83,19 @@ public class Commandpowertool extends EssentialsCommand
 				}
 
 				powertools.add(command);
-				user.sendMessage(_("{0} command assigned to {1}.", Util.joinList(powertools), itemName));
+				user.sendMessage(_("§c{0}§6 command assigned to {1}.", Util.joinList(powertools), itemName));
 			}
 		}
 		else
 		{
 			powertools = new ArrayList<String>();
-			user.sendMessage(_("All commands removed from {0}.", itemName));
+			user.sendMessage(_("§6All commands removed from {0}.", itemName));
 		}
 
 		if (!userData.isPowerToolsEnabled())
 		{
 			userData.setPowerToolsEnabled(true);
-			user.sendMessage(_("All of your power tools have been enabled."));
+			user.sendMessage(_("§6All of your power tools have been enabled."));
 		}
 		userData.setPowertool(itemStack.getType(), powertools);
 		user.queueSave();

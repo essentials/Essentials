@@ -16,19 +16,19 @@ public class Commandtpaccept extends EssentialsCommand
 	{
 		if (user.getTeleportRequester() == null)
 		{
-			throw new Exception(_("You do not have a pending request."));
+			throw new Exception(_("§4You do not have a pending request."));
 		}
 
 		final IUser target = user.getTeleportRequester();
 		if (target == null || !target.isOnline() || (user.isTpRequestHere() && !Permissions.TPAHERE.isAuthorized(
 				target)) || (!user.isTpRequestHere() && !Permissions.TPA.isAuthorized(target) && !Permissions.TPAALL.isAuthorized(target)))
 		{
-			throw new Exception(_("You do not have a pending request."));
+			throw new Exception(_("§4You do not have a pending request."));
 		}
 
 		if (args.length > 0 && !target.getName().contains(args[0]))
 		{
-			throw new Exception(_("You do not have a pending request."));
+			throw new Exception(_("§4You do not have a pending request."));
 		}
 
 
@@ -38,12 +38,12 @@ public class Commandtpaccept extends EssentialsCommand
 		if (tpaAcceptCancellation != 0 && (System.currentTimeMillis() - user.getTeleportRequestTime()) / 1000 > tpaAcceptCancellation)
 		{
 			user.requestTeleport(null, false);
-			throw new Exception(_("Teleport request has timed out."));
+			throw new Exception(_("§4Teleport request has timed out."));
 		}
 
 		final Trade charge = new Trade(commandName, ess);
-		user.sendMessage(_("Teleport request accepted."));
-		target.sendMessage(_("{0} accepted your teleport request.", user.getPlayer().getDisplayName()));
+		user.sendMessage(_("§6Teleport request accepted."));
+		target.sendMessage(_("§c{0} §6accepted your teleport request.", user.getPlayer().getDisplayName()));
 
 		try
 		{
@@ -58,7 +58,7 @@ public class Commandtpaccept extends EssentialsCommand
 		}
 		catch (ChargeException ex)
 		{
-			user.sendMessage(_("Pending teleportation request cancelled."));
+			user.sendMessage(_("§4Pending teleportation request cancelled."));
 			//ess.showError(target, ex, commandLabel); TODO: equivalent to ess.showError() could not be found?
 		}
 		user.requestTeleport(null, false);

@@ -16,7 +16,7 @@ public class Commandspawnmob extends EssentialsCommand
 		if (args.length < 1)
 		{
 			final String mobList = SpawnMob.mobList(user);
-			throw new NotEnoughArgumentsException(_("Mobs: {0}", mobList));
+			throw new NotEnoughArgumentsException(_("§6Mobs:§r {0}", mobList));
 		}
 
 		List<String> mobParts = SpawnMob.mobParts(args[0]);

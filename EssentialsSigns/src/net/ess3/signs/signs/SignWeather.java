@@ -31,7 +31,7 @@ public class SignWeather extends EssentialsSign
 			sign.setLine(1, "§2Storm");
 			return true;
 		}
-		throw new SignException(_("/weather only supports sun/storm."));
+		throw new SignException(_("§4/weather only supports sun/storm."));
 	}
 
 	@Override
@@ -53,6 +53,6 @@ public class SignWeather extends EssentialsSign
 			charge.charge(player);
 			return true;
 		}
-		throw new SignException(_("/weather only supports sun/storm."));
+		throw new SignException(_("§4/weather only supports sun/storm."));
 	}
 }

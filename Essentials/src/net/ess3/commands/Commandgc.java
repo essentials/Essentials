@@ -28,11 +28,11 @@ public class Commandgc extends EssentialsCommand
 			color = ChatColor.RED;
 		}
 		final Runtime runtime = Runtime.getRuntime();
-		sender.sendMessage(_("Uptime: {0}", DateUtil.formatDateDiff(ManagementFactory.getRuntimeMXBean().getStartTime())));
-		sender.sendMessage(_("Current TPS ", "" + color + tps));
-		sender.sendMessage(_("Maximum memory: {0} MB", (runtime.maxMemory() / 1024 / 1024)));
-		sender.sendMessage(_("Allocated memory: {0} MB", (runtime.totalMemory() / 1024 / 1024)));
-		sender.sendMessage(_("Free memory: {0} MB", (runtime.freeMemory() / 1024 / 1024)));
+		sender.sendMessage(_("§6Uptime:§c {0}", DateUtil.formatDateDiff(ManagementFactory.getRuntimeMXBean().getStartTime())));
+		sender.sendMessage(_("§6Current TPS = {0}", "" + color + tps));
+		sender.sendMessage(_("§6Maximum memory:§c {0} MB.", (runtime.maxMemory() / 1024 / 1024)));
+		sender.sendMessage(_("§6Allocated memory:§c {0} MB.", (runtime.totalMemory() / 1024 / 1024)));
+		sender.sendMessage(_("§6Free memory:§c {0} MB.", (runtime.freeMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gcquene", (ess.getStorageQueue().getQueueSize())));
 
 		for (World w : server.getWorlds())

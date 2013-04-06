@@ -20,17 +20,17 @@ public class Commandclearinventory extends EssentialsCommand
 			{
 				final Player player = p.getPlayer();
 				player.getInventory().clear();
-				user.sendMessage(_("Inventory of {0} cleared.", player.getDisplayName()));
+				user.sendMessage(_("§6Inventory of §c{0}§6 cleared.", player.getDisplayName()));
 			}
 			else
 			{
-				throw new Exception(_("Player not found."));
+				throw new Exception(_("§4Player not found."));
 			}
 		}
 		else
 		{
 			user.getPlayer().getInventory().clear();
-			user.sendMessage(_("Inventory cleared."));
+			user.sendMessage(_("§6Inventory cleared."));
 		}
 	}
 
@@ -51,11 +51,11 @@ public class Commandclearinventory extends EssentialsCommand
 				for (Player p : online)
 				{
 					p.getInventory().clear();
-					sender.sendMessage(_("Inventory of {0} cleared.", p.getDisplayName()));
+					sender.sendMessage(_("§6Inventory of §c{0}§6 cleared.", p.getDisplayName()));
 				}
 				return;
 			}
-			throw new Exception(_("Player not found."));
+			throw new Exception(_("§4Player not found."));
 		}
 		else
 		{
@@ -63,11 +63,11 @@ public class Commandclearinventory extends EssentialsCommand
 			if (u != null)
 			{
 				u.getInventory().clear();
-				sender.sendMessage(_("Inventory of {0} cleared.", u.getDisplayName()));
+				sender.sendMessage(_("§6Inventory of §c{0}§6 cleared.", u.getDisplayName()));
 			}
 			else
 			{
-				throw new Exception(_("Player not found."));
+				throw new Exception(_("§4Player not found."));
 			}
 		}
 	}

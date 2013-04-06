@@ -68,7 +68,7 @@ public class Commandremove extends EssentialsCommand
 
 		if (world == null)
 		{
-			throw new Exception(_("Invalid world."));
+			throw new Exception(_("§4Invalid world."));
 		}
 		final ToRemove toRemove;
 		try
@@ -149,6 +149,6 @@ public class Commandremove extends EssentialsCommand
 
 			}
 		}
-		sender.sendMessage(_("Removed {0} entities.", removed));
+		sender.sendMessage(_("§6Removed§c {0} §6entities.", removed));
 	}
 }

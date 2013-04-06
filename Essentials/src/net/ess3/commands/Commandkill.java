@@ -31,7 +31,7 @@ public class Commandkill extends EssentialsCommand
 			}
 
 			player.damage(Short.MAX_VALUE);
-			sender.sendMessage(_("Killed {0}.", player.getDisplayName()));
+			sender.sendMessage(_("§6Killed§c {0}§6.", player.getDisplayName()));
 		}
 	}
 }

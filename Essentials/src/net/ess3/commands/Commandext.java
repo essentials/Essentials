@@ -25,7 +25,7 @@ public class Commandext extends EssentialsCommand
 		if (args.length < 1)
 		{
 			user.getPlayer().setFireTicks(0);
-			user.sendMessage(_("You extinguished yourself."));
+			user.sendMessage(_("§6You extinguished yourself."));
 			return;
 		}
 
@@ -38,7 +38,7 @@ public class Commandext extends EssentialsCommand
 		{
 			final Player player = matchPlayer.getPlayer();
 			player.setFireTicks(0);
-			sender.sendMessage(_("You extinguished {0}.", player.getDisplayName()));
+			sender.sendMessage(_("§6You extinguished {0}§6.", player.getDisplayName()));
 		}
 	}
 }

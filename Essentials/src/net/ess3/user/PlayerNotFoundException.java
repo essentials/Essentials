@@ -10,6 +10,6 @@ public class PlayerNotFoundException extends Exception
 
 	public PlayerNotFoundException()
 	{
-		super(_("Player not found."));
+		super(_("§4Player not found."));
 	}
 }

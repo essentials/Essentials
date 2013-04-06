@@ -149,6 +149,6 @@ public class Commandkillall extends EssentialsCommand
 				}
 			}
 		}
-		sender.sendMessage(_("Killed {0}.", numKills));
+		sender.sendMessage(_("§6Killed§c {0}§6.", numKills));
 	}
 }

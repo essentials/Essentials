@@ -175,7 +175,7 @@ public class EssentialsConf extends YamlConfiguration
 			istr = resourceClass.getResourceAsStream(templateName);
 			if (istr == null)
 			{
-				LOGGER.log(Level.SEVERE, _("Could not find template {0}", templateName));
+				LOGGER.log(Level.SEVERE, _("§4Could not find template {0}", templateName));
 				return;
 			}
 			ostr = new FileOutputStream(configFile);

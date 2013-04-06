@@ -88,7 +88,7 @@ public class Commandsell extends EssentialsCommand
 
 		if (Double.isNaN(worth))
 		{
-			throw new Exception(_("That item cannot be sold to the server."));
+			throw new Exception(_("§4That item cannot be sold to the server."));
 		}
 
 
@@ -127,9 +127,9 @@ public class Commandsell extends EssentialsCommand
 		{
 			if (!isBulkSell)
 			{
-				user.sendMessage(_("You do not have enough of that item to sell."));
-				user.sendMessage(_("If you meant to sell all of your items of that type, use /sell itemname."));
-				throw new Exception(_("/sell itemname -1 will sell all but one item, etc."));
+				user.sendMessage(_("§4You do not have enough of that item to sell."));
+				user.sendMessage(_("§6If you meant to sell all of your items of that type, use /sell itemname."));
+				throw new Exception(_("§6/sell itemname -1 will sell all but one item, etc."));
 			}
 			else
 			{

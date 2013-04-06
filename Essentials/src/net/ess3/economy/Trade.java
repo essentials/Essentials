@@ -68,24 +68,24 @@ public class Trade
 	{
 		if (getMoney() != null && getMoney() > 0 && !Permissions.ECO_LOAN.isAuthorized(user) && !user.canAfford(getMoney()))
 		{
-			throw new ChargeException(_("You do not have sufficient funds."));
+			throw new ChargeException(_("§4You do not have sufficient funds."));
 		}
 
 		if (getItemStack() != null && !user.getPlayer().getInventory().containsAtLeast(itemStack, itemStack.getAmount()))
 		{
 			throw new ChargeException(
-					_("You do not have {0}x {1}.", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+					_("§4You do not have {0}x {1}.", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 		}
 
 
 		if (command != null && !command.isEmpty() && 0 < getCommandCost(user) && !Permissions.ECO_LOAN.isAuthorized(user))
 		{
-			throw new ChargeException(_("You do not have sufficient funds."));
+			throw new ChargeException(_("§4You do not have sufficient funds."));
 		}
 
 		if (exp != null && exp > 0 && user.getPlayer().getTotalExperience() < exp)
 		{
-			throw new ChargeException(_("You do not have enough experience."));
+			throw new ChargeException(_("§4You do not have enough experience."));
 		}
 	}
 
@@ -146,7 +146,7 @@ public class Trade
 		{
 			if (!user.canAfford(getMoney()) && getMoney() > 0)
 			{
-				throw new ChargeException(_("You do not have sufficient funds."));
+				throw new ChargeException(_("§4You do not have sufficient funds."));
 			}
 			user.takeMoney(getMoney());
 		}
@@ -155,7 +155,7 @@ public class Trade
 			if (!user.getPlayer().getInventory().containsAtLeast(itemStack, itemStack.getAmount()))
 			{
 				throw new ChargeException(
-						_("You do not have {0}x {1}.", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+						_("§4You do not have {0}x {1}.", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
 			}
 			user.getPlayer().getInventory().removeItem(getItemStack());
 			user.getPlayer().updateInventory();
@@ -167,7 +167,7 @@ public class Trade
 			final double cost = settings.getData().getEconomy().getCommandCost(command.charAt(0) == '/' ? command.substring(1) : command);
 			if (!user.canAfford(cost) && cost > 0)
 			{
-				throw new ChargeException(_("You do not have sufficient funds."));
+				throw new ChargeException(_("§4You do not have sufficient funds."));
 			}
 			user.takeMoney(cost);
 		}
@@ -176,7 +176,7 @@ public class Trade
 			final int experience = user.getPlayer().getTotalExperience();
 			if (experience < getExperience() && getExperience() > 0)
 			{
-				throw new ChargeException(_("You do not have enough experience."));
+				throw new ChargeException(_("§4You do not have enough experience."));
 			}
 			user.getPlayer().setTotalExperience(experience - getExperience());
 		}

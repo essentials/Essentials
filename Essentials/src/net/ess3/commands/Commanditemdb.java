@@ -37,7 +37,7 @@ public class Commanditemdb extends EssentialsCommand
 			final int durability = ((maxuses + 1) - itemStack.getDurability());
 			if (maxuses != 0)
 			{
-				sender.sendMessage(_("This tool has {0} uses left.", Integer.toString(durability)));
+				sender.sendMessage(_("§6This tool has §c{0}§6 uses left", Integer.toString(durability)));
 			}
 		}
 	}

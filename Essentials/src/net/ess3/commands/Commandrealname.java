@@ -39,7 +39,7 @@ public class Commandrealname extends EssentialsCommand
 		}
 		if (!foundUser)
 		{
-			throw new NoSuchFieldException(_("Player not found."));
+			throw new NoSuchFieldException(_("§4Player not found."));
 		}
 	}
 }

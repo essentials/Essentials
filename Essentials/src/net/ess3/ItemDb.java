@@ -145,14 +145,14 @@ public class ItemDb implements IItemDb
 			}
 			else
 			{
-				throw new Exception(_("Unknown item name: {0}", id));
+				throw new Exception(_("§4Unknown item name: {0}.", id));
 			}
 		}
 
 		final Material mat = Material.getMaterial(itemid);
 		if (mat == null)
 		{
-			throw new Exception(_("Unknown item id: {0}", itemid));
+			throw new Exception(_("§4Unknown item id:§r {0}§4.", itemid));
 		}
 		final ItemStack retval = new ItemStack(mat, mat.getMaxStackSize(), metaData);
 		return retval;

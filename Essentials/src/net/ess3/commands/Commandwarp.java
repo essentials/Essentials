@@ -25,7 +25,7 @@ public class Commandwarp extends EssentialsCommand
 		{
 			if (!Permissions.WARP_LIST.isAuthorized(user))
 			{
-				throw new Exception(_("You do not have Permission to list warps."));
+				throw new Exception(_("§4You do not have Permission to list warps."));
 			}
 			warpList(user, args);
 			throw new NoChargeException();
@@ -62,7 +62,7 @@ public class Commandwarp extends EssentialsCommand
 		IUser otherUser = ess.getUserMap().matchUser(args[1], false);
 		if (otherUser == null)
 		{
-			throw new Exception(_("Player not found."));
+			throw new Exception(_("§4Player not found."));
 		}
 		otherUser.getTeleport().warp(args[0], null, TeleportCause.COMMAND);
 		throw new NoChargeException();
@@ -75,7 +75,7 @@ public class Commandwarp extends EssentialsCommand
 		final IWarps warps = ess.getWarps();
 		if (warps.isEmpty())
 		{
-			throw new Exception(_("No warps defined."));
+			throw new Exception(_("§6No warps defined."));
 		}
 		final List<String> warpNameList = new ArrayList<String>(warps.getList());
 
@@ -102,12 +102,12 @@ public class Commandwarp extends EssentialsCommand
 
 		if (warpNameList.size() > WARPS_PER_PAGE)
 		{
-			sender.sendMessage(_("There are {0} warps. Showing page {1} of {2}.", warpNameList.size(), page, (int)Math.ceil(warpNameList.size() / (double)WARPS_PER_PAGE)));
+			sender.sendMessage(_("§6There are§c {0} §6warps. Showing page {1} of {2}.", warpNameList.size(), page, (int)Math.ceil(warpNameList.size() / (double)WARPS_PER_PAGE)));
 			sender.sendMessage(warpList);
 		}
 		else
 		{
-			sender.sendMessage(_("Warps: {0}", warpList));
+			sender.sendMessage(_("§6Warps:§r {0}", warpList));
 		}
 	}
 
@@ -123,6 +123,6 @@ public class Commandwarp extends EssentialsCommand
 			user.getTeleport().warp(name, charge, TeleportCause.COMMAND);
 			return;
 		}
-		throw new Exception(_("You do not have Permission to use that warp."));
+		throw new Exception(_("§4You do not have Permission to use that warp."));
 	}
 }

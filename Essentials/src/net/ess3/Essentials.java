@@ -193,7 +193,7 @@ public class Essentials implements IEssentials
 			if (user.isVanished())
 			{
 				user.toggleVanished();
-				p.sendMessage(_("A reload has forced you to become visible."));
+				p.sendMessage(_("§4A reload has forced you to become visible."));
 			}
 		}
 		i18n.onDisable();

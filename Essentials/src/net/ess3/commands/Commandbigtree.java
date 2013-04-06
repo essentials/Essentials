@@ -41,11 +41,11 @@ public class Commandbigtree extends EssentialsCommand
 		final boolean success = user.getPlayer().getWorld().generateTree(safeLocation, bukkitTree);
 		if (success)
 		{
-			user.sendMessage(_("Big tree spawned."));
+			user.sendMessage(_(" §6Big tree spawned."));
 		}
 		else
 		{
-			throw new Exception(_("Big tree generation failure. Try again on grass or dirt."));
+			throw new Exception(_("§4Big tree generation failure. Try again on grass or dirt."));
 		}
 	}
 }

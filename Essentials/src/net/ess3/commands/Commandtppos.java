@@ -37,7 +37,7 @@ public class Commandtppos extends EssentialsCommand
 		}
 		final Trade charge = new Trade(commandName, ess);
 		charge.isAffordableFor(user);
-		user.sendMessage(_("Teleporting..."));
+		user.sendMessage(_("§6Teleporting..."));
 		user.getTeleport().teleport(location, charge, TeleportCause.COMMAND);
 		throw new NoChargeException();
 	}
@@ -68,8 +68,8 @@ public class Commandtppos extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException(_("tpposTooFar"));
 		}
-		sender.sendMessage(_("Teleporting..."));
-		user.sendMessage(_("Teleporting..."));
+		sender.sendMessage(_("§6Teleporting..."));
+		user.sendMessage(_("§6Teleporting..."));
 		user.getTeleport().teleport(location, null, TeleportCause.COMMAND);
 	}
 }

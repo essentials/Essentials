@@ -12,15 +12,15 @@ public class Commanddepth extends EssentialsCommand
 		final int depth = user.getPlayer().getLocation().getBlockY() - 63;
 		if (depth > 0)
 		{
-			user.sendMessage(_("You are {0} block(s) above sea level.", depth));
+			user.sendMessage(_("§6You are§c {0} §6block(s) above sea level.", depth));
 		}
 		else if (depth < 0)
 		{
-			user.sendMessage(_("You are {0} block(s) below sea level.", (-depth)));
+			user.sendMessage(_("§6You are§c {0} §6block(s) below sea level.", (-depth)));
 		}
 		else
 		{
-			user.sendMessage(_("You are at sea level."));
+			user.sendMessage(_("§6You are at sea level."));
 		}
 	}
 }

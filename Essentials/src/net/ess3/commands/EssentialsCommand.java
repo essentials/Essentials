@@ -53,7 +53,7 @@ public abstract class EssentialsCommand extends AbstractSuperpermsPermission imp
 
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		throw new Exception(_("Only in-game players can use {0}.", commandName));
+		throw new Exception(_("§4Only in-game players can use {0}.", commandName));
 	}
 
 	@Override

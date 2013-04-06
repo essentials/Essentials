@@ -34,7 +34,7 @@ public class Commandbanip extends EssentialsCommand
 			final String ipAddress = player.getData().getIpAddress();
 			if (ipAddress.length() == 0)
 			{
-				throw new Exception(_("Player not found."));
+				throw new Exception(_("§4Player not found."));
 			}
 			ess.getServer().banIP(ipAddress);
 			sender.sendMessage(_("Banned IP address"));

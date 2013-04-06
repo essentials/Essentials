@@ -94,7 +94,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 				}
 				if (Permissions.GEOIP_SHOW.isAuthorized(player))
 				{
-					player.sendMessage(_("Player {0} comes from {1}.", player.getDisplayName(), builder.toString()));
+					player.sendMessage(_("§6Player §c{0} §6comes from §c{1}§6.", player.getDisplayName(), builder.toString()));
 				}
 			}
 		}

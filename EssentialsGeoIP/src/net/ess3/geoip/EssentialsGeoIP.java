@@ -18,7 +18,7 @@ public class EssentialsGeoIP extends JavaPlugin
 		final IEssentials ess = (IEssentials)plugin.getEssentials();
 		if (!this.getDescription().getVersion().equals(plugin.getDescription().getVersion()))
 		{
-			getLogger().log(Level.WARNING, _("Version mismatch! Please update all Essentials jars to the same version."));
+			getLogger().log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
 		}
 		if (!plugin.isEnabled())
 		{

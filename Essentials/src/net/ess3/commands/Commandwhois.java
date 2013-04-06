@@ -55,38 +55,38 @@ public class Commandwhois extends EssentialsCommand
 			}
 			final Player player = user.getPlayer();
 			foundPlayer = true;
-			sender.sendMessage(_(" ", user.getName()));
-			sender.sendMessage(_("{0} is {1}", player.getDisplayName(), user.getName()));
-			sender.sendMessage(_(" - Health: {0}/20", player.getHealth()));
-			sender.sendMessage(_(" - Exp: {0} (Level {1})", SetExpFix.getTotalExperience(player), player.getLevel()));
+			sender.sendMessage(_("§6 ====== WhoIs:§c {0} §6======", user.getName()));
+			sender.sendMessage(_("whoisIs", player.getDisplayName(), user.getName()));
+			sender.sendMessage(_("§6 - Health:§r {0}/20", player.getHealth()));
+			sender.sendMessage(_("§6 - Exp:§r {0} (Level {1})", SetExpFix.getTotalExperience(player), player.getLevel()));
 			sender.sendMessage(
 					_(
 							"whoisLocation", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(),
 							player.getLocation().getBlockZ()));
-			sender.sendMessage(_(" - Money: {0}", FormatUtil.displayCurrency(user.getMoney(), ess)));
-			sender.sendMessage(_(" - IP Address: {0}", player.getAddress().getAddress().toString()));
+			sender.sendMessage(_("§6 - Money:§r {0}", FormatUtil.displayCurrency(user.getMoney(), ess)));
+			sender.sendMessage(_("§6 - IP Address:§r {0}", player.getAddress().getAddress().toString()));
 			final String location = userData.getGeolocation();
 			if (location != null && Permissions.GEOIP_SHOW.isAuthorized(sender))
 			{
-				sender.sendMessage(_(" - Location: {0}", location));
+				sender.sendMessage(_("§6 - Location:§r {0}", location));
 			}
-			sender.sendMessage(_(" - Gamemode: {0}", _(player.getGameMode().toString().toLowerCase(Locale.ENGLISH))));
-			sender.sendMessage(_(" - God mode: {0}", (user.isGodModeEnabled() ? _("true") : _("false"))));
-			sender.sendMessage(_("whoisOP", (user.isOp() ? _("true") : _("false"))));
-			sender.sendMessage(_(" - Fly mode: {0} ({1})", player.getAllowFlight() ? _("true") : _("false"), player.isFlying() ? _("flying") : _("not flying")));
-			sender.sendMessage(_(" - AFK: {0}", (userData.isAfk() ? _("true") : _("false"))));
+			sender.sendMessage(_("§6 - Gamemode:§r {0}", _(player.getGameMode().toString().toLowerCase(Locale.ENGLISH))));
+			sender.sendMessage(_("§6 - God mode:§r {0}", (user.isGodModeEnabled() ? _("§atrue§r") : _("§4false§r"))));
+			sender.sendMessage(_("whoisOP", (user.isOp() ? _("§atrue§r") : _("§4false§r"))));
+			sender.sendMessage(_("§6 - Fly mode:§r {0} ({1})", player.getAllowFlight() ? _("§atrue§r") : _("§4false§r"), player.isFlying() ? _("flying") : _("not flying")));
+			sender.sendMessage(_("§6 - AFK:§r {0}", (userData.isAfk() ? _("§atrue§r") : _("§4false§r"))));
 			sender.sendMessage(
 					_(
 							"whoisJail", (userData.isJailed() ? user.getTimestamp(UserData.TimestampType.JAIL) > 0 ? DateUtil.formatDateDiff(
-							user.getTimestamp(UserData.TimestampType.JAIL)) : _("true") : _("false"))));
+							user.getTimestamp(UserData.TimestampType.JAIL)) : _("§atrue§r") : _("§4false§r"))));
 			sender.sendMessage(
 					_(
 							"whoisMute", (userData.isMuted() ? user.getTimestamp(UserData.TimestampType.MUTE) > 0 ? DateUtil.formatDateDiff(
-							user.getTimestamp(UserData.TimestampType.MUTE)) : _("true") : _("false"))));
+							user.getTimestamp(UserData.TimestampType.MUTE)) : _("§atrue§r") : _("§4false§r"))));
 
 			if (!foundPlayer)
 			{
-				throw new NoSuchFieldException(_("Player not found."));
+				throw new NoSuchFieldException(_("§4Player not found."));
 			}
 		}
 	}

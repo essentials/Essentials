@@ -17,7 +17,7 @@ public class SignBalance extends EssentialsSign
 	@Override
 	protected boolean onSignInteract(final ISign sign, final IUser player, final String username, final IEssentials ess) throws SignException
 	{
-		player.sendMessage(_("Balance: {0}", FormatUtil.displayCurrency(player.getMoney(), ess)));
+		player.sendMessage(_("§aBalance:§c {0}", FormatUtil.displayCurrency(player.getMoney(), ess)));
 		return true;
 	}
 }

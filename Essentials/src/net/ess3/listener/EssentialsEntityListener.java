@@ -127,7 +127,7 @@ public class EssentialsEntityListener implements Listener
 		if (Permissions.BACK_ONDEATH.isAuthorized(user) && !settings.getData().getCommands().isDisabled("back"))
 		{
 			user.setLastLocation();
-			user.sendMessage(_("Use the /back command to return to your death point."));
+			user.sendMessage(_("§6Use the /back command to return to your death point."));
 		}
 		if (!settings.getData().getGeneral().isDeathMessages())
 		{

@@ -173,7 +173,7 @@ public class LocationUtil
 				y = world.getHighestBlockYAt(x, z);
 				if (x - 48 > loc.getBlockX())
 				{
-					throw new Exception(_("Hole in floor!"));
+					throw new Exception(_("§4Hole in floor!"));
 				}
 			}
 		}

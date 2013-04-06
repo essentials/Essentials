@@ -25,13 +25,13 @@ public class Commandweather extends EssentialsCommand
 			world.setStorm(isStorm ? true : false);
 			world.setWeatherDuration(Integer.parseInt(args[1]) * 20);
 			user.sendMessage(
-					isStorm ? _("You set the weather to storm in {0} for {1} seconds.", world.getName(), args[1]) : _("You set the weather to sun in {0} for {1} seconds.", world.getName(), args[1]));
+					isStorm ? _("§6You set the weather to §cstorm§6 in§c {0} §6for {1} seconds.", world.getName(), args[1]) : _("§6You set the weather to §csun§6 in§c {0} §6for {1} seconds.", world.getName(), args[1]));
 		}
 		else
 		{
 			world.setStorm(isStorm ? true : false);
 			user.sendMessage(
-					isStorm ? _("You set the weather to storm in {0}.", world.getName()) : _("You set the weather to sun in {0}.", world.getName()));
+					isStorm ? _("§6You set the weather to §cstorm§6 in§c {0}§6.", world.getName()) : _("§6You set the weather to §csun§6 in§c {0}§6.", world.getName()));
 		}
 	}
 
@@ -55,13 +55,13 @@ public class Commandweather extends EssentialsCommand
 			world.setStorm(isStorm ? true : false);
 			world.setWeatherDuration(Integer.parseInt(args[2]) * 20);
 			sender.sendMessage(
-					isStorm ? _("You set the weather to storm in {0} for {1} seconds.", world.getName(), args[2]) : _("You set the weather to sun in {0} for {1} seconds.", world.getName(), args[2]));
+					isStorm ? _("§6You set the weather to §cstorm§6 in§c {0} §6for {1} seconds.", world.getName(), args[2]) : _("§6You set the weather to §csun§6 in§c {0} §6for {1} seconds.", world.getName(), args[2]));
 		}
 		else
 		{
 			world.setStorm(isStorm ? true : false);
 			sender.sendMessage(
-					isStorm ? _("You set the weather to storm in {0}.", world.getName()) : _("You set the weather to sun in {0}.", world.getName()));
+					isStorm ? _("§6You set the weather to §cstorm§6 in§c {0}§6.", world.getName()) : _("§6You set the weather to §csun§6 in§c {0}§6.", world.getName()));
 		}
 	}
 }

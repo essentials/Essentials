@@ -12,7 +12,7 @@ public class Commandback extends EssentialsCommand
 	{
 		final Trade charge = new Trade(commandName, ess);
 		charge.isAffordableFor(user);
-		user.sendMessage(_("Returning to previous location."));
+		user.sendMessage(_("§6Returning to previous location."));
 		user.getTeleport().back(charge);
 		throw new NoChargeException();
 	}

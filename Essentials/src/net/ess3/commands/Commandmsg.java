@@ -27,7 +27,7 @@ public class Commandmsg extends EssentialsCommand
 			final IUser user = getUser(sender);
 			if (user.getData().isMuted())
 			{
-				throw new Exception(_("Your voice has been silenced!"));
+				throw new Exception(_("§6Your voice has been silenced!"));
 			}
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{
@@ -50,9 +50,9 @@ public class Commandmsg extends EssentialsCommand
 
 		if (args[0].equalsIgnoreCase(Console.NAME))
 		{
-			sender.sendMessage(_("[{0} -> {1}] {2}", translatedMe, Console.NAME, message));
+			sender.sendMessage(_("§6[{0}§6 -> {1}§6] §r{2}", translatedMe, Console.NAME, message));
 			CommandSender cs = server.getConsoleSender();
-			cs.sendMessage(_("[{0} -> {1}] {2}", senderName, translatedMe, message));
+			cs.sendMessage(_("§6[{0}§6 -> {1}§6] §r{2}", senderName, translatedMe, message));
 			replyTo.setReplyTo(cs);
 			Console.getConsoleReplyTo().setReplyTo(sender);
 			return;
@@ -63,7 +63,7 @@ public class Commandmsg extends EssentialsCommand
 
 		if (matchedPlayers.isEmpty())
 		{
-			throw new Exception(_("Player not found."));
+			throw new Exception(_("§4Player not found."));
 		}
 
 		final Player player = getPlayerOrNull(sender);
@@ -80,19 +80,19 @@ public class Commandmsg extends EssentialsCommand
 			}
 			if (i == matchedPlayers.size())
 			{
-				throw new Exception(_("Player not found."));
+				throw new Exception(_("§4Player not found."));
 			}
 		}
 
 		for (IUser matchedPlayer : matchedPlayers)
 		{
 			final Player realPlayer = matchedPlayer.getPlayer();
-			sender.sendMessage(_("[{0} -> {1}] {2}", translatedMe, realPlayer.getDisplayName(), message));
+			sender.sendMessage(_("§6[{0}§6 -> {1}§6] §r{2}", translatedMe, realPlayer.getDisplayName(), message));
 			if (isUser(sender) && (matchedPlayer.isIgnoringPlayer(getUser(sender)) || !player.canSee(realPlayer)))
 			{
 				continue;
 			}
-			matchedPlayer.sendMessage(_("[{0} -> {1}] {2}", senderName, translatedMe, message));
+			matchedPlayer.sendMessage(_("§6[{0}§6 -> {1}§6] §r{2}", senderName, translatedMe, message));
 			replyTo.setReplyTo(matchedPlayer);
 			matchedPlayer.setReplyTo(sender);
 		}

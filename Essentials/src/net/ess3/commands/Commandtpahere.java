@@ -20,32 +20,32 @@ public class Commandtpahere extends EssentialsCommand
 		final IUser player = ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer());
 		if (!player.getData().isTeleportEnabled())
 		{
-			throw new Exception(_("{0} has teleportation disabled.", player.getPlayer().getDisplayName()));
+			throw new Exception(_("§c{0} §4has teleportation disabled.", player.getPlayer().getDisplayName()));
 		}
 
 		ISettings settings = ess.getSettings();
 		if (settings.getData().getGeneral().isPerGroupTeleport() && !Permissions.PERGROUPTELEPORT.isAuthorized(
 					user, ess.getRanks().getMainGroup(player)))
 			{
-				throw new Exception(_("You do not have the {0} permission.", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
+				throw new Exception(_("§4You do not have the §c{0}§4 permission.", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
 			}
 		if (user.getPlayer().getWorld() != player.getPlayer().getWorld() && settings.getData().getGeneral().isWorldTeleportPermissions() && !Permissions.WORLD.isAuthorized(
 				user, user.getPlayer().getWorld().getName()))
 		{
-			throw new Exception(_("You do not have the {0} permission.", "essentials.world." + user.getPlayer().getWorld().getName()));
+			throw new Exception(_("§4You do not have the §c{0}§4 permission.", "essentials.world." + user.getPlayer().getWorld().getName()));
 		}
 		player.requestTeleport(user, true);
-		player.sendMessage(_("{0} has requested that you teleport to them.", user.getPlayer().getDisplayName()));
-		player.sendMessage(_("To teleport, type /tpaccept."));
-		player.sendMessage(_("To deny this request, type /tpdeny."));
+		player.sendMessage(_("§c{0}§6 has requested that you teleport to them.", user.getPlayer().getDisplayName()));
+		player.sendMessage(_("§6To teleport, type §c/tpaccept§6."));
+		player.sendMessage(_("§6To deny this request, type §c/tpdeny§6."));
 		int tpaAcceptCancellation = 0;
 		{
 			tpaAcceptCancellation = settings.getData().getCommands().getTeleport().getRequestTimeout();
 		}
 		if (tpaAcceptCancellation != 0)
 		{
-			player.sendMessage(_("This request will timeout after {0} seconds.", tpaAcceptCancellation));
+			player.sendMessage(_("§6This request will timeout after§c {0} seconds§6.", tpaAcceptCancellation));
 		}
-		user.sendMessage(_("Request sent to {0}.", player.getPlayer().getDisplayName()));
+		user.sendMessage(_("§6Request sent to§c {0}§6.", player.getPlayer().getDisplayName()));
 	}
 }

@@ -47,6 +47,6 @@ public class Commandcompass extends EssentialsCommand
 		{
 			dir = "N";
 		}
-		user.sendMessage(_("Bearing:  {0} ({1} degrees).", dir, bearing));
+		user.sendMessage(_("§6Bearing:  {0} ({1} degrees).", dir, bearing));
 	}
 }

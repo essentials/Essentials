@@ -90,7 +90,7 @@ public class SpawnMob
 		final Block block = LocationUtil.getTarget(user.getPlayer()).getBlock();
 		if (block == null)
 		{
-			throw new Exception(_("Unable to spawn mob."));
+			throw new Exception(_("§4Unable to spawn mob."));
 		}
 		spawnmob(ess, server, user, user, block.getLocation(), parts, data, mobCount);
 	}
@@ -138,7 +138,7 @@ public class SpawnMob
 		}
 		catch (MobException e1)
 		{
-			throw new Exception(_("Unable to spawn mob."), e1);
+			throw new Exception(_("§4Unable to spawn mob."), e1);
 		}
 		catch (NumberFormatException e2)
 		{
@@ -146,7 +146,7 @@ public class SpawnMob
 		}
 		catch (NullPointerException np)
 		{
-			throw new Exception(_("That mob likes to be alone."), np);
+			throw new Exception(_("§4That mob likes to be alone."), np);
 		}
 	}
 
@@ -197,7 +197,7 @@ public class SpawnMob
 
 		if (!Permissions.SPAWNMOB.isAuthorized((User) sender, mob.getName()))
 		{
-			throw new Exception(_("You don't have permission to spawn this mob."));
+			throw new Exception(_("§4You don't have permission to spawn this mob."));
 		}
 	}
 
@@ -213,7 +213,7 @@ public class SpawnMob
 			}
 			catch (Exception e)
 			{
-				throw new Exception(_("Malformed size."), e);
+				throw new Exception(_("§4Malformed size."), e);
 			}
 		}
 		if (spawned instanceof Ageable && data.contains("baby"))
@@ -238,7 +238,7 @@ public class SpawnMob
 			}
 			catch (Exception e)
 			{
-				throw new Exception(_("Malformed color."), e);
+				throw new Exception(_("§4Malformed color."), e);
 			}
 		}
 		if (spawned instanceof Tameable && data.contains("tamed") && target != null)

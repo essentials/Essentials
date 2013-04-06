@@ -28,14 +28,14 @@ public class Commandafk extends EssentialsCommand
 	{
 		if (!user.toggleAfk())
 		{
-			//user.sendMessage(_("You are no longer marked as away."));
-			ess.broadcastMessage(user, _("{0} is no longer AFK.", user.getPlayer().getDisplayName()));
+			//user.sendMessage(_("§6You are no longer marked as away."));
+			ess.broadcastMessage(user, _("§5{0} §5is no longer AFK.", user.getPlayer().getDisplayName()));
 			user.updateActivity(false);
 		}
 		else
 		{
-			//user.sendMessage(_("You are now marked as away."));
-			ess.broadcastMessage(user, _("{0} is now AFK.", user.getPlayer().getDisplayName()));
+			//user.sendMessage(_("§6You are now marked as away."));
+			ess.broadcastMessage(user, _("§5{0} §5is now AFK.", user.getPlayer().getDisplayName()));
 		}
 	}
 }

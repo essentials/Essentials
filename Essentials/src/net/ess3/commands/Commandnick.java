@@ -23,16 +23,16 @@ public class Commandnick extends EssentialsCommand
 		final ISettings settings = ess.getSettings();
 		if (!settings.getData().getChat().getChangeDisplayname())
 		{
-			throw new Exception(_("You have to enable change-displayname in Essentials config."));
+			throw new Exception(_("§4You have to enable change-displayname in Essentials config."));
 		}
 		if (args.length > 1)
 		{
 			if (!Permissions.NICK_OTHERS.isAuthorized(user))
 			{
-				throw new Exception(_("You do not have permission to change the nickname of others!"));
+				throw new Exception(_("§4You do not have permission to change the nickname of others!"));
 			}
 			setNickname(ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer()), formatNickname(user, args[1]));
-			user.sendMessage(_("Nickname changed."));
+			user.sendMessage(_("§6Nickname changed."));
 			return;
 		}
 		setNickname(user, formatNickname(user, args[0]));
@@ -48,7 +48,7 @@ public class Commandnick extends EssentialsCommand
 		final ISettings settings = ess.getSettings();
 		if (!settings.getData().getChat().getChangeDisplayname())
 		{
-			throw new Exception(_("You have to enable change-displayname in Essentials config."));
+			throw new Exception(_("§4You have to enable change-displayname in Essentials config."));
 		}
 		if ((args[0].equalsIgnoreCase("*") || args[0].equalsIgnoreCase("all")) && args[1].equalsIgnoreCase("off"))
 		{
@@ -58,7 +58,7 @@ public class Commandnick extends EssentialsCommand
 		{
 			setNickname(ess.getUserMap().matchUser(args[0], false), formatNickname(null, args[1]));
 		}
-		sender.sendMessage(_("Nickname changed."));
+		sender.sendMessage(_("§6Nickname changed."));
 	}
 
 	private String formatNickname(final IUser user, final String nick)
@@ -91,7 +91,7 @@ public class Commandnick extends EssentialsCommand
 	{
 		if (!nick.matches("^[a-zA-Z_0-9\u00a7]+$"))
 		{
-			throw new Exception(_("Nicknames must be alphanumeric."));
+			throw new Exception(_("§4Nicknames must be alphanumeric."));
 		}
 		final String stripNick = FormatUtil.stripFormat(nick);
 		if (ess.getSettings().getData().getChat().getMaxNickLength() > 0 && stripNick.length() > ess.getSettings().getData().getChat().getMaxNickLength())
@@ -102,7 +102,7 @@ public class Commandnick extends EssentialsCommand
 		{
 			target.getData().setNickname(null);
 			target.updateDisplayName();
-			target.sendMessage(_("You no longer have a nickname."));
+			target.sendMessage(_("§6You no longer have a nickname."));
 		}
 		else
 		{
@@ -117,13 +117,13 @@ public class Commandnick extends EssentialsCommand
 				final String nk = nick.toLowerCase(Locale.ENGLISH);
 				if (nk.equals(dn) || nk.equals(n))
 				{
-					throw new Exception(_("That name is already in use."));
+					throw new Exception(_("§4That name is already in use."));
 				}
 			}
 
 			target.getData().setNickname(nick);
 			target.updateDisplayName();
-			target.sendMessage(_("Your nickname is now {0}.", target.getPlayer().getDisplayName() + "§7."));
+			target.sendMessage(_("§6Your nickname is now §c{0}", target.getPlayer().getDisplayName() + "§7."));
 		}
 	}
 }

@@ -21,7 +21,7 @@ public class Commandmute extends EssentialsCommand
 		final IUser player = ess.getUserMap().matchUser(args[0], true);
 		if (!player.getData().isMuted() && Permissions.MUTE_EXEMPT.isAuthorized(player))
 		{
-			throw new Exception(_("You may not mute that player."));
+			throw new Exception(_("§4You may not mute that player."));
 		}
 		long muteTimestamp = 0;
 
@@ -38,10 +38,10 @@ public class Commandmute extends EssentialsCommand
 		player.setTimestamp(TimestampType.MUTE, muteTimestamp);
 		final boolean muted = player.getData().isMuted();
 		sender.sendMessage(
-				muted ? (muteTimestamp > 0 ? _("Player {0} muted for {1}.", player.getPlayer().getDisplayName(), DateUtil.formatDateDiff(muteTimestamp)) : _(
+				muted ? (muteTimestamp > 0 ? _("§6Player {0} §6muted for {1}.", player.getPlayer().getDisplayName(), DateUtil.formatDateDiff(muteTimestamp)) : _(
 						"mutedPlayer", player.getPlayer().getDisplayName())) : _(
 						"unmutedPlayer", player.getPlayer().getDisplayName()));
 		player.sendMessage(
-				muted ? (muteTimestamp > 0 ? _("You have been muted for {0}.", DateUtil.formatDateDiff(muteTimestamp)) : _("You have been muted.")) : _("You have been unmuted."));
+				muted ? (muteTimestamp > 0 ? _("§6You have been muted for§c {0}.", DateUtil.formatDateDiff(muteTimestamp)) : _("§6You have been muted!")) : _("§6You have been unmuted."));
 	}
 }

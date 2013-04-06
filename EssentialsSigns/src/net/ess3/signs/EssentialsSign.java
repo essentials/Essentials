@@ -39,7 +39,7 @@ public class EssentialsSign
 			// they won't change it to §1[Signname]
 			return true;
 		}
-		sign.setLine(0, _("[{0}]", this.signName));
+		sign.setLine(0, _("§4[{0}]", this.signName));
 		try
 		{
 			final boolean ret = onSignCreate(sign, user, getUsername(user), ess);
@@ -63,7 +63,7 @@ public class EssentialsSign
 
 	public String getSuccessName()
 	{
-		return _("[{0}]", this.signName);
+		return _("§1[{0}]", this.signName);
 	}
 
 	public String getTemplateName()
@@ -297,7 +297,7 @@ public class EssentialsSign
 				getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * player.getPlayer().getInventory().getSize());
 		if (item.getTypeId() == 0 || amount < 1)
 		{
-			throw new SignException(_("Quantities must be greater than 0."));
+			throw new SignException(_("§4Quantities must be greater than 0."));
 		}
 		item.setAmount(amount);
 		return new Trade(item, ess);
@@ -319,7 +319,7 @@ public class EssentialsSign
 		final int quantity = getInteger(line);
 		if (quantity < 1)
 		{
-			throw new SignException(_("Quantities must be greater than 0."));
+			throw new SignException(_("§4Quantities must be greater than 0."));
 		}
 		return quantity;
 	}
@@ -363,7 +363,7 @@ public class EssentialsSign
 		final double quantity = getDouble(line);
 		if (Math.round(quantity * 100.0) < 1.0)
 		{
-			throw new SignException(_("Quantities must be greater than 0."));
+			throw new SignException(_("§4Quantities must be greater than 0."));
 		}
 		return quantity;
 	}
@@ -399,7 +399,7 @@ public class EssentialsSign
 			final String[] split = line.split("[ :]+", 2);
 			if (split.length != 2)
 			{
-				throw new SignException(_("Invalid charge."));
+				throw new SignException(_("§4Invalid charge."));
 			}
 			final int quantity = getIntegerPositive(split[0]);
 

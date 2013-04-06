@@ -47,7 +47,7 @@ public class EssentialsAntiBuildListener implements Listener
 		{
 			if (antib.getSettings().getData().isWarnOnBuildDisallow())
 			{
-				user.sendMessage(_("You are not permitted to place {0} here.", type.toString()));
+				user.sendMessage(_("§4You are not permitted to place§c {0} §4here.", type.toString()));
 			}
 			event.setCancelled(true);
 			return;
@@ -57,7 +57,7 @@ public class EssentialsAntiBuildListener implements Listener
 		{
 			if (antib.getSettings().getData().isWarnOnBuildDisallow())
 			{
-				user.sendMessage(_("You are not permitted to place {0} here.", type.toString()));
+				user.sendMessage(_("§4You are not permitted to place§c {0} §4here.", type.toString()));
 			}
 			event.setCancelled(true);
 			return;
@@ -81,7 +81,7 @@ public class EssentialsAntiBuildListener implements Listener
 		{
 			if (antib.getSettings().getData().isWarnOnBuildDisallow())
 			{
-				user.sendMessage(_("You are not permitted to break {0} blocks here.", type.toString()));
+				user.sendMessage(_("§4You are not permitted to break§c {0} §4blocks here.", type.toString()));
 			}
 			event.setCancelled(true);
 			return;
@@ -91,7 +91,7 @@ public class EssentialsAntiBuildListener implements Listener
 		{
 			if (antib.getSettings().getData().isWarnOnBuildDisallow())
 			{
-				user.sendMessage(_("You are not permitted to break {0} blocks here.", type.toString()));
+				user.sendMessage(_("§4You are not permitted to break§c {0} §4blocks here.", type.toString()));
 			}
 			event.setCancelled(true);
 			return;
@@ -119,7 +119,7 @@ public class EssentialsAntiBuildListener implements Listener
 				{
 					if (warn)
 					{
-						user.sendMessage(_("You are not permitted to break {0} blocks here.", Material.PAINTING.toString()));
+						user.sendMessage(_("§4You are not permitted to break§c {0} §4blocks here.", Material.PAINTING.toString()));
 					}
 					event.setCancelled(true);
 				}
@@ -127,7 +127,7 @@ public class EssentialsAntiBuildListener implements Listener
 				{
 					if (warn)
 					{
-						user.sendMessage(_("You are not permitted to break {0} blocks here.", Material.ITEM_FRAME.toString()));
+						user.sendMessage(_("§4You are not permitted to break§c {0} §4blocks here.", Material.ITEM_FRAME.toString()));
 					}
 					event.setCancelled(true);
 				}
@@ -173,7 +173,7 @@ public class EssentialsAntiBuildListener implements Listener
 		{
 			if (antib.getSettings().getData().isWarnOnBuildDisallow())
 			{
-				user.sendMessage(_("You are not permitted to use {0}.", item.getType().toString()));
+				user.sendMessage(_("§4You are not permitted to use§c {0}§4.", item.getType().toString()));
 			}
 			event.setCancelled(true);
 			return;
@@ -191,7 +191,7 @@ public class EssentialsAntiBuildListener implements Listener
 				event.setCancelled(true);
 				if (antib.getSettings().getData().isWarnOnBuildDisallow())
 				{
-					user.sendMessage(_("You are not permitted to use {0}.", item.getType().toString()));
+					user.sendMessage(_("§4You are not permitted to use§c {0}§4.", item.getType().toString()));
 				}
 				return;
 			}
@@ -200,7 +200,7 @@ public class EssentialsAntiBuildListener implements Listener
 				event.setCancelled(true);
 				if (antib.getSettings().getData().isWarnOnBuildDisallow())
 				{
-					user.sendMessage(_("You are not permitted to interact with {0}.", event.getClickedBlock().getType().toString()));
+					user.sendMessage(_("§4You are not permitted to interact with§c {0}§4.", event.getClickedBlock().getType().toString()));
 				}
 			}
 		}
@@ -223,7 +223,7 @@ public class EssentialsAntiBuildListener implements Listener
 					event.setCancelled(true);
 					if (antib.getSettings().getData().isWarnOnBuildDisallow())
 					{
-						user.sendMessage(_("You are not permitted to create {0}.", item.getType().toString()));
+						user.sendMessage(_("§4You are not permitted to create§c {0}§4.", item.getType().toString()));
 					}
 				}
 			}
@@ -265,7 +265,7 @@ public class EssentialsAntiBuildListener implements Listener
 				user.getPlayer().updateInventory();
 				if (antib.getSettings().getData().isWarnOnBuildDisallow())
 				{
-					user.sendMessage(_("You are not permitted to drop {0}.", item.getType().toString()));
+					user.sendMessage(_("§4You are not permitted to drop§c {0}§4.", item.getType().toString()));
 				}
 			}
 		}

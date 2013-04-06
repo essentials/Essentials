@@ -35,16 +35,16 @@ public class Commandlist extends EssentialsCommand
 
 			if (showhidden && playerHidden > 0)
 			{
-				online = _("There are {0}/{1} out of maximum {2} players online.", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
+				online = _(" §6There are §c{0}§6/{1}§6 out of maximum §c{2}§6 players online.", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
 			}
 			else
 			{
-				online = _("There are {0} out of maximum {1} players online.", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
+				online = _(" §6There are §c{0}§6 out of maximum §c{1}§6 players online.", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
 			}
 		}
 		else
 		{
-			online = _("There are {0} out of maximum {1} players online.", server.getOnlinePlayers().length, server.getMaxPlayers());
+			online = _(" §6There are §c{0}§6 out of maximum §c{1}§6 players online.", server.getOnlinePlayers().length, server.getMaxPlayers());
 		}
 
 		sender.sendMessage(online);
@@ -81,7 +81,7 @@ public class Commandlist extends EssentialsCommand
 			for (String group : groups)
 			{
 				final StringBuilder groupString = new StringBuilder();
-				groupString.append(_("{0}: ", FormatUtil.replaceFormat(group)));
+				groupString.append(_("{0}§r: ", FormatUtil.replaceFormat(group)));
 				final List<IUser> users = sort.get(group);
 				Collections.sort(users);
 				boolean first = true;
@@ -98,12 +98,12 @@ public class Commandlist extends EssentialsCommand
 
 					if (user.getData().isAfk())
 					{
-						groupString.append(" ").append(_("[AFK]"));
+						groupString.append(_(" §7[AFK]§r"));
 					}
 
 					if (hiddenPlayers.contains(user.getName()))
 					{
-						groupString.append(" ").append(_("[HIDDEN]"));
+						groupString.append(_(" §7[HIDDEN]§r"));
 					}
 					groupString.append(user.getPlayer().getDisplayName());
 					groupString.append("§f");
@@ -130,7 +130,7 @@ public class Commandlist extends EssentialsCommand
 			Collections.sort(users);
 
 			final StringBuilder onlineUsers = new StringBuilder();
-			onlineUsers.append(_("Connected players "));
+			onlineUsers.append(_("§6Connected players§r"));
 			boolean first = true;
 			for (IUser user : users)
 			{
@@ -145,12 +145,12 @@ public class Commandlist extends EssentialsCommand
 
 				if (user.getData().isAfk())
 				{
-					onlineUsers.append(" ").append(_("[AFK]"));
+					onlineUsers.append(_(" §7[AFK]§r"));
 				}
 
 				if (hiddenPlayers.contains(user.getName()))
 				{
-					onlineUsers.append(" ").append(_("[HIDDEN]"));
+					onlineUsers.append(_(" §7[HIDDEN]§r"));
 				}
 				onlineUsers.append(user.getPlayer().getDisplayName());
 				onlineUsers.append("§f");

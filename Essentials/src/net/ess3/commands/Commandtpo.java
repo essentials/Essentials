@@ -24,17 +24,17 @@ public class Commandtpo extends EssentialsCommand
 		if (settings.getData().getGeneral().isPerGroupTeleport() && !Permissions.PERGROUPTELEPORT.isAuthorized(
 					user, ess.getRanks().getMainGroup(player)))
 			{
-				throw new Exception(_("You do not have the {0} permission.", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
+				throw new Exception(_("§4You do not have the §c{0}§4 permission.", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
 			}
 		// Verify permission
 		if (user.getPlayer().canSee(player.getPlayer()) || Permissions.TELEPORT_HIDDEN.isAuthorized(user))
 		{
 			user.getTeleport().now(player.getPlayer(), false, TeleportCause.COMMAND);
-			user.sendMessage(_("Teleporting..."));
+			user.sendMessage(_("§6Teleporting..."));
 		}
 		else
 		{
-			throw new NoSuchFieldException(_("Player not found."));
+			throw new NoSuchFieldException(_("§4Player not found."));
 		}
 	}
 }

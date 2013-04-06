@@ -105,8 +105,8 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 				}
 				catch (Exception ex)
 				{
-					sender.sendMessage(_("Command {0} is improperly loaded.", commandName));
-					LOGGER.log(Level.SEVERE, _("Command {0} is improperly loaded.", commandName), ex);
+					sender.sendMessage(_("§4Command {0} is improperly loaded.", commandName));
+					LOGGER.log(Level.SEVERE, _("§4Command {0} is improperly loaded.", commandName), ex);
 					return true;
 				}
 			}
@@ -114,8 +114,8 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 			// Check authorization
 			if (sender != null && !cmd.isAuthorized(sender))
 			{
-				LOGGER.log(Level.WARNING, _("{0} was denied access to command.", sender.getName()));
-				sender.sendMessage(_("You do not have access to that command."));
+				LOGGER.log(Level.WARNING, _("§c{0} §4was denied access to command.", sender.getName()));
+				sender.sendMessage(_("§4You do not have access to that command."));
 				return true;
 			}
 
@@ -236,8 +236,8 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 				}
 				catch (Exception ex)
 				{
-					sender.sendMessage(_("Command {0} is improperly loaded.", commandName));
-					LOGGER.log(Level.SEVERE, _("Command {0} is improperly loaded.", commandName), ex);
+					sender.sendMessage(_("§4Command {0} is improperly loaded.", commandName));
+					LOGGER.log(Level.SEVERE, _("§4Command {0} is improperly loaded.", commandName), ex);
 					return null;
 				}
 			}
@@ -245,8 +245,8 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 			// Check authorization
 			if (sender != null && !cmd.isAuthorized(sender))
 			{
-				LOGGER.log(Level.WARNING, _("{0} was denied access to command.", sender.getName()));
-				sender.sendMessage(_("You do not have access to that command."));
+				LOGGER.log(Level.WARNING, _("§c{0} §4was denied access to command.", sender.getName()));
+				sender.sendMessage(_("§4You do not have access to that command."));
 				return null;
 			}
 
@@ -287,7 +287,7 @@ public class EssentialsCommandHandler implements ICommandHandler, TabExecutor
 	@Override
 	public void showCommandError(final CommandSender sender, final String commandLabel, final Throwable exception)
 	{
-		sender.sendMessage(_("Error: {0}", exception.getMessage()));
+		sender.sendMessage(_("§cError:§4 {0}", exception.getMessage()));
 		if (ess.getSettings().isDebug())
 		{
 			LOGGER.log(Level.WARNING, _("Error calling command /{0}", commandLabel), exception);

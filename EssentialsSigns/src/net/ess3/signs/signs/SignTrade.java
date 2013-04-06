@@ -49,7 +49,7 @@ public class SignTrade extends EssentialsSign
 			{
 				if (store == null)
 				{
-					throw new SignException(_("There is nothing to collect from this trade sign."), e);
+					throw new SignException(_("§4There is nothing to collect from this trade sign."), e);
 				}
 			}
 			Trade.log("Sign", "Trade", "OwnerInteract", username, store, username, stored, sign.getBlock().getLocation(), ess);
@@ -157,7 +157,7 @@ public class SignTrade extends EssentialsSign
 				amount -= amount % money;
 				if (amount < 0.01 || money < 0.01)
 				{
-					throw new SignException(_("Quantities must be greater than 0."));
+					throw new SignException(_("§4Quantities must be greater than 0."));
 				}
 				sign.setLine(index, FormatUtil.shortCurrency(money, ess) + ":" + FormatUtil.shortCurrency(amount, ess).substring(1));
 				return;
@@ -170,11 +170,11 @@ public class SignTrade extends EssentialsSign
 
 			if (amount < 1)
 			{
-				throw new SignException(_("Quantities must be greater than 0."));
+				throw new SignException(_("§4Quantities must be greater than 0."));
 			}
 			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp")) && getItemStack(split[1], amount, ess).getTypeId() == 0)
 			{
-				throw new SignException(_("Quantities must be greater than 0."));
+				throw new SignException(_("§4Quantities must be greater than 0."));
 			}
 			String newline = amount + " " + split[1] + ":0";
 			if ((newline + amount).length() > 15)
@@ -192,16 +192,16 @@ public class SignTrade extends EssentialsSign
 			amount -= amount % stackamount;
 			if (amount < 1 || stackamount < 1)
 			{
-				throw new SignException(_("Quantities must be greater than 0."));
+				throw new SignException(_("§4Quantities must be greater than 0."));
 			}
 			if (!(split[1].equalsIgnoreCase("exp") || split[1].equalsIgnoreCase("xp")) && getItemStack(split[1], stackamount, ess).getTypeId() == 0)
 			{
-				throw new SignException(_("Quantities must be greater than 0."));
+				throw new SignException(_("§4Quantities must be greater than 0."));
 			}
 			sign.setLine(index, stackamount + " " + split[1] + ":" + amount);
 			return;
 		}
-		throw new SignException(_("Line {0} on sign is invalid.", index + 1));
+		throw new SignException(_("§4Line§c {0} §4on sign is invalid.", index + 1));
 	}
 
 	protected final Trade getTrade(final ISign sign, final int index, final boolean fullAmount, final boolean notEmpty, final IEssentials ess) throws SignException
@@ -226,7 +226,7 @@ public class SignTrade extends EssentialsSign
 			}
 			catch (SignException e)
 			{
-				throw new SignException(_("The trade sign has nothing available for you."), e);
+				throw new SignException(_("§4The trade sign has nothing available for you."), e);
 			}
 		}
 
@@ -239,7 +239,7 @@ public class SignTrade extends EssentialsSign
 				amount -= amount % stackamount;
 				if (notEmpty && (amount < 1 || stackamount < 1))
 				{
-					throw new SignException(_("The trade sign has nothing available for you."));
+					throw new SignException(_("§4The trade sign has nothing available for you."));
 				}
 				return new Trade(fullAmount ? amount : stackamount, ess);
 			}
@@ -251,13 +251,13 @@ public class SignTrade extends EssentialsSign
 				amount -= amount % stackamount;
 				if (notEmpty && (amount < 1 || stackamount < 1 || item.getTypeId() == 0))
 				{
-					throw new SignException(_("The trade sign has nothing available for you."));
+					throw new SignException(_("§4The trade sign has nothing available for you."));
 				}
 				item.setAmount(fullAmount ? amount : stackamount);
 				return new Trade(item, ess);
 			}
 		}
-		throw new SignException(_("Line {0} on sign is invalid.", index + 1));
+		throw new SignException(_("§4Line§c {0} §4on sign is invalid.", index + 1));
 	}
 
 	protected final void subtractAmount(final ISign sign, final int index, final Trade trade, final IEssentials ess) throws SignException
@@ -354,6 +354,6 @@ public class SignTrade extends EssentialsSign
 				return;
 			}
 		}
-		throw new SignException(_("Line {0} on sign is invalid.", index + 1));
+		throw new SignException(_("§4Line§c {0} §4on sign is invalid.", index + 1));
 	}
 }

@@ -71,7 +71,7 @@ public class EssentialsPlayerListener implements Listener
 		if (user.getData().isMuted())
 		{
 			event.setCancelled(true);
-			user.sendMessage(_("You have been muted!"));
+			user.sendMessage(_("§6You have been muted!"));
 			LOGGER.info(_("{0} tried to speak, but is muted.", user.getName()));
 		}
 		final Iterator<Player> it = event.getRecipients().iterator();
@@ -157,7 +157,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			user.getData().clearAllPowertools();
 			user.queueSave();
-			user.sendMessage(_("All powertool commands have been cleared."));
+			user.sendMessage(_("§6All powertool commands have been cleared."));
 		}
 	}
 
@@ -243,11 +243,11 @@ public class EssentialsPlayerListener implements Listener
 			final List<String> mail = user.getData().getMails();
 			if (mail == null || mail.isEmpty())
 			{
-				user.sendMessage(_("You have no new mail."));
+				user.sendMessage(_("§6You have no new mail."));
 			}
 			else
 			{
-				user.sendMessage(_("You have {0} messages! Type /mail read to view your mail.", mail.size()));
+				user.sendMessage(_("§6You have§c {0} §6messages! Type §c/mail read§6 to view your mail.", mail.size()));
 			}
 		}*/
 	}
@@ -319,7 +319,7 @@ public class EssentialsPlayerListener implements Listener
 			final List<String> mail = user.getMails();
 			if (mail.isEmpty())
 			{
-				final String msg = _("You have no new mail.");
+				final String msg = _("§6You have no new mail.");
 				if (!msg.isEmpty())
 				{
 					user.sendMessage(msg);
@@ -327,7 +327,7 @@ public class EssentialsPlayerListener implements Listener
 			}
 			else
 			{
-				user.sendMessage(_("You have {0} messages! Type /mail read to view your mail.", mail.size()));
+				user.sendMessage(_("§6You have§c {0} §6messages! Type §c/mail read§6 to view your mail.", mail.size()));
 			}
 		}
 		if(Permissions.FLY_SAFELOGIN.isAuthorized(user))
@@ -346,7 +346,7 @@ public class EssentialsPlayerListener implements Listener
 			{
 				user.getPlayer().setAllowFlight(true);
 				user.getPlayer().setFlying(true);
-				user.sendMessage(_("Set fly mode {0} for {1}.", _("enabled"), user.getPlayer().getDisplayName()));
+				user.sendMessage(_("§6Set fly mode§c {0} §6for {1}§6.", _("enabled"), user.getPlayer().getDisplayName()));
 			}
 		}
 	}
@@ -489,7 +489,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			if (user.getData().isGodmode())
 			{
-				user.sendMessage(_("Warning! God mode in this world disabled."));
+				user.sendMessage(_("§4Warning! God mode in this world disabled."));
 			}
 		}
 		if (settings.getData().getCommands().getTeleport().isCancelRequestsOnWorldChange())
@@ -504,7 +504,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			user.getData().clearAllPowertools();
 			user.queueSave();
-			user.sendMessage(_("All powertool commands have been cleared."));
+			user.sendMessage(_("§6All powertool commands have been cleared."));
 		}
 	}
 

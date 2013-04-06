@@ -20,14 +20,14 @@ public class SignMail extends EssentialsSign
 		final List<String> mail = player.getData().getMails();
 		if (mail == null || mail.isEmpty())
 		{
-			player.sendMessage(_("You have no new mail."));
+			player.sendMessage(_("§6You have no new mail."));
 			return false;
 		}
 		for (String s : mail)
 		{
 			player.sendMessage(s);
 		}
-		player.sendMessage(_("To mark your mail as read, type /mail clear."));
+		player.sendMessage(_("§6To mark your mail as read, type§c /mail clear."));
 		return true;
 	}
 }

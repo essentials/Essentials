@@ -12,6 +12,6 @@ public class NoLoanPermittedException extends Exception
 
 	public NoLoanPermittedException()
 	{
-		super(_("User is not allowed to have a negative balance."));
+		super(_("§4User is not allowed to have a negative balance."));
 	}
 }

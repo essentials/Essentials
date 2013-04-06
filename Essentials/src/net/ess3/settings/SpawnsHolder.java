@@ -262,7 +262,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns>
 				}
 				catch (Exception ex)
 				{
-					Bukkit.getLogger().log(Level.WARNING, _("Failed to teleport new player!"), ex);
+					Bukkit.getLogger().log(Level.WARNING, _("§4Failed to teleport new player!"), ex);
 				}
 			}
 		}

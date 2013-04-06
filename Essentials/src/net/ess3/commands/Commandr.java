@@ -47,11 +47,11 @@ public class Commandr extends EssentialsCommand
 		final CommandSender target = replyTo.getReplyTo();
 		if (target == null || (isUser(target) && !getUser(target).isOnline()))
 		{
-			throw new Exception(_("You have nobody to whom you can reply."));
+			throw new Exception(_("§4You have nobody to whom you can reply."));
 		}
 		final String targetName = isUser(target) ? getPlayer(target).getDisplayName() : Console.NAME;
 
-		sender.sendMessage(_("[{0} -> {1}] {2}", _("me"), targetName, message));
+		sender.sendMessage(_("§6[{0}§6 -> {1}§6] §r{2}", _("me"), targetName, message));
 		if (isUser(target))
 		{
 			if (isUser(sender) && getUser(target).isIgnoringPlayer(getUser(sender)))
@@ -59,7 +59,7 @@ public class Commandr extends EssentialsCommand
 				return;
 			}
 		}
-		target.sendMessage(_("[{0} -> {1}] {2}", senderName, _("me"), message));
+		target.sendMessage(_("§6[{0}§6 -> {1}§6] §r{2}", senderName, _("me"), message));
 		replyTo.setReplyTo(target);
 		if (target != sender)
 		{

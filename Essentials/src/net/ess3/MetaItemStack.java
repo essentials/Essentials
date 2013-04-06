@@ -111,14 +111,14 @@ public class MetaItemStack
         {
             if (!hasMetaPermission(sender, "firework", true, true, ess))
             {
-                throw new Exception(_("You do not have permission to apply firework meta."));
+                throw new Exception(_("§4You do not have permission to apply firework meta."));
             }
             FireworkEffect effect = builder.build();
             FireworkMeta fmeta = (FireworkMeta)stack.getItemMeta();
             fmeta.addEffect(effect);
             if (fmeta.getEffects().size() > 1 && !hasMetaPermission(sender, "firework-multiple", true, true, ess))
             {
-                throw new Exception(_("You cannot apply more than one charge to this firework."));
+                throw new Exception(_("§4You cannot apply more than one charge to this firework."));
             }
             stack.setItemMeta(fmeta);
         }
@@ -161,7 +161,7 @@ public class MetaItemStack
             }
             else
             {
-                throw new Exception(_("You can only set the owner of player skulls (397:3)."));
+                throw new Exception(_("§4You can only set the owner of player skulls (397:3)."));
             }
         }
         else if (split.length > 1 && split[0].equalsIgnoreCase("book") && stack.getType() == Material.WRITTEN_BOOK && hasMetaPermission(sender, "book", false, true, ess))
@@ -178,7 +178,7 @@ public class MetaItemStack
             }
             else
             {
-                throw new Exception(_("You do not have permission to create dynamic books."));
+                throw new Exception(_("§4You do not have permission to create dynamic books."));
             }
 
         }
@@ -229,7 +229,7 @@ public class MetaItemStack
             }
             else
             {
-                throw new Exception(_("Leather Color Syntax: color:<red>,<green>,<blue> eg: color:255,0,0."));
+                throw new Exception(_("§6Leather Color Syntax: color:<red>,<green>,<blue> eg: color:255,0,0."));
             }
         }
         else
@@ -255,14 +255,14 @@ public class MetaItemStack
                 {
                     if (!hasMetaPermission(sender, "firework", true, true, ess))
                     {
-                        throw new Exception(_("You do not have permission to apply firework meta."));
+                        throw new Exception(_("§4You do not have permission to apply firework meta."));
                     }
                     FireworkEffect effect = builder.build();
                     FireworkMeta fmeta = (FireworkMeta)stack.getItemMeta();
                     fmeta.addEffect(effect);
                     if (fmeta.getEffects().size() > 1 && !hasMetaPermission(sender, "firework-multiple", true, true, ess))
                     {
-                        throw new Exception(_("You cannot apply more than one charge to this firework."));
+                        throw new Exception(_("§4You cannot apply more than one charge to this firework."));
                     }
                     stack.setItemMeta(fmeta);
                     builder = FireworkEffect.builder();
@@ -279,7 +279,7 @@ public class MetaItemStack
                     }
                     else
                     {
-                        throw new Exception(_("The option {0} is not a valid value for {1}.", split[1], split[0]));
+                        throw new Exception(_("§6The option §4{0} §6is not a valid value for §4{1}§6.", split[1], split[0]));
                     }
                 }
                 builder.withColor(primaryColors);
@@ -294,7 +294,7 @@ public class MetaItemStack
                 }
                 else
                 {
-                    throw new Exception(_("The option {0} is not a valid value for {1}.", split[1], split[0]));
+                    throw new Exception(_("§6The option §4{0} §6is not a valid value for §4{1}§6.", split[1], split[0]));
                 }
                 if (finalEffect != null)
                 {
@@ -313,7 +313,7 @@ public class MetaItemStack
                     }
                     else
                     {
-                        throw new Exception(_("The option {0} is not a valid value for {1}.", split[1], split[0]));
+                        throw new Exception(_("§6The option §4{0} §6is not a valid value for §4{1}§6.", split[1], split[0]));
                     }
                 }
                 if (!fadeColors.isEmpty())
@@ -336,7 +336,7 @@ public class MetaItemStack
                     }
                     else
                     {
-                        throw new Exception(_("The option {0} is not a valid value for {1}.", split[1], split[0]));
+                        throw new Exception(_("§6The option §4{0} §6is not a valid value for §4{1}§6.", split[1], split[0]));
                     }
                 }
             }
@@ -365,12 +365,12 @@ public class MetaItemStack
                     }
                     else
                     {
-                        throw new Exception(_("You do not have permission to apply potion effect {0} to this potion.", pEffectType.getName().toLowerCase(Locale.ENGLISH)));
+                        throw new Exception(_("§4You do not have permission to apply potion effect §c{0} §4to this potion.", pEffectType.getName().toLowerCase(Locale.ENGLISH)));
                     }
                 }
                 else
                 {
-                    throw new Exception(_("Invalid Potion.Meta", split[1]));
+                    throw new Exception(_("§4Invalid potion meta: §c{0}§4.", split[1]));
                 }
             }
             else if (split[0].equalsIgnoreCase("power") || (allowShortName && split[0].equalsIgnoreCase("p")))
@@ -386,7 +386,7 @@ public class MetaItemStack
                 }
                 else
                 {
-                    throw new Exception(_("Invalid Potion.Meta", split[1]));
+                    throw new Exception(_("§4Invalid potion meta: §c{0}§4.", split[1]));
                 }
             }
             else if (split[0].equalsIgnoreCase("duration") || (allowShortName && split[0].equalsIgnoreCase("d")))
@@ -398,7 +398,7 @@ public class MetaItemStack
                 }
                 else
                 {
-                    throw new Exception(_("Invalid Potion.Meta", split[1]));
+                    throw new Exception(_("§4Invalid potion meta: §c{0}§4.", split[1]));
                 }
             }
 
@@ -408,7 +408,7 @@ public class MetaItemStack
                 pEffect = pEffectType.createEffect(duration, power);
                 if (pmeta.getCustomEffects().size() > 1 && !hasMetaPermission(sender, "Potions: {0}..multiple", true, false, ess))
                 {
-                    throw new Exception(_("You cannot apply more than one effect to this potion."));
+                    throw new Exception(_("§4You cannot apply more than one effect to this potion."));
                 }
                 pmeta.addCustomEffect(pEffect, true);
                 stack.setItemMeta(pmeta);
@@ -499,7 +499,7 @@ public class MetaItemStack
 
         if (!hasMetaPermission(user, "enchantments." + enchantmentName, true, false))
         {
-            throw new Exception(_("You do not have the permission for {0}.", enchantmentName));
+            throw new Exception(_(" §4You do not have the permission for§c {0}§4.", enchantmentName));
         }
         return enchantment;
     }
@@ -525,7 +525,7 @@ public class MetaItemStack
         }
         else
         {
-            throw new Exception(_("You do not have permission to apply {0} meta to this item.", metaPerm));
+            throw new Exception(_("§4You do not have permission to apply §c{0}§4 meta to this item.", metaPerm));
         }
     }
 }

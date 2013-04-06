@@ -49,7 +49,7 @@ public class Warps extends StorageObjectMap<IWarp> implements IWarps
 		final IWarp warp = getObject(name);
 		if (warp == null)
 		{
-			throw new WarpNotFoundException(_("That warp does not exist."));
+			throw new WarpNotFoundException(_("§4That warp does not exist."));
 		}
 		return warp.getData().getLocation().getStoredLocation();
 	}

@@ -66,7 +66,7 @@ public class EssentialsTimer implements Runnable
 					final List<String> mail = user.getMails();
 					if (mail != null && !mail.isEmpty())
 					{
-						user.sendMessage(I18n._("You have {0} messages! Type /mail read to view your mail.", mail.size()));
+						user.sendMessage(I18n._("§6You have§c {0} §6messages! Type §c/mail read§6 to view your mail.", mail.size()));
 					}
 				}
 			}

@@ -74,7 +74,7 @@ public class Commandhome extends EssentialsCommand
 			}
 			else if (homes.isEmpty())
 			{
-				throw new Exception(player == user ? _("You have not set a home.") : _("Player has not set a home."));
+				throw new Exception(player == user ? _("§4You have not set a home.") : _("§6Player has not set a home."));
 			}
 			else if (homes.size() == 1 && player.equals(user))
 			{
@@ -86,7 +86,7 @@ public class Commandhome extends EssentialsCommand
 				{
 					homes.add("bed");
 				}
-				user.sendMessage(_("Homes: {0}", Util.joinList(homes)));
+				user.sendMessage(_("§6Homes:§r {0}", Util.joinList(homes)));
 			}
 		}
 		throw new NoChargeException();
@@ -102,7 +102,7 @@ public class Commandhome extends EssentialsCommand
 		if (user.getPlayer().getWorld() != loc.getWorld() && ess.getSettings().getData().getGeneral().isWorldHomePermissions() && !Permissions.WORLD.isAuthorized(
 				user, loc.getWorld().getName()))
 		{
-			throw new Exception(_("You do not have the {0} permission.", "essentials.world." + loc.getWorld().getName()));
+			throw new Exception(_("§4You do not have the §c{0}§4 permission.", "essentials.world." + loc.getWorld().getName()));
 		}
 		user.getTeleport().home(loc, charge);
 	}

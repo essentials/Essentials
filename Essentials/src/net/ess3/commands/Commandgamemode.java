@@ -30,7 +30,7 @@ public class Commandgamemode extends EssentialsSettingsCommand
 	{
 		if (value)
 		{
-			sender.sendMessage(_("Set game mode {0} for {1}.", getValue(player).toString().toLowerCase(Locale.ENGLISH), player.getPlayer().getDisplayName()));
+			sender.sendMessage(_("§6Set game mode§c {0} §6for {1}§6.", getValue(player).toString().toLowerCase(Locale.ENGLISH), player.getPlayer().getDisplayName()));
 		}
 		else
 		{
@@ -41,7 +41,7 @@ public class Commandgamemode extends EssentialsSettingsCommand
 	@Override
 	protected void informPlayer(final IUser player)
 	{
-		final String message = _("Set game mode {0} for {1}.", getValue(player).toString().toLowerCase(Locale.ENGLISH), player.getPlayer().getDisplayName());
+		final String message = _("§6Set game mode§c {0} §6for {1}§6.", getValue(player).toString().toLowerCase(Locale.ENGLISH), player.getPlayer().getDisplayName());
 		player.sendMessage(message);
 	}
 

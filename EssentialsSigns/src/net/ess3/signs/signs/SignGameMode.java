@@ -39,13 +39,13 @@ public class SignGameMode extends EssentialsSign
 
 		if (mode.isEmpty())
 		{
-			throw new SignException(_("Line {0} on sign is invalid.", 2));
+			throw new SignException(_("§4Line§c {0} §4on sign is invalid.", 2));
 		}
 		charge.isAffordableFor(player);
 
 		//TODO: this needs to be fixed
 		player.getPlayer().setGameMode(player.getPlayer().getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL);
-		player.sendMessage(_("Set game mode {0} for {1}.", _(player.getPlayer().getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getPlayer().getDisplayName()));
+		player.sendMessage(_("§6Set game mode§c {0} §6for {1}§6.", _(player.getPlayer().getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getPlayer().getDisplayName()));
 		charge.charge(player);
 		return true;
 	}

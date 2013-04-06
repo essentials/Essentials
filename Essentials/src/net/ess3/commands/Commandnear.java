@@ -47,11 +47,11 @@ public class Commandnear extends EssentialsCommand
 		}
 		if (otherUser == null || Permissions.NEAR_OTHERS.isAuthorized(user))
 		{
-			user.sendMessage(_("Players nearby: {0}", getLocal(otherUser == null ? user : otherUser, radius)));
+			user.sendMessage(_("§6Players nearby:§r {0}", getLocal(otherUser == null ? user : otherUser, radius)));
 		}
 		else
 		{
-			user.sendMessage(_("You do not have access to that command."));
+			user.sendMessage(_("§4You do not have access to that command."));
 		}
 	}
 
@@ -74,7 +74,7 @@ public class Commandnear extends EssentialsCommand
 			{
 			}
 		}
-		sender.sendMessage(_("Players nearby: {0}", getLocal(otherUser, radius)));
+		sender.sendMessage(_("§6Players nearby:§r {0}", getLocal(otherUser, radius)));
 	}
 
 	private String getLocal(final IUser user, final long radius)

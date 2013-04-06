@@ -20,7 +20,7 @@ public class Commandsetwarp extends EssentialsCommand
 
 		if (Util.isInt(args[0]))
 		{
-			throw new NoSuchFieldException(_("Invalid warp name!"));
+			throw new NoSuchFieldException(_("§4Invalid warp name!"));
 		}
 
 		final Location loc = user.getPlayer().getLocation();
@@ -42,9 +42,9 @@ public class Commandsetwarp extends EssentialsCommand
 		}
 		else
 		{
-			throw new Exception(_("You cannot overwrite that warp."));
+			throw new Exception(_("§4You cannot overwrite that warp."));
 		}
 
-		user.sendMessage(_("Warp {0} set.", args[0]));
+		user.sendMessage(_("§6Warp§c {0} §6set.", args[0]));
 	}
 }

@@ -36,7 +36,7 @@ public class Commandvanish extends EssentialsToggleCommand
 	@Override
 	protected void informPlayer(final IUser player)
 	{
-		player.sendMessage(getValue(player) ? _("You are now completely invisible to normal users, and hidden from in-game commands.") : _("You are once again visible."));
+		player.sendMessage(getValue(player) ? _("§6You are now completely invisible to normal users, and hidden from in-game commands.") : _("§6You are once again visible."));
 	}
 
 	@Override

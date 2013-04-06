@@ -65,7 +65,7 @@ public class Backup implements Runnable, IBackup
 			return;
 		}*/
 
-		ess.getLogger().log(Level.INFO, _("Backup started."));
+		ess.getLogger().log(Level.INFO, _("§6Backup started."));
 
 		if (!backupSettings.getCommandsBeforeBackup().isEmpty())
 		{
@@ -153,7 +153,7 @@ public class Backup implements Runnable, IBackup
 			}
 
 			active.set(false);
-			ess.getLogger().log(Level.INFO, _("Backup finished."));
+			ess.getLogger().log(Level.INFO, _("§6Backup finished."));
 		}
 	}
 }

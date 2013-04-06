@@ -31,7 +31,7 @@ public class Commandfly extends EssentialsToggleCommand
 	{
 		if (value)
 		{
-			sender.sendMessage(_("Set fly mode {0} for {1}.", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
+			sender.sendMessage(_("§6Set fly mode§c {0} §6for {1}§6.", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName()));
 		}
 		else
 		{
@@ -42,7 +42,7 @@ public class Commandfly extends EssentialsToggleCommand
 	@Override
 	protected void informPlayer(final IUser player)
 	{
-		final String message = _("Set fly mode {0} for {1}.", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName());
+		final String message = _("§6Set fly mode§c {0} §6for {1}§6.", _(getValue(player) ? "enabled" : "disabled"), player.getPlayer().getDisplayName());
 		player.sendMessage(message);
 	}
 
