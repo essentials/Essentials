@@ -27,7 +27,7 @@ public class Commandmsg extends EssentialsCommand
 			final IUser user = getUser(sender);
 			if (user.getData().isMuted())
 			{
-				throw new Exception(_("Your voice has been silenced."));
+				throw new Exception(_("Your voice has been silenced!"));
 			}
 			if (Permissions.MSG_COLOR.isAuthorized(user))
 			{

@@ -12,7 +12,7 @@ public class Commandkickall extends EssentialsCommand
 	@Override
 	protected void run(final CommandSender sender, final String commandLabel, final String[] args) throws Exception
 	{
-		String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("Kicked from server");
+		String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("Kicked from server.");
 		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n").replace("|", "\n"));
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{

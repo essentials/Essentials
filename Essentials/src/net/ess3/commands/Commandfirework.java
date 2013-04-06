@@ -52,7 +52,7 @@ public class Commandfirework extends EssentialsCommand
                     FireworkMeta fmeta = (FireworkMeta)stack.getItemMeta();
                     fmeta.clearEffects();
                     stack.setItemMeta(fmeta);
-                    user.sendMessage(_("fireworkEffectsCleared"));
+                    user.sendMessage(_("Removed all effects from held stack."));
                 }
                 else if (args.length > 1 && (args[0].equalsIgnoreCase("power") || (args[0].equalsIgnoreCase("p"))))
                 {
@@ -64,7 +64,7 @@ public class Commandfirework extends EssentialsCommand
                     }
                     catch (NumberFormatException e)
                     {
-                        throw new Exception(_("invalidFireworkFormat", args[1], args[0]));
+                        throw new Exception(_("The option {0} is not a valid value for {1}.", args[1], args[0]));
                     }
                     stack.setItemMeta(fmeta);
                 }
@@ -118,7 +118,7 @@ public class Commandfirework extends EssentialsCommand
                         }
                         catch (Exception e)
                         {
-                            user.sendMessage(_("fireworkSyntax"));
+                            user.sendMessage(_("Firework parameters: color:<color> [fade:<color>] [shape:<shape>] [effect:<effect>]nTo use multiple colors/effects, seperate values with commas: red,blue,pinknShapes: star, ball, large, creeper, burst Effects: trail, twinkle."));
                             throw e;
                         }
                     }
@@ -129,15 +129,15 @@ public class Commandfirework extends EssentialsCommand
                         FireworkEffect effect = mStack.getFireworkBuilder().build();
                         if (fmeta.getEffects().size() > 0 && !Permissions.FIREWORK_MULTIPLE.isAuthorized(user))
                         {
-                            throw new Exception(_("multipleCharges"));
+                            throw new Exception(_("You cannot apply more than one charge to this firework."));
                         }
                         fmeta.addEffect(effect);
                         stack.setItemMeta(fmeta);
                     }
                     else
                     {
-                        user.sendMessage(_("fireworkSyntax"));
-                        throw new Exception(_("fireworkColor"));
+                        user.sendMessage(_("Firework parameters: color:<color> [fade:<color>] [shape:<shape>] [effect:<effect>]nTo use multiple colors/effects, seperate values with commas: red,blue,pinknShapes: star, ball, large, creeper, burst Effects: trail, twinkle."));
+                        throw new Exception(_("Invalid firework charge parameters inserted, must set a color first."));
                     }
                 }
             }
@@ -148,7 +148,7 @@ public class Commandfirework extends EssentialsCommand
         }
         else
         {
-            throw new Exception(_("holdFirework"));
+            throw new Exception(_("You must be holding a firework to add effects."));
         }
     }
 }

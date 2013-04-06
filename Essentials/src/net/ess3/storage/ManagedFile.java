@@ -47,7 +47,7 @@ public class ManagedFile
 			}
 			catch (IOException ex)
 			{
-				Bukkit.getLogger().log(Level.SEVERE, _("Could not load items.csv."), ex);
+				Bukkit.getLogger().log(Level.SEVERE, _("Could not load items.csv!"), ex);
 			}
 		}
 	}

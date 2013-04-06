@@ -49,7 +49,7 @@ public class Commandtempban extends EssentialsCommand
 			return;
 		}
 
-		final String banReason = _("Temporarily banned from server for {0}", DateUtil.formatDateDiff(banTimestamp));
+		final String banReason = _("Temporarily banned from server for {0}.", DateUtil.formatDateDiff(banTimestamp));
 		final Ban ban = new Ban();
 		final UserData userData = user.getData();
 		ban.setReason(banReason);

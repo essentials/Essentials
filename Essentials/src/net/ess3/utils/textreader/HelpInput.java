@@ -147,7 +147,7 @@ public class HelpInput implements IText
 			{
 				if (!reported)
 				{
-					logger.log(Level.WARNING, _("Error getting help for: {0}", pluginNameLow), ex);
+					logger.log(Level.WARNING, _("Error getting help for plugin: {0}", pluginNameLow), ex);
 				}
 				reported = true;
 				continue;

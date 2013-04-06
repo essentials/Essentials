@@ -130,7 +130,7 @@ public class Commandlist extends EssentialsCommand
 			Collections.sort(users);
 
 			final StringBuilder onlineUsers = new StringBuilder();
-			onlineUsers.append(_("Connected players: "));
+			onlineUsers.append(_("Connected players "));
 			boolean first = true;
 			for (IUser user : users)
 			{

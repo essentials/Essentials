@@ -26,7 +26,7 @@ public class Commandtogglejail extends EssentialsCommand
 			{
 				if (Permissions.TOGGLEJAIL_OFFLINE.isAuthorized(sender))
 				{
-					sender.sendMessage(_("You may not jail that person."));
+					sender.sendMessage(_("You may not jail that person!"));
 					return;
 				}
 			}
@@ -34,7 +34,7 @@ public class Commandtogglejail extends EssentialsCommand
 			{
 				if (Permissions.JAIL_EXEMPT.isAuthorized(player))
 				{
-					sender.sendMessage(_("You may not jail that person."));
+					sender.sendMessage(_("You may not jail that person!"));
 					return;
 				}
 			}
@@ -48,7 +48,7 @@ public class Commandtogglejail extends EssentialsCommand
 				ess.getJails().getJail(args[1]);
 			}
 			player.getData().setJailed(true);
-			player.sendMessage(_("You have been jailed."));
+			player.sendMessage(_("You have been jailed!"));
 			player.getData().setJail(args[1]);
 			long timeDiff = 0;
 			if (args.length > 2)

@@ -71,7 +71,7 @@ public class EssentialsPlayerListener implements Listener
 		if (user.getData().isMuted())
 		{
 			event.setCancelled(true);
-			user.sendMessage(_("You have been muted."));
+			user.sendMessage(_("You have been muted!"));
 			LOGGER.info(_("{0} tried to speak, but is muted.", user.getName()));
 		}
 		final Iterator<Player> it = event.getRecipients().iterator();
@@ -393,7 +393,7 @@ public class EssentialsPlayerListener implements Listener
 
 		if (server.getOnlinePlayers().length >= server.getMaxPlayers() && !Permissions.JOINFULLSERVER.isAuthorized(user))
 		{
-			event.disallow(Result.KICK_FULL, _("Server is full."));
+			event.disallow(Result.KICK_FULL, _("Server is full!"));
 			return;
 		}
 		event.allow();

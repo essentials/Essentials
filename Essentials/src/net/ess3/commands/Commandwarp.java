@@ -75,7 +75,7 @@ public class Commandwarp extends EssentialsCommand
 		final IWarps warps = ess.getWarps();
 		if (warps.isEmpty())
 		{
-			throw new Exception(_("No warps defined"));
+			throw new Exception(_("No warps defined."));
 		}
 		final List<String> warpNameList = new ArrayList<String>(warps.getList());
 

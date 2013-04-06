@@ -30,11 +30,11 @@ public class Commandbook extends EssentialsCommand
                 {
                     bmeta.setAuthor(args[1]);
                     item.setItemMeta(bmeta);
-                    user.sendMessage(_("bookAuthorSet", getFinalArg(args, 1)));
+                    user.sendMessage(_("Author of the book set to {0}.", getFinalArg(args, 1)));
                 }
                 else
                 {
-                    throw new Exception(_("denyChangeAuthor"));
+                    throw new Exception(_("You cannot change the author of this book."));
                 }
             }
             else if (args.length > 1 && args[0].equalsIgnoreCase("title"))
@@ -43,11 +43,11 @@ public class Commandbook extends EssentialsCommand
                 {
                     bmeta.setTitle(args[1]);
                     item.setItemMeta(bmeta);
-                    user.sendMessage(_("bookTitleSet", getFinalArg(args, 1)));
+                    user.sendMessage(_("Title of the book set to {0}.", getFinalArg(args, 1)));
                 }
                 else
                 {
-                    throw new Exception(_("denyChangeTitle"));
+                    throw new Exception(_("You cannot change the title of this book."));
                 }
             }
             else
@@ -57,11 +57,11 @@ public class Commandbook extends EssentialsCommand
                     ItemStack newItem = new ItemStack(Material.BOOK_AND_QUILL, item.getAmount());
                     newItem.setItemMeta(bmeta);
                     user.getPlayer().setItemInHand(newItem);
-                    user.sendMessage(_("editBookContents"));
+                    user.sendMessage(_("You may now edit the contents of this book."));
                 }
                 else
                 {
-                    throw new Exception(_("denyBookEdit"));
+                    throw new Exception(_("You cannot unlock this book."));
                 }
             }
         }
@@ -75,11 +75,11 @@ public class Commandbook extends EssentialsCommand
             ItemStack newItem = new ItemStack(Material.WRITTEN_BOOK, item.getAmount());
             newItem.setItemMeta(bmeta);
             player.setItemInHand(newItem);
-            user.sendMessage(_("bookLocked"));
+            user.sendMessage(_("This book is now locked."));
         }
         else
         {
-            throw new Exception(_("holdBook"));
+            throw new Exception(_("You are not holding a writable book."));
         }
     }
 

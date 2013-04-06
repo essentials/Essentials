@@ -92,7 +92,7 @@ public class Commandenchant extends EssentialsCommand
 		final Enchantment enchantment = Enchantments.getByName(name);
 		if (enchantment == null)
 		{
-			throw new Exception(_(" Enchantment not found"));
+			throw new Exception(_("Enchantment not found!"));
 		}
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
 		if (user != null && !Permissions.ENCHANT.isAuthorized(user, enchantmentName))

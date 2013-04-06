@@ -63,7 +63,7 @@ public class Commandsethome extends EssentialsCommand
 					}
 					if ("bed".equals(name.toLowerCase(Locale.ENGLISH)))
 					{
-						throw new NoSuchFieldException(_("Invalid home name"));
+						throw new NoSuchFieldException(_("Invalid home name!"));
 					}
 
 					usersHome.getData().addHome(name, user.getPlayer().getLocation());

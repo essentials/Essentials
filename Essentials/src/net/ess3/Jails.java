@@ -174,11 +174,11 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()), ex);
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}!", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()));
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}!", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 		}
@@ -200,11 +200,11 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()), ex);
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}!", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()));
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}!", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 			user.sendMessage(_("You do the crime, you do the time."));
@@ -227,11 +227,11 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()), ex);
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}!", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}.", user.getName(), ex.getLocalizedMessage()));
+					LOGGER.log(Level.INFO, _("Error occurred when trying to return player {0} to jail: {1}!", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 			user.sendMessage(_("You do the crime, you do the time."));

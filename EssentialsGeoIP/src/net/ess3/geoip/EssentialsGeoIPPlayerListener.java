@@ -94,7 +94,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 				}
 				if (Permissions.GEOIP_SHOW.isAuthorized(player))
 				{
-					player.sendMessage(_("Player {0} comes from {1}", player.getDisplayName(), builder.toString()));
+					player.sendMessage(_("Player {0} comes from {1}.", player.getDisplayName(), builder.toString()));
 				}
 			}
 		}
@@ -156,7 +156,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IReload
 		OutputStream output = null;
 		try
 		{
-			LOGGER.log(Level.INFO, _("Downloading GeoIP database ... this might take a while (country: 0.6 MB, city: 20MB)"));
+			LOGGER.log(Level.INFO, _("Downloading GeoIP database... this might take a while (country: 0.6 MB, city: 20MB)"));
 			final URL downloadUrl = new URL(url);
 			final URLConnection conn = downloadUrl.openConnection();
 			conn.setConnectTimeout(10000);

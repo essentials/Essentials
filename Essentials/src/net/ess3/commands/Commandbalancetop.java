@@ -77,7 +77,7 @@ public class Commandbalancetop extends EssentialsCommand
 				}
 				if (ess.getUserMap().getUniqueUsers() > MINUSERS)
 				{
-					sender.sendMessage(_("Ordering balances of {0} users, please wait ...", ess.getUserMap().getUniqueUsers()));
+					sender.sendMessage(_("Ordering balances of {0} users, please wait...", ess.getUserMap().getUniqueUsers()));
 				}
 			}
 			finally
@@ -90,7 +90,7 @@ public class Commandbalancetop extends EssentialsCommand
 		{
 			if (ess.getUserMap().getUniqueUsers() > MINUSERS)
 			{
-				sender.sendMessage(_("Ordering balances of {0} users, please wait ...", ess.getUserMap().getUniqueUsers()));
+				sender.sendMessage(_("Ordering balances of {0} users, please wait...", ess.getUserMap().getUniqueUsers()));
 			}
 			ess.getPlugin().runTaskAsynchronously(new Viewer(sender, page, force));
 		}

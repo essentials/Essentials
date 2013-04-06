@@ -29,7 +29,7 @@ public class Commandnick extends EssentialsCommand
 		{
 			if (!Permissions.NICK_OTHERS.isAuthorized(user))
 			{
-				throw new Exception(_("You do not have permission to change the nickname of others."));
+				throw new Exception(_("You do not have permission to change the nickname of others!"));
 			}
 			setNickname(ess.getUserMap().matchUserExcludingHidden(args[0], user.getPlayer()), formatNickname(user, args[1]));
 			user.sendMessage(_("Nickname changed."));

@@ -13,7 +13,7 @@ public class Commandme extends EssentialsCommand
 	{
 		if (user.getData().isMuted())
 		{
-			throw new Exception(_("Your voice has been silenced."));
+			throw new Exception(_("Your voice has been silenced!"));
 		}
 
 		if (args.length < 1)

@@ -48,7 +48,7 @@ public class Commandhat extends EssentialsCommand
 				}
 				else
 				{
-					user.sendMessage(_("Error, you cannot use this item as a hat!"));
+					user.sendMessage(_("You cannot use this item as a hat!"));
 				}
 			}
 			else

@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Essentials 3.0-SNAPSHOT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-06 04:18+0200\n"
+"POT-Creation-Date: 2013-04-06 05:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: Essentials/src/net/ess3/commands/Commandwhois.java:58
@@ -103,12 +103,6 @@ msgstr ""
 msgid " Big tree spawned."
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandenchant.java:95
-#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:34
-#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:79
-msgid " Enchantment not found"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandenchant.java:40
 #, java-format
 msgid " Enchantments: {0}"
@@ -159,11 +153,6 @@ msgstr ""
 #: Essentials/src/net/ess3/commands/Commandlist.java:106
 #: Essentials/src/net/ess3/commands/Commandlist.java:153
 msgid " [HIDDEN]"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandsuicide.java:17
-#, java-format
-msgid " {0} took their own life"
 msgstr ""
 
 #: Essentials/src/net/ess3/settings/Settings.java:22
@@ -289,6 +278,11 @@ msgstr ""
 msgid "Amount of homes a player can have"
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandbook.java:33
+#, java-format
+msgid "Author of the book set to {0}."
+msgstr ""
+
 #: Essentials/src/net/ess3/settings/commands/Afk.java:18
 msgid ""
 "Auto-AFK Kick\n"
@@ -360,6 +354,11 @@ msgstr ""
 msgid "Chapter {0}, page {1} of {2}:"
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:160
+#, java-format
+msgid "Combine {0}"
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandpowertool.java:34
 msgid "Command can't be attached to air."
 msgstr ""
@@ -408,7 +407,7 @@ msgid "Commands to listen for in socialspy"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandlist.java:133
-msgid "Connected players: "
+msgid "Connected players "
 msgstr ""
 
 #: Essentials/src/net/ess3/ranks/RankOptions.java:25
@@ -431,7 +430,7 @@ msgid "Could not find template {0}"
 msgstr ""
 
 #: Essentials/src/net/ess3/storage/ManagedFile.java:50
-msgid "Could not load items.csv."
+msgid "Could not load items.csv!"
 msgstr ""
 
 #: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:93
@@ -465,7 +464,7 @@ msgid "Delay to wait before people can cause attack damage after logging in "
 msgstr ""
 
 #: Essentials/src/net/ess3/utils/LocationUtil.java:121
-msgid "Destination not set."
+msgid "Destination not set!"
 msgstr ""
 
 #: Essentials/src/net/ess3/settings/Chat.java:16
@@ -498,7 +497,7 @@ msgstr ""
 
 #: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:159
 msgid ""
-"Downloading GeoIP database ... this might take a while (country: 0.6 MB, "
+"Downloading GeoIP database... this might take a while (country: 0.6 MB, "
 "city: 20MB)"
 msgstr ""
 
@@ -516,6 +515,12 @@ msgid ""
 "command"
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandenchant.java:95
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:34
+#: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:79
+msgid "Enchantment not found!"
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandhat.java:47
 msgid "Enjoy your new hat!"
 msgstr ""
@@ -527,7 +532,7 @@ msgstr ""
 
 #: Essentials/src/net/ess3/utils/textreader/HelpInput.java:150
 #, java-format
-msgid "Error getting help for: {0}"
+msgid "Error getting help for plugin: {0}"
 msgstr ""
 
 #: Essentials/src/net/ess3/Jails.java:177
@@ -537,15 +542,11 @@ msgstr ""
 #: Essentials/src/net/ess3/Jails.java:230
 #: Essentials/src/net/ess3/Jails.java:234
 #, java-format
-msgid "Error occurred when trying to return player {0} to jail: {1}."
+msgid "Error occurred when trying to return player {0} to jail: {1}!"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandspawner.java:65
 msgid "Error while changing mob spawner."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandhat.java:51
-msgid "Error, you cannot use this item as a hat!"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/EssentialsCommandHandler.java:290
@@ -564,14 +565,14 @@ msgstr ""
 
 #: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:217
 #, java-format
-msgid "Failed to close config {0}"
+msgid "Failed to close config {0}."
 msgstr ""
 
 #: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:50
 #: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:103
 #: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:108
 #, java-format
-msgid "Failed to create config {0}"
+msgid "Failed to create config {0}."
 msgstr ""
 
 #: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:186
@@ -585,12 +586,20 @@ msgid "Failed to read GeoIP database!"
 msgstr ""
 
 #: Essentials/src/net/ess3/settings/SpawnsHolder.java:265
-msgid "Failed to teleport new player."
+msgid "Failed to teleport new player!"
 msgstr ""
 
 #: Essentials2Compat/src/com/earth2me/essentials/EssentialsConf.java:193
 #, java-format
-msgid "Failed to write config {0}"
+msgid "Failed to write config {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:121
+#: Essentials/src/net/ess3/commands/Commandfirework.java:139
+msgid ""
+"Firework parameters: color:<color> [fade:<color>] [shape:<shape>] [effect:"
+"<effect>]nTo use multiple colors/effects, seperate values with commas: red,"
+"blue,pinknShapes: star, ball, large, creeper, burst Effects: trail, twinkle."
 msgstr ""
 
 #: Essentials/src/net/ess3/settings/antibuild/Alert.java:27
@@ -607,7 +616,7 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandsudo.java:36
 #, java-format
-msgid "Forcing {0} to run: /{1} {2}."
+msgid "Forcing {0} to run: /{1} {2}"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandgc.java:35
@@ -670,7 +679,7 @@ msgid ""
 msgstr ""
 
 #: Essentials/src/net/ess3/utils/LocationUtil.java:176
-msgid "Hole in floor"
+msgid "Hole in floor!"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commanddelhome.java:57
@@ -727,12 +736,26 @@ msgstr ""
 msgid "InvFull"
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:37
+msgid "Invalid Number."
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:373
+#: Essentials/src/net/ess3/MetaItemStack.java:389
+#: Essentials/src/net/ess3/MetaItemStack.java:401
+msgid "Invalid Potion.Meta"
+msgstr ""
+
 #: EssentialsSigns/src/net/ess3/signs/EssentialsSign.java:402
 msgid "Invalid charge."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandfirework.java:140
+msgid "Invalid firework charge parameters inserted, must set a color first."
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandsethome.java:66
-msgid "Invalid home name"
+msgid "Invalid home name!"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandkillall.java:81
@@ -742,7 +765,7 @@ msgid "Invalid mob type."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandsetwarp.java:23
-msgid "Invalid warp name"
+msgid "Invalid warp name!"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandremove.java:71
@@ -752,7 +775,7 @@ msgid "Invalid world."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandclearinventory.java:33
-msgid "Inventory Cleared."
+msgid "Inventory cleared."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandclearinventory.java:23
@@ -789,7 +812,7 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandkick.java:27
 #: Essentials/src/net/ess3/commands/Commandkickall.java:15
-msgid "Kicked from server"
+msgid "Kicked from server."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandkill.java:34
@@ -801,6 +824,10 @@ msgstr ""
 #: Essentials/src/net/ess3/commands/Commandkit.java:34
 #, java-format
 msgid "Kits: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:232
+msgid "Leather Color Syntax: color:<red>,<green>,<blue> eg: color:255,0,0."
 msgstr ""
 
 #: EssentialsSigns/src/net/ess3/signs/signs/SignEnchant.java:29
@@ -885,8 +912,13 @@ msgstr ""
 msgid "No permission for unlimited item {0}."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:44
+#, java-format
+msgid "No recipes exist for {0}."
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandwarp.java:78
-msgid "No warps defined"
+msgid "No warps defined."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandmail.java:78
@@ -899,7 +931,7 @@ msgstr ""
 #: Essentials/src/net/ess3/commands/Commandbalancetop.java:80
 #: Essentials/src/net/ess3/commands/Commandbalancetop.java:93
 #, java-format
-msgid "Ordering balances of {0} users, please wait ..."
+msgid "Ordering balances of {0} users, please wait..."
 msgstr ""
 
 #: Essentials/src/net/ess3/settings/General.java:30
@@ -950,7 +982,7 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandptime.java:161
 #, java-format
-msgid "Player time has been reset for: {0}."
+msgid "Player time has been reset for: {0}"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandptime.java:168
@@ -971,7 +1003,7 @@ msgstr ""
 
 #: EssentialsGeoIP/src/net/ess3/geoip/EssentialsGeoIPPlayerListener.java:97
 #, java-format
-msgid "Player {0} comes from {1}"
+msgid "Player {0} comes from {1}."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandseen.java:57
@@ -1057,6 +1089,15 @@ msgstr ""
 msgid "Radius of the near command, if no number is given."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:53
+#, java-format
+msgid "Recipe for {0} ({1} of {2})"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:55
+msgid "Removed all effects from held stack."
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandremove.java:152
 #, java-format
 msgid "Removed {0} entities."
@@ -1103,7 +1144,7 @@ msgid "Server Total: {0}"
 msgstr ""
 
 #: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:396
-msgid "Server is full."
+msgid "Server is full!"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandfly.java:34
@@ -1250,6 +1291,11 @@ msgstr ""
 msgid "Show other plugins commands in help"
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:76
+#, java-format
+msgid "Smelt {0}"
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandlightning.java:50
 #, java-format
 msgid "Smiting {0}"
@@ -1322,7 +1368,7 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtempban.java:52
 #, java-format
-msgid "Temporarily banned from server for {0}"
+msgid "Temporarily banned from server for {0}."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandsell.java:91
@@ -1411,6 +1457,15 @@ msgid ""
 "more than one stack."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandfirework.java:67
+#: Essentials/src/net/ess3/MetaItemStack.java:282
+#: Essentials/src/net/ess3/MetaItemStack.java:297
+#: Essentials/src/net/ess3/MetaItemStack.java:316
+#: Essentials/src/net/ess3/MetaItemStack.java:339
+#, java-format
+msgid "The option {0} is not a valid value for {1}."
+msgstr ""
+
 #: Essentials/src/net/ess3/ranks/Ranks.java:21
 msgid ""
 "The order of the ranks matters, the ranks are checked from top to bottom.\n"
@@ -1452,6 +1507,10 @@ msgstr ""
 msgid "There are {0} warps. Showing page {1} of {2}."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:49
+msgid "There is no recipe by that number."
+msgstr ""
+
 #: EssentialsSigns/src/net/ess3/signs/signs/SignTrade.java:52
 msgid "There is nothing to collect from this trade sign."
 msgstr ""
@@ -1462,6 +1521,10 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandptime.java:91
 msgid "These players have their own time:"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:78
+msgid "This book is now locked."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandrepair.java:31
@@ -1492,6 +1555,11 @@ msgstr ""
 #: Essentials/src/net/ess3/Teleport.java:135
 #, java-format
 msgid "Time before next teleport: {0}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:46
+#, java-format
+msgid "Title of the book set to {0}."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtpa.java:41
@@ -1535,6 +1603,11 @@ msgstr ""
 msgid ""
 "Turn this on, if you want to see more error messages, if something goes "
 "wrong."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:70
+#, java-format
+msgid "Type /{0} {1} <number> to see other recipes for {2}."
 msgstr ""
 
 #: Essentials/src/net/ess3/utils/textreader/TextPager.java:77
@@ -1684,6 +1757,11 @@ msgid ""
 "Set to none if you want to use the spawn point of the world."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:131
+#, java-format
+msgid "Where: {0}"
+msgstr ""
+
 #: Essentials/src/net/ess3/settings/antibuild/BlackList.java:32
 msgid "Which blocks should not be pushed by pistons"
 msgstr ""
@@ -1736,6 +1814,10 @@ msgstr ""
 msgid "You are not authorized to set the time."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandbook.java:82
+msgid "You are not holding a writable book."
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandignore.java:38
 #, java-format
 msgid "You are not ignoring player {0} anymore."
@@ -1781,6 +1863,12 @@ msgid "You are not wearing a hat."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandvanish.java:39
+msgid ""
+"You are now completely invisible to normal users, and hidden from in-game "
+"commands."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandvanish.java:39
 msgid "You are once again visible."
 msgstr ""
 
@@ -1812,11 +1900,33 @@ msgid "You can not kick that person."
 msgstr ""
 
 #: Essentials/src/net/ess3/user/User.java:354
-msgid "You can talk again."
+msgid "You can now talk again."
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:164
+msgid "You can only set the owner of player skulls (397:3)."
 msgstr ""
 
 #: Essentials/src/net/ess3/Kits.java:101
 msgid "You can't use that kit again for another {0}."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:132
+#: Essentials/src/net/ess3/MetaItemStack.java:121
+#: Essentials/src/net/ess3/MetaItemStack.java:265
+msgid "You cannot apply more than one charge to this firework."
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:411
+msgid "You cannot apply more than one effect to this potion."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:37
+msgid "You cannot change the author of this book."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:50
+msgid "You cannot change the title of this book."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandsetwarp.java:45
@@ -1835,6 +1945,14 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandsudo.java:32
 msgid "You cannot sudo this user."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:64
+msgid "You cannot unlock this book."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandhat.java:51
+msgid "You cannot use this item as a hat!"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandwarp.java:28
@@ -1871,8 +1989,27 @@ msgstr ""
 msgid "You do not have enough of that item to sell."
 msgstr ""
 
+#: Essentials/src/net/ess3/MetaItemStack.java:114
+#: Essentials/src/net/ess3/MetaItemStack.java:258
+msgid "You do not have permission to apply firework meta."
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:368
+#, java-format
+msgid "You do not have permission to apply potion effect {0} to this potion."
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:528
+#, java-format
+msgid "You do not have permission to apply {0} meta to this item."
+msgstr ""
+
 #: Essentials/src/net/ess3/commands/Commandnick.java:32
-msgid "You do not have permission to change the nickname of others."
+msgid "You do not have permission to change the nickname of others!"
+msgstr ""
+
+#: Essentials/src/net/ess3/MetaItemStack.java:181
+msgid "You do not have permission to create dynamic books."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandeco.java:81
@@ -1937,7 +2074,7 @@ msgid "You have been healed."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtogglejail.java:51
-msgid "You have been jailed."
+msgid "You have been jailed!"
 msgstr ""
 
 #: Essentials/src/net/ess3/user/User.java:400
@@ -1950,8 +2087,11 @@ msgstr ""
 msgid "You have been muted for {0}."
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandmute.java:45
 #: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:74
+msgid "You have been muted!"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandmute.java:45
 msgid "You have been muted."
 msgstr ""
 
@@ -1964,7 +2104,7 @@ msgid "You have been released."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandmute.java:45
-msgid "You have been unmuted"
+msgid "You have been unmuted."
 msgstr ""
 
 #: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:322
@@ -1986,10 +2126,6 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandenchant.java:26
 msgid "You have nothing in your hand."
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandvanish.java:39
-msgid "You have now been vanished."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandrepair.java:48
@@ -2016,7 +2152,7 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtogglejail.java:29
 #: Essentials/src/net/ess3/commands/Commandtogglejail.java:37
-msgid "You may not jail that person."
+msgid "You may not jail that person!"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandmute.java:24
@@ -2026,6 +2162,14 @@ msgstr ""
 #: Essentials/src/net/ess3/commands/Commandtempban.java:30
 #: Essentials/src/net/ess3/commands/Commandtempban.java:38
 msgid "You may not tempban that player."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandbook.java:60
+msgid "You may now edit the contents of this book."
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandfirework.java:151
+msgid "You must be holding a firework to add effects."
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandhat.java:56
@@ -2105,7 +2249,7 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandme.java:16
 #: Essentials/src/net/ess3/commands/Commandmsg.java:30
-msgid "Your voice has been silenced."
+msgid "Your voice has been silenced!"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandbroadcast.java:17
@@ -2155,18 +2299,6 @@ msgstr ""
 msgid "baltopShown"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandbook.java:33
-msgid "bookAuthorSet"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbook.java:78
-msgid "bookLocked"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbook.java:46
-msgid "bookTitleSet"
-msgstr ""
-
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:102
 msgid "broke:"
 msgstr ""
@@ -2187,18 +2319,6 @@ msgstr ""
 msgid "deniedWorldAccess"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandbook.java:64
-msgid "denyBookEdit"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbook.java:37
-msgid "denyChangeAuthor"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbook.java:50
-msgid "denyChangeTitle"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandthunder.java:25
 #: Essentials/src/net/ess3/commands/Commandthunder.java:31
 msgid "disabled"
@@ -2210,10 +2330,6 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandeco.java:94
 msgid "ecoResetAllOnline"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandbook.java:60
-msgid "editBookContents"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandessentials.java:49
@@ -2239,19 +2355,6 @@ msgstr ""
 #: Essentials/src/net/ess3/commands/Commandwhois.java:81
 #: Essentials/src/net/ess3/commands/Commandwhois.java:85
 msgid "false"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandfirework.java:140
-msgid "fireworkColor"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandfirework.java:55
-msgid "fireworkEffectsCleared"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandfirework.java:121
-#: Essentials/src/net/ess3/commands/Commandfirework.java:139
-msgid "fireworkSyntax"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandfly.java:38
@@ -2316,14 +2419,6 @@ msgstr ""
 msgid "godFailed"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandbook.java:82
-msgid "holdBook"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandfirework.java:151
-msgid "holdFirework"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandsethome.java:81
 msgid "homeSet"
 msgstr ""
@@ -2340,26 +2435,8 @@ msgstr ""
 msgid "invalidAmount"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandfirework.java:67
-#: Essentials/src/net/ess3/MetaItemStack.java:282
-#: Essentials/src/net/ess3/MetaItemStack.java:297
-#: Essentials/src/net/ess3/MetaItemStack.java:316
-#: Essentials/src/net/ess3/MetaItemStack.java:339
-msgid "invalidFireworkFormat"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandbanip.java:29
 msgid "invalidIpAddress"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:37
-msgid "invalidNumber"
-msgstr ""
-
-#: Essentials/src/net/ess3/MetaItemStack.java:373
-#: Essentials/src/net/ess3/MetaItemStack.java:389
-#: Essentials/src/net/ess3/MetaItemStack.java:401
-msgid "invalidPotionMeta"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandrealname.java:37
@@ -2372,10 +2449,6 @@ msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandsell.java:155
 msgid "itemSoldConsole"
-msgstr ""
-
-#: Essentials/src/net/ess3/MetaItemStack.java:232
-msgid "leatherSyntax"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandmsg.java:46
@@ -2418,39 +2491,12 @@ msgstr ""
 msgid "months"
 msgstr ""
 
-#: Essentials/src/net/ess3/commands/Commandfirework.java:132
-#: Essentials/src/net/ess3/MetaItemStack.java:121
-#: Essentials/src/net/ess3/MetaItemStack.java:265
-msgid "multipleCharges"
-msgstr ""
-
-#: Essentials/src/net/ess3/MetaItemStack.java:411
-msgid "multiplePotionEffects"
-msgstr ""
-
 #: Essentials/src/net/ess3/commands/Commandmute.java:42
 msgid "mutedPlayer"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandtp.java:49
 msgid "needTpohere"
-msgstr ""
-
-#: Essentials/src/net/ess3/MetaItemStack.java:181
-msgid "noChapterMeta"
-msgstr ""
-
-#: Essentials/src/net/ess3/MetaItemStack.java:114
-#: Essentials/src/net/ess3/MetaItemStack.java:258
-msgid "noMetaFirework"
-msgstr ""
-
-#: Essentials/src/net/ess3/MetaItemStack.java:528
-msgid "noMetaPerm"
-msgstr ""
-
-#: Essentials/src/net/ess3/MetaItemStack.java:368
-msgid "noPotionEffectPerm"
 msgstr ""
 
 #: Essentials/src/net/ess3/commands/Commandnear.java:109
@@ -2463,59 +2509,17 @@ msgstr ""
 msgid "not flying"
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:168
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:177
+msgid "nothing"
+msgstr ""
+
 #: Essentials/src/net/ess3/utils/DateUtil.java:25
 msgid "now"
 msgstr ""
 
-#: Essentials/src/net/ess3/MetaItemStack.java:164
-msgid "onlyPlayerSkulls"
-msgstr ""
-
 #: EssentialsAntiBuild/src/net/ess3/antibuild/EssentialsAntiBuildListener.java:68
 msgid "placed:"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:53
-msgid "recipe"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:49
-msgid "recipeBadIndex"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:76
-msgid "recipeFurnace"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:122
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:123
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:124
-msgid "recipeGrid"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:129
-msgid "recipeGridItem"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:70
-msgid "recipeMore"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:44
-msgid "recipeNone"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:168
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:177
-msgid "recipeNothing"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:160
-msgid "recipeShapeless"
-msgstr ""
-
-#: Essentials/src/net/ess3/commands/Commandrecipe.java:131
-msgid "recipeWhere"
 msgstr ""
 
 #: Essentials/src/net/ess3/utils/DateUtil.java:37
@@ -2693,12 +2697,12 @@ msgstr ""
 
 #: Essentials/src/net/ess3/user/User.java:143
 #, java-format
-msgid "{0} has been received from {1}"
+msgid "{0} has been received from {1}."
 msgstr ""
 
 #: Essentials/src/net/ess3/user/User.java:142
 #, java-format
-msgid "{0} has been sent to {1}"
+msgid "{0} has been sent to {1}."
 msgstr ""
 
 #: Essentials/src/net/ess3/user/User.java:165
@@ -2772,6 +2776,11 @@ msgstr ""
 msgid "{0} teleported you to {1}."
 msgstr ""
 
+#: Essentials/src/net/ess3/commands/Commandsuicide.java:17
+#, java-format
+msgid "{0} took their own life."
+msgstr ""
+
 #: Essentials/src/net/ess3/listener/EssentialsPlayerListener.java:75
 #, java-format
 msgid "{0} tried to speak, but is muted."
@@ -2811,4 +2820,16 @@ msgstr ""
 #: Essentials/src/net/ess3/utils/FormatUtil.java:135
 #, java-format
 msgid "{0}{1}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:129
+#, java-format
+msgid "§{0}X is {1}"
+msgstr ""
+
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:122
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:123
+#: Essentials/src/net/ess3/commands/Commandrecipe.java:124
+#, java-format
+msgid "§{0}X | §{1}X | §{2}X"
 msgstr ""

@@ -139,8 +139,8 @@ public class User extends UserBase implements IUser
 		{
 			setMoney(getMoney() - value);
 			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("{0} has been sent to {1}", FormatUtil.displayCurrency(value, ess), reciever.getPlayer().getDisplayName()));
-			reciever.sendMessage(_("{0} has been received from {1}", FormatUtil.displayCurrency(value, ess), getPlayer().getDisplayName()));
+			sendMessage(_("{0} has been sent to {1}.", FormatUtil.displayCurrency(value, ess), reciever.getPlayer().getDisplayName()));
+			reciever.sendMessage(_("{0} has been received from {1}.", FormatUtil.displayCurrency(value, ess), getPlayer().getDisplayName()));
 		}
 		else
 		{
@@ -351,7 +351,7 @@ public class User extends UserBase implements IUser
 		if (getTimestamp(UserData.TimestampType.MUTE) > 0 && getTimestamp(UserData.TimestampType.MUTE) < currentTime && getData().isMuted())
 		{
 			setTimestamp(UserData.TimestampType.MUTE, 0);
-			sendMessage(_("You can talk again."));
+			sendMessage(_("You can now talk again."));
 			getData().setMuted(false);
 			queueSave();
 			return true;

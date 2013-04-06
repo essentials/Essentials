@@ -30,7 +30,7 @@ public class Commandclearinventory extends EssentialsCommand
 		else
 		{
 			user.getPlayer().getInventory().clear();
-			user.sendMessage(_("Inventory Cleared."));
+			user.sendMessage(_("Inventory cleared."));
 		}
 	}
 

@@ -42,6 +42,6 @@ public class Commandmute extends EssentialsCommand
 						"mutedPlayer", player.getPlayer().getDisplayName())) : _(
 						"unmutedPlayer", player.getPlayer().getDisplayName()));
 		player.sendMessage(
-				muted ? (muteTimestamp > 0 ? _("You have been muted for {0}.", DateUtil.formatDateDiff(muteTimestamp)) : _("You have been muted.")) : _("You have been unmuted"));
+				muted ? (muteTimestamp > 0 ? _("You have been muted for {0}.", DateUtil.formatDateDiff(muteTimestamp)) : _("You have been muted.")) : _("You have been unmuted."));
 	}
 }

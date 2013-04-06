@@ -158,7 +158,7 @@ public class Commandptime extends EssentialsCommand
 		// Inform the sender of the change
 		if (ticks == null)
 		{
-			sender.sendMessage(_("Player time has been reset for: {0}.", msg.toString()));
+			sender.sendMessage(_("Player time has been reset for: {0}", msg.toString()));
 		}
 		else
 		{

@@ -14,6 +14,6 @@ public class Commandsuicide extends EssentialsCommand
 		ess.getPlugin().callSuicideEvent(player);
 		user.getPlayer().damage(player.getHealth());
 		user.sendMessage(_("Goodbye cruel world..."));
-		ess.broadcastMessage(user, _(" {0} took their own life", player.getDisplayName()));
+		ess.broadcastMessage(user, _("{0} took their own life.", player.getDisplayName()));
 	}
 }
