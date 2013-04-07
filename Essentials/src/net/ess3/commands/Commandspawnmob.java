@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Commandspawnmob extends EssentialsCommand
 {
-
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{

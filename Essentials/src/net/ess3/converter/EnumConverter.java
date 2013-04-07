@@ -14,7 +14,7 @@ public class EnumConverter<E extends Enum<E>> implements ArgumentsParser<E>, Ser
 	private static final Pattern REPLACE = Pattern.compile("[_-]");
 	private final Map<String, E> enumMap = new HashMap<String, E>();
 	private final Map<E, String> serializedMap;
-	
+
 	private EnumConverter(final Class<E> enumClass)
 	{
 		serializedMap = new EnumMap<E, String>(enumClass);
@@ -24,7 +24,7 @@ public class EnumConverter<E extends Enum<E>> implements ArgumentsParser<E>, Ser
 			serializedMap.put(t, prettifyString(t.name()));
 		}
 	}
-	
+
 	public static <T extends Enum<T>> EnumConverter<T> getInstance(final Class<T> enumClass)
 	{
 		synchronized (converterMap)
@@ -38,7 +38,7 @@ public class EnumConverter<E extends Enum<E>> implements ArgumentsParser<E>, Ser
 			return converter;
 		}
 	}
-	
+
 	@Override
 	public ParserResult<E> parse(final String... args)
 	{
@@ -51,18 +51,18 @@ public class EnumConverter<E extends Enum<E>> implements ArgumentsParser<E>, Ser
 		}
 		return new FirstEntryParserResult<E>(e, args);
 	}
-	
+
 	@Override
 	public String serialize(final E input)
 	{
 		return serializedMap.get(input);
 	}
-	
+
 	private String cleanString(final String input)
 	{
 		return REPLACE.matcher(input).replaceAll("").toLowerCase(Locale.ENGLISH);
 	}
-	
+
 	private String prettifyString(final String input)
 	{
 		return input.replace('_', '-').toLowerCase(Locale.ENGLISH);

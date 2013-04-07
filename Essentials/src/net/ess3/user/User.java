@@ -592,7 +592,6 @@ public class User extends UserBase implements IUser
 	{
 		return true;
 	}
-
 	private long teleportInvulnerabilityTimestamp = 0;
 
 	public void enableInvulnerabilityAfterTeleport()
@@ -635,7 +634,7 @@ public class User extends UserBase implements IUser
 				}
 			}
 			ess.getVanishedPlayers().add(getName());
-			if(Permissions.VANISH_EFFECT.isAuthorized(this))
+			if (Permissions.VANISH_EFFECT.isAuthorized(this))
 			{
 				getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false));
 			}
@@ -647,7 +646,7 @@ public class User extends UserBase implements IUser
 				p.showPlayer(getPlayer());
 			}
 			ess.getVanishedPlayers().remove(getName());
-			if(Permissions.VANISH_EFFECT.isAuthorized(this))
+			if (Permissions.VANISH_EFFECT.isAuthorized(this))
 			{
 				getPlayer().removePotionEffect(PotionEffectType.INVISIBILITY);
 			}

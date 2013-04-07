@@ -162,7 +162,7 @@ public class SpawnMob
 			if (i == 0)
 			{
 				mob = EntityType.fromName(parts.get(i));
-				spawnedMob = spawningWorld.spawn(sloc, (Class<? extends LivingEntity>) mob.getEntityClass());
+				spawnedMob = spawningWorld.spawn(sloc, (Class<? extends LivingEntity>)mob.getEntityClass());
 
 				if (data.get(i) != null)
 				{
@@ -174,7 +174,7 @@ public class SpawnMob
 			if (next < parts.size())
 			{
 				EntityType mMob = EntityType.fromName(parts.get(next));
-				spawnedMount = spawningWorld.spawn(sloc, (Class<? extends LivingEntity>) mMob.getEntityClass());
+				spawnedMount = spawningWorld.spawn(sloc, (Class<? extends LivingEntity>)mMob.getEntityClass());
 
 				if (data.get(next) != null)
 				{
@@ -195,7 +195,7 @@ public class SpawnMob
 			throw new Exception(_("Invalid mob type."));
 		}
 
-		if (!Permissions.SPAWNMOB.isAuthorized((User) sender, mob.getName()))
+		if (!Permissions.SPAWNMOB.isAuthorized((User)sender, mob.getName()))
 		{
 			throw new Exception(_("§4You don't have permission to spawn this mob."));
 		}
@@ -209,7 +209,7 @@ public class SpawnMob
 		{
 			try
 			{
-				((Slime) spawned).setSize(Integer.parseInt(data));
+				((Slime)spawned).setSize(Integer.parseInt(data));
 			}
 			catch (Exception e)
 			{
@@ -218,7 +218,7 @@ public class SpawnMob
 		}
 		if (spawned instanceof Ageable && data.contains("baby"))
 		{
-			((Ageable) spawned).setBaby();
+			((Ageable)spawned).setBaby();
 			data = data.replace("baby", "");
 		}
 		if (spawned instanceof Colorable)
@@ -229,11 +229,11 @@ public class SpawnMob
 				if (color.equals("RANDOM"))
 				{
 					final Random rand = new Random();
-					((Colorable) spawned).setColor(DyeColor.values()[rand.nextInt(DyeColor.values().length)]);
+					((Colorable)spawned).setColor(DyeColor.values()[rand.nextInt(DyeColor.values().length)]);
 				}
 				else
 				{
-					((Colorable) spawned).setColor(DyeColor.valueOf(color));
+					((Colorable)spawned).setColor(DyeColor.valueOf(color));
 				}
 			}
 			catch (Exception e)
@@ -243,32 +243,32 @@ public class SpawnMob
 		}
 		if (spawned instanceof Tameable && data.contains("tamed") && target != null)
 		{
-			final Tameable tameable = ((Tameable) spawned);
+			final Tameable tameable = ((Tameable)spawned);
 			tameable.setTamed(true);
 			tameable.setOwner(target.getPlayer());
 			data = data.replace("tamed", "");
 		}
 		if (type == EntityType.WOLF && data.contains("angry"))
 		{
-			((Wolf) spawned).setAngry(true);
+			((Wolf)spawned).setAngry(true);
 		}
 		if (type == EntityType.CREEPER && data.contains("powered"))
 		{
-			((Creeper) spawned).setPowered(true);
+			((Creeper)spawned).setPowered(true);
 		}
 		if (type == EntityType.OCELOT)
 		{
 			if (data.contains("siamese") || data.contains("white"))
 			{
-				((Ocelot) spawned).setCatType(Ocelot.Type.SIAMESE_CAT);
+				((Ocelot)spawned).setCatType(Ocelot.Type.SIAMESE_CAT);
 			}
 			else if (data.contains("red") || data.contains("orange") || data.contains("tabby"))
 			{
-				((Ocelot) spawned).setCatType(Ocelot.Type.RED_CAT);
+				((Ocelot)spawned).setCatType(Ocelot.Type.RED_CAT);
 			}
 			else if (data.contains("black") || data.contains("tuxedo"))
 			{
-				((Ocelot) spawned).setCatType(Ocelot.Type.BLACK_CAT);
+				((Ocelot)spawned).setCatType(Ocelot.Type.BLACK_CAT);
 			}
 		}
 		if (type == EntityType.VILLAGER)
@@ -277,7 +277,7 @@ public class SpawnMob
 			{
 				if (data.contains(prof.toString().toLowerCase(Locale.ENGLISH)))
 				{
-					((Villager) spawned).setProfession(prof);
+					((Villager)spawned).setProfession(prof);
 				}
 			}
 		}
@@ -285,23 +285,23 @@ public class SpawnMob
 		{
 			if (data.contains("villager"))
 			{
-				((Zombie) spawned).setVillager(true);
+				((Zombie)spawned).setVillager(true);
 			}
 			if (data.contains("baby"))
 			{
-				((Zombie) spawned).setBaby(true);
+				((Zombie)spawned).setBaby(true);
 			}
 		}
 		if (type == EntityType.SKELETON)
 		{
 			if (data.contains("wither"))
 			{
-				((Skeleton) spawned).setSkeletonType(Skeleton.SkeletonType.WITHER);
+				((Skeleton)spawned).setSkeletonType(Skeleton.SkeletonType.WITHER);
 			}
 		}
 		if (type == EntityType.EXPERIENCE_ORB)
 		{
-			((ExperienceOrb) spawned).setExperience(Integer.parseInt(data));
+			((ExperienceOrb)spawned).setExperience(Integer.parseInt(data));
 		}
 	}
 }

@@ -49,7 +49,8 @@ public class GMSystemEvent extends Event
 
 	public enum Action
 	{
-		RELOADED, SAVED, DEFAULT_GROUP_CHANGED, VALIDATE_TOGGLE,}
+		RELOADED, SAVED, DEFAULT_GROUP_CHANGED, VALIDATE_TOGGLE,
+	}
 
 	public void schedule(final GMSystemEvent event)
 	{

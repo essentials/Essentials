@@ -53,10 +53,10 @@ public class MetricsStarter implements Runnable
 					ess.getLogger().info(_("metrics4"));
 					start = false;
 				}
-                else if (settings.getData().getGeneral().getMetricsEnabled())
-                {
-                    start = true;
-                }
+				else if (settings.getData().getGeneral().getMetricsEnabled())
+				{
+					start = true;
+				}
 			}
 		}
 		catch (Exception ex)

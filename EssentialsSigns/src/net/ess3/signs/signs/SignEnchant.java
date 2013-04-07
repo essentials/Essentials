@@ -90,7 +90,7 @@ public class SignEnchant extends EssentialsSign
 
 		final ItemStack playerHand = player.getPlayer().getItemInHand();
 		if (playerHand == null || playerHand.getAmount() != 1 || (playerHand.containsEnchantment(enchantment) && playerHand.getEnchantmentLevel(
-				enchantment) == level))
+																  enchantment) == level))
 		{
 			throw new SignException(_("§4You do not have {0}x {1}.", 1, sign.getLine(1)));
 		}

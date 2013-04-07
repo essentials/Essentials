@@ -43,10 +43,10 @@ public class Commandworth extends EssentialsCommand
 
 		user.sendMessage(
 				iStack.getDurability() != 0 ? _(
-						"worthMeta", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), iStack.getDurability(),
-						FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)) : _(
-						"worth", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), FormatUtil.displayCurrency(worth * amount, ess),
-						amount, FormatUtil.displayCurrency(worth, ess)));
+				"worthMeta", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), iStack.getDurability(),
+				FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)) : _(
+				"worth", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), FormatUtil.displayCurrency(worth * amount, ess),
+				amount, FormatUtil.displayCurrency(worth, ess)));
 	}
 
 	@Override
@@ -81,10 +81,10 @@ public class Commandworth extends EssentialsCommand
 
 		sender.sendMessage(
 				iStack.getDurability() != 0 ? _(
-						"worthMeta", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), iStack.getDurability(),
-						FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)) : _(
-						"worth", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), FormatUtil.displayCurrency(worth * amount, ess),
-						amount, FormatUtil.displayCurrency(worth, ess)));
+				"worthMeta", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), iStack.getDurability(),
+				FormatUtil.displayCurrency(worth * amount, ess), amount, FormatUtil.displayCurrency(worth, ess)) : _(
+				"worth", iStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""), FormatUtil.displayCurrency(worth * amount, ess),
+				amount, FormatUtil.displayCurrency(worth, ess)));
 
 	}
 }

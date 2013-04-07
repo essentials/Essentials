@@ -12,12 +12,11 @@ import static net.ess3.I18n._;
 
 public class UtilTest extends EssentialsTest
 {
-
 	public UtilTest(String name)
 	{
 		super(name);
 	}
-	
+
 	public void testI18n()
 	{
 		_("Hello {0}, how are you?");

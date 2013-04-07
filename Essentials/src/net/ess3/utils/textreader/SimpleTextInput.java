@@ -32,5 +32,4 @@ public class SimpleTextInput implements IText
 	{
 		return Collections.emptyMap();
 	}
-
 }

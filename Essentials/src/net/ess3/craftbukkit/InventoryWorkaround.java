@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
  * TODO: make sure this is up-to date
  */
 
-
 public final class InventoryWorkaround
 {
 	private InventoryWorkaround()
@@ -28,7 +27,7 @@ public final class InventoryWorkaround
 		for (int i = 0; i < stacks.length; i++)
 		{
 			final ItemStack cItem = stacks[i];
-			if(cItem != null && cItem.getAmount() < maxAmount && cItem.isSimilar(item))
+			if (cItem != null && cItem.getAmount() < maxAmount && cItem.isSimilar(item))
 			{
 				return i;
 			}

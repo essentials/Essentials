@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 
 public class Commandsocialspy extends EssentialsToggleCommand
 {
-
 	@Override
 	protected void setValue(final IUser player, final boolean value)
 	{

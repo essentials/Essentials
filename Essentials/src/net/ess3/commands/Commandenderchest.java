@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 
 public class Commandenderchest extends EssentialsCommand
 {
-
 	@Override
 	protected void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{

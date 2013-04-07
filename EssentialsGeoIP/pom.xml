@@ -35,11 +35,11 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-                <artifactSet>
-                    <includes>
-                        <include>org.kohsuke:geoip</include>
-                    </includes>
-                </artifactSet>
+              <artifactSet>
+                <includes>
+                  <include>org.kohsuke:geoip</include>
+                </includes>
+              </artifactSet>
             </configuration>
           </execution>
         </executions>

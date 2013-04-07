@@ -78,8 +78,8 @@ public class Commandsethome extends EssentialsCommand
 		}
 		user.sendMessage(
 				_(
-						"homeSet", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(),
-						user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
+				"homeSet", user.getPlayer().getLocation().getWorld().getName(), user.getPlayer().getLocation().getBlockX(),
+				user.getPlayer().getLocation().getBlockY(), user.getPlayer().getLocation().getBlockZ()));
 
 	}
 }

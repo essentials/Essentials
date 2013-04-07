@@ -14,8 +14,6 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 	{
 		ABORT, WAIT, DONE, NONE
 	}
-
-
 	private final StateMap states = new StateMap();
 	private AbstractState current;
 	private Player player;
@@ -84,7 +82,6 @@ public class StateMachine extends AbstractWorkListener implements Runnable
 		}
 		return result;
 	}
-
 	private Iterator<AbstractState> iterator;
 
 	public void startWork()

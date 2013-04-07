@@ -67,7 +67,7 @@ public class I18n implements II18n
 			return string;
 		}
 	}
-	
+
 	public static String _(final String string)
 	{
 		if (instance == null)
@@ -99,12 +99,11 @@ public class I18n implements II18n
 		MessageFormat messageFormat = messageFormatCache.get(format);
 		if (messageFormat == null)
 		{
-			messageFormat = new MessageFormat(format.replace("'","''"));
+			messageFormat = new MessageFormat(format.replace("'", "''"));
 			messageFormatCache.put(format, messageFormat);
 		}
 		return messageFormat.format(objects);
 	}
-
 	private final Pattern partSplit = Pattern.compile("[_\\.]");
 
 	public void updateLocale(final String loc)

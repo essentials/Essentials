@@ -22,10 +22,10 @@ public class Commandtpo extends EssentialsCommand
 
 		ISettings settings = ess.getSettings();
 		if (settings.getData().getGeneral().isPerGroupTeleport() && !Permissions.PERGROUPTELEPORT.isAuthorized(
-					user, ess.getRanks().getMainGroup(player)))
-			{
-				throw new Exception(_("§4You do not have the §c{0}§4 permission.", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
-			}
+				user, ess.getRanks().getMainGroup(player)))
+		{
+			throw new Exception(_("§4You do not have the §c{0}§4 permission.", "essentials.teleport.groups." + ess.getRanks().getMainGroup(player)));
+		}
 		// Verify permission
 		if (user.getPlayer().canSee(player.getPlayer()) || Permissions.TELEPORT_HIDDEN.isAuthorized(user))
 		{

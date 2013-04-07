@@ -21,11 +21,10 @@ public class Kits implements StorageObject
 		kit.setDelay(10.0);
 		kit.setItems(
 				Arrays.<ItemStack>asList(
-						new ItemStack(Material.DIAMOND_SPADE, 1), new ItemStack(Material.DIAMOND_PICKAXE, 1), new ItemStack(Material.DIAMOND_AXE, 1)));
+				new ItemStack(Material.DIAMOND_SPADE, 1), new ItemStack(Material.DIAMOND_PICKAXE, 1), new ItemStack(Material.DIAMOND_AXE, 1)));
 		kits = new HashMap<String, Kit>();
 		kits.put("tools", kit);
 	}
-
 	@MapValueType(Kit.class)
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)

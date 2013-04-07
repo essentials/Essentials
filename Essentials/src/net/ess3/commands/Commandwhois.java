@@ -61,8 +61,8 @@ public class Commandwhois extends EssentialsCommand
 			sender.sendMessage(_("§6 - Exp:§r {0} (Level {1})", SetExpFix.getTotalExperience(player), player.getLevel()));
 			sender.sendMessage(
 					_(
-							"whoisLocation", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(),
-							player.getLocation().getBlockZ()));
+					"whoisLocation", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(),
+					player.getLocation().getBlockZ()));
 			sender.sendMessage(_("§6 - Money:§r {0}", FormatUtil.displayCurrency(user.getMoney(), ess)));
 			sender.sendMessage(_("§6 - IP Address:§r {0}", player.getAddress().getAddress().toString()));
 			final String location = userData.getGeolocation();
@@ -77,12 +77,12 @@ public class Commandwhois extends EssentialsCommand
 			sender.sendMessage(_("§6 - AFK:§r {0}", (userData.isAfk() ? _("§atrue§r") : _("§4false§r"))));
 			sender.sendMessage(
 					_(
-							"whoisJail", (userData.isJailed() ? user.getTimestamp(UserData.TimestampType.JAIL) > 0 ? DateUtil.formatDateDiff(
-							user.getTimestamp(UserData.TimestampType.JAIL)) : _("§atrue§r") : _("§4false§r"))));
+					"whoisJail", (userData.isJailed() ? user.getTimestamp(UserData.TimestampType.JAIL) > 0 ? DateUtil.formatDateDiff(
+								  user.getTimestamp(UserData.TimestampType.JAIL)) : _("§atrue§r") : _("§4false§r"))));
 			sender.sendMessage(
 					_(
-							"whoisMute", (userData.isMuted() ? user.getTimestamp(UserData.TimestampType.MUTE) > 0 ? DateUtil.formatDateDiff(
-							user.getTimestamp(UserData.TimestampType.MUTE)) : _("§atrue§r") : _("§4false§r"))));
+					"whoisMute", (userData.isMuted() ? user.getTimestamp(UserData.TimestampType.MUTE) > 0 ? DateUtil.formatDateDiff(
+								  user.getTimestamp(UserData.TimestampType.MUTE)) : _("§atrue§r") : _("§4false§r"))));
 		}
 		if (!foundPlayer)
 		{

@@ -102,8 +102,10 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 		final MetricsStarter metricsStarter = new MetricsStarter(ess);
 		if (metricsStarter.getStart() != null)
 		{
-			if(metricsStarter.getStart())
+			if (metricsStarter.getStart())
+			{
 				getServer().getScheduler().runTaskLaterAsynchronously(this, metricsStarter, 1);
+			}
 			else
 			{
 				final MetricsListener metricsListener = new MetricsListener(ess, metricsStarter);

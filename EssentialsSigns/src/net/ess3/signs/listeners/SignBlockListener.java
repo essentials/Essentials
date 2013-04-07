@@ -150,7 +150,7 @@ public class SignBlockListener implements Listener
 
 		final Block block = event.getBlock();
 		if (((block.getTypeId() == WALL_SIGN || block.getTypeId() == SIGN_POST) && EssentialsSign.isValidSign(
-				new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
+			 new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
 		{
 			event.setCancelled(true);
 			return;
@@ -175,7 +175,7 @@ public class SignBlockListener implements Listener
 
 		final Block block = event.getBlock();
 		if (((block.getTypeId() == WALL_SIGN || block.getTypeId() == SIGN_POST) && EssentialsSign.isValidSign(
-				new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
+			 new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
 		{
 			event.setCancelled(true);
 			return;
@@ -201,7 +201,7 @@ public class SignBlockListener implements Listener
 		for (Block block : event.getBlocks())
 		{
 			if (((block.getTypeId() == WALL_SIGN || block.getTypeId() == SIGN_POST) && EssentialsSign.isValidSign(
-					new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
+				 new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
 			{
 				event.setCancelled(true);
 				return;
@@ -229,7 +229,7 @@ public class SignBlockListener implements Listener
 		{
 			final Block block = event.getBlock();
 			if (((block.getTypeId() == WALL_SIGN || block.getTypeId() == SIGN_POST) && EssentialsSign.isValidSign(
-					new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
+				 new EssentialsSign.BlockSign(block))) || EssentialsSign.checkIfBlockBreaksSigns(block))
 			{
 				event.setCancelled(true);
 				return;

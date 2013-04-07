@@ -96,7 +96,8 @@ public class UpdateProcess implements Listener
 	{
 		UpdateProcess.this.currentPlayer = null;
 	}
-    //TODO: make sure this is threadsafe
+	//TODO: make sure this is threadsafe
+
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(final AsyncPlayerChatEvent event)
 	{

@@ -17,5 +17,3 @@ public class WarpNotFoundException extends Exception
 		super(message);
 	}
 }
-
-

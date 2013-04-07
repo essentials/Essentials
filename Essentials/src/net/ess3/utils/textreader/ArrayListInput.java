@@ -27,5 +27,4 @@ public class ArrayListInput implements IText
 	{
 		return Collections.emptyMap();
 	}
-
 }

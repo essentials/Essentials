@@ -10,7 +10,6 @@ public abstract class AbstractWorkListener
 		this.plugin = plugin;
 		this.newVersionInfo = newVersionInfo;
 	}
-
 	private final Plugin plugin;
 	private final VersionInfo newVersionInfo;
 

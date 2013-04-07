@@ -71,10 +71,14 @@ public class StorageQueue implements Runnable
 	{
 		if (this.enabled.getAndSet(enabled) != enabled)
 		{
-			if (enabled) {
+			if (enabled)
+			{
 				startThread();
-			} else {
-				while (queue.size() > 0) {
+			}
+			else
+			{
+				while (queue.size() > 0)
+				{
 					work();
 					try
 					{
@@ -86,7 +90,7 @@ public class StorageQueue implements Runnable
 				}
 			}
 		}
-		
+
 	}
 
 	public int getQueueSize()

@@ -12,7 +12,6 @@ public class Util
 	private Util()
 	{
 	}
-
 	private final static Pattern INVALIDFILECHARS = Pattern.compile("[^a-z0-9]");
 	private final static Pattern INVALIDCHARS = Pattern.compile("[^\t\n\r\u0020-\u007E\u0085\u00A0-\uD7FF\uE000-\uFFFC]");
 
@@ -33,8 +32,6 @@ public class Util
 	{
 		return INVALIDCHARS.matcher(string).replaceAll("");
 	}
-
-
 	private static DecimalFormat dFormat = new DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale.US));
 
 	public static String formatAsCurrency(final double value)

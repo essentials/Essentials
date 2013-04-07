@@ -211,7 +211,6 @@ public class Trade
 		}
 		return cost;
 	}
-
 	private static FileWriter fw = null;
 
 	public static void log(String type, String subtype, String event, String sender, Trade charge, String receiver, Trade pay, Location loc, IEssentials ess)

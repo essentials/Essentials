@@ -40,7 +40,7 @@ public interface IPlugin extends Plugin
 	 * @return - BukkitTask for the task created
 	 */
 	BukkitTask runTaskLaterAsynchronously(final Runnable run, final long delay);
-	
+
 	BukkitTask runTaskTimerAsynchronously(final Runnable run, final long delay, final long delay2);
 
 	/**

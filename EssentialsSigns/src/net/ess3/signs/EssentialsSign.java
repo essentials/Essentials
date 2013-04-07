@@ -212,8 +212,9 @@ public class EssentialsSign
 		{
 			return true;
 		}
-		final BlockFace[] directions = new BlockFace[]{
-				BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
+		final BlockFace[] directions = new BlockFace[]
+		{
+			BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
 		};
 		for (BlockFace blockFace : directions)
 		{
@@ -254,7 +255,7 @@ public class EssentialsSign
 	{
 		return EMPTY_SET;
 	}
-	
+
 	protected final void validateTrade(final ISign sign, final int index, final IEssentials ess) throws SignException
 	{
 		final String line = sign.getLine(index).trim();

@@ -60,10 +60,10 @@ public class Backup implements Runnable, IBackup
 		final net.ess3.settings.Backup backupSettings = settings.getData().getGeneral().getBackup();
 
 		String backupCommand = backupSettings.getCommand() == null || backupSettings.getCommand().isEmpty() ? ("NORUN") : backupSettings.getCommand();
-		
+
 		/*if (backupCommand.equals("NORUN")) { TODO: Un-comment if you do not want commands to be run if there is no backup command
-			return;
-		}*/
+		 return;
+		 }*/
 
 		ess.getLogger().log(Level.INFO, _("§6Backup started."));
 

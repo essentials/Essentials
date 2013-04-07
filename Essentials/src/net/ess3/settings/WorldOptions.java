@@ -26,7 +26,6 @@ public class WorldOptions implements StorageObject
 			}
 		}
 	}
-
 	@Comment("Disables godmode for all players if they teleport to this world.")
 	private boolean godmode = true;
 	@Comment("Prevent creatures spawning")

@@ -91,7 +91,7 @@ public abstract class EssentialsTest extends TestCase
 		folder = new File(folder, "Essentials-" + System.currentTimeMillis());
 		when(plugin.getDataFolder()).thenReturn(folder);
 		when(world.getName()).thenReturn("world");
-		
+
 	}
 
 	protected void createFolder()

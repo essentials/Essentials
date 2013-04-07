@@ -35,6 +35,4 @@ public class Money implements StorageObject
 		balanceMap.remove(name);
 		balances = balanceMap;
 	}
-
-
 }

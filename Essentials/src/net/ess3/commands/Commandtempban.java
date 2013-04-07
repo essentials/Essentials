@@ -43,7 +43,7 @@ public class Commandtempban extends EssentialsCommand
 		final long banTimestamp = DateUtil.parseDateDiff(time, true);
 
 		final long max = ess.getSettings().getData().getCommands().getTempban().getMaxTempbanTime();
-		if(max != -1 && banTimestamp - Calendar.getInstance().getTimeInMillis() > max && !Permissions.TEMPBAN_UNLIMITED.isAuthorized(sender))
+		if (max != -1 && banTimestamp - Calendar.getInstance().getTimeInMillis() > max && !Permissions.TEMPBAN_UNLIMITED.isAuthorized(sender))
 		{
 			sender.sendMessage(_("tempbanOversized"));
 			return;

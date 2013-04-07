@@ -36,7 +36,7 @@ public class SpawnsHolder extends AsyncStorageObjectHolder<Spawns>
 	/**
 	 * Sets a spawn location
 	 *
-	 * @param loc   - Location you want to set as spawn
+	 * @param loc - Location you want to set as spawn
 	 * @param group - Group to save it under in the config
 	 */
 	public void setSpawn(final Location loc, final String group)

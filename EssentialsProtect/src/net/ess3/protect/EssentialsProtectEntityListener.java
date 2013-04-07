@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 
+
 public class EssentialsProtectEntityListener implements Listener
 {
 	private final IProtect prot;
@@ -38,7 +39,7 @@ public class EssentialsProtectEntityListener implements Listener
 			return;
 		}
 
-		final Player user = target instanceof Player ? (Player) target : null;
+		final Player user = target instanceof Player ? (Player)target : null;
 		if (target instanceof Player && event instanceof EntityDamageByBlockEvent)
 		{
 			final DamageCause cause = event.getCause();
@@ -62,9 +63,9 @@ public class EssentialsProtectEntityListener implements Listener
 
 		if (target instanceof Player && event instanceof EntityDamageByEntityEvent)
 		{
-			final EntityDamageByEntityEvent edEvent = (EntityDamageByEntityEvent) event;
+			final EntityDamageByEntityEvent edEvent = (EntityDamageByEntityEvent)event;
 			final Entity eAttack = edEvent.getDamager();
-			final Player attacker = eAttack instanceof Player ? (Player) eAttack : null;
+			final Player attacker = eAttack instanceof Player ? (Player)eAttack : null;
 
 			// PVP Settings
 			if (target instanceof Player && eAttack instanceof Player && (!Permissions.PVP.isAuthorized(user) || !Permissions.PVP.isAuthorized(attacker)))
@@ -75,35 +76,35 @@ public class EssentialsProtectEntityListener implements Listener
 
 			//Player damage prevention section
 			if (eAttack instanceof Creeper && getSettings().isCreeperPlayerdamage() || (Permissions.PREVENTDAMAGE_CREEPER.isAuthorized(
-					user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
+																						user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
 			{
 				event.setCancelled(true);
 				return;
 			}
 
 			if (eAttack instanceof ExplosiveMinecart && getSettings().isTntMinecartPlayerdamage() || (Permissions.PREVENTDAMAGE_TNTMINECART.isAuthorized(
-					user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
+																									  user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
 			{
 				event.setCancelled(true);
 				return;
 			}
 
 			if ((event.getEntity() instanceof Fireball || event.getEntity() instanceof SmallFireball || event.getEntity() instanceof LargeFireball) && (Permissions.PREVENTDAMAGE_FIREBALL.isAuthorized(
-					user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
+																																						user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
 			{
 				event.setCancelled(true);
 				return;
 			}
 
 			if ((eAttack instanceof WitherSkull && Permissions.PREVENTDAMAGE_WITHERSKULL.isAuthorized(
-					user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
+				 user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
 			{
 				event.setCancelled(true);
 				return;
 			}
 
 			if ((eAttack instanceof Wither && event.getCause() == DamageCause.ENTITY_EXPLOSION) && getSettings().isWitherSpawnPlayerdamage() || (Permissions.PREVENTDAMAGE_WITHER.isAuthorized(
-					user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
+																																				 user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
 			{
 				event.setCancelled(true);
 				return;
@@ -116,9 +117,9 @@ public class EssentialsProtectEntityListener implements Listener
 			}
 
 			if (edEvent.getDamager() instanceof Projectile && ((Permissions.PREVENTDAMAGE_PROJECTILES.isAuthorized(
-					user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(
-					user)) || (((Projectile) edEvent.getDamager()).getShooter() instanceof Player && (!Permissions.PVP.isAuthorized(
-					user) || !Permissions.PVP.isAuthorized((Player) ((Projectile) edEvent.getDamager()).getShooter())))))
+																user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(
+																user)) || (((Projectile)edEvent.getDamager()).getShooter() instanceof Player && (!Permissions.PVP.isAuthorized(
+																																				 user) || !Permissions.PVP.isAuthorized((Player)((Projectile)edEvent.getDamager()).getShooter())))))
 			{
 				event.setCancelled(true);
 				return;
@@ -135,13 +136,13 @@ public class EssentialsProtectEntityListener implements Listener
 			}
 
 			if (cause == DamageCause.SUFFOCATION && (Permissions.PREVENTDAMAGE_SUFFOCATION.isAuthorized(user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(
-					user)))
+													 user)))
 			{
 				event.setCancelled(true);
 				return;
 			}
 			if ((cause == DamageCause.FIRE || cause == DamageCause.FIRE_TICK) && (Permissions.PREVENTDAMAGE_FIRE.isAuthorized(
-					user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
+																				  user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(user)))
 			{
 				event.setCancelled(true);
 				return;
@@ -152,7 +153,7 @@ public class EssentialsProtectEntityListener implements Listener
 				return;
 			}
 			if (cause == DamageCause.LIGHTNING && (Permissions.PREVENTDAMAGE_LIGHTNING.isAuthorized(user) && !Permissions.PREVENTDAMAGE_NONE.isAuthorized(
-					user)))
+												   user)))
 			{
 				event.setCancelled(true);
 			}
@@ -179,7 +180,7 @@ public class EssentialsProtectEntityListener implements Listener
 			event.setCancelled(true);
 		}
 		else if (entity instanceof Creeper && (getSettings().isCreeperBlockdamage() || getSettings().isCreeperBlockdamage()
-				|| (maxHeight >= 0 && event.getLocation().getBlockY() > maxHeight)))
+											   || (maxHeight >= 0 && event.getLocation().getBlockY() > maxHeight)))
 		{
 			event.setCancelled(true);
 			event.getLocation().getWorld().createExplosion(event.getLocation(), 0F);
@@ -213,11 +214,11 @@ public class EssentialsProtectEntityListener implements Listener
 
 		if (entity.getType() == EntityType.PLAYER)
 		{
-			final Player user = (Player) event.getTarget();
+			final Player user = (Player)event.getTarget();
 			if ((event.getReason() == TargetReason.CLOSEST_PLAYER || event.getReason() == TargetReason.TARGET_ATTACKED_ENTITY || event.getReason() == TargetReason.PIG_ZOMBIE_TARGET
-					|| event.getReason() == TargetReason.RANDOM_TARGET || event.getReason() == TargetReason.TARGET_ATTACKED_OWNER
-					|| event.getReason() == TargetReason.OWNER_ATTACKED_TARGET)
-					&& !prot.getSettings().getData().getPrevent().isEntitytarget() && !Permissions.ENTITY_TARGET_BYPASS.isAuthorized(
+				 || event.getReason() == TargetReason.RANDOM_TARGET || event.getReason() == TargetReason.TARGET_ATTACKED_OWNER
+				 || event.getReason() == TargetReason.OWNER_ATTACKED_TARGET)
+				&& !prot.getSettings().getData().getPrevent().isEntitytarget() && !Permissions.ENTITY_TARGET_BYPASS.isAuthorized(
 					user, event.getEntity().getType().getName().toLowerCase()))
 			{
 				event.setCancelled(true);
@@ -253,12 +254,12 @@ public class EssentialsProtectEntityListener implements Listener
 		final ProtectHolder settings = prot.getSettings();
 		Entity remover = event.getRemover();
 		if ((event.getCause() == HangingBreakEvent.RemoveCause.ENTITY)
-				&& ((remover instanceof Creeper) && getSettings().isCreeperBlockdamage())
-				|| ((remover instanceof Wither) && getSettings().isWitherSpawnBlockdamage())
-				|| ((remover instanceof Fireball) && getSettings().isFireballBlockdamage())
-				|| ((remover instanceof TNTPrimed) && getSettings().isTntBlockdamage())
-				|| ((remover instanceof WitherSkull) && getSettings().isWitherskullBlockdamage())
-				|| ((remover instanceof ExplosiveMinecart) && getSettings().isTntMinecartBlockdamage()))
+			&& ((remover instanceof Creeper) && getSettings().isCreeperBlockdamage())
+			|| ((remover instanceof Wither) && getSettings().isWitherSpawnBlockdamage())
+			|| ((remover instanceof Fireball) && getSettings().isFireballBlockdamage())
+			|| ((remover instanceof TNTPrimed) && getSettings().isTntBlockdamage())
+			|| ((remover instanceof WitherSkull) && getSettings().isWitherskullBlockdamage())
+			|| ((remover instanceof ExplosiveMinecart) && getSettings().isTntMinecartBlockdamage()))
 		{
 			event.setCancelled(true);
 		}
