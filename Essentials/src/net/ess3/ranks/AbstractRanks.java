@@ -33,8 +33,7 @@ public abstract class AbstractRanks
 		format = format.replace("{WORLDNAME}", "{1}");
 		format = format.replace("{SHORTWORLDNAME}", "{2}");
 		format = format.replaceAll("\\{(\\D*)\\}", "\\[$1\\]");
-		MessageFormat mFormat = new MessageFormat(format);
-		return mFormat;
+		return new MessageFormat(format);
 	}
 
 	protected abstract String getRawChatFormat(final CommandSender sender);

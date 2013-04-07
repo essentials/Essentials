@@ -55,10 +55,9 @@ public class EssentialsTimer implements Runnable
 				user.setLastOnlineActivity(currentTime);
 				user.checkActivity();
 
-				boolean mailDisabled = false;
 				ISettings settings = ess.getSettings();
 
-				mailDisabled = settings.getData().getCommands().isDisabled("mail");
+				boolean mailDisabled = settings.getData().getCommands().isDisabled("mail");
 
 				// New mail notification
 				if (!mailDisabled && Permissions.MAIL.isAuthorized(user) && !user.gotMailInfo())

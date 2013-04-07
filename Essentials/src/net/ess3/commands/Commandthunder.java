@@ -20,14 +20,14 @@ public class Commandthunder extends EssentialsCommand
 		if (args.length > 1)
 		{
 
-			world.setThundering(setThunder ? true : false);
+			world.setThundering(setThunder);
 			world.setThunderDuration(Integer.parseInt(args[1]) * 20);
 			user.sendMessage(_("§6You§c {0} §6thunder in your world for§c {1} §6seconds.", (setThunder ? _("enabled") : _("disabled")), Integer.parseInt(args[1])));
 
 		}
 		else
 		{
-			world.setThundering(setThunder ? true : false);
+			world.setThundering(setThunder);
 			user.sendMessage(_("§6You§c {0} §6thunder in your world.", setThunder ? _("enabled") : _("disabled")));
 		}
 

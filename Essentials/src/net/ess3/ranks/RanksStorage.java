@@ -39,7 +39,7 @@ public class RanksStorage extends AsyncStorageObjectHolder<Ranks> implements IRa
 		{
 			return Collections.emptyList();
 		}
-		final ArrayList<Entry<String, RankOptions>> list = new ArrayList();
+		final ArrayList<Entry<String, RankOptions>> list = new ArrayList<Entry<String, RankOptions>>();
 		for (Entry<String, RankOptions> entry : groups.entrySet())
 		{
 			if (Permissions.RANKS.isAuthorized(player, entry.getKey()))

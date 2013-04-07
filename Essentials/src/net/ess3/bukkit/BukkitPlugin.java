@@ -100,14 +100,15 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 
 
 		final MetricsStarter metricsStarter = new MetricsStarter(ess);
-		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
+		if (metricsStarter.getStart() != null)
 		{
-			getServer().getScheduler().runTaskLaterAsynchronously(this, metricsStarter, 1);
-		}
-		else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
-		{
-			final MetricsListener metricsListener = new MetricsListener(ess, metricsStarter);
-			pm.registerEvents(metricsListener, this);
+			if(metricsStarter.getStart())
+				getServer().getScheduler().runTaskLaterAsynchronously(this, metricsStarter, 1);
+			else
+			{
+				final MetricsListener metricsListener = new MetricsListener(ess, metricsStarter);
+				pm.registerEvents(metricsListener, this);
+			}
 		}
 	}
 
@@ -149,7 +150,7 @@ public class BukkitPlugin extends JavaPlugin implements IPlugin
 	{
 		return getServer().getScheduler().runTaskLaterAsynchronously(this, run, delay);
 	}
-	
+
 	@Override
 	public BukkitTask runTaskTimerAsynchronously(final Runnable run, final long delay, final long delay2)
 	{

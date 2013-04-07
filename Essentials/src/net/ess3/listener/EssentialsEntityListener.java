@@ -121,7 +121,7 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerDeathEvent(final PlayerDeathEvent event)
 	{
-		final IUser user = ess.getUserMap().getUser((Player)event.getEntity());
+		final IUser user = ess.getUserMap().getUser(event.getEntity());
 
 		final ISettings settings = ess.getSettings();
 		if (Permissions.BACK_ONDEATH.isAuthorized(user) && !settings.getData().getCommands().isDisabled("back"))

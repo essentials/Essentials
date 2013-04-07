@@ -112,7 +112,7 @@ public class Trade
 					final int maxStackSize = dropStack.getType().getMaxStackSize();
 					final int stacks = dropStack.getAmount() / maxStackSize;
 					final int leftover = dropStack.getAmount() % maxStackSize;
-					final ItemStack[] itemStacks = new ItemStack[stacks + (leftover > 0 ? 1 : 0)];
+					final ItemStack[] itemStacks = new ItemStack[stacks + (leftover > 0 ? 1 : 0)]; // TODO: Written, but never read?
 					for (int i = 0; i < stacks; i++)
 					{
 						final ItemStack stack = dropStack.clone();

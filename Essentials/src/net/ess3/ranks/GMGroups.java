@@ -175,11 +175,7 @@ public class GMGroups extends AbstractRanks implements IRanks
 		try
 		{
 			final AnjoPermissionsHandler handler = groupManager.getWorldsHolder().getWorldPermissions(getPlayer(player));
-			if (handler == null)
-			{
-				return false;
-			}
-			return handler.inGroup(player.getName(), groupname);
+			return handler != null && handler.inGroup(player.getName(), groupname);
 		}
 		catch (Exception e)
 		{

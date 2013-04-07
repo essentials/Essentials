@@ -154,7 +154,6 @@ public class ItemDb implements IItemDb
 		{
 			throw new Exception(_("§4Unknown item id:§r {0}§4.", itemid));
 		}
-		final ItemStack retval = new ItemStack(mat, mat.getMaxStackSize(), metaData);
-		return retval;
+		return new ItemStack(mat, mat.getMaxStackSize(), metaData);
 	}
 }

@@ -55,7 +55,7 @@ public class Commandeco extends EssentialsCommand
 					break;
 				}
 			}
-			if (ecoResetAll == true)
+			if (ecoResetAll)
 			{
 				ess.broadcastMessage(null, _("ecoResetAll", settings.getData().getEconomy().getCurrencySymbol() + amount));
 			}
@@ -89,7 +89,7 @@ public class Commandeco extends EssentialsCommand
 					break;
 				}
 			}
-			if (ecoResetAllOnline == true)
+			if (ecoResetAllOnline)
 			{
 				ess.broadcastMessage(null, _("ecoResetAllOnline", settings.getData().getEconomy().getCurrencySymbol() + amount));
 			}

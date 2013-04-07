@@ -83,11 +83,10 @@ public class Commandwhois extends EssentialsCommand
 					_(
 							"whoisMute", (userData.isMuted() ? user.getTimestamp(UserData.TimestampType.MUTE) > 0 ? DateUtil.formatDateDiff(
 							user.getTimestamp(UserData.TimestampType.MUTE)) : _("§atrue§r") : _("§4false§r"))));
-
-			if (!foundPlayer)
-			{
-				throw new NoSuchFieldException(_("§4Player not found."));
-			}
+		}
+		if (!foundPlayer)
+		{
+			throw new NoSuchFieldException(_("§4Player not found."));
 		}
 	}
 }

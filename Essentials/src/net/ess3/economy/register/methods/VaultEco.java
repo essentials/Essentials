@@ -96,11 +96,7 @@ public class VaultEco implements Method
 
 	public boolean createAccount(String name, double balance)
 	{
-		if (!this.economy.createBank(name, "").transactionSuccess())
-		{
-			return false;
-		}
-		return this.economy.bankDeposit(name, balance).transactionSuccess();
+		return this.economy.createBank(name, "").transactionSuccess() && this.economy.bankDeposit(name, balance).transactionSuccess();
 	}
 
 	@Override
@@ -176,15 +172,7 @@ public class VaultEco implements Method
 		@Override
 		public boolean set(double amount)
 		{
-			if (!this.economy.withdrawPlayer(this.name, this.balance()).transactionSuccess())
-			{
-				return false;
-			}
-			if (amount == 0)
-			{
-				return true;
-			}
-			return this.economy.depositPlayer(this.name, amount).transactionSuccess();
+			return this.economy.withdrawPlayer(this.name, this.balance()).transactionSuccess() && (amount == 0 || this.economy.depositPlayer(this.name, amount).transactionSuccess());
 		}
 
 		@Override
@@ -277,15 +265,7 @@ public class VaultEco implements Method
 		@Override
 		public boolean set(double amount)
 		{
-			if (!this.economy.bankWithdraw(this.bank, this.balance()).transactionSuccess())
-			{
-				return false;
-			}
-			if (amount == 0)
-			{
-				return true;
-			}
-			return this.economy.bankDeposit(this.bank, amount).transactionSuccess();
+			return this.economy.bankWithdraw(this.bank, this.balance()).transactionSuccess() && (amount == 0 || this.economy.bankDeposit(this.bank, amount).transactionSuccess());
 		}
 
 		@Override

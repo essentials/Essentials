@@ -16,11 +16,7 @@ public class Commandkickall extends EssentialsCommand
 		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n").replace("|", "\n"));
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
-			if (sender instanceof IUser && onlinePlayer.getName().equalsIgnoreCase(((Player)sender).getName()))
-			{
-				continue;
-			}
-			else
+			if (!(sender instanceof IUser && onlinePlayer.getName().equalsIgnoreCase(sender.getName())))
 			{
 				onlinePlayer.kickPlayer(kickReason);
 			}

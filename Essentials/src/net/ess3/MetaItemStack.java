@@ -156,7 +156,7 @@ public class MetaItemStack
             {
                 final String owner = split[1];
                 final SkullMeta meta = (SkullMeta)stack.getItemMeta();
-                boolean result = meta.setOwner(owner);
+                meta.setOwner(owner);
                 stack.setItemMeta(meta);
             }
             else
@@ -286,7 +286,7 @@ public class MetaItemStack
             }
             else if (split[0].equalsIgnoreCase("shape") || split[0].equalsIgnoreCase("type") || (allowShortName && (split[0].equalsIgnoreCase("s") || split[0].equalsIgnoreCase("t"))))
             {
-                FireworkEffect.Type finalEffect = null;
+                FireworkEffect.Type finalEffect;
                 split[1] = (split[1].equalsIgnoreCase("large") ? "BALL_LARGE" : split[1]);
                 if (fireworkShape.containsKey(split[1].toUpperCase()))
                 {
@@ -513,7 +513,6 @@ public class MetaItemStack
 
     private boolean hasMetaPermission(final IUser user, final String metaPerm, final boolean graceful, final boolean includeBase) throws Exception
     {
-        final String permBase = includeBase ? "essentials.itemspawn.meta-" : "essentials.";
         if (user == null || (includeBase ? Permissions.ITEMSPAWN.isAuthorized(user, "meta-" + metaPerm) : Permissions.ESSENTIALS.isAuthorized(user, metaPerm)))
         {
             return true;

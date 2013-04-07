@@ -32,7 +32,7 @@ public class Commandwarp extends EssentialsCommand
 		}
 		if (args.length > 0)
 		{
-			IUser otherUser = null;
+			IUser otherUser;
 			if (args.length == 2 && Permissions.WARP_OTHERS.isAuthorized(user))
 			{
 				if (Permissions.WARP_HIDDEN.isAuthorized(user))

@@ -41,28 +41,16 @@ public class Alert implements StorageObject
 
 	public boolean getAlertOnPlacementContains(Material mat)
 	{
-		if (alertOnPlacement == null)
-		{
-			return false;
-		}
-		return alertOnPlacement.contains(mat);
+		return alertOnPlacement != null && alertOnPlacement.contains(mat);
 	}
 
 	public boolean getAlertOnUseContains(Material mat)
 	{
-		if (alertOnUse == null)
-		{
-			return false;
-		}
-		return alertOnUse.contains(mat);
+		return alertOnUse != null && alertOnUse.contains(mat);
 	}
 
 	public boolean getAlertOnBreakContains(Material mat)
 	{
-		if (alertOnBreak == null)
-		{
-			return false;
-		}
-		return alertOnBreak.contains(mat);
+		return alertOnBreak != null && alertOnBreak.contains(mat);
 	}
 }

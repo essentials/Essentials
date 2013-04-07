@@ -155,7 +155,7 @@ public class Methods
 
 		int count = 0;
 		boolean match = false;
-		Plugin plugin = null;
+		Plugin plugin;
 
 		for (String name : getDependencies())
 		{

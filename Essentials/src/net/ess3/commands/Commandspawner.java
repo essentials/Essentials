@@ -34,8 +34,7 @@ public class Commandspawner extends EssentialsCommand
 		{
 			String name = args[0];
 
-			EntityType mob = null;
-			mob = LivingEntities.fromName(name);
+			EntityType mob = LivingEntities.fromName(name);
 			if (mob == null)
 			{
 				user.sendMessage(_("Invalid mob type."));

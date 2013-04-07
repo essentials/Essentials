@@ -76,7 +76,7 @@ public class Commandlist extends EssentialsCommand
 				}
 				list.add(getUser(onlinePlayer));
 			}
-			final String[] groups = sort.keySet().toArray(new String[0]);
+			final String[] groups = sort.keySet().toArray(new String[sort.size()]);
 			Arrays.sort(groups, String.CASE_INSENSITIVE_ORDER);
 			for (String group : groups)
 			{

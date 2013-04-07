@@ -562,7 +562,6 @@ public class EssentialsPlayerListener implements Listener
 			if (command.matches(".*\\{player\\}.*"))
 			{
 				//user.sendMessage("Click a player to use this command");
-				continue;
 			}
 			else if (command.startsWith("c:"))
 			{
@@ -651,7 +650,7 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPlayerFishEvent(final PlayerFishEvent event)
 	{
-		final IUser user = userMap.getUser((Player)event.getPlayer());
+		final IUser user = userMap.getUser(event.getPlayer());
 		user.updateActivity(true);
 	}
 }

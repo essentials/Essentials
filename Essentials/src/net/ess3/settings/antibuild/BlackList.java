@@ -46,37 +46,21 @@ public class BlackList implements StorageObject
 
 	public boolean getPlacement(Material mat)
 	{
-		if (placement == null)
-		{
-			return false;
-		}
-		return placement.contains(mat);
+		return placement != null && placement.contains(mat);
 	}
 
 	public boolean getUsage(Material mat)
 	{
-		if (usage == null)
-		{
-			return false;
-		}
-		return usage.contains(mat);
+		return usage != null && usage.contains(mat);
 	}
 
 	public boolean getBreaking(Material mat)
 	{
-		if (breaking == null)
-		{
-			return false;
-		}
-		return breaking.contains(mat);
+		return breaking != null && breaking.contains(mat);
 	}
 
 	public boolean getPiston(Material mat)
 	{
-		if (piston == null)
-		{
-			return false;
-		}
-		return piston.contains(mat);
+		return piston != null && piston.contains(mat);
 	}
 }
