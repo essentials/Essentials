@@ -40,6 +40,7 @@ import net.ess3.settings.SpawnsHolder;
 import net.ess3.storage.StorageQueue;
 import net.ess3.user.UserMap;
 import net.ess3.utils.ExecuteTimer;
+import net.ess3.broadcast.*;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -131,14 +132,12 @@ public class Essentials implements IEssentials
 	@Override
 	public void onEnable()
 	{
+		EssentialsBroadcast.main();			//If you know a better way to do that tell me! //Carlgo11
 		storageQueue.setEnabled(true);
 		execTimer = new ExecuteTimer();
 		execTimer.start();
-
 		execTimer.mark("I18n1");
-
 		execTimer.mark("BukkitCheck");
-
 		reloadList = new ArrayList<IReload>();
 		settings = new SettingsHolder(this);
 		reloadList.add(settings);
