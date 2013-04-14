@@ -26,6 +26,8 @@ public class Commandrepair extends EssentialsCommand
 		}
 
 		if (args[0].equalsIgnoreCase("hand"))
+		&& !user.isAuthorized("essentials.repair.hand"))
+
 		{
 			final ItemStack item = user.getItemInHand();
 			if (item == null || item.getType().isBlock() || item.getDurability() == 0)
@@ -52,6 +54,7 @@ public class Commandrepair extends EssentialsCommand
 			user.sendMessage(_("repair", itemName.replace('_', ' ')));
 		}
 		else if (args[0].equalsIgnoreCase("all"))
+		&& !user.isAuthorized("essentials.repair.all"))
 		{
 			final Trade charge = new Trade("repair-all", ess);
 			charge.isAffordableFor(user);
