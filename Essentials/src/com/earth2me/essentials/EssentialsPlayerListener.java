@@ -441,23 +441,23 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
+		final User user = ess.getUser(event.getPlayer());
+		user.updateActivity(true);
 		switch (event.getAction())
 		{
 		case RIGHT_CLICK_BLOCK:
 			if (!event.isCancelled() && event.getClickedBlock().getTypeId() == BED && ess.getSettings().getUpdateBedAtDaytime())
 			{
-				User player = ess.getUser(event.getPlayer());
 				if (player.isAuthorized("essentials.sethome.bed"))
 				{
-					player.setBedSpawnLocation(event.getClickedBlock().getLocation());
-					player.sendMessage(_("bedSet", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()));
+					user.setBedSpawnLocation(event.getClickedBlock().getLocation());
+					user.sendMessage(_("bedSet", user.getLocation().getWorld().getName(), user.getLocation().getBlockX(), user.getLocation().getBlockY(), user.getLocation().getBlockZ()));
 				}
 			}
 			break;
 		case LEFT_CLICK_AIR:
 			if (event.getPlayer().isFlying())
 			{
-				final User user = ess.getUser(event.getPlayer());
 				if (user.isFlyClickJump())
 				{
 					useFlyClickJump(user);
@@ -467,8 +467,6 @@ public class EssentialsPlayerListener implements Listener
 		case LEFT_CLICK_BLOCK:
 			if (event.getItem() != null && event.getItem().getTypeId() != AIR)
 			{
-				final User user = ess.getUser(event.getPlayer());
-				user.updateActivity(true);
 				if (user.hasPowerTools() && user.arePowerToolsEnabled() && usePowertools(user, event.getItem().getTypeId()))
 				{
 					event.setCancelled(true);
