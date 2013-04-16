@@ -208,4 +208,16 @@ public class EssentialsEntityListener implements Listener
 			}
 		}
 	}
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	public void onEntityShootBow (EntityShootBowEvent event)
+	{
+		if (event.getEntity() instanceof Player)
+		{
+			final IUser user = ess.getUserMap().getUser((Player)event.getEntity());
+			if (user.getData().isAfk())
+			{
+				user.updateActivity(true);
+			}
+		}
+	}
 }
