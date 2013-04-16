@@ -34,6 +34,11 @@ public class BlackList implements StorageObject
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
 	private Set<Material> piston = new HashSet<Material>();
+	@Comment("Which blocks should not be dispensed by dispensers")
+	@ListType(Material.class)
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private Set<Material> dispenser = new HashSet<Material>();
 
 	public void setupDefaults()
 	{
@@ -62,5 +67,10 @@ public class BlackList implements StorageObject
 	public boolean getPiston(Material mat)
 	{
 		return piston != null && piston.contains(mat);
+	}
+	
+	public boolean getDispenser(Material mat)
+	{
+		return dispenser != null && dispenser.contains(mat);
 	}
 }

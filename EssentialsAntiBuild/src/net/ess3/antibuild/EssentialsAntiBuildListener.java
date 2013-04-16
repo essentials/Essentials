@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -268,6 +269,16 @@ public class EssentialsAntiBuildListener implements Listener
 					user.sendMessage(_("§4You are not permitted to drop§c {0}§4.", item.getType().toString()));
 				}
 			}
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onBlockDispense(final BlockDispenseEvent event)
+	{
+		final Material mat = event.getItem().getType();
+		if (antib.getSettings().getData().getBlacklist().getDispenser(mat))
+		{
+			event.setCancelled(true);
 		}
 	}
 }
