@@ -8,7 +8,7 @@
 #
 # Local group inheritances define your promotion tree when using 'manpromote/mandemote'
 
-groups:
+groups:&3gast
   Default:
     default: true
     permissions:
@@ -22,9 +22,15 @@ groups:
       prefix: '&e'
       build: false
       suffix: ''
-  Builder:
+  Builder:&3buil&9der
     default: false
-    permissions: []
+    permissions: [-bukkit.command.kill
+   -bukkit.command.me
+   -bukkit.command.help
+   -bukkit.command.tpa
+   -bukkit.command.msg
+   -bukkit.command.sethome
+   -bukkit.command.home]
     inheritance:
     - default
     - g:essentials_builder
@@ -33,9 +39,22 @@ groups:
       prefix: '&2'
       build: true
       suffix: ''
-  Moderator:
+  Moderator:&2mode&7rator
     default: false
-    permissions: []
+    permissions: [-bukkit.command.tell
+    -bukkit.command.msg
+    -bukkit.command.kill
+    -bukkit.command.ban
+    -bukkit.command.kick
+    -bukkit.command.gamemode 1
+    -bukkit.command.gamemode 0
+    -bukkit.command.gamemode 2
+    -bukkit.command.banip
+    -bukkit.command.tp
+    -bukkit.command.tphere
+    -bukkit.command.tpall
+    -bukkit.command.unbanip
+    -bukkit.command.unban]
     inheritance:
     - builder
     - g:groupmanager_moderator
@@ -47,9 +66,24 @@ groups:
       prefix: '&5'
       build: true
       suffix: ''
-  Admin:
+  Admin:&4ad&3mi&2n
     default: false
-    permissions: []
+    permissions: [-bukkit.command.gamemode 2
+    -bukkit.command.gamemode 1
+    -bukkit.command.gamemode 0
+    -bukkit.command.kill
+    -bukkit.command.tell
+    -bukkit.command.msg
+    -bukkit.command.banip
+    -bukkit.command.ban
+    -bukkit.command.kick
+    -bukkit.command.give
+    -bukkit.command.tp
+    -bukkit.command.tpall
+    -bukkit.command.tphere
+    -bukkit.command.say
+    -bukkit.command.unbanip
+    -bukkit.command.unban]
     inheritance:
     - moderator
     - g:groupmanager_admin
@@ -61,7 +95,7 @@ groups:
       prefix: '&c'
       build: true
       suffix: ''
-  Owner:
+  Owner:&4own&3er
     default: false
     permissions:
     - '*'
