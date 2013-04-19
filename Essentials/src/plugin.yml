@@ -12,7 +12,7 @@ commands:
     usage: /<command>
     aliases: [eafk]
   antioch:
-    description: 'A little surprise for operators.'
+    description: A little surprise for operators.
     usage: /<command> [message]
     aliases: [eantioch,grenade,tnt,egrenade,etnt]
   back:
