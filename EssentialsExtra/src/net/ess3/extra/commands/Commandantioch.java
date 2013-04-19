@@ -1,6 +1,7 @@
-package net.ess3.commands;
+package net.ess3.extra.commands;
 
 import net.ess3.api.IUser;
+import net.ess3.commands.EssentialsCommand;
 import net.ess3.utils.LocationUtil;
 import org.bukkit.Location;
 import org.bukkit.Server;
