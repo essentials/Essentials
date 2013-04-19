@@ -89,7 +89,7 @@
               <artifactSet>
                 <includes>
                   <include>commons-io:*</include>
-                  <include>org.apache.commons:*</include>
+                  <include>org.apache.commons:commons-compress</include>
                 </includes>
               </artifactSet>
               <minimizeJar>true</minimizeJar>
