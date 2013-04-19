@@ -68,6 +68,7 @@ public enum Permissions implements IPermission
 	KICK_EXEMPT,
 	KICK_NOTIFY,
 	KILL_FORCE,
+	KILL_EXEMPT,
 	LIST_HIDDEN,
 	LIGHTNING_OTHERS,
 	MAIL,

@@ -20,6 +20,10 @@ public class Commandkill extends EssentialsCommand
 
 		for (IUser matchPlayer : ess.getUserMap().matchUsersExcludingHidden(args[0], getPlayerOrNull(sender)))
 		{
+			if (Permissions.KILL_EXEMPT.isAuthorized(matchPlayer) && !Permissions.KILL_FORCE.isAuthorized(sender))
+			{
+				throw new Exception(_("killExempt", matchPlayer.getName()));
+			}
 			final Player player = matchPlayer.getPlayer();
 			final EntityDamageEvent ede = new EntityDamageEvent(
 					player, sender instanceof IUser && sender.getName().equals(
