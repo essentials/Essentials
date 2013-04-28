@@ -51,6 +51,11 @@ public class Commandremove extends EssentialsCommand
 				throw new Exception(_("numberRequired"), e);
 			}
 		}
+		
+		if (args.length >= 3)
+		{
+			world = ess.getWorld(args[2]);
+		}
 
 		if (args.length >= 3)
 		{
