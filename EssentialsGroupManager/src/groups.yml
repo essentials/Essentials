@@ -22,8 +22,8 @@ groups:
       prefix: '&e'
       build: false
       suffix: ''
-  Builder:
-    default: false
+  Citizen:
+    default: true
     permissions: []
     inheritance:
     - default
