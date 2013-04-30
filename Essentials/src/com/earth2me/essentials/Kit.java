@@ -48,7 +48,16 @@ public class Kit
 		final Calendar time = new GregorianCalendar();
 
 		// Take the current time, and remove the delay from it.
-		final double delay = els.containsKey("delay") ? ((Number)els.get("delay")).doubleValue() : 0.0d;
+		final double delay = 0;
+		try
+		{	// Also make sure delay is valid
+			delay = els.containsKey("delay") ? ((Number)els.get("delay")).doubleValue() : 0.0d;
+		}
+		catch (Exception e)
+		{
+			user.sendMessage(_("kitError2"));
+			throw new NoChargeException();
+		}
 		final Calendar earliestTime = new GregorianCalendar();
 		earliestTime.add(Calendar.SECOND, -(int)delay);
 		earliestTime.add(Calendar.MILLISECOND, -(int)((delay * 1000.0) % 1000.0));
