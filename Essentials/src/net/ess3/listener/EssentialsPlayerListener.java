@@ -39,7 +39,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsPlayerListener implements Listener
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private final Server server;
 	private final IEssentials ess;
 	private final IUserMap userMap;
@@ -73,7 +72,7 @@ public class EssentialsPlayerListener implements Listener
 		{
 			event.setCancelled(true);
 			user.sendMessage(_("§6You have been muted!"));
-			LOGGER.info(_("{0} tried to speak, but is muted.", user.getName()));
+			ess.getLogger().info(_("{0} tried to speak, but is muted.", user.getName()));
 		}
 		final Iterator<Player> it = event.getRecipients().iterator();
 		while (it.hasNext())
@@ -306,11 +305,11 @@ public class EssentialsPlayerListener implements Listener
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.WARNING, ex.getMessage(), ex);
+					ess.getLogger().log(Level.WARNING, ex.getMessage(), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.WARNING, ex.getMessage());
+					ess.getLogger().log(Level.WARNING, ex.getMessage());
 				}
 			}
 		}
