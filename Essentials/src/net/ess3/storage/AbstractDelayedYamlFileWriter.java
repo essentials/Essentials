@@ -48,7 +48,7 @@ public abstract class AbstractDelayedYamlFileWriter implements Runnable
 			}
 			catch (FileNotFoundException ex)
 			{
-				Bukkit.getLogger().log(Level.SEVERE, file.toString(), ex);
+				ess.getLogger().log(Level.SEVERE, file.toString(), ex);
 			}
 			finally
 			{

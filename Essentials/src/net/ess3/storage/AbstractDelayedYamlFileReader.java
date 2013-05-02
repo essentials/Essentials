@@ -56,7 +56,7 @@ public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> imp
 					}
 					catch (IOException ex)
 					{
-						Bukkit.getLogger().log(Level.SEVERE, "File can't be closed: " + file.toString(), ex);
+						ess.getLogger().log(Level.SEVERE, "File can't be closed: " + file.toString(), ex);
 					}
 				}
 
@@ -64,14 +64,14 @@ public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> imp
 			catch (FileNotFoundException ex)
 			{
 				onException(ex);
-				Bukkit.getLogger().log(Level.INFO, "File not found: " + file.toString());
+				ess.getLogger().log(Level.INFO, "File not found: " + file.toString());
 			}
 			catch (ObjectLoadException ex)
 			{
 				onException(ex);
 				File broken = new File(file.getAbsolutePath() + ".broken." + System.currentTimeMillis());
 				file.renameTo(broken);
-				Bukkit.getLogger().log(Level.SEVERE, "The file " + file.toString() + " is broken, it has been renamed to " + broken.toString(), ex.getCause());
+				ess.getLogger().log(Level.SEVERE, "The file " + file.toString() + " is broken, it has been renamed to " + broken.toString(), ex.getCause());
 			}
 		}
 	}

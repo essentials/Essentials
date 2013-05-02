@@ -19,9 +19,11 @@ public class ManagedFile
 {
 	private final static int BUFFERSIZE = 1024 * 8;
 	private final File file;
+	protected final IEssentials ess;
 
 	public ManagedFile(final String filename, final IEssentials ess)
 	{
+		this.ess = ess;
 		file = new File(ess.getPlugin().getDataFolder(), filename);
 
 		if (file.exists())
@@ -35,7 +37,7 @@ public class ManagedFile
 			}
 			catch (IOException ex)
 			{
-				Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
+				ess.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 			}
 		}
 
@@ -47,7 +49,7 @@ public class ManagedFile
 			}
 			catch (IOException ex)
 			{
-				Bukkit.getLogger().log(Level.SEVERE, _("Could not load items.csv!"), ex);
+				ess.getLogger().log(Level.SEVERE, _("Could not load items.csv!"), ex);
 			}
 		}
 	}
@@ -157,7 +159,8 @@ public class ManagedFile
 								else
 								{
 									Bukkit.getLogger().warning(
-											"File " + file.toString() + " has been modified by user and file version differs, please update the file manually.");
+											"File " + file.toString() + " has been modified by user and file version "
+											+ "differs, please update the file manually.");
 								}
 							}
 							finally
@@ -222,7 +225,7 @@ public class ManagedFile
 		}
 		catch (IOException ex)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
+			ess.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 			return Collections.emptyList();
 		}
 	}

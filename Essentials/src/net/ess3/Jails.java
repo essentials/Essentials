@@ -30,7 +30,6 @@ import org.bukkit.plugin.PluginManager;
 
 public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> implements IJails
 {
-	private static final Logger LOGGER = Bukkit.getLogger();
 
 	public Jails(final IEssentials ess)
 	{
@@ -174,11 +173,11 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()), ex);
+					ess.getLogger().log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()));
+					ess.getLogger().log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 		}
@@ -200,11 +199,11 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()), ex);
+					ess.getLogger().log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()));
+					ess.getLogger().log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 			user.sendMessage(_("§4You do the crime, you do the time."));
@@ -227,11 +226,11 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 			{
 				if (ess.getSettings().isDebug())
 				{
-					LOGGER.log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()), ex);
+					ess.getLogger().log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()), ex);
 				}
 				else
 				{
-					LOGGER.log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()));
+					ess.getLogger().log(Level.INFO, _("§4Error occurred when trying to return player§c {0} §4to jail: {1}!", user.getName(), ex.getLocalizedMessage()));
 				}
 			}
 			user.sendMessage(_("§4You do the crime, you do the time."));
