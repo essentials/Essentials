@@ -32,7 +32,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 		}
 		catch (Exception ex)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
+			ess.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 		}
 	}
 
@@ -175,7 +175,7 @@ public abstract class AsyncStorageObjectHolder<T extends StorageObject> implemen
 				}
 				catch (Exception ex)
 				{
-					Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
+					ess.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 				}
 			}
 			loaded.set(true);

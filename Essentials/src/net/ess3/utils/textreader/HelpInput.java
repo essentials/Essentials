@@ -15,16 +15,17 @@ import org.bukkit.plugin.PluginDescriptionFile;
 
 public class HelpInput implements IText
 {
+	protected final IEssentials ess;
 	private static final String DESCRIPTION = "description";
 	private static final String PERMISSION = "permission";
 	private static final String PERMISSIONS = "permissions";
 	private final List<String> lines = new ArrayList<String>();
 	private final List<String> chapters = new ArrayList<String>();
 	private final Map<String, Integer> bookmarks = new HashMap<String, Integer>();
-	private final static Logger logger = Logger.getLogger("Minecraft");
 
 	public HelpInput(final IUser user, final String match, final IEssentials ess) throws IOException
 	{
+		this.ess = ess;
 		final ISettings settings = ess.getSettings();
 		boolean reported = false;
 		final List<String> newLines = new ArrayList<String>();
@@ -147,7 +148,7 @@ public class HelpInput implements IText
 			{
 				if (!reported)
 				{
-					logger.log(Level.WARNING, _("Error getting help for plugin: {0}", pluginNameLow), ex);
+					ess.getLogger().log(Level.WARNING, _("Error getting help for plugin: {0}", pluginNameLow), ex);
 				}
 				reported = true;
 				continue;
