@@ -18,7 +18,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private static EssentialsXMPP instance = null;
 	private UserManager users;
 	private XMPPManager xmpp;
@@ -40,7 +39,7 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 		ess = plugin.getEssentials();
 		if (!this.getDescription().getVersion().equals(plugin.getDescription().getVersion()))
 		{
-			LOGGER.log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
+			getLogger().log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
 		}
 		if (!plugin.isEnabled())
 		{

@@ -42,7 +42,7 @@ public class UpdateCheck
 		{
 			if (new File(plugin.getDataFolder().getParentFile(), "Essentials.jar").exists())
 			{
-				Bukkit.getLogger().severe("Essentials.jar found, but not recognized by Bukkit. Broken download?");
+				plugin.getLogger().severe("Essentials.jar found, but not recognized by Bukkit. Broken download?");
 			}
 		}
 	}
