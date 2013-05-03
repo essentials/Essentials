@@ -3,6 +3,7 @@ package net.ess3.xmpp;
 import java.io.File;
 import java.util.*;
 import java.util.logging.*;
+import net.ess3.api.IEssentials;
 import net.ess3.api.IReload;
 import net.ess3.api.IUser;
 import net.ess3.utils.FormatUtil;
@@ -17,7 +18,6 @@ import org.jivesoftware.smack.util.StringUtils;
 
 public final class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IReload
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private static final SimpleFormatter formatter = new SimpleFormatter();
 	private YamlConfiguration config = null;
 	private XMPPConnection connection;
@@ -98,7 +98,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 		final String server = config.getString("xmpp.server");
 		if (server == null || server.equals("example.com"))
 		{
-			LOGGER.log(Level.WARNING, "config broken for xmpp");
+			parent.getLogger().log(Level.WARNING, "config broken for xmpp");
 			return false;
 		}
 		final int port = config.getInt("xmpp.port", 5222);
@@ -109,7 +109,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Connecting to xmpp server ").append(server).append(":").append(port);
 		stringBuilder.append(" as user ").append(xmppuser).append(".");
-		LOGGER.log(Level.INFO, stringBuilder.toString());
+		parent.getLogger().log(Level.INFO, stringBuilder.toString());
 		connConf.setSASLAuthenticationEnabled(config.getBoolean("xmpp.sasl-enabled", false));
 		connConf.setSendPresence(true);
 		connConf.setReconnectionAllowed(true);
@@ -125,7 +125,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 		}
 		catch (XMPPException ex)
 		{
-			LOGGER.log(Level.WARNING, "Failed to connect to server: " + server, ex);
+			parent.getLogger().log(Level.WARNING, "Failed to connect to server: " + server, ex);
 			return false;
 		}
 	}
@@ -165,7 +165,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 	@Override
 	public void onReload()
 	{
-		LOGGER.removeHandler(this);
+		parent.getLogger().removeHandler(this);
 		config = YamlConfiguration.loadConfiguration(new File(parent.getDataFolder(), "config.yml"));
 		synchronized (chats)
 		{
@@ -179,7 +179,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 		}
 		if (config.getBoolean("log-enabled", false))
 		{
-			LOGGER.addHandler(this);
+			parent.getLogger().addHandler(this);
 			logUsers = config.getStringList("log-users");
 			final String level = config.getString("log-level", "info");
 			try
@@ -271,14 +271,14 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 									catch (XMPPException ex)
 									{
 										failedUsers.add(user);
-										LOGGER.removeHandler(XMPPManager.this);
-										LOGGER.log(Level.SEVERE, "Failed to deliver log message! Disabling logging to XMPP.", ex);
+										parent.getLogger().removeHandler(XMPPManager.this);
+										parent.getLogger().log(Level.SEVERE, "Failed to deliver log message! Disabling logging to XMPP.", ex);
 									}
 								}
 								logUsers.removeAll(failedUsers);
 								if (logUsers.isEmpty())
 								{
-									LOGGER.removeHandler(XMPPManager.this);
+									parent.getLogger().removeHandler(XMPPManager.this);
 									threadrunning = false;
 								}
 								copy.clear();
@@ -292,7 +292,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 								threadrunning = false;
 							}
 						}
-						LOGGER.removeHandler(XMPPManager.this);
+						parent.getLogger().removeHandler(XMPPManager.this);
 					}
 				});
 		loggerThread.start();
@@ -333,7 +333,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 				}
 				catch (XMPPException ex)
 				{
-					LOGGER.log(Level.WARNING, "Failed to send xmpp message.", ex);
+					parent.getLogger().log(Level.WARNING, "Failed to send xmpp message.", ex);
 				}
 			}
 			else
@@ -357,7 +357,7 @@ public final class XMPPManager extends Handler implements MessageListener, ChatM
 			}
 			catch (Exception ex)
 			{
-				LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+				parent.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 			}
 		}
 	}

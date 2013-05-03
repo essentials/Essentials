@@ -18,7 +18,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsChat extends JavaPlugin
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 
 	@Override
 	public void onEnable()
@@ -28,7 +27,7 @@ public class EssentialsChat extends JavaPlugin
 		final IEssentials ess = (IEssentials)plugin.getEssentials();
 		if (!this.getDescription().getVersion().equals(plugin.getDescription().getVersion()))
 		{
-			LOGGER.log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
+			getLogger().log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
 		}
 		if (!plugin.isEnabled())
 		{

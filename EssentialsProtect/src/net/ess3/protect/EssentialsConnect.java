@@ -10,7 +10,6 @@ import org.bukkit.plugin.Plugin;
 
 public class EssentialsConnect
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private final IEssentials ess;
 	private final IProtect protect;
 
@@ -18,7 +17,7 @@ public class EssentialsConnect
 	{
 		if (!essProtect.getDescription().getVersion().equals(essPlugin.getDescription().getVersion()))
 		{
-			LOGGER.log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
+			essPlugin.getLogger().log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
 		}
 		ess = ((BukkitPlugin)essPlugin).getEssentials();
 		protect = (IProtect)essProtect;

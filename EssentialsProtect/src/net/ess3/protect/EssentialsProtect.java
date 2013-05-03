@@ -10,7 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsProtect extends JavaPlugin implements IProtect
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private EssentialsConnect ess = null;
 	private ProtectHolder settings = null;
 
@@ -45,7 +44,7 @@ public class EssentialsProtect extends JavaPlugin implements IProtect
 		{
 			player.sendMessage("Essentials Protect is in emergency mode. Check your log for errors."); //TODO: tl this
 		}
-		LOGGER.log(Level.SEVERE, "Essentials not installed or failed to load. Essentials Protect is in emergency mode now."); //TODO: tl this
+		getLogger().log(Level.SEVERE, "Essentials not installed or failed to load. Essentials Protect is in emergency mode now."); //TODO: tl this
 	}
 
 	@Override

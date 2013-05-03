@@ -17,7 +17,6 @@ import org.bukkit.inventory.ItemStack;
 public final class Settings implements ISettings
 {
 	private final EssentialsConf config;
-	private final static Logger logger = Logger.getLogger("Minecraft");
 	private final IEssentials ess;
 	private boolean metricsEnabled = true;
 
@@ -418,7 +417,7 @@ public final class Settings implements ISettings
 		final List<Integer> epItemSpwn = new ArrayList<Integer>();
 		if (ess.getItemDb() == null)
 		{
-			logger.log(Level.FINE, "Aborting ItemSpawnBL read, itemDB not yet loaded.");
+			ess.getLogger().log(Level.FINE, "Aborting ItemSpawnBL read, itemDB not yet loaded.");
 			return epItemSpwn;
 		}
 		for (String itemName : config.getString("item-spawn-blacklist", "").split(","))
@@ -435,7 +434,7 @@ public final class Settings implements ISettings
 			}
 			catch (Exception ex)
 			{
-				logger.log(Level.SEVERE, _("§4Unknown item {0} in {1} list.", itemName, "item-spawn-blacklist"));
+				ess.getLogger().log(Level.SEVERE, _("§4Unknown item {0} in {1} list.", itemName, "item-spawn-blacklist"));
 			}
 		}
 		return epItemSpwn;
@@ -471,7 +470,7 @@ public final class Settings implements ISettings
 			}
 			catch (Exception ex)
 			{
-				logger.log(Level.SEVERE, _("§4Unknown item {0} in {1} list.", signName, "enabledSigns"));
+				ess.getLogger().log(Level.SEVERE, _("§4Unknown item {0} in {1} list.", signName, "enabledSigns"));
 				continue;
 			}
 			signsEnabled = true;
@@ -565,7 +564,7 @@ public final class Settings implements ISettings
 			}
 			catch (Exception ex)
 			{
-				logger.log(Level.SEVERE, _("§4Unknown item {0} in {1} list.", itemName, configName));
+				ess.getLogger().log(Level.SEVERE, _("§4Unknown item {0} in {1} list.", itemName, configName));
 			}
 		}
 		return list;
