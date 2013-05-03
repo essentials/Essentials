@@ -12,7 +12,6 @@ import org.bukkit.plugin.Plugin;
 
 public class EssentialsConnect
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private final IEssentials ess;
 	private final IAntiBuild antib;
 
@@ -20,7 +19,7 @@ public class EssentialsConnect
 	{
 		if (!essProtect.getDescription().getVersion().equals(essPlugin.getDescription().getVersion()))
 		{
-			LOGGER.log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
+			essPlugin.getLogger().log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
 		}
 		ess = ((BukkitPlugin)essPlugin).getEssentials();
 		antib = (IAntiBuild)essProtect;
@@ -43,7 +42,7 @@ public class EssentialsConnect
 		final Location loc = user.getLocation();
 		final String warnMessage = _(
 				"alertFormat", user.getName(), type, item, loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ());
-		LOGGER.log(Level.WARNING, warnMessage);
+		ess.getLogger().log(Level.WARNING, warnMessage);
 		for (Player p : ess.getServer().getOnlinePlayers())
 		{
 			if (Permissions.ALERTS.isAuthorized(p))

@@ -15,7 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EssentialsSignsPlugin extends JavaPlugin implements ISignsPlugin
 {
-	private static final Logger LOGGER = Bukkit.getLogger();
 	private SignsConfigHolder config;
 
 	@Override
@@ -26,7 +25,7 @@ public class EssentialsSignsPlugin extends JavaPlugin implements ISignsPlugin
 		final IEssentials ess = (IEssentials)plugin.getEssentials();
 		if (!this.getDescription().getVersion().equals(plugin.getDescription().getVersion()))
 		{
-			LOGGER.log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
+			getLogger().log(Level.WARNING, _("§4Version mismatch! Please update all Essentials jars to the same version."));
 		}
 		if (!plugin.isEnabled())
 		{

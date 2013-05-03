@@ -43,7 +43,7 @@ public class UpdateProcess implements Listener
 			{
 				currentPlayer.sendMessage("A newer version of EssentialsUpdate is found. Downloading new file and reloading server.");
 			}
-			Bukkit.getLogger().log(Level.INFO, "A newer version of EssentialsUpdate is found. Downloading new file and reloading server.");
+			plugin.getLogger().log(Level.INFO, "A newer version of EssentialsUpdate is found. Downloading new file and reloading server.");
 			new SelfUpdate(
 					new AbstractWorkListener(plugin, updateCheck.getNewVersionInfo())
 					{
@@ -70,7 +70,7 @@ public class UpdateProcess implements Listener
 							}
 							if (message != null && !message.isEmpty())
 							{
-								Bukkit.getLogger().log(Level.INFO, message);
+								plugin.getLogger().log(Level.INFO, message);
 							}
 							UpdateProcess.this.currentPlayer = null;
 						}

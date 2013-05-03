@@ -23,7 +23,6 @@ public class SignBlockListener implements Listener
 {
 	private final IEssentials ess;
 	private final ISignsPlugin plugin;
-	private final static Logger LOGGER = Logger.getLogger("Minecraft");
 	private final static int WALL_SIGN = Material.WALL_SIGN.getId();
 	private final static int SIGN_POST = Material.SIGN_POST.getId();
 
@@ -52,7 +51,7 @@ public class SignBlockListener implements Listener
 		// prevent any signs be broken by destroying the block they are attached to
 		if (EssentialsSign.checkIfBlockBreaksSigns(block))
 		{
-			LOGGER.log(Level.INFO, "Prevented that a block was broken next to a sign.");
+			ess.getLogger().log(Level.INFO, "Prevented that a block was broken next to a sign.");
 			return true;
 		}
 
@@ -73,7 +72,7 @@ public class SignBlockListener implements Listener
 		{
 			if (sign.getBlocks().contains(block.getType()) && !sign.onBlockBreak(block, player, ess))
 			{
-				LOGGER.log(Level.INFO, "A block was protected by a sign.");
+				ess.getLogger().log(Level.INFO, "A block was protected by a sign.");
 				return true;
 			}
 		}

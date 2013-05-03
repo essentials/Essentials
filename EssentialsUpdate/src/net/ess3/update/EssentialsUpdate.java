@@ -17,7 +17,7 @@ public class EssentialsUpdate extends JavaPlugin
 	{
 		if (!getDataFolder().exists() && !getDataFolder().mkdirs())
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "Could not create data folder: {0}", getDataFolder().getPath());
+			getLogger().log(Level.SEVERE, "Could not create data folder: {0}", getDataFolder().getPath());
 		}
 		essentialsHelp = new EssentialsHelp(this);
 		essentialsHelp.registerEvents();
@@ -33,7 +33,7 @@ public class EssentialsUpdate extends JavaPlugin
 		}
 		else
 		{
-			Bukkit.getLogger().info("Essentials is ready for installation. Join the game and follow the instructions.");
+			getLogger().info("Essentials is ready for installation. Join the game and follow the instructions.");
 		}
 	}
 

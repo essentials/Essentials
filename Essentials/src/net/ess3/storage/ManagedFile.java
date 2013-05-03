@@ -159,8 +159,7 @@ public class ManagedFile
 								else
 								{
 									Bukkit.getLogger().warning(
-											"File " + file.toString() + " has been modified by user and file version "
-											+ "differs, please update the file manually.");
+											"File " + file.toString() + " has been modified by user and file version differs, please update the file manually.");
 								}
 							}
 							finally

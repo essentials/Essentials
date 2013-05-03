@@ -18,7 +18,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public abstract class EssentialsChatPlayer implements Listener
 {
 	protected IEssentials ess;
-	protected final static Logger LOGGER = Logger.getLogger("Minecraft");
 	protected final Server server;
 	protected final Map<AsyncPlayerChatEvent, ChatStore> chatStorage;
 
