@@ -30,7 +30,8 @@ public class Commanditemdb extends EssentialsCommand
 		}
 		final Material itemType = itemStack.getType();
 		final int id = itemType.getId();
-		sender.sendMessage(itemStack.getType().toString() + "- " + id + ":" + Integer.toString(itemStack.getData().getData()));
+		final String data = Integer.toString(itemStack.getData().getData());
+		sender.sendMessage(_("ItemDatabaseResponse", itemStack.getType().toString(), id, data));
 		if (id != 0)
 		{
 			final int maxuses = itemType.getMaxDurability();
