@@ -89,6 +89,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	private transient EssentialsTimer timer;
 	private transient List<String> vanishedPlayers = new ArrayList<String>();
 	private transient SimpleCommandMap scm;
+	public static Essentials p;
 
 	@Override
 	public ISettings getSettings()
@@ -122,6 +123,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	@Override
 	public void onEnable()
 	{
+		p = this;
 		execTimer = new ExecuteTimer();
 		execTimer.start();
 		i18n = new I18n(this);
