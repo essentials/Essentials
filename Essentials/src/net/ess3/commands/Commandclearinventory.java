@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 public class Commandclearinventory extends EssentialsCommand
 {
+	boolean clearconfirm=false;
 	@Override
 	public void run(final IUser user, final String commandLabel, final String[] args) throws Exception
 	{
@@ -62,8 +63,14 @@ public class Commandclearinventory extends EssentialsCommand
 			final Player u = server.getPlayer(args[0]);
 			if (u != null)
 			{
-				u.getInventory().clear();
-				sender.sendMessage(_("inventoryClearedOthers", u.getDisplayName()));
+				u.sendMessage(ChatColor.RED + "WARNING: THIS WILL CLEAR YOUR INVENTORY. TYPE /CI CONFIRM TO CLEAR");
+				if(args[0] == "confirm")
+				{
+				    clearconfirm = !clearconfirm;
+				    u.getInventory().clear();
+				    sender.sendMessage(_("inventoryClearedOthers", u.getDisplayName()));
+				}
+				
 			}
 			else
 			{
