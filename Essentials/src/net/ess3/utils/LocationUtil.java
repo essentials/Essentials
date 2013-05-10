@@ -135,6 +135,12 @@ public class LocationUtil
 			}
 		}
 
+		if (isBlockUnsafe(world, x, y, z))
+		{
+			x = Math.round(loc.getX()) == origX ? x - 1 : x + 1;
+			z = Math.round(loc.getZ()) == origZ ? z - 1 : z + 1;
+		}
+
 		int i = 0;
 		while (isBlockUnsafe(world, x, y, z))
 		{
