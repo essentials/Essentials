@@ -116,6 +116,7 @@ public enum Permissions implements IPermission
 	TPOHERE,
 	TPTOGGLE_OTHERS,
 	TPTOGGLE_EXEMPT,
+	UNBAN_NOTIFY,
 	UNLIMITED_OTHERS,
 	WARP_LIST(PermissionDefault.TRUE),
 	WARP_HIDDEN,
