@@ -25,7 +25,7 @@ public class Commandexp extends EssentialsCommand
 		{
 			showExp(user, user);
 		}
-		else if (args[0].equalsIgnoreCase("set") && user.isAuthorized("essentials.exp.set"))
+		else if (args.length > 1 && args[0].equalsIgnoreCase("set") && user.isAuthorized("essentials.exp.set"))
 		{
 			if (args.length == 3 && user.isAuthorized("essentials.exp.set.others"))
 			{
@@ -36,7 +36,7 @@ public class Commandexp extends EssentialsCommand
 				setExp(user, user, args[1], false);
 			}
 		}
-		else if (args[0].equalsIgnoreCase("give") && user.isAuthorized("essentials.exp.give"))
+		else if (args.length > 1 && args[0].equalsIgnoreCase("give") && user.isAuthorized("essentials.exp.give"))
 		{
 			if (args.length == 3 && user.isAuthorized("essentials.exp.give.others"))
 			{
@@ -47,7 +47,7 @@ public class Commandexp extends EssentialsCommand
 				setExp(user, user, args[1], true);
 			}
 		}
-		else if (args[0].equalsIgnoreCase("show"))
+		else if (args.length > 1 && args[0].equalsIgnoreCase("show"))
 		{
 			if (args.length >= 2 && user.isAuthorized("essentials.exp.others"))
 			{
