@@ -47,7 +47,7 @@ public class Commandexp extends EssentialsCommand
 				setExp(user, user, args[1], true);
 			}
 		}
-		else if (args.length > 1 && args[0].equalsIgnoreCase("show"))
+		else if (args[0].equalsIgnoreCase("show"))
 		{
 			if (args.length >= 2 && user.isAuthorized("essentials.exp.others"))
 			{
