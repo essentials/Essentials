@@ -95,7 +95,7 @@ public class Commandheal extends EssentialsCommand
 		ess.getServer().getPluginManager().callEvent(erhe);
 		if (erhe.isCancelled())
 		{
-			throw new QuietAbortException();
+			throw new QuietAbortException("Heal is denied! Is a plugin cancelling the entity regain health event?");
 		}
 
 		int newAmount = player.getHealth() + erhe.getAmount();
