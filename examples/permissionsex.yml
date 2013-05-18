@@ -1,5 +1,5 @@
 groups:
-    Default:
+    Member:
         default: true
         permissions:
         - essentials.spawn
@@ -8,22 +8,12 @@ groups:
         - essentials.list
         - essentials.helpop
         - essentials.help
-        - modifyworld.*
-        prefix: '&e'
-        options:
-            build: false
-            rank: '1000'
-    Builder:
-        permissions:
         - essentials.afk
         - essentials.back
         - essentials.back.ondeath
         - essentials.balance
         - essentials.balance.others
         - essentials.balancetop
-        - essentials.chat.color
-        - essentials.chat.shout
-        - essentials.chat.question
         - essentials.compass
         - essentials.depth
         - essentials.home
@@ -32,23 +22,11 @@ groups:
         - essentials.kits.tools
         - essentials.mail
         - essentials.mail.send
-        - essentials.me
         - essentials.msg
-        - essentials.nick
         - essentials.pay
         - essentials.ping
-        - essentials.powertool
-        - essentials.protect
         - essentials.sethome
         - essentials.signs.use.*
-        - essentials.signs.create.disposal
-        - essentials.signs.create.mail
-        - essentials.signs.create.protection
-        - essentials.signs.create.trade
-        - essentials.signs.break.disposal
-        - essentials.signs.break.mail
-        - essentials.signs.break.protection
-        - essentials.signs.break.trade
         - essentials.suicide
         - essentials.time
         - essentials.tpa
@@ -57,13 +35,11 @@ groups:
         - essentials.tpdeny
         - essentials.warp
         - essentials.warp.list
-        - essentials.worth
-        inheritance:
-        - default
-        prefix: '&2'
+        - essentials.clearinventory
+        prefix: '&7[Member] '
         options:
             build: true
-            rank: '500'
+            rank: '1000'
     Moderator:
         permissions:
         - essentials.ban
@@ -114,24 +90,17 @@ groups:
         - permissions.user.demote.default
         - permissions.manage.membership
         inheritance:
-        - builder
-        prefix: '&5'
+        - Member
+        prefix: '&1[Mod] '
         options:
             build: true
             rank: '200'
     Admin:
         permissions:
-        - -essentials.backup
-        - -essentials.essentials
-        - -essentials.setspawn
-        - -essentials.reloadall
-        - essentials.*
-        - permissions.manage.users
-        - permissions.manage.users.permissions
-        - permissions.manage.users.permissions.timed
+        - '*'
         inheritance:
         - moderator
-        prefix: '&c'
+        prefix: '&2[Admin+] '
         options:
             build: true
             rank: '100'
@@ -140,11 +109,7 @@ groups:
         - '*'
         inheritance:
         - admin
-        prefix: '&4'
+        prefix: '&4[Owner] '
         options:
             build: true
             rank: '0'
-users:
-    snowleo:
-        group:
-        - Builder
