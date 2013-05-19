@@ -87,6 +87,8 @@ public class Commandwhois extends EssentialsCommand
 												 ? Util.formatDateDiff(user.getMuteTimeout())
 												 : _("true")
 											   : _("false"))));
+			
+		sender.sendMessage(_("whoisHomes", Util.joinList(user.getHomes())));
 						
 		}
 		if (!foundUser)
