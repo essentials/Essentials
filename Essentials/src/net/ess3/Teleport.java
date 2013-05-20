@@ -292,8 +292,7 @@ public class Teleport implements Runnable, ITeleport
 	public void respawn(final Trade chargeFor, TeleportCause cause) throws Exception
 	{
 		final Location bed = user.getBedSpawnLocation();
-		final Location respawnLoc = ess.getPlugin().callRespawnEvent(
-				user.getPlayer(), bed == null ? user.getPlayer().getWorld().getSpawnLocation() : bed, bed != null);
+		final Location respawnLoc = bed == null ? user.getPlayer().getWorld().getSpawnLocation() : bed;
 		teleport(new Target(respawnLoc), chargeFor, cause);
 	}
 
