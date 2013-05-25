@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 
 public class UserMap extends StorageObjectMap<IUser> implements IUserMap
 {
-	private final Map<String, Player> prejoinedPlayers = new HashMap<String, Player>();
+	private final Map<String, Player> prejoinedPlayers = new HashMap<String, Player>(); //TODO: We shouldn't be using a player object here
 
 	public UserMap(final IEssentials ess)
 	{

@@ -12,7 +12,7 @@ public interface IPlugin extends Plugin
 	/**
 	 * Get an instance of essentials
 	 *
-	 * @return
+	 * @return the instance
 	 */
 	IEssentials getEssentials();
 

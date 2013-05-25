@@ -7,20 +7,23 @@ import net.ess3.storage.IStorageObjectHolder;
 public interface ISettings extends IStorageObjectHolder<Settings>
 {
 	/**
+	 * Used to get the locale string
 	 *
-	 * @return
+	 * @return the current locale string (i.e. en_US)
 	 */
 	String getLocale();
 
 	/**
+	 * Used to check if debug mode is enabled
 	 *
-	 * @return
+	 * @return true if debug is enabled
 	 */
 	boolean isDebug();
 
 	/**
+	 * Used to set debug mode
 	 *
-	 * @param b **TODO: rename this, "b" is a terrible name**
+	 * @param set
 	 */
-	void setDebug(boolean b);
+	void setDebug(boolean set);
 }
