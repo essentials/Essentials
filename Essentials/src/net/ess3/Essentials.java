@@ -134,11 +134,8 @@ public class Essentials implements IEssentials
 		storageQueue.setEnabled(true);
 		execTimer = new ExecuteTimer();
 		execTimer.start();
-
 		execTimer.mark("I18n1");
-
 		execTimer.mark("BukkitCheck");
-
 		reloadList = new ArrayList<IReload>();
 		settings = new SettingsHolder(this);
 		reloadList.add(settings);
@@ -166,13 +163,9 @@ public class Essentials implements IEssentials
 		spawns = new SpawnsHolder(this);
 		reloadList.add(spawns);
 		onReload();
-
 		backup = new Backup(this);
-
 		jails = new Jails(this);
 		reloadList.add(jails);
-
-
 		timer = new EssentialsTimer(this);
 		getPlugin().scheduleSyncRepeatingTask(timer, 1, 100);
 		execTimer.mark("RegListeners");
@@ -211,7 +204,6 @@ public class Essentials implements IEssentials
 			iReload.onReload();
 			execTimer.mark("Reload(" + iReload.getClass().getSimpleName() + ")");
 		}
-
 		i18n.updateLocale(settings.getLocale());
 	}
 
@@ -253,7 +245,6 @@ public class Essentials implements IEssentials
 				delivered++;
 			}
 		}
-
 		return delivered;
 	}
 
