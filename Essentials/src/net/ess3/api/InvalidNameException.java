@@ -8,6 +8,10 @@ public class InvalidNameException extends Exception
 	 */
 	private static final long serialVersionUID = 1485321420293663139L;
 
+	/**
+	 *
+	 * @param thrwbl
+	 */
 	public InvalidNameException(Throwable thrwbl)
 	{
 		super(thrwbl);

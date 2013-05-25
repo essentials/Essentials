@@ -4,7 +4,7 @@ import net.ess3.utils.FormatUtil;
 
 
 /**
- * Instead of using this api directly, we recommend to use the register plugin: http://bit.ly/RegisterMethod
+ * Instead of using this api directly, we recommend to use Vault
  */
 public final class Economy
 {

@@ -9,18 +9,52 @@ import org.bukkit.entity.Player;
 
 public interface IUserMap extends IReload
 {
+	/**
+	 *
+	 * @param name
+	 * @return
+	 */
 	boolean userExists(final String name);
 
+	/**
+	 *
+	 * @param player
+	 * @return
+	 */
 	IUser getUser(final Player player);
 
+	/**
+	 *
+	 * @param playerName
+	 * @return
+	 */
 	IUser getUser(final String playerName);
 
+	/**
+	 *
+	 * @param name
+	 * @throws InvalidNameException
+	 */
 	void removeUser(final String name) throws InvalidNameException;
 
+	/**
+	 *
+	 * @return
+	 */
 	Set<String> getAllUniqueUsers();
 
+	/**
+	 *
+	 * @return
+	 */
 	int getUniqueUsers();
 
+	/**
+	 *
+	 * @param name
+	 * @return
+	 * @throws InvalidNameException
+	 */
 	File getUserFile(final String name) throws InvalidNameException;
 
 	/**
@@ -45,11 +79,31 @@ public interface IUserMap extends IReload
 	 */
 	IUser matchUserExcludingHidden(final String name, final Player requester) throws TooManyMatchesException, PlayerNotFoundException;
 
+	/**
+	 *
+	 * @param name
+	 * @param includeOffline
+	 * @return
+	 */
 	Set<IUser> matchUsers(final String name, final boolean includeOffline);
 
+	/**
+	 *
+	 * @param name
+	 * @param requester
+	 * @return
+	 */
 	Set<IUser> matchUsersExcludingHidden(final String name, final Player requester);
 
+	/**
+	 *
+	 * @param player
+	 */
 	void addPrejoinedPlayer(Player player);
 
+	/**
+	 *
+	 * @param player
+	 */
 	void removePrejoinedPlayer(Player player);
 }

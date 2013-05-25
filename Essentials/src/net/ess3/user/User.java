@@ -681,4 +681,10 @@ public class User extends UserBase implements IUser
 	{
 		lastThrottledAction = System.currentTimeMillis();
 	}
+
+	@Override
+	public boolean isHidden()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

@@ -10,6 +10,10 @@ public class UserDoesNotExistException extends Exception
 	 */
 	private static final long serialVersionUID = -6540804196206916310L;
 
+	/**
+	 *
+	 * @param name
+	 */
 	public UserDoesNotExistException(String name)
 	{
 		super(_("§4The user§c {0} §4does not exist.", name));

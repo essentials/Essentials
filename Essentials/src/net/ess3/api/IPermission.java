@@ -16,7 +16,15 @@ public interface IPermission
 	 */
 	boolean isAuthorized(CommandSender sender);
 
+	/**
+	 *
+	 * @return
+	 */
 	String getParentPermission();
 
+	/**
+	 *
+	 * @return
+	 */
 	PermissionDefault getPermissionDefault();
 }
