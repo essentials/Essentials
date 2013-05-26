@@ -6,13 +6,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IJails;
 import net.ess3.api.IUser;
 import net.ess3.storage.AsyncStorageObjectHolder;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -106,7 +104,14 @@ public class Jails extends AsyncStorageObjectHolder<net.ess3.settings.Jails> imp
 	@Override
 	public int getCount()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		try
+		{
+			return getList().size();
+		}
+		catch (Exception ex)
+		{
+			return 0;
+		}
 	}
 
 

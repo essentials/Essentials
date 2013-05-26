@@ -407,8 +407,7 @@ public class BukkitConstructor extends Constructor
 				}
 				catch (Exception e)
 				{
-					throw new YAMLException(
-							"Cannot create property=" + key + " for JavaBean=" + object + "; " + e.getMessage(), e);
+					throw new YAMLException("Cannot create property=" + key + " for JavaBean=" + object + "; " + e.getMessage(), e);
 				}
 			}
 			return object;

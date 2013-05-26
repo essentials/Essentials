@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;

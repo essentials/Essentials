@@ -1,7 +1,5 @@
 package net.ess3;
 
-import net.ess3.api.IUser;
-
 
 public class UserTest extends EssentialsTest
 {

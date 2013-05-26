@@ -1,8 +1,7 @@
 package net.ess3.commands;
 
-import static net.ess3.I18n._;
 import java.util.regex.Pattern;
-
+import static net.ess3.I18n._;
 import net.ess3.MetaItemStack;
 import net.ess3.api.ISettings;
 import net.ess3.api.IUser;

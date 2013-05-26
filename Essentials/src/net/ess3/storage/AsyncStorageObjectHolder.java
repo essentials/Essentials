@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import net.ess3.api.IEssentials;
-import org.bukkit.Bukkit;
 
 
 public abstract class AsyncStorageObjectHolder<T extends StorageObject> implements IStorageObjectHolder<T>

@@ -3,7 +3,6 @@ package net.ess3.utils.textreader;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import static net.ess3.I18n._;
 import net.ess3.api.IEssentials;
 import net.ess3.api.ISettings;

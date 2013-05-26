@@ -1,7 +1,8 @@
 package net.ess3;
 
+import java.util.*;
+import java.util.regex.Pattern;
 import static net.ess3.I18n._;
-
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import net.ess3.bukkit.Enchantments;
@@ -11,8 +12,6 @@ import net.ess3.utils.Util;
 import net.ess3.utils.textreader.BookInput;
 import net.ess3.utils.textreader.BookPager;
 import net.ess3.utils.textreader.IText;
-import java.util.*;
-import java.util.regex.Pattern;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.FireworkEffect;

@@ -9,7 +9,6 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import net.ess3.api.IEssentials;
 import net.ess3.api.II18n;

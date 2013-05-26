@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import net.ess3.api.IEssentials;
-import org.bukkit.Bukkit;
 
 
 public abstract class AbstractDelayedYamlFileReader<T extends StorageObject> implements Runnable
