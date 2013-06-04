@@ -6,6 +6,7 @@ import com.earth2me.essentials.User;
 import com.earth2me.essentials.Util;
 import com.earth2me.essentials.craftbukkit.InventoryWorkaround;
 import java.util.Locale;
+import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -72,14 +73,14 @@ public class Commandgive extends EssentialsCommand
 		if (args.length > 3)
 		{
 			MetaItemStack metaStack = new MetaItemStack(stack);
-			boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments();			
+			boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments();
 			if (allowUnsafe && sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.enchantments.allowunsafe"))
 			{
 				allowUnsafe = false;
 			}
-			
+
 			metaStack.parseStringMeta(sender, allowUnsafe, args, Util.isInt(args[3]) ? 4 : 3, ess);
-			
+
 			stack = metaStack.getItemStack();
 		}
 
@@ -90,14 +91,23 @@ public class Commandgive extends EssentialsCommand
 
 		final String itemName = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');
 		sender.sendMessage(_("giveSpawn", stack.getAmount(), itemName, giveTo.getDisplayName()));
+
+		Map<Integer, ItemStack> leftovers;
+
 		if (giveTo.isAuthorized("essentials.oversizedstacks"))
 		{
-			InventoryWorkaround.addOversizedItems(giveTo.getInventory(), ess.getSettings().getOversizedStackSize(), stack);
+			leftovers = InventoryWorkaround.addOversizedItems(giveTo.getInventory(), ess.getSettings().getOversizedStackSize(), stack);
 		}
 		else
 		{
-			InventoryWorkaround.addItems(giveTo.getInventory(), stack);
+			leftovers = InventoryWorkaround.addItems(giveTo.getInventory(), stack);
 		}
+
+		for (ItemStack item: leftovers.values())
+		{
+			sender.sendMessage(_("giveSpawnFailure", item.getAmount(), itemName, giveTo.getDisplayName()));
+		}
+
 		giveTo.updateInventory();
 	}
 }
