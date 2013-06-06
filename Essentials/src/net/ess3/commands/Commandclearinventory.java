@@ -20,6 +20,7 @@ public class Commandclearinventory extends EssentialsCommand
 			{
 				final Player player = p.getPlayer();
 				player.getInventory().clear();
+				player.getInventory().setArmorContents(new ItemStack[]{null,null,null,null});
 				user.sendMessage(_("§6Inventory of §c{0}§6 cleared.", player.getDisplayName()));
 			}
 			else
@@ -30,6 +31,7 @@ public class Commandclearinventory extends EssentialsCommand
 		else
 		{
 			user.getPlayer().getInventory().clear();
+			user.getInventory().setArmorContents(new ItemStack[]{null,null,null,null});
 			user.sendMessage(_("§6Inventory cleared."));
 		}
 	}
@@ -51,6 +53,7 @@ public class Commandclearinventory extends EssentialsCommand
 				for (Player p : online)
 				{
 					p.getInventory().clear();
+					p.getInventory().setArmorContents(new ItemStack[]{null,null,null,null});
 					sender.sendMessage(_("§6Inventory of §c{0}§6 cleared.", p.getDisplayName()));
 				}
 				return;
@@ -63,6 +66,7 @@ public class Commandclearinventory extends EssentialsCommand
 			if (u != null)
 			{
 				u.getInventory().clear();
+				u.getInventory().setArmorContents(new ItemStack[]{null,null,null,null});
 				sender.sendMessage(_("§6Inventory of §c{0}§6 cleared.", u.getDisplayName()));
 			}
 			else
