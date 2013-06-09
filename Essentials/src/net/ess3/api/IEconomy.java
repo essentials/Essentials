@@ -4,6 +4,7 @@ package net.ess3.api;
 public interface IEconomy extends IReload
 {
 	/**
+	 * Disregard women, acquire currency.
 	 * Used to get the balance of a user
 	 *
 	 * @param name the name of the user
