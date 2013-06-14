@@ -54,11 +54,11 @@ commands:
     permissions: groupmanager.manucheckp
   mangaddp:
     description: Add permissions to a group.
-    usage: /<command> <player> <permission> [permission2] [permission3]..
+    usage: /<command> <group> <permission> [permission2] [permission3]..
     permissions: groupmanager.mangaddp
   mangdelp:
     description: Removes permissions from a group.
-    usage: /<command> <player> <permission> [permission2] [permission3]..
+    usage: /<command> <group> <permission> [permission2] [permission3]..
     permissions: groupmanager.mangdelp
   mangclearp:
     description: Removes all permissions of a group.
