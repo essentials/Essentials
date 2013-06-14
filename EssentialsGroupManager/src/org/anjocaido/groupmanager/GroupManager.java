@@ -2107,13 +2107,11 @@ public class GroupManager extends JavaPlugin {
 			{
 				sender.sendMessage(ChatColor.RED + "The " + type + " already has an exception for this node.");
 				sender.sendMessage(ChatColor.RED + "Node: " + oldPerm.accessLevel);
-				return false;
 			}
 			else if (oldPerm.resultType.equals(PermissionCheckResult.Type.NEGATION))
 			{
 				sender.sendMessage(ChatColor.RED + "The " + type + " already has a matching negated node.");
 				sender.sendMessage(ChatColor.RED + "Node: " + oldPerm.accessLevel);
-				return false;
 			}
 			else if (oldPerm.resultType.equals(PermissionCheckResult.Type.FOUND))
 			{
