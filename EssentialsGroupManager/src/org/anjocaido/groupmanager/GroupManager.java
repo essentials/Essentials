@@ -2072,7 +2072,7 @@ public class GroupManager extends JavaPlugin {
 	}
 	
 	/**
-	 * Checks if a permission exists and of a lower priority.
+	 * Checks if a permission exists and of a lower or same priority.
 	 */
 	private boolean checkPermissionExists(CommandSender sender, String newPerm, PermissionCheckResult oldPerm, String type) {
 		
