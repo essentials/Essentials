@@ -52,6 +52,7 @@ public enum Mob
 	MINECART_HOPPER("HopperMinecart", Enemies.NEUTRAL, EntityType.MINECART_HOPPER),
 	ENDERCRYSTAL("EnderCrystal", Enemies.NEUTRAL, EntityType.ENDER_CRYSTAL),
 	EXPERIENCEORB("ExperienceOrb", Enemies.NEUTRAL, EntityType.EXPERIENCE_ORB);
+	HORSE("Horse", Ememies.FRIENDLY, EntityType.HORSE)
 	public static final Logger logger = Logger.getLogger("Minecraft");
 
 	private Mob(String n, Enemies en, String s, EntityType type)
