@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -401,7 +402,11 @@ public class EssentialsPlayerListener implements Listener
 				final User spyer = ess.getUser(onlinePlayer);
 				if (spyer.isSocialSpyEnabled() && !player.equals(onlinePlayer))
 				{
-					onlinePlayer.sendMessage(player.getDisplayName() + " : " + event.getMessage());
+					User user = ess.getUser(player);
+					if (!user.isAuthorized("essentials.socialspy.exempt") 
+					{
+						onlinePlayer.sendMessage(ChatColor.GRAY + "[Spy] " + player.getDisplayName() + ":" + event.getMessage());
+					}
 				}
 			}
 		}
