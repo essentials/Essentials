@@ -404,7 +404,7 @@ public class EssentialsPlayerListener implements Listener
 					User user = ess.getUser(player);
 					if (!user.isAuthorized("essentials.socialspy.exempt") 
 					{
-						onlinePlayer.sendMessage(player.getDisplayName() + " : " + event.getMessage());
+						onlinePlayer.sendMessage(ChatColor.GRAY + "[Spy] " + player.getDisplayName() + ":" + event.getMessage());
 					}
 				}
 			}
