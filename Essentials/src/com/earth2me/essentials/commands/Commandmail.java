@@ -47,7 +47,7 @@ public class Commandmail extends EssentialsCommand
 			
 			if (user.isMuted())
 			{
-				throw new Exception(_("playerMuted"));
+				throw new Exception(_("voiceSilenced"));
 			}
 
 			User u = ess.getUser(args[1]);
