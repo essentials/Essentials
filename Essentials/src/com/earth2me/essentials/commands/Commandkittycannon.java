@@ -6,6 +6,7 @@ import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Ocelot;
+import org.bukkit.enum.Sound;
 
 // This command is not documented on the wiki #EasterEgg
 public class Commandkittycannon extends EssentialsCommand
@@ -31,6 +32,7 @@ public class Commandkittycannon extends EssentialsCommand
 		ocelot.setTamed(true);
 		ocelot.setBaby();
 		ocelot.setVelocity(user.getEyeLocation().getDirection().multiply(2));
+		user.playSound(user.getLocation(), Sound.CAT_MEOW, 10, 1);
 		ess.scheduleSyncDelayedTask(new Runnable()
 		{
 			@Override
