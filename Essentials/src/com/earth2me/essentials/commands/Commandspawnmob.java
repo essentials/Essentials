@@ -40,7 +40,7 @@ public class Commandspawnmob extends EssentialsCommand
 			throw new Exception(_("cannotStackMob"));
 		}
 		
-		if (args.length >= 3)
+		if (args.length >= 3 && user.isAuthorized("essentials.spawnmob.others"))
 		{
 			final User target = getPlayer(ess.getServer(), user, args, 2);
 			SpawnMob.spawnmob(ess, server, user.getBase(), target, mobParts, mobData, mobCount);
