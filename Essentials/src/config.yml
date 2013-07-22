@@ -78,6 +78,10 @@ permission-based-item-spawn: false
 # Mob limit on the /spawnmob command per execution.
 spawnmob-limit: 10
 
+# Don't kill mobs when using /mobkill which would not despawn under normal circumstances,
+# like zombies who picked up armor or named mobs.
+mobkill-exclude-persistent: false
+
 # Shall we notify users when using /lightning?
 warn-on-smite: true
 

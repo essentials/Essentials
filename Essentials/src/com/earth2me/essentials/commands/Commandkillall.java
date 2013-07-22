@@ -92,6 +92,7 @@ public class Commandkillall extends EssentialsCommand
 			entityClass = Mob.fromName(killType).getType().getEntityClass();
 		}
 		int numKills = 0;
+		boolean excludePersistent = ess.getConfig().getBoolean("mobkill-exclude-persistent");
 		for (Chunk chunk : world.getLoadedChunks())
 		{
 			for (Entity entity : chunk.getEntities())
@@ -104,6 +105,10 @@ public class Commandkillall extends EssentialsCommand
 					}
 				}
 				if (entity instanceof LivingEntity == false || entity instanceof HumanEntity)
+				{
+					continue;
+				}
+				if(excludePersistent && !((LivingEntity)entity).getRemoveWhenFarAway())
 				{
 					continue;
 				}
