@@ -370,6 +370,10 @@ commands:
     description: Display/Change the world time. Defaults to current world.
     usage: /<command> [day|night|dawn|17:30|4pm|4000ticks] [worldname|all]
     aliases: [day,eday,night,enight,etime]
+  timer: 
+    description: Places/removes a Redstoneblock at the given Location after a time
+    usage: /<command> <x> <y> <z> <time> [mode]
+    aliases: [redstonetimer, etimer, eredstonetimer]
   togglejail:
     description: Jails/Unjails a player, TPs them to the jail specified.
     usage: /<command> <player> <jailname> [datediff]
