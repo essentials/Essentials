@@ -993,7 +993,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				// Validating arguments
 				if (args.length < 2) {
-					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/mangaaddp <group> <permission> [permission2] [permission3]...)");
+					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/mangaddp <group> <permission> [permission2] [permission3]...)");
 					return true;
 				}
 				
