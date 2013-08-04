@@ -264,7 +264,7 @@ public class Commandlist extends EssentialsCommand
 	{
 		final StringBuilder outputString = new StringBuilder();
 		outputString.append(_("listGroupTag", FormatUtil.replaceFormat(group)));
-		outputString.append(message);
+		outputString.append(" " + message);
 		outputString.setCharAt(0, Character.toTitleCase(outputString.charAt(0)));
 		return outputString.toString();
 	}
