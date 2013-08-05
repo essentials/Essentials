@@ -216,6 +216,7 @@ public class SpawnMob
 		if (data.equals(""))
 		{
 			sender.sendMessage(_("mobDataList", StringUtil.joinList(MobData.getValidHelp(spawned))));
+			return;
 		}
 		
 		MobData newData = MobData.fromData(spawned, data);
