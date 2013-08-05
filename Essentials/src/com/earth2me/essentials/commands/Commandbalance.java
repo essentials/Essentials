@@ -36,11 +36,15 @@ public class Commandbalance extends EssentialsCommand
 			final BigDecimal bal = user.getMoney();
 			user.sendMessage(_("balance", NumberUtil.displayCurrency(bal, ess)));
 		}
-		else
+		else if (args.length == 1)
 		{
 			final User target = getPlayer(server, args, 0, true, true);
 			final BigDecimal bal = target.getMoney();
 			user.sendMessage(_("balanceOther", target.getDisplayName(), NumberUtil.displayCurrency(bal, ess)));
+		}
+		else
+		{
+			throw new NotEnoughArgumentsException();
 		}
 	}
 }
