@@ -74,7 +74,7 @@ public class Commandlist extends EssentialsCommand
 			{
 				continue;
 			}
-			final String group = FormatUtil.stripFormat(onlineUser.getGroup().toLowerCase());
+			final String group = FormatUtil.stripFormat(ChatColor.translateAlternateColorCodes('&',onlineUser.getGroup().toLowerCase()));
 			List<User> list = playerList.get(group);
 			if (list == null)
 			{
