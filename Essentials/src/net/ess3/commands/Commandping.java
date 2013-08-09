@@ -12,7 +12,15 @@ public class Commandping extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			user.sendMessage(_("Pong!"));
+			
+			if (commandLabel.equalsIgnoreCase("pong") || commandLabel.equalsIgnoreCase("epong") ) 
+			{
+				user.sendMessage(_("Ping!"));
+			} 
+			else 
+			{
+				user.sendMessage(_("Pong!"));
+			}
 		}
 		else
 		{
