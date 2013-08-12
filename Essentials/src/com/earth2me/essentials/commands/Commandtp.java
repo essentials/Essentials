@@ -42,6 +42,7 @@ public class Commandtp extends EssentialsCommand
 			user.getTeleport().teleport(player.getBase(), charge, TeleportCause.COMMAND);
 			throw new NoChargeException();
 		case 4:
+		case 6:
 			if (!user.isAuthorized("essentials.tp.others"))
 			{
 				throw new Exception(_("noPerm", "essentials.tp.others"));
@@ -50,11 +51,23 @@ public class Commandtp extends EssentialsCommand
 			final double x = args[1].startsWith("~") ? target2.getLocation().getX() + Integer.parseInt(args[1].substring(1)) : Integer.parseInt(args[1]);
 			final double y = args[2].startsWith("~") ? target2.getLocation().getY() + Integer.parseInt(args[2].substring(1)) : Integer.parseInt(args[2]);
 			final double z = args[3].startsWith("~") ? target2.getLocation().getZ() + Integer.parseInt(args[3].substring(1)) : Integer.parseInt(args[3]);
+			double yaw;
+			double pitch;
+			if (args.length == 6)
+			{
+				yaw = Integer.parseInt(args[4]);
+				pitch = Integer.parseInt(args[5]);
+			}
+			else
+			{
+				yaw = target2.getLocation().getYaw();
+				pitch = target2.getLocation().getPitch();
+			}
 			if (x > 30000000 || y > 30000000 || z > 30000000 || x < -30000000 || y < -30000000 || z < -30000000)
 			{
 				throw new NotEnoughArgumentsException("Value of coordinates cannot be over 30000000"); //TODO: I18n
 			}
-			final Location location = new Location(target2.getWorld(), x, y, z, target2.getLocation().getYaw(), target2.getLocation().getPitch());
+			final Location location = new Location(target2.getWorld(), x, y, z, yaw, pitch);
 			if (!target2.isTeleportEnabled())
 			{
 				throw new Exception(_("teleportDisabled", target2.getDisplayName()));
@@ -62,7 +75,7 @@ public class Commandtp extends EssentialsCommand
 			target2.getTeleport().now(location, false, TeleportCause.COMMAND);
 			user.sendMessage(_("teleporting"));
 			target2.sendMessage(_("teleporting"));
-			break;
+		
 		case 2:
 		default:
 			if (!user.isAuthorized("essentials.tp.others"))
