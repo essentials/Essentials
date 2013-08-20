@@ -20,13 +20,9 @@ public class Commandbreak extends EssentialsCommand
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
 		final Block block = user.getTargetBlock(null, 20);
-		if (block == null)
+		if (block == null || block.getType() == Material.AIR)
 		{
-			throw new NoChargeException();
-		}
-		if (block.getType() == Material.AIR)
-		{
-			throw new NoChargeException();
+			throw new Exception(_("breakAir"));
 		}
 		if (block.getType() == Material.BEDROCK && !user.isAuthorized("essentials.break.bedrock"))
 		{
