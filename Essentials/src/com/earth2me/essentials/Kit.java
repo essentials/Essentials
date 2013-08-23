@@ -95,7 +95,7 @@ public class Kit
 		try
 		{
 			// Make sure delay is valid
-			delay = els.containsKey("delay") ? ((Number)els.get("delay")).doubleValue() : 0.0d;
+			delay = els.containsKey("delay") ? ((Number)els.get("delay").replaceAll(" ", "").replaceAll(",", "").replaceAll(".", "").doubleValue() : 0.0d;
 		}
 		catch (Exception e)
 		{
