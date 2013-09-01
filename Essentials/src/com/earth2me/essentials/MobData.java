@@ -45,6 +45,8 @@ public enum MobData
 	RANDOM_SHEEP("random", EntityType.SHEEP, Data.COLORABLE, true),
 	COLORABLE_SHEEP("", StringUtil.joinList(DyeColor.values()).toLowerCase(Locale.ENGLISH), EntityType.SHEEP, Data.COLORABLE, true),
 	
+	MIXED_HORSE("mixed", EntityType.HORSE, Data.MIXED, true),
+	
 	DONKEY_HORSE("donkey", EntityType.HORSE, Horse.Variant.DONKEY, true),
 	MULE_HORSE("mule", EntityType.HORSE, Horse.Variant.MULE, true),
 	SKELETON_HORSE("skeleton", EntityType.HORSE, Horse.Variant.SKELETON_HORSE, true),
@@ -135,7 +137,8 @@ public enum MobData
 		TAMED,
 		COLORABLE,
 		EXP,
-		SIZE;
+		SIZE,
+		MIXED;
 	}
 	public static final Logger logger = Logger.getLogger("Minecraft");
 
@@ -287,6 +290,22 @@ public enum MobData
 				throw new Exception(_("sheepMalformedColor"), e);
 			}
 		}
+		else if (this.value.equals(Data.MIXED))
+        {
+            try
+            {
+                final Random rand1 = new Random();
+                final Random rand2 = new Random();
+                ((Horse)spawned).setColor(Horse.Color.values()[rand1.nextInt(Horse.Color.values().length)]);
+                ((Horse)spawned).setStyle(Horse.Style.values()[rand2.nextInt(Horse.Style.values().length)]);
+
+                this.matched = rawData;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(_("horseMalformedColor"), e);
+            }
+        }
 		else if (this.value.equals(Data.EXP))
 		{
 			try
