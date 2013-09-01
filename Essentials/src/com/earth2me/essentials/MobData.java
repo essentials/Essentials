@@ -46,7 +46,6 @@ public enum MobData
 	COLORABLE_SHEEP("", StringUtil.joinList(DyeColor.values()).toLowerCase(Locale.ENGLISH), EntityType.SHEEP, Data.COLORABLE, true),
 	
 	MIXED_HORSE("mixed", EntityType.HORSE, Data.MIXED, true),
-	
 	DONKEY_HORSE("donkey", EntityType.HORSE, Horse.Variant.DONKEY, true),
 	MULE_HORSE("mule", EntityType.HORSE, Horse.Variant.MULE, true),
 	SKELETON_HORSE("skeleton", EntityType.HORSE, Horse.Variant.SKELETON_HORSE, true),
