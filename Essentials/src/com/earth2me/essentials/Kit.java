@@ -143,6 +143,10 @@ public class Kit
 		{
 			final List<String> itemList = new ArrayList<String>();
 			final Object kitItems = kit.get("items");
+			if (kitItems == null)
+			{
+				throw new Exception("Kit has no items listed!");
+			}
 			if (kitItems instanceof List)
 			{
 				for (Object item : (List)kitItems)
