@@ -1,17 +1,17 @@
 # "For a more advanced configuration example utilizing the advanced features of GroupManager, see http://pastebin.com/a8ZA0j5G"
 users:
   snowleo:
-    group: Builder
+    group: Default
     subgroups: []
     permissions:
     - groupmanager.noofflineperms
   KHobbits:
-    group: Moderator
+    group: Default
     subgroups: []
     permissions:
     - groupmanager.noofflineperms
   ElgarL:
-    group: Moderator
+    group: Default
     subgroups: []
     permissions:
     - groupmanager.noofflineperms
