@@ -3,10 +3,8 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.UserMap;
-import com.earth2me.essentials.metrics.Metrics;
 import com.earth2me.essentials.utils.DateUtil;
 import com.earth2me.essentials.utils.NumberUtil;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Material;
@@ -49,10 +47,6 @@ public class Commandessentials extends EssentialsCommand
 		else if (args[0].equalsIgnoreCase("reset"))
 		{
 			run_reset(server, sender, commandLabel, args);
-		}
-		else if (args[0].equalsIgnoreCase("opt-out"))
-		{
-			run_optout(server, sender, commandLabel, args);
 		}
 		else if (args[0].equalsIgnoreCase("cleanup"))
 		{
@@ -221,28 +215,6 @@ public class Commandessentials extends EssentialsCommand
 				final Player player = (Player)sender;
 				player.playSound(player.getLocation(), Sound.COW_IDLE, 1, 1.0f);
 			}
-		}
-	}
-
-	private void run_optout(final Server server, final CommandSender sender, final String command, final String args[])
-	{
-		final Metrics metrics = ess.getMetrics();
-		try
-		{
-			sender.sendMessage("Essentials collects simple metrics to highlight which features to concentrate work on in the future.");
-			if (metrics.isOptOut())
-			{
-				metrics.enable();
-			}
-			else
-			{
-				metrics.disable();
-			}
-			sender.sendMessage("Anonymous Metrics are now: " + (metrics.isOptOut() ? "disabled" : "enabled"));
-		}
-		catch (IOException ex)
-		{
-			sender.sendMessage("Unable to modify 'plugins/PluginMetrics/config.yml': " + ex.getMessage());
 		}
 	}
 
