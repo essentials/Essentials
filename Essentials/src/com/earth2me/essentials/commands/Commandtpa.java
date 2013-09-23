@@ -21,6 +21,10 @@ public class Commandtpa extends EssentialsCommand
 		}
 
 		User player = getPlayer(server, user, args, 0);
+		if (user.getName().equalsIgnoreCase(player.getName()))
+		{
+			throw new Exception(_("teleportToSelf"));
+		}
 		if (!player.isTeleportEnabled())
 		{
 			throw new Exception(_("teleportDisabled", player.getDisplayName()));
