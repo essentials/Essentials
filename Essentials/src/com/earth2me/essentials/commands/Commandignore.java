@@ -17,30 +17,41 @@ public class Commandignore extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			throw new NotEnoughArgumentsException();
-		}
-		User player;
-		try
-		{
-			player = getPlayer(server, args, 0, true, true);
-		}
-		catch (NoSuchFieldException ex)
-		{
-			player = ess.getOfflineUser(args[0]);
-		}
-		if (player == null)
-		{
-			throw new PlayerNotFoundException();
-		}
-		if (user.isIgnoredPlayer(player))
-		{
-			user.setIgnoredPlayer(player, false);
-			user.sendMessage(_("unignorePlayer", player.getName()));
+			StringBuilder sb = new StringBuilder();
+			for (String s : user._getIgnoredPlayers())
+			{
+				sb.append(s).append(" ");
+			}
+			String ignoredList = sb.toString().trim();
+			user.sendMessage(ignoredList.length() > 0 ? _("ignored", ignoredList) : _("noIgnored"));
 		}
 		else
 		{
-			user.setIgnoredPlayer(player, true);
-			user.sendMessage(_("ignorePlayer", player.getName()));
+			User player;
+			try
+			{
+				player = getPlayer(server, args, 0, true, true);
+			}
+			catch (NoSuchFieldException ex)
+			{
+				player = ess.getOfflineUser(args[0]);
+			}
+			
+			if (player == null)
+			{
+				throw new PlayerNotFoundException();
+			}
+			
+			if (user.isIgnoredPlayer(player))
+			{
+				user.setIgnoredPlayer(player, false);
+				user.sendMessage(_("unignorePlayer", player.getName()));
+			}
+			else
+			{
+				user.setIgnoredPlayer(player, true);
+				user.sendMessage(_("ignorePlayer", player.getName()));
+			}
 		}
 	}
 }
