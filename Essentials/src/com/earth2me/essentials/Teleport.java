@@ -96,6 +96,10 @@ public class Teleport implements net.ess3.api.ITeleport
 	{
 		cancel(false);
 		teleportee.setLastLocation();
+		if (teleportee.getBase().isInsideVehicle())
+		{
+			teleportee.getBase().getVehicle().eject();
+		}
 		teleportee.getBase().teleport(LocationUtil.getSafeDestination(teleportee, target.getLocation()), cause);
 	}
 
