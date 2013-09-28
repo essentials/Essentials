@@ -21,6 +21,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class Kit
 {
+	private static final long SINGLE_USE_KIT_ALREADY_USED = -1L;
+	
 	//TODO: Convert this to use one of the new text classes?
 	public static String listKits(final IEssentials ess, final User user) throws Exception
 	{
@@ -39,13 +41,22 @@ public class Kit
 					String cost = "";
 					String name = capitalCase(kitItem);
 					BigDecimal costPrice = new Trade("kit-" + kitItem.toLowerCase(Locale.ENGLISH), ess).getCommandCost(user);
+					
 					if (costPrice.signum() > 0)
 					{
 						cost = _("kitCost", NumberUtil.displayCurrency(costPrice, ess));
 					}
-					final Map<String, Object> kit = ess.getSettings().getKit(kitItem);
 
-					if (Kit.getNextUse(user, kitItem, kit) != 0)
+					final Map<String, Object> kit = ess.getSettings().getKit(kitItem);
+					final long nextUse = Kit.getNextUse(user, kitItem, kit);
+					
+					// Hide single use kits that are already used up
+					if(nextUse == SINGLE_USE_KIT_ALREADY_USED)
+					{
+						continue;					
+					}
+					
+					if (nextUse != 0)
 					{
 						name = _("kitDelay", name);
 					}
@@ -119,8 +130,9 @@ public class Kit
 		}
 		else if (delay < 0d)
 		{
-			// If the kit has a negative kit time, it can only be used once.
-			return -1;
+			// If the kit has a negative kit time, it can only be used once 
+			// and since lastTime != 0 then it has already been used once.
+			return SINGLE_USE_KIT_ALREADY_USED;
 		}
 		else if (delayTime.before(time))
 		{
