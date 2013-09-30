@@ -41,7 +41,7 @@ public class Commandban extends EssentialsCommand
 			if (sender instanceof Player
 				&& !ess.getUser(sender).isAuthorized("essentials.ban.offline"))
 			{
-				throw new Exception(_("banExempt"));
+				throw new Exception(_("banExemptOffline"));
 			}
 		}
 		else
