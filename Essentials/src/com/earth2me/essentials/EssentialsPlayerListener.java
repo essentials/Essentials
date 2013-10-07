@@ -332,6 +332,11 @@ public class EssentialsPlayerListener implements Listener
 			final boolean banExpired = user.checkBanTimeout(System.currentTimeMillis());
 			if (!banExpired)
 			{
+				if (!event.getKickMessage().equals("")) 
+				{
+					return;
+				}
+				
 				String banReason = user.getBanReason();
 				if (banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban"))
 				{
