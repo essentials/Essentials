@@ -39,7 +39,7 @@ public class Commandmute extends EssentialsCommand
 			if (sender instanceof Player
 				&& !ess.getUser(sender).isAuthorized("essentials.mute.offline"))
 			{
-				throw new Exception(_("muteExempt"));
+				throw new Exception(_("muteExemptOffline"));
 			}
 		}
 		else
