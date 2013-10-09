@@ -1,6 +1,7 @@
 package com.earth2me.essentials;
 
-import net.ess3.api.IEssentials;
+import net.ess3.api.*;
+
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.commands.IEssentialsCommand;
 import com.earth2me.essentials.register.payment.Method;
@@ -12,6 +13,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import net.ess3.api.events.AfkStatusChangeEvent;
+import net.ess3.api.events.GodStatusChangeEvent;
+import net.ess3.api.events.IgnoreStatusChangeEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -468,16 +473,23 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 	@Override
 	public void setAfk(final boolean set)
 	{
-		this.setSleepingIgnored(this.isAuthorized("essentials.sleepingignored") ? true : set);
-		if (set && !isAfk())
+		AfkStatusChangeEvent asce = new AfkStatusChangeEvent(this, null, set);
+		ess.getServer().getPluginManager().callEvent(asce);
+		if(asce.isCancelled())
+		{
+			return;
+		}
+		final boolean value = asce.getValue();
+		this.setSleepingIgnored(this.isAuthorized("essentials.sleepingignored") ? true : value);
+		if (value && !isAfk())
 		{
 			afkPosition = getLocation();
 		}
-		else if (!set && isAfk())
+		else if (!value && isAfk())
 		{
 			afkPosition = null;
 		}
-		super.setAfk(set);
+		super.setAfk(value);
 	}
 
 	@Override
@@ -831,5 +843,28 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 	public int hashCode()
 	{
 		return this.getName().hashCode();
+	}
+
+	@Override
+	public void setGodModeEnabled(boolean god)
+	{
+		GodStatusChangeEvent gsce = new GodStatusChangeEvent(this, null, god);
+		ess.getServer().getPluginManager().callEvent(gsce);
+		if(!gsce.isCancelled())
+		{
+			super.setGodModeEnabled(gsce.getValue());
+		}
+	}
+
+	@Override
+	public void setIgnoredPlayer(IUser target, boolean ignored)
+	{
+		IgnoreStatusChangeEvent isce = new IgnoreStatusChangeEvent((net.ess3.api.IUser)target, this, ignored);
+		ess.getServer().getPluginManager().callEvent(isce);
+		if(isce.isCancelled())
+		{
+			return;
+		}
+		super.setIgnoredPlayer(target, isce.getValue());
 	}
 }
