@@ -11,6 +11,15 @@ debug: false
 op-users:
 #  - 'name@example.com'
 
+# vcard:
+#  send: true
+#  nickname: 'My Minecraft Server - Survival'
+#  emailaddress: 'email@domain.com'
+#  organization: 'Creepers Inc. - We are hiring'
+#  street: '5555 TNT Lane'
+#  city: 'Somewhere'
+#  state: 'CA'
+#  country: 'USA'
 
 log-enabled: false
 # Level is minimum level that should be send: info, warning, severe
