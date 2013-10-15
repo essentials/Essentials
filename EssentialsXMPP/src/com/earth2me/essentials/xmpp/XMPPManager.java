@@ -17,8 +17,9 @@ import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.Roster.SubscriptionMode;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.util.StringUtils;
-
+import org.jivesoftware.smackx.packet.VCard;
 
 public class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IConf
 {
@@ -126,7 +127,21 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 			connection.connect();
 
 			connection.login(xmppuser, password, "Essentials-XMPP");
-			connection.sendPacket(new Presence(Presence.Type.available, "No one online.", 2, Presence.Mode.available));
+			connection.sendPacket(new Presence(Presence.Type.available, "No one online.", 2, Presence.Mode.dnd));
+
+			if (config.getBoolean("vcard.send", false) == true) {
+			VCard vcard = new VCard();
+			// vcard.load(connection);
+			vcard.setNickName(config.getString("vcard.nickname"));
+			vcard.setEmailHome(config.getString("vcard.emailaddress"));
+			vcard.setOrganization(config.getString("vcard.organization"));
+			vcard.setAddressFieldHome("STREET", config.getString("vcard.street"));
+			vcard.setAddressFieldHome("LOCALITY", config.getString("vcard.city"));
+			vcard.setAddressFieldHome("REGION", config.getString("vcard.state"));
+			vcard.setAddressFieldHome("CTRY", config.getString("vcard.country"));
+			vcard.save(connection);
+			LOGGER.log(Level.INFO, "[EssentialsXMPP] Sent updated vCard to XMPP server.");
+			}
 
 			connection.getRoster().setSubscriptionMode(SubscriptionMode.accept_all);
 			chatManager = connection.getChatManager();
