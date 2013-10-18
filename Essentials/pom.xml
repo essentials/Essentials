@@ -43,12 +43,12 @@
 
 	<repositories>
 		<repository>
-			<id>bukkit-repo</id>
-			<url>http://repo.bukkit.org/content/groups/public</url>
-		</repository>
-		<repository>
 			<id>vault-repo</id>
 			<url>http://ci.herocraftonline.com/plugin/repository/everything</url>
+		</repository>
+		<repository>
+			<id>kitteh-repo</id>
+			<url>http://repo.kitteh.org/content/groups/public/</url>
 		</repository>
 	</repositories>
 
@@ -63,9 +63,7 @@
 		<dependency>
 			<groupId>de.bananaco</groupId>
 			<artifactId>bPermissions</artifactId>
-			<version>v2.10.7c</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/bPermissions.jar</systemPath>
+			<version>v2.12-DEV</version>
 		</dependency>
 		<dependency>
 			<groupId>iConomy</groupId>
