@@ -124,11 +124,6 @@
 						</artifactItem>
 						<artifactItem>
 							<groupId>${project.groupId}</groupId>
-							<artifactId>EssentialsGroupManager</artifactId>
-							<version>${project.version}</version>
-						</artifactItem>
-						<artifactItem>
-							<groupId>${project.groupId}</groupId>
 							<artifactId>EssentialsProtect</artifactId>
 							<version>${project.version}</version>
 						</artifactItem>
@@ -162,14 +157,20 @@
 								<resource>
 									<directory>Essentials/src</directory>
 									<includes>
-										<include>*.properties</include>
-										<include>*.yml</include>
-										<include>*.csv</include>
+										<include>messages*.properties</include>
+										<include>config.yml</include>
+										<include>items.csv</include>
 									</includes>
 									<excludes>
 										<exclude>plugin.yml</exclude>
 									</excludes>
 									<filtering>true</filtering>
+								</resource>
+								<resource>
+									<directory>EssentialsGroupManager/dist</directory>
+									<includes>
+										<include>EssentialsGroupManager.jar</include>
+									</includes>
 								</resource>
 							</resources>
 						</configuration>
