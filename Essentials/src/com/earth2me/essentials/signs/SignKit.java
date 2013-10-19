@@ -1,11 +1,12 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.*;
+import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.commands.NoChargeException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import net.ess3.api.IEssentials;
 
 
 public class SignKit extends EssentialsSign
@@ -50,7 +51,7 @@ public class SignKit extends EssentialsSign
 	protected boolean onSignInteract(final ISign sign, final User player, final String username, final IEssentials ess) throws SignException, ChargeException
 	{
 		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH).trim();
-		final String group = sign.getLine(2);
+		final String group = sign.getLine(2).trim();
 		if ((!group.isEmpty() && ("§2Everyone".equals(group) || player.inGroup(group)))
 			|| (group.isEmpty() && (player.isAuthorized("essentials.kits." + kitName))))
 		{
@@ -60,9 +61,10 @@ public class SignKit extends EssentialsSign
 			{
 				final Map<String, Object> kit = ess.getSettings().getKit(kitName);
 				Kit.checkTime(player, kitName, kit);
-				final List<String> items = Kit.getItems(player, kit);
+				final List<String> items = Kit.getItems(ess, player, kitName, kit);
 				Kit.expandItems(ess, player, items);
 				charge.charge(player);
+				Trade.log("Sign", "Kit", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
 			}
 			catch (NoChargeException ex)
 			{
@@ -76,7 +78,12 @@ public class SignKit extends EssentialsSign
 		}
 		else
 		{
-			throw new SignException(_("noKitPermission", "essentials.kits." + kitName));
+			if (group.isEmpty()) {
+				throw new SignException(_("noKitPermission", "essentials.kits." + kitName));
+			}
+			else {
+				throw new SignException(_("noKitGroup", group));
+			}
 		}
 	}
 }

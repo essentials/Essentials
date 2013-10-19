@@ -3,6 +3,7 @@ package com.earth2me.essentials.craftbukkit;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,23 +35,29 @@ public final class InventoryWorkaround
 		return -1;
 	}
 
-	public static boolean addAllItems(final Inventory inventory, final ItemStack... items)
+	// Returns what it couldnt store
+	// This will will abort if it couldn't store all items	
+	public static Map<Integer, ItemStack> addAllItems(final Inventory inventory, final ItemStack... items)
 	{
 		final Inventory fakeInventory = Bukkit.getServer().createInventory(null, inventory.getType());
 		fakeInventory.setContents(inventory.getContents());
-		if (addItems(fakeInventory, items).isEmpty())
+		Map<Integer, ItemStack> overFlow = addItems(fakeInventory, items);
+		if (overFlow.isEmpty())
 		{
 			addItems(inventory, items);
-			return true;
+			return null;
 		}
-		return false;
+		return addItems(fakeInventory, items);
 	}
 
+	// Returns what it couldnt store
 	public static Map<Integer, ItemStack> addItems(final Inventory inventory, final ItemStack... items)
 	{
 		return addOversizedItems(inventory, 0, items);
 	}
 
+	// Returns what it couldnt store
+	// Set oversizedStack to below normal stack size to disable oversized stacks
 	public static Map<Integer, ItemStack> addOversizedItems(final Inventory inventory, final int oversizedStacks, final ItemStack... items)
 	{
 		final Map<Integer, ItemStack> leftover = new HashMap<Integer, ItemStack>();
@@ -88,7 +95,7 @@ public final class InventoryWorkaround
 		for (int i = 0; i < combined.length; i++)
 		{
 			final ItemStack item = combined[i];
-			if (item == null)
+			if (item == null || item.getType() == Material.AIR)
 			{
 				continue;
 			}

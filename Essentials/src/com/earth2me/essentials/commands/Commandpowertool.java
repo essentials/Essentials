@@ -1,8 +1,9 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,17 +22,35 @@ public class Commandpowertool extends EssentialsCommand
 	@Override
 	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
-		String command = getFinalArg(args, 0);
+		final String command = getFinalArg(args, 0);
+		final ItemStack itemStack = user.getItemInHand();
+		powertool(server, user.getSource(), user, commandLabel, itemStack, command);
+	}
 
+	@Override
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
+	{
+		if (args.length < 3) //running from console means inserting a player and item before the standard syntax
+		{
+			throw new Exception("When running from console, usage is: /" + commandLabel + " <player> <itemid> <command>");
+		}
+
+		final User user = getPlayer(server, args, 0, true, true);
+		final ItemStack itemStack = ess.getItemDb().get(args[1]);
+		final String command = getFinalArg(args, 2);
+		powertool(server, sender, user, commandLabel, itemStack, command);
+	}
+
+	protected void powertool(final Server server, final CommandSource sender, final User user, final String commandLabel, final ItemStack itemStack, String command) throws Exception
+	{
 		// check to see if this is a clear all command
 		if (command != null && command.equalsIgnoreCase("d:"))
 		{
 			user.clearAllPowertools();
-			user.sendMessage(_("powerToolClearAll"));
+			sender.sendMessage(_("powerToolClearAll"));
 			return;
 		}
 
-		final ItemStack itemStack = user.getItemInHand();
 		if (itemStack == null || itemStack.getType() == Material.AIR)
 		{
 			throw new Exception(_("powerToolAir"));
@@ -49,7 +68,7 @@ public class Commandpowertool extends EssentialsCommand
 				}
 				else
 				{
-					user.sendMessage(_("powerToolList", Util.joinList(powertools), itemName));
+					sender.sendMessage(_("powerToolList", StringUtil.joinList(powertools), itemName));
 				}
 				throw new NoChargeException();
 			}
@@ -62,13 +81,13 @@ public class Commandpowertool extends EssentialsCommand
 				}
 
 				powertools.remove(command);
-				user.sendMessage(_("powerToolRemove", command, itemName));
+				sender.sendMessage(_("powerToolRemove", command, itemName));
 			}
 			else
 			{
 				if (command.startsWith("a:"))
 				{
-					if (!user.isAuthorized("essentials.powertool.append"))
+					if (sender.isPlayer() && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.powertool.append"))
 					{
 						throw new Exception(_("noPerm", "essentials.powertool.append"));
 					}
@@ -89,7 +108,7 @@ public class Commandpowertool extends EssentialsCommand
 				}
 
 				powertools.add(command);
-				user.sendMessage(_("powerToolAttach", Util.joinList(powertools), itemName));
+				sender.sendMessage(_("powerToolAttach", StringUtil.joinList(powertools), itemName));
 			}
 		}
 		else
@@ -98,7 +117,7 @@ public class Commandpowertool extends EssentialsCommand
 			{
 				powertools.clear();
 			}
-			user.sendMessage(_("powerToolRemoveAll", itemName));
+			sender.sendMessage(_("powerToolRemoveAll", itemName));
 		}
 
 		if (!user.arePowerToolsEnabled())

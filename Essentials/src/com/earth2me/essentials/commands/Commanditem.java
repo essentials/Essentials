@@ -58,9 +58,9 @@ public class Commanditem extends EssentialsCommand
 		if (args.length > 2)
 		{
 			MetaItemStack metaStack = new MetaItemStack(stack);
-			final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && user.isAuthorized("essentials.enchant.allowunsafe");
+			final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && user.isAuthorized("essentials.enchantments.allowunsafe");
 			
-			metaStack.parseStringMeta(user, allowUnsafe, args, 2, ess);
+			metaStack.parseStringMeta(user.getSource(), allowUnsafe, args, 2, ess);
 			
 			stack = metaStack.getItemStack();
 		}

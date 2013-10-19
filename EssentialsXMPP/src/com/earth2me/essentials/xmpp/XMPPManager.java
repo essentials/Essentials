@@ -3,8 +3,8 @@ package com.earth2me.essentials.xmpp;
 import com.earth2me.essentials.Console;
 import com.earth2me.essentials.EssentialsConf;
 import com.earth2me.essentials.IConf;
-import com.earth2me.essentials.IUser;
-import com.earth2me.essentials.Util;
+import net.ess3.api.IUser;
+import com.earth2me.essentials.utils.FormatUtil;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Handler;
@@ -64,7 +64,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 						disconnect();
 						connect();
 					}
-					chat.sendMessage(Util.stripFormat(message));
+					chat.sendMessage(FormatUtil.stripFormat(message));
 					return true;
 				}
 			}
@@ -94,7 +94,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 				break;
 			default:
 				final IUser sender = parent.getUserByAddress(StringUtils.parseBareAddress(chat.getParticipant()));
-				parent.broadcastMessage(sender, "=" + sender.getDisplayName() + ": " + message, StringUtils.parseBareAddress(chat.getParticipant()));
+				parent.broadcastMessage(sender, "=" + sender.getBase().getDisplayName() + ": " + message, StringUtils.parseBareAddress(chat.getParticipant()));
 			}
 		}
 	}
@@ -124,7 +124,10 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 		try
 		{
 			connection.connect();
-			connection.login(xmppuser, password);
+
+			connection.login(xmppuser, password, "Essentials-XMPP");
+			connection.sendPacket(new Presence(Presence.Type.available, "No one online.", 2, Presence.Mode.available));
+
 			connection.getRoster().setSubscriptionMode(SubscriptionMode.accept_all);
 			chatManager = connection.getChatManager();
 			chatManager.addChatListener(this);
@@ -153,6 +156,30 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 			connection.disconnect(new Presence(Presence.Type.unavailable));
 		}
 
+	}
+
+	public final void updatePresence()
+	{
+		final int usercount;
+		final StringBuilder stringBuilder = new StringBuilder();
+
+		usercount = parent.getServer().getOnlinePlayers().length;
+
+		if (usercount == 0)
+		{
+			final String presenceMsg = "No one online.";
+			connection.sendPacket(new Presence(Presence.Type.available, presenceMsg, 2, Presence.Mode.dnd));
+		}
+		if (usercount == 1)
+		{
+			final String presenceMsg = "1 player online.";
+			connection.sendPacket(new Presence(Presence.Type.available, presenceMsg, 2, Presence.Mode.available));
+		}
+		if (usercount > 1)
+		{
+			stringBuilder.append(usercount).append(" players online.");
+			connection.sendPacket(new Presence(Presence.Type.available, stringBuilder.toString(), 2, Presence.Mode.available));
+		}
 	}
 
 	@Override
@@ -266,7 +293,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 								for (LogRecord logRecord : copy)
 								{
 									final String message = formatter.format(logRecord);
-									if (!XMPPManager.this.sendMessage(user, Util.stripLogColorFormat(message)))
+									if (!XMPPManager.this.sendMessage(user, FormatUtil.stripLogColorFormat(message)))
 									{
 										failedUsers.add(user);
 										break;

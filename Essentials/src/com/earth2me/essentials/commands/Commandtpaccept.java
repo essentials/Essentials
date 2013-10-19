@@ -1,6 +1,5 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.ChargeException;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
@@ -19,28 +18,28 @@ public class Commandtpaccept extends EssentialsCommand
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
 
-		final User target = user.getTeleportRequest();
+		final User requester = ess.getUser(user.getTeleportRequest());
 
-		if (target == null || !target.isOnline())
+		if (requester == null || !requester.isOnline())
 		{
 			throw new Exception(_("noPendingRequest"));
 		}
 
-		if (user.isTpRequestHere() && ((!target.isAuthorized("essentials.tpahere") && !target.isAuthorized("essentials.tpaall"))
-									   || (user.getWorld() != target.getWorld() && ess.getSettings().isWorldTeleportPermissions()
+		if (user.isTpRequestHere() && ((!requester.isAuthorized("essentials.tpahere") && !requester.isAuthorized("essentials.tpaall"))
+									   || (user.getWorld() != requester.getWorld() && ess.getSettings().isWorldTeleportPermissions()
 										   && !user.isAuthorized("essentials.worlds." + user.getWorld().getName()))))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}
 
-		if (!user.isTpRequestHere() && (!target.isAuthorized("essentials.tpa")
-										|| (user.getWorld() != target.getWorld() && ess.getSettings().isWorldTeleportPermissions()
-											&& !user.isAuthorized("essentials.worlds." + target.getWorld().getName()))))
+		if (!user.isTpRequestHere() && (!requester.isAuthorized("essentials.tpa")
+										|| (user.getWorld() != requester.getWorld() && ess.getSettings().isWorldTeleportPermissions()
+											&& !user.isAuthorized("essentials.worlds." + requester.getWorld().getName()))))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}
 
-		if (args.length > 0 && !target.getName().contains(args[0]))
+		if (args.length > 0 && !requester.getName().contains(args[0]))
 		{
 			throw new Exception(_("noPendingRequest"));
 		}
@@ -54,23 +53,23 @@ public class Commandtpaccept extends EssentialsCommand
 
 		final Trade charge = new Trade(this.getName(), ess);
 		user.sendMessage(_("requestAccepted"));
-		target.sendMessage(_("requestAcceptedFrom", user.getDisplayName()));
+		requester.sendMessage(_("requestAcceptedFrom", user.getDisplayName()));
 
 		try
 		{
 			if (user.isTpRequestHere())
 			{
-				target.getTeleport().teleportToMe(user, charge, TeleportCause.COMMAND);
+				requester.getTeleport().teleportPlayer(user, user.getTpRequestLocation(), charge, TeleportCause.COMMAND);
 			}
 			else
 			{
-				target.getTeleport().teleport(user, charge, TeleportCause.COMMAND);
+				requester.getTeleport().teleport(user.getBase(), charge, TeleportCause.COMMAND);
 			}
 		}
-		catch (ChargeException ex)
+		catch (Exception ex)
 		{
 			user.sendMessage(_("pendingTeleportCancelled"));
-			ess.showError(target, ex, commandLabel);
+			ess.showError(requester.getSource(), ex, commandLabel);
 		}
 		user.requestTeleport(null, false);
 		throw new NoChargeException();

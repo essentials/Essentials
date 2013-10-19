@@ -1,28 +1,22 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
-public class Commandfly extends EssentialsCommand
+public class Commandfly extends EssentialsToggleCommand
 {
 	public Commandfly()
 	{
-		super("fly");
+		super("fly", "essentials.fly.others");
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length < 1)
-		{
-			throw new NotEnoughArgumentsException();
-		}
-
-		flyOtherPlayers(server, sender, args);
+		toggleOtherPlayers(server, sender, args);
 	}
 
 	@Override
@@ -30,67 +24,46 @@ public class Commandfly extends EssentialsCommand
 	{
 		if (args.length == 1)
 		{
-			if (args[0].equalsIgnoreCase("on") || args[0].startsWith("ena") || args[0].equalsIgnoreCase("1"))
+			Boolean toggle = matchToggleArgument(args[0]);
+			if (toggle == null && user.isAuthorized(othersPermission))
 			{
-				user.setAllowFlight(true);
-			}
-			else if (args[0].equalsIgnoreCase("off") || args[0].startsWith("dis") || args[0].equalsIgnoreCase("0"))
-			{
-				user.setAllowFlight(false);
-			}
-			else if (user.isAuthorized("essentials.fly.others"))
-			{
-				flyOtherPlayers(server, user, args);
-				return;
-			}
-		}
-		else if (args.length == 2 && user.isAuthorized("essentials.fly.others"))
-		{
-			flyOtherPlayers(server, user, args);
-			return;
-		}
-		else
-		{
-			user.setAllowFlight(!user.getAllowFlight());
-			if (!user.getAllowFlight())
-			{
-				user.setFlying(false);
-			}
-		}
-		user.sendMessage(_("flyMode", _(user.getAllowFlight() ? "enabled" : "disabled"), user.getDisplayName()));
-	}
-
-	private void flyOtherPlayers(final Server server, final CommandSender sender, final String[] args)
-	{
-		for (Player matchPlayer : server.matchPlayer(args[0]))
-		{
-			final User player = ess.getUser(matchPlayer);
-			if (player.isHidden())
-			{
-				continue;
-			}
-
-			if (args.length > 1)
-			{
-				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
-				{
-					player.setAllowFlight(true);
-				}
-				else
-				{
-					player.setAllowFlight(false);
-				}
+				toggleOtherPlayers(server, user.getSource(), args);
 			}
 			else
 			{
-				player.setAllowFlight(!player.getAllowFlight());
+				togglePlayer(user.getSource(), user, toggle);
 			}
+		}
+		else if (args.length == 2 && user.isAuthorized(othersPermission))
+		{
+			toggleOtherPlayers(server, user.getSource(), args);
+		}
+		else
+		{
+			togglePlayer(user.getSource(), user, null);
+		}
+	}
 
-			if (!player.getAllowFlight())
-			{
-				player.setFlying(false);
-			}
-			sender.sendMessage(_("flyMode", _(player.getAllowFlight() ? "enabled" : "disabled"), player.getDisplayName()));
+	@Override
+	void togglePlayer(CommandSource sender, User user, Boolean enabled)
+	{
+		if (enabled == null)
+		{
+			enabled = !user.getAllowFlight();
+		}
+
+		user.setFallDistance(0f);
+		user.setAllowFlight(enabled);
+		
+		if (!user.getAllowFlight())
+		{
+			user.setFlying(false);
+		}
+
+		user.sendMessage(_("flyMode", _(enabled ? "enabled" : "disabled"), user.getDisplayName()));
+		if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+		{
+			sender.sendMessage(_("flyMode", _(enabled ? "enabled" : "disabled"), user.getDisplayName()));
 		}
 	}
 }

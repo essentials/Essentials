@@ -1,8 +1,9 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.*;
+import static com.earth2me.essentials.I18n._;
 import java.util.Locale;
+import net.ess3.api.IEssentials;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
@@ -49,7 +50,7 @@ public class SignEnchant extends EssentialsSign
 			sign.setLine(2, "§c<enchant>");
 			throw new SignException(ex.getMessage(), ex);
 		}
-		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && player.isAuthorized("essentials.enchant.allowunsafe");
+		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && player.isAuthorized("essentials.enchantments.allowunsafe");
 		if (level < 0 || (!allowUnsafe && level > enchantment.getMaxLevel()))
 		{
 			level = enchantment.getMaxLevel();

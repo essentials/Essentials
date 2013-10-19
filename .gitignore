@@ -36,8 +36,6 @@
 /EssentialsUpdate/build/
 /WebPush/apikey.php
 /WebPush/nbproject/private
-/.idea
-*.iml
 /EssentialsGroupManager/bin
 /EssentialsGroupManager/.externalToolBuilders
 /EssentialsAntiBuild/nbproject/private/
@@ -45,3 +43,7 @@
 /EssentialsAntiBuild/build/
 /jars
 /out
+.idea/
+*.iml
+target/
+dependency-reduced-pom.xml

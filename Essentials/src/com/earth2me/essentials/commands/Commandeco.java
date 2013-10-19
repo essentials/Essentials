@@ -1,163 +1,114 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.ChargeException;
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.NumberUtil;
+import java.math.BigDecimal;
 import java.util.Locale;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
-public class Commandeco extends EssentialsCommand
+public class Commandeco extends EssentialsLoopCommand
 {
+	Commandeco.EcoCommands cmd;
+	BigDecimal amount;
+
 	public Commandeco()
 	{
 		super("eco");
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
-		Double broadcast = null;
-		Double broadcastAll = null;
-		final double startingBalance = (double)ess.getSettings().getStartingBalance();
 		if (args.length < 2)
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		EcoCommands cmd;
-		double amount;
+
+		BigDecimal startingBalance = ess.getSettings().getStartingBalance();
+
 		try
 		{
-			cmd = EcoCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH));
-			amount = Double.parseDouble(args[2].replaceAll("[^0-9\\.]", ""));
+			cmd = Commandeco.EcoCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH));
+			amount = (cmd == Commandeco.EcoCommands.RESET) ? startingBalance : new BigDecimal(args[2].replaceAll("[^0-9\\.]", ""));
 		}
 		catch (Exception ex)
 		{
 			throw new NotEnoughArgumentsException(ex);
 		}
 
-		final double minBalance = ess.getSettings().getMinMoney();
+		loopOfflinePlayers(server, sender, false, args[1], args);
 
-		if (args[1].contentEquals("**"))
+		if (cmd == Commandeco.EcoCommands.RESET || cmd == Commandeco.EcoCommands.SET)
 		{
-			for (String sUser : ess.getUserMap().getAllUniqueUsers())
+			if (args[1].contentEquals("**"))
 			{
-				final User player = ess.getUser(sUser);
-				switch (cmd)
-				{
-				case GIVE:
-					player.giveMoney(amount);
-					break;
-
-				case TAKE:
-					if (player.canAfford(amount, false))
-					{
-						player.takeMoney(amount);
-					}
-					else
-					{
-						if (player.getMoney() > 0)
-						{
-							player.setMoney(0);
-						}
-					}
-					break;
-
-				case RESET:
-					player.setMoney(startingBalance);
-					broadcastAll = startingBalance;
-					break;
-
-				case SET:
-					boolean underMinimum = (player.getMoney() - amount) < minBalance;
-					player.setMoney(underMinimum ? minBalance : amount);
-					broadcastAll = underMinimum ? minBalance : amount;
-					break;
-				}
+				server.broadcastMessage(_("resetBalAll", NumberUtil.displayCurrency(amount, ess)));
+			}
+			else if (args[1].contentEquals("*"))
+			{
+				server.broadcastMessage(_("resetBal", NumberUtil.displayCurrency(amount, ess)));
 			}
 		}
-		else if (args[1].contentEquals("*"))
+	}
+
+	@Override
+	protected void updatePlayer(final Server server, final CommandSource sender, final User player, final String[] args) throws NotEnoughArgumentsException, ChargeException
+	{
+		switch (cmd)
 		{
-			for (Player onlinePlayer : server.getOnlinePlayers())
-			{
-				final User player = ess.getUser(onlinePlayer);
-				switch (cmd)
-				{
-				case GIVE:
-					player.giveMoney(amount);
-					break;
+		case GIVE:
+			player.giveMoney(amount, sender);
+			break;
 
-				case TAKE:
-					if (player.canAfford(amount))
-					{
-						player.takeMoney(amount);
-					}
-					else
-					{
-						if (player.getMoney() > 0)
-						{
-							player.setMoney(0);
-						}
-					}
-					break;
+		case TAKE:
+			take(amount, player, sender);
+			break;
 
-				case RESET:
-					player.setMoney(startingBalance);
-					broadcast = startingBalance;
-					break;
+		case RESET:
+		case SET:
+			set(amount, player, sender);
+			break;
+		}
+	}
 
-				case SET:
-					boolean underMinimum = (player.getMoney() - amount) < minBalance;
-					player.setMoney(underMinimum ? minBalance : amount);
-					broadcast = underMinimum ? minBalance : amount;
-					break;
-				}
-			}
+	private void take(BigDecimal amount, final User player, final CommandSource sender) throws ChargeException
+	{
+		BigDecimal money = player.getMoney();
+		BigDecimal minBalance = ess.getSettings().getMinMoney();
+		if (money.subtract(amount).compareTo(minBalance) > 0)
+		{
+			player.takeMoney(amount, sender);
+		}
+		else if (sender == null)
+		{
+			player.setMoney(minBalance);
+			player.sendMessage(_("takenFromAccount", NumberUtil.displayCurrency(player.getMoney(), ess)));
 		}
 		else
 		{
-			final User player = getPlayer(server, args, 1, true);
-			switch (cmd)
-			{
-			case GIVE:
-				player.giveMoney(amount, sender);
-				break;
-
-			case TAKE:
-				if (!player.canAfford(amount))
-				{
-					throw new Exception(_("notEnoughMoney"));
-					
-				}
-				player.takeMoney(amount, sender);
-				break;
-
-			case RESET:
-				player.setMoney(startingBalance);
-				break;
-
-			case SET:
-				boolean underMinimum = (player.getMoney() - amount) < minBalance;
-				player.setMoney(underMinimum ? minBalance : amount);
-				break;
-			}
+			throw new ChargeException(_("insufficientFunds"));
 		}
+	}
 
-		if (broadcast != null)
+	private void set(BigDecimal amount, final User player, final CommandSource sender)
+	{
+		BigDecimal minBalance = ess.getSettings().getMinMoney();
+		boolean underMinimum = (amount.compareTo(minBalance) < 0);
+		player.setMoney(underMinimum ? minBalance : amount);
+		player.sendMessage(_("setBal", NumberUtil.displayCurrency(player.getMoney(), ess)));
+		if (sender != null)
 		{
-			server.broadcastMessage(_("resetBal", Util.formatAsCurrency(broadcast)));
-		}
-		if (broadcastAll != null)
-		{
-			server.broadcastMessage(_("resetBalAll", Util.formatAsCurrency(broadcastAll)));
+			sender.sendMessage(_("setBalOthers", player.getDisplayName(), NumberUtil.displayCurrency(player.getMoney(), ess)));
 		}
 	}
 
 
 	private enum EcoCommands
 	{
-		GIVE, TAKE, RESET, SET
+		GIVE, TAKE, SET, RESET
 	}
 }

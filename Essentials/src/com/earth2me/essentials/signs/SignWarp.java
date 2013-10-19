@@ -2,9 +2,9 @@ package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.ChargeException;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
+import net.ess3.api.IEssentials;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -58,7 +58,8 @@ public class SignWarp extends EssentialsSign
 			final Trade charge = getTrade(sign, 3, ess);
 			try
 			{
-				player.getTeleport().warp(warpName, charge, TeleportCause.PLUGIN);
+				player.getTeleport().warp(player, warpName, charge, TeleportCause.PLUGIN);
+				Trade.log("Sign", "Warp", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
 			}
 			catch (Exception ex)
 			{

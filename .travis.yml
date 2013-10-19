@@ -1,0 +1,18 @@
+language: java
+jdk:
+  - oraclejdk7
+  - openjdk7
+  - openjdk6
+script: ant collect
+install: true
+notifications:
+  irc: 
+    channels: 
+      - "irc.esper.net#lain"
+    on_success: change
+    on_failure: always
+  email:
+    recipients:
+      - "khobbits@ess3.net"
+    on_success: change
+    on_failure: always

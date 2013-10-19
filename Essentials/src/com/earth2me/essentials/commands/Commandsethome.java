@@ -2,7 +2,7 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.NumberUtil;
 import java.util.Locale;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -37,14 +37,14 @@ public class Commandsethome extends EssentialsCommand
 			}
 			else
 			{
+				name = args[1].toLowerCase(Locale.ENGLISH);
 				if (user.isAuthorized("essentials.sethome.others"))
 				{
 					usersHome = ess.getUser(args[0]);
 					if (usersHome == null)
 					{
-						throw new NoSuchFieldException(_("playerNotFound"));
-					}
-					name = args[1].toLowerCase(Locale.ENGLISH);
+						throw new PlayerNotFoundException();
+					}					
 				}
 			}
 		}
@@ -52,7 +52,7 @@ public class Commandsethome extends EssentialsCommand
 		{
 			name = "home";
 		}
-		if ("bed".equals(name) || Util.isInt(name))
+		if ("bed".equals(name) || NumberUtil.isInt(name))
 		{
 			throw new NoSuchFieldException(_("invalidHomeName"));
 		}

@@ -2,9 +2,9 @@ package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.ChargeException;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
+import net.ess3.api.IEssentials;
 
 
 public class SignWeather extends EssentialsSign
@@ -43,12 +43,14 @@ public class SignWeather extends EssentialsSign
 		{
 			player.getWorld().setStorm(false);
 			charge.charge(player);
+			Trade.log("Sign", "WeatherSun", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
 			return true;
 		}
 		if ("§2Storm".equalsIgnoreCase(weatherString))
 		{
 			player.getWorld().setStorm(true);
 			charge.charge(player);
+			Trade.log("Sign", "WeatherStorm", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
 			return true;
 		}
 		throw new SignException(_("onlySunStorm"));

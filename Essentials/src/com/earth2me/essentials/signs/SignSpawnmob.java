@@ -1,10 +1,8 @@
 package com.earth2me.essentials.signs;
 
-import com.earth2me.essentials.ChargeException;
-import com.earth2me.essentials.IEssentials;
-import com.earth2me.essentials.SpawnMob;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.User;
+import com.earth2me.essentials.*;
+import java.util.List;
+import net.ess3.api.IEssentials;
 
 
 public class SignSpawnmob extends EssentialsSign
@@ -30,8 +28,9 @@ public class SignSpawnmob extends EssentialsSign
 
 		try
 		{
-			String[] mobData = SpawnMob.mobData(sign.getLine(2));
-			SpawnMob.spawnmob(ess, ess.getServer(), player, player, mobData, Integer.parseInt(sign.getLine(1)));
+			List<String> mobParts = SpawnMob.mobParts(sign.getLine(2));
+			List<String> mobData = SpawnMob.mobData(sign.getLine(2));
+			SpawnMob.spawnmob(ess, ess.getServer(), player.getSource(), player, mobParts, mobData, Integer.parseInt(sign.getLine(1)));
 		}
 		catch (Exception ex)
 		{
@@ -39,6 +38,7 @@ public class SignSpawnmob extends EssentialsSign
 		}
 
 		charge.charge(player);
+		Trade.log("Sign", "Spawnmob", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
 		return true;
 	}
 }

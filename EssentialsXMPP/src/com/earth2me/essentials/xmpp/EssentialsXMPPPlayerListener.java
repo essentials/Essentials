@@ -26,6 +26,16 @@ class EssentialsXMPPPlayerListener implements Listener
 	public void onPlayerJoin(final PlayerJoinEvent event)
 	{
 		final User user = ess.getUser(event.getPlayer());
+
+		Bukkit.getScheduler().scheduleSyncDelayedTask(ess, new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				EssentialsXMPP.updatePresence();
+			}
+		});
+
 		sendMessageToSpyUsers("Player " + user.getDisplayName() + " joined the game");
 	}
 
@@ -40,6 +50,17 @@ class EssentialsXMPPPlayerListener implements Listener
 	public void onPlayerQuit(final PlayerQuitEvent event)
 	{
 		final User user = ess.getUser(event.getPlayer());
+
+		Bukkit.getScheduler().scheduleSyncDelayedTask(ess, new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				EssentialsXMPP.updatePresence();
+			}
+		});
+
+
 		sendMessageToSpyUsers("Player " + user.getDisplayName() + " left the game");
 	}
 
@@ -59,7 +80,6 @@ class EssentialsXMPPPlayerListener implements Listener
 						{
 							EssentialsXMPP.getInstance().sendMessage(address, message);
 						}
-
 					});
 
 				}

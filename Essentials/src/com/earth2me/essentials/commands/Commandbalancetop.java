@@ -1,16 +1,17 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import com.earth2me.essentials.textreader.ArrayListInput;
+import com.earth2me.essentials.textreader.SimpleTextInput;
 import com.earth2me.essentials.textreader.TextPager;
+import com.earth2me.essentials.utils.NumberUtil;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 //TODO: Remove op and replace with perm
 public class Commandbalancetop extends EssentialsCommand
@@ -21,12 +22,12 @@ public class Commandbalancetop extends EssentialsCommand
 	}
 	private static final int CACHETIME = 2 * 60 * 1000;
 	public static final int MINUSERS = 50;
-	private static ArrayListInput cache = new ArrayListInput();
+	private static SimpleTextInput cache = new SimpleTextInput();
 	private static long cacheage = 0;
 	private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		int page = 0;
 		boolean force = false;
@@ -38,7 +39,7 @@ public class Commandbalancetop extends EssentialsCommand
 			}
 			catch (NumberFormatException ex)
 			{
-				if (args[0].equalsIgnoreCase("force") && sender.isOp())
+				if (args[0].equalsIgnoreCase("force") && sender.getSender().isOp())
 				{
 					force = true;
 				}
@@ -76,7 +77,7 @@ public class Commandbalancetop extends EssentialsCommand
 
 	}
 
-	private static void outputCache(final CommandSender sender, int page)
+	private static void outputCache(final CommandSource sender, int page)
 	{
 		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(cacheage);
@@ -105,36 +106,47 @@ public class Commandbalancetop extends EssentialsCommand
 			{
 				if (force || cacheage <= System.currentTimeMillis() - CACHETIME)
 				{
-					cache.getLines().clear();					
-					final Map<String, Double> balances = new HashMap<String, Double>();
-					double totalMoney = 0d;
-					for (String u : ess.getUserMap().getAllUniqueUsers())
+					cache.getLines().clear();
+					final Map<String, BigDecimal> balances = new HashMap<String, BigDecimal>();
+					BigDecimal totalMoney = BigDecimal.ZERO;
+					if (ess.getSettings().isEcoDisabled())
 					{
-						final User user = ess.getUserMap().getUser(u);
-						if (user != null)
+						if (ess.getSettings().isDebug())
 						{
-							final double userMoney = user.getMoney();
-							user.updateMoneyCache(userMoney);
-							totalMoney += userMoney;
-							balances.put(user.getDisplayName(), userMoney);
+							ess.getLogger().info("Internal economy functions disabled, aborting baltop.");
+						}
+					}
+					else
+					{
+						for (String u : ess.getUserMap().getAllUniqueUsers())
+						{
+							final User user = ess.getUserMap().getUser(u);
+							if (user != null)
+							{
+								final BigDecimal userMoney = user.getMoney();
+								user.updateMoneyCache(userMoney);
+								totalMoney = totalMoney.add(userMoney);
+								final String name = user.isHidden() ? user.getName() : user.getDisplayName();
+								balances.put(name, userMoney);
+							}
 						}
 					}
 
-					final List<Map.Entry<String, Double>> sortedEntries = new ArrayList<Map.Entry<String, Double>>(balances.entrySet());
-					Collections.sort(sortedEntries, new Comparator<Map.Entry<String, Double>>()
+					final List<Map.Entry<String, BigDecimal>> sortedEntries = new ArrayList<Map.Entry<String, BigDecimal>>(balances.entrySet());
+					Collections.sort(sortedEntries, new Comparator<Map.Entry<String, BigDecimal>>()
 					{
 						@Override
-						public int compare(final Entry<String, Double> entry1, final Entry<String, Double> entry2)
+						public int compare(final Entry<String, BigDecimal> entry1, final Entry<String, BigDecimal> entry2)
 						{
-							return -entry1.getValue().compareTo(entry2.getValue());
+							return entry2.getValue().compareTo(entry1.getValue());
 						}
 					});
-					
-					cache.getLines().add(_("serverTotal", Util.displayCurrency(totalMoney, ess)));
+
+					cache.getLines().add(_("serverTotal", NumberUtil.displayCurrency(totalMoney, ess)));
 					int pos = 1;
-					for (Map.Entry<String, Double> entry : sortedEntries)
+					for (Map.Entry<String, BigDecimal> entry : sortedEntries)
 					{
-						cache.getLines().add(pos + ". " + entry.getKey() + ", " + Util.displayCurrency(entry.getValue(), ess));
+						cache.getLines().add(pos + ". " + entry.getKey() + ", " + NumberUtil.displayCurrency(entry.getValue(), ess));
 						pos++;
 					}
 					cacheage = System.currentTimeMillis();
@@ -151,11 +163,11 @@ public class Commandbalancetop extends EssentialsCommand
 
 	private class Viewer implements Runnable
 	{
-		private final transient CommandSender sender;
+		private final transient CommandSource sender;
 		private final transient int page;
 		private final transient boolean force;
 
-		public Viewer(final CommandSender sender, final int page, final boolean force)
+		public Viewer(final CommandSource sender, final int page, final boolean force)
 		{
 			this.sender = sender;
 			this.page = page;
@@ -178,7 +190,7 @@ public class Commandbalancetop extends EssentialsCommand
 			{
 				lock.readLock().unlock();
 			}
-			ess.runTaskAsynchronously(new Calculator(new Viewer(sender, page, force), force));
+			ess.runTaskAsynchronously(new Calculator(new Viewer(sender, page, false), force));
 		}
 	}
 }

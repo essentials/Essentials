@@ -1,13 +1,12 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.FormatUtil;
 import java.util.logging.Level;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandkick extends EssentialsCommand
@@ -18,21 +17,22 @@ public class Commandkick extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User target = getPlayer(server, args, 0, true);
-		if (sender instanceof Player)
+		final User target = getPlayer(server, args, 0, true, false);
+		if (sender.isPlayer())
 		{
-			User user = ess.getUser(sender);
-			if (target.isHidden() && !user.isAuthorized("essentials.list.hidden"))
+			User user = ess.getUser(sender.getPlayer());
+			if (target.isHidden() && !user.isAuthorized("essentials.vanish.interact"))
 			{
 				throw new PlayerNotFoundException();
 			}
+
 			if (target.isAuthorized("essentials.kick.exempt"))
 			{
 				throw new Exception(_("kickExempt"));
@@ -40,20 +40,12 @@ public class Commandkick extends EssentialsCommand
 		}
 
 		String kickReason = args.length > 1 ? getFinalArg(args, 1) : _("kickDefault");
-		kickReason = Util.replaceFormat(kickReason.replace("\\n", "\n").replace("|", "\n"));
+		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n").replace("|", "\n"));
 
 		target.kickPlayer(kickReason);
-		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
+		final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
 
 		server.getLogger().log(Level.INFO, _("playerKicked", senderName, target.getName(), kickReason));
-
-		for (Player onlinePlayer : server.getOnlinePlayers())
-		{
-			User player = ess.getUser(onlinePlayer);
-			if (player.isAuthorized("essentials.kick.notify"))
-			{
-				onlinePlayer.sendMessage(_("playerKicked", senderName, target.getName(), kickReason));
-			}
-		}
+		ess.broadcastMessage("essentials.kick.notify", _("playerKicked", senderName, target.getName(), kickReason));
 	}
 }

@@ -22,13 +22,7 @@ public class Commandtpohere extends EssentialsCommand
 		}
 
 		//Just basically the old tphere command
-		final User player = getPlayer(server, args, 0, true);
-
-		// Check if user is offline
-		if (!player.isOnline())
-		{
-			throw new NoSuchFieldException(_("playerNotFound"));
-		}
+		final User player = getPlayer(server, user, args, 0);
 
 		if (user.getWorld() != player.getWorld() && ess.getSettings().isWorldTeleportPermissions()
 			&& !user.isAuthorized("essentials.worlds." + user.getWorld().getName()))
@@ -37,14 +31,8 @@ public class Commandtpohere extends EssentialsCommand
 		}
 
 		// Verify permission
-		if (!player.isHidden() || user.isAuthorized("essentials.teleport.hidden"))
-		{
-			player.getTeleport().now(user, false, TeleportCause.COMMAND);
-			user.sendMessage(_("teleporting"));
-		}
-		else
-		{
-			throw new NoSuchFieldException(_("playerNotFound"));
-		}
+		player.getTeleport().now(user.getBase(), false, TeleportCause.COMMAND);
+		user.sendMessage(_("teleporting"));
+
 	}
 }

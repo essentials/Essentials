@@ -22,18 +22,14 @@ public class Commandtpo extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 
 		case 1:
-			final User player = getPlayer(server, args, 0, true);
-			if (!player.isOnline() || (player.isHidden() && !user.isAuthorized("essentials.teleport.hidden")))
-			{
-				throw new NoSuchFieldException(_("playerNotFound"));
-			}
+			final User player = getPlayer(server, user, args, 0);
 			if (user.getWorld() != player.getWorld() && ess.getSettings().isWorldTeleportPermissions()
 				&& !user.isAuthorized("essentials.worlds." + player.getWorld().getName()))
 			{
 				throw new Exception(_("noPerm", "essentials.worlds." + player.getWorld().getName()));
 			}
 			user.sendMessage(_("teleporting"));
-			user.getTeleport().now(player, false, TeleportCause.COMMAND);
+			user.getTeleport().now(player.getBase(), false, TeleportCause.COMMAND);
 			break;
 
 		default:
@@ -42,14 +38,8 @@ public class Commandtpo extends EssentialsCommand
 				throw new Exception(_("noPerm", "essentials.tp.others"));
 			}
 			user.sendMessage(_("teleporting"));
-			final User target = getPlayer(server, args, 0, true);
-			final User toPlayer = getPlayer(server, args, 1, true);
-
-			if (!target.isOnline() || !toPlayer.isOnline()
-				|| ((target.isHidden() || toPlayer.isHidden()) && !user.isAuthorized("essentials.teleport.hidden")))
-			{
-				throw new NoSuchFieldException(_("playerNotFound"));
-			}
+			final User target = getPlayer(server, user, args, 0);
+			final User toPlayer = getPlayer(server, user, args, 1);
 
 			if (target.getWorld() != toPlayer.getWorld() && ess.getSettings().isWorldTeleportPermissions()
 				&& !user.isAuthorized("essentials.worlds." + toPlayer.getWorld().getName()))
@@ -57,7 +47,7 @@ public class Commandtpo extends EssentialsCommand
 				throw new Exception(_("noPerm", "essentials.worlds." + toPlayer.getWorld().getName()));
 			}
 
-			target.getTeleport().now(toPlayer, false, TeleportCause.COMMAND);
+			target.getTeleport().now(toPlayer.getBase(), false, TeleportCause.COMMAND);
 			target.sendMessage(_("teleportAtoB", user.getDisplayName(), toPlayer.getDisplayName()));
 			break;
 		}

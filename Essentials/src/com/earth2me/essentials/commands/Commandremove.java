@@ -1,12 +1,12 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import java.util.Locale;
 import org.bukkit.Chunk;
 import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 
 //Todo: Fix this up
@@ -25,7 +25,9 @@ public class Commandremove extends EssentialsCommand
 		BOATS,
 		MINECARTS,
 		XP,
-		PAINTINGS
+		PAINTINGS,
+		ITEMFRAMES,
+		ENDERCRYSTALS
 	}
 
 	@Override
@@ -36,10 +38,10 @@ public class Commandremove extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		ToRemove toRemove;
-		final World world = user.getWorld();
+		World world = user.getWorld();
 		int radius = 0;
 
-		if (args.length < 2)
+		if (args.length >= 2)
 		{
 			try
 			{
@@ -51,32 +53,39 @@ public class Commandremove extends EssentialsCommand
 			}
 		}
 
+		if (args.length >= 3)
+		{
+			world = ess.getWorld(args[2]);
+		}
+
 		try
 		{
 			toRemove = ToRemove.valueOf(args[0].toUpperCase(Locale.ENGLISH));
 		}
 		catch (IllegalArgumentException e)
 		{
-			throw new NotEnoughArgumentsException(e); //TODO: translate and list types
+			try
+			{
+				toRemove = ToRemove.valueOf(args[0].concat("S").toUpperCase(Locale.ENGLISH));
+			}
+			catch (IllegalArgumentException ee)
+			{
+				throw new NotEnoughArgumentsException(ee); //TODO: translate and list types
+			}
 		}
 
-		removeEntities(user, world, toRemove, radius);
+		removeEntities(user.getSource(), world, toRemove, radius);
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		World world;
-		world = ess.getWorld(args[1]);
+		World world = ess.getWorld(args[1]);
 
-		if (world == null)
-		{
-			throw new Exception(_("invalidWorld"));
-		}
 		ToRemove toRemove;
 		try
 		{
@@ -84,12 +93,19 @@ public class Commandremove extends EssentialsCommand
 		}
 		catch (IllegalArgumentException e)
 		{
-			throw new NotEnoughArgumentsException(e); //TODO: translate and list types
+			try
+			{
+				toRemove = ToRemove.valueOf(args[0].concat("S").toUpperCase(Locale.ENGLISH));
+			}
+			catch (IllegalArgumentException ee)
+			{
+				throw new NotEnoughArgumentsException(ee); //TODO: translate and list types
+			}
 		}
 		removeEntities(sender, world, toRemove, 0);
 	}
 
-	protected void removeEntities(final CommandSender sender, final World world, final ToRemove toRemove, int radius) throws Exception
+	protected void removeEntities(final CommandSource sender, final World world, final ToRemove toRemove, int radius) throws Exception
 	{
 		int removed = 0;
 		if (radius > 0)
@@ -102,7 +118,7 @@ public class Commandremove extends EssentialsCommand
 			{
 				if (radius > 0)
 				{
-					if (((Player)sender).getLocation().distanceSquared(e.getLocation()) > radius)
+					if (sender.getPlayer().getLocation().distanceSquared(e.getLocation()) > radius)
 					{
 						continue;
 					}
@@ -150,6 +166,22 @@ public class Commandremove extends EssentialsCommand
 				else if (toRemove == ToRemove.PAINTINGS)
 				{
 					if (e instanceof Painting)
+					{
+						e.remove();
+						removed++;
+					}
+				}
+				else if (toRemove == ToRemove.ITEMFRAMES)
+				{
+					if (e instanceof ItemFrame)
+					{
+						e.remove();
+						removed++;
+					}
+				}
+				else if (toRemove == ToRemove.ENDERCRYSTALS)
+				{
+					if (e instanceof EnderCrystal)
 					{
 						e.remove();
 						removed++;

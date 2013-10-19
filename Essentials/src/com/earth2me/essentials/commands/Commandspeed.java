@@ -1,9 +1,10 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
+import java.util.List;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
@@ -15,7 +16,7 @@ public class Commandspeed extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
@@ -39,44 +40,49 @@ public class Commandspeed extends EssentialsCommand
 		boolean isBypass = user.isAuthorized("essentials.speed.bypass");
 		if (args.length == 1)
 		{
-			//isFly = user.isFlying();
-			isFly = true;
+			isFly = flyPermCheck(user, user.isFlying());
 			speed = getMoveSpeed(args[0]);
 		}
 		else
 		{
-			//isFly = isFlyMode(args[0]);
-			//speed = getMoveSpeed(args[1]);
-			//if (args.length > 2 && user.isAuthorized("essentials.speed.others"))
-			//{
-			//	speedOtherPlayers(server, user, isFly, isBypass, speed, args[2]);
-			//	return;
-			//}
-			isFly = true;
-			speed = getMoveSpeed(args[0]);
-			if (user.isAuthorized("essentials.speed.others"))
+			isFly = flyPermCheck(user, isFlyMode(args[0]));
+			speed = getMoveSpeed(args[1]);
+			if (args.length > 2 && user.isAuthorized("essentials.speed.others"))
 			{
-				speedOtherPlayers(server, user, isFly, isBypass, speed, args[1]);
+				if (args[2].trim().length() < 2)
+				{
+					throw new PlayerNotFoundException();
+				}
+				speedOtherPlayers(server, user.getSource(), isFly, isBypass, speed, args[2]);
 				return;
 			}
 		}
 
-		//if (isFly)
-		//{
+		if (isFly)
+		{
 			user.setFlySpeed(getRealMoveSpeed(speed, isFly, isBypass));
 			user.sendMessage(_("moveSpeed", _("flying"), speed, user.getDisplayName()));
-		//}
-		//else
-		//{
-		//	user.setWalkSpeed(getRealMoveSpeed(speed, isFly, isBypass));
-		//	user.sendMessage(_("moveSpeed", _("walking"), speed, user.getDisplayName()));
-		//}
+		}
+		else
+		{
+			user.setWalkSpeed(getRealMoveSpeed(speed, isFly, isBypass));
+			user.sendMessage(_("moveSpeed", _("walking"), speed, user.getDisplayName()));
+		}
 	}
 
-	private void speedOtherPlayers(final Server server, final CommandSender sender, final boolean isFly, final boolean isBypass, final float speed, final String target)
+	private void speedOtherPlayers(final Server server, final CommandSource sender, final boolean isFly, final boolean isBypass, final float speed, final String name) throws PlayerNotFoundException
 	{
-		for (Player matchPlayer : server.matchPlayer(target))
+		boolean skipHidden = sender.isPlayer() && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.vanish.interact");
+		boolean foundUser = false;
+		final List<Player> matchedPlayers = server.matchPlayer(name);
+		for (Player matchPlayer : matchedPlayers)
 		{
+			final User player = ess.getUser(matchPlayer);
+			if (skipHidden && player.isHidden())
+			{
+				continue;
+			}
+			foundUser = true;
 			if (isFly)
 			{
 				matchPlayer.setFlySpeed(getRealMoveSpeed(speed, isFly, isBypass));
@@ -88,6 +94,25 @@ public class Commandspeed extends EssentialsCommand
 				sender.sendMessage(_("moveSpeed", _("walking"), speed, matchPlayer.getDisplayName()));
 			}
 		}
+		if (!foundUser)
+		{
+			throw new PlayerNotFoundException();
+		}
+	}
+
+	private Boolean flyPermCheck(User user, boolean input) throws Exception
+	{
+		boolean canFly = user.isAuthorized("essentials.speed.fly");
+		boolean canWalk = user.isAuthorized("essentials.speed.walk");
+		if (input && canFly || !input && canWalk || !canFly && !canWalk)
+		{
+			return input;
+		}
+		else if (canWalk)
+		{
+			return false;
+		}
+		return true;
 	}
 
 	private boolean isFlyMode(final String modeString) throws NotEnoughArgumentsException
@@ -119,9 +144,9 @@ public class Commandspeed extends EssentialsCommand
 			{
 				userSpeed = 10f;
 			}
-			else if (userSpeed < 0f)
+			else if (userSpeed < 0.0001f)
 			{
-				userSpeed = 0f;
+				userSpeed = 0.0001f;
 			}
 		}
 		catch (NumberFormatException e)

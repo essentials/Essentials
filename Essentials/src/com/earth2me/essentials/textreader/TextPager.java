@@ -1,11 +1,11 @@
 package com.earth2me.essentials.textreader;
 
+import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.I18n;
 import static com.earth2me.essentials.I18n._;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import org.bukkit.command.CommandSender;
 
 
 public class TextPager
@@ -24,7 +24,7 @@ public class TextPager
 		this.onePage = onePage;
 	}
 
-	public void showPage(final String pageStr, final String chapterPageStr, final String commandName, final CommandSender sender)
+	public void showPage(final String pageStr, final String chapterPageStr, final String commandName, final CommandSource sender)
 	{
 		List<String> lines = text.getLines();
 		List<String> chapters = text.getChapters();
@@ -95,11 +95,6 @@ public class TextPager
 						content.append(I18n.capitalCase(title[0])).append(": ");
 						content.append(title[1]);
 					}
-					else if (chapterPageStr != null)
-					{
-						content.append(I18n.capitalCase(commandName)).append(": ");
-						content.append(chapterPageStr);
-					}
 					else
 					{
 						content.append(I18n.capitalCase(commandName));
@@ -161,7 +156,10 @@ public class TextPager
 		final int pages = (chapterend - chapterstart) / 9 + ((chapterend - chapterstart) % 9 > 0 ? 1 : 0);
 		if (!onePage && commandName != null)
 		{
-			sender.sendMessage(_("infoChapterPages", pageStr, page, pages));
+			StringBuilder content = new StringBuilder();
+			content.append(I18n.capitalCase(commandName)).append(": ");
+			content.append(pageStr);
+			sender.sendMessage(_("infoChapterPages", content, page, pages));
 		}
 		for (int i = start; i < chapterend && i < start + (onePage ? 20 : 9); i++)
 		{

@@ -3,8 +3,8 @@ package com.earth2me.essentials.geoip;
 import com.earth2me.essentials.EssentialsConf;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.IConf;
-import com.earth2me.essentials.IEssentials;
 import com.earth2me.essentials.User;
+import net.ess3.api.IEssentials;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 import com.maxmind.geoip.regionName;
@@ -29,7 +29,7 @@ public class EssentialsGeoIPPlayerListener implements Listener, IConf
 	private static final Logger logger = Logger.getLogger("Minecraft");
 	File databaseFile;
 	File dataFolder;
-	EssentialsConf config;
+	final EssentialsConf config;
 	private final transient IEssentials ess;
 
 	public EssentialsGeoIPPlayerListener(File dataFolder, IEssentials ess)

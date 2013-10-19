@@ -8,24 +8,40 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
+import net.ess3.api.IEssentials;
 import org.bukkit.*;
 import org.bukkit.Warning.WarningState;
 import org.bukkit.World.Environment;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.conversations.Conversation;
+import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.help.HelpMap;
 import org.bukkit.inventory.*;
 import org.bukkit.map.MapView;
+import org.bukkit.permissions.Permissible;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.plugin.EventExecutor;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.InvalidPluginException;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
+import org.bukkit.plugin.UnknownDependencyException;
 import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scheduler.BukkitWorker;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 
 public class FakeServer implements Server
@@ -123,7 +139,7 @@ public class FakeServer implements Server
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
-	
+
 	@Override
 	public Player getPlayer(String string)
 	{
@@ -154,7 +170,182 @@ public class FakeServer implements Server
 	@Override
 	public PluginManager getPluginManager()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		return new PluginManager()
+		{
+			@Override
+			public void registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public Plugin getPlugin(String name)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public Plugin[] getPlugins()
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public boolean isPluginEnabled(String name)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public boolean isPluginEnabled(Plugin plugin)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public Plugin[] loadPlugins(File directory)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void disablePlugins()
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void clearPlugins()
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void callEvent(Event event) throws IllegalStateException
+			{
+				Logger.getLogger("Minecraft").info("Called event " + event.getEventName());
+			}
+
+			@Override
+			public void registerEvents(Listener listener, Plugin plugin)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin, boolean ignoreCancelled)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void enablePlugin(Plugin plugin)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void disablePlugin(Plugin plugin)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public Permission getPermission(String name)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void addPermission(Permission perm)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void removePermission(Permission perm)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void removePermission(String name)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public Set<Permission> getDefaultPermissions(boolean op)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void recalculatePermissionDefaults(Permission perm)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void subscribeToPermission(String permission, Permissible permissible)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void unsubscribeFromPermission(String permission, Permissible permissible)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public Set<Permissible> getPermissionSubscriptions(String permission)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void subscribeToDefaultPerms(boolean op, Permissible permissible)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public void unsubscribeFromDefaultPerms(boolean op, Permissible permissible)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public Set<Permissible> getDefaultPermSubscriptions(boolean op)
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public Set<Permission> getPermissions()
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+
+			@Override
+			public boolean useTimings()
+			{
+				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+		};
 	}
 
 	@Override
@@ -243,7 +434,7 @@ public class FakeServer implements Server
 			@Override
 			public BukkitTask runTaskAsynchronously(Plugin plugin, Runnable r) throws IllegalArgumentException
 			{
-				r.run();	  	
+				r.run();
 				return null;
 			}
 
@@ -256,7 +447,7 @@ public class FakeServer implements Server
 			@Override
 			public BukkitTask runTaskLaterAsynchronously(Plugin plugin, Runnable r, long l) throws IllegalArgumentException
 			{
-				r.run();	  	
+				r.run();
 				return null;
 			}
 
@@ -510,7 +701,7 @@ public class FakeServer implements Server
 			@Override
 			public boolean isOnline()
 			{
-				throw new UnsupportedOperationException("Not supported yet.");
+				return false;
 			}
 
 			@Override
@@ -632,7 +823,149 @@ public class FakeServer implements Server
 	@Override
 	public ConsoleCommandSender getConsoleSender()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		return new ConsoleCommandSender()
+		{
+			@Override
+			public void sendMessage(String message)
+			{
+				System.out.println("Console message: " + message);
+			}
+
+			@Override
+			public void sendMessage(String[] messages)
+			{
+				for (String message : messages)
+				{
+					System.out.println("Console message: " + message);
+				}
+			}
+
+			@Override
+			public Server getServer()
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public String getName()
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public boolean isPermissionSet(String name)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public boolean isPermissionSet(Permission perm)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public boolean hasPermission(String name)
+			{
+				return true;
+			}
+
+			@Override
+			public boolean hasPermission(Permission perm)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public PermissionAttachment addAttachment(Plugin plugin)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public PermissionAttachment addAttachment(Plugin plugin, int ticks)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public void removeAttachment(PermissionAttachment attachment)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public void recalculatePermissions()
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public Set<PermissionAttachmentInfo> getEffectivePermissions()
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public boolean isOp()
+			{
+				return true;
+			}
+
+			@Override
+			public void setOp(boolean value)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public boolean isConversing()
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public void acceptConversationInput(String input)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public boolean beginConversation(Conversation conversation)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public void abandonConversation(Conversation conversation)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public void abandonConversation(Conversation conversation, ConversationAbandonedEvent details)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+
+			@Override
+			public void sendRawMessage(String message)
+			{
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+		};
 	}
 
 	@Override
@@ -817,6 +1150,12 @@ public class FakeServer implements Server
 
 	@Override
 	public ItemFactory getItemFactory()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public ScoreboardManager getScoreboardManager()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}

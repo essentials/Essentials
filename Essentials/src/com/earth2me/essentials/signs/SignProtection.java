@@ -1,14 +1,18 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.*;
+import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.Trade.OverflowType;
+import com.earth2me.essentials.utils.FormatUtil;
 import java.util.*;
+import net.ess3.api.IEssentials;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.inventory.ItemStack;
+
 
 @Deprecated // This sign will be removed soon
 public class SignProtection extends EssentialsSign
@@ -81,7 +85,7 @@ public class SignProtection extends EssentialsSign
 				{
 					block.setType(Material.AIR);
 					final Trade trade = new Trade(new ItemStack(Material.SIGN, 1), ess);
-					trade.pay(player);
+					trade.pay(player, OverflowType.DROP);
 				}
 			}
 		}
@@ -143,7 +147,7 @@ public class SignProtection extends EssentialsSign
 		{
 			return SignProtectionState.OWNER;
 		}
-		if (Util.stripFormat(sign.getLine(3)).equalsIgnoreCase(username))
+		if (FormatUtil.stripFormat(sign.getLine(3)).equalsIgnoreCase(username))
 		{
 			return SignProtectionState.OWNER;
 		}
@@ -241,7 +245,7 @@ public class SignProtection extends EssentialsSign
 	{
 		return protectedBlocks;
 	}
-	
+
 	@Override
 	public boolean areHeavyEventRequired()
 	{
