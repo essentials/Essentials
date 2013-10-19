@@ -9,7 +9,6 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 
 
 // Suffixes can be appended on the end of a mob name to make it plural
@@ -21,6 +20,7 @@ public enum Mob
 	CREEPER("Creeper", Enemies.ENEMY, EntityType.CREEPER),
 	GHAST("Ghast", Enemies.ENEMY, EntityType.GHAST),
 	GIANT("Giant", Enemies.ENEMY, EntityType.GIANT),
+	HORSE("Horse", Enemies.FRIENDLY, EntityType.HORSE),
 	PIG("Pig", Enemies.FRIENDLY, EntityType.PIG),
 	PIGZOMB("PigZombie", Enemies.NEUTRAL, EntityType.PIG_ZOMBIE),
 	SHEEP("Sheep", Enemies.FRIENDLY, "", EntityType.SHEEP),
@@ -29,7 +29,7 @@ public enum Mob
 	SPIDER("Spider", Enemies.ENEMY, EntityType.SPIDER),
 	SQUID("Squid", Enemies.FRIENDLY, EntityType.SQUID),
 	ZOMBIE("Zombie", Enemies.ENEMY, EntityType.ZOMBIE),
-	WOLF("Wolf", Enemies.NEUTRAL, EntityType.WOLF),
+	WOLF("Wolf", Enemies.NEUTRAL, "", EntityType.WOLF),
 	CAVESPIDER("CaveSpider", Enemies.ENEMY, EntityType.CAVE_SPIDER),
 	ENDERMAN("Enderman", Enemies.ENEMY, "", EntityType.ENDERMAN),
 	SILVERFISH("Silverfish", Enemies.ENEMY, "", EntityType.SILVERFISH),
@@ -46,6 +46,11 @@ public enum Mob
 	WITCH("Witch", Enemies.ENEMY, EntityType.WITCH),
 	BOAT("Boat", Enemies.NEUTRAL, EntityType.BOAT),
 	MINECART("Minecart", Enemies.NEUTRAL, EntityType.MINECART),
+	MINECART_CHEST("ChestMinecart", Enemies.NEUTRAL, EntityType.MINECART_CHEST),
+	MINECART_FURNACE("FurnaceMinecart", Enemies.NEUTRAL, EntityType.MINECART_FURNACE),
+	MINECART_TNT("TNTMinecart", Enemies.NEUTRAL, EntityType.MINECART_TNT),
+	MINECART_HOPPER("HopperMinecart", Enemies.NEUTRAL, EntityType.MINECART_HOPPER),
+	MINECART_MOB_SPAWNER("SpawnerMinecart", Enemies.NEUTRAL, EntityType.MINECART_MOB_SPAWNER),
 	ENDERCRYSTAL("EnderCrystal", Enemies.NEUTRAL, EntityType.ENDER_CRYSTAL),
 	EXPERIENCEORB("ExperienceOrb", Enemies.NEUTRAL, EntityType.EXPERIENCE_ORB);
 	public static final Logger logger = Logger.getLogger("Minecraft");
@@ -69,23 +74,20 @@ public enum Mob
 	final public Enemies type;
 	final private EntityType bukkitType;
 	private static final Map<String, Mob> hashMap = new HashMap<String, Mob>();
+	private static final Map<EntityType, Mob> bukkitMap = new HashMap<EntityType, Mob>();
 
 	static
 	{
 		for (Mob mob : Mob.values())
 		{
 			hashMap.put(mob.name.toLowerCase(Locale.ENGLISH), mob);
+			bukkitMap.put(mob.bukkitType, mob);
 		}
 	}
 
 	public static Set<String> getMobList()
 	{
 		return Collections.unmodifiableSet(hashMap.keySet());
-	}
-
-	public Entity spawn(final Player player, final Server server, final Location loc) throws MobException
-	{
-		return spawn(player.getWorld(), server, loc);
 	}
 
 	public Entity spawn(final World world, final Server server, final Location loc) throws MobException
@@ -121,6 +123,11 @@ public enum Mob
 	public static Mob fromName(final String name)
 	{
 		return hashMap.get(name.toLowerCase(Locale.ENGLISH));
+	}
+
+	public static Mob fromBukkitType(final EntityType type)
+	{
+		return bukkitMap.get(type);
 	}
 
 

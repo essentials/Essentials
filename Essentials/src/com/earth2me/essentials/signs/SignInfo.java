@@ -1,7 +1,6 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.ChargeException;
-import com.earth2me.essentials.IEssentials;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.textreader.IText;
@@ -9,6 +8,7 @@ import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.TextInput;
 import com.earth2me.essentials.textreader.TextPager;
 import java.io.IOException;
+import net.ess3.api.IEssentials;
 
 
 public class SignInfo extends EssentialsSign
@@ -37,10 +37,10 @@ public class SignInfo extends EssentialsSign
 		final IText input;
 		try
 		{
-			input = new TextInput(player, "info", true, ess);
-			final IText output = new KeywordReplacer(input, player, ess);
+			input = new TextInput(player.getSource(), "info", true, ess);
+			final IText output = new KeywordReplacer(input, player.getSource(), ess);
 			final TextPager pager = new TextPager(output);
-			pager.showPage(chapter, page, null, player);
+			pager.showPage(chapter, page, null, player.getSource());
 
 		}
 		catch (IOException ex)
@@ -49,6 +49,7 @@ public class SignInfo extends EssentialsSign
 		}
 
 		charge.charge(player);
+		Trade.log("Sign", "Info", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
 		return true;
 	}
 }

@@ -1,9 +1,9 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
@@ -15,29 +15,29 @@ public class Commandtpaall extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
-			if (sender instanceof Player)
+			if (sender.isPlayer())
 			{
-				teleportAAllPlayers(server, sender, ess.getUser(sender));
+				teleportAAllPlayers(server, sender, ess.getUser(sender.getPlayer()));
 				return;
 			}
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User player = getPlayer(server, args, 0);
-		teleportAAllPlayers(server, sender, player);
+		final User target = getPlayer(server, sender, args, 0);
+		teleportAAllPlayers(server, sender, target);
 	}
 
-	private void teleportAAllPlayers(final Server server, final CommandSender sender, final User user)
+	private void teleportAAllPlayers(final Server server, final CommandSource sender, final User target)
 	{
 		sender.sendMessage(_("teleportAAll"));
 		for (Player onlinePlayer : server.getOnlinePlayers())
 		{
 			final User player = ess.getUser(onlinePlayer);
-			if (user == player)
+			if (target == player)
 			{
 				continue;
 			}
@@ -45,15 +45,16 @@ public class Commandtpaall extends EssentialsCommand
 			{
 				continue;
 			}
-			if (user.getWorld() != player.getWorld() && ess.getSettings().isWorldTeleportPermissions()
-				&& !user.isAuthorized("essentials.worlds." + user.getWorld().getName()))
+			if (sender.equals(target.getBase())
+				&& target.getWorld() != player.getWorld() && ess.getSettings().isWorldTeleportPermissions()
+				&& !target.isAuthorized("essentials.worlds." + target.getWorld().getName()))
 			{
 				continue;
 			}
 			try
 			{
-				player.requestTeleport(user, true);
-				player.sendMessage(_("teleportHereRequest", user.getDisplayName()));
+				player.requestTeleport(target, true);
+				player.sendMessage(_("teleportHereRequest", target.getDisplayName()));
 				player.sendMessage(_("typeTpaccept"));
 				if (ess.getSettings().getTpaAcceptCancellation() != 0)
 				{

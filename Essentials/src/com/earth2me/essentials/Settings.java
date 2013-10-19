@@ -6,11 +6,13 @@ import com.earth2me.essentials.signs.EssentialsSign;
 import com.earth2me.essentials.signs.Signs;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.SimpleTextInput;
+import com.earth2me.essentials.utils.FormatUtil;
 import java.io.File;
-import java.text.MessageFormat;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IEssentials;
 import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,7 +21,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.ItemStack;
 
 
-public class Settings implements ISettings
+public class Settings implements net.ess3.api.ISettings
 {
 	private final transient EssentialsConf config;
 	private final static Logger logger = Logger.getLogger("Minecraft");
@@ -112,9 +114,9 @@ public class Settings implements ISettings
 	}
 
 	@Override
-	public int getStartingBalance()
+	public BigDecimal getStartingBalance()
 	{
-		return config.getInt("starting-balance", 0);
+		return config.getBigDecimal("starting-balance", BigDecimal.ZERO);
 	}
 
 	@Override
@@ -177,12 +179,12 @@ public class Settings implements ISettings
 	private ConfigurationSection commandCosts;
 
 	@Override
-	public double getCommandCost(IEssentialsCommand cmd)
+	public BigDecimal getCommandCost(IEssentialsCommand cmd)
 	{
 		return getCommandCost(cmd.getName());
 	}
 
-	public ConfigurationSection _getCommandCosts()
+	private ConfigurationSection _getCommandCosts()
 	{
 		if (config.isConfigurationSection("command-costs"))
 		{
@@ -228,22 +230,22 @@ public class Settings implements ISettings
 	}
 
 	@Override
-	public double getCommandCost(String name)
+	public BigDecimal getCommandCost(String name)
 	{
 		name = name.replace('.', '_').replace('/', '_');
 		if (commandCosts != null)
 		{
-			return commandCosts.getDouble(name, 0.0);
+			return EssentialsConf.toBigDecimal(commandCosts.getString(name), BigDecimal.ZERO);
 		}
-		return 0.0;
+		return BigDecimal.ZERO;
 	}
 	private Set<String> socialSpyCommands = new HashSet<String>();
 
-	public Set<String> _getSocialSpyCommands()
+	private Set<String> _getSocialSpyCommands()
 	{
 		Set<String> socialspyCommands = new HashSet<String>();
 
-		if (config.isConfigurationSection("socialspy-commands"))
+		if (config.isList("socialspy-commands"))
 		{
 			for (String c : config.getStringList("socialspy-commands"))
 			{
@@ -258,6 +260,7 @@ public class Settings implements ISettings
 		return socialspyCommands;
 	}
 
+	@Override
 	public Set<String> getSocialSpyCommands()
 	{
 		return socialSpyCommands;
@@ -288,7 +291,7 @@ public class Settings implements ISettings
 	}
 	private ConfigurationSection kits;
 
-	public ConfigurationSection _getKits()
+	private ConfigurationSection _getKits()
 	{
 		if (config.isConfigurationSection("kits"))
 		{
@@ -399,25 +402,26 @@ public class Settings implements ISettings
 	{
 		return config.getString("backup.command", null);
 	}
-	private Map<String, MessageFormat> chatFormats = Collections.synchronizedMap(new HashMap<String, MessageFormat>());
+	private Map<String, String> chatFormats = Collections.synchronizedMap(new HashMap<String, String>());
 
 	@Override
-	public MessageFormat getChatFormat(String group)
+	public String getChatFormat(String group)
 	{
-		MessageFormat mFormat = chatFormats.get(group);
+		String mFormat = chatFormats.get(group);
 		if (mFormat == null)
 		{
-			String format = config.getString("chat.group-formats." + (group == null ? "Default" : group),
-											 config.getString("chat.format", "&7[{GROUP}]&f {DISPLAYNAME}&7:&f {MESSAGE}"));
-			format = Util.replaceFormat(format);
-			format = format.replace("{DISPLAYNAME}", "%1$s");
-			format = format.replace("{GROUP}", "{0}");
-			format = format.replace("{MESSAGE}", "%2$s");
-			format = format.replace("{WORLDNAME}", "{1}");
-			format = format.replace("{SHORTWORLDNAME}", "{2}");
-			format = format.replaceAll("\\{(\\D*?)\\}", "\\[$1\\]");
-			format = "§r".concat(format);
-			mFormat = new MessageFormat(format);
+			mFormat = config.getString("chat.group-formats." + (group == null ? "Default" : group),
+									   config.getString("chat.format", "&7[{GROUP}]&r {DISPLAYNAME}&7:&r {MESSAGE}"));
+			mFormat = FormatUtil.replaceFormat(mFormat);
+			mFormat = mFormat.replace("{DISPLAYNAME}", "%1$s");
+			mFormat = mFormat.replace("{MESSAGE}", "%2$s");
+			mFormat = mFormat.replace("{GROUP}", "{0}");
+			mFormat = mFormat.replace("{WORLDNAME}", "{1}");
+			mFormat = mFormat.replace("{SHORTWORLDNAME}", "{2}");
+			mFormat = mFormat.replace("{TEAMPREFIX}", "{3}");
+			mFormat = mFormat.replace("{TEAMSUFFIX}", "{4}");
+			mFormat = mFormat.replace("{TEAMNAME}", "{5}");
+			mFormat = "§r".concat(mFormat);
 			chatFormats.put(group, mFormat);
 		}
 		return mFormat;
@@ -432,7 +436,7 @@ public class Settings implements ISettings
 	@Override
 	public IText getAnnounceNewPlayerFormat()
 	{
-		return new SimpleTextInput(Util.replaceFormat(config.getString("newbies.announce-format", "&dWelcome {DISPLAYNAME} to the server!")));
+		return new SimpleTextInput(FormatUtil.replaceFormat(config.getString("newbies.announce-format", "&dWelcome {DISPLAYNAME} to the server!")));
 	}
 
 	@Override
@@ -454,9 +458,26 @@ public class Settings implements ISettings
 	}
 
 	@Override
-	public boolean getSortListByGroups()
+	public Map<String, Object> getListGroupConfig()
 	{
-		return config.getBoolean("sort-list-by-groups", true);
+		if (config.isConfigurationSection("list"))
+		{
+			Map<String, Object> values = config.getConfigurationSection("list").getValues(false);
+			if (!values.isEmpty())
+			{
+				return values;
+			}
+		}
+		Map<String, Object> defaultMap = new HashMap<String, Object>();
+		if (config.getBoolean("sort-list-by-groups", false))
+		{
+			defaultMap.put("ListByGroup", "ListByGroup");
+		}
+		else
+		{
+			defaultMap.put("Players", "*");
+		}
+		return defaultMap;
 	}
 
 	@Override
@@ -465,10 +486,12 @@ public class Settings implements ISettings
 		config.load();
 		noGodWorlds = new HashSet<String>(config.getStringList("no-god-in-worlds"));
 		enabledSigns = _getEnabledSigns();
+		teleportInvulnerabilityTime = _getTeleportInvulnerability();
 		teleportInvulnerability = _isTeleportInvulnerability();
 		disableItemPickupWhileAfk = _getDisableItemPickupWhileAfk();
 		registerBackInListener = _registerBackInListener();
-		cancelAfkOnMove = _cancelAfkOnMove();
+		cancelAfkOnInteract = _cancelAfkOnInteract();
+		cancelAfkOnMove = _cancelAfkOnMove() && cancelAfkOnInteract;
 		getFreezeAfkPlayers = _getFreezeAfkPlayers();
 		itemSpawnBl = _getItemSpawnBlacklist();
 		loginAttackDelay = _getLoginAttackDelay();
@@ -490,6 +513,12 @@ public class Settings implements ISettings
 		socialSpyCommands = _getSocialSpyCommands();
 		warnOnBuildDisallow = _warnOnBuildDisallow();
 		mailsPerMinute = _getMailsPerMinute();
+		maxMoney = _getMaxMoney();
+		minMoney = _getMinMoney();
+		economyLagWarning = _getEconomyLagWarning();
+		economyLog = _isEcoLogEnabled();
+		economyLogUpdate = _isEcoLogUpdateEnabled();
+		economyDisabled = _isEcoDisabled();
 	}
 	private List<Integer> itemSpawnBl = new ArrayList<Integer>();
 
@@ -616,16 +645,24 @@ public class Settings implements ISettings
 		return config.getString("currency-symbol", "$").concat("$").substring(0, 1).replaceAll("[0-9]", "$");
 	}
 
+	// #easteregg
 	@Override
 	public boolean isTradeInStacks(int id)
 	{
 		return config.getBoolean("trade-in-stacks-" + id, false);
 	}
+	// #easteregg
+	private boolean economyDisabled = false;
+
+	public boolean _isEcoDisabled()
+	{
+		return config.getBoolean("disable-eco", false);
+	}
 
 	@Override
 	public boolean isEcoDisabled()
 	{
-		return config.getBoolean("disable-eco", false);
+		return economyDisabled;
 	}
 
 	@Override
@@ -670,43 +707,59 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean(configName, def);
 	}
-	private final static double MAXMONEY = 10000000000000.0;
+	private final static BigDecimal MAXMONEY = new BigDecimal("10000000000000");
+	private BigDecimal maxMoney = MAXMONEY;
 
-	@Override
-	public double getMaxMoney()
+	private BigDecimal _getMaxMoney()
 	{
-		double max = config.getDouble("max-money", MAXMONEY);
-		if (Math.abs(max) > MAXMONEY)
-		{
-			max = max < 0 ? -MAXMONEY : MAXMONEY;
-		}
-		return max;
+		return config.getBigDecimal("max-money", MAXMONEY);
 	}
-	private final static double MINMONEY = -10000000000000.0;
 
 	@Override
-	public double getMinMoney()
+	public BigDecimal getMaxMoney()
 	{
-		double min = config.getDouble("min-money", MINMONEY);
-		if (min > 0)
+		return maxMoney;
+	}
+	private final static BigDecimal MINMONEY = new BigDecimal("-10000000000000");
+	private BigDecimal minMoney = MINMONEY;
+
+	private BigDecimal _getMinMoney()
+	{
+		BigDecimal min = config.getBigDecimal("min-money", MINMONEY);
+		if (min.signum() > 0)
 		{
-			min = -min;
-		}
-		if (min < MINMONEY)
-		{
-			min = MINMONEY;
+			min = min.negate();
 		}
 		return min;
 	}
 
 	@Override
+	public BigDecimal getMinMoney()
+	{
+		return minMoney;
+	}
+	private boolean economyLog = false;
+
+	@Override
 	public boolean isEcoLogEnabled()
+	{
+		return economyLog;
+	}
+
+	public boolean _isEcoLogEnabled()
 	{
 		return config.getBoolean("economy-log-enabled", false);
 	}
+	// #easteregg
+	private boolean economyLogUpdate = false;
 
 	@Override
 	public boolean isEcoLogUpdateEnabled()
+	{
+		return economyLogUpdate;
+	}
+
+	public boolean _isEcoLogUpdateEnabled()
 	{
 		return config.getBoolean("economy-log-update-enabled", false);
 	}
@@ -771,6 +824,7 @@ public class Settings implements ISettings
 	{
 		return prefixsuffixconfigured ? addprefixsuffix : essentialsChatActive;
 	}
+	// #easteregg
 	private boolean disablePrefix = false;
 
 	private boolean _disablePrefix()
@@ -783,6 +837,7 @@ public class Settings implements ISettings
 	{
 		return disablePrefix;
 	}
+	// #easteregg
 	private boolean disableSuffix = false;
 
 	private boolean _disableSuffix()
@@ -831,6 +886,18 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("cancel-afk-on-move", true);
 	}
+	private boolean cancelAfkOnInteract;
+
+	@Override
+	public boolean cancelAfkOnInteract()
+	{
+		return cancelAfkOnInteract;
+	}
+
+	private boolean _cancelAfkOnInteract()
+	{
+		return config.getBoolean("cancel-afk-on-interact", true);
+	}
 
 	@Override
 	public boolean areDeathMessagesEnabled()
@@ -856,7 +923,7 @@ public class Settings implements ISettings
 	{
 		return config.getBoolean("repair-enchanted", true);
 	}
-	
+
 	@Override
 	public boolean allowUnsafeEnchantments()
 	{
@@ -943,13 +1010,19 @@ public class Settings implements ISettings
 	{
 		this.metricsEnabled = metricsEnabled;
 	}
-	private boolean teleportInvulnerability;
+	private long teleportInvulnerabilityTime;
+
+	private long _getTeleportInvulnerability()
+	{
+		return config.getLong("teleport-invulnerability", 0) * 1000;
+	}
 
 	@Override
 	public long getTeleportInvulnerability()
 	{
-		return config.getLong("teleport-invulnerability", 0) * 1000;
+		return teleportInvulnerabilityTime;
 	}
+	private boolean teleportInvulnerability;
 
 	private boolean _isTeleportInvulnerability()
 	{
@@ -990,12 +1063,10 @@ public class Settings implements ISettings
 	@Override
 	public double getMaxFlySpeed()
 	{
-		double maxSpeed = config.getDouble("max-fly-speed", 1.0);
+		double maxSpeed = config.getDouble("max-fly-speed", 0.8);
 		return maxSpeed > 1.0 ? 1.0 : Math.abs(maxSpeed);
 	}
 
-	//This option does not exist in the config.yml because it wasn't yet implemented in bukkit
-	//The code was commented out in the /speed command
 	@Override
 	public double getMaxWalkSpeed()
 	{
@@ -1014,10 +1085,38 @@ public class Settings implements ISettings
 	{
 		return mailsPerMinute;
 	}
+	// #easteregg
+	private long economyLagWarning;
+
+	private long _getEconomyLagWarning()
+	{
+		// Default to 20ms
+		final long value = (long)(config.getDouble("economy-lag-warning", 20.0) * 1000000);
+		return value;
+	}
+
+	@Override
+	public long getEconomyLagWarning()
+	{
+		return economyLagWarning;
+	}
 
 	@Override
 	public long getMaxTempban()
 	{
 		return config.getLong("max-tempban-time", -1);
+	}
+
+	@Override
+	public int getMaxNickLength()
+	{
+		return config.getInt("max-nick-length", 30);
+	}
+
+	// #easteregg
+	public int getMaxUserCacheCount()
+	{
+		long count = Runtime.getRuntime().maxMemory() / 1024 / 96;
+		return config.getInt("max-user-cache-count", (int)count);
 	}
 }

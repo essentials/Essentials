@@ -1,16 +1,30 @@
 package com.earth2me.essentials.textreader;
 
-import com.earth2me.essentials.DescParseTickFormat;
-import com.earth2me.essentials.IEssentials;
+import com.earth2me.essentials.CommandSource;
+import com.earth2me.essentials.ExecuteTimer;
+import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.PlayerList;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import static com.earth2me.essentials.textreader.KeywordType.DISPLAYNAME;
+import static com.earth2me.essentials.textreader.KeywordType.PLAYER;
+import com.earth2me.essentials.utils.DateUtil;
+import com.earth2me.essentials.utils.DescParseTickFormat;
+import com.earth2me.essentials.utils.NumberUtil;
+import java.lang.management.ManagementFactory;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import net.ess3.api.IEssentials;
+import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -20,119 +34,310 @@ public class KeywordReplacer implements IText
 	private final transient IText input;
 	private final transient List<String> replaced;
 	private final transient IEssentials ess;
-	
-	public KeywordReplacer(final IText input, final CommandSender sender, final IEssentials ess)
+	private final transient boolean includePrivate;
+	private transient ExecuteTimer execTimer;
+	private final static Pattern KEYWORD = Pattern.compile("\\{([^\\{\\}]+)\\}");
+	private final static Pattern KEYWORDSPLIT = Pattern.compile("\\:");
+	private final EnumMap<KeywordType, Object> keywordCache = new EnumMap<KeywordType, Object>(KeywordType.class);
+
+	public KeywordReplacer(final IText input, final CommandSource sender, final IEssentials ess)
 	{
 		this.input = input;
 		this.replaced = new ArrayList<String>(this.input.getLines().size());
 		this.ess = ess;
+		this.includePrivate = true;
 		replaceKeywords(sender);
 	}
-	
-	private void replaceKeywords(final CommandSender sender)
+
+	public KeywordReplacer(final IText input, final CommandSource sender, final IEssentials ess, final boolean showPrivate)
 	{
-		String displayName, ipAddress, balance, mails, world;
-		String worlds, online, unique, playerlist, date, time;
-		String worldTime12, worldTime24, worldDate, plugins;
-		String userName, address, version;
-		if (sender instanceof Player)
+		this.input = input;
+		this.replaced = new ArrayList<String>(this.input.getLines().size());
+		this.ess = ess;
+		this.includePrivate = showPrivate;
+		replaceKeywords(sender);
+	}
+
+	private void replaceKeywords(final CommandSource sender)
+	{
+		execTimer = new ExecuteTimer();
+		execTimer.start();
+		User user = null;
+		if (sender.isPlayer())
 		{
-			final User user = ess.getUser(sender);
+			user = ess.getUser(sender.getPlayer());
+			//This is just so any displayname lookups below show the correct nickname
 			user.setDisplayNick();
-			displayName = user.getDisplayName();
-			userName = user.getName();
-			ipAddress = user.getAddress() == null || user.getAddress().getAddress() == null ? "" : user.getAddress().getAddress().toString();
-			address = user.getAddress() == null ? "" : user.getAddress().toString();
-			balance = Util.displayCurrency(user.getMoney(), ess);
-			mails = Integer.toString(user.getMails().size());
-			world = user.getLocation() == null || user.getLocation().getWorld() == null ? "" : user.getLocation().getWorld().getName();
-			worldTime12 = DescParseTickFormat.format12(user.getWorld() == null ? 0 : user.getWorld().getTime());
-			worldTime24 = DescParseTickFormat.format24(user.getWorld() == null ? 0 : user.getWorld().getTime());
-			worldDate = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(DescParseTickFormat.ticksToDate(user.getWorld() == null ? 0 : user.getWorld().getFullTime()));
 		}
-		else
-		{
-			displayName = ipAddress = balance = mails = world = worldTime12 = worldTime24 = worldDate = "";
-		}
-
-		int playerHidden = 0;
-		for (Player p : ess.getServer().getOnlinePlayers())
-		{
-			if (ess.getUser(p).isHidden())
-			{
-				playerHidden++;
-			}
-		}
-		online = Integer.toString(ess.getServer().getOnlinePlayers().length - playerHidden);
-		unique = Integer.toString(ess.getUserMap().getUniqueUsers());
-
-		final StringBuilder worldsBuilder = new StringBuilder();
-		for (World w : ess.getServer().getWorlds())
-		{
-			if (worldsBuilder.length() > 0)
-			{
-				worldsBuilder.append(", ");
-			}
-			worldsBuilder.append(w.getName());
-		}
-		worlds = worldsBuilder.toString();
-
-		final StringBuilder playerlistBuilder = new StringBuilder();
-		for (Player p : ess.getServer().getOnlinePlayers())
-		{
-			if (ess.getUser(p).isHidden())
-			{
-				continue;
-			}
-			if (playerlistBuilder.length() > 0)
-			{
-				playerlistBuilder.append(", ");
-			}
-			playerlistBuilder.append(p.getDisplayName());
-		}
-		playerlist = playerlistBuilder.toString();
-
-		final StringBuilder pluginlistBuilder = new StringBuilder();
-		for (Plugin p : ess.getServer().getPluginManager().getPlugins())
-		{
-			if (pluginlistBuilder.length() > 0)
-			{
-				pluginlistBuilder.append(", ");
-			}
-			pluginlistBuilder.append(p.getDescription().getName());
-		}
-		plugins = pluginlistBuilder.toString();
-
-		date = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(new Date());
-		time = DateFormat.getTimeInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(new Date());
-
-		version = ess.getServer().getVersion();
+		execTimer.mark("User Grab");
 
 		for (int i = 0; i < input.getLines().size(); i++)
 		{
 			String line = input.getLines().get(i);
+			final Matcher matcher = KEYWORD.matcher(line);
 
-			line = line.replace("{PLAYER}", displayName);
-			line = line.replace("{DISPLAYNAME}", displayName);
-			line = line.replace("{USERNAME}", displayName);
-			line = line.replace("{IP}", ipAddress);
-			line = line.replace("{ADDRESS}", ipAddress);
-			line = line.replace("{BALANCE}", balance);
-			line = line.replace("{MAILS}", mails);
-			line = line.replace("{WORLD}", world);
-			line = line.replace("{ONLINE}", online);
-			line = line.replace("{UNIQUE}", unique);
-			line = line.replace("{WORLDS}", worlds);
-			line = line.replace("{PLAYERLIST}", playerlist);
-			line = line.replace("{TIME}", time);
-			line = line.replace("{DATE}", date);
-			line = line.replace("{WORLDTIME12}", worldTime12);
-			line = line.replace("{WORLDTIME24}", worldTime24);
-			line = line.replace("{WORLDDATE}", worldDate);
-			line = line.replace("{PLUGINS}", plugins);
-			line = line.replace("{VERSION}", version);
+			while (matcher.find())
+			{
+				final String fullMatch = matcher.group(0);
+				final String keywordMatch = matcher.group(1);
+				final String[] matchTokens = KEYWORDSPLIT.split(keywordMatch);
+				line = replaceLine(line, fullMatch, matchTokens, user);
+			}
 			replaced.add(line);
 		}
+
+		execTimer.mark("Text Replace");
+		final String timeroutput = execTimer.end();
+		if (ess.getSettings().isDebug())
+		{
+			ess.getLogger().log(Level.INFO, "Keyword Replacer " + timeroutput);
+		}
+	}
+
+	private String replaceLine(String line, final String fullMatch, final String[] matchTokens, final User user)
+	{
+		final String keyword = matchTokens[0];
+		try
+		{
+			String replacer = null;
+			KeywordType validKeyword = KeywordType.valueOf(keyword);
+			if (validKeyword.getType().equals(KeywordCachable.CACHEABLE) && keywordCache.containsKey(validKeyword))
+			{
+				replacer = keywordCache.get(validKeyword).toString();
+			}
+			else if (validKeyword.getType().equals(KeywordCachable.SUBVALUE))
+			{
+				String subKeyword = "";
+				if (matchTokens.length > 1)
+				{
+					subKeyword = matchTokens[1].toLowerCase(Locale.ENGLISH);
+				}
+
+				if (keywordCache.containsKey(validKeyword))
+				{
+					Map<String, String> values = (Map<String, String>)keywordCache.get(validKeyword);
+					if (values.containsKey(subKeyword))
+					{
+						replacer = values.get(subKeyword);
+					}
+				}
+			}
+
+			if (validKeyword.isPrivate() && !includePrivate)
+			{
+				replacer = "";
+			}
+
+			if (replacer == null)
+			{
+				replacer = "";
+				switch (validKeyword)
+				{
+				case PLAYER:
+				case DISPLAYNAME:
+					if (user != null)
+					{
+						replacer = user.getDisplayName();
+					}
+					break;
+				case USERNAME:
+					if (user != null)
+					{
+						replacer = user.getName();
+					}
+					break;
+				case BALANCE:
+					if (user != null)
+					{
+						replacer = NumberUtil.displayCurrency(user.getMoney(), ess);
+					}
+					break;
+				case MAILS:
+					if (user != null)
+					{
+						replacer = Integer.toString(user.getMails().size());
+					}
+					break;
+				case WORLD:
+					if (user != null)
+					{
+						final Location location = user.getLocation();
+						replacer = location == null || location.getWorld() == null ? "" : location.getWorld().getName();
+					}
+					break;
+				case ONLINE:
+					int playerHidden = 0;
+					for (Player p : ess.getServer().getOnlinePlayers())
+					{
+						if (ess.getUser(p).isHidden())
+						{
+							playerHidden++;
+						}
+					}
+					replacer = Integer.toString(ess.getServer().getOnlinePlayers().length - playerHidden);
+					break;
+				case UNIQUE:
+					replacer = Integer.toString(ess.getUserMap().getUniqueUsers());
+					break;
+				case WORLDS:
+					final StringBuilder worldsBuilder = new StringBuilder();
+					for (World w : ess.getServer().getWorlds())
+					{
+						if (worldsBuilder.length() > 0)
+						{
+							worldsBuilder.append(", ");
+						}
+						worldsBuilder.append(w.getName());
+					}
+					replacer = worldsBuilder.toString();
+					break;
+				case PLAYERLIST:
+					final Map<String, String> outputList;
+					if (keywordCache.containsKey(validKeyword))
+					{
+						outputList = (Map<String, String>)keywordCache.get(validKeyword);
+					}
+					else
+					{
+						final boolean showHidden;
+						if (user == null)
+						{
+							showHidden = true;
+						}
+						else
+						{
+							showHidden = user.isAuthorized("essentials.list.hidden") || user.isAuthorized("essentials.vanish.interact");
+						}
+
+						//First lets build the per group playerlist
+						final Map<String, List<User>> playerList = PlayerList.getPlayerLists(ess, showHidden);
+						outputList = new HashMap<String, String>();
+						for (String groupName : playerList.keySet())
+						{
+							final List<User> groupUsers = playerList.get(groupName);
+							if (groupUsers != null && !groupUsers.isEmpty())
+							{
+								outputList.put(groupName, PlayerList.listUsers(ess, groupUsers, " "));
+							}
+						}
+
+						//Now lets build the all user playerlist
+						final StringBuilder playerlistBuilder = new StringBuilder();
+						for (Player p : ess.getServer().getOnlinePlayers())
+						{
+							if (ess.getUser(p).isHidden())
+							{
+								continue;
+							}
+							if (playerlistBuilder.length() > 0)
+							{
+								playerlistBuilder.append(", ");
+							}
+							playerlistBuilder.append(p.getDisplayName());
+						}
+						outputList.put("", playerlistBuilder.toString());
+						keywordCache.put(validKeyword, outputList);
+					}
+
+					//Now thats all done, output the one we want and cache the rest.
+					if (matchTokens.length == 1)
+					{
+						replacer = outputList.get("");
+					}
+					else if (outputList.containsKey(matchTokens[1].toLowerCase(Locale.ENGLISH)))
+					{
+						replacer = outputList.get(matchTokens[1].toLowerCase(Locale.ENGLISH));
+					}
+					else if (matchTokens.length > 2)
+					{
+						replacer = matchTokens[2];
+					}
+
+					keywordCache.put(validKeyword, outputList);
+					break;
+				case TIME:
+					replacer = DateFormat.getTimeInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(new Date());
+					break;
+				case DATE:
+					replacer = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(new Date());
+					break;
+				case WORLDTIME12:
+					if (user != null)
+					{
+						replacer = DescParseTickFormat.format12(user.getWorld() == null ? 0 : user.getWorld().getTime());
+					}
+					break;
+				case WORLDTIME24:
+					if (user != null)
+					{
+						replacer = DescParseTickFormat.format24(user.getWorld() == null ? 0 : user.getWorld().getTime());
+					}
+					break;
+				case WORLDDATE:
+					if (user != null)
+					{
+						replacer = DateFormat.getDateInstance(DateFormat.MEDIUM, ess.getI18n().getCurrentLocale()).format(DescParseTickFormat.ticksToDate(user.getWorld() == null ? 0 : user.getWorld().getFullTime()));
+					}
+					break;
+				case COORDS:
+					if (user != null)
+					{
+						final Location location = user.getLocation();
+						replacer = _("coordsKeyword", location.getBlockX(), location.getBlockY(), location.getBlockZ());
+					}
+					break;
+				case TPS:
+					replacer = NumberUtil.formatDouble(ess.getTimer().getAverageTPS());
+					break;
+				case UPTIME:
+					replacer = DateUtil.formatDateDiff(ManagementFactory.getRuntimeMXBean().getStartTime());
+					break;
+				case IP:
+					if (user != null)
+					{
+						replacer = user.getAddress() == null || user.getAddress().getAddress() == null ? "" : user.getAddress().getAddress().toString();
+					}
+					break;
+				case ADDRESS:
+					if (user != null)
+					{
+						replacer = user.getAddress() == null ? "" : user.getAddress().toString();
+					}
+					break;
+				case PLUGINS:
+					final StringBuilder pluginlistBuilder = new StringBuilder();
+					for (Plugin p : ess.getServer().getPluginManager().getPlugins())
+					{
+						if (pluginlistBuilder.length() > 0)
+						{
+							pluginlistBuilder.append(", ");
+						}
+						pluginlistBuilder.append(p.getDescription().getName());
+					}
+					replacer = pluginlistBuilder.toString();
+					break;
+				case VERSION:
+					replacer = ess.getServer().getVersion();
+					break;
+				default:
+					replacer = "N/A";
+					break;
+				}
+
+				//If this is just a regular keyword, lets throw it into the cache
+				if (validKeyword.getType().equals(KeywordCachable.CACHEABLE))
+				{
+					keywordCache.put(validKeyword, replacer);
+				}
+			}
+
+			line = line.replace(fullMatch, replacer);
+		}
+		catch (IllegalArgumentException ex)
+		{
+		}
+
+		return line;
 	}
 
 	@Override
@@ -152,4 +357,63 @@ public class KeywordReplacer implements IText
 	{
 		return input.getBookmarks();
 	}
+}
+
+//When adding a keyword here, you also need to add the implementation above
+enum KeywordType
+{
+	PLAYER(KeywordCachable.CACHEABLE),
+	DISPLAYNAME(KeywordCachable.CACHEABLE),
+	USERNAME(KeywordCachable.NOTCACHEABLE),
+	BALANCE(KeywordCachable.CACHEABLE),
+	MAILS(KeywordCachable.CACHEABLE),
+	WORLD(KeywordCachable.CACHEABLE),
+	ONLINE(KeywordCachable.CACHEABLE),
+	UNIQUE(KeywordCachable.CACHEABLE),
+	WORLDS(KeywordCachable.CACHEABLE),
+	PLAYERLIST(KeywordCachable.SUBVALUE, true),
+	TIME(KeywordCachable.CACHEABLE),
+	DATE(KeywordCachable.CACHEABLE),
+	WORLDTIME12(KeywordCachable.CACHEABLE),
+	WORLDTIME24(KeywordCachable.CACHEABLE),
+	WORLDDATE(KeywordCachable.CACHEABLE),
+	COORDS(KeywordCachable.CACHEABLE),
+	TPS(KeywordCachable.CACHEABLE),
+	UPTIME(KeywordCachable.CACHEABLE),
+	IP(KeywordCachable.CACHEABLE, true),
+	ADDRESS(KeywordCachable.CACHEABLE, true),
+	PLUGINS(KeywordCachable.CACHEABLE, true),
+	VERSION(KeywordCachable.CACHEABLE, true);
+	private final KeywordCachable type;
+	private final boolean isPrivate;
+
+	KeywordType(KeywordCachable type)
+	{
+		this.type = type;
+		this.isPrivate = false;
+	}
+
+	KeywordType(KeywordCachable type, boolean isPrivate)
+	{
+		this.type = type;
+		this.isPrivate = isPrivate;
+	}
+
+	public KeywordCachable getType()
+	{
+		return type;
+	}
+
+	public boolean isPrivate()
+	{
+		return isPrivate;
+	}
+}
+
+
+enum KeywordCachable
+{
+	CACHEABLE, // This keyword can be cached as a string
+	SUBVALUE, // This keyword can be cached as a map
+	NOTCACHEABLE; // This keyword should never be cached
 }

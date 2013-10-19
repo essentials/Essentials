@@ -1,13 +1,15 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.DateUtil;
+import com.earth2me.essentials.utils.NumberUtil;
 import java.lang.management.ManagementFactory;
 import java.util.List;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandgc extends EssentialsCommand
@@ -18,15 +20,15 @@ public class Commandgc extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
-		float tps = ess.getTimer().getAverageTPS();
+		double tps = ess.getTimer().getAverageTPS();
 		ChatColor color;
-		if (tps >= 18)
+		if (tps >= 18.0)
 		{
 			color = ChatColor.GREEN;
 		}
-		else if (tps >= 15)
+		else if (tps >= 15.0)
 		{
 			color = ChatColor.YELLOW;
 		}
@@ -35,8 +37,8 @@ public class Commandgc extends EssentialsCommand
 			color = ChatColor.RED;
 		}
 
-		sender.sendMessage(_("uptime", Util.formatDateDiff(ManagementFactory.getRuntimeMXBean().getStartTime())));
-		sender.sendMessage(_("tps", "" + color + tps));
+		sender.sendMessage(_("uptime", DateUtil.formatDateDiff(ManagementFactory.getRuntimeMXBean().getStartTime())));
+		sender.sendMessage(_("tps", "" + color + NumberUtil.formatDouble(tps)));
 		sender.sendMessage(_("gcmax", (Runtime.getRuntime().maxMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gctotal", (Runtime.getRuntime().totalMemory() / 1024 / 1024)));
 		sender.sendMessage(_("gcfree", (Runtime.getRuntime().freeMemory() / 1024 / 1024)));
@@ -54,8 +56,14 @@ public class Commandgc extends EssentialsCommand
 				worldType = "The End";
 				break;
 			}
+			
+			int tileEntities = 0;
+			
+			for (Chunk chunk : w.getLoadedChunks()) {
+				tileEntities += chunk.getTileEntities().length;
+			}
 
-			sender.sendMessage(_("gcWorld", worldType, w.getName(), w.getLoadedChunks().length, w.getEntities().size()));
+			sender.sendMessage(_("gcWorld", worldType, w.getName(), w.getLoadedChunks().length, w.getEntities().size(), tileEntities));
 		}
 	}
 }

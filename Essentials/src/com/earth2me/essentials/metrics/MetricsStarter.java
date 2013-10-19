@@ -1,12 +1,13 @@
 package com.earth2me.essentials.metrics;
 
-import com.earth2me.essentials.IEssentials;
 import com.earth2me.essentials.metrics.Metrics.Graph;
 import com.earth2me.essentials.metrics.Metrics.Plotter;
 import com.earth2me.essentials.register.payment.Method;
 import com.earth2me.essentials.register.payment.methods.VaultEco;
+import com.earth2me.essentials.signs.EssentialsSign;
 import java.util.Locale;
 import java.util.logging.Level;
+import net.ess3.api.IEssentials;
 import org.bukkit.configuration.ConfigurationSection;
 
 
@@ -46,7 +47,7 @@ public class MetricsStarter implements Runnable
 				else
 				{
 					ess.getLogger().info("This plugin collects minimal statistic data and sends it to http://metrics.essentials3.net.");
-					ess.getLogger().info("You can opt out by running /essentials opt-out");
+					ess.getLogger().info("You can opt out, disabling metrics for all plugins, by running /essentials opt-out");
 					ess.getLogger().info("This will start 5 minutes after the first admin/op joins.");
 					start = false;
 				}
@@ -101,8 +102,11 @@ public class MetricsStarter implements Runnable
 				@Override
 				public int getValue()
 				{
-					ConfigurationSection kits =  ess.getSettings().getKits();
-					if (kits == null) { return 0; }
+					ConfigurationSection kits = ess.getSettings().getKits();
+					if (kits == null)
+					{
+						return 0;
+					}
 					return kits.getKeys(false).size();
 				}
 			});
@@ -111,7 +115,7 @@ public class MetricsStarter implements Runnable
 				@Override
 				public int getValue()
 				{
-					return ess.getWarps().getWarpNames().size();
+					return ess.getWarps().getCount();
 				}
 			});
 
@@ -130,7 +134,7 @@ public class MetricsStarter implements Runnable
 			{
 				enabledGraph.addPlotter(new SimplePlotter("Kits"));
 			}
-			if (ess.getWarps().getWarpNames().size() > 0)
+			if (ess.getWarps().getCount() > 0)
 			{
 				enabledGraph.addPlotter(new SimplePlotter("Warps"));
 			}
@@ -188,6 +192,12 @@ public class MetricsStarter implements Runnable
 				depGraph.addPlotter(new SimplePlotter(method.getName() + " " + version));
 			}
 			depGraph.addPlotter(new SimplePlotter(ess.getPermissionsHandler().getName()));
+
+			final Graph signGraph = metrics.createGraph("Signs");
+			for (EssentialsSign sign : ess.getSettings().enabledSigns())
+			{
+				signGraph.addPlotter(new SimplePlotter(sign.getName()));
+			}
 
 			metrics.start();
 

@@ -3,24 +3,29 @@ package com.earth2me.essentials;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.commands.IEssentialsCommand;
 import com.earth2me.essentials.register.payment.Method;
+import com.earth2me.essentials.utils.DateUtil;
+import com.earth2me.essentials.utils.FormatUtil;
+import com.earth2me.essentials.utils.NumberUtil;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IEssentials;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 
-public class User extends UserData implements Comparable<User>, IReplyTo, IUser
+public class User extends UserData implements Comparable<User>, IReplyTo, net.ess3.api.IUser
 {
-	private CommandSender replyTo = null;
-	private transient User teleportRequester;
+	private CommandSource replyTo = null;
+	private transient String teleportRequester;
 	private transient boolean teleportRequestHere;
+	private transient Location teleportLocation;
 	private transient boolean vanished;
 	private transient final Teleport teleport;
 	private transient long teleportRequestTime;
@@ -42,6 +47,10 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		if (isAfk())
 		{
 			afkPosition = getLocation();
+		}
+		if (isOnline())
+		{
+			lastOnlineActivity = System.currentTimeMillis();
 		}
 	}
 
@@ -101,6 +110,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		}
 	}
 
+	@Override
 	public void healCooldown() throws Exception
 	{
 		final Calendar now = new GregorianCalendar();
@@ -113,89 +123,92 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 			cooldownTime.add(Calendar.MILLISECOND, (int)((cooldown * 1000.0) % 1000.0));
 			if (cooldownTime.after(now) && !isAuthorized("essentials.heal.cooldown.bypass"))
 			{
-				throw new Exception(_("timeBeforeHeal", Util.formatDateDiff(cooldownTime.getTimeInMillis())));
+				throw new Exception(_("timeBeforeHeal", DateUtil.formatDateDiff(cooldownTime.getTimeInMillis())));
 			}
 		}
 		setLastHealTimestamp(now.getTimeInMillis());
 	}
 
 	@Override
-	public void giveMoney(final double value)
+	public void giveMoney(final BigDecimal value)
 	{
 		giveMoney(value, null);
 	}
 
-	public void giveMoney(final double value, final CommandSender initiator)
+	@Override
+	public void giveMoney(final BigDecimal value, final CommandSource initiator)
 	{
-		if (value == 0.0d)
+		if (value.signum() == 0)
 		{
 			return;
 		}
-		setMoney(getMoney() + value);
-		sendMessage(_("addedToAccount", Util.displayCurrency(value, ess)));
+		setMoney(getMoney().add(value));
+		sendMessage(_("addedToAccount", NumberUtil.displayCurrency(value, ess)));
 		if (initiator != null)
 		{
-			initiator.sendMessage(_("addedToOthersAccount", Util.displayCurrency(value, ess), this.getDisplayName(), Util.displayCurrency(getMoney(), ess)));
+			initiator.sendMessage(_("addedToOthersAccount", NumberUtil.displayCurrency(value, ess), this.getDisplayName(), NumberUtil.displayCurrency(getMoney(), ess)));
 		}
 	}
 
-	public void payUser(final User reciever, final double value) throws Exception
+	@Override
+	public void payUser(final User reciever, final BigDecimal value) throws ChargeException
 	{
-		if (value == 0.0d)
+		if (value.signum() == 0)
 		{
 			return;
 		}
 		if (canAfford(value))
 		{
-			setMoney(getMoney() - value);
-			reciever.setMoney(reciever.getMoney() + value);
-			sendMessage(_("moneySentTo", Util.displayCurrency(value, ess), reciever.getDisplayName()));
-			reciever.sendMessage(_("moneyRecievedFrom", Util.displayCurrency(value, ess), getDisplayName()));
+			setMoney(getMoney().subtract(value));
+			reciever.setMoney(reciever.getMoney().add(value));
+			sendMessage(_("moneySentTo", NumberUtil.displayCurrency(value, ess), reciever.getDisplayName()));
+			reciever.sendMessage(_("moneyRecievedFrom", NumberUtil.displayCurrency(value, ess), getDisplayName()));
 		}
 		else
 		{
-			throw new Exception(_("notEnoughMoney"));
+			throw new ChargeException(_("notEnoughMoney"));
 		}
 	}
 
 	@Override
-	public void takeMoney(final double value)
+	public void takeMoney(final BigDecimal value)
 	{
 		takeMoney(value, null);
 	}
 
-	public void takeMoney(final double value, final CommandSender initiator)
+	@Override
+	public void takeMoney(final BigDecimal value, final CommandSource initiator)
 	{
-		if (value == 0.0d)
+		if (value.signum() == 0)
 		{
 			return;
 		}
-		setMoney(getMoney() - value);
-		sendMessage(_("takenFromAccount", Util.displayCurrency(value, ess)));
+		setMoney(getMoney().subtract(value));
+		sendMessage(_("takenFromAccount", NumberUtil.displayCurrency(value, ess)));
 		if (initiator != null)
 		{
-			initiator.sendMessage(_("takenFromOthersAccount", Util.displayCurrency(value, ess), this.getDisplayName(), Util.displayCurrency(getMoney(), ess)));
+			initiator.sendMessage(_("takenFromOthersAccount", NumberUtil.displayCurrency(value, ess), this.getDisplayName(), NumberUtil.displayCurrency(getMoney(), ess)));
 		}
 	}
 
 	@Override
-	public boolean canAfford(final double cost)
+	public boolean canAfford(final BigDecimal cost)
 	{
 		return canAfford(cost, true);
 	}
 
-	public boolean canAfford(final double cost, final boolean permcheck)
+	public boolean canAfford(final BigDecimal cost, final boolean permcheck)
 	{
-		if (cost <= 0.0d)
+		if (cost.signum() <= 0)
 		{
 			return true;
 		}
-		final double mon = getMoney();
+		final BigDecimal remainingBalance = getMoney().subtract(cost);
 		if (!permcheck || isAuthorized("essentials.eco.loan"))
 		{
-			return (mon - cost) >= ess.getSettings().getMinMoney();
+			return (remainingBalance.compareTo(ess.getSettings().getMinMoney()) >= 0);
 		}
-		return cost <= mon;
+		return (remainingBalance.signum() >= 0);
 	}
 
 	public void dispose()
@@ -204,48 +217,9 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	}
 
 	@Override
-	public void setReplyTo(final CommandSender user)
-	{
-		replyTo = user;
-	}
-
-	@Override
-	public CommandSender getReplyTo()
-	{
-		return replyTo;
-	}
-
-	@Override
-	public int compareTo(final User other)
-	{
-		return Util.stripFormat(this.getDisplayName()).compareToIgnoreCase(Util.stripFormat(other.getDisplayName()));
-	}
-
-	@Override
-	public boolean equals(final Object object)
-	{
-		if (!(object instanceof User))
-		{
-			return false;
-		}
-		return this.getName().equalsIgnoreCase(((User)object).getName());
-
-	}
-
-	@Override
-	public int hashCode()
-	{
-		return this.getName().hashCode();
-	}
-
 	public Boolean canSpawnItem(final int itemId)
 	{
 		return !ess.getSettings().itemSpawnBlacklist().contains(itemId);
-	}
-
-	public Location getHome() throws Exception
-	{
-		return getHome(getHomes().get(0));
 	}
 
 	@Override
@@ -254,14 +228,29 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		setLastLocation(getLocation());
 	}
 
+	@Override
+	public void setLogoutLocation()
+	{
+		setLogoutLocation(getLocation());
+	}
+
+	@Override
 	public void requestTeleport(final User player, final boolean here)
 	{
 		teleportRequestTime = System.currentTimeMillis();
-		teleportRequester = player;
+		teleportRequester = player == null ? null : player.getName();
 		teleportRequestHere = here;
+		if (player == null)
+		{
+			teleportLocation = null;
+		}
+		else
+		{
+			teleportLocation = here ? player.getLocation() : this.getLocation();
+		}
 	}
 
-	public User getTeleportRequest()
+	public String getTeleportRequest()
 	{
 		return teleportRequester;
 	}
@@ -271,19 +260,25 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		return teleportRequestHere;
 	}
 
+	public Location getTpRequestLocation()
+	{
+		return teleportLocation;
+	}
+
 	public String getNick(final boolean longnick)
 	{
 		final StringBuilder prefix = new StringBuilder();
 		String nickname;
 		String suffix = "";
 		final String nick = getNickname();
-		if (ess.getSettings().isCommandDisabled("nick") || nick == null || nick.isEmpty() || nick.equals(getName()))
+		if (ess.getSettings().isCommandDisabled("nick") || nick == null || nick.isEmpty() || nick.equalsIgnoreCase(getName()))
 		{
 			nickname = getName();
 		}
 		else
 		{
 			nickname = ess.getSettings().getNicknamePrefix() + nick;
+			suffix = "§r";
 		}
 
 		if (isOp())
@@ -326,11 +321,11 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		}
 		if (!longnick && output.length() > 16)
 		{
-			output = Util.lastCode(strPrefix) + nickname;
+			output = FormatUtil.lastCode(strPrefix) + nickname;
 		}
 		if (!longnick && output.length() > 16)
 		{
-			output = Util.lastCode(strPrefix) + nickname.substring(0, 14);
+			output = FormatUtil.lastCode(strPrefix) + nickname.substring(0, 14);
 		}
 		if (output.charAt(output.length() - 1) == '§')
 		{
@@ -385,8 +380,28 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	}
 
 	@Override
-	public double getMoney()
+	public BigDecimal getMoney()
 	{
+		final long start = System.nanoTime();
+		final BigDecimal value = _getMoney();
+		final long elapsed = System.nanoTime() - start;
+		if (elapsed > ess.getSettings().getEconomyLagWarning())
+		{
+			ess.getLogger().log(Level.INFO, "Lag Notice - Slow Economy Response - Request took over {0}ms!", elapsed / 1000000.0);
+		}
+		return value;
+	}
+
+	private BigDecimal _getMoney()
+	{
+		if (ess.getSettings().isEcoDisabled())
+		{
+			if (ess.getSettings().isDebug())
+			{
+				ess.getLogger().info("Internal economy functions disabled, aborting balance check.");
+			}
+			return BigDecimal.ZERO;
+		}
 		if (ess.getPaymentMethod().hasMethod())
 		{
 			try
@@ -397,7 +412,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 					throw new Exception();
 				}
 				final Method.MethodAccount account = ess.getPaymentMethod().getMethod().getAccount(this.getName());
-				return account.balance();
+				return BigDecimal.valueOf(account.balance());
 			}
 			catch (Throwable ex)
 			{
@@ -407,8 +422,16 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	}
 
 	@Override
-	public void setMoney(final double value)
+	public void setMoney(final BigDecimal value)
 	{
+		if (ess.getSettings().isEcoDisabled())
+		{
+			if (ess.getSettings().isDebug())
+			{
+				ess.getLogger().info("Internal economy functions disabled, aborting balance change.");
+			}
+			return;
+		}
 		if (ess.getPaymentMethod().hasMethod())
 		{
 			try
@@ -419,7 +442,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 					throw new Exception();
 				}
 				final Method.MethodAccount account = ess.getPaymentMethod().getMethod().getAccount(this.getName());
-				account.set(value);
+				account.set(value.doubleValue());
 			}
 			catch (Throwable ex)
 			{
@@ -429,8 +452,12 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		Trade.log("Update", "Set", "API", getName(), new Trade(value, ess), null, null, null, ess);
 	}
 
-	public void updateMoneyCache(final double value)
+	public void updateMoneyCache(final BigDecimal value)
 	{
+		if (ess.getSettings().isEcoDisabled())
+		{
+			return;
+		}
 		if (ess.getPaymentMethod().hasMethod() && super.getMoney() != value)
 		{
 			super.setMoney(value);
@@ -466,6 +493,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		return hidden;
 	}
 
+	@Override
 	public void setHidden(final boolean hidden)
 	{
 		this.hidden = hidden;
@@ -530,7 +558,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 
 	public void updateActivity(final boolean broadcast)
 	{
-		if (isAfk())
+		if (isAfk() && ess.getSettings().cancelAfkOnInteract())
 		{
 			setAfk(false);
 			if (broadcast && !isHidden())
@@ -562,7 +590,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 				final User user = ess.getUser(player);
 				if (user.isAuthorized("essentials.kick.notify"))
 				{
-					player.sendMessage(_("playerKicked", Console.NAME, getName(), kickReason));
+					user.sendMessage(_("playerKicked", Console.NAME, getName(), kickReason));
 				}
 			}
 		}
@@ -605,11 +633,13 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		return ess.getPermissionsHandler().getGroup(base);
 	}
 
+	@Override
 	public boolean inGroup(final String group)
 	{
 		return ess.getPermissionsHandler().inGroup(base, group);
 	}
 
+	@Override
 	public boolean canBuild()
 	{
 		if (isOp())
@@ -645,6 +675,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	}
 	private transient long teleportInvulnerabilityTimestamp = 0;
 
+	@Override
 	public void enableInvulnerabilityAfterTeleport()
 	{
 		final long time = ess.getSettings().getTeleportInvulnerability();
@@ -654,6 +685,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		}
 	}
 
+	@Override
 	public void resetInvulnerabilityAfterTeleport()
 	{
 		if (teleportInvulnerabilityTimestamp != 0
@@ -668,11 +700,13 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 		return teleportInvulnerabilityTimestamp != 0 && teleportInvulnerabilityTimestamp >= System.currentTimeMillis();
 	}
 
+	@Override
 	public boolean isVanished()
 	{
 		return vanished;
 	}
 
+	@Override
 	public void setVanished(final boolean set)
 	{
 		vanished = set;
@@ -705,12 +739,6 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 				this.removePotionEffect(PotionEffectType.INVISIBILITY);
 			}
 		}
-	}
-
-	public void toggleVanished()
-	{
-		final boolean set = !vanished;
-		this.setVanished(set);
 	}
 
 	public boolean checkSignThrottle()
@@ -758,5 +786,54 @@ public class User extends UserData implements Comparable<User>, IReplyTo, IUser
 	public void setRecipeSee(boolean recipeSee)
 	{
 		this.recipeSee = recipeSee;
+	}
+
+	@Override
+	public void sendMessage(String message)
+	{
+		if (!message.isEmpty())
+		{
+			base.sendMessage(message);
+		}
+	}
+
+	@Override
+	public void setReplyTo(final CommandSource user)
+	{
+		replyTo = user;
+	}
+
+	@Override
+	public CommandSource getReplyTo()
+	{
+		return replyTo;
+	}
+
+	@Override
+	public int compareTo(final User other)
+	{
+		return FormatUtil.stripFormat(this.getDisplayName()).compareToIgnoreCase(FormatUtil.stripFormat(other.getDisplayName()));
+	}
+
+	@Override
+	public boolean equals(final Object object)
+	{
+		if (!(object instanceof User))
+		{
+			return false;
+		}
+		return this.getName().equalsIgnoreCase(((User)object).getName());
+
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return this.getName().hashCode();
+	}
+
+	public CommandSource getSource()
+	{
+		return new CommandSource(getBase());
 	}
 }

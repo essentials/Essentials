@@ -1,8 +1,8 @@
 package com.earth2me.essentials.antibuild;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
 import com.earth2me.essentials.User;
+import net.ess3.api.IEssentials;
 import java.util.logging.Level;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -151,7 +151,7 @@ public class EssentialsAntiBuildListener implements Listener
 		final Entity entity = event.getRemover();
 		if (entity instanceof Player)
 		{
-			final User user = ess.getUser(entity);
+			final User user = ess.getUser((Player)entity);
 			final EntityType type = event.getEntity().getType();
 			final boolean warn = ess.getSettings().warnOnBuildDisallow();
 			if (prot.getSettingBool(AntiBuildConfig.disable_build) && !user.canBuild() && !user.isAuthorized("essentials.build"))
@@ -259,7 +259,7 @@ public class EssentialsAntiBuildListener implements Listener
 
 		if (entity instanceof Player)
 		{
-			final User user = ess.getUser(entity);
+			final User user = ess.getUser((Player)entity);
 			final ItemStack item = event.getRecipe().getResult();
 
 			if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
@@ -311,6 +311,16 @@ public class EssentialsAntiBuildListener implements Listener
 					user.sendMessage(_("antiBuildDrop", item.getType().toString()));
 				}
 			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onBlockDispense(final BlockDispenseEvent event)
+	{
+		final ItemStack item = event.getItem();
+		if (prot.checkProtectionItems(AntiBuildConfig.blacklist_dispenser, item.getTypeId()))
+		{
+			event.setCancelled(true);
 		}
 	}
 }

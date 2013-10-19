@@ -1,9 +1,9 @@
 package com.earth2me.essentials.signs;
 
 import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
+import net.ess3.api.IEssentials;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +40,7 @@ public class SignFree extends EssentialsSign
 		}
 
 		item.setAmount(item.getType().getMaxStackSize());
-		Inventory invent = ess.getServer().createInventory(player, 36);
+		Inventory invent = ess.getServer().createInventory(player.getBase(), 36);
 		for (int i = 0; i < 36; i++) {
 			invent.addItem(item);
 		}

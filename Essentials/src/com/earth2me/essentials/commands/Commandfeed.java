@@ -1,14 +1,14 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
-import java.util.List;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 
-public class Commandfeed extends EssentialsCommand
+public class Commandfeed extends EssentialsLoopCommand
 {
 	public Commandfeed()
 	{
@@ -18,35 +18,58 @@ public class Commandfeed extends EssentialsCommand
 	@Override
 	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
+		if (!user.isAuthorized("essentials.feed.cooldown.bypass"))
+		{
+			user.healCooldown();
+		}
+
 		if (args.length > 0 && user.isAuthorized("essentials.feed.others"))
 		{
-			feedOtherPlayers(server,user,args[0]);
-		}
-		else
-		{
-			user.setFoodLevel(20);
-			user.setSaturation(10);
-			user.sendMessage(_("feed"));
-		}
-	}
-	
-		private void feedOtherPlayers(final Server server, final CommandSender sender, final String name)
-	{
-		final List<Player> players = server.matchPlayer(name);
-		if (players.isEmpty())
-		{
-			sender.sendMessage(_("playerNotFound"));
+			loopOnlinePlayers(server, user.getSource(), true, args[0], null);
 			return;
 		}
-		for (Player player : players)
+
+		feedPlayer(user.getBase());
+		user.sendMessage(_("feed"));
+	}
+
+	@Override
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
+	{
+		if (args.length < 1)
 		{
-			if (ess.getUser(player).isHidden())
-			{
-				continue;
-			}
-			player.setFoodLevel(20);
-			player.setSaturation(10);
+			throw new NotEnoughArgumentsException();
+		}
+
+		loopOnlinePlayers(server, sender, true, args[0], null);
+	}
+
+	@Override
+	protected void updatePlayer(final Server server, final CommandSource sender, final User player, final String[] args) throws PlayerExemptException
+	{
+		try
+		{
+			feedPlayer(player.getBase());
 			sender.sendMessage(_("feedOther", player.getDisplayName()));
 		}
+		catch (QuietAbortException e)
+		{
+			//Handle Quietly
+		}
+	}
+
+	private void feedPlayer(final Player player) throws QuietAbortException
+	{
+		final int amount = 30;
+
+		final FoodLevelChangeEvent flce = new FoodLevelChangeEvent(player, amount);
+		ess.getServer().getPluginManager().callEvent(flce);
+		if (flce.isCancelled())
+		{
+			throw new QuietAbortException();
+		}
+
+		player.setFoodLevel(flce.getFoodLevel() > 20 ? 20 : flce.getFoodLevel());
+		player.setSaturation(10);
 	}
 }

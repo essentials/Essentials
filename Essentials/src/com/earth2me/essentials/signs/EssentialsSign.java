@@ -1,10 +1,13 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.*;
+import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.utils.NumberUtil;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import net.ess3.api.IEssentials;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -17,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 public class EssentialsSign
 {
 	private static final Set<Material> EMPTY_SET = new HashSet<Material>();
-
+	protected static final BigDecimal MINTRANSACTION = new BigDecimal("0.01");
 	protected transient final String signName;
 
 	public EssentialsSign(final String signName)
@@ -48,11 +51,11 @@ public class EssentialsSign
 		}
 		catch (ChargeException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 		}
 		catch (SignException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 		}
 		// Return true, so the player sees the wrong sign.
 		return true;
@@ -66,6 +69,11 @@ public class EssentialsSign
 	public String getTemplateName()
 	{
 		return _("signFormatTemplate", this.signName);
+	}
+
+	public String getName()
+	{
+		return this.signName;
 	}
 
 	private String getUsername(final User user)
@@ -83,18 +91,18 @@ public class EssentialsSign
 		}
 		try
 		{
-			return (user.isAuthorized("essentials.signs." + signName.toLowerCase(Locale.ENGLISH) + ".use")
-					|| user.isAuthorized("essentials.signs.use." + signName.toLowerCase(Locale.ENGLISH)))
+			return (!user.isDead() && (user.isAuthorized("essentials.signs." + signName.toLowerCase(Locale.ENGLISH) + ".use")
+									   || user.isAuthorized("essentials.signs.use." + signName.toLowerCase(Locale.ENGLISH))))
 				   && onSignInteract(sign, user, getUsername(user), ess);
 		}
 		catch (ChargeException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 			return false;
 		}
 		catch (SignException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 			return false;
 		}
 	}
@@ -111,7 +119,7 @@ public class EssentialsSign
 		}
 		catch (SignException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 			return false;
 		}
 	}
@@ -140,11 +148,11 @@ public class EssentialsSign
 		}
 		catch (ChargeException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 		}
 		catch (SignException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 		}
 		return false;
 	}
@@ -158,11 +166,11 @@ public class EssentialsSign
 		}
 		catch (ChargeException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 		}
 		catch (SignException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 		}
 		return false;
 	}
@@ -176,7 +184,7 @@ public class EssentialsSign
 		}
 		catch (SignException ex)
 		{
-			ess.showError(user, ex, signName);
+			ess.showError(user.getSource(), ex, signName);
 		}
 		return false;
 	}
@@ -225,10 +233,17 @@ public class EssentialsSign
 			final Block signblock = block.getRelative(blockFace);
 			if (signblock.getType() == Material.WALL_SIGN)
 			{
-				final org.bukkit.material.Sign signMat = (org.bukkit.material.Sign)signblock.getState().getData();
-				if (signMat != null && signMat.getFacing() == blockFace && isValidSign(new BlockSign(signblock)))
+				try
 				{
-					return true;
+					final org.bukkit.material.Sign signMat = (org.bukkit.material.Sign)signblock.getState().getData();
+					if (signMat != null && signMat.getFacing() == blockFace && isValidSign(new BlockSign(signblock)))
+					{
+						return true;
+					}
+				}
+				catch (NullPointerException ex)
+				{
+					// Sometimes signs enter a state of being semi broken, having no text or state data, usually while burning.
 				}
 			}
 		}
@@ -259,7 +274,7 @@ public class EssentialsSign
 	{
 		return EMPTY_SET;
 	}
-	
+
 	public boolean areHeavyEventRequired()
 	{
 		return false;
@@ -273,10 +288,10 @@ public class EssentialsSign
 			return;
 		}
 		final Trade trade = getTrade(sign, index, 0, ess);
-		final Double money = trade.getMoney();
+		final BigDecimal money = trade.getMoney();
 		if (money != null)
 		{
-			sign.setLine(index, Util.shortCurrency(money, ess));
+			sign.setLine(index, NumberUtil.shortCurrency(money, ess));
 		}
 	}
 
@@ -306,7 +321,7 @@ public class EssentialsSign
 		}
 		final ItemStack item = getItemStack(sign.getLine(itemIndex), 1, ess);
 		final int amount = Math.min(getIntegerPositive(sign.getLine(amountIndex)), item.getType().getMaxStackSize() * player.getInventory().getSize());
-		if (item.getTypeId() == 0 || amount < 1)
+		if (item.getType() == Material.AIR || amount < 1)
 		{
 			throw new SignException(_("moreThanZero"));
 		}
@@ -363,27 +378,31 @@ public class EssentialsSign
 		}
 	}
 
-	protected final Double getMoney(final String line) throws SignException
+	protected final BigDecimal getMoney(final String line) throws SignException
 	{
 		final boolean isMoney = line.matches("^[^0-9-\\.][\\.0-9]+$");
-		return isMoney ? getDoublePositive(line.substring(1)) : null;
+		return isMoney ? getBigDecimalPositive(line.substring(1)) : null;
 	}
 
-	protected final Double getDoublePositive(final String line) throws SignException
+	protected final BigDecimal getBigDecimalPositive(final String line) throws SignException
 	{
-		final double quantity = getDouble(line);
-		if (Math.round(quantity * 100.0) < 1.0)
+		final BigDecimal quantity = getBigDecimal(line);
+		if (quantity.compareTo(MINTRANSACTION) < 0)
 		{
 			throw new SignException(_("moreThanZero"));
 		}
 		return quantity;
 	}
 
-	protected final Double getDouble(final String line) throws SignException
+	protected final BigDecimal getBigDecimal(final String line) throws SignException
 	{
 		try
 		{
-			return Double.parseDouble(line);
+			return new BigDecimal(line);
+		}
+		catch (ArithmeticException ex)
+		{
+			throw new SignException(ex.getMessage(), ex);
 		}
 		catch (NumberFormatException ex)
 		{
@@ -404,7 +423,7 @@ public class EssentialsSign
 			return new Trade(signName.toLowerCase(Locale.ENGLISH) + "sign", ess);
 		}
 
-		final Double money = getMoney(line);
+		final BigDecimal money = getMoney(line);
 		if (money == null)
 		{
 			final String[] split = line.split("[ :]+", 2);
@@ -463,7 +482,7 @@ public class EssentialsSign
 		public final void setLine(final int index, final String text)
 		{
 			event.setLine(index, text);
-			sign.setLine(index, text);			
+			sign.setLine(index, text);
 			updateSign();
 		}
 

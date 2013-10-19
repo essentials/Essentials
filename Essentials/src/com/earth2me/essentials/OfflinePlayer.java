@@ -4,6 +4,7 @@ import static com.earth2me.essentials.I18n._;
 import java.net.InetSocketAddress;
 import java.util.*;
 import lombok.Delegate;
+import net.ess3.api.IEssentials;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.conversations.Conversation;
@@ -21,6 +22,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
 public class OfflinePlayer implements Player
@@ -31,6 +33,8 @@ public class OfflinePlayer implements Player
 	private final transient UUID uniqueId = UUID.randomUUID();
 	@Delegate(types = org.bukkit.OfflinePlayer.class)
 	private transient org.bukkit.OfflinePlayer base;
+	private boolean allowFlight = false;
+	private boolean isFlying = false;
 
 	public OfflinePlayer(final String name, final IEssentials ess)
 	{
@@ -89,13 +93,13 @@ public class OfflinePlayer implements Player
 	}
 
 	@Override
-	public int getHealth()
+	public double getHealth()
 	{
 		return 0;
 	}
 
 	@Override
-	public void setHealth(int i)
+	public void setHealth(double d)
 	{
 	}
 
@@ -304,13 +308,13 @@ public class OfflinePlayer implements Player
 	}
 
 	@Override
-	public void damage(int i)
+	public void damage(double d)
 	{
 		throw new UnsupportedOperationException(_("notSupportedYet"));
 	}
 
 	@Override
-	public void damage(int i, Entity entity)
+	public void damage(double d, Entity entity)
 	{
 		throw new UnsupportedOperationException(_("notSupportedYet"));
 	}
@@ -346,13 +350,13 @@ public class OfflinePlayer implements Player
 	}
 
 	@Override
-	public int getLastDamage()
+	public double getLastDamage()
 	{
 		throw new UnsupportedOperationException(_("notSupportedYet"));
 	}
 
 	@Override
-	public void setLastDamage(int i)
+	public void setLastDamage(double d)
 	{
 		throw new UnsupportedOperationException(_("notSupportedYet"));
 	}
@@ -450,7 +454,6 @@ public class OfflinePlayer implements Player
 	@Override
 	public void setFallDistance(float f)
 	{
-		throw new UnsupportedOperationException(_("notSupportedYet"));
 	}
 
 	@Override
@@ -737,13 +740,13 @@ public class OfflinePlayer implements Player
 	@Override
 	public void setPlayerListName(String name)
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		
 	}
 
 	@Override
 	public String getPlayerListName()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		return getName();
 	}
 
 	@Override
@@ -759,7 +762,7 @@ public class OfflinePlayer implements Player
 	}
 
 	@Override
-	public int getMaxHealth()
+	public double getMaxHealth()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
@@ -823,13 +826,13 @@ public class OfflinePlayer implements Player
 	@Override
 	public void setAllowFlight(boolean bln)
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		allowFlight = bln;
 	}
 
 	@Override
 	public boolean getAllowFlight()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		return allowFlight;
 	}
 
 	@Override
@@ -1046,13 +1049,13 @@ public class OfflinePlayer implements Player
 	@Override
 	public boolean isFlying()
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		return isFlying;
 	}
 
 	@Override
 	public void setFlying(boolean arg0)
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		isFlying = arg0;
 	}
 	
 	@Override
@@ -1158,7 +1161,7 @@ public class OfflinePlayer implements Player
 	}
 
 	@Override
-	public void setMaxHealth(int i)
+	public void setMaxHealth(double i)
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
@@ -1167,5 +1170,161 @@ public class OfflinePlayer implements Player
 	public void resetMaxHealth()
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setCustomName(String string)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public String getCustomName()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setCustomNameVisible(boolean bln)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean isCustomNameVisible()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setPlayerWeather(WeatherType arg0)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public WeatherType getPlayerWeather()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void resetPlayerWeather()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean isOnGround()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Scoreboard getScoreboard()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setScoreboard(Scoreboard scrbrd) throws IllegalArgumentException, IllegalStateException
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public int _INVALID_getLastDamage()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void _INVALID_setLastDamage(int i)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void _INVALID_damage(int i)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void _INVALID_damage(int i, Entity entity)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public int _INVALID_getHealth()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void _INVALID_setHealth(int i)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public int _INVALID_getMaxHealth()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void _INVALID_setMaxHealth(int i)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void playSound(Location arg0, String arg1, float arg2, float arg3)
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean isHealthScaled()
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void setHealthScaled(boolean arg0)
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void setHealthScale(double arg0) throws IllegalArgumentException
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public double getHealthScale()
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean isLeashed()
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public Entity getLeashHolder() throws IllegalStateException
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean setLeashHolder(Entity arg0)
+	{
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 }

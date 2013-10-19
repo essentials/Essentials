@@ -4,6 +4,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.craftbukkit.FakeWorld;
 import com.earth2me.essentials.settings.Spawns;
 import com.earth2me.essentials.storage.YamlStorageWriter;
+import com.earth2me.essentials.utils.StringUtil;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.DigestInputStream;
@@ -11,6 +12,7 @@ import java.security.MessageDigest;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -230,7 +232,7 @@ public class EssentialsUpgrade
 							config.removeProperty("home");
 							config.setProperty("home.default", worldName);
 							config.setProperty("home.worlds." + worldName, loc);
-							config.save();
+							config.forceSave();
 						}
 					}
 				}
@@ -285,7 +287,7 @@ public class EssentialsUpgrade
 							((Map<String, Object>)powertools).put(entry.getKey(), temp);
 						}
 					}
-					config.save();
+					config.forceSave();
 				}
 			}
 			catch (RuntimeException ex)
@@ -358,7 +360,7 @@ public class EssentialsUpgrade
 						}
 					}
 					config.removeProperty("home");
-					config.save();
+					config.forceSave();
 				}
 
 			}
@@ -580,7 +582,7 @@ public class EssentialsUpgrade
 			{
 				continue;
 			}
-			final String sanitizedFilename = Util.sanitizeFileName(filename.substring(0, filename.length() - 4)) + ".yml";
+			final String sanitizedFilename = StringUtil.sanitizeFileName(filename.substring(0, filename.length() - 4)) + ".yml";
 			if (sanitizedFilename.equals(filename))
 			{
 				continue;

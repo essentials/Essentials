@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
+import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
 
 

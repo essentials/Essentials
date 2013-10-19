@@ -3,7 +3,7 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.LocationUtil;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -39,7 +39,7 @@ public class Commandjump extends EssentialsCommand
 
 		try
 		{
-			loc = Util.getTarget(user);
+			loc = LocationUtil.getTarget(user.getBase());
 			loc.setYaw(cloc.getYaw());
 			loc.setPitch(cloc.getPitch());
 			loc.setY(loc.getY() + 1);

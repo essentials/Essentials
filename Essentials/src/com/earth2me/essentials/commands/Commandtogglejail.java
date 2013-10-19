@@ -1,11 +1,10 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.DateUtil;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandtogglejail extends EssentialsCommand
@@ -16,21 +15,21 @@ public class Commandtogglejail extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User player = getPlayer(server, args, 0, true);
+		final User player = getPlayer(server, args, 0, true, true);
 
 		if (args.length >= 2 && !player.isJailed())
 		{
 			if (!player.isOnline())
 			{
-				if (sender instanceof Player
-					&& !ess.getUser(sender).isAuthorized("essentials.togglejail.offline"))
+				if (sender.isPlayer()
+					&& !ess.getUser(sender.getPlayer()).isAuthorized("essentials.togglejail.offline"))
 				{
 					sender.sendMessage(_("mayNotJail"));
 					return;
@@ -61,11 +60,11 @@ public class Commandtogglejail extends EssentialsCommand
 			if (args.length > 2)
 			{
 				final String time = getFinalArg(args, 2);
-				timeDiff = Util.parseDateDiff(time, true);
+				timeDiff = DateUtil.parseDateDiff(time, true);
 				player.setJailTimeout(timeDiff);
 			}
 			sender.sendMessage((timeDiff > 0
-								? _("playerJailedFor", player.getName(), Util.formatDateDiff(timeDiff))
+								? _("playerJailedFor", player.getName(), DateUtil.formatDateDiff(timeDiff))
 								: _("playerJailed", player.getName())));
 			return;
 		}
@@ -79,9 +78,9 @@ public class Commandtogglejail extends EssentialsCommand
 		if (args.length >= 2 && player.isJailed() && args[1].equalsIgnoreCase(player.getJail()))
 		{
 			final String time = getFinalArg(args, 2);
-			final long timeDiff = Util.parseDateDiff(time, true);
+			final long timeDiff = DateUtil.parseDateDiff(time, true);
 			player.setJailTimeout(timeDiff);
-			sender.sendMessage(_("jailSentenceExtended", Util.formatDateDiff(timeDiff)));
+			sender.sendMessage(_("jailSentenceExtended", DateUtil.formatDateDiff(timeDiff)));
 			return;
 		}
 

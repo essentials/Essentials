@@ -3,11 +3,8 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.MetaItemStack;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import java.util.HashMap;
-import java.util.Map;
+import com.earth2me.essentials.utils.NumberUtil;
 import java.util.regex.Pattern;
-import org.bukkit.DyeColor;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -36,20 +33,6 @@ import org.bukkit.util.Vector;
 public class Commandfirework extends EssentialsCommand
 {
 	private final transient Pattern splitPattern = Pattern.compile("[:+',;.]");
-	private final static Map<String, DyeColor> colorMap = new HashMap<String, DyeColor>();
-	private final static Map<String, FireworkEffect.Type> fireworkShape = new HashMap<String, FireworkEffect.Type>();
-
-	static
-	{
-		for (DyeColor color : DyeColor.values())
-		{
-			colorMap.put(color.name(), color);
-		}
-		for (FireworkEffect.Type type : FireworkEffect.Type.values())
-		{
-			fireworkShape.put(type.name(), type);
-		}
-	}
 
 	public Commandfirework()
 	{
@@ -85,24 +68,27 @@ public class Commandfirework extends EssentialsCommand
 					}
 					stack.setItemMeta(fmeta);
 				}
-				else if ((args[0].equalsIgnoreCase("fire") || (args[0].equalsIgnoreCase("p")))
+				else if ((args[0].equalsIgnoreCase("fire") || (args[0].equalsIgnoreCase("f")))
 						 && user.isAuthorized("essentials.firework.fire"))
 				{
 					int amount = 1;
 					boolean direction = false;
-					if (Util.isInt(args[1]))
+					if (args.length > 1)
 					{
-						final int serverLimit = ess.getSettings().getSpawnMobLimit();
-						amount = Integer.parseInt(args[1]);
-						if (amount > serverLimit)
+						if (NumberUtil.isInt(args[1]))
 						{
-							amount = serverLimit;
-							user.sendMessage(_("mobSpawnLimit"));
+							final int serverLimit = ess.getSettings().getSpawnMobLimit();
+							amount = Integer.parseInt(args[1]);
+							if (amount > serverLimit)
+							{
+								amount = serverLimit;
+								user.sendMessage(_("mobSpawnLimit"));
+							}
 						}
-					}
-					else
-					{
-						direction = true;
+						else
+						{
+							direction = true;
+						}
 					}
 					for (int i = 0; i < amount; i++)
 					{
@@ -125,14 +111,25 @@ public class Commandfirework extends EssentialsCommand
 					final MetaItemStack mStack = new MetaItemStack(stack);
 					for (String arg : args)
 					{
-						final String[] split = splitPattern.split(arg, 2);
-						mStack.addFireworkMeta(user, true, arg, ess);
+						try
+						{
+							mStack.addFireworkMeta(user.getSource(), true, arg, ess);
+						}
+						catch (Exception e)
+						{
+							user.sendMessage(_("fireworkSyntax"));
+							throw e;
+						}
 					}
 
 					if (mStack.isValidFirework())
 					{
 						FireworkMeta fmeta = (FireworkMeta)mStack.getItemStack().getItemMeta();
 						FireworkEffect effect = mStack.getFireworkBuilder().build();
+						if (fmeta.getEffects().size() > 0 && !user.isAuthorized("essentials.firework.multiple"))
+						{
+							throw new Exception(_("multipleCharges"));
+						}
 						fmeta.addEffect(effect);
 						stack.setItemMeta(fmeta);
 					}

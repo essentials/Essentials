@@ -1,11 +1,12 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.FormatUtil;
+import com.earth2me.essentials.utils.StringUtil;
 import java.util.List;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandmail extends EssentialsCommand
@@ -18,7 +19,7 @@ public class Commandmail extends EssentialsCommand
 		super("mail");
 	}
 
-	//TODO: Tidy this up
+	//TODO: Tidy this up / TL these errors.
 	@Override
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
@@ -43,6 +44,11 @@ public class Commandmail extends EssentialsCommand
 			{
 				throw new Exception(_("noPerm", "essentials.mail.send"));
 			}
+			
+			if (user.isMuted())
+			{
+				throw new Exception(_("voiceSilenced"));
+			}
 
 			User u = ess.getUser(args[1]);
 			if (u == null)
@@ -51,7 +57,7 @@ public class Commandmail extends EssentialsCommand
 			}
 			if (!u.isIgnoredPlayer(user))
 			{
-				final String mail = user.getName() + ": " + Util.sanitizeString(Util.stripFormat(getFinalArg(args, 2)));
+				final String mail = user.getName() + ": " + StringUtil.sanitizeString(FormatUtil.stripFormat(getFinalArg(args, 2)));
 				if (mail.length() > 1000)
 				{
 					throw new Exception("Mail message too long. Try to keep it below 1000");
@@ -77,7 +83,7 @@ public class Commandmail extends EssentialsCommand
 			{
 				throw new Exception(_("noPerm", "essentials.mail.sendall"));
 			}
-			ess.runTaskAsynchronously(new SendAll(user.getName() + ": " + Util.stripFormat(getFinalArg(args, 1))));
+			ess.runTaskAsynchronously(new SendAll(user.getName() + ": " + FormatUtil.stripFormat(getFinalArg(args, 1))));
 			user.sendMessage(_("mailSent"));
 			return;
 		}
@@ -91,7 +97,7 @@ public class Commandmail extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(Server server, CommandSender sender, String commandLabel, String[] args) throws Exception
+	protected void run(Server server, CommandSource sender, String commandLabel, String[] args) throws Exception
 	{
 		if (args.length >= 1 && "read".equalsIgnoreCase(args[0]))
 		{
@@ -112,9 +118,9 @@ public class Commandmail extends EssentialsCommand
 			sender.sendMessage(_("mailSent"));
 			return;
 		}
-		else if (args.length >= 1 && "sendall".equalsIgnoreCase(args[0]))
+		else if (args.length >= 2 && "sendall".equalsIgnoreCase(args[0]))
 		{
-			ess.runTaskAsynchronously(new SendAll("Server: " + getFinalArg(args, 2)));
+			ess.runTaskAsynchronously(new SendAll("Server: " + getFinalArg(args, 1)));
 			sender.sendMessage(_("mailSent"));
 			return;
 		}

@@ -2,16 +2,19 @@ package com.earth2me.essentials;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.commands.WarpNotFoundException;
+import com.earth2me.essentials.utils.StringUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.InvalidNameException;
+import net.ess3.api.InvalidWorldException;
 import org.bukkit.Location;
 import org.bukkit.Server;
 
 
-public class Warps implements IConf
+public class Warps implements IConf, net.ess3.api.IWarps
 {
 	private static final Logger logger = Logger.getLogger("Minecraft");
 	private final Map<StringIgnoreCase, EssentialsConf> warpPoints = new HashMap<StringIgnoreCase, EssentialsConf>();
@@ -29,12 +32,14 @@ public class Warps implements IConf
 		reloadConfig();
 	}
 
+	@Override
 	public boolean isEmpty()
 	{
 		return warpPoints.isEmpty();
 	}
 
-	public Collection<String> getWarpNames()
+	@Override
+	public Collection<String> getList()
 	{
 		final List<String> keys = new ArrayList<String>();
 		for (StringIgnoreCase stringIgnoreCase : warpPoints.keySet())
@@ -45,7 +50,8 @@ public class Warps implements IConf
 		return keys;
 	}
 
-	public Location getWarp(String warp) throws Exception
+	@Override
+	public Location getWarp(String warp) throws WarpNotFoundException, InvalidWorldException
 	{
 		EssentialsConf conf = warpPoints.get(new StringIgnoreCase(warp));
 		if (conf == null)
@@ -55,9 +61,10 @@ public class Warps implements IConf
 		return conf.getLocation(null, server);
 	}
 
+	@Override
 	public void setWarp(String name, Location loc) throws Exception
 	{
-		String filename = Util.sanitizeFileName(name);
+		String filename = StringUtil.sanitizeFileName(name);
 		EssentialsConf conf = warpPoints.get(new StringIgnoreCase(name));
 		if (conf == null)
 		{
@@ -81,7 +88,8 @@ public class Warps implements IConf
 		}
 	}
 
-	public void delWarp(String name) throws Exception
+	@Override
+	public void removeWarp(String name) throws Exception
 	{
 		EssentialsConf conf = warpPoints.get(new StringIgnoreCase(name));
 		if (conf == null)
@@ -126,6 +134,18 @@ public class Warps implements IConf
 		}
 	}
 
+	//This is here for future 3.x api support. Not implemented here becasue storage is handled differently
+	@Override
+	public File getWarpFile(String name) throws InvalidNameException
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public int getCount()
+	{
+		return getList().size();
+	}
 
 	private static class StringIgnoreCase
 	{

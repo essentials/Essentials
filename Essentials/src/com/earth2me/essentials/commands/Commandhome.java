@@ -3,11 +3,10 @@ package com.earth2me.essentials.commands;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.StringUtil;
 import java.util.List;
 import java.util.Locale;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -35,7 +34,7 @@ public class Commandhome extends EssentialsCommand
 			}
 			else
 			{
-				player = getPlayer(server, nameParts, 0, true);
+				player = getPlayer(server, nameParts, 0, true, true);
 				if (nameParts.length > 1)
 				{
 					homeName = nameParts[1];
@@ -52,16 +51,16 @@ public class Commandhome extends EssentialsCommand
 					user.getTeleport().teleport(bed, charge, TeleportCause.COMMAND);
 					throw new NoChargeException();
 				}
+				else
+				{
+					throw new Exception(_("bedMissing"));
+				}
 			}
 			goHome(user, player, homeName.toLowerCase(Locale.ENGLISH), charge);
 		}
 		catch (NotEnoughArgumentsException e)
 		{
 			Location bed = player.getBedSpawnLocation();
-			if (bed != null && bed.getBlock().getType() != Material.BED_BLOCK)
-			{
-				bed = null;
-			}
 			final List<String> homes = player.getHomes();
 			if (homes.isEmpty() && player.equals(user))
 			{
@@ -77,11 +76,18 @@ public class Commandhome extends EssentialsCommand
 			}
 			else
 			{
-				if (bed != null  && user.isAuthorized("essentials.home.bed"))
+				if (user.isAuthorized("essentials.home.bed"))
 				{
-					homes.add("bed");
+					if (bed != null)
+					{
+						homes.add(_("bed"));
+					}
+					else
+					{
+						homes.add(_("bedNull"));
+					}
 				}
-				user.sendMessage(_("homes", Util.joinList(homes)));
+				user.sendMessage(_("homes", StringUtil.joinList(homes)));
 			}
 		}
 		throw new NoChargeException();
@@ -99,6 +105,6 @@ public class Commandhome extends EssentialsCommand
 		{
 			throw new Exception(_("noPerm", "essentials.worlds." + loc.getWorld().getName()));
 		}
-		user.getTeleport().home(loc, charge);
+		user.getTeleport().teleport(loc, charge, TeleportCause.COMMAND);
 	}
 }
