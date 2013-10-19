@@ -196,7 +196,8 @@ public class Kit
 
 				if (parts.length > 2)
 				{
-					metaStack.parseStringMeta(user.getSource(), allowUnsafe, parts, 2, ess);
+					// We pass a null sender here because kits should not do perm checks
+					metaStack.parseStringMeta(null, allowUnsafe, parts, 2, ess);
 				}
 
 				final Map<Integer, ItemStack> overfilled;
