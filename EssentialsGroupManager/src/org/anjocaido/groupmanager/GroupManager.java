@@ -611,6 +611,14 @@ public class GroupManager extends JavaPlugin {
 					sender.sendMessage(ChatColor.RED + "You can't modify a player with same permissions as you, or higher.");
 					return true;
 				}
+				if (!isConsole && !isOpOverride && (permissionHandler.hasGroupInInheritance(auxGroup, senderGroup.getName()))) {
+					sender.sendMessage(ChatColor.RED + "The sub-group can't be the same as yours, or higher.");
+					return true;
+				}
+				if (!isConsole && !isOpOverride && (!permissionHandler.inGroup(senderUser.getName(), auxUser.getGroupName()) || !permissionHandler.inGroup(senderUser.getName(), auxGroup.getName()))) {
+					sender.sendMessage(ChatColor.RED + "You can't modify a player involving a group that you don't inherit.");
+					return true;
+				}
 				// Seems OK
 				if (auxUser.addSubGroup(auxGroup))
 					sender.sendMessage(ChatColor.YELLOW + "You added subgroup '" + auxGroup.getName() + "' to player '" + auxUser.getName() + "'.");
