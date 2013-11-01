@@ -289,8 +289,45 @@ public class Settings implements net.ess3.api.ISettings
 	{
 		return config.getDouble("heal-cooldown", 0);
 	}
-	private ConfigurationSection kits;
+        
+    private ConfigurationSection worldPriceMultipliers;
+        
+	private ConfigurationSection _getWorldPriceMultipliers()
+	{            
+		if (config.isConfigurationSection("world-price-multipliers"))
+		{
+			final ConfigurationSection section = config.getConfigurationSection("world-price-multipliers");
+			final ConfigurationSection newSection = new MemoryConfiguration();
+			for (String worldPriceMultiplierItem : section.getKeys(false))
+			{
+				newSection.set(worldPriceMultiplierItem.toLowerCase(Locale.ENGLISH), section.get(worldPriceMultiplierItem));
+            }
 
+			return newSection;
+		}
+		return null;
+	}
+
+	@Override
+	public ConfigurationSection getWorldPriceMultipliers()
+	{
+		return worldPriceMultipliers;
+	}
+        
+	@Override
+	public Object getWorldPriceMultiplier(String name)
+	{
+		name = name.replace('.', '_').replace('/', '_');
+		if (getWorldPriceMultipliers() != null)
+		{
+			final ConfigurationSection worldPriceMultipliers = getWorldPriceMultipliers();
+            return worldPriceMultipliers.get(name);
+		}
+		return null;
+	}        
+        
+	private ConfigurationSection kits;
+        
 	private ConfigurationSection _getKits()
 	{
 		if (config.isConfigurationSection("kits"))
@@ -496,6 +533,7 @@ public class Settings implements net.ess3.api.ISettings
 		itemSpawnBl = _getItemSpawnBlacklist();
 		loginAttackDelay = _getLoginAttackDelay();
 		signUsePerSecond = _getSignUsePerSecond();
+        worldPriceMultipliers = _getWorldPriceMultipliers();
 		kits = _getKits();
 		chatFormats.clear();
 		changeDisplayName = _changeDisplayName();

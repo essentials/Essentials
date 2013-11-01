@@ -22,7 +22,7 @@ public class Worth implements IConf
 		config.load();
 	}
 
-	public BigDecimal getPrice(ItemStack itemStack)
+	public BigDecimal getPrice(IEssentials ess, User user, ItemStack itemStack)
 	{
 		String itemname = itemStack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
 		BigDecimal result;
@@ -55,8 +55,23 @@ public class Worth implements IConf
 		{
 			return null;
 		}
+
+		// Get the world price multiplier (if any)
+		Object priceMultiplerObject = ess.getSettings().getWorldPriceMultiplier(user.getWorld().getName());
+		BigDecimal priceMultiplier;
+		if(priceMultiplerObject != null)
+		{
+			priceMultiplier = EssentialsConf.toBigDecimal(priceMultiplerObject.toString(),null);
+		}
+		else                
+		{
+			priceMultiplier = EssentialsConf.toBigDecimal("1.0",null);
+		}
+
+		result = result.multiply(priceMultiplier);
+                
 		return result;
-	}
+        }
 
 	public int getAmount(IEssentials ess, User user, ItemStack is, String[] args, boolean isBulkSell) throws Exception
 	{

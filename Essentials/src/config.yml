@@ -468,6 +468,15 @@ min-money: -10000
 # Enable this to log all interactions with trade/buy/sell signs and sell command.
 economy-log-enabled: false
 
+# Add a /sell and /worth multiplier to each world
+# Default value is 1.0
+# Typically used with plugins that will create separate inventories per world.
+# Uncomment world-price-multipliers and list the worlds you would like with different multipliers.
+#world-price-multipliers:
+#  world: 1
+#  world_normal: 1.5
+#  world_hard: 4
+
 ############################################################
 # +------------------------------------------------------+ #
 # |                   EssentialsHelp                     | #

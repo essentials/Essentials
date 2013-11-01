@@ -106,7 +106,7 @@ public class Commandworth extends EssentialsCommand
 			amount = ess.getWorth().getAmount(ess, user, is, args, true);
 		}
 
-		BigDecimal worth = ess.getWorth().getPrice(is);
+		BigDecimal worth = ess.getWorth().getPrice(ess, user, is);
 
 		if (worth == null)
 		{
