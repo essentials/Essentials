@@ -22,6 +22,7 @@ public class Commandhelpop extends EssentialsCommand
 	{
 		user.setDisplayNick();
 		sendMessage(server, user.getSource(), user.getDisplayName(), args);
+		user.sendMessage(_("helpOpSent"));
 	}
 
 	@Override
