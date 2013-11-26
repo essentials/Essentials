@@ -114,6 +114,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		}
 		config.setProperty("money", money);
 		config.save();
+		getServer().getPluginManager().callEvent(new MoneySetEvent(base, value));
 	}
 	private Map<String, Object> homes;
 
