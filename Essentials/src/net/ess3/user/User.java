@@ -590,7 +590,7 @@ public class User extends UserBase implements IUser
 	@Override
 	public boolean canAfford(double amount, boolean b)
 	{
-		return true;
+		return true; //TODO eco.loan permission check
 	}
 	private long teleportInvulnerabilityTimestamp = 0;
 
