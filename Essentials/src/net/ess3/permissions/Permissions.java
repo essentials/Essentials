@@ -78,6 +78,7 @@ public enum Permissions implements IPermission
 	MOTD,
 	MSG_COLOR,
 	MUTE_EXEMPT,
+	MUTE_NOTIFY,
 	NEAR_OTHERS,
 	NICK_COLOR,
 	NICK_OTHERS,
