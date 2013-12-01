@@ -162,7 +162,7 @@ commands:
   helpop:
     description: Message online admins.
     usage: /<command> <message>
-    aliases: [ehelpop,msg,eamsg,ac,eac,ehelpop]
+    aliases: [ehelpop,amsg,eamsg,ac,eac,ehelpop]
   home:
     description: Teleport to your home.
     usage: /<command> [player:][name]
