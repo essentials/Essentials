@@ -21,6 +21,7 @@ public enum Permissions implements IPermission
 	BAN_EXEMPT,
 	BAN_NOTIFY,
 	BAN_OFFLINE,
+	BED_SETHOME,
 	BOOK_AUTHOR,
 	BOOK_OTHERS,
 	BOOK_TITLE,

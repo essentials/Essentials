@@ -508,7 +508,8 @@ public class EssentialsPlayerListener implements Listener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
-		final IUser user = userMap.getUser(event.getPlayer());
+		Player player = event.getPlayer();
+		final IUser user = userMap.getUser(player);
 		user.updateActivity(true);
 		switch (event.getAction())
 		{
@@ -519,9 +520,10 @@ public class EssentialsPlayerListener implements Listener
 			}
 
 			final ISettings settings = ess.getSettings();
-			if (settings.getData().getCommands().getHome().isUpdateBedAtDaytime() && event.getClickedBlock().getType() == Material.BED_BLOCK)
+			if (settings.getData().getCommands().getHome().isUpdateBedAtDaytime() && event.getClickedBlock().getType() == Material.BED_BLOCK && Permissions.BED_SETHOME.isAuthorized(player))
 			{
-				event.getPlayer().setBedSpawnLocation(event.getClickedBlock().getLocation());
+				player.setBedSpawnLocation(event.getClickedBlock().getLocation());
+				player.sendMessage(_("§6Home set."));
 			}
 			break;
 		case LEFT_CLICK_AIR:
