@@ -26,7 +26,7 @@ public class Teleport implements Runnable, ITeleport
 	private int teleTimer = -1;
 	private long started;    // time this task was initiated
 	private long tpDelay;        // how long to delay the teleport
-	private int health;
+	private double health;
 	// note that I initially stored a clone of the location for reference, but...
 	// when comparing locations, I got incorrect mismatches (rounding errors, looked like)
 	// so, the X/Y/Z values are stored instead and rounded off
