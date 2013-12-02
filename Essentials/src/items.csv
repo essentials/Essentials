@@ -302,7 +302,6 @@ dowoodsapling,6,5
 dotreesapling,6,5
 dologsapling,6,5
 dotrunksapling,6,5
-dowoodsapling,6,5
 bedrock,7,0
 oprock,7,0
 opblock,7,0
@@ -2279,7 +2278,6 @@ pglass,102,0
 flatglass,102,0
 fglass,102,0
 skinnyglass,102,0
-sglass,102,0
 glassflat,102,0
 glassf,102,0
 glassskinny,102,0
@@ -4482,7 +4480,7 @@ dotreeleaves,161,1
 dologleaves,161,1
 dotrunkleaves,161,1
 dowoodleaves,161,1
-darkoakleaves,161,1
+darkoakleave,161,1
 darkoaktreeleave,161,1
 darkoaklogleave,161,1
 darkoaktrunkleave,161,1
