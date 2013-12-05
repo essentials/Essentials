@@ -141,6 +141,11 @@ public class Enchantments
 		ALIASENCHANTMENTS.put("unlimited", Enchantment.ARROW_INFINITE);
 		ALIASENCHANTMENTS.put("unlimitedarrows", Enchantment.ARROW_INFINITE);
 		ALIASENCHANTMENTS.put("ai", Enchantment.ARROW_INFINITE);
+		
+		ENCHANTMENTS.put("luck", Enchantment.LUCK);
+		ALIASENCHANTMENTS.put("luckofsea", Enchantment.LUCK);
+		
+		ENCHANTMENTS.put("lure", Enchantment.LURE);
 	}
 
 	public static Enchantment getByName(String name) {
