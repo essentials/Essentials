@@ -76,7 +76,7 @@ public class Commandweather extends EssentialsCommand
 		if (args.length > 2)
 		{
 
-			world.setStorm(isStorm;
+			world.setStorm(isStorm);
 			world.setWeatherDuration(Integer.parseInt(args[2]) * 20);
 			sender.sendMessage(isStorm
 							   ? _("weatherStormFor", world.getName(), args[2])
