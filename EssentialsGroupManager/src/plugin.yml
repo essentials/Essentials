@@ -63,7 +63,7 @@ commands:
   mangclearp:
     description: Removes all permissions of a group.
     usage: /<command> <group> <permissions>
-    permissions: groupmanager.mangdelp
+    permissions: groupmanager.mangclearp
   manglistp:
     description: Lists all permissionss from a group.
     usage: /<command> <group>
