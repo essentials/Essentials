@@ -84,6 +84,8 @@ public interface ISettings extends IConf
 
 	double getTeleportDelay();
 
+	boolean isSafeTeleportEnabled();
+
 	boolean hidePermissionlessHelp();
 
 	boolean isCommandDisabled(final IEssentialsCommand cmd);

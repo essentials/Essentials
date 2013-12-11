@@ -279,6 +279,12 @@ public class Settings implements net.ess3.api.ISettings
 	}
 
 	@Override
+	public boolean isSafeTeleportEnabled()
+	{
+		return config.getBoolean("teleport-safely", true);
+	}
+
+	@Override
 	public double getTeleportCooldown()
 	{
 		return config.getDouble("teleport-cooldown", 0);
