@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class DateUtil
 {
-	public static long parseDateDiff(String time, boolean future) throws Exception
+	public static long parseDateDiff(String time, boolean future)
 	{
 		Pattern timePattern = Pattern.compile("(?:([0-9]+)\\s*y[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*mo[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*w[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*d[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*h[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*m[a-z]*[,\\s]*)?" + "(?:([0-9]+)\\s*(?:s[a-z]*)?)?", Pattern.CASE_INSENSITIVE);
 		Matcher m = timePattern.matcher(time);
@@ -70,7 +70,7 @@ public class DateUtil
 		}
 		if (!found)
 		{
-			throw new Exception(_("illegalDate"));
+			throw new IllegalArgumentException(_("illegalDate"));
 		}
 		Calendar c = new GregorianCalendar();
 		if (years > 0)
