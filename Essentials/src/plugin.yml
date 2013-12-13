@@ -243,7 +243,7 @@ commands:
     usage: /<command> <to> <message>
     aliases: [w,m,t,emsg,tell,etell,whisper,ewhisper]
   mute:
-    description: Mutes or unmutes a player.
+    description: Mutes a player, or multiple players.
     usage: /<command> <player> [datediff]
     aliases: [emute,silence,esilence]
   near:
@@ -442,6 +442,10 @@ commands:
     description: Allows the unlimited placing of items.
     usage: /<command> <list|item|clear> [player]
     aliases: [eunlimited,ul,unl,eul,eunl]
+  unmute:
+    description: Unmutes a player.
+    usage: /<command> <player>
+    aliases: [eunmute,unsilence,eunsilence]
   vanish:
     description: Hide yourself from other players.
     usage: /<command> [player] [on|off]
