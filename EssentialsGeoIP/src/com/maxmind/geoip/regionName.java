@@ -10787,82 +10787,82 @@ static public String regionNameByCode(String country_code,String region_code) {
     if (country_code.equals("SE") == true) {
       switch (region_code2) {
         case 1:
-        name = "Alvsborgs Lan";
+        name = "Älvsborgs Län";
         break;
         case 2:
-        name = "Blekinge Lan";
+        name = "Blekinge Län";
         break;
         case 3:
-        name = "Gavleborgs Lan";
+        name = "Gävleborgs Län";
         break;
         case 4:
-        name = "Goteborgs och Bohus Lan";
+        name = "Göteborgs och Bohus Län";
         break;
         case 5:
-        name = "Gotlands Lan";
+        name = "Götlands Län";
         break;
         case 6:
-        name = "Hallands Lan";
+        name = "Hallands Län";
         break;
         case 7:
-        name = "Jamtlands Lan";
+        name = "Jämtlands Län";
         break;
         case 8:
-        name = "Jonkopings Lan";
+        name = "Jönköpings Län";
         break;
         case 9:
-        name = "Kalmar Lan";
+        name = "Kalmar Län";
         break;
         case 10:
-        name = "Dalarnas Lan";
+        name = "Dalarnas Län";
         break;
         case 11:
-        name = "Kristianstads Lan";
+        name = "Kristianstads Län"; // This state does not exist and have not existed for the past 30 years. (It's called Skåne Län nowadays)
         break;
         case 12:
-        name = "Kronobergs Lan";
+        name = "Kronobergs Län";
         break;
         case 13:
-        name = "Malmohus Lan";
+        name = "Malmöhus Län"; // This state does not exist and have not existed for the past 30 years. (It's called Skåne Län nowadays)
         break;
         case 14:
-        name = "Norrbottens Lan";
+        name = "Norrbottens Län";
         break;
         case 15:
-        name = "Orebro Lan";
+        name = "Örebro Län";
         break;
         case 16:
-        name = "Ostergotlands Lan";
+        name = "Östergötlands Län";
         break;
         case 17:
-        name = "Skaraborgs Lan";
+        name = "Skaraborgs Län";
         break;
         case 18:
-        name = "Sodermanlands Lan";
+        name = "Södermanlands Län";
         break;
         case 21:
-        name = "Uppsala Lan";
+        name = "Uppsala Län";
         break;
         case 22:
-        name = "Varmlands Lan";
+        name = "Värmlands Län";
         break;
         case 23:
-        name = "Vasterbottens Lan";
+        name = "Västerbottens Län";
         break;
         case 24:
-        name = "Vasternorrlands Lan";
+        name = "Västernorrlands Län";
         break;
         case 25:
-        name = "Vastmanlands Lan";
+        name = "Västmanlands Län";
         break;
         case 26:
-        name = "Stockholms Lan";
+        name = "Stockholms Län";
         break;
         case 27:
-        name = "Skane Lan";
+        name = "Skåne Län";
         break;
         case 28:
-        name = "Vastra Gotaland";
+        name = "Västra Gotaland";
         break;
       }
     }
