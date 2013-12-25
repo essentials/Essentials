@@ -9,11 +9,11 @@ authors:
   - ElgarL
 commands:
   manuadd:
-    description: Move a player to desired group. (Adds to the file if not exists)
+    description: Move a player to desired group (Adds to the file if does not exist).
     usage: /<command> <player> <group> | optional [world]
     permissions: groupmanager.manuadd
   manudel:
-    description: Remove any user specific configuration. Make him default group.
+    description: Remove any user specific configuration and make him default group.
     usage: /<command> <player>
     permissions: groupmanager.manudel
   manuaddsub:
@@ -29,7 +29,7 @@ commands:
     usage: /<command> <group>
     permissions: groupmanager.mangadd
   mangdel:
-    description: Removes group from the system (all it's users become default)
+    description: Remove group from the system (all its users become default).
     usage: /<command> <group>
     permissions: groupmanager.mangdel
   manuaddp:
@@ -37,19 +37,19 @@ commands:
     usage: /<command> <player> <permission> [permission2] [permission3]..
     permissions: groupmanager.manuaddp
   manudelp:
-    description: Removes permissions directly from the player.
+    description: Remove permissions directly from the player.
     usage: /<command> <player> <permission> [permission2] [permission3]..
     permissions: groupmanager.manudelp
   manuclearp:
-    description: Removes all permissions of a player.
+    description: Remove all permissions from a player.
     usage: /<command> <player>
     permissions: groupmanager.manuclearp
   manulistp:
-    description: List all permissionss from a player.
+    description: List all permissions of a player.
     usage: /<command> <player>
     permissions: groupmanager.manulistp
   manucheckp:
-    description: Verify if user has a permissions, and where it comes from.
+    description: Verify if user has a permission, and where it comes from.
     usage: /<command> <player> <permissions>
     permissions: groupmanager.manucheckp
   mangaddp:
@@ -57,15 +57,15 @@ commands:
     usage: /<command> <group> <permission> [permission2] [permission3]..
     permissions: groupmanager.mangaddp
   mangdelp:
-    description: Removes permissions from a group.
+    description: Remove permissions from a group.
     usage: /<command> <group> <permission> [permission2] [permission3]..
     permissions: groupmanager.mangdelp
   mangclearp:
-    description: Removes all permissions of a group.
+    description: Remove all permissions from a group.
     usage: /<command> <group> <permissions>
     permissions: groupmanager.mangclearp
   manglistp:
-    description: Lists all permissionss from a group.
+    description: Lists all permissions of a group.
     usage: /<command> <group>
     permissions: groupmanager.manglistp
   mangcheckp:
@@ -81,7 +81,7 @@ commands:
     usage: /<command> <group1> <group2>
     permissions: groupmanager.mangdeli
   manuaddv:
-    description: Add, or replaces, a variable to a user (like prefix or suffix).
+    description: Add or replace a variable of a user (like prefix or suffix).
     usage: /<command> <user> <variable> <value>
     permissions: groupmanager.manuaddv
   manudelv:
@@ -89,15 +89,15 @@ commands:
     usage: /<command> <user> <variable>
     permissions: groupmanager.manudelv
   manulistv:
-    description: List variables a user has (like prefix or suffix).
+    description: List variables of a user (like prefix or suffix).
     usage: /<command> <user>
     permissions: groupmanager.manulistv
   manucheckv:
-    description: Verify a value of a variable of user, and where it comes from.
+    description: Verify a value of a variable of a user, and where it comes from.
     usage: /<command> <user> <variable>
     permissions: groupmanager.manucheckv
   mangaddv:
-    description: Add, or replaces, a variable to a group (like prefix or suffix).
+    description: Add, or replace, a variable of a group (like prefix or suffix).
     usage: /<command> <group> <variable> <value>
     permissions: groupmanager.mangaddv
   mangdelv:
@@ -105,27 +105,27 @@ commands:
     usage: /<command> <group> <variable>
     permissions: groupmanager.mangdelv
   manglistv:
-    description: List variables a group has (like prefix or suffix).
+    description: List variables of a group (like prefix or suffix).
     usage: /<command> <group>
     permissions: groupmanager.manglistv
   mangcheckv:
-    description: Verify a value of a variable of group, and where it comes from.
+    description: Verify a value of a variable of a group, and where it comes from.
     usage: /<command> <group> <variable>
     permissions: groupmanager.mangckeckv
   manwhois:
-    description: Tell the group that user belongs.
+    description: Lists groups and other data of a user.
     usage: /<command> <player>
     permissions: groupmanager.manwhois
   tempadd:
-    description: Creates a temporary permissions copy for that user.
+    description: Create a temporary permissions copy for a user.
     usage: /<command> <player>
     permissions: groupmanager.tempadd
   tempdel:
-    description: Remove the temporary permissions copy for player.
+    description: Remove the temporary permissions copy for a user.
     usage: /<command> <player>
     permissions: groupmanager.tempdel
   templist:
-    description: List players in overload-permissionss mode made by /tempadd.
+    description: List players in overload-permissions mode made by command /tempadd.
     usage: /<command>
     permissions: groupmanager.templist
   tempdelall:
@@ -133,11 +133,11 @@ commands:
     usage: /<command>
     permissions: groupmanager.tempdelall
   mansave:
-    description: Save all permissionss on file.
+    description: Save all permissions on file.
     usage: /<command>
     permissions: groupmanager.mansave
   manload:
-    description: Reload current world and config.yml. Or load given world.
+    description: Reload current world and config.yml, or load given world.
     usage: /<command> [world]
     permissions: groupmanager.manload
   listgroups:
@@ -162,19 +162,19 @@ commands:
     usage: /<command>
     permissions: groupmanager.mantogglesave
   manworld:
-    description: Prints the selected world name
+    description: Prints the selected world name.
     usage: /<command>
     permissions: groupmanager.manworld
   manselect:
-    description: Select a world to work with next commands.
+    description: Select a world to work with commands.
     usage: /<command> <world>
     permissions: groupmanager.manselect
   manclear:
-    description: Clear world selection. Next commands will work on your world.
+    description: Clear world selection. Commands will work on your current world.
     usage: /<command>
     permissions: groupmanager.manclear
   mancheckw:
-    description: Obtain the paths to each file a world is storing it's data in (users/groups).
+    description: Obtain the path to each file a world is storing its data in (users/groups).
     usage: /<command> <world>
     permissions: groupmanager.mancheckw
     
