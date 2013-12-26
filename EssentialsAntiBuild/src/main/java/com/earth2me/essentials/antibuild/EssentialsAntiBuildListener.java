@@ -48,13 +48,13 @@ public class EssentialsAntiBuildListener implements Listener
 
 	private boolean metaPermCheck(final User user, final String action, final int blockId)
 	{
-		final String blockPerm = "essentials.build." + action + "." + blockId;
+		final String blockPerm = "essentials.build." + action + "" + blockId;
 		return user.isAuthorized(blockPerm);
 	}
 
 	private boolean metaPermCheck(final User user, final String action, final int blockId, final short data)
 	{
-		final String blockPerm = "essentials.build." + action + "." + blockId;
+		final String blockPerm = "essentials.build." + action + "" + blockId;
 		final String dataPerm = blockPerm + ":" + data;
 
 		if (user.isPermissionSet(dataPerm))

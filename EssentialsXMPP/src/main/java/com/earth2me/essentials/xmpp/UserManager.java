@@ -21,7 +21,7 @@ public class UserManager implements IConf
 
 	public final boolean isSpy(final String username)
 	{
-		return users.getBoolean(username.toLowerCase(Locale.ENGLISH) + "." + SPY, false);
+		return users.getBoolean(username.toLowerCase(Locale.ENGLISH) + "" + SPY, false);
 	}
 
 	public void setSpy(final String username, final boolean spy)
@@ -31,7 +31,7 @@ public class UserManager implements IConf
 
 	public final String getAddress(final String username)
 	{
-		return users.getString(username.toLowerCase(Locale.ENGLISH) + "." + ADDRESS, null);
+		return users.getString(username.toLowerCase(Locale.ENGLISH) + "" + ADDRESS, null);
 	}
 
 	public final String getUserByAddress(final String search)
@@ -39,7 +39,7 @@ public class UserManager implements IConf
 		final Set<String> usernames = users.getKeys(false);
 		for (String username : usernames)
 		{
-			final String address = users.getString(username + "." + ADDRESS, null);
+			final String address = users.getString(username + "" + ADDRESS, null);
 			if (address != null && search.equalsIgnoreCase(address))
 			{
 				return username;
