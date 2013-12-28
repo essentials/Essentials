@@ -123,7 +123,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 		i18n.onEnable();
 		LOGGER.log(Level.INFO, _("usingTempFolderForTesting"));
 		LOGGER.log(Level.INFO, dataFolder.toString());
-		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
+		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src/main/resources/plugin.yml"))), dataFolder, null, null);
 		settings = new Settings(this);
 		i18n.updateLocale("en");
 		userMap = new UserMap(this);

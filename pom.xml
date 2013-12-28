@@ -87,8 +87,6 @@
 	</dependencies>
 
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -188,11 +186,9 @@
 							<outputDirectory>${basedir}/jars</outputDirectory>
 							<resources>
 								<resource>
-									<directory>Essentials/src</directory>
+									<directory>Essentials/src/main/resources</directory>
 									<includes>
-										<include>messages*.properties</include>
-										<include>config.yml</include>
-										<include>items.csv</include>
+										<include>**/*</include>
 									</includes>
 									<excludes>
 										<exclude>plugin.yml</exclude>
@@ -224,7 +220,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<filesToInclude>**/src/*</filesToInclude>
+					<filesToInclude>**/src/main/resources/*</filesToInclude>
 					<replacements>
 						<replacement>
 							<token>TeamCity</token>
@@ -248,25 +244,6 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${basedir}</directory>
-							<includes>
-								<include>jars/**</include>
-
-								<!-- Following folders clear Ant build directories -->
-								<include>build/**</include>
-								<include>dist/**</include>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
 			</plugin>
@@ -281,12 +258,9 @@
 		</plugins>
 		<resources>
 			<resource>
-				<directory>src</directory>
+				<directory>src/main/resources</directory>
 				<includes>
-					<include>*.properties</include>
-					<include>*.yml</include>
-					<include>*.csv</include>
-					<include>*.txt</include>
+					<include>**</include>
 				</includes>
 				<filtering>true</filtering>
 			</resource>

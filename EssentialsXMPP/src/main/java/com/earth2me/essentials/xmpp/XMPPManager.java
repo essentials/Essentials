@@ -114,7 +114,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 		final ConnectionConfiguration connConf = new ConnectionConfiguration(server, port, serviceName);
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Connecting to xmpp server ").append(server).append(":").append(port);
-		stringBuilder.append(" as user ").append(xmppuser).append(".");
+		stringBuilder.append(" as user ").append(xmppuser).append("");
 		LOGGER.log(Level.INFO, stringBuilder.toString());
 		connConf.setSASLAuthenticationEnabled(config.getBoolean("xmpp.sasl-enabled", false));
 		connConf.setSendPresence(true);
