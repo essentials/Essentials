@@ -79,7 +79,7 @@ public abstract class EssentialsLoopCommand extends EssentialsCommand
 
 		boolean skipHidden = sender.isPlayer() && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.vanish.interact");
 
-		if (searchTerm.contentEquals("**") || searchTerm.contentEquals("*"))
+		if ((searchTerm.contentEquals("**") || searchTerm.contentEquals("*")) && ess.getUser(sender.getPlayer()).isAuthorized("essentials.wildcard"))
 		{
 			for (Player onlinePlayer : server.getOnlinePlayers())
 			{
