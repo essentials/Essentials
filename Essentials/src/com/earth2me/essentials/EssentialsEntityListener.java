@@ -131,12 +131,20 @@ public class EssentialsEntityListener implements Listener
 			player.setRemainingAir(player.getMaximumAir());
 			event.setCancelled(true);
 		}
+		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isVanished())
+		{
+			event.setCancelled(true);
+		}
 	}
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onEntityCombust(final EntityCombustEvent event)
 	{
 		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isGodModeEnabled())
+		{
+			event.setCancelled(true);
+		}
+		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isVanished())
 		{
 			event.setCancelled(true);
 		}
@@ -152,6 +160,10 @@ public class EssentialsEntityListener implements Listener
 			user.sendMessage(_("backAfterDeath"));
 		}
 		if (!ess.getSettings().areDeathMessagesEnabled())
+		{
+			event.setDeathMessage("");
+		}
+		if (ess.getUser(getPlayer()).isVanished())
 		{
 			event.setDeathMessage("");
 		}
@@ -182,6 +194,10 @@ public class EssentialsEntityListener implements Listener
 					user.setSaturation(10);
 				}
 				event.setCancelled(true);
+			}
+			if (user.isVanished())
+			{
+				event.setCancelled();
 			}
 		}
 	}
@@ -217,6 +233,10 @@ public class EssentialsEntityListener implements Listener
 			if (user.isAfk())
 			{
 				user.updateActivity(true);
+			}
+			if (user.isVanished())
+			{
+				event.setCancelled(true);
 			}
 		}
 	}
