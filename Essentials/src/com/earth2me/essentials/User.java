@@ -752,7 +752,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 			ess.getVanishedPlayers().add(getName());
 			if (isAuthorized("essentials.vanish.effect"))
 			{
-				this.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false));
+				this.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, false));
 			}
 		}
 		else
