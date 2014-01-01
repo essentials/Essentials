@@ -25,6 +25,15 @@ public class EssentialsBlockListener implements Listener
 	}
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	public void onBlockBreak(final BlockBreakEvent event)
+	{
+		if (ess.getUser(event.getPlayer).isVanished())
+		{
+			event.setCancelled(true);
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{
 		// Do not rely on getItemInHand();
@@ -35,6 +44,11 @@ public class EssentialsBlockListener implements Listener
 			return;
 		}
 
+		if (ess.getUser(event.getPlayer).isVanished())
+		{
+			event.setCancelled(true);
+		}
+		
 		if (is.getType() == Material.MOB_SPAWNER && event.getItemInHand() != null && event.getPlayer() != null
 			&& event.getItemInHand().getType() == Material.MOB_SPAWNER)
 		{
