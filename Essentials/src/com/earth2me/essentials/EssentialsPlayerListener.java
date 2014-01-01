@@ -422,6 +422,10 @@ public class EssentialsPlayerListener implements Listener
 			user.getInventory().addItem(stack);
 			user.updateInventory();
 		}
+		if (ess.getUser(event.getPlayer()).isVanished())
+		{
+			e.setCancelled(true);
+		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -514,6 +518,10 @@ public class EssentialsPlayerListener implements Listener
 					player.setBedSpawnLocation(event.getClickedBlock().getLocation());
 					player.sendMessage(_("bedSet", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()));
 				}
+			}
+			if (ess.getUser(event.getPlayer()).isVanished())
+			{
+				event.setCancelled(true);
 			}
 			break;
 		case LEFT_CLICK_AIR:
@@ -622,6 +630,10 @@ public class EssentialsPlayerListener implements Listener
 			{
 				event.setCancelled(true);
 			}
+		}
+		if (ess.getUser(event.getPlayer()).isVanished())
+		{
+			event.setCancelled(true);
 		}
 	}
 
