@@ -46,11 +46,11 @@ Please follow the format guidelines that are saved in the project properties.
 Windows users, please read this: http://help.github.com/line-endings/
 The default line ending is **LF**.
 
-To build all jars, select the BuildAll project and build that. You'll find all jars inside the dist/lib folder of the BuildAll project.
+To build all jars, select the BuildAll project and build that. You'll find all jars inside the `dist/lib` folder of the BuildAll project.
 
 Please only submit pull requests for the 2.x branch.
 
-Bugs and issues can be submitted at https://essentials3.atlassian.net/
+Bugs and issues can be submitted/found at https://essentials3.atlassian.net/
 
 
 Other advice
@@ -58,4 +58,4 @@ Other advice
 
 Not all features are 'Essentials Ready'.  Essentials is designed to cover the basic needs of Minecraft server administration, thus, we reject over 80% of feature requests that we deem are unsuitable.
 
-Before developing an Essentials feature, we would recommend speaking to a developer in the Essentials IRC channel (#essentials on irc.esper.net).
+Before developing an Essentials feature, we would recommend speaking to a developer in the Essentials IRC channel ([#essentials on irc.esper.net](http://tiny.cc/EssentialsChat)). Click [here](irc://irc.esper.net/#essentials) if you have a IRC client.
