@@ -327,3 +327,26 @@ groups:
     - vanish.silentjoin
     - vanish.silentquit
     - vanish.silentchests
+
+# Permission nodes for Magic by NathanWolf
+# http://dev.bukkit.org/bukkit-plugins/magic/
+
+  g:magic_moderator:
+    permissions:
+    - Magic.commands.wand
+    - Magic.commands.wand.add
+    - Magic.commands.wand.remove
+    - Magic.commands.wand.configure
+    - Magic.commands.wand.upgrade
+    - Magic.commands.wand.list
+    - Magic.commands.spells
+    - Magic.commands.cast
+
+  g:magic_admin:
+    permissions:
+    - Magic.commands.pwand
+    - Magic.commands.pwand.add
+    - Magic.commands.pwand.remove
+    - Magic.commands.pwand.configure
+    - Magic.commands.reload
+    - Magic.commands.populate
