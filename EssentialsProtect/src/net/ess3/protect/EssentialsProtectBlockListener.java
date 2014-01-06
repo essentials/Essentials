@@ -48,9 +48,15 @@ public class EssentialsProtectBlockListener implements Listener
 			event.setCancelled(settings.getData().getPrevent().isLavaFirespread());
 			return;
 		}
+		
 		if (event.getCause().equals(BlockIgniteEvent.IgniteCause.LIGHTNING))
 		{
 			event.setCancelled(settings.getData().getPrevent().isLightningFirespread());
+		}
+		
+		if (event.getCause().equals(BlockIgniteEvent.IgniteCause.FIREBALL))
+		{
+			event.setCancelled(settings.getData().getPrevent().isFireballFire());
 		}
 	}
 
