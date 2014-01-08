@@ -350,6 +350,10 @@ commands:
     description: Change your speed limits.
     usage: /<command> [type] <speed> [player]
     aliases: [flyspeed,eflyspeed,fspeed,efspeed,espeed,walkspeed,ewalkspeed,wspeed,ewspeed]
+  staffchat:
+    description: Sends a message only to staff members.
+    usage: /<command> <message>
+    aliases: [staff,st]
   sudo:
     description: Make another user perform a command.
     usage: /<command> <player> <command [args]>
