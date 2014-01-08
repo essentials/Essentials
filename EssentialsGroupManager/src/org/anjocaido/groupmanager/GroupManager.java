@@ -1241,7 +1241,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				// Seems OK
 				auxGroup.addInherits(auxGroup2);
-				sender.sendMessage(ChatColor.RED + "Group " + auxGroup2.getName() + " is now in " + auxGroup.getName() + " inheritance list.");
+				sender.sendMessage(ChatColor.YELLOW + "Group " + auxGroup2.getName() + " is now in " + auxGroup.getName() + " inheritance list.");
 
 				BukkitPermissions.updateAllPlayers();
 
@@ -1284,7 +1284,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				// Seems OK
 				auxGroup.removeInherits(auxGroup2.getName());
-				sender.sendMessage(ChatColor.RED + "Group " + auxGroup2.getName() + " was removed from " + auxGroup.getName() + " inheritance list.");
+				sender.sendMessage(ChatColor.YELLOW + "Group " + auxGroup2.getName() + " was removed from " + auxGroup.getName() + " inheritance list.");
 
 				BukkitPermissions.updateAllPlayers();
 
