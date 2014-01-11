@@ -42,7 +42,8 @@ change-displayname: true
 #add-prefix-suffix: false
 
 # Should players be teleported to the closest safe destination when teleporting?
-# If this is disabled, unsafe teleports will be cancelled.
+# If this is enabled, if teleport location is unsafe, teleport to nearest safe location.
+# If this is disabled, if teleport location is unsafe, cancel teleport.
 teleport-safety: true
 
 # The delay, in seconds, required between /home, /tp, etc.
