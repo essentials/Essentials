@@ -326,6 +326,10 @@ commands:
     description: Creates a jail where you specified named [jailname].
     usage: /<command> <jailname>
     aliases: [esetjail,createjail,ecreatejail]
+  setskull:
+    description: Changes the head of the player.
+    usage: /<command> <player>
+    aliases: [esetskull, changeso, echangeso, skullowner, eskullowner]    
   setwarp:
     description: Creates a new warp.
     usage: /<command> <warp>
