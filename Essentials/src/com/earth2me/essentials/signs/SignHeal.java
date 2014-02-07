@@ -33,6 +33,8 @@ public class SignHeal extends EssentialsSign
 		player.setHealth(20);
 		player.setFoodLevel(20);
 		player.setFireTicks(0);
+		player.setSaturation(10);
+		player.setExhaustion(0F);
 		player.sendMessage(_("youAreHealed"));
 		charge.charge(player);
 		Trade.log("Sign", "Heal", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
