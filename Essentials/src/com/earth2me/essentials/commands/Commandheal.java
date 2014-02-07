@@ -85,6 +85,8 @@ public class Commandheal extends EssentialsLoopCommand
 		player.setHealth(newAmount);
 		player.setFoodLevel(20);
 		player.setFireTicks(0);
+		player.setSaturation(10);
+		player.setExhaustion(0F);
 		user.sendMessage(_("heal"));
 		for (PotionEffect effect : player.getActivePotionEffects())
 		{
