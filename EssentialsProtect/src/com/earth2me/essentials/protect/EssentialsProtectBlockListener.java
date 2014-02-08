@@ -58,6 +58,12 @@ public class EssentialsProtectBlockListener implements Listener
 		{
 			event.setCancelled(prot.getSettingBool(ProtectConfig.prevent_fireball_fire));
 		}
+		
+		if (event.getCause().equals(BlockIgniteEvent.IgniteCause.FIREBALL))
+		{
+			event.setCancelled(prot.getSettingBool(ProtectConfig.prevent_fireball_fire));
+			return;
+		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
