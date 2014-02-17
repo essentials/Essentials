@@ -75,6 +75,8 @@ public class Commandmail extends EssentialsCommand
 				u.addMail(mail);
 			}
 			user.sendMessage(_("mailSent"));
+			user.sendMessage(_("mailMessage"));
+			user.sendMessage(mail);
 			return;
 		}
 		if (args.length > 1 && "sendall".equalsIgnoreCase(args[0]))
