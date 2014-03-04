@@ -2,6 +2,7 @@ package net.ess3.api.events;
 
 import java.math.BigDecimal;
 
+import com.earth2me.essentials.IUser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -10,13 +11,13 @@ import org.bukkit.event.HandlerList;
 public class UserBalanceUpdateEvent extends Event
 {
 	private static final HandlerList handlers = new HandlerList();
-	private final Player player;
-	private final BigDecimal balance;
+	private final IUser user;
+	private BigDecimal newBalance;
 
-	public UserBalanceUpdateEvent(Player player, BigDecimal balance)
+	public UserBalanceUpdateEvent(IUser user, BigDecimal newBalance)
 	{
-		this.player = player;
-		this.balance = balance;
+		this.user = user;
+		this.newBalance = newBalance;
 	}
 
 	@Override
@@ -32,11 +33,28 @@ public class UserBalanceUpdateEvent extends Event
 
 	public Player getPlayer()
 	{
-		return player;
+		return user.getBase();
+	}
+
+	public IUser getUser() {
+		return user;
 	}
 
 	public BigDecimal getNewBalance()
 	{
-		return balance;
+		return newBalance;
+	}
+
+	public void setNewBalance(BigDecimal newBalance) {
+		this.newBalance = newBalance;
+	}
+
+	public BigDecimal getOldBalance()
+	{
+		return user.getMoney();
+	}
+
+	public BigDecimal getChange() {
+		return newBalance.subtract(getOldBalance());
 	}
 }
