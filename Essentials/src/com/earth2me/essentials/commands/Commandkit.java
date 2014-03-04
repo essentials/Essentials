@@ -1,15 +1,17 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.Kit;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.StringUtil;
+import org.bukkit.Server;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import org.bukkit.Server;
+
+import static com.earth2me.essentials.I18n._;
 
 
 public class Commandkit extends EssentialsCommand
@@ -24,8 +26,10 @@ public class Commandkit extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			final String kitList = Kit.listKits(ess, user);
-			user.sendMessage(kitList.length() > 0 ? _("kits", kitList) : _("noKits"));
+            final String kitList = Kit.listKits(ess, user);
+			// Dirty workaround for getting amount of kits
+			final int count = kitList.split(" ").length;
+            user.sendMessage(kitList.length() > 0 ? _("kits", kitList, count) : _("noKits"));
 			throw new NoChargeException();
 		}
 		else if (args.length > 1 && user.isAuthorized("essentials.kit.others"))
@@ -47,7 +51,9 @@ public class Commandkit extends EssentialsCommand
 		if (args.length < 2)
 		{
 			final String kitList = Kit.listKits(ess, null);
-			sender.sendMessage(kitList.length() > 0 ? _("kits", kitList) : _("noKits"));
+			// Dirty workaround for getting amount of kits
+			final int count = kitList.split(" ").length;
+			sender.sendMessage(kitList.length() > 0 ? _("kits", kitList, count) : _("noKits"));
 			throw new NoChargeException();
 		}
 		else

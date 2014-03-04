@@ -1,8 +1,9 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n._;
 import org.bukkit.Server;
+
+import static com.earth2me.essentials.I18n._;
 
 
 public class Commanddelwarp extends EssentialsCommand
@@ -19,8 +20,15 @@ public class Commanddelwarp extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		
-		ess.getWarps().removeWarp(args[0]);
-		sender.sendMessage(_("deleteWarp", args[0]));
+
+		if (ess.getWarps().getList().contains(args[0]))
+		{
+			ess.getWarps().removeWarp(args[0]);
+			sender.sendMessage(_("deleteWarp", args[0]));
+		}
+		else
+		{
+			sender.sendMessage(_("invalidWarpName"));
+		}
 	}
 }
