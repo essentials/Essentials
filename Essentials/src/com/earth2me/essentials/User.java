@@ -460,8 +460,9 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 			{
 			}
 		}
+		BigDecimal oldValue = getMoney();
 		super.setMoney(value, true);
-		ess.getServer().getPluginManager().callEvent(new UserBalanceUpdateEvent(this.getBase(), value));
+		ess.getServer().getPluginManager().callEvent(new UserBalanceUpdateEvent(this, value, oldValue));
 		Trade.log("Update", "Set", "API", getName(), new Trade(value, ess), null, null, null, ess);
 	}
 
