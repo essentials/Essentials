@@ -18,6 +18,11 @@ To build with Maven, use the command
 mvn package dependency:copy
 ```
 
+To build with Ant, use the command
+```
+ant
+```
+
 Jar files can then be found in the /jars folder
 
 
@@ -26,11 +31,11 @@ Commit Guidelines
 
 Commits should fall into one of 3 areas:
 
-- `[Feature]`: Commits which are features should start with `[Feature]` and followed by a quick summary on the top line, followed by some extra details in the commit body.
+- `[Feature]`: Commits which are features should start with `[Feature]` and be followed by a quick summary on the top line with some extra details in the commit body.
 
-- `[Fix]`: Commits which fix bugs, or minor improvements to existing features should start with `[Fix]` and followed by a quick summary on the top line, followed by some extra details in the commit body.
+- `[Fix]`: Commits which fix bugs or involve minor improvements to existing features should start with `[Fix]` and be followed by a quick summary on the top line with some extra details in the commit body.
 
-- Commits which fix bugs caused by previous commits (since last release), or otherwise make no functionality changes, should have no prefix.  These will not be added to the project change log.
+- Commits which fix bugs caused by previous commits (since last release), or otherwise make no functionality changes, should have no prefix.  These will not be added to the project changelog.
 
 Coding Guidelines
 -----------------
@@ -45,7 +50,7 @@ To build all jars, select the EssentialsParent project and build that. You'll fi
 
 Please only submit pull requests for the 2.x branch.
 
-Bugs and issues can be submitted/found at https://essentials3.atlassian.net/
+Bugs and issues can be submitted at https://essentials3.atlassian.net/
 
 
 Other advice
