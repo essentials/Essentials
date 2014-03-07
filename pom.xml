@@ -58,7 +58,6 @@
 	</distributionManagement>
 
 	<modules>
-		<module>Essentials</module>
 		<module>EssentialsAntiBuild</module>
 		<module>EssentialsChat</module>
 		<module>EssentialsGeoIP</module>
