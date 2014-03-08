@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 public class Commandbalancetop extends EssentialsCommand
 {
@@ -38,9 +39,18 @@ public class Commandbalancetop extends EssentialsCommand
 			}
 			catch (NumberFormatException ex)
 			{
-				if (args[0].equalsIgnoreCase("force") && ess.getUser(sender.getSender()).isAuthorized("essentials.balancetop.force"))
-				{
-					force = true;
+				if (args[0].equalsIgnoreCase("force")){// && ess.getUser(sender.getSender()).isAuthorized("essentials.balancetop.force"))
+					if (!(sender.getSender() instanceof Player)){
+						force = true;
+					} else {
+						Player player = (Player) sender.getSender();
+						if (ess.getUser(player).isAuthorized("essentials.balancetop.force")){
+							force = true;
+						} else {
+							sender.sendMessage(_("noAccessCommand"));
+							return;
+						}
+					}
 				}
 			}
 		}
