@@ -32,7 +32,7 @@ public class Commandpowertool extends EssentialsCommand
 	{
 		if (args.length < 3) //running from console means inserting a player and item before the standard syntax
 		{
-			throw new Exception("When running from console, usage is: /" + commandLabel + " <player> <itemid> <command>");
+			throw new Exception(_("powerToolConsole"));
 		}
 
 		final User user = getPlayer(server, args, 0, true, true);
