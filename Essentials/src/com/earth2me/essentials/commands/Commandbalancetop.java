@@ -39,7 +39,7 @@ public class Commandbalancetop extends EssentialsCommand
 			}
 			catch (NumberFormatException ex)
 			{
-				if (args[0].equalsIgnoreCase("force")){// && ess.getUser(sender.getSender()).isAuthorized("essentials.balancetop.force"))
+				if (args[0].equalsIgnoreCase("force")){
 					if (!(sender.getSender() instanceof Player)){
 						force = true;
 					} else {
