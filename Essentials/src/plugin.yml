@@ -375,7 +375,7 @@ commands:
     usage: /<command> [day|night|dawn|17:30|4pm|4000ticks] [worldname|all]
     aliases: [day,eday,night,enight,etime]
   togglejail:
-    description: Jails/Unjails a player, TPs them to the jail specified.
+    description: Jails/Unjails a player and teleports them to the jail specified.
     usage: /<command> <player> <jailname> [datediff]
     aliases: [jail,ejail,tjail,etjail,etogglejail,unjail,eunjail]
   top:
