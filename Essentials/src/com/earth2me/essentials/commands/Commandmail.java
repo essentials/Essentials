@@ -70,7 +70,7 @@ public class Commandmail extends EssentialsCommand
 				mailsPerMinute++;
 				if (mailsPerMinute > ess.getSettings().getMailsPerMinute())
 				{
-					throw new Exception("Too many mails have been send within the last minute. Maximum: " + ess.getSettings().getMailsPerMinute());
+					throw new Exception("Too many mails have been sent within the last minute. Maximum: " + ess.getSettings().getMailsPerMinute());
 				}
 				u.addMail(mail);
 			}
