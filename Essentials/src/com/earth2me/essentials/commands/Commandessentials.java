@@ -1,5 +1,6 @@
 package com.earth2me.essentials.commands;
 
+import com.carlgo11.report.Pastebin;
 import com.earth2me.essentials.CommandSource;
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
@@ -8,8 +9,10 @@ import com.earth2me.essentials.metrics.Metrics;
 import com.earth2me.essentials.utils.DateUtil;
 import com.earth2me.essentials.utils.NumberUtil;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.Sound;
@@ -56,6 +59,8 @@ public class Commandessentials extends EssentialsCommand
 		else if (args[0].equalsIgnoreCase("cleanup"))
 		{
 			run_cleanup(server, sender, commandLabel, args);
+		}else if(args[0].equalsIgnoreCase("report")){
+			run_report(sender, args);
 		}
 		else
 		{
@@ -311,5 +316,23 @@ public class Commandessentials extends EssentialsCommand
 			}
 		});
 
+	}
+	private void run_report(final CommandSource sender, final String args[]){
+		if(args.length == 1){
+			User user = ess.getUser(sender.getPlayer());
+			if(user == null || user.isAuthorized("essentials.essentials.report")){
+				try
+				{
+					String pastebin = Pastebin.makePaste("Essentials report", ess, "e16a58388baa8362e63d558993ae56ff");
+					sender.sendMessage(ChatColor.GREEN + "Here is your pastebin: "+ChatColor.RESET+pastebin);
+				}
+				catch (UnsupportedEncodingException ex)
+				{
+					ess.getLogger().warning(ex.toString());
+				}
+			}else{
+				sender.sendMessage(_("cleaned"));
+			}
+		}
 	}
 }
