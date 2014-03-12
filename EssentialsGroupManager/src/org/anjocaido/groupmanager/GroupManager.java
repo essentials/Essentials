@@ -681,7 +681,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
 				if (auxGroup != null) {
-					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group already exist!");
+					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group already exists!");
 					return true;
 				}
 				// Seems OK
@@ -703,7 +703,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
 				if (auxGroup == null) {
-					sender.sendMessage(ChatColor.RED + "" + args[0] + " Group doesnt exist!");
+					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group doesnt exist!");
 					return true;
 				}
 				// Seems OK
@@ -1866,7 +1866,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
 				if (auxGroup == null) {
-					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group doesnt exist!");
+					sender.sendMessage(ChatColor.RED + "'" + args[1] + "' Group doesnt exist!");
 					return true;
 				}
 				if (auxGroup.isGlobal()) {
@@ -1922,7 +1922,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
 				if (auxGroup == null) {
-					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group doesnt exist!");
+					sender.sendMessage(ChatColor.RED + "'" + args[1] + "' Group doesnt exist!");
 					return true;
 				}
 				if (auxGroup.isGlobal()) {
@@ -1961,291 +1961,4 @@ public class GroupManager extends JavaPlugin {
 				validateOnlinePlayer = !validateOnlinePlayer;
 				sender.sendMessage(ChatColor.YELLOW + "Validate if player is online, now set to: " + Boolean.toString(validateOnlinePlayer));
 				if (!validateOnlinePlayer) {
-					sender.sendMessage(ChatColor.GOLD + "From now on you can edit players that are not connected... BUT:");
-					sender.sendMessage(ChatColor.LIGHT_PURPLE + "From now on you should type the whole name of the player, correctly.");
-				}
-				return true;
-			case mantogglesave:
-				if (scheduler == null) {
-					enableScheduler();
-					sender.sendMessage(ChatColor.YELLOW + "The auto-saving is enabled!");
-				} else {
-					disableScheduler();
-					sender.sendMessage(ChatColor.YELLOW + "The auto-saving is disabled!");
-				}
-				return true;
-			case manworld:
-				auxString = selectedWorlds.get(sender.getName());
-				if (auxString != null) {
-					sender.sendMessage(ChatColor.YELLOW + "You have the world '" + dataHolder.getName() + "' in your selection.");
-				} else {
-					if (dataHolder == null) {
-						sender.sendMessage(ChatColor.YELLOW + "There is no world selected. And no world is available now.");
-					} else {
-						sender.sendMessage(ChatColor.YELLOW + "You don't have a world in your selection..");
-						sender.sendMessage(ChatColor.YELLOW + "Working with the direct world where your player is.");
-						sender.sendMessage(ChatColor.YELLOW + "Your world now uses permissions of world name: '" + dataHolder.getName() + "' ");
-					}
-				}
-
-				return true;
-
-			case manselect:
-				if (args.length < 1) {
-					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/manselect <world>)");
-					sender.sendMessage(ChatColor.YELLOW + "Worlds available: ");
-					ArrayList<OverloadedWorldHolder> worlds = worldsHolder.allWorldsDataList();
-					auxString = "";
-					for (int i = 0; i < worlds.size(); i++) {
-						auxString += worlds.get(i).getName();
-						if ((i + 1) < worlds.size()) {
-							auxString += ", ";
-						}
-					}
-					sender.sendMessage(ChatColor.YELLOW + auxString);
-					return false;
-				}
-				auxString = "";
-				for (int i = 0; i < args.length; i++) {
-					if (args[i] == null) {
-						logger.warning("Bukkit gave invalid arguments array! Cmd: " + cmd.getName() + " args.length: " + args.length);
-						return false;
-					}
-					auxString += args[i];
-					if (i < (args.length - 1)) {
-						auxString += " ";
-					}
-				}
-				dataHolder = worldsHolder.getWorldData(auxString);
-				permissionHandler = dataHolder.getPermissionsHandler();
-				selectedWorlds.put(sender.getName(), dataHolder.getName());
-				sender.sendMessage(ChatColor.YELLOW + "You have selected world '" + dataHolder.getName() + "'.");
-
-				return true;
-
-			case manclear:
-				if (args.length != 0) {
-					sender.sendMessage(ChatColor.RED + "Review your arguments count!");
-					return false;
-				}
-				selectedWorlds.remove(sender.getName());
-				sender.sendMessage(ChatColor.YELLOW + "You have removed your world selection. Working with current world(if possible).");
-
-				return true;
-				
-			case mancheckw:
-				if (args.length < 1) {
-					sender.sendMessage(ChatColor.RED + "Review your arguments count! (/mancheckw <world>)");
-					sender.sendMessage(ChatColor.YELLOW + "Worlds available: ");
-					ArrayList<OverloadedWorldHolder> worlds = worldsHolder.allWorldsDataList();
-					auxString = "";
-					for (int i = 0; i < worlds.size(); i++) {
-						auxString += worlds.get(i).getName();
-						if ((i + 1) < worlds.size()) {
-							auxString += ", ";
-						}
-					}
-					sender.sendMessage(ChatColor.YELLOW + auxString);
-					return false;
-				}
-				
-				auxString = "";
-				for (int i = 0; i < args.length; i++) {
-					if (args[i] == null) {
-						logger.warning("Bukkit gave invalid arguments array! Cmd: " + cmd.getName() + " args.length: " + args.length);
-						return false;
-					}
-					auxString += args[i];
-					if (i < (args.length - 1)) {
-						auxString += " ";
-					}
-				}
-				dataHolder = worldsHolder.getWorldData(auxString);
-				
-				sender.sendMessage(ChatColor.YELLOW + "You have selected world '" + dataHolder.getName() + "'.");
-				sender.sendMessage(ChatColor.YELLOW + "This world is using the following data files..");
-				sender.sendMessage(ChatColor.YELLOW + "Groups:" + ChatColor.GREEN + " " + dataHolder.getGroupsFile().getAbsolutePath());
-				sender.sendMessage(ChatColor.YELLOW + "Users:" + ChatColor.GREEN + " " + dataHolder.getUsersFile().getAbsolutePath());
-
-				return true;
-
-			default:
-				break;
-			}
-		}
-		sender.sendMessage(ChatColor.RED + "You are not allowed to use that command.");
-		return true;
-	}
-	
-	/**
-	 * Checks if a permission exists and of a lower or same priority.
-	 */
-	private boolean checkPermissionExists(CommandSender sender, String newPerm, PermissionCheckResult oldPerm, String type) {
-		
-		
-		if (newPerm.startsWith("+"))
-		{
-			if (oldPerm.resultType.equals(PermissionCheckResult.Type.EXCEPTION))
-			{
-				sender.sendMessage(ChatColor.RED + "The " + type + " already has direct access to that permission.");
-				sender.sendMessage(ChatColor.RED + "Node: " + oldPerm.accessLevel);
-				return true;
-			}
-		}
-		else if (newPerm.startsWith("-"))
-		{
-			if (oldPerm.resultType.equals(PermissionCheckResult.Type.EXCEPTION))
-			{
-				sender.sendMessage(ChatColor.RED + "The " + type + " already has an exception for this node.");
-				sender.sendMessage(ChatColor.RED + "Node: " + oldPerm.accessLevel);
-				return true;
-			}
-			else if (oldPerm.resultType.equals(PermissionCheckResult.Type.NEGATION))
-			{
-				sender.sendMessage(ChatColor.RED + "The " + type + " already has a matching negated node.");
-				sender.sendMessage(ChatColor.RED + "Node: " + oldPerm.accessLevel);
-				return true;
-			}
-		}
-		else
-		{
-			if (oldPerm.resultType.equals(PermissionCheckResult.Type.EXCEPTION))
-			{
-				sender.sendMessage(ChatColor.RED + "The " + type + " already has an exception for this node.");
-				sender.sendMessage(ChatColor.RED + "Node: " + oldPerm.accessLevel);
-			}
-			else if (oldPerm.resultType.equals(PermissionCheckResult.Type.NEGATION))
-			{
-				sender.sendMessage(ChatColor.RED + "The " + type + " already has a matching negated node.");
-				sender.sendMessage(ChatColor.RED + "Node: " + oldPerm.accessLevel);
-			}
-			else if (oldPerm.resultType.equals(PermissionCheckResult.Type.FOUND))
-			{
-				sender.sendMessage(ChatColor.RED + "The " + type + " already has direct access to that permission.");
-				sender.sendMessage(ChatColor.RED + "Node: " + oldPerm.accessLevel);
-				
-				// Since not all plugins define wildcard permissions, allow setting the permission anyway if the permissions dont match exactly.
-				return (oldPerm.accessLevel.equalsIgnoreCase(newPerm));
-			}
-		}
-		return false;
-	}
-
-
-	/**
-	 * Sets up the default world for use.
-	 */
-	private boolean setDefaultWorldHandler(CommandSender sender) {
-
-		dataHolder = worldsHolder.getWorldData(worldsHolder.getDefaultWorld().getName());
-		permissionHandler = dataHolder.getPermissionsHandler();
-
-		if ((dataHolder != null) && (permissionHandler != null)) {
-			selectedWorlds.put(sender.getName(), dataHolder.getName());
-			sender.sendMessage(ChatColor.RED + "Couldn't retrieve your world. Default world '" + worldsHolder.getDefaultWorld().getName() + "' selected.");
-			return true;
-		}
-
-		sender.sendMessage(ChatColor.RED + "Couldn't retrieve your world. World selection is needed.");
-		sender.sendMessage(ChatColor.RED + "Use /manselect <world>");
-		return false;
-
-	}
-
-	/**
-	 * Send confirmation of a group change. using permission nodes...
-	 * 
-	 * groupmanager.notify.self groupmanager.notify.other
-	 * 
-	 * @param name
-	 * @param msg
-	 */
-	public static void notify(String name, String msg) {
-
-		Player player = Bukkit.getServer().getPlayerExact(name);
-
-		for (Player test : Bukkit.getServer().getOnlinePlayers()) {
-			if (!test.equals(player)) {
-				if (test.hasPermission("groupmanager.notify.other"))
-					test.sendMessage(ChatColor.YELLOW + name + " was" + msg);
-			} else if ((player != null) && ((player.hasPermission("groupmanager.notify.self")) || (player.hasPermission("groupmanager.notify.other"))))
-				player.sendMessage(ChatColor.YELLOW + "You were" + msg);
-		}
-
-	}
-
-	/**
-	 * Load a List of players matching the name given. If none online, check
-	 * Offline.
-	 * 
-	 * @param playerName, sender
-	 * @return true if a single match is found
-	 */
-	private List<String> validatePlayer(String playerName, CommandSender sender) {
-
-		List<Player> players = new ArrayList<Player>();
-		List<String> match = new ArrayList<String>();
-
-		players = this.getServer().matchPlayer(playerName);
-		if (players.isEmpty()) {
-			// Check for an offline player (exact match).
-			if (Arrays.asList(this.getServer().getOfflinePlayers()).contains(Bukkit.getOfflinePlayer(playerName))) {
-				match.add(playerName);
-			} else {
-				// look for partial matches
-				for (OfflinePlayer offline : this.getServer().getOfflinePlayers()) {
-					if (offline.getName().toLowerCase().startsWith(playerName.toLowerCase()))
-						match.add(offline.getName());
-				}
-			}
-
-		} else {
-			for (Player player : players) {
-				match.add(player.getName());
-			}
-		}
-
-		if (match.isEmpty() || match == null) {
-			sender.sendMessage(ChatColor.RED + "Player not found!");
-			return null;
-		} else if (match.size() > 1) {
-			sender.sendMessage(ChatColor.RED + "Too many matches found! (" + match.toString() + ")");
-			return null;
-		}
-
-		return match;
-
-	}
-
-	/**
-	 * @return the config
-	 */
-	public GMConfiguration getGMConfig() {
-
-		return config;
-	}
-
-	/**
-	 * @return the backupFolder
-	 */
-	public File getBackupFolder() {
-
-		return backupFolder;
-	}
-
-	public static GlobalGroups getGlobalGroups() {
-
-		return globalGroups;
-
-	}
-
-	public static GroupManagerEventHandler getGMEventHandler() {
-
-		return GMEventHandler;
-	}
-
-	public static void setGMEventHandler(GroupManagerEventHandler gMEventHandler) {
-
-		GMEventHandler = gMEventHandler;
-	}
-}
+					
