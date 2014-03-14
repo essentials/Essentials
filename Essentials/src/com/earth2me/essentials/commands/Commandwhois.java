@@ -1,13 +1,15 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.craftbukkit.SetExpFix;
 import com.earth2me.essentials.utils.DateUtil;
 import com.earth2me.essentials.utils.NumberUtil;
-import java.util.Locale;
 import org.bukkit.Server;
+
+import java.util.Locale;
+
+import static com.earth2me.essentials.I18n._;
 
 
 public class Commandwhois extends EssentialsCommand
@@ -30,6 +32,7 @@ public class Commandwhois extends EssentialsCommand
 		sender.sendMessage(_("whoisTop", user.getName()));
 		user.setDisplayNick();
 		sender.sendMessage(_("whoisNick", user.getDisplayName()));
+		sender.sendMessage(_("whoisUUID", user.getUniqueId().toString()));
 		sender.sendMessage(_("whoisHealth", user.getHealth()));
 		sender.sendMessage(_("whoisHunger", user.getFoodLevel(), user.getSaturation()));
 		sender.sendMessage(_("whoisExp", SetExpFix.getTotalExperience(user.getBase()), user.getLevel()));

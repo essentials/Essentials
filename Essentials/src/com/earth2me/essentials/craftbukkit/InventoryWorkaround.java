@@ -1,14 +1,15 @@
 package com.earth2me.essentials.craftbukkit;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
- * This class can be removed when https://github.com/Bukkit/CraftBukkit/pull/193 is accepted to CraftBukkit
+ * This class can be removed when https://github/193.com/Bukkit/CraftBukkit/pull is accepted to CraftBukkit
  */
 
 public final class InventoryWorkaround
