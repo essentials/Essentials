@@ -1,28 +1,31 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.UserMap;
 import com.earth2me.essentials.metrics.Metrics;
 import com.earth2me.essentials.utils.DateUtil;
 import com.earth2me.essentials.utils.NumberUtil;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-// This command has 4 undocumented behaviours #EasterEgg
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.earth2me.essentials.I18n._;
+
+// This command has 2 undocumented behaviours #EasterEgg
 public class Commandessentials extends EssentialsCommand
 {
 	public Commandessentials()
 	{
 		super("essentials");
 	}
+
 	private transient int taskid;
 	private final transient Map<Player, Block> noteBlocks = new HashMap<Player, Block>();
 
@@ -57,16 +60,21 @@ public class Commandessentials extends EssentialsCommand
 		{
 			run_cleanup(server, sender, commandLabel, args);
 		}
-		else
+		else if (args[0].equalsIgnoreCase("reload"))
 		{
 			run_reload(server, sender, commandLabel, args);
+		}
+		else
+		{
+			run_disabled(server, sender, commandLabel, args);
 		}
 	}
 
 	//If you do not supply an argument this command will list 'overridden' commands.
 	private void run_disabled(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
-		sender.sendMessage("/<command> <reload/debug>");
+		sender.sendMessage("Running Essentials v" + ess.getDescription().getVersion());
+		sender.sendMessage("/" + commandLabel + " <cleanup/debug/opt-out/reload/reset>");
 
 		final StringBuilder disabledCommands = new StringBuilder();
 		for (Map.Entry<String, String> entry : ess.getAlternativeCommandsHandler().disabledCommands().entrySet())
@@ -88,7 +96,7 @@ public class Commandessentials extends EssentialsCommand
 	{
 		if (args.length < 2)
 		{
-			throw new Exception("/<command> reset <player>");
+			throw new Exception("/" + commandLabel + " reset <player>");
 		}
 		final User user = getPlayer(server, args, 1, true, true);
 		user.reset();
@@ -253,7 +261,7 @@ public class Commandessentials extends EssentialsCommand
 			sender.sendMessage("This sub-command will delete users who havent logged in in the last <days> days.");
 			sender.sendMessage("Optional parameters define the minium amount required to prevent deletion.");
 			sender.sendMessage("Unless you define larger default values, this command wil ignore people who have more than 0 money/homes/bans.");
-			throw new Exception("/<command> cleanup <days> [money] [homes] [ban count]");
+			throw new Exception("/" + command + " cleanup <days> [money] [homes] [ban count]");
 		}
 		sender.sendMessage(_("cleaning"));
 
