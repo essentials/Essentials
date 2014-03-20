@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl_;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.TextInput;
@@ -63,8 +63,8 @@ public class EssentialsPlayerListener implements Listener
 		if (user.isMuted())
 		{
 			event.setCancelled(true);
-			user.sendMessage(_("voiceSilenced"));
-			LOGGER.info(_("mutedUserSpeaks", user.getName()));
+			user.sendMessage(tl_("voiceSilenced"));
+			LOGGER.info(tl_("mutedUserSpeaks", user.getName()));
 		}
 		try
 		{
@@ -295,11 +295,11 @@ public class EssentialsPlayerListener implements Listener
 					final List<String> mail = user.getMails();
 					if (mail.isEmpty())
 					{
-						user.sendMessage(_("noNewMail"));
+						user.sendMessage(tl_("noNewMail"));
 					}
 					else
 					{
-						user.sendMessage(_("youHaveNewMail", mail.size()));
+						user.sendMessage(tl_("youHaveNewMail", mail.size()));
 					}
 				}
 				
@@ -310,7 +310,7 @@ public class EssentialsPlayerListener implements Listener
 					{
 						user.setAllowFlight(true);
 						user.setFlying(true);
-						user.sendMessage(_("flyMode", _("enabled"), user.getDisplayName()));
+						user.sendMessage(tl_("flyMode", tl_("enabled"), user.getDisplayName()));
 					}					
 				}
 				user.setFlySpeed(0.1f);
@@ -346,7 +346,7 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 		
-		final String banReason = _("banFormat", _("defaultBanReason"), "Console");
+		final String banReason = tl_("banFormat", tl_("defaultBanReason"), "Console");
 		event.disallow(Result.KICK_BANNED, banReason);
 	}
 	
@@ -386,7 +386,7 @@ public class EssentialsPlayerListener implements Listener
 		
 		if (event.getResult() == Result.KICK_FULL && !user.isAuthorized("essentials.joinfullserver"))
 		{
-			event.disallow(Result.KICK_FULL, _("serverFull"));
+			event.disallow(Result.KICK_FULL, tl_("serverFull"));
 			return;
 		}
 		event.allow();
@@ -510,12 +510,12 @@ public class EssentialsPlayerListener implements Listener
 		updateCompass(user);
 		if (ess.getSettings().getNoGodWorlds().contains(newWorld) && user.isGodModeEnabledRaw())
 		{
-			user.sendMessage(_("noGodWorldWarning"));
+			user.sendMessage(tl_("noGodWorldWarning"));
 		}
 		
 		if (!user.getWorld().getName().equals(newWorld))
 		{
-			user.sendMessage(_("currentWorld", newWorld));
+			user.sendMessage(tl_("currentWorld", newWorld));
 		}
 		if (user.isVanished())
 		{
@@ -535,7 +535,7 @@ public class EssentialsPlayerListener implements Listener
 				if (player.isAuthorized("essentials.sethome.bed"))
 				{
 					player.setBedSpawnLocation(event.getClickedBlock().getLocation());
-					player.sendMessage(_("bedSet", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()));
+					player.sendMessage(tl_("bedSet", player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()));
 				}
 			}
 			break;
@@ -611,7 +611,6 @@ public class EssentialsPlayerListener implements Listener
 		{
 			if (command.contains("{player}"))
 			{
-				continue;
 			}
 			else if (command.startsWith("c:"))
 			{

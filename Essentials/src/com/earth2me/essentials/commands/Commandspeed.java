@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl_;
 import com.earth2me.essentials.User;
 import java.util.List;
 import org.bukkit.Server;
@@ -61,12 +61,12 @@ public class Commandspeed extends EssentialsCommand
 		if (isFly)
 		{
 			user.setFlySpeed(getRealMoveSpeed(speed, isFly, isBypass));
-			user.sendMessage(_("moveSpeed", _("flying"), speed, user.getDisplayName()));
+			user.sendMessage(tl_("moveSpeed", tl_("flying"), speed, user.getDisplayName()));
 		}
 		else
 		{
 			user.setWalkSpeed(getRealMoveSpeed(speed, isFly, isBypass));
-			user.sendMessage(_("moveSpeed", _("walking"), speed, user.getDisplayName()));
+			user.sendMessage(tl_("moveSpeed", tl_("walking"), speed, user.getDisplayName()));
 		}
 	}
 
@@ -86,12 +86,12 @@ public class Commandspeed extends EssentialsCommand
 			if (isFly)
 			{
 				matchPlayer.setFlySpeed(getRealMoveSpeed(speed, isFly, isBypass));
-				sender.sendMessage(_("moveSpeed", _("flying"), speed, matchPlayer.getDisplayName()));
+				sender.sendMessage(tl_("moveSpeed", tl_("flying"), speed, matchPlayer.getDisplayName()));
 			}
 			else
 			{
 				matchPlayer.setWalkSpeed(getRealMoveSpeed(speed, isFly, isBypass));
-				sender.sendMessage(_("moveSpeed", _("walking"), speed, matchPlayer.getDisplayName()));
+				sender.sendMessage(tl_("moveSpeed", tl_("walking"), speed, matchPlayer.getDisplayName()));
 			}
 		}
 		if (!foundUser)

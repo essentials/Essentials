@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl_;
 import com.earth2me.essentials.User;
 import java.util.*;
 import org.bukkit.Server;
@@ -59,7 +59,7 @@ public class Commandpweather extends EssentialsCommand
 			User user = ess.getUser(sender.getPlayer());
 			if (user != null && (!users.contains(user) || users.size() > 1) && !user.isAuthorized("essentials.pweather.others"))
 			{
-				user.sendMessage(_("pWeatherOthersPermission"));
+				user.sendMessage(tl_("pWeatherOthersPermission"));
 				return;
 			}
 		}
@@ -74,18 +74,18 @@ public class Commandpweather extends EssentialsCommand
 	{
 		if (users.size() > 1)
 		{
-			sender.sendMessage(_("pWeatherPlayers"));
+			sender.sendMessage(tl_("pWeatherPlayers"));
 		}
 
 		for (User user : users)
 		{
 			if (user.getPlayerWeather() == null)
 			{
-				sender.sendMessage(_("pWeatherNormal", user.getName()));
+				sender.sendMessage(tl_("pWeatherNormal", user.getName()));
 			}
 			else
 			{
-				sender.sendMessage(_("pWeatherCurrent", user.getName(), user.getPlayerWeather().toString().toLowerCase(Locale.ENGLISH)));
+				sender.sendMessage(tl_("pWeatherCurrent", user.getName(), user.getPlayerWeather().toString().toLowerCase(Locale.ENGLISH)));
 			}
 		}
 	}
@@ -114,20 +114,20 @@ public class Commandpweather extends EssentialsCommand
 				user.resetPlayerWeather();
 			}
 
-			sender.sendMessage(_("pWeatherReset", msg));
+			sender.sendMessage(tl_("pWeatherReset", msg));
 		}
 		else
 		{
 			if (!weatherAliases.containsKey(weatherType))
 			{
-				throw new NotEnoughArgumentsException(_("pWeatherInvalidAlias"));
+				throw new NotEnoughArgumentsException(tl_("pWeatherInvalidAlias"));
 			}
 
 			for (User user : users)
 			{
 				user.setPlayerWeather(weatherAliases.get(weatherType));
 			}
-			sender.sendMessage(_("pWeatherSet", weatherType, msg.toString()));
+			sender.sendMessage(tl_("pWeatherSet", weatherType, msg.toString()));
 		}
 	}
 

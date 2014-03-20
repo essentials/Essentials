@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl_;
 import org.bukkit.Server;
 
 
@@ -21,6 +21,6 @@ public class Commanddeljail extends EssentialsCommand
 		}
 		
 		ess.getJails().removeJail(args[0]);
-		sender.sendMessage(_("deleteJail", args[0]));
+		sender.sendMessage(tl_("deleteJail", args[0]));
 	}
 }

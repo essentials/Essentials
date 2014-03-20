@@ -2,7 +2,7 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.Backup;
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl_;
 import org.bukkit.Server;
 
 
@@ -19,14 +19,14 @@ public class Commandbackup extends EssentialsCommand
 		final Backup backup = ess.getBackup();
 		if (backup == null)
 		{
-			throw new Exception(_("backupDisabled"));
+			throw new Exception(tl_("backupDisabled"));
 		}
 		final String command = ess.getSettings().getBackupCommand();
 		if (command == null || "".equals(command) || "save-all".equalsIgnoreCase(command))
 		{
-			throw new Exception(_("backupDisabled"));
+			throw new Exception(tl_("backupDisabled"));
 		}
 		backup.run();
-		sender.sendMessage(_("backupStarted"));
+		sender.sendMessage(tl_("backupStarted"));
 	}
 }

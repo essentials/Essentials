@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl_;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import org.bukkit.Location;
@@ -38,11 +38,11 @@ public class Commandtppos extends EssentialsCommand
 		}
 		if (x > 30000000 || y > 30000000 || z > 30000000 || x < -30000000 || y < -30000000 || z < -30000000)
 		{
-			throw new NotEnoughArgumentsException(_("teleportInvalidLocation"));
+			throw new NotEnoughArgumentsException(tl_("teleportInvalidLocation"));
 		}
 		final Trade charge = new Trade(this.getName(), ess);
 		charge.isAffordableFor(user);
-		user.sendMessage(_("teleporting", loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
+		user.sendMessage(tl_("teleporting", loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
 		user.getTeleport().teleport(loc, charge, TeleportCause.COMMAND);
 		throw new NoChargeException();
 	}
@@ -70,10 +70,10 @@ public class Commandtppos extends EssentialsCommand
 		}
 		if (x > 30000000 || y > 30000000 || z > 30000000 || x < -30000000 || y < -30000000 || z < -30000000)
 		{
-			throw new NotEnoughArgumentsException(_("teleportInvalidLocation"));
+			throw new NotEnoughArgumentsException(tl_("teleportInvalidLocation"));
 		}
-		sender.sendMessage(_("teleporting", loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
-		user.sendMessage(_("teleporting", loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
+		sender.sendMessage(tl_("teleporting", loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
+		user.sendMessage(tl_("teleporting", loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
 		user.getTeleport().teleport(loc, null, TeleportCause.COMMAND);
 
 	}

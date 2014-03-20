@@ -1,6 +1,6 @@
 package com.earth2me.essentials.utils;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl_;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -222,7 +222,7 @@ public final class DescParseTickFormat
 	// ============================================
 	public static String format(final long ticks)
 	{
-		return _("timeFormat", format24(ticks), format12(ticks), formatTicks(ticks));
+		return tl_("timeFormat", format24(ticks), format12(ticks), formatTicks(ticks));
 	}
 	public static String formatTicks(final long ticks)
 	{
