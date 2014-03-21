@@ -86,23 +86,6 @@ public class I18n implements net.ess3.api.II18n
 			return instance.format(string, objects);
 		}
 	}
-	
-	@Deprecated
-	public static String _(final String string, final Object...  objects)
-	{
-		if (instance == null)
-		{
-			return "";
-		}
-		if (objects.length == 0)
-		{
-			return NODOUBLEMARK.matcher(instance.translate(string)).replaceAll("'");
-		}
-		else
-		{
-			return instance.format(string, objects);
-		}
-	}
 
 	public String format(final String string, final Object... objects)
 	{
