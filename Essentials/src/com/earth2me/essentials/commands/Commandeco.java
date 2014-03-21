@@ -2,7 +2,7 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.ChargeException;
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.NumberUtil;
 import java.math.BigDecimal;
@@ -47,11 +47,11 @@ public class Commandeco extends EssentialsLoopCommand
 		{
 			if (args[1].contentEquals("**"))
 			{
-				server.broadcastMessage(tl_("resetBalAll", NumberUtil.displayCurrency(amount, ess)));
+				server.broadcastMessage(tl("resetBalAll", NumberUtil.displayCurrency(amount, ess)));
 			}
 			else if (args[1].contentEquals("*"))
 			{
-				server.broadcastMessage(tl_("resetBal", NumberUtil.displayCurrency(amount, ess)));
+				server.broadcastMessage(tl("resetBal", NumberUtil.displayCurrency(amount, ess)));
 			}
 		}
 	}
@@ -94,11 +94,11 @@ public class Commandeco extends EssentialsLoopCommand
 			{
 				// Take shouldn't be able to throw a max money exception
 			}
-			player.sendMessage(tl_("takenFromAccount", NumberUtil.displayCurrency(player.getMoney(), ess)));
+			player.sendMessage(tl("takenFromAccount", NumberUtil.displayCurrency(player.getMoney(), ess)));
 		}
 		else
 		{
-			throw new ChargeException(tl_("insufficientFunds"));
+			throw new ChargeException(tl("insufficientFunds"));
 		}
 	}
 
@@ -107,10 +107,10 @@ public class Commandeco extends EssentialsLoopCommand
 		BigDecimal minBalance = ess.getSettings().getMinMoney();
 		boolean underMinimum = (amount.compareTo(minBalance) < 0);
 		player.setMoney(underMinimum ? minBalance : amount);
-		player.sendMessage(tl_("setBal", NumberUtil.displayCurrency(player.getMoney(), ess)));
+		player.sendMessage(tl("setBal", NumberUtil.displayCurrency(player.getMoney(), ess)));
 		if (sender != null)
 		{
-			sender.sendMessage(tl_("setBalOthers", player.getDisplayName(), NumberUtil.displayCurrency(player.getMoney(), ess)));
+			sender.sendMessage(tl("setBalOthers", player.getDisplayName(), NumberUtil.displayCurrency(player.getMoney(), ess)));
 		}
 	}
 

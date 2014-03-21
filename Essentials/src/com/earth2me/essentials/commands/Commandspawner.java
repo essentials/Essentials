@@ -1,6 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Mob;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
@@ -26,13 +26,13 @@ public class Commandspawner extends EssentialsCommand
 	{
 		if (args.length < 1 || args[0].length() < 2)
 		{
-			throw new NotEnoughArgumentsException(tl_("mobsAvailable", StringUtil.joinList(Mob.getMobList())));
+			throw new NotEnoughArgumentsException(tl("mobsAvailable", StringUtil.joinList(Mob.getMobList())));
 		}
 
 		final Location target = LocationUtil.getTarget(user.getBase());
 		if (target == null || target.getBlock().getType() != Material.MOB_SPAWNER)
 		{
-			throw new Exception(tl_("mobSpawnTarget"));
+			throw new Exception(tl("mobSpawnTarget"));
 		}
 
 		String name = args[0];
@@ -42,15 +42,15 @@ public class Commandspawner extends EssentialsCommand
 		mob = Mob.fromName(name);
 		if (mob == null)
 		{
-			throw new Exception(tl_("invalidMob"));
+			throw new Exception(tl("invalidMob"));
 		}
 		if (ess.getSettings().getProtectPreventSpawn(mob.getType().toString().toLowerCase(Locale.ENGLISH)))
 		{
-			throw new Exception(tl_("disabledToSpawnMob"));
+			throw new Exception(tl("disabledToSpawnMob"));
 		}
 		if (!user.isAuthorized("essentials.spawner." + mob.name.toLowerCase(Locale.ENGLISH)))
 		{
-			throw new Exception(tl_("noPermToSpawnMob"));
+			throw new Exception(tl("noPermToSpawnMob"));
 		}
 		if (args.length > 1)
 		{
@@ -70,10 +70,10 @@ public class Commandspawner extends EssentialsCommand
 		}
 		catch (Throwable ex)
 		{
-			throw new Exception(tl_("mobSpawnError"), ex);
+			throw new Exception(tl("mobSpawnError"), ex);
 		}
 		charge.charge(user);
-		user.sendMessage(tl_("setSpawner", mob.name));
+		user.sendMessage(tl("setSpawner", mob.name));
 
 	}
 }

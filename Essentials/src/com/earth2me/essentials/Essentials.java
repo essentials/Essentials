@@ -17,7 +17,7 @@
  */
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.commands.EssentialsCommand;
 import com.earth2me.essentials.commands.IEssentialsCommand;
 import com.earth2me.essentials.commands.NoChargeException;
@@ -129,7 +129,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 		}
 		i18n = new I18n(this);
 		i18n.onEnable();
-		LOGGER.log(Level.INFO, tl_("usingTempFolderForTesting"));
+		LOGGER.log(Level.INFO, tl("usingTempFolderForTesting"));
 		LOGGER.log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 		settings = new Settings(this);
@@ -157,7 +157,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 					&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion())
 					&& !plugin.getDescription().getName().equals("EssentialsAntiCheat"))
 				{
-					LOGGER.log(Level.WARNING, tl_("versionMismatch", plugin.getDescription().getName()));
+					LOGGER.log(Level.WARNING, tl("versionMismatch", plugin.getDescription().getName()));
 				}
 			}
 			final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
@@ -173,7 +173,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			}
 			else
 			{
-				LOGGER.log(Level.INFO, tl_("bukkitFormatChanged"));
+				LOGGER.log(Level.INFO, tl("bukkitFormatChanged"));
 				LOGGER.log(Level.INFO, getServer().getVersion());
 				LOGGER.log(Level.INFO, getServer().getBukkitVersion());
 			}
@@ -209,11 +209,11 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			{
 				if (pm.getPlugin("EssentialsUpdate") != null)
 				{
-					LOGGER.log(Level.SEVERE, tl_("essentialsHelp2"));
+					LOGGER.log(Level.SEVERE, tl("essentialsHelp2"));
 				}
 				else
 				{
-					LOGGER.log(Level.SEVERE, tl_("essentialsHelp1"));
+					LOGGER.log(Level.SEVERE, tl("essentialsHelp1"));
 				}
 				handleCrash(exception);
 				return;
@@ -310,7 +310,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			if (user.isVanished())
 			{
 				user.setVanished(false);
-				user.sendMessage(tl_("unvanishedReload"));
+				user.sendMessage(tl("unvanishedReload"));
 			}
 		}
 		cleanupOpenInventories();
@@ -439,7 +439,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 				final List<String> mail = user.getMails();
 				if (mail != null && !mail.isEmpty())
 				{
-					user.sendMessage(tl_("youHaveNewMail", mail.size()));
+					user.sendMessage(tl("youHaveNewMail", mail.size()));
 				}
 			}
 
@@ -465,16 +465,16 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			}
 			catch (Exception ex)
 			{
-				sender.sendMessage(tl_("commandNotLoaded", commandLabel));
-				LOGGER.log(Level.SEVERE, tl_("commandNotLoaded", commandLabel), ex);
+				sender.sendMessage(tl("commandNotLoaded", commandLabel));
+				LOGGER.log(Level.SEVERE, tl("commandNotLoaded", commandLabel), ex);
 				return true;
 			}
 
 			// Check authorization
 			if (user != null && !user.isAuthorized(cmd, permissionPrefix))
 			{
-				LOGGER.log(Level.INFO, tl_("deniedAccessCommand", user.getName()));
-				user.sendMessage(tl_("noAccessCommand"));
+				LOGGER.log(Level.INFO, tl("deniedAccessCommand", user.getName()));
+				user.sendMessage(tl("noAccessCommand"));
 				return true;
 			}
 
@@ -482,11 +482,11 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			{
 				if (user.getJailTimeout() > 0)
 				{
-					user.sendMessage(tl_("playerJailedFor", user.getName(), DateUtil.formatDateDiff(user.getJailTimeout())));
+					user.sendMessage(tl("playerJailedFor", user.getName(), DateUtil.formatDateDiff(user.getJailTimeout())));
 				}
 				else
 				{
-					user.sendMessage(tl_("jailMessage"));
+					user.sendMessage(tl("jailMessage"));
 				}
 				return true;
 			}
@@ -530,7 +530,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 		}
 		catch (Throwable ex)
 		{
-			LOGGER.log(Level.SEVERE, tl_("commandFailed", commandLabel), ex);
+			LOGGER.log(Level.SEVERE, tl("commandFailed", commandLabel), ex);
 			return true;
 		}
 	}
@@ -558,18 +558,18 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 	@Override
 	public void showError(final CommandSource sender, final Throwable exception, final String commandLabel)
 	{
-		sender.sendMessage(tl_("errorWithMessage", exception.getMessage()));
+		sender.sendMessage(tl("errorWithMessage", exception.getMessage()));
 		if (getSettings().isDebug())
 		{
-			LOGGER.log(Level.WARNING, tl_("errorCallingCommand", commandLabel), exception);
+			LOGGER.log(Level.WARNING, tl("errorCallingCommand", commandLabel), exception);
 		}
 	}
 
 	public static void wrongVersion()
 	{
 		LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
-		LOGGER.log(Level.SEVERE, tl_("notRecommendedBukkit"));
-		LOGGER.log(Level.SEVERE, tl_("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
+		LOGGER.log(Level.SEVERE, tl("notRecommendedBukkit"));
+		LOGGER.log(Level.SEVERE, tl("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
 		LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
 	}
 

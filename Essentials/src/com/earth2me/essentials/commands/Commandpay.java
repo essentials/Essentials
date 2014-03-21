@@ -2,7 +2,7 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.ChargeException;
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import java.math.BigDecimal;
@@ -42,7 +42,7 @@ public class Commandpay extends EssentialsLoopCommand
 		}
 		catch (MaxMoneyException ex)
 		{
-			sender.sendMessage(tl_("maxMoney"));
+			sender.sendMessage(tl("maxMoney"));
 		}		
 	}
 }

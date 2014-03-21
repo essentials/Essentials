@@ -1,6 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
 
@@ -18,11 +18,11 @@ public class Commandtpdeny extends EssentialsCommand
 		final User player = ess.getUser(user.getTeleportRequest());
 		if (player == null)
 		{
-			throw new Exception(tl_("noPendingRequest"));
+			throw new Exception(tl("noPendingRequest"));
 		}
 
-		user.sendMessage(tl_("requestDenied"));
-		player.sendMessage(tl_("requestDeniedFrom", user.getDisplayName()));
+		user.sendMessage(tl("requestDenied"));
+		player.sendMessage(tl("requestDeniedFrom", user.getDisplayName()));
 		user.requestTeleport(null, false);
 	}
 }

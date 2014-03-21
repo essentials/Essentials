@@ -1,6 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.api.IWarps;
 import com.earth2me.essentials.utils.NumberUtil;
@@ -27,7 +27,7 @@ public class Commandsetwarp extends EssentialsCommand
 
 		if (NumberUtil.isInt(args[0]) || args[0].isEmpty())
 		{
-			throw new NoSuchFieldException(tl_("invalidWarpName"));
+			throw new NoSuchFieldException(tl("invalidWarpName"));
 		}
 
 		final Location loc = user.getLocation();
@@ -51,8 +51,8 @@ public class Commandsetwarp extends EssentialsCommand
 		}
 		else
 		{
-			throw new Exception(tl_("warpOverwrite"));
+			throw new Exception(tl("warpOverwrite"));
 		}
-		user.sendMessage(tl_("warpSet", args[0]));
+		user.sendMessage(tl("warpSet", args[0]));
 	}
 }

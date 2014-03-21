@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.NumberUtil;
 import java.math.BigDecimal;
@@ -60,11 +60,11 @@ public class Commandworth extends EssentialsCommand
 		{
 			if (args.length > 0 && args[0].equalsIgnoreCase("blocks"))
 			{
-				user.sendMessage(tl_("totalSellableBlocks", type, NumberUtil.displayCurrency(totalWorth, ess)));
+				user.sendMessage(tl("totalSellableBlocks", type, NumberUtil.displayCurrency(totalWorth, ess)));
 			}
 			else
 			{
-				user.sendMessage(tl_("totalSellableAll", type, NumberUtil.displayCurrency(totalWorth, ess)));
+				user.sendMessage(tl("totalSellableAll", type, NumberUtil.displayCurrency(totalWorth, ess)));
 			}
 		}
 	}
@@ -110,7 +110,7 @@ public class Commandworth extends EssentialsCommand
 
 		if (worth == null)
 		{
-			throw new Exception(tl_("itemCannotBeSold"));
+			throw new Exception(tl("itemCannotBeSold"));
 		}
 
 		if (amount < 0)
@@ -121,13 +121,13 @@ public class Commandworth extends EssentialsCommand
 		BigDecimal result = worth.multiply(BigDecimal.valueOf(amount));
 
 		sender.sendMessage(is.getDurability() != 0
-						   ? tl_("worthMeta",
+						   ? tl("worthMeta",
 							   is.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""),
 							   is.getDurability(),
 							   NumberUtil.displayCurrency(result, ess),
 							   amount,
 							   NumberUtil.displayCurrency(worth, ess))
-						   : tl_("worth",
+						   : tl("worth",
 							   is.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", ""),
 							   NumberUtil.displayCurrency(result, ess),
 							   amount,

@@ -1,6 +1,6 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import net.ess3.api.IEssentials;
@@ -42,7 +42,7 @@ public class SignFree extends EssentialsSign
 		
 		if (item.getType() == Material.AIR)
 		{
-			throw new SignException(tl_("cantSpawnItem", "Air"));
+			throw new SignException(tl("cantSpawnItem", "Air"));
 		}
 
 		item.setAmount(item.getType().getMaxStackSize());

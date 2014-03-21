@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.google.common.io.Files;
 import java.io.*;
 import java.math.BigDecimal;
@@ -57,7 +57,7 @@ public class EssentialsConf extends YamlConfiguration
 		{
 			if (!configFile.getParentFile().mkdirs())
 			{
-				LOGGER.log(Level.SEVERE, tl_("failedToCreateConfig", configFile.toString()));
+				LOGGER.log(Level.SEVERE, tl("failedToCreateConfig", configFile.toString()));
 			}
 		}
 		// This will delete files where the first character is 0. In most cases they are broken.
@@ -100,7 +100,7 @@ public class EssentialsConf extends YamlConfiguration
 		{
 			if (templateName != null)
 			{
-				LOGGER.log(Level.INFO, tl_("creatingConfigFromTemplate", configFile.toString()));
+				LOGGER.log(Level.INFO, tl("creatingConfigFromTemplate", configFile.toString()));
 				createFromTemplate();
 			}
 			else
@@ -189,7 +189,7 @@ public class EssentialsConf extends YamlConfiguration
 			istr = resourceClass.getResourceAsStream(templateName);
 			if (istr == null)
 			{
-				LOGGER.log(Level.SEVERE, tl_("couldNotFindTemplate", templateName));
+				LOGGER.log(Level.SEVERE, tl("couldNotFindTemplate", templateName));
 				return;
 			}
 			ostr = new FileOutputStream(configFile);
@@ -204,7 +204,7 @@ public class EssentialsConf extends YamlConfiguration
 		}
 		catch (IOException ex)
 		{
-			LOGGER.log(Level.SEVERE, tl_("failedToWriteConfig", configFile.toString()), ex);
+			LOGGER.log(Level.SEVERE, tl("failedToWriteConfig", configFile.toString()), ex);
 		}
 		finally
 		{
@@ -228,7 +228,7 @@ public class EssentialsConf extends YamlConfiguration
 			}
 			catch (IOException ex)
 			{
-				LOGGER.log(Level.SEVERE, tl_("failedToCloseConfig", configFile.toString()), ex);
+				LOGGER.log(Level.SEVERE, tl("failedToCloseConfig", configFile.toString()), ex);
 			}
 		}
 	}
@@ -352,16 +352,16 @@ public class EssentialsConf extends YamlConfiguration
 					{
 						try
 						{
-							LOGGER.log(Level.INFO, tl_("creatingEmptyConfig", configFile.toString()));
+							LOGGER.log(Level.INFO, tl("creatingEmptyConfig", configFile.toString()));
 							if (!configFile.createNewFile())
 							{
-								LOGGER.log(Level.SEVERE, tl_("failedToCreateConfig", configFile.toString()));
+								LOGGER.log(Level.SEVERE, tl("failedToCreateConfig", configFile.toString()));
 								return;
 							}
 						}
 						catch (IOException ex)
 						{
-							LOGGER.log(Level.SEVERE, tl_("failedToCreateConfig", configFile.toString()), ex);
+							LOGGER.log(Level.SEVERE, tl("failedToCreateConfig", configFile.toString()), ex);
 							return;
 						}
 					}

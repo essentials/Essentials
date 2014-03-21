@@ -1,7 +1,7 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.ChargeException;
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import java.util.Locale;
@@ -39,13 +39,13 @@ public class SignGameMode extends EssentialsSign
 
 		if (mode.isEmpty())
 		{
-			throw new SignException(tl_("invalidSignLine", 2));
+			throw new SignException(tl("invalidSignLine", 2));
 		}
 
 		charge.isAffordableFor(player);
 
 		performSetMode(mode.toLowerCase(Locale.ENGLISH), player.getBase());
-		player.sendMessage(tl_("gameMode", tl_(player.getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getDisplayName()));
+		player.sendMessage(tl("gameMode", tl(player.getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getDisplayName()));
 		Trade.log("Sign", "gameMode", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
 		charge.charge(player);
 		return true;
@@ -67,7 +67,7 @@ public class SignGameMode extends EssentialsSign
 		}
 		else
 		{
-			throw new SignException(tl_("invalidSignLine", 2));
+			throw new SignException(tl("invalidSignLine", 2));
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.LocationUtil;
 import org.bukkit.Location;
@@ -41,11 +41,11 @@ public class Commandbigtree extends EssentialsCommand
 		final boolean success = user.getWorld().generateTree(safeLocation, tree);
 		if (success)
 		{
-			user.sendMessage(tl_("bigTreeSuccess"));
+			user.sendMessage(tl("bigTreeSuccess"));
 		}
 		else
 		{
-			throw new Exception(tl_("bigTreeFailure"));
+			throw new Exception(tl("bigTreeFailure"));
 		}
 	}
 }

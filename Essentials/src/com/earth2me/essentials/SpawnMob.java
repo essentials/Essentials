@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Mob.MobException;
 import com.earth2me.essentials.utils.LocationUtil;
 import com.earth2me.essentials.utils.StringUtil;
@@ -34,7 +34,7 @@ public class SpawnMob
 		}
 		if (availableList.isEmpty())
 		{
-			availableList.add(tl_("none"));
+			availableList.add(tl("none"));
 		}
 		return StringUtil.joinList(availableList);
 	}
@@ -88,7 +88,7 @@ public class SpawnMob
 		final Block block = LocationUtil.getTarget(user.getBase()).getBlock();
 		if (block == null)
 		{
-			throw new Exception(tl_("unableToSpawnMob"));
+			throw new Exception(tl("unableToSpawnMob"));
 		}
 		spawnmob(ess, server, user.getSource(), user, block.getLocation(), parts, data, mobCount);
 	}
@@ -125,7 +125,7 @@ public class SpawnMob
 		if (mobCount > effectiveLimit)
 		{
 			mobCount = effectiveLimit;
-			sender.sendMessage(tl_("mobSpawnLimit"));
+			sender.sendMessage(tl("mobSpawnLimit"));
 		}
 
 		Mob mob = Mob.fromName(parts.get(0)); // Get the first mob
@@ -135,19 +135,19 @@ public class SpawnMob
 			{
 				spawnMob(ess, server, sender, target, sloc, parts, data);
 			}
-			sender.sendMessage(mobCount * parts.size() + " " + mob.name.toLowerCase(Locale.ENGLISH) + mob.suffix + " " + tl_("spawned"));
+			sender.sendMessage(mobCount * parts.size() + " " + mob.name.toLowerCase(Locale.ENGLISH) + mob.suffix + " " + tl("spawned"));
 		}
 		catch (MobException e1)
 		{
-			throw new Exception(tl_("unableToSpawnMob"), e1);
+			throw new Exception(tl("unableToSpawnMob"), e1);
 		}
 		catch (NumberFormatException e2)
 		{
-			throw new Exception(tl_("numberRequired"), e2);
+			throw new Exception(tl("numberRequired"), e2);
 		}
 		catch (NullPointerException np)
 		{
-			throw new Exception(tl_("soloMob"), np);
+			throw new Exception(tl("soloMob"), np);
 		}
 	}
 
@@ -194,17 +194,17 @@ public class SpawnMob
 	{
 		if (mob == null)
 		{
-			throw new Exception(tl_("invalidMob"));
+			throw new Exception(tl("invalidMob"));
 		}
 
 		if (ess.getSettings().getProtectPreventSpawn(mob.getType().toString().toLowerCase(Locale.ENGLISH)))
 		{
-			throw new Exception(tl_("disabledToSpawnMob"));
+			throw new Exception(tl("disabledToSpawnMob"));
 		}
 
 		if (sender.isPlayer() && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.spawnmob." + mob.name.toLowerCase(Locale.ENGLISH)))
 		{
-			throw new Exception(tl_("noPermToSpawnMob"));
+			throw new Exception(tl("noPermToSpawnMob"));
 		}
 	}
 
@@ -214,7 +214,7 @@ public class SpawnMob
 
 		if (data.isEmpty())
 		{
-			sender.sendMessage(tl_("mobDataList", StringUtil.joinList(MobData.getValidHelp(spawned))));
+			sender.sendMessage(tl("mobDataList", StringUtil.joinList(MobData.getValidHelp(spawned))));
 		}
 
 		if (spawned instanceof Zombie || type == EntityType.SKELETON)

@@ -1,6 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.MetaItemStack;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.NumberUtil;
@@ -52,7 +52,7 @@ public class Commandfirework extends EssentialsCommand
 					FireworkMeta fmeta = (FireworkMeta)stack.getItemMeta();
 					fmeta.clearEffects();
 					stack.setItemMeta(fmeta);
-					user.sendMessage(tl_("fireworkEffectsCleared"));
+					user.sendMessage(tl("fireworkEffectsCleared"));
 				}
 				else if (args.length > 1 && (args[0].equalsIgnoreCase("power") || (args[0].equalsIgnoreCase("p"))))
 				{
@@ -64,7 +64,7 @@ public class Commandfirework extends EssentialsCommand
 					}
 					catch (NumberFormatException e)
 					{
-						throw new Exception(tl_("invalidFireworkFormat", args[1], args[0]));
+						throw new Exception(tl("invalidFireworkFormat", args[1], args[0]));
 					}
 					stack.setItemMeta(fmeta);
 				}
@@ -82,7 +82,7 @@ public class Commandfirework extends EssentialsCommand
 							if (amount > serverLimit)
 							{
 								amount = serverLimit;
-								user.sendMessage(tl_("mobSpawnLimit"));
+								user.sendMessage(tl("mobSpawnLimit"));
 							}
 						}
 						else
@@ -117,7 +117,7 @@ public class Commandfirework extends EssentialsCommand
 						}
 						catch (Exception e)
 						{
-							user.sendMessage(tl_("fireworkSyntax"));
+							user.sendMessage(tl("fireworkSyntax"));
 							throw e;
 						}
 					}
@@ -128,15 +128,15 @@ public class Commandfirework extends EssentialsCommand
 						FireworkEffect effect = mStack.getFireworkBuilder().build();
 						if (fmeta.getEffects().size() > 0 && !user.isAuthorized("essentials.firework.multiple"))
 						{
-							throw new Exception(tl_("multipleCharges"));
+							throw new Exception(tl("multipleCharges"));
 						}
 						fmeta.addEffect(effect);
 						stack.setItemMeta(fmeta);
 					}
 					else
 					{
-						user.sendMessage(tl_("fireworkSyntax"));
-						throw new Exception(tl_("fireworkColor"));
+						user.sendMessage(tl("fireworkSyntax"));
+						throw new Exception(tl("fireworkColor"));
 					}
 				}
 			}
@@ -147,7 +147,7 @@ public class Commandfirework extends EssentialsCommand
 		}
 		else
 		{
-			throw new Exception(tl_("holdFirework"));
+			throw new Exception(tl("holdFirework"));
 		}
 	}
 }

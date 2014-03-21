@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.FormatUtil;
 import org.bukkit.Server;
@@ -19,7 +19,7 @@ public class Commandme extends EssentialsCommand
 	{
 		if (user.isMuted())
 		{
-			throw new Exception(tl_("voiceSilenced"));
+			throw new Exception(tl("voiceSilenced"));
 		}
 
 		if (args.length < 1)
@@ -31,7 +31,7 @@ public class Commandme extends EssentialsCommand
 		message = FormatUtil.formatMessage(user, "essentials.chat", message);
 
 		user.setDisplayNick();
-		ess.broadcastMessage(user, tl_("action", user.getDisplayName(), message));
+		ess.broadcastMessage(user, tl("action", user.getDisplayName(), message));
 	}
 
 	@Override
@@ -45,6 +45,6 @@ public class Commandme extends EssentialsCommand
 		String message = getFinalArg(args, 0);
 		message = FormatUtil.replaceFormat(message);
 
-		ess.getServer().broadcastMessage(tl_("action", "@", message));
+		ess.getServer().broadcastMessage(tl("action", "@", message));
 	}
 }

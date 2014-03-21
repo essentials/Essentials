@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import java.util.*;
 import org.bukkit.Server;
@@ -59,7 +59,7 @@ public class Commandpweather extends EssentialsCommand
 			User user = ess.getUser(sender.getPlayer());
 			if (user != null && (!users.contains(user) || users.size() > 1) && !user.isAuthorized("essentials.pweather.others"))
 			{
-				user.sendMessage(tl_("pWeatherOthersPermission"));
+				user.sendMessage(tl("pWeatherOthersPermission"));
 				return;
 			}
 		}
@@ -74,18 +74,18 @@ public class Commandpweather extends EssentialsCommand
 	{
 		if (users.size() > 1)
 		{
-			sender.sendMessage(tl_("pWeatherPlayers"));
+			sender.sendMessage(tl("pWeatherPlayers"));
 		}
 
 		for (User user : users)
 		{
 			if (user.getPlayerWeather() == null)
 			{
-				sender.sendMessage(tl_("pWeatherNormal", user.getName()));
+				sender.sendMessage(tl("pWeatherNormal", user.getName()));
 			}
 			else
 			{
-				sender.sendMessage(tl_("pWeatherCurrent", user.getName(), user.getPlayerWeather().toString().toLowerCase(Locale.ENGLISH)));
+				sender.sendMessage(tl("pWeatherCurrent", user.getName(), user.getPlayerWeather().toString().toLowerCase(Locale.ENGLISH)));
 			}
 		}
 	}
@@ -114,20 +114,20 @@ public class Commandpweather extends EssentialsCommand
 				user.resetPlayerWeather();
 			}
 
-			sender.sendMessage(tl_("pWeatherReset", msg));
+			sender.sendMessage(tl("pWeatherReset", msg));
 		}
 		else
 		{
 			if (!weatherAliases.containsKey(weatherType))
 			{
-				throw new NotEnoughArgumentsException(tl_("pWeatherInvalidAlias"));
+				throw new NotEnoughArgumentsException(tl("pWeatherInvalidAlias"));
 			}
 
 			for (User user : users)
 			{
 				user.setPlayerWeather(weatherAliases.get(weatherType));
 			}
-			sender.sendMessage(tl_("pWeatherSet", weatherType, msg.toString()));
+			sender.sendMessage(tl("pWeatherSet", weatherType, msg.toString()));
 		}
 	}
 

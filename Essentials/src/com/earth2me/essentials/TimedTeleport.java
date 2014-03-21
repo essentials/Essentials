@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import net.ess3.api.IEssentials;
 import net.ess3.api.IUser;
 import org.bukkit.Location;
@@ -98,16 +98,16 @@ public class TimedTeleport implements Runnable
 			}
 			catch (Exception ex)
 			{
-				teleportOwner.sendMessage(tl_("cooldownWithMessage", ex.getMessage()));
+				teleportOwner.sendMessage(tl("cooldownWithMessage", ex.getMessage()));
 				if (teleportOwner != teleportUser)
 				{
-					teleportUser.sendMessage(tl_("cooldownWithMessage", ex.getMessage()));
+					teleportUser.sendMessage(tl("cooldownWithMessage", ex.getMessage()));
 				}
 			}
 			try
 			{
 				cancelTimer(false);
-				teleportUser.sendMessage(tl_("teleportationCommencing"));
+				teleportUser.sendMessage(tl("teleportationCommencing"));
 				timer_chargeFor.isAffordableFor(teleportOwner);
 				if (timer_respawn)
 				{
@@ -142,10 +142,10 @@ public class TimedTeleport implements Runnable
 			ess.getServer().getScheduler().cancelTask(timer_task);
 			if (notifyUser)
 			{
-				teleportOwner.sendMessage(tl_("pendingTeleportCancelled"));
+				teleportOwner.sendMessage(tl("pendingTeleportCancelled"));
 				if (timer_teleportee != null && !timer_teleportee.equals(teleportOwner.getName()))
 				{
-					ess.getUser(timer_teleportee).sendMessage(tl_("pendingTeleportCancelled"));
+					ess.getUser(timer_teleportee).sendMessage(tl("pendingTeleportCancelled"));
 				}
 			}
 		}

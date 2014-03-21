@@ -1,7 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.OfflinePlayer;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.DateUtil;
@@ -37,14 +37,14 @@ public class Commandmute extends EssentialsCommand
 		{
 			if (sender.isPlayer() && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.mute.offline"))
 			{
-				throw new Exception(tl_("muteExemptOffline"));
+				throw new Exception(tl("muteExemptOffline"));
 			}
 		}
 		else
 		{
 			if (user.isAuthorized("essentials.mute.exempt") && sender.isPlayer())
 			{
-				throw new Exception(tl_("muteExempt"));
+				throw new Exception(tl("muteExempt"));
 			}
 		}
 
@@ -66,27 +66,27 @@ public class Commandmute extends EssentialsCommand
 
 		if (nomatch)
 		{
-			sender.sendMessage(tl_("userUnknown", user.getName()));
+			sender.sendMessage(tl("userUnknown", user.getName()));
 		}
 
 		if (muted)
 		{
 			if (muteTimestamp > 0)
 			{
-				sender.sendMessage(tl_("mutedPlayerFor", user.getDisplayName(), muteTime));
-				user.sendMessage(tl_("playerMutedFor", muteTime));
+				sender.sendMessage(tl("mutedPlayerFor", user.getDisplayName(), muteTime));
+				user.sendMessage(tl("playerMutedFor", muteTime));
 			}
 			else
 			{
-				sender.sendMessage(tl_("mutedPlayer", user.getDisplayName()));
-				user.sendMessage(tl_("playerMuted"));
+				sender.sendMessage(tl("mutedPlayer", user.getDisplayName()));
+				user.sendMessage(tl("playerMuted"));
 			}
-			ess.broadcastMessage("essentials.mute.notify", tl_("muteNotify", sender.getSender().getName(), user.getName(), muteTime));
+			ess.broadcastMessage("essentials.mute.notify", tl("muteNotify", sender.getSender().getName(), user.getName(), muteTime));
 		}
 		else
 		{
-			sender.sendMessage(tl_("unmutedPlayer", user.getDisplayName()));
-			user.sendMessage(tl_("playerUnmuted"));
+			sender.sendMessage(tl("unmutedPlayer", user.getDisplayName()));
+			user.sendMessage(tl("playerUnmuted"));
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.earth2me.essentials.utils;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
@@ -70,7 +70,7 @@ public class DateUtil
 		}
 		if (!found)
 		{
-			throw new Exception(tl_("illegalDate"));
+			throw new Exception(tl("illegalDate"));
 		}
 		Calendar c = new GregorianCalendar();
 		if (years > 0)
@@ -138,7 +138,7 @@ public class DateUtil
 		boolean future = false;
 		if (toDate.equals(fromDate))
 		{
-			return tl_("now");
+			return tl("now");
 		}
 		if (toDate.after(fromDate))
 		{
@@ -151,7 +151,7 @@ public class DateUtil
 		};
 		String[] names = new String[]
 		{
-			tl_("year"), tl_("years"), tl_("month"), tl_("months"), tl_("day"), tl_("days"), tl_("hour"), tl_("hours"), tl_("minute"), tl_("minutes"), tl_("second"), tl_("seconds")
+			tl("year"), tl("years"), tl("month"), tl("months"), tl("day"), tl("days"), tl("hour"), tl("hours"), tl("minute"), tl("minutes"), tl("second"), tl("seconds")
 		};
 		int accuracy = 0;
 		for (int i = 0; i < types.length; i++)

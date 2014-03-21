@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n.tl_;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.utils.FormatUtil;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,11 +30,11 @@ public class PlayerList
 			needComma = true;
 			if (user.isAfk())
 			{
-				groupString.append(tl_("listAfkTag"));
+				groupString.append(tl("listAfkTag"));
 			}
 			if (user.isHidden())
 			{
-				groupString.append(tl_("listHiddenTag"));
+				groupString.append(tl("listHiddenTag"));
 			}
 			user.setDisplayNick();
 			groupString.append(user.getDisplayName());
@@ -58,11 +58,11 @@ public class PlayerList
 		String online;
 		if (showHidden && playerHidden > 0)
 		{
-			online = tl_("listAmountHidden", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
+			online = tl("listAmountHidden", server.getOnlinePlayers().length - playerHidden, playerHidden, server.getMaxPlayers());
 		}
 		else
 		{
-			online = tl_("listAmount", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
+			online = tl("listAmount", server.getOnlinePlayers().length - playerHidden, server.getMaxPlayers());
 		}
 		return online;
 	}
@@ -132,7 +132,7 @@ public class PlayerList
 		}
 		if (users == null || users.isEmpty())
 		{
-			throw new Exception(tl_("groupDoesNotExist"));
+			throw new Exception(tl("groupDoesNotExist"));
 		}
 		final StringBuilder displayGroupName = new StringBuilder();
 		displayGroupName.append(Character.toTitleCase(groupName.charAt(0)));
@@ -144,7 +144,7 @@ public class PlayerList
 	public static String outputFormat(final String group, final String message)
 	{
 		final StringBuilder outputString = new StringBuilder();
-		outputString.append(tl_("listGroupTag", FormatUtil.replaceFormat(group)));
+		outputString.append(tl("listGroupTag", FormatUtil.replaceFormat(group)));
 		outputString.append(message);
 		return outputString.toString();
 	}
