@@ -110,13 +110,15 @@ public class Commandrecipe extends EssentialsCommand
 		else
 		{
 			final HashMap<Material, String> colorMap = new HashMap<Material, String>();
-			int i = 1;
+			String[] symbolarr = "1@ 2# 3X 4W 5Q 6% 7M 8+ 9K".split(" ");
+			int i = 0;
 			for (Character c : "abcdefghi".toCharArray())
 			{
 				ItemStack item = recipeMap.get(c);
 				if (!colorMap.containsKey(item == null ? null : item.getType()))
 				{
-					colorMap.put(item == null ? null : item.getType(), String.valueOf(i++));
+					colorMap.put(item == null ? null : item.getType(), symbolarr[i]);
+					i++;
 				}
 			}
 			final Material[][] materials = new Material[3][3];
