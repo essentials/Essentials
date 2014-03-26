@@ -36,17 +36,6 @@ public class Commandhelpop extends EssentialsCommand
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		final String message = tl("helpOp", from, FormatUtil.stripFormat(getFinalArg(args, 0)));
-		CommandSender cs = Console.getCommandSender(server);
-		cs.sendMessage(message);
-		for (Player onlinePlayer : server.getOnlinePlayers())
-		{
-			final User player = ess.getUser(onlinePlayer);
-			if (!player.isAuthorized("essentials.helpop.receive"))
-			{
-				continue;
-			}
-			player.sendMessage(message);
-		}
+		ess.broadcastMessage("essentials.helpop.receive", tl("helpOp", from, FormatUtil.stripFormat(getFinalArg(args, 0)));
 	}
 }
