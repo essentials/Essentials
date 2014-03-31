@@ -8,17 +8,17 @@ worth:
 
   # This will work similar to the above syntax
   wool:
-    0: 20
+    '0': 20
     
   # This will only allow selling leaves with datavalue '0' and '1'
   leaves: 
-    0: 1.0
-    1: 1.0
+    '0': 1.0
+    '1': 1.0
     
   # This will allow the selling of all, but sells '0' slightly cheaper  
   sapling:
-    0: 2.0  
-    *: 2.5
+    '0': 2.0  
+    '*': 2.5
 
 
   stonebutton: 6.0
