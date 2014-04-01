@@ -177,7 +177,7 @@ public class GroupManager extends JavaPlugin {
 			if (worldsHolder == null) {
 				GroupManager.logger.severe("Can't enable " + pdfFile.getName() + " version " + pdfFile.getVersion() + ", bad loading!");
 				this.getServer().getPluginManager().disablePlugin(this);
-				throw new IllegalStateException("An error ocurred while loading GroupManager");
+				throw new IllegalStateException("An error ocurred while loading GroupManager.");
 			}
 
 			/*
@@ -212,7 +212,7 @@ public class GroupManager extends JavaPlugin {
 			 */
 
 			if (getServer().getScheduler().scheduleSyncDelayedTask(this, new BukkitPermsUpdateTask(), 1) == -1) {
-				GroupManager.logger.severe("Could not schedule superperms Update.");
+				GroupManager.logger.severe("Could not schedule superperms update.");
 				/*
 				 * Flag that we are now loaded and should start processing events.
 				 */
@@ -347,7 +347,7 @@ public class GroupManager extends JavaPlugin {
 				scheduler.scheduleAtFixedRate(commiter, minutes, minutes, TimeUnit.MINUTES);
 				GroupManager.logger.info("Scheduled Data Saving is set for every " + minutes + " minutes!");
 			} else
-				GroupManager.logger.info("Scheduled Data Saving is Disabled!");
+				GroupManager.logger.info("Scheduled Data Saving is disabled!");
 
 			GroupManager.logger.info("Backups will be retained for " + getGMConfig().getBackupDuration() + " hours!");
 		}
@@ -605,7 +605,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
 				if (auxGroup == null) {
-					sender.sendMessage(ChatColor.RED + "'" + args[1] + "' Group doesnt exist!");
+					sender.sendMessage(ChatColor.RED + "'" + args[1] + "' Group doesn't exist!");
 					return true;
 				}
 				// Validating permission
@@ -949,7 +949,7 @@ public class GroupManager extends JavaPlugin {
 				if ((args.length == 2) && (args[1].equalsIgnoreCase("+"))) {
 					targetPlayer = this.getServer().getPlayer(auxUser.getName());
 					if (targetPlayer != null) {
-						sender.sendMessage(ChatColor.YELLOW + "Superperms reports: ");
+						sender.sendMessage(ChatColor.YELLOW + "SuperPerms reports: ");
 						for (String line : BukkitPermissions.listPerms(targetPlayer))
 							sender.sendMessage(ChatColor.YELLOW + line);
 
@@ -991,7 +991,7 @@ public class GroupManager extends JavaPlugin {
 
 				if (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND)) {
 					// No permissions found in GM so fall through and check Bukkit.
-					sender.sendMessage(ChatColor.YELLOW + "The player doesn't have access to that permission");
+					sender.sendMessage(ChatColor.YELLOW + "The player doesn't have access to that permission.");
 
 				} else {
 					// This permission was found in groupmanager.
@@ -1119,7 +1119,7 @@ public class GroupManager extends JavaPlugin {
 				// Validating your permissions
 				permissionResult = permissionHandler.checkFullUserPermission(senderUser, auxString);
 				if (!isConsole && !isOpOverride && (permissionResult.resultType.equals(PermissionCheckResult.Type.NOTFOUND) || permissionResult.resultType.equals(PermissionCheckResult.Type.NEGATION))) {
-					sender.sendMessage(ChatColor.RED + "Can't remove a permission you don't have.");
+					sender.sendMessage(ChatColor.RED + "You can't remove a permission you don't have.");
 					return true;
 				}
 				// Validating permissions of user
@@ -1333,11 +1333,11 @@ public class GroupManager extends JavaPlugin {
 
 				// Validating permission
 				if (!permissionHandler.hasGroupInInheritance(auxGroup, auxGroup2.getName())) {
-					sender.sendMessage(ChatColor.RED + "Group " + auxGroup.getName() + " does not inherits " + auxGroup2.getName() + ".");
+					sender.sendMessage(ChatColor.RED + "Group " + auxGroup.getName() + " doesn't inherit " + auxGroup2.getName() + ".");
 					return true;
 				}
 				if (!auxGroup.getInherits().contains(auxGroup2.getName())) {
-					sender.sendMessage(ChatColor.RED + "Group " + auxGroup.getName() + " does not inherits " + auxGroup2.getName() + " directly.");
+					sender.sendMessage(ChatColor.RED + "Group " + auxGroup.getName() + " doesn't inherit " + auxGroup2.getName() + " directly.");
 					return true;
 				}
 				// Seems OK
@@ -1560,7 +1560,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				// Validating permission
 				if (!auxGroup.getVariables().hasVar(args[1])) {
-					sender.sendMessage(ChatColor.RED + "The group doesn't have directly that variable!");
+					sender.sendMessage(ChatColor.RED + "The group doesn't directly have that variable!");
 					return true;
 				}
 				// Seems OK
@@ -2045,7 +2045,7 @@ public class GroupManager extends JavaPlugin {
 					if (dataHolder == null) {
 						sender.sendMessage(ChatColor.YELLOW + "There is no world selected. And no world is available now.");
 					} else {
-						sender.sendMessage(ChatColor.YELLOW + "You don't have a world in your selection..");
+						sender.sendMessage(ChatColor.YELLOW + "You don't have a world in your selection.");
 						sender.sendMessage(ChatColor.YELLOW + "Working with the direct world where your player is.");
 						sender.sendMessage(ChatColor.YELLOW + "Your world now uses permissions of world name: '" + dataHolder.getName() + "' ");
 					}
@@ -2092,7 +2092,7 @@ public class GroupManager extends JavaPlugin {
 					return false;
 				}
 				selectedWorlds.remove(sender.getName());
-				sender.sendMessage(ChatColor.YELLOW + "You have removed your world selection. Working with current world(if possible).");
+				sender.sendMessage(ChatColor.YELLOW + "You have removed your world selection. Working with current world (if possible).");
 
 				return true;
 				
@@ -2126,7 +2126,7 @@ public class GroupManager extends JavaPlugin {
 				dataHolder = worldsHolder.getWorldData(auxString);
 				
 				sender.sendMessage(ChatColor.YELLOW + "You have selected world '" + dataHolder.getName() + "'.");
-				sender.sendMessage(ChatColor.YELLOW + "This world is using the following data files..");
+				sender.sendMessage(ChatColor.YELLOW + "This world is using the following data files...");
 				sender.sendMessage(ChatColor.YELLOW + "Groups:" + ChatColor.GREEN + " " + dataHolder.getGroupsFile().getAbsolutePath());
 				sender.sendMessage(ChatColor.YELLOW + "Users:" + ChatColor.GREEN + " " + dataHolder.getUsersFile().getAbsolutePath());
 
