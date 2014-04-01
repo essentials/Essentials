@@ -18,14 +18,10 @@ public class EssentialsChatPlayerListenerNormal extends EssentialsChatPlayer
 		super(server, ess, chatStorage);
 	}
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	@Override
 	public void onPlayerChat(final AsyncPlayerChatEvent event)
 	{
-		if (event.isCancelled())
-		{
-			return;
-		}
 		final ChatStore chatStore = getChatStore(event);
 		handleLocalChat(event, chatStore);
 	}
