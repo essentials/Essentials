@@ -6,7 +6,7 @@
 #
 # These collections are to be inherited in your different worlds groups.yml's
 # They can also be added as one of a users subgroups, but NOT as a primary group.
-# These collections are available to ALL group and user yml's.
+# These collections are available to ALL group yml and user yml files.
 #
 # Add to and customize these groups to fit your needs.
 
