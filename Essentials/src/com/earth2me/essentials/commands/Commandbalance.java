@@ -12,7 +12,7 @@ public class Commandbalance extends EssentialsCommand
 {
 	public Commandbalance()
 	{
-		super("balance");
+		super("egyenleg");
 	}
 
 	@Override
