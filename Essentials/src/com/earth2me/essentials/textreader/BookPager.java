@@ -94,7 +94,10 @@ public class BookPager
 
 					tempLine = pageLine.substring(start, pointer);
 					pageLines.add(tempLine);
-					buildPage(pages, pageLines, forcePageEnd);
+					if (buildPage(pages, pageLines, forcePageEnd))
+					{
+						pageLength = 0;
+					}
 					forcePageEnd = false;
 
 					start = pointer;
@@ -149,7 +152,10 @@ public class BookPager
 			{
 				tempLine = pageLine.substring(start, lineLength);
 				pageLines.add(tempLine);
-				buildPage(pages, pageLines, false);
+				if (buildPage(pages, pageLines, false))
+				{
+					pageLength = 0;
+				}
 			}
 		}
 
@@ -157,7 +163,7 @@ public class BookPager
 		return pages;
 	}
 
-	void buildPage(List<String> pages, List<String> lines, boolean override)
+	boolean buildPage(List<String> pages, List<String> lines, boolean override)
 	{
 		if (override || lines.size() > lineMax)
 		{
@@ -168,6 +174,8 @@ public class BookPager
 			}
 			pages.add(newPage.toString());
 			lines.clear();
+			return true;
 		}
+		return false;
 	}
 }
