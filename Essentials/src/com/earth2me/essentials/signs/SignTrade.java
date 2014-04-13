@@ -8,6 +8,7 @@ import com.earth2me.essentials.utils.NumberUtil;
 import java.math.BigDecimal;
 import java.util.Map;
 import net.ess3.api.IEssentials;
+import net.ess3.api.events.SignTransactionEvent;
 import net.ess3.api.MaxMoneyException;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -77,6 +78,13 @@ public class SignTrade extends EssentialsSign
 			final Trade charge = getTrade(sign, 1, AmountType.COST, false, ess);
 			final Trade trade = getTrade(sign, 2, AmountType.COST, true, ess);
 			charge.isAffordableFor(player);
+			final SignTransactionEvent signEvent = new SignTransactionEvent(player, charge, ess.getUser(sign.getLine(3)), trade, player.getLocation(), ess);
+			ess.getServer().getPluginManager().callEvent(signEvent);
+			if (signEvent.isCancelled())
+			{
+				return false;
+			}
+
 			addAmount(sign, 1, charge, ess);
 			subtractAmount(sign, 2, trade, ess);
 			if (!trade.pay(player))
