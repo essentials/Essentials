@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
+
+import net.ess3.api.events.PlayerTransactionEvent;
 import org.bukkit.Server;
 import org.bukkit.inventory.ItemStack;
 
@@ -99,6 +101,12 @@ public class Commandsell extends EssentialsCommand
 		{
 			// This should never happen.
 			throw new IllegalStateException("Trying to remove more items than are available.");
+		}
+		final PlayerTransactionEvent transactionEvent = new PlayerTransactionEvent(null, new Trade(ris, ess), user, new Trade(result ,ess), user.getLocation(), ess );
+		ess.getServer().getPluginManager().callEvent(transactionEvent);
+		if(transactionEvent.isCancelled())
+		{
+			throw new QuietAbortException();
 		}
 		user.getInventory().removeItem(ris);
 		user.updateInventory();
