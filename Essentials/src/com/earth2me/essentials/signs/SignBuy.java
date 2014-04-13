@@ -4,6 +4,7 @@ import com.earth2me.essentials.ChargeException;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import net.ess3.api.IEssentials;
+import net.ess3.api.events.SignTransactionEvent;
 import net.ess3.api.MaxMoneyException;
 
 
@@ -31,6 +32,12 @@ public class SignBuy extends EssentialsSign
 		if (!items.pay(player))
 		{
 			throw new ChargeException("Inventory full"); //TODO: TL
+		}
+		final SignTransactionEvent signEvent = new SignTransactionEvent(player, charge, null, items, player.getLocation(), ess);
+		ess.getServer().getPluginManager().callEvent(signEvent);
+		if (signEvent.isCancelled())
+		{
+			return false;
 		}
 		charge.charge(player);
 		Trade.log("Sign", "Buy", "Interact", username, charge, username, items, sign.getBlock().getLocation(), ess);
