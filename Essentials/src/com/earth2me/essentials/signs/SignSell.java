@@ -5,6 +5,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.Trade.OverflowType;
 import com.earth2me.essentials.User;
 import net.ess3.api.IEssentials;
+import net.ess3.api.events.SignTransactionEvent;
 import net.ess3.api.MaxMoneyException;
 
 
@@ -29,6 +30,12 @@ public class SignSell extends EssentialsSign
 		final Trade charge = getTrade(sign, 1, 2, player, ess);
 		final Trade money = getTrade(sign, 3, ess);
 		charge.isAffordableFor(player);
+		final SignTransactionEvent signEvent = new SignTransactionEvent(null, charge, player, money, player.getLocation(), ess);
+		ess.getServer().getPluginManager().callEvent(signEvent);
+		if (signEvent.isCancelled())
+		{
+			return false;
+		}
 		money.pay(player, OverflowType.DROP);
 		charge.charge(player);
 		Trade.log("Sign", "Sell", "Interact", username, charge, username, money, sign.getBlock().getLocation(), ess);

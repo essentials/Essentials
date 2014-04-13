@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import net.ess3.api.IEssentials;
 import net.ess3.api.MaxMoneyException;
 import net.ess3.api.events.AfkStatusChangeEvent;
+import net.ess3.api.events.PlayerTransactionEvent;
 import net.ess3.api.events.UserBalanceUpdateEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -164,6 +165,12 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 		}
 		if (canAfford(value))
 		{
+			final PlayerTransactionEvent transactionEvent = new PlayerTransactionEvent(this, new Trade(value, ess), reciever, new Trade(value ,ess), this.getLocation(), ess );
+			ess.getServer().getPluginManager().callEvent(transactionEvent);
+			if(transactionEvent.isCancelled())
+			{
+				return;
+			}
 			setMoney(getMoney().subtract(value));
 			reciever.setMoney(reciever.getMoney().add(value));
 			sendMessage(tl("moneySentTo", NumberUtil.displayCurrency(value, ess), reciever.getDisplayName()));
