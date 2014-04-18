@@ -1,6 +1,7 @@
 package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
+import com.earth2me.essentials.EssentialsUpgrade;
 import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.UserMap;
@@ -10,6 +11,7 @@ import com.earth2me.essentials.utils.NumberUtil;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.Sound;
@@ -56,6 +58,10 @@ public class Commandessentials extends EssentialsCommand
 		else if (args[0].equalsIgnoreCase("cleanup"))
 		{
 			run_cleanup(server, sender, commandLabel, args);
+		}
+		else if (args[0].equalsIgnoreCase("uuidconvert"))
+		{
+			run_uuidconvert(server, sender, commandLabel, args);
 		}
 		else
 		{
@@ -269,7 +275,7 @@ public class Commandessentials extends EssentialsCommand
 			public void run()
 			{
 				Long currTime = System.currentTimeMillis();
-				for (String u : userMap.getAllUniqueUsers())
+				for (UUID u : userMap.getAllUniqueUsers())
 				{
 					final User user = ess.getUserMap().getUser(u);
 					if (user == null)
@@ -311,5 +317,12 @@ public class Commandessentials extends EssentialsCommand
 			}
 		});
 
+	}
+	
+	private void run_uuidconvert(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
+	{
+		sender.sendMessage("Starting Essentials UUID userdata conversion, this may lag the server.");
+		EssentialsUpgrade.uuidFileConvert(ess);
+		sender.sendMessage("UUID conversion complete, check your server log for more information.");
 	}
 }

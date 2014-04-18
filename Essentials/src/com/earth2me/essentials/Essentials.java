@@ -40,6 +40,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -80,7 +81,7 @@ import org.yaml.snakeyaml.error.YAMLException;
 
 public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 {
-	public static final int BUKKIT_VERSION = 2922;
+	public static final int BUKKIT_VERSION = 3050;
 	private static final Logger LOGGER = Logger.getLogger("Essentials");
 	private transient ISettings settings;
 	private final transient TNTExplodeListener tntListener = new TNTExplodeListener(this);
@@ -102,7 +103,6 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 
 	public Essentials()
 	{
-
 	}
 
 	public Essentials(final Server server)
@@ -187,12 +187,12 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 				settings = new Settings(this);
 				confList.add(settings);
 				execTimer.mark("Settings");
-				upgrade.afterSettings();
-				execTimer.mark("Upgrade2");
-				i18n.updateLocale(settings.getLocale());
 				userMap = new UserMap(this);
 				confList.add(userMap);
 				execTimer.mark("Init(Usermap)");
+				upgrade.afterSettings();
+				execTimer.mark("Upgrade2");
+				i18n.updateLocale(settings.getLocale());
 				warps = new Warps(getServer(), this.getDataFolder());
 				confList.add(warps);
 				execTimer.mark("Init(Spawn/Warp)");
@@ -324,6 +324,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 		}
 		Economy.setEss(null);
 		Trade.closeLog();
+		getUserMap().getUUIDMap().forceWriteUUIDMap();
 	}
 
 	@Override
@@ -561,7 +562,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 		sender.sendMessage(tl("errorWithMessage", exception.getMessage()));
 		if (getSettings().isDebug())
 		{
-			LOGGER.log(Level.WARNING, tl("errorCallingCommand", commandLabel), exception);
+			LOGGER.log(Level.INFO, tl("errorCallingCommand", commandLabel), exception);
 		}
 	}
 
@@ -634,17 +635,33 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 	@Override
 	public User getUser(final String base)
 	{
-		return getOfflineUser((String)base);
+		return getOfflineUser(base);
+	}
+
+	//This will return null if there is not a match.
+	@Override
+	public User getUser(final UUID base)
+	{
+		return userMap.getUser(base);
 	}
 
 	//This will return null if there is not a match.
 	@Override
 	public User getOfflineUser(final String name)
 	{
-		final User user = userMap.getUser(name);
+		final User user = userMap.getUser(name);		
 		if (user != null && user.getBase() instanceof OfflinePlayer)
 		{
-			((OfflinePlayer)user.getBase()).setName(name);
+			//This code should attempt to use the last known name of a user, if Bukkit returns name as null.
+			final String lastName = user.getLastAccountName();
+			if (lastName != null)
+			{
+				((OfflinePlayer)user.getBase()).setName(lastName);
+			}
+			else
+			{
+				((OfflinePlayer)user.getBase()).setName(name);
+			}
 		}
 		return user;
 	}
@@ -664,7 +681,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			return null;
 		}
 
-		User user = userMap.getUser(base.getName());
+		User user = userMap.getUser(base.getUniqueId());
 
 		if (user == null)
 		{
@@ -673,6 +690,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 				LOGGER.log(Level.INFO, "Constructing new userfile from base player {0}", base.getName());
 			}
 			user = new User(base, this);
+			user.setLastAccountName(base.getName());
 		}
 		else
 		{
