@@ -86,7 +86,8 @@ public class Commandnick extends EssentialsLoopCommand
 	private String formatNickname(final User user, final String nick) throws Exception
 	{
 		String newNick = user == null ? FormatUtil.replaceFormat(nick) : FormatUtil.formatString(user, "essentials.nick", nick);
-		if (!newNick.matches("^[a-zA-Z_0-9\u00a7]+$"))
+		// if (!newNick.matches("^[a-zA-Z_0-9\u00a7]+$")) /* Original Regex */
+		if (!newNick.matches("^[a-zA-Z_0-9\u00a7ㄱ-ㆆㄱ-ㆎ가-힣]+$"))
 		{
 			throw new Exception(tl("nickNamesAlpha"));
 		}
