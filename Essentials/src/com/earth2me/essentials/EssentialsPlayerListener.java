@@ -14,6 +14,9 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.ess3.api.IEssentials;
+import org.bukkit.BanEntry;
+import org.bukkit.BanList;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -346,7 +349,7 @@ public class EssentialsPlayerListener implements Listener
 			return;
 		}
 		
-		final String banReason = tl("banFormat", tl("defaultBanReason"), "Console");
+		final String banReason = Bukkit.getBanList(BanList.Type.NAME).getBanEntry(event.getPlayer().toString()).getReason();
 		event.disallow(Result.KICK_BANNED, banReason);
 	}
 	

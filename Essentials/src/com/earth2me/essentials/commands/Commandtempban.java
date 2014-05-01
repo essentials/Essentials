@@ -5,8 +5,11 @@ import com.earth2me.essentials.Console;
 import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.DateUtil;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
+import org.bukkit.BanList;
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 
 
@@ -52,13 +55,14 @@ public class Commandtempban extends EssentialsCommand
 			sender.sendMessage(tl("oversizedTempban"));
 			throw new NoChargeException();
 		}
-
+		
 		final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
 		final String banReason = tl("tempBanned", DateUtil.formatDateDiff(banTimestamp), senderName);
+
 		user.setBanReason(banReason);
 		user.setBanTimeout(banTimestamp);
-		user.getBase().setBanned(true);
-		user.getBase().kickPlayer(banReason);
+		Bukkit.getBanList(BanList.Type.NAME).addBan(user.getName(), banReason, new Date(banTimestamp), senderName);
+		user.kickPlayer(banReason);
 
 		final String message = tl("playerBanned", senderName, user.getName(), banReason, DateUtil.formatDateDiff(banTimestamp));
 		server.getLogger().log(Level.INFO, message);
