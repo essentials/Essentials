@@ -9,6 +9,7 @@ import com.earth2me.essentials.utils.FormatUtil;
 import com.earth2me.essentials.utils.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.Server;
 
@@ -53,7 +54,8 @@ public class Commandseen extends EssentialsCommand
 					seenIP(server, sender, args[0]);
 					return;
 				}
-				else if (FormatUtil.validIP(args[0]) && (server.getIPBans().contains(args[0]))) {
+				else if (FormatUtil.validIP(args[0]) && (server.getIPBans().contains(args[0])))
+				{
 					sender.sendMessage(tl("isIpBanned", args[0]));
 					return;
 				}
@@ -71,6 +73,18 @@ public class Commandseen extends EssentialsCommand
 
 		user.setDisplayNick();
 		sender.sendMessage(tl("seenOnline", user.getDisplayName(), DateUtil.formatDateDiff(user.getLastLogin())));
+
+		if (ess.getSettings().isDebug())
+		{
+			ess.getLogger().info("UUID: " + user.getBase().getUniqueId().toString());
+		}
+
+		List<String> history = ess.getUserMap().getUserHistory(user.getBase().getUniqueId());
+		if (history != null && history.size() > 1)
+		{
+			sender.sendMessage(tl("seenAccounts", StringUtil.joinListSkip(", ", user.getName(), history)));
+		}
+
 		if (user.isAfk())
 		{
 			sender.sendMessage(tl("whoisAFK", tl("true")));
@@ -78,14 +92,14 @@ public class Commandseen extends EssentialsCommand
 		if (user.isJailed())
 		{
 			sender.sendMessage(tl("whoisJail", (user.getJailTimeout() > 0
-											   ? DateUtil.formatDateDiff(user.getJailTimeout())
-											   : tl("true"))));
+												? DateUtil.formatDateDiff(user.getJailTimeout())
+												: tl("true"))));
 		}
 		if (user.isMuted())
 		{
 			sender.sendMessage(tl("whoisMuted", (user.getMuteTimeout() > 0
-												? DateUtil.formatDateDiff(user.getMuteTimeout())
-												: tl("true"))));
+												 ? DateUtil.formatDateDiff(user.getMuteTimeout())
+												 : tl("true"))));
 		}
 		final String location = user.getGeoLocation();
 		if (location != null && (!(sender.isPlayer()) || ess.getUser(sender.getPlayer()).isAuthorized("essentials.geoip.show")))
@@ -94,7 +108,7 @@ public class Commandseen extends EssentialsCommand
 		}
 		if (extra)
 		{
-			sender.sendMessage(tl("whoisIPAddress", user.getAddress().getAddress().toString()));
+			sender.sendMessage(tl("whoisIPAddress", user.getBase().getAddress().getAddress().toString()));
 		}
 	}
 
@@ -109,7 +123,19 @@ public class Commandseen extends EssentialsCommand
 		{
 			sender.sendMessage(tl("userUnknown", user.getName()));
 		}
-		if (user.isBanned())
+
+		if (ess.getSettings().isDebug())
+		{
+			ess.getLogger().info("UUID: " + user.getBase().getUniqueId().toString());
+		}
+
+		List<String> history = ess.getUserMap().getUserHistory(user.getBase().getUniqueId());
+		if (history != null && history.size() > 1)
+		{
+			sender.sendMessage(tl("seenAccounts", StringUtil.joinListSkip(", ", user.getName(), history)));
+		}
+
+		if (user.getBase().isBanned())
 		{
 			sender.sendMessage(tl("whoisBanned", showBan ? user.getBanReason() : tl("true")));
 		}
@@ -149,7 +175,7 @@ public class Commandseen extends EssentialsCommand
 			public void run()
 			{
 				final List<String> matches = new ArrayList<String>();
-				for (final String u : userMap.getAllUniqueUsers())
+				for (final UUID u : userMap.getAllUniqueUsers())
 				{
 					final User user = ess.getUserMap().getUser(u);
 					if (user == null)
