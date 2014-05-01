@@ -55,7 +55,7 @@ public class Commandtempban extends EssentialsCommand
 			sender.sendMessage(tl("oversizedTempban"));
 			throw new NoChargeException();
 		}
-		
+
 		final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
 		final String banReason = tl("tempBanned", DateUtil.formatDateDiff(banTimestamp), senderName);
 
