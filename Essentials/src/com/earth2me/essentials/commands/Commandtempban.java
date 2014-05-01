@@ -28,7 +28,7 @@ public class Commandtempban extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 		final User user = getPlayer(server, args, 0, true, true);
-		if (!user.isOnline())
+		if (!user.getBase().isOnline())
 		{
 			if (sender.isPlayer()
 				&& !ess.getUser(sender.getPlayer()).isAuthorized("essentials.tempban.offline"))
