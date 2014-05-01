@@ -62,7 +62,7 @@ public class Commandtempban extends EssentialsCommand
 		user.setBanReason(banReason);
 		user.setBanTimeout(banTimestamp);
 		Bukkit.getBanList(BanList.Type.NAME).addBan(user.getName(), banReason, new Date(banTimestamp), senderName);
-		user.kickPlayer(banReason);
+		user.getBase().kickPlayer(banReason);
 
 		final String message = tl("playerBanned", senderName, user.getName(), banReason, DateUtil.formatDateDiff(banTimestamp));
 		server.getLogger().log(Level.INFO, message);
