@@ -1,16 +1,24 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import com.google.common.io.Files;
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.InvalidWorldException;
 import org.bukkit.*;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -23,27 +31,33 @@ import org.bukkit.util.Vector;
 
 public class EssentialsConf extends YamlConfiguration
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
-	private transient File configFile;
-	private transient String templateName = null;
-	private transient Class<?> resourceClass = EssentialsConf.class;
-	private static final Charset UTF8 = Charset.forName("UTF-8");
+	protected static final Logger LOGGER = Logger.getLogger("Essentials");
+	protected final File configFile;
+	protected String templateName = null;
+	protected static final Charset UTF8 = Charset.forName("UTF-8");
+	private Class<?> resourceClass = EssentialsConf.class;	
+	private static final ExecutorService EXECUTOR_SERVICE = Executors.newSingleThreadExecutor();
+	private final AtomicInteger pendingDiskWrites = new AtomicInteger(0);
 
 	public EssentialsConf(final File configFile)
 	{
 		super();
-		this.configFile = configFile;
+		this.configFile = configFile.getAbsoluteFile();
 	}
 	private final byte[] bytebuffer = new byte[1024];
 
 	public synchronized void load()
 	{
-		configFile = configFile.getAbsoluteFile();
+		if (pendingDiskWrites.get() != 0)
+		{
+			LOGGER.log(Level.INFO, "File {0} not read, because it''s not yet written to disk.", configFile);
+			return;
+		}
 		if (!configFile.getParentFile().exists())
 		{
 			if (!configFile.getParentFile().mkdirs())
 			{
-				LOGGER.log(Level.SEVERE, _("failedToCreateConfig", configFile.toString()));
+				LOGGER.log(Level.SEVERE, tl("failedToCreateConfig", configFile.toString()));
 			}
 		}
 		// This will delete files where the first character is 0. In most cases they are broken.
@@ -81,12 +95,20 @@ public class EssentialsConf extends YamlConfiguration
 				LOGGER.log(Level.SEVERE, null, ex);
 			}
 		}
-
+				
 		if (!configFile.exists())
 		{
-			if (templateName != null)
+			if (legacyFileExists())
 			{
-				LOGGER.log(Level.INFO, _("creatingConfigFromTemplate", configFile.toString()));
+				convertLegacyFile();
+			}
+			else if (altFileExists())
+			{
+				convertAltFile();
+			}
+			else if (templateName != null)
+			{
+				LOGGER.log(Level.INFO, tl("creatingConfigFromTemplate", configFile.toString()));
 				createFromTemplate();
 			}
 			else
@@ -101,14 +123,28 @@ public class EssentialsConf extends YamlConfiguration
 			final FileInputStream inputStream = new FileInputStream(configFile);
 			try
 			{
-				final ByteBuffer buffer = ByteBuffer.allocate((int)configFile.length());
+				long startSize = configFile.length();
+				if (startSize > Integer.MAX_VALUE)
+				{
+					throw new InvalidConfigurationException("File too big");
+				}
+				ByteBuffer buffer = ByteBuffer.allocate((int)startSize);
 				int length;
 				while ((length = inputStream.read(bytebuffer)) != -1)
 				{
+					if (length > buffer.remaining())
+					{
+						ByteBuffer resize = ByteBuffer.allocate(buffer.capacity() + length - buffer.remaining());
+						int resizePosition = buffer.position();
+						buffer.rewind();
+						resize.put(buffer);
+						resize.position(resizePosition);
+						buffer = resize;
+					}
 					buffer.put(bytebuffer, 0, length);
 				}
 				buffer.rewind();
-				final CharBuffer data = CharBuffer.allocate((int)configFile.length());
+				final CharBuffer data = CharBuffer.allocate(buffer.capacity());
 				CharsetDecoder decoder = UTF8.newDecoder();
 				CoderResult result = decoder.decode(buffer, data, true);
 				if (result.isError())
@@ -151,6 +187,26 @@ public class EssentialsConf extends YamlConfiguration
 			LOGGER.log(Level.SEVERE, "The file " + configFile.toString() + " is broken, it has been renamed to " + broken.toString(), ex.getCause());
 		}
 	}
+	
+	public boolean legacyFileExists()
+	{
+		return false;
+	}
+	
+	public void convertLegacyFile()
+	{
+		LOGGER.log(Level.SEVERE, "Unable to import legacy config file.");
+	}
+	
+	public boolean altFileExists()
+	{
+		return false;
+	}
+	
+	public void convertAltFile()
+	{
+		LOGGER.log(Level.SEVERE, "Unable to import alt config file.");
+	}
 
 	private void createFromTemplate()
 	{
@@ -161,7 +217,7 @@ public class EssentialsConf extends YamlConfiguration
 			istr = resourceClass.getResourceAsStream(templateName);
 			if (istr == null)
 			{
-				LOGGER.log(Level.SEVERE, _("couldNotFindTemplate", templateName));
+				LOGGER.log(Level.SEVERE, tl("couldNotFindTemplate", templateName));
 				return;
 			}
 			ostr = new FileOutputStream(configFile);
@@ -176,7 +232,7 @@ public class EssentialsConf extends YamlConfiguration
 		}
 		catch (IOException ex)
 		{
-			LOGGER.log(Level.SEVERE, _("failedToWriteConfig", configFile.toString()), ex);
+			LOGGER.log(Level.SEVERE, tl("failedToWriteConfig", configFile.toString()), ex);
 		}
 		finally
 		{
@@ -200,7 +256,7 @@ public class EssentialsConf extends YamlConfiguration
 			}
 			catch (IOException ex)
 			{
-				LOGGER.log(Level.SEVERE, _("failedToCloseConfig", configFile.toString()), ex);
+				LOGGER.log(Level.SEVERE, tl("failedToCloseConfig", configFile.toString()), ex);
 			}
 		}
 	}
@@ -241,46 +297,132 @@ public class EssentialsConf extends YamlConfiguration
 	@Override
 	public synchronized void save(final File file) throws IOException
 	{
+		delayedSave(file);
+	}
+
+	public synchronized void forceSave()
+	{
+		try
+		{
+			Future<?> future = delayedSave(configFile);
+			if (future != null)
+			{
+				future.get();
+			}
+		}
+		catch (InterruptedException ex)
+		{
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+		}
+		catch (ExecutionException ex)
+		{
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+		}
+	}
+
+	private Future<?> delayedSave(final File file)
+	{
+		//long startTime = System.nanoTime();
 		if (file == null)
 		{
 			throw new IllegalArgumentException("File cannot be null");
 		}
 
-		Files.createParentDirs(file);
-
 		final String data = saveToString();
 
 		if (data.length() == 0)
 		{
-			return;
+			return null;
 		}
 
-		if (!configFile.exists())
+		pendingDiskWrites.incrementAndGet();
+
+		Future<?> future = EXECUTOR_SERVICE.submit(new WriteRunner(configFile, data, pendingDiskWrites));
+
+		//LOGGER.log(Level.INFO, configFile + " prepared for writing in " + (System.nanoTime() - startTime) + " nsec.");
+
+		return future;
+	}
+
+
+	private static class WriteRunner implements Runnable
+	{
+		private final File configFile;
+		private final String data;
+		private final AtomicInteger pendingDiskWrites;
+
+		private WriteRunner(final File configFile, final String data, final AtomicInteger pendingDiskWrites)
 		{
-			try
+			this.configFile = configFile;
+			this.data = data;
+			this.pendingDiskWrites = pendingDiskWrites;
+		}
+
+		@Override
+		public void run()
+		{
+			//long startTime = System.nanoTime();
+			synchronized (configFile)
 			{
-				LOGGER.log(Level.INFO, _("creatingEmptyConfig", configFile.toString()));
-				if (!configFile.createNewFile())
+				if (pendingDiskWrites.get() > 1)
 				{
-					LOGGER.log(Level.SEVERE, _("failedToCreateConfig", configFile.toString()));
+					// Writes can be skipped, because they are stored in a queue (in the executor).
+					// Only the last is actually written.
+					pendingDiskWrites.decrementAndGet();
+					//LOGGER.log(Level.INFO, configFile + " skipped writing in " + (System.nanoTime() - startTime) + " nsec.");
+					return;
+				}
+				try
+				{
+					Files.createParentDirs(configFile);
+
+					if (!configFile.exists())
+					{
+						try
+						{
+							LOGGER.log(Level.INFO, tl("creatingEmptyConfig", configFile.toString()));
+							if (!configFile.createNewFile())
+							{
+								LOGGER.log(Level.SEVERE, tl("failedToCreateConfig", configFile.toString()));
+								return;
+							}
+						}
+						catch (IOException ex)
+						{
+							LOGGER.log(Level.SEVERE, tl("failedToCreateConfig", configFile.toString()), ex);
+							return;
+						}
+					}
+
+					final FileOutputStream fos = new FileOutputStream(configFile);
+					try
+					{
+						final OutputStreamWriter writer = new OutputStreamWriter(fos, UTF8);
+
+						try
+						{
+							writer.write(data);
+						}
+						finally
+						{
+							writer.close();
+						}
+					}
+					finally
+					{
+						fos.close();
+					}
+				}
+				catch (IOException e)
+				{
+					LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				}
+				finally
+				{
+					//LOGGER.log(Level.INFO, configFile + " written to disk in " + (System.nanoTime() - startTime) + " nsec.");
+					pendingDiskWrites.decrementAndGet();
 				}
 			}
-			catch (IOException ex)
-			{
-				LOGGER.log(Level.SEVERE, _("failedToCreateConfig", configFile.toString()), ex);
-			}
-		}
-
-
-		final OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), UTF8);
-
-		try
-		{
-			writer.write(data);
-		}
-		finally
-		{
-			writer.close();
 		}
 	}
 
@@ -289,9 +431,10 @@ public class EssentialsConf extends YamlConfiguration
 		return isSet(path);
 	}
 
-	public Location getLocation(final String path, final Server server) throws Exception
+	public Location getLocation(final String path, final Server server) throws InvalidWorldException
 	{
-		final String worldName = getString((path == null ? "" : path + ".") + "world");
+		final String worldString = (path == null ? "" : path + ".") + "world";
+		final String worldName = getString(worldString);
 		if (worldName == null || worldName.isEmpty())
 		{
 			return null;
@@ -299,7 +442,7 @@ public class EssentialsConf extends YamlConfiguration
 		final World world = server.getWorld(worldName);
 		if (world == null)
 		{
-			throw new Exception(_("invalidWorld"));
+			throw new InvalidWorldException(worldName);
 		}
 		return new Location(world,
 							getDouble((path == null ? "" : path + ".") + "x", 0),
@@ -383,6 +526,11 @@ public class EssentialsConf extends YamlConfiguration
 		return get(path);
 	}
 
+	public void setProperty(final String path, final BigDecimal bigDecimal)
+	{
+		set(path, bigDecimal.toString());
+	}
+
 	public void setProperty(String path, Object object)
 	{
 		set(path, object);
@@ -403,6 +551,35 @@ public class EssentialsConf extends YamlConfiguration
 	public synchronized Object get(String path, Object def)
 	{
 		return super.get(path, def);
+	}
+
+	public synchronized BigDecimal getBigDecimal(final String path, final BigDecimal def)
+	{
+		final String input = super.getString(path);
+		return toBigDecimal(input, def);
+	}
+
+	public static BigDecimal toBigDecimal(final String input, final BigDecimal def)
+	{
+		if (input == null || input.isEmpty())
+		{
+			return def;
+		}
+		else
+		{
+			try
+			{
+				return new BigDecimal(input, MathContext.DECIMAL128);
+			}
+			catch (NumberFormatException e)
+			{
+				return def;
+			}
+			catch (ArithmeticException e)
+			{
+				return def;
+			}
+		}
 	}
 
 	@Override

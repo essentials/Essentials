@@ -1,9 +1,12 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import com.earth2me.essentials.Console;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
+import com.earth2me.essentials.utils.FormatUtil;
+import java.util.logging.Level;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandunbanip extends EssentialsCommand
@@ -14,21 +17,40 @@ public class Commandunbanip extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		try
+		
+		String ipAddress;
+		if (FormatUtil.validIP(args[0]))
 		{
-			final User user = getPlayer(server, args, 0, true);
-			ess.getServer().unbanIP(user.getLastLoginAddress());
+			ipAddress = args[0];
 		}
-		catch (Exception ex)
+		else
 		{
+			try
+			{
+				User player = getPlayer(server, args, 0, true, true);
+				ipAddress = player.getLastLoginAddress();
+			}
+			catch (PlayerNotFoundException ex)
+			{
+				ipAddress = args[0];
+			}
 		}
-		ess.getServer().unbanIP(args[0]);
-		sender.sendMessage(_("unbannedIP"));
+
+		if (ipAddress.isEmpty())
+		{
+			throw new PlayerNotFoundException();
+		}
+
+		ess.getServer().unbanIP(ipAddress);
+		final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
+		server.getLogger().log(Level.INFO, tl("playerUnbanIpAddress", senderName, ipAddress));
+
+		ess.broadcastMessage("essentials.ban.notify", tl("playerUnbanIpAddress", senderName, ipAddress));
 	}
 }

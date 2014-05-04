@@ -17,12 +17,12 @@
  */
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.api.Economy;
-import com.earth2me.essentials.api.IJails;
+import static com.earth2me.essentials.I18n.tl;
+import com.earth2me.essentials.commands.EssentialsCommand;
 import com.earth2me.essentials.commands.IEssentialsCommand;
 import com.earth2me.essentials.commands.NoChargeException;
 import com.earth2me.essentials.commands.NotEnoughArgumentsException;
+import com.earth2me.essentials.commands.QuietAbortException;
 import com.earth2me.essentials.metrics.Metrics;
 import com.earth2me.essentials.metrics.MetricsListener;
 import com.earth2me.essentials.metrics.MetricsStarter;
@@ -31,24 +31,35 @@ import com.earth2me.essentials.register.payment.Methods;
 import com.earth2me.essentials.signs.SignBlockListener;
 import com.earth2me.essentials.signs.SignEntityListener;
 import com.earth2me.essentials.signs.SignPlayerListener;
+import com.earth2me.essentials.textreader.IText;
+import com.earth2me.essentials.textreader.KeywordReplacer;
+import com.earth2me.essentials.textreader.SimpleTextInput;
+import com.earth2me.essentials.utils.DateUtil;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import net.ess3.api.Economy;
+import net.ess3.api.IEssentials;
+import net.ess3.api.IItemDb;
+import net.ess3.api.IJails;
+import net.ess3.api.ISettings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.command.SimpleCommandMap;
-import org.bukkit.command.defaults.VanillaCommand;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -62,15 +73,16 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 import org.yaml.snakeyaml.error.YAMLException;
 
 
-public class Essentials extends JavaPlugin implements IEssentials
+public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 {
-	public static final int BUKKIT_VERSION = 2624;
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
+	public static final int BUKKIT_VERSION = 3050;
+	private static final Logger LOGGER = Logger.getLogger("Essentials");
 	private transient ISettings settings;
 	private final transient TNTExplodeListener tntListener = new TNTExplodeListener(this);
 	private transient Jails jails;
@@ -87,8 +99,16 @@ public class Essentials extends JavaPlugin implements IEssentials
 	private transient I18n i18n;
 	private transient Metrics metrics;
 	private transient EssentialsTimer timer;
-	private transient List<String> vanishedPlayers = new ArrayList<String>();
-	private transient SimpleCommandMap scm;
+	private final transient List<String> vanishedPlayers = new ArrayList<String>();
+
+	public Essentials()
+	{
+	}
+
+	public Essentials(final Server server)
+	{
+		super(new JavaPluginLoader(server), new PluginDescriptionFile("Essentials", "", "com.earth2me.essentials.Essentials"), null, null);
+	}
 
 	@Override
 	public ISettings getSettings()
@@ -109,7 +129,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 		}
 		i18n = new I18n(this);
 		i18n.onEnable();
-		LOGGER.log(Level.INFO, _("usingTempFolderForTesting"));
+		LOGGER.log(Level.INFO, tl("usingTempFolderForTesting"));
 		LOGGER.log(Level.INFO, dataFolder.toString());
 		this.initialize(null, server, new PluginDescriptionFile(new FileReader(new File("src" + File.separator + "plugin.yml"))), dataFolder, null, null);
 		settings = new Settings(this);
@@ -122,122 +142,124 @@ public class Essentials extends JavaPlugin implements IEssentials
 	@Override
 	public void onEnable()
 	{
-		execTimer = new ExecuteTimer();
-		execTimer.start();
-		i18n = new I18n(this);
-		i18n.onEnable();
-		execTimer.mark("I18n1");
-		scm = new SimpleCommandMap(this.getServer());
-		final PluginManager pm = getServer().getPluginManager();
-		for (Plugin plugin : pm.getPlugins())
-		{
-			if (plugin.getDescription().getName().startsWith("Essentials")
-				&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion())
-				&& !plugin.getDescription().getName().equals("EssentialsAntiCheat"))
-			{
-				LOGGER.log(Level.WARNING, _("versionMismatch", plugin.getDescription().getName()));
-			}
-		}
-		final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
-		if (versionMatch.matches())
-		{
-			final int versionNumber = Integer.parseInt(versionMatch.group(1));
-			if (versionNumber < BUKKIT_VERSION && versionNumber > 100)
-			{
-				LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
-				LOGGER.log(Level.SEVERE, _("notRecommendedBukkit"));
-				LOGGER.log(Level.SEVERE, _("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
-				LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
-				this.setEnabled(false);
-				return;
-			}
-		}
-		else
-		{
-			LOGGER.log(Level.INFO, _("bukkitFormatChanged"));
-			LOGGER.log(Level.INFO, getServer().getVersion());
-			LOGGER.log(Level.INFO, getServer().getBukkitVersion());
-		}
-		execTimer.mark("BukkitCheck");
 		try
 		{
-			final EssentialsUpgrade upgrade = new EssentialsUpgrade(this);
-			upgrade.beforeSettings();
-			execTimer.mark("Upgrade");
-			confList = new ArrayList<IConf>();
-			settings = new Settings(this);
-			confList.add(settings);
-			execTimer.mark("Settings");
-			upgrade.afterSettings();
-			execTimer.mark("Upgrade2");
-			i18n.updateLocale(settings.getLocale());
-			userMap = new UserMap(this);
-			confList.add(userMap);
-			execTimer.mark("Init(Usermap)");
-			warps = new Warps(getServer(), this.getDataFolder());
-			confList.add(warps);
-			execTimer.mark("Init(Spawn/Warp)");
-			worth = new Worth(this.getDataFolder());
-			confList.add(worth);
-			itemDb = new ItemDb(this);
-			confList.add(itemDb);
-			execTimer.mark("Init(Worth/ItemDB)");
-			jails = new Jails(this);
-			confList.add(jails);
-			reload();
-		}
-		catch (YAMLException exception)
-		{
-			if (pm.getPlugin("EssentialsUpdate") != null)
+			LOGGER.setParent(this.getLogger());
+			execTimer = new ExecuteTimer();
+			execTimer.start();
+			i18n = new I18n(this);
+			i18n.onEnable();
+			execTimer.mark("I18n1");
+			final PluginManager pm = getServer().getPluginManager();
+			for (Plugin plugin : pm.getPlugins())
 			{
-				LOGGER.log(Level.SEVERE, _("essentialsHelp2"));
+				if (plugin.getDescription().getName().startsWith("Essentials")
+					&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion())
+					&& !plugin.getDescription().getName().equals("EssentialsAntiCheat"))
+				{
+					LOGGER.log(Level.WARNING, tl("versionMismatch", plugin.getDescription().getName()));
+				}
+			}
+			final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
+			if (versionMatch.matches())
+			{
+				final int versionNumber = Integer.parseInt(versionMatch.group(1));
+				if (versionNumber < BUKKIT_VERSION && versionNumber > 100)
+				{
+					wrongVersion();
+					this.setEnabled(false);
+					return;
+				}
 			}
 			else
 			{
-				LOGGER.log(Level.SEVERE, _("essentialsHelp1"));
+				LOGGER.log(Level.INFO, tl("bukkitFormatChanged"));
+				LOGGER.log(Level.INFO, getServer().getVersion());
+				LOGGER.log(Level.INFO, getServer().getBukkitVersion());
 			}
-			LOGGER.log(Level.SEVERE, exception.toString());
-			pm.registerEvents(new Listener()
+			execTimer.mark("BukkitCheck");
+			try
 			{
-				@EventHandler(priority = EventPriority.LOW)
-				public void onPlayerJoin(final PlayerJoinEvent event)
+				final EssentialsUpgrade upgrade = new EssentialsUpgrade(this);
+				upgrade.beforeSettings();
+				execTimer.mark("Upgrade");
+				confList = new ArrayList<IConf>();
+				settings = new Settings(this);
+				confList.add(settings);
+				execTimer.mark("Settings");
+				userMap = new UserMap(this);
+				confList.add(userMap);
+				execTimer.mark("Init(Usermap)");
+				upgrade.afterSettings();
+				execTimer.mark("Upgrade2");
+				i18n.updateLocale(settings.getLocale());
+				warps = new Warps(getServer(), this.getDataFolder());
+				confList.add(warps);
+				execTimer.mark("Init(Spawn/Warp)");
+				worth = new Worth(this.getDataFolder());
+				confList.add(worth);
+				itemDb = new ItemDb(this);
+				confList.add(itemDb);
+				execTimer.mark("Init(Worth/ItemDB)");
+				jails = new Jails(this);
+				confList.add(jails);
+				reload();
+			}
+			catch (YAMLException exception)
+			{
+				if (pm.getPlugin("EssentialsUpdate") != null)
 				{
-					event.getPlayer().sendMessage("Essentials failed to load, read the log file.");
+					LOGGER.log(Level.SEVERE, tl("essentialsHelp2"));
 				}
-			}, this);
-			for (Player player : getServer().getOnlinePlayers())
-			{
-				player.sendMessage("Essentials failed to load, read the log file.");
+				else
+				{
+					LOGGER.log(Level.SEVERE, tl("essentialsHelp1"));
+				}
+				handleCrash(exception);
+				return;
 			}
-			this.setEnabled(false);
-			return;
+			backup = new Backup(this);
+			permissionsHandler = new PermissionsHandler(this, settings.useBukkitPermissions());
+			alternativeCommandsHandler = new AlternativeCommandsHandler(this);
+
+			timer = new EssentialsTimer(this);
+			scheduleSyncRepeatingTask(timer, 1000, 50);
+
+			Economy.setEss(this);
+			execTimer.mark("RegHandler");
+
+			final MetricsStarter metricsStarter = new MetricsStarter(this);
+			if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
+			{
+				runTaskLaterAsynchronously(metricsStarter, 1);
+			}
+			else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
+			{
+				final MetricsListener metricsListener = new MetricsListener(this, metricsStarter);
+				pm.registerEvents(metricsListener, this);
+			}
+
+			final String timeroutput = execTimer.end();
+			if (getSettings().isDebug())
+			{
+				LOGGER.log(Level.INFO, "Essentials load {0}", timeroutput);
+			}
 		}
-		backup = new Backup(this);
-		permissionsHandler = new PermissionsHandler(this, settings.useBukkitPermissions());
-		alternativeCommandsHandler = new AlternativeCommandsHandler(this);
-
-		timer = new EssentialsTimer(this);
-		getScheduler().scheduleSyncRepeatingTask(this, timer, 100, 100);
-
-		Economy.setEss(this);
-		execTimer.mark("RegHandler");
-
-		final MetricsStarter metricsStarter = new MetricsStarter(this);
-		if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
+		catch (NumberFormatException ex)
 		{
-			getScheduler().runTaskLaterAsynchronously(this, metricsStarter, 1);
+			handleCrash(ex);
 		}
-		else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
+		catch (Error ex)
 		{
-			final MetricsListener metricsListener = new MetricsListener(this, metricsStarter);
-			pm.registerEvents(metricsListener, this);
+			handleCrash(ex);
+			throw ex;
 		}
+	}
 
-		final String timeroutput = execTimer.end();
-		if (getSettings().isDebug())
-		{
-			LOGGER.log(Level.INFO, "Essentials load " + timeroutput);
-		}
+	@Override
+	public void saveConfig()
+	{
+		// We don't use any of the bukkit config writing, as this breaks our config file formatting.
 	}
 
 	private void registerListeners(PluginManager pm)
@@ -287,13 +309,22 @@ public class Essentials extends JavaPlugin implements IEssentials
 			User user = getUser(p);
 			if (user.isVanished())
 			{
-				user.toggleVanished();
-				p.sendMessage(_("unvanishedReload"));
+				user.setVanished(false);
+				user.sendMessage(tl("unvanishedReload"));
 			}
 		}
-		i18n.onDisable();
+		cleanupOpenInventories();
+		if (i18n != null)
+		{
+			i18n.onDisable();
+		}
+		if (backup != null)
+		{
+			backup.stopTask();
+		}
 		Economy.setEss(null);
 		Trade.closeLog();
+		getUserMap().getUUIDMap().forceWriteUUIDMap();
 	}
 
 	@Override
@@ -314,13 +345,42 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
+	public List<String> onTabComplete(CommandSender sender,
+									  Command command,
+									  String commandLabel,
+									  String[] args)
+	{
+		// Allow plugins to override the command via onCommand
+		if (!getSettings().isCommandOverridden(command.getName()) && (!commandLabel.startsWith("e") || commandLabel.equalsIgnoreCase(command.getName())))
+		{
+			final PluginCommand pc = alternativeCommandsHandler.getAlternative(commandLabel);
+			if (pc != null)
+			{
+				try
+				{
+					TabCompleter completer = pc.getTabCompleter();
+					if (completer != null)
+					{
+						return completer.onTabComplete(sender, command, commandLabel, args);
+					}
+				}
+				catch (final Exception ex)
+				{
+					Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String commandLabel, final String[] args)
 	{
 		return onCommandEssentials(sender, command, commandLabel, args, Essentials.class.getClassLoader(), "com.earth2me.essentials.commands.Command", "essentials.", null);
 	}
 
 	@Override
-	public boolean onCommandEssentials(final CommandSender sender, final Command command, final String commandLabel, final String[] args, final ClassLoader classLoader, final String commandPath, final String permissionPrefix, final IEssentialsModule module)
+	public boolean onCommandEssentials(final CommandSender cSender, final Command command, final String commandLabel, final String[] args, final ClassLoader classLoader, final String commandPath, final String permissionPrefix, final IEssentialsModule module)
 	{
 		// Allow plugins to override the command via onCommand
 		if (!getSettings().isCommandOverridden(command.getName()) && (!commandLabel.startsWith("e") || commandLabel.equalsIgnoreCase(command.getName())))
@@ -331,12 +391,12 @@ public class Essentials extends JavaPlugin implements IEssentials
 				alternativeCommandsHandler.executed(commandLabel, pc);
 				try
 				{
-					return pc.execute(sender, commandLabel, args);
+					return pc.execute(cSender, commandLabel, args);
 				}
 				catch (final Exception ex)
 				{
 					Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
-					sender.sendMessage(ChatColor.RED + "An internal error occurred while attempting to perform this command");
+					cSender.sendMessage(ChatColor.RED + "An internal error occurred while attempting to perform this command");
 					return true;
 				}
 			}
@@ -344,35 +404,56 @@ public class Essentials extends JavaPlugin implements IEssentials
 
 		try
 		{
+
 			User user = null;
-			if (sender instanceof Player)
+			Block bSenderBlock = null;
+			if (cSender instanceof Player)
 			{
-				user = getUser(sender);
+				user = getUser((Player)cSender);
+			}
+			else if (cSender instanceof BlockCommandSender)
+			{
+				BlockCommandSender bsender = (BlockCommandSender)cSender;
+				bSenderBlock = bsender.getBlock();
 			}
 
+			if (bSenderBlock != null)
+			{
+				Bukkit.getLogger().log(Level.INFO, "CommandBlock at {0},{1},{2} issued server command: /{3} {4}", new Object[]
+				{
+					bSenderBlock.getX(), bSenderBlock.getY(), bSenderBlock.getZ(), commandLabel, EssentialsCommand.getFinalArg(args, 0)
+				});
+			}
+			else if (user == null)
+			{
+				Bukkit.getLogger().log(Level.INFO, "{0} issued server command: /{1} {2}", new Object[]
+				{
+					cSender.getName(), commandLabel, EssentialsCommand.getFinalArg(args, 0)
+				});
+			}
+
+			CommandSource sender = new CommandSource(cSender);
+
 			// New mail notification
-			if (user != null && !getSettings().isCommandDisabled("mail") && !commandLabel.equals("mail") && user.isAuthorized("essentials.mail"))
+			if (user != null && !getSettings().isCommandDisabled("mail") && !command.getName().equals("mail") && user.isAuthorized("essentials.mail"))
 			{
 				final List<String> mail = user.getMails();
 				if (mail != null && !mail.isEmpty())
 				{
-					user.sendMessage(_("youHaveNewMail", mail.size()));
+					user.sendMessage(tl("youHaveNewMail", mail.size()));
 				}
+			}
+
+			//Print version even if admin command is not available #easteregg
+			if (commandLabel.equalsIgnoreCase("essversion"))
+			{
+				sender.sendMessage("This server is running Essentials " + getDescription().getVersion());
+				return true;
 			}
 
 			// Check for disabled commands
 			if (getSettings().isCommandDisabled(commandLabel))
 			{
-				if (scm != null)
-				{
-					for (VanillaCommand cmd : scm.getFallbackCommands())
-					{
-						if (cmd.matches(commandLabel))
-						{
-							cmd.execute(sender, commandLabel, args);
-						}
-					}
-				}
 				return true;
 			}
 
@@ -385,16 +466,16 @@ public class Essentials extends JavaPlugin implements IEssentials
 			}
 			catch (Exception ex)
 			{
-				sender.sendMessage(_("commandNotLoaded", commandLabel));
-				LOGGER.log(Level.SEVERE, _("commandNotLoaded", commandLabel), ex);
+				sender.sendMessage(tl("commandNotLoaded", commandLabel));
+				LOGGER.log(Level.SEVERE, tl("commandNotLoaded", commandLabel), ex);
 				return true;
 			}
 
 			// Check authorization
 			if (user != null && !user.isAuthorized(cmd, permissionPrefix))
 			{
-				LOGGER.log(Level.WARNING, _("deniedAccessCommand", user.getName()));
-				user.sendMessage(_("noAccessCommand"));
+				LOGGER.log(Level.INFO, tl("deniedAccessCommand", user.getName()));
+				user.sendMessage(tl("noAccessCommand"));
 				return true;
 			}
 
@@ -402,11 +483,11 @@ public class Essentials extends JavaPlugin implements IEssentials
 			{
 				if (user.getJailTimeout() > 0)
 				{
-					user.sendMessage(_("playerJailedFor", user.getName(), Util.formatDateDiff(user.getJailTimeout())));
+					user.sendMessage(tl("playerJailedFor", user.getName(), DateUtil.formatDateDiff(user.getJailTimeout())));
 				}
 				else
 				{
-					user.sendMessage(_("jailMessage"));
+					user.sendMessage(tl("jailMessage"));
 				}
 				return true;
 			}
@@ -428,6 +509,10 @@ public class Essentials extends JavaPlugin implements IEssentials
 			{
 				return true;
 			}
+			catch (QuietAbortException ex)
+			{
+				return true;
+			}
 			catch (NotEnoughArgumentsException ex)
 			{
 				sender.sendMessage(command.getDescription());
@@ -438,7 +523,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 				}
 				return true;
 			}
-			catch (Throwable ex)
+			catch (Exception ex)
 			{
 				showError(sender, ex, commandLabel);
 				return true;
@@ -446,19 +531,47 @@ public class Essentials extends JavaPlugin implements IEssentials
 		}
 		catch (Throwable ex)
 		{
-			LOGGER.log(Level.SEVERE, _("commandFailed", commandLabel), ex);
+			LOGGER.log(Level.SEVERE, tl("commandFailed", commandLabel), ex);
 			return true;
 		}
 	}
 
-	@Override
-	public void showError(final CommandSender sender, final Throwable exception, final String commandLabel)
+	public void cleanupOpenInventories()
 	{
-		sender.sendMessage(_("errorWithMessage", exception.getMessage()));
+		for (Player player : getServer().getOnlinePlayers())
+		{
+			User user = getUser(player);
+			if (user.isRecipeSee())
+			{
+				user.getBase().getOpenInventory().getTopInventory().clear();
+				user.getBase().getOpenInventory().close();
+				user.setRecipeSee(false);
+			}
+			if (user.isInvSee() || user.isEnderSee())
+			{
+				user.getBase().getOpenInventory().close();
+				user.setInvSee(false);
+				user.setEnderSee(false);
+			}
+		}
+	}
+
+	@Override
+	public void showError(final CommandSource sender, final Throwable exception, final String commandLabel)
+	{
+		sender.sendMessage(tl("errorWithMessage", exception.getMessage()));
 		if (getSettings().isDebug())
 		{
-			LOGGER.log(Level.WARNING, _("errorCallingCommand", commandLabel), exception);
+			LOGGER.log(Level.INFO, tl("errorCallingCommand", commandLabel), exception);
 		}
+	}
+
+	public static void wrongVersion()
+	{
+		LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
+		LOGGER.log(Level.SEVERE, tl("notRecommendedBukkit"));
+		LOGGER.log(Level.SEVERE, tl("requiredBukkit", Integer.toString(BUKKIT_VERSION)));
+		LOGGER.log(Level.SEVERE, " * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! * ! *");
 	}
 
 	@Override
@@ -491,16 +604,19 @@ public class Essentials extends JavaPlugin implements IEssentials
 		return backup;
 	}
 
+	@Override
 	public Metrics getMetrics()
 	{
 		return metrics;
 	}
 
+	@Override
 	public void setMetrics(Metrics metrics)
 	{
 		this.metrics = metrics;
 	}
 
+	@Deprecated
 	@Override
 	public User getUser(final Object base)
 	{
@@ -515,27 +631,48 @@ public class Essentials extends JavaPlugin implements IEssentials
 		return null;
 	}
 
+	//This will return null if there is not a match.
+	@Override
+	public User getUser(final String base)
+	{
+		return getOfflineUser(base);
+	}
+
+	//This will return null if there is not a match.
+	@Override
+	public User getUser(final UUID base)
+	{
+		return userMap.getUser(base);
+	}
+
+	//This will return null if there is not a match.
 	@Override
 	public User getOfflineUser(final String name)
 	{
-		final User user = userMap.getUser(name);
+		final User user = userMap.getUser(name);		
 		if (user != null && user.getBase() instanceof OfflinePlayer)
 		{
-			((OfflinePlayer)user.getBase()).setName(name);
+			//This code should attempt to use the last known name of a user, if Bukkit returns name as null.
+			final String lastName = user.getLastAccountName();
+			if (lastName != null)
+			{
+				((OfflinePlayer)user.getBase()).setName(lastName);
+			}
+			else
+			{
+				((OfflinePlayer)user.getBase()).setName(name);
+			}
 		}
 		return user;
 	}
 
-	private <T extends Player> User getUser(final T base)
+	//This will create a new user if there is not a match.
+	@Override
+	public User getUser(final Player base)
 	{
 		if (base == null)
 		{
 			return null;
-		}
-
-		if (base instanceof User)
-		{
-			return (User)base;
 		}
 
 		if (userMap == null)
@@ -544,17 +681,41 @@ public class Essentials extends JavaPlugin implements IEssentials
 			return null;
 		}
 
-		User user = userMap.getUser(base.getName());
+		User user = userMap.getUser(base.getUniqueId());
 
 		if (user == null)
 		{
+			if (getSettings().isDebug())
+			{
+				LOGGER.log(Level.INFO, "Constructing new userfile from base player {0}", base.getName());
+			}
 			user = new User(base, this);
+			user.setLastAccountName(base.getName());
 		}
 		else
 		{
 			user.update(base);
 		}
 		return user;
+	}
+
+	private void handleCrash(Throwable exception)
+	{
+		final PluginManager pm = getServer().getPluginManager();
+		LOGGER.log(Level.SEVERE, exception.toString());
+		pm.registerEvents(new Listener()
+		{
+			@EventHandler(priority = EventPriority.LOW)
+			public void onPlayerJoin(final PlayerJoinEvent event)
+			{
+				event.getPlayer().sendMessage("Essentials failed to load, read the log file.");
+			}
+		}, this);
+		for (Player player : getServer().getOnlinePlayers())
+		{
+			player.sendMessage("Essentials failed to load, read the log file.");
+		}
+		this.setEnabled(false);
 	}
 
 	@Override
@@ -584,24 +745,48 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
+	public int broadcastMessage(final String message)
+	{
+		return broadcastMessage(null, null, message, true);
+	}
+
+	@Override
 	public int broadcastMessage(final IUser sender, final String message)
 	{
-		if (sender == null)
-		{
-			return getServer().broadcastMessage(message);
-		}
-		if (sender.isHidden())
+		return broadcastMessage(sender, null, message, false);
+	}
+
+	@Override
+	public int broadcastMessage(final String permission, final String message)
+	{
+		return broadcastMessage(null, permission, message, false);
+	}
+
+	private int broadcastMessage(final IUser sender, final String permission, final String message, final boolean keywords)
+	{
+		if (sender != null && sender.isHidden())
 		{
 			return 0;
 		}
+
+		IText broadcast = new SimpleTextInput(message);
+
 		final Player[] players = getServer().getOnlinePlayers();
 
 		for (Player player : players)
 		{
 			final User user = getUser(player);
-			if (!user.isIgnoredPlayer(sender))
+			if ((permission == null && (sender == null || !user.isIgnoredPlayer(sender)))
+				|| (permission != null && user.isAuthorized(permission)))
 			{
-				player.sendMessage(message);
+				if (keywords)
+				{
+					broadcast = new KeywordReplacer(broadcast, new CommandSource(player), this, false);
+				}
+				for (String messageText : broadcast.getLines())
+				{
+					user.sendMessage(messageText);
+				}
 			}
 		}
 
@@ -613,6 +798,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	{
 		return this.getScheduler().runTaskAsynchronously(this, run);
 	}
+
 	@Override
 	public BukkitTask runTaskLaterAsynchronously(final Runnable run, final long delay)
 	{
@@ -656,7 +842,7 @@ public class Essentials extends JavaPlugin implements IEssentials
 	}
 
 	@Override
-	public ItemDb getItemDb()
+	public IItemDb getItemDb()
 	{
 		return itemDb;
 	}

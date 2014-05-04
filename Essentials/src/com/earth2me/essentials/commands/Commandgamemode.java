@@ -1,11 +1,12 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
+import java.util.List;
 import java.util.Locale;
 import org.bukkit.GameMode;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
@@ -17,7 +18,7 @@ public class Commandgamemode extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		GameMode gameMode;
 		if (args.length == 0)
@@ -48,7 +49,7 @@ public class Commandgamemode extends EssentialsCommand
 		else if (args.length > 1 && args[1].trim().length() > 2 && user.isAuthorized("essentials.gamemode.others"))
 		{
 			gameMode = matchGameMode(args[0].toLowerCase(Locale.ENGLISH));
-			gamemodeOtherPlayers(server, user, gameMode, args[1]);
+			gamemodeOtherPlayers(server, user.getSource(), gameMode, args[1]);
 			return;
 		}
 		else
@@ -62,7 +63,7 @@ public class Commandgamemode extends EssentialsCommand
 				if (user.isAuthorized("essentials.gamemode.others"))
 				{
 					gameMode = matchGameMode(commandLabel);
-					gamemodeOtherPlayers(server, user, gameMode, args[0]);
+					gamemodeOtherPlayers(server, user.getSource(), gameMode, args[0]);
 					return;
 				}
 				throw new NotEnoughArgumentsException();
@@ -70,35 +71,36 @@ public class Commandgamemode extends EssentialsCommand
 		}
 		if (gameMode == null)
 		{
-			gameMode = user.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : user.getGameMode() == GameMode.CREATIVE ? GameMode.ADVENTURE : GameMode.SURVIVAL;
+			gameMode = user.getBase().getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : user.getBase().getGameMode() == GameMode.CREATIVE ? GameMode.ADVENTURE : GameMode.SURVIVAL;
 		}
-		user.setGameMode(gameMode);
-		user.sendMessage(_("gameMode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName()));
+		user.getBase().setGameMode(gameMode);
+		user.sendMessage(tl("gameMode", tl(user.getBase().getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName()));
 	}
 
-	private void gamemodeOtherPlayers(final Server server, final CommandSender sender, final GameMode gameMode, final String player) throws NotEnoughArgumentsException
+	private void gamemodeOtherPlayers(final Server server, final CommandSource sender, final GameMode gameMode, final String name) throws NotEnoughArgumentsException, PlayerNotFoundException
 	{
-		//TODO: TL this
-		if (player.trim().length() < 2 || gameMode == null)
+		if (name.trim().length() < 2 || gameMode == null)
 		{
-			throw new NotEnoughArgumentsException("You need to specify a valid player/mode.");
+			throw new NotEnoughArgumentsException(tl("gameModeInvalid"));
 		}
 
+		boolean skipHidden = sender.isPlayer() && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.vanish.interact");
 		boolean foundUser = false;
-		for (Player matchPlayer : server.matchPlayer(player))
+		final List<Player> matchedPlayers = server.matchPlayer(name);
+		for (Player matchPlayer : matchedPlayers)
 		{
-			final User user = ess.getUser(matchPlayer);
-			if (user.isHidden())
+			final User player = ess.getUser(matchPlayer);
+			if (skipHidden && player.isHidden())
 			{
 				continue;
 			}
-			user.setGameMode(gameMode);
-			sender.sendMessage(_("gameMode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName()));
 			foundUser = true;
+			player.getBase().setGameMode(gameMode);
+			sender.sendMessage(tl("gameMode", tl(player.getBase().getGameMode().toString().toLowerCase(Locale.ENGLISH)), player.getDisplayName()));
 		}
 		if (!foundUser)
 		{
-			throw new NotEnoughArgumentsException(_("playerNotFound"));
+			throw new PlayerNotFoundException();
 		}
 	}
 

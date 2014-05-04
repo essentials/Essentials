@@ -1,9 +1,11 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import com.earth2me.essentials.Warps;
+import com.earth2me.essentials.api.IWarps;
+import com.earth2me.essentials.utils.NumberUtil;
+import com.earth2me.essentials.utils.StringUtil;
+import net.ess3.api.InvalidWorldException;
 import org.bukkit.Location;
 import org.bukkit.Server;
 
@@ -23,31 +25,34 @@ public class Commandsetwarp extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		if (Util.isInt(args[0]))
+		if (NumberUtil.isInt(args[0]) || args[0].isEmpty())
 		{
-			throw new NoSuchFieldException(_("invalidWarpName"));
+			throw new NoSuchFieldException(tl("invalidWarpName"));
 		}
 
 		final Location loc = user.getLocation();
-		final Warps warps = ess.getWarps();
+		final IWarps warps = ess.getWarps();
 		Location warpLoc = null;
 
 		try
 		{
 			warpLoc = warps.getWarp(args[0]);
 		}
-		catch (Exception ex)
+		catch (WarpNotFoundException ex)
+		{
+		}
+		catch (InvalidWorldException ex)
 		{
 		}
 
-		if (warpLoc == null || user.isAuthorized("essentials.warp.overwrite." + Util.safeString(args[0])))
+		if (warpLoc == null || user.isAuthorized("essentials.warp.overwrite." + StringUtil.safeString(args[0])))
 		{
 			warps.setWarp(args[0], loc);
 		}
 		else
 		{
-			throw new Exception(_("warpOverwrite"));
+			throw new Exception(tl("warpOverwrite"));
 		}
-		user.sendMessage(_("warpSet", args[0]));
+		user.sendMessage(tl("warpSet", args[0]));
 	}
 }

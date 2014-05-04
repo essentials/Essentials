@@ -1,8 +1,9 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.*;
+import static com.earth2me.essentials.I18n.tl;
 import java.util.Locale;
+import net.ess3.api.IEssentials;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,13 +32,13 @@ public class SignEnchant extends EssentialsSign
 		if (enchantLevel.length != 2)
 		{
 			sign.setLine(2, "§c<enchant>");
-			throw new SignException(_("invalidSignLine", 3));
+			throw new SignException(tl("invalidSignLine", 3));
 		}
 		final Enchantment enchantment = Enchantments.getByName(enchantLevel[0]);
 		if (enchantment == null)
 		{
 			sign.setLine(2, "§c<enchant>");
-			throw new SignException(_("enchantmentNotFound"));
+			throw new SignException(tl("enchantmentNotFound"));
 		}
 		int level;
 		try
@@ -49,7 +50,8 @@ public class SignEnchant extends EssentialsSign
 			sign.setLine(2, "§c<enchant>");
 			throw new SignException(ex.getMessage(), ex);
 		}
-		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && player.isAuthorized("essentials.enchant.allowunsafe");
+		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() 
+									&& player.isAuthorized("essentials.enchantments.allowunsafe") && player.isAuthorized("essentials.signs.enchant.allowunsafe");
 		if (level < 0 || (!allowUnsafe && level > enchantment.getMaxLevel()))
 		{
 			level = enchantment.getMaxLevel();
@@ -81,18 +83,17 @@ public class SignEnchant extends EssentialsSign
 	protected boolean onSignInteract(ISign sign, User player, String username, IEssentials ess) throws SignException, ChargeException
 	{
 		final ItemStack search = sign.getLine(1).equals("*") || sign.getLine(1).equalsIgnoreCase("any") ? null : getItemStack(sign.getLine(1), 1, ess);
-		int slot = -1;
 		final Trade charge = getTrade(sign, 3, ess);
 		charge.isAffordableFor(player);
 		final String[] enchantLevel = sign.getLine(2).split(":");
 		if (enchantLevel.length != 2)
 		{
-			throw new SignException(_("invalidSignLine", 3));
+			throw new SignException(tl("invalidSignLine", 3));
 		}
 		final Enchantment enchantment = Enchantments.getByName(enchantLevel[0]);
 		if (enchantment == null)
 		{
-			throw new SignException(_("enchantmentNotFound"));
+			throw new SignException(tl("enchantmentNotFound"));
 		}
 		int level;
 		try
@@ -104,17 +105,17 @@ public class SignEnchant extends EssentialsSign
 			level = enchantment.getMaxLevel();
 		}
 
-		final ItemStack playerHand = player.getItemInHand();
+		final ItemStack playerHand = player.getBase().getItemInHand();
 		if (playerHand == null
 			|| playerHand.getAmount() != 1
 			|| (playerHand.containsEnchantment(enchantment)
 				&& playerHand.getEnchantmentLevel(enchantment) == level))
 		{
-			throw new SignException(_("missingItems", 1, sign.getLine(1)));
+			throw new SignException(tl("missingItems", 1, sign.getLine(1)));
 		}
 		if (search != null && playerHand.getType() != search.getType())
 		{
-			throw new SignException(_("missingItems", 1, search.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ')));
+			throw new SignException(tl("missingItems", 1, search.getType().toString().toLowerCase(Locale.ENGLISH).replace('_', ' ')));
 		}
 
 		final ItemStack toEnchant = playerHand;
@@ -126,7 +127,7 @@ public class SignEnchant extends EssentialsSign
 			}
 			else
 			{
-				if (ess.getSettings().allowUnsafeEnchantments())
+				if (ess.getSettings().allowUnsafeEnchantments() && player.isAuthorized("essentials.signs.enchant.allowunsafe"))
 				{
 					toEnchant.addUnsafeEnchantment(enchantment, level);
 				}
@@ -144,16 +145,16 @@ public class SignEnchant extends EssentialsSign
 		final String enchantmentName = enchantment.getName().toLowerCase(Locale.ENGLISH);
 		if (level == 0)
 		{
-			player.sendMessage(_("enchantmentRemoved", enchantmentName.replace('_', ' ')));
+			player.sendMessage(tl("enchantmentRemoved", enchantmentName.replace('_', ' ')));
 		}
 		else
 		{
-			player.sendMessage(_("enchantmentApplied", enchantmentName.replace('_', ' ')));
+			player.sendMessage(tl("enchantmentApplied", enchantmentName.replace('_', ' ')));
 		}
 
 		charge.charge(player);
 		Trade.log("Sign", "Enchant", "Interact", username, charge, username, charge, sign.getBlock().getLocation(), ess);
-		player.updateInventory();
+		player.getBase().updateInventory();
 		return true;
 	}
 }

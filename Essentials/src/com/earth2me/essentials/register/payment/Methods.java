@@ -31,9 +31,9 @@ public class Methods
 	private static boolean self = false;
 	private static Method Method = null;
 	private static String preferred = "";
-	private static Set<Method> Methods = new HashSet<Method>();
-	private static Set<String> Dependencies = new HashSet<String>();
-	private static Set<Method> Attachables = new HashSet<Method>();
+	private static final Set<Method> Methods = new HashSet<Method>();
+	private static final Set<String> Dependencies = new HashSet<String>();
+	private static final Set<Method> Attachables = new HashSet<Method>();
 
 	static
 	{
@@ -47,8 +47,6 @@ public class Methods
 	{
 		addMethod("iConomy", new com.earth2me.essentials.register.payment.methods.iCo6());
 		addMethod("iConomy", new com.earth2me.essentials.register.payment.methods.iCo5());
-		addMethod("iConomy", new com.earth2me.essentials.register.payment.methods.iCo4());
-		addMethod("BOSEconomy", new com.earth2me.essentials.register.payment.methods.BOSE6());
 		addMethod("BOSEconomy", new com.earth2me.essentials.register.payment.methods.BOSE7());
 		addMethod("Currency", new com.earth2me.essentials.register.payment.methods.MCUR());
 		Dependencies.add("MultiCurrency");

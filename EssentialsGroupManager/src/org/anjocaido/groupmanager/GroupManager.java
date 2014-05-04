@@ -681,7 +681,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
 				if (auxGroup != null) {
-					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group already exist!");
+					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group already exists!");
 					return true;
 				}
 				// Seems OK
@@ -703,7 +703,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				auxGroup = dataHolder.getGroup(args[0]);
 				if (auxGroup == null) {
-					sender.sendMessage(ChatColor.RED + "" + args[0] + " Group doesnt exist!");
+					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group doesnt exist!");
 					return true;
 				}
 				// Seems OK
@@ -1872,7 +1872,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
 				if (auxGroup == null) {
-					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group doesnt exist!");
+					sender.sendMessage(ChatColor.RED + "'" + args[1] + "' Group doesnt exist!");
 					return true;
 				}
 				if (auxGroup.isGlobal()) {
@@ -1928,7 +1928,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				auxGroup = dataHolder.getGroup(args[1]);
 				if (auxGroup == null) {
-					sender.sendMessage(ChatColor.RED + "'" + args[0] + "' Group doesnt exist!");
+					sender.sendMessage(ChatColor.RED + "'" + args[1] + "' Group doesnt exist!");
 					return true;
 				}
 				if (auxGroup.isGlobal()) {

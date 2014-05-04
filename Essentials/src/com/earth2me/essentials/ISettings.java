@@ -3,7 +3,7 @@ package com.earth2me.essentials;
 import com.earth2me.essentials.commands.IEssentialsCommand;
 import com.earth2me.essentials.signs.EssentialsSign;
 import com.earth2me.essentials.textreader.IText;
-import java.text.MessageFormat;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,13 +26,17 @@ public interface ISettings extends IConf
 
 	long getBackupInterval();
 
-	MessageFormat getChatFormat(String group);
+	String getChatFormat(String group);
 
 	int getChatRadius();
+	
+	char getChatShout();
+	
+	char getChatQuestion();
 
-	double getCommandCost(IEssentialsCommand cmd);
+	BigDecimal getCommandCost(IEssentialsCommand cmd);
 
-	double getCommandCost(String label);
+	BigDecimal getCommandCost(String label);
 
 	String getCurrencySymbol();
 
@@ -43,7 +47,7 @@ public interface ISettings extends IConf
 	double getHealCooldown();
 
 	Set<String> getSocialSpyCommands();
-	
+
 	Map<String, Object> getKit(String name);
 
 	ConfigurationSection getKits();
@@ -76,11 +80,11 @@ public interface ISettings extends IConf
 
 	int getHomeLimit(User user);
 
-	boolean getSortListByGroups();
-
 	int getSpawnMobLimit();
 
-	int getStartingBalance();
+	BigDecimal getStartingBalance();
+
+	boolean isTeleportSafetyEnabled();
 
 	double getTeleportCooldown();
 
@@ -112,9 +116,9 @@ public interface ISettings extends IConf
 
 	boolean warnOnSmite();
 
-	double getMaxMoney();
+	BigDecimal getMaxMoney();
 
-	double getMinMoney();
+	BigDecimal getMinMoney();
 
 	boolean isEcoLogEnabled();
 
@@ -144,14 +148,16 @@ public interface ISettings extends IConf
 
 	boolean cancelAfkOnMove();
 
+	boolean cancelAfkOnInteract();
+
 	boolean areDeathMessagesEnabled();
 
-	public void setDebug(boolean debug);
+	void setDebug(boolean debug);
 
 	Set<String> getNoGodWorlds();
 
 	boolean getUpdateBedAtDaytime();
-	
+
 	boolean allowUnsafeEnchantments();
 
 	boolean getRepairEnchanted();
@@ -184,9 +190,27 @@ public interface ISettings extends IConf
 
 	double getMaxWalkSpeed();
 
-	public int getMailsPerMinute();
+	int getMailsPerMinute();
 
-	public void setEssentialsChatActive(boolean b);
+	long getEconomyLagWarning();
+
+	void setEssentialsChatActive(boolean b);
 
 	long getMaxTempban();
+
+	Map<String, Object> getListGroupConfig();
+
+	int getMaxNickLength();
+
+	int getMaxUserCacheCount();
+
+	boolean allowSilentJoinQuit();
+
+	boolean isCustomJoinMessage();
+
+	String getCustomJoinMessage();
+
+	boolean isCustomQuitMessage();
+
+	String getCustomQuitMessage();
 }

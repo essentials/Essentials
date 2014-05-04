@@ -1,43 +1,67 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
 
 
-public class Commandvanish extends EssentialsCommand
+public class Commandvanish extends EssentialsToggleCommand
 {
 	public Commandvanish()
 	{
-		super("vanish");
+		super("vanish", "essentials.vanish.others");
+	}
+
+	@Override
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
+	{
+		toggleOtherPlayers(server, sender, args);
 	}
 
 	@Override
 	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length < 1)
+		if (args.length == 1)
 		{
-			user.toggleVanished();
-			if (user.isVanished())
+			Boolean toggle = matchToggleArgument(args[0]);
+			if (toggle == null && user.isAuthorized(othersPermission))
 			{
-				user.sendMessage(_("vanished"));
+				toggleOtherPlayers(server, user.getSource(), args);
 			}
 			else
 			{
-				user.sendMessage(_("unvanished"));
+				togglePlayer(user.getSource(), user, toggle);
 			}
+		}
+		else if (args.length == 2 && user.isAuthorized(othersPermission))
+		{
+			toggleOtherPlayers(server, user.getSource(), args);
 		}
 		else
 		{
-			if (args[0].contains("on") || args[0].contains("ena") || args[0].equalsIgnoreCase("1"))
-			{
-				user.setVanished(true);
-			}
-			else
-			{
-				user.setVanished(false);
-			}
-			user.sendMessage(user.isVanished() ? _("vanished") : _("unvanished"));
+			togglePlayer(user.getSource(), user, null);
+		}
+	}
+
+	@Override
+	void togglePlayer(CommandSource sender, User user, Boolean enabled) throws NotEnoughArgumentsException
+	{
+		if (enabled == null)
+		{
+			enabled = !user.isVanished();
+		}
+
+		user.setVanished(enabled);
+		user.sendMessage(tl("vanish", user.getDisplayName(), enabled ? tl("enabled") : tl("disabled")));
+
+		if (enabled == true)
+		{
+			user.sendMessage(tl("vanished"));
+		}
+		if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+		{
+			sender.sendMessage(tl("vanish", user.getDisplayName(), enabled ? tl("enabled") : tl("disabled")));
 		}
 	}
 }

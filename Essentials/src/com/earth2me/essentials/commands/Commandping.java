@@ -1,9 +1,9 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
+import com.earth2me.essentials.utils.FormatUtil;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 // This command can be used to echo messages to the users screen, mostly useless but also an #EasterEgg
 public class Commandping extends EssentialsCommand
@@ -14,16 +14,16 @@ public class Commandping extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 
-			sender.sendMessage(_("pong"));
+			sender.sendMessage(tl("pong"));
 		}
 		else
 		{
-			sender.sendMessage(Util.replaceFormat(getFinalArg(args, 0)));
+			sender.sendMessage(FormatUtil.replaceFormat(getFinalArg(args, 0)));
 		}
 	}
 }

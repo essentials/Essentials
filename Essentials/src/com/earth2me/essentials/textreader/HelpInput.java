@@ -1,12 +1,12 @@
 package com.earth2me.essentials.textreader;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IEssentials;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
@@ -16,10 +16,10 @@ public class HelpInput implements IText
 	private static final String DESCRIPTION = "description";
 	private static final String PERMISSION = "permission";
 	private static final String PERMISSIONS = "permissions";
+	private static final Logger logger = Logger.getLogger("Essentials");
 	private final transient List<String> lines = new ArrayList<String>();
 	private final transient List<String> chapters = new ArrayList<String>();
 	private final transient Map<String, Integer> bookmarks = new HashMap<String, Integer>();
-	private final static Logger logger = Logger.getLogger("Minecraft");
 
 	public HelpInput(final User user, final String match, final IEssentials ess) throws IOException
 	{
@@ -29,7 +29,7 @@ public class HelpInput implements IText
 		String pluginNameLow = "";
 		if (!match.equalsIgnoreCase(""))
 		{
-			lines.add(_("helpMatching", match));
+			lines.add(tl("helpMatching", match));
 		}
 
 		for (Plugin p : ess.getServer().getPluginManager().getPlugins())
@@ -45,7 +45,7 @@ public class HelpInput implements IText
 				{
 					lines.clear();
 					newLines.clear();
-					lines.add(_("helpFrom", p.getDescription().getName()));
+					lines.add(tl("helpFrom", p.getDescription().getName()));
 				}
 				final boolean isOnWhitelist = user.isAuthorized("essentials.help." + pluginNameLow);
 
@@ -65,7 +65,7 @@ public class HelpInput implements IText
 							final String node = "essentials." + k.getKey();
 							if (!ess.getSettings().isCommandDisabled(k.getKey()) && user.isAuthorized(node))
 							{
-								pluginLines.add(_("helpLine", k.getKey(), k.getValue().get(DESCRIPTION)));
+								pluginLines.add(tl("helpLine", k.getKey(), k.getValue().get(DESCRIPTION)));
 							}
 						}
 						else
@@ -84,7 +84,7 @@ public class HelpInput implements IText
 								}
 								if (isOnWhitelist || user.isAuthorized("essentials.help." + pluginNameLow + "." + k.getKey()))
 								{
-									pluginLines.add(_("helpLine", k.getKey(), value.get(DESCRIPTION)));
+									pluginLines.add(tl("helpLine", k.getKey(), value.get(DESCRIPTION)));
 								}
 								else if (permissions instanceof List && !((List<Object>)permissions).isEmpty())
 								{
@@ -99,21 +99,21 @@ public class HelpInput implements IText
 									}
 									if (enabled)
 									{
-										pluginLines.add(_("helpLine", k.getKey(), value.get(DESCRIPTION)));
+										pluginLines.add(tl("helpLine", k.getKey(), value.get(DESCRIPTION)));
 									}
 								}
 								else if (permissions instanceof String && !"".equals(permissions))
 								{
 									if (user.isAuthorized(permissions.toString()))
 									{
-										pluginLines.add(_("helpLine", k.getKey(), value.get(DESCRIPTION)));
+										pluginLines.add(tl("helpLine", k.getKey(), value.get(DESCRIPTION)));
 									}
 								}
 								else
 								{
 									if (!ess.getSettings().hidePermissionlessHelp())
 									{
-										pluginLines.add(_("helpLine", k.getKey(), value.get(DESCRIPTION)));
+										pluginLines.add(tl("helpLine", k.getKey(), value.get(DESCRIPTION)));
 									}
 								}
 							}
@@ -121,7 +121,6 @@ public class HelpInput implements IText
 					}
 					catch (NullPointerException ex)
 					{
-						continue;
 					}
 				}
 				if (!pluginLines.isEmpty())
@@ -133,22 +132,20 @@ public class HelpInput implements IText
 					}
 					if (match.equalsIgnoreCase(""))
 					{
-						lines.add(_("helpPlugin", pluginName, pluginNameLow));
+						lines.add(tl("helpPlugin", pluginName, pluginNameLow));
 					}
 				}
 			}
 			catch (NullPointerException ex)
 			{
-				continue;
 			}
 			catch (Exception ex)
 			{
 				if (!reported)
 				{
-					logger.log(Level.WARNING, _("commandHelpFailedForPlugin", pluginNameLow), ex);
+					logger.log(Level.WARNING, tl("commandHelpFailedForPlugin", pluginNameLow), ex);
 				}
 				reported = true;
-				continue;
 			}
 		}
 		lines.addAll(newLines);

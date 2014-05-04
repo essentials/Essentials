@@ -1,14 +1,19 @@
 package com.earth2me.essentials.signs;
 
-import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.*;
+import static com.earth2me.essentials.I18n.tl;
+import com.earth2me.essentials.Trade.OverflowType;
+import com.earth2me.essentials.utils.FormatUtil;
 import java.util.*;
+import net.ess3.api.IEssentials;
+import net.ess3.api.MaxMoneyException;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.inventory.ItemStack;
+
 
 @Deprecated // This sign will be removed soon
 public class SignProtection extends EssentialsSign
@@ -38,7 +43,7 @@ public class SignProtection extends EssentialsSign
 				return true;
 			}
 		}
-		player.sendMessage(_("signProtectInvalidLocation"));
+		player.sendMessage(tl("signProtectInvalidLocation"));
 		return false;
 	}
 
@@ -58,7 +63,7 @@ public class SignProtection extends EssentialsSign
 			{
 				if (b.getLocation().equals(ignoredBlock.getLocation()))
 				{
-					continue;
+					//TODO: What?
 				}
 			}
 			if (protectedBlocks.contains(b.getType()))
@@ -69,7 +74,7 @@ public class SignProtection extends EssentialsSign
 		return false;
 	}
 
-	private void checkIfSignsAreBroken(final Block block, final User player, final String username, final IEssentials ess)
+	private void checkIfSignsAreBroken(final Block block, final User player, final String username, final IEssentials ess) throws MaxMoneyException
 	{
 		final Map<Location, SignProtectionState> signs = getConnectedSigns(block, player, username, false);
 		for (Map.Entry<Location, SignProtectionState> entry : signs.entrySet())
@@ -81,7 +86,7 @@ public class SignProtection extends EssentialsSign
 				{
 					block.setType(Material.AIR);
 					final Trade trade = new Trade(new ItemStack(Material.SIGN, 1), ess);
-					trade.pay(player);
+					trade.pay(player, OverflowType.DROP);
 				}
 			}
 		}
@@ -114,12 +119,6 @@ public class SignProtection extends EssentialsSign
 		}
 	}
 
-
-	public enum SignProtectionState
-	{
-		NOT_ALLOWED, ALLOWED, NOSIGN, OWNER
-	}
-
 	private SignProtectionState checkProtectionSign(final Block block, final User user, final String username)
 	{
 		if (block.getType() == Material.SIGN_POST || block.getType() == Material.WALL_SIGN)
@@ -143,7 +142,7 @@ public class SignProtection extends EssentialsSign
 		{
 			return SignProtectionState.OWNER;
 		}
-		if (Util.stripFormat(sign.getLine(3)).equalsIgnoreCase(username))
+		if (FormatUtil.stripFormat(sign.getLine(3)).equalsIgnoreCase(username))
 		{
 			return SignProtectionState.OWNER;
 		}
@@ -241,7 +240,7 @@ public class SignProtection extends EssentialsSign
 	{
 		return protectedBlocks;
 	}
-	
+
 	@Override
 	public boolean areHeavyEventRequired()
 	{
@@ -258,7 +257,7 @@ public class SignProtection extends EssentialsSign
 			if ((state == SignProtectionState.ALLOWED || state == SignProtectionState.NOT_ALLOWED)
 				&& !player.isAuthorized("essentials.signs.protection.override"))
 			{
-				player.sendMessage(_("noPlacePermission", block.getType().toString().toLowerCase(Locale.ENGLISH)));
+				player.sendMessage(tl("noPlacePermission", block.getType().toString().toLowerCase(Locale.ENGLISH)));
 				return false;
 			}
 		}
@@ -283,12 +282,12 @@ public class SignProtection extends EssentialsSign
 		}
 
 
-		player.sendMessage(_("noAccessPermission", block.getType().toString().toLowerCase(Locale.ENGLISH)));
+		player.sendMessage(tl("noAccessPermission", block.getType().toString().toLowerCase(Locale.ENGLISH)));
 		return false;
 	}
 
 	@Override
-	protected boolean onBlockBreak(final Block block, final User player, final String username, final IEssentials ess) throws SignException
+	protected boolean onBlockBreak(final Block block, final User player, final String username, final IEssentials ess) throws SignException, MaxMoneyException
 	{
 		final SignProtectionState state = isBlockProtected(block, player, username, false);
 
@@ -306,7 +305,7 @@ public class SignProtection extends EssentialsSign
 		}
 
 
-		player.sendMessage(_("noDestroyPermission", block.getType().toString().toLowerCase(Locale.ENGLISH)));
+		player.sendMessage(tl("noDestroyPermission", block.getType().toString().toLowerCase(Locale.ENGLISH)));
 		return false;
 	}
 
@@ -348,5 +347,10 @@ public class SignProtection extends EssentialsSign
 		final SignProtectionState state = isBlockProtected(block, null, null, false);
 
 		return state == SignProtectionState.NOSIGN;
+	}
+
+	public enum SignProtectionState
+	{
+		NOT_ALLOWED, ALLOWED, NOSIGN, OWNER
 	}
 }

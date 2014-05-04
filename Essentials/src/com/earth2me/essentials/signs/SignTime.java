@@ -1,10 +1,10 @@
 package com.earth2me.essentials.signs;
 
 import com.earth2me.essentials.ChargeException;
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
+import net.ess3.api.IEssentials;
 
 
 public class SignTime extends EssentialsSign
@@ -29,7 +29,7 @@ public class SignTime extends EssentialsSign
 			sign.setLine(1, "§2Night");
 			return true;
 		}
-		throw new SignException(_("onlyDayNight"));
+		throw new SignException(tl("onlyDayNight"));
 	}
 
 	@Override
@@ -44,14 +44,16 @@ public class SignTime extends EssentialsSign
 		{
 			player.getWorld().setTime(time + 24000);
 			charge.charge(player);
+			Trade.log("Sign", "TimeDay", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
 			return true;
 		}
 		if ("§2Night".equalsIgnoreCase(timeString))
 		{
 			player.getWorld().setTime(time + 37700);
 			charge.charge(player);
+			Trade.log("Sign", "TimeNight", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
 			return true;
 		}
-		throw new SignException(_("onlyDayNight"));
+		throw new SignException(tl("onlyDayNight"));
 	}
 }

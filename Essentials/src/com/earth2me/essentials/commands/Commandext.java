@@ -1,13 +1,13 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
-public class Commandext extends EssentialsCommand
+public class Commandext extends EssentialsLoopCommand
 {
 	public Commandext()
 	{
@@ -15,14 +15,14 @@ public class Commandext extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		extinguishPlayers(server, sender, args[0]);
+		loopOnlinePlayers(server, sender, true, true, args[0], null);
 	}
 
 	@Override
@@ -30,20 +30,23 @@ public class Commandext extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			user.setFireTicks(0);
-			user.sendMessage(_("extinguish"));
+			extPlayer(user.getBase());
+			user.sendMessage(tl("extinguish"));
 			return;
 		}
 
-		extinguishPlayers(server, user, commandLabel);
+		loopOnlinePlayers(server, user.getSource(), true, true, args[0], null);
 	}
 
-	private void extinguishPlayers(final Server server, final CommandSender sender, final String name) throws Exception
+	@Override
+	protected void updatePlayer(final Server server, final CommandSource sender, final User player, final String[] args)
 	{
-		for (Player matchPlayer : server.matchPlayer(name))
-		{
-			matchPlayer.setFireTicks(0);
-			sender.sendMessage(_("extinguishOthers", matchPlayer.getDisplayName()));
-		}
+		extPlayer(player.getBase());
+		sender.sendMessage(tl("extinguishOthers", player.getDisplayName()));
+	}
+
+	private void extPlayer(final Player player)
+	{
+		player.setFireTicks(0);
 	}
 }

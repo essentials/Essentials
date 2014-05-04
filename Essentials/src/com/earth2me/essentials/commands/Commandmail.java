@@ -1,11 +1,15 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import java.util.List;
+import com.earth2me.essentials.utils.FormatUtil;
+import com.earth2me.essentials.utils.StringUtil;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+
+import java.util.List;
+
+import static com.earth2me.essentials.I18n.tl;
+import java.util.UUID;
 
 
 public class Commandmail extends EssentialsCommand
@@ -18,7 +22,7 @@ public class Commandmail extends EssentialsCommand
 		super("mail");
 	}
 
-	//TODO: Tidy this up
+	//TODO: Tidy this up / TL these errors.
 	@Override
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
@@ -27,34 +31,39 @@ public class Commandmail extends EssentialsCommand
 			final List<String> mail = user.getMails();
 			if (mail.isEmpty())
 			{
-				user.sendMessage(_("noMail"));
+				user.sendMessage(tl("noMail"));
 				throw new NoChargeException();
 			}
 			for (String messages : mail)
 			{
 				user.sendMessage(messages);
 			}
-			user.sendMessage(_("mailClear"));
+			user.sendMessage(tl("mailClear"));
 			return;
 		}
 		if (args.length >= 3 && "send".equalsIgnoreCase(args[0]))
 		{
 			if (!user.isAuthorized("essentials.mail.send"))
 			{
-				throw new Exception(_("noPerm", "essentials.mail.send"));
+				throw new Exception(tl("noPerm", "essentials.mail.send"));
+			}
+			
+			if (user.isMuted())
+			{
+				throw new Exception(tl("voiceSilenced"));
 			}
 
 			User u = ess.getUser(args[1]);
 			if (u == null)
 			{
-				throw new Exception(_("playerNeverOnServer", args[1]));
+				throw new Exception(tl("playerNeverOnServer", args[1]));
 			}
 			if (!u.isIgnoredPlayer(user))
 			{
-				final String mail = user.getName() + ": " + Util.sanitizeString(Util.stripFormat(getFinalArg(args, 2)));
+				final String mail = user.getName() + ": " + StringUtil.sanitizeString(FormatUtil.stripFormat(getFinalArg(args, 2)));
 				if (mail.length() > 1000)
 				{
-					throw new Exception("Mail message too long. Try to keep it below 1000");
+					throw new Exception(tl("mailTooLong"));
 				}
 				if (Math.abs(System.currentTimeMillis() - timestamp) > 60000)
 				{
@@ -64,58 +73,58 @@ public class Commandmail extends EssentialsCommand
 				mailsPerMinute++;
 				if (mailsPerMinute > ess.getSettings().getMailsPerMinute())
 				{
-					throw new Exception("Too many mails have been send within the last minute. Maximum: " + ess.getSettings().getMailsPerMinute());
+					throw new Exception(tl("mailDelay", ess.getSettings().getMailsPerMinute()));
 				}
 				u.addMail(mail);
 			}
-			user.sendMessage(_("mailSent"));
+			user.sendMessage(tl("mailSent"));
 			return;
 		}
 		if (args.length > 1 && "sendall".equalsIgnoreCase(args[0]))
 		{
 			if (!user.isAuthorized("essentials.mail.sendall"))
 			{
-				throw new Exception(_("noPerm", "essentials.mail.sendall"));
+				throw new Exception(tl("noPerm", "essentials.mail.sendall"));
 			}
-			ess.runTaskAsynchronously(new SendAll(user.getName() + ": " + Util.stripFormat(getFinalArg(args, 1))));
-			user.sendMessage(_("mailSent"));
+			ess.runTaskAsynchronously(new SendAll(user.getName() + ": " + FormatUtil.stripFormat(getFinalArg(args, 1))));
+			user.sendMessage(tl("mailSent"));
 			return;
 		}
 		if (args.length >= 1 && "clear".equalsIgnoreCase(args[0]))
 		{
 			user.setMails(null);
-			user.sendMessage(_("mailCleared"));
+			user.sendMessage(tl("mailCleared"));
 			return;
 		}
 		throw new NotEnoughArgumentsException();
 	}
 
 	@Override
-	protected void run(Server server, CommandSender sender, String commandLabel, String[] args) throws Exception
+	protected void run(Server server, CommandSource sender, String commandLabel, String[] args) throws Exception
 	{
 		if (args.length >= 1 && "read".equalsIgnoreCase(args[0]))
 		{
-			throw new Exception(_("onlyPlayers", commandLabel + " read"));
+			throw new Exception(tl("onlyPlayers", commandLabel + " read"));
 		}
 		else if (args.length >= 1 && "clear".equalsIgnoreCase(args[0]))
 		{
-			throw new Exception(_("onlyPlayers", commandLabel + " clear"));
+			throw new Exception(tl("onlyPlayers", commandLabel + " clear"));
 		}
 		else if (args.length >= 3 && "send".equalsIgnoreCase(args[0]))
 		{
 			User u = ess.getUser(args[1]);
 			if (u == null)
 			{
-				throw new Exception(_("playerNeverOnServer", args[1]));
+				throw new Exception(tl("playerNeverOnServer", args[1]));
 			}
 			u.addMail("Server: " + getFinalArg(args, 2));
-			sender.sendMessage(_("mailSent"));
+			sender.sendMessage(tl("mailSent"));
 			return;
 		}
-		else if (args.length >= 1 && "sendall".equalsIgnoreCase(args[0]))
+		else if (args.length >= 2 && "sendall".equalsIgnoreCase(args[0]))
 		{
-			ess.runTaskAsynchronously(new SendAll("Server: " + getFinalArg(args, 2)));
-			sender.sendMessage(_("mailSent"));
+			ess.runTaskAsynchronously(new SendAll("Server: " + getFinalArg(args, 1)));
+			sender.sendMessage(tl("mailSent"));
 			return;
 		}
 		else if (args.length >= 2)
@@ -124,10 +133,10 @@ public class Commandmail extends EssentialsCommand
 			User u = ess.getUser(args[0]);
 			if (u == null)
 			{
-				throw new Exception(_("playerNeverOnServer", args[0]));
+				throw new Exception(tl("playerNeverOnServer", args[0]));
 			}
 			u.addMail("Server: " + getFinalArg(args, 1));
-			sender.sendMessage(_("mailSent"));
+			sender.sendMessage(tl("mailSent"));
 			return;
 		}
 		throw new NotEnoughArgumentsException();
@@ -146,9 +155,9 @@ public class Commandmail extends EssentialsCommand
 		@Override
 		public void run()
 		{
-			for (String username : ess.getUserMap().getAllUniqueUsers())
+			for (UUID userid : ess.getUserMap().getAllUniqueUsers())
 			{
-				User user = ess.getUserMap().getUser(username);
+				User user = ess.getUserMap().getUser(userid);
 				if (user != null)
 				{
 					user.addMail(message);

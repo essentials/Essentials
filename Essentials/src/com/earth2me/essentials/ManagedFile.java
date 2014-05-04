@@ -1,6 +1,6 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.DigestInputStream;
@@ -11,12 +11,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
+import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
 
 
 public class ManagedFile
 {
-	private final static int BUFFERSIZE = 1024 * 8;
+	private static final int BUFFERSIZE = 1024 * 8;
 	private final transient File file;
 
 	public ManagedFile(final String filename, final IEssentials ess)
@@ -46,7 +47,7 @@ public class ManagedFile
 			}
 			catch (IOException ex)
 			{
-				Bukkit.getLogger().log(Level.SEVERE, _("itemsCsvNotLoaded"), ex);
+				Bukkit.getLogger().log(Level.SEVERE, tl("itemsCsvNotLoaded"), ex);
 			}
 		}
 	}

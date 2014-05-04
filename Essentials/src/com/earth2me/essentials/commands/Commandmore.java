@@ -1,6 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import java.util.Locale;
 import org.bukkit.Server;
@@ -17,15 +17,15 @@ public class Commandmore extends EssentialsCommand
 	@Override
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
-		final ItemStack stack = user.getItemInHand();
+		final ItemStack stack = user.getBase().getItemInHand();
 		if (stack == null)
 		{
-			throw new Exception(_("cantSpawnItem", "Air"));
+			throw new Exception(tl("cantSpawnItem", "Air"));
 		}
 		if (stack.getAmount() >= ((user.isAuthorized("essentials.oversizedstacks")) 
 								  ? ess.getSettings().getOversizedStackSize() : stack.getMaxStackSize()))
 		{
-			throw new Exception(_("fullStack"));
+			throw new Exception(tl("fullStack"));
 		}
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
 		if (ess.getSettings().permissionBasedItemSpawn()
@@ -35,7 +35,7 @@ public class Commandmore extends EssentialsCommand
 			: (!user.isAuthorized("essentials.itemspawn.exempt")
 			   && !user.canSpawnItem(stack.getTypeId())))
 		{
-			throw new Exception(_("cantSpawnItem", itemname));
+			throw new Exception(tl("cantSpawnItem", itemname));
 		}
 		if (user.isAuthorized("essentials.oversizedstacks"))
 		{
@@ -45,6 +45,6 @@ public class Commandmore extends EssentialsCommand
 		{
 			stack.setAmount(stack.getMaxStackSize());
 		}
-		user.updateInventory();
+		user.getBase().updateInventory();
 	}
 }

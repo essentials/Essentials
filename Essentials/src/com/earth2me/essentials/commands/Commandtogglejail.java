@@ -1,11 +1,10 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.DateUtil;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandtogglejail extends EssentialsCommand
@@ -16,23 +15,23 @@ public class Commandtogglejail extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User player = getPlayer(server, args, 0, true);
+		final User player = getPlayer(server, args, 0, true, true);
 
 		if (args.length >= 2 && !player.isJailed())
 		{
-			if (!player.isOnline())
+			if (!player.getBase().isOnline())
 			{
-				if (sender instanceof Player
-					&& !ess.getUser(sender).isAuthorized("essentials.togglejail.offline"))
+				if (sender.isPlayer()
+					&& !ess.getUser(sender.getPlayer()).isAuthorized("essentials.togglejail.offline"))
 				{
-					sender.sendMessage(_("mayNotJail"));
+					sender.sendMessage(tl("mayNotJailOffline"));
 					return;
 				}
 			}
@@ -40,11 +39,11 @@ public class Commandtogglejail extends EssentialsCommand
 			{
 				if (player.isAuthorized("essentials.jail.exempt"))
 				{
-					sender.sendMessage(_("mayNotJail"));
+					sender.sendMessage(tl("mayNotJail"));
 					return;
 				}
 			}
-			if (player.isOnline())
+			if (player.getBase().isOnline())
 			{
 				ess.getJails().sendToJail(player, args[1]);
 			}
@@ -54,34 +53,34 @@ public class Commandtogglejail extends EssentialsCommand
 				ess.getJails().getJail(args[1]);
 			}
 			player.setJailed(true);
-			player.sendMessage(_("userJailed"));
+			player.sendMessage(tl("userJailed"));
 			player.setJail(null);
 			player.setJail(args[1]);
 			long timeDiff = 0;
 			if (args.length > 2)
 			{
 				final String time = getFinalArg(args, 2);
-				timeDiff = Util.parseDateDiff(time, true);
+				timeDiff = DateUtil.parseDateDiff(time, true);
 				player.setJailTimeout(timeDiff);
 			}
 			sender.sendMessage((timeDiff > 0
-								? _("playerJailedFor", player.getName(), Util.formatDateDiff(timeDiff))
-								: _("playerJailed", player.getName())));
+								? tl("playerJailedFor", player.getName(), DateUtil.formatDateDiff(timeDiff))
+								: tl("playerJailed", player.getName())));
 			return;
 		}
 
 		if (args.length >= 2 && player.isJailed() && !args[1].equalsIgnoreCase(player.getJail()))
 		{
-			sender.sendMessage(_("jailAlreadyIncarcerated", player.getJail()));
+			sender.sendMessage(tl("jailAlreadyIncarcerated", player.getJail()));
 			return;
 		}
 
 		if (args.length >= 2 && player.isJailed() && args[1].equalsIgnoreCase(player.getJail()))
 		{
 			final String time = getFinalArg(args, 2);
-			final long timeDiff = Util.parseDateDiff(time, true);
+			final long timeDiff = DateUtil.parseDateDiff(time, true);
 			player.setJailTimeout(timeDiff);
-			sender.sendMessage(_("jailSentenceExtended", Util.formatDateDiff(timeDiff)));
+			sender.sendMessage(tl("jailSentenceExtended", DateUtil.formatDateDiff(timeDiff)));
 			return;
 		}
 
@@ -93,13 +92,13 @@ public class Commandtogglejail extends EssentialsCommand
 			}
 			player.setJailed(false);
 			player.setJailTimeout(0);
-			player.sendMessage(_("jailReleasedPlayerNotify"));
+			player.sendMessage(tl("jailReleasedPlayerNotify"));
 			player.setJail(null);
-			if (player.isOnline())
+			if (player.getBase().isOnline())
 			{
 				player.getTeleport().back();
 			}
-			sender.sendMessage(_("jailReleased", player.getName()));
+			sender.sendMessage(tl("jailReleased", player.getName()));
 		}
 	}
 }

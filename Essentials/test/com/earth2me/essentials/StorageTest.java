@@ -17,9 +17,9 @@ public class StorageTest extends TestCase
 
 	public StorageTest()
 	{
-		ess = new Essentials();
 		server = new FakeServer();
 		world = server.createWorld("testWorld", Environment.NORMAL);
+		ess = new Essentials(server);
 		try
 		{
 			ess.setupForTesting(server);
@@ -39,7 +39,7 @@ public class StorageTest extends TestCase
 	{
 		ExecuteTimer ext = new ExecuteTimer();
 		ext.start();
-		OfflinePlayer base1 = server.createPlayer("testPlayer1", ess);
+		OfflinePlayer base1 = server.createPlayer("testPlayer1");
 		server.addPlayer(base1);
 		ext.mark("fake user created");
 		UserData user = (UserData)ess.getUser(base1);

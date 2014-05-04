@@ -1,24 +1,24 @@
 package com.earth2me.essentials.protect;
 
-import com.earth2me.essentials.IEssentials;
 import com.earth2me.essentials.User;
+import net.ess3.api.IEssentials;
 import java.util.Locale;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
+import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakEvent;
 
 
 public class EssentialsProtectEntityListener implements Listener
 {
-	private final transient IProtect prot;
-	private final transient IEssentials ess;
+	private final IProtect prot;
+	private final IEssentials ess;
 
 	public EssentialsProtectEntityListener(final IProtect prot)
 	{
@@ -37,7 +37,12 @@ public class EssentialsProtectEntityListener implements Listener
 			return;
 		}
 
-		final User user = ess.getUser(target);
+		User user = null;
+		if (target instanceof Player)
+		{
+			user = ess.getUser((Player)target);
+		}
+
 		final DamageCause cause = event.getCause();
 
 		if (event instanceof EntityDamageByBlockEvent)
@@ -69,7 +74,12 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			final EntityDamageByEntityEvent edEvent = (EntityDamageByEntityEvent)event;
 			final Entity eAttack = edEvent.getDamager();
-			final User attacker = ess.getUser(eAttack);
+
+			User attacker = null;
+			if (eAttack instanceof Player)
+			{
+				attacker = ess.getUser((Player)eAttack);
+			}
 
 			//Creeper explode prevention
 			if (eAttack instanceof Creeper
@@ -104,9 +114,17 @@ public class EssentialsProtectEntityListener implements Listener
 				return;
 			}
 
+			if (eAttack instanceof ExplosiveMinecart && prot.getSettingBool(ProtectConfig.prevent_tntminecart_playerdmg)
+				&& !(target instanceof Player && shouldBeDamaged(user, "tnt-minecart")))
+			{
+				event.setCancelled(true);
+				return;
+			}
+
 			// PVP Settings
 			if (target instanceof Player && eAttack instanceof Player
 				&& prot.getSettingBool(ProtectConfig.disable_pvp)
+				&& !user.getName().equalsIgnoreCase(attacker.getName())
 				&& (!user.isAuthorized("essentials.protect.pvp") || !attacker.isAuthorized("essentials.protect.pvp")))
 			{
 				event.setCancelled(true);
@@ -119,7 +137,7 @@ public class EssentialsProtectEntityListener implements Listener
 					|| (((Projectile)edEvent.getDamager()).getShooter() instanceof Player
 						&& prot.getSettingBool(ProtectConfig.disable_pvp)
 						&& (!user.isAuthorized("essentials.protect.pvp")
-							|| !ess.getUser(((Projectile)edEvent.getDamager()).getShooter()).isAuthorized("essentials.protect.pvp")))))
+							|| !ess.getUser((Player)((Projectile)edEvent.getDamager()).getShooter()).isAuthorized("essentials.protect.pvp")))))
 			{
 				event.setCancelled(true);
 				return;
@@ -169,7 +187,6 @@ public class EssentialsProtectEntityListener implements Listener
 				&& !shouldBeDamaged(user, "wither"))
 			{
 				event.setCancelled(true);
-				return;
 			}
 		}
 	}
@@ -177,7 +194,7 @@ public class EssentialsProtectEntityListener implements Listener
 	private boolean shouldBeDamaged(final User user, final String type)
 	{
 		return (user.isAuthorized("essentials.protect.damage.".concat(type))
-			&& !user.isAuthorized("essentials.protect.damage.disable"));
+				&& !user.isAuthorized("essentials.protect.damage.disable"));
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -187,9 +204,10 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
+		Entity entity = event.getEntity();
 		final int maxHeight = ess.getSettings().getProtectCreeperMaxHeight();
 
-		if (event.getEntity() instanceof EnderDragon
+		if (entity instanceof EnderDragon
 			&& prot.getSettingBool(ProtectConfig.prevent_enderdragon_blockdmg))
 		{
 			event.setCancelled(true);
@@ -199,13 +217,12 @@ public class EssentialsProtectEntityListener implements Listener
 			}
 			return;
 		}
-		if (event.getEntity() instanceof Wither
+		if (entity instanceof Wither
 			&& prot.getSettingBool(ProtectConfig.prevent_wither_spawnexplosion))
 		{
 			event.setCancelled(true);
-			return;
 		}
-		else if (event.getEntity() instanceof Creeper
+		else if (entity instanceof Creeper
 				 && (prot.getSettingBool(ProtectConfig.prevent_creeper_explosion)
 					 || prot.getSettingBool(ProtectConfig.prevent_creeper_blockdmg)
 					 || (maxHeight >= 0 && event.getLocation().getBlockY() > maxHeight)))
@@ -213,56 +230,30 @@ public class EssentialsProtectEntityListener implements Listener
 			//Nicccccccccce plaaacccccccccce..
 			event.setCancelled(true);
 			event.getLocation().getWorld().createExplosion(event.getLocation(), 0F);
-			return;
 		}
-		else if (event.getEntity() instanceof TNTPrimed
+		else if (entity instanceof TNTPrimed
 				 && prot.getSettingBool(ProtectConfig.prevent_tnt_explosion))
 		{
 			event.setCancelled(true);
-			return;
+
 		}
-		else if ((event.getEntity() instanceof Fireball || event.getEntity() instanceof SmallFireball)
+		else if ((entity instanceof Fireball || entity instanceof SmallFireball)
 				 && prot.getSettingBool(ProtectConfig.prevent_fireball_explosion))
 		{
 			event.setCancelled(true);
-			return;
+
 		}
-		else if ((event.getEntity() instanceof WitherSkull)
+		else if ((entity instanceof WitherSkull)
 				 && prot.getSettingBool(ProtectConfig.prevent_witherskull_explosion))
 		{
 			event.setCancelled(true);
-			return;
 		}
-		
-		// This code will prevent explosions near protected rails, signs or protected chests
-		// TODO: Use protect db instead of this code
-
-		for (Block block : event.blockList())
+		else if ((entity instanceof ExplosiveMinecart)
+				 && prot.getSettingBool(ProtectConfig.prevent_tntminecart_explosion))
 		{
-			if ((block.getRelative(BlockFace.UP).getType() == Material.RAILS
-				 || block.getType() == Material.RAILS
-				 || block.getRelative(BlockFace.UP).getType() == Material.POWERED_RAIL
-				 || block.getType() == Material.POWERED_RAIL
-				 || block.getRelative(BlockFace.UP).getType() == Material.DETECTOR_RAIL
-				 || block.getType() == Material.DETECTOR_RAIL)
-				&& prot.getSettingBool(ProtectConfig.protect_rails))
-			{
-				event.setCancelled(true);
-				return;
-			}
-			if ((block.getType() == Material.WALL_SIGN
-				 || block.getRelative(BlockFace.NORTH).getType() == Material.WALL_SIGN
-				 || block.getRelative(BlockFace.EAST).getType() == Material.WALL_SIGN
-				 || block.getRelative(BlockFace.SOUTH).getType() == Material.WALL_SIGN
-				 || block.getRelative(BlockFace.WEST).getType() == Material.WALL_SIGN
-				 || block.getType() == Material.SIGN_POST
-				 || block.getRelative(BlockFace.UP).getType() == Material.SIGN_POST)
-				&& prot.getSettingBool(ProtectConfig.protect_signs))
-			{
-				event.setCancelled(true);
-				return;
-			}
+			event.setCancelled(true);
 		}
+
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -295,7 +286,7 @@ public class EssentialsProtectEntityListener implements Listener
 		{
 			return;
 		}
-		final User user = ess.getUser(event.getTarget());
+		final User user = ess.getUser((Player)event.getTarget());
 		if ((event.getReason() == TargetReason.CLOSEST_PLAYER
 			 || event.getReason() == TargetReason.TARGET_ATTACKED_ENTITY
 			 || event.getReason() == TargetReason.PIG_ZOMBIE_TARGET
@@ -307,7 +298,6 @@ public class EssentialsProtectEntityListener implements Listener
 			&& !user.isAuthorized("essentials.protect.entitytarget.bypass"))
 		{
 			event.setCancelled(true);
-			return;
 		}
 	}
 
@@ -332,7 +322,19 @@ public class EssentialsProtectEntityListener implements Listener
 		if (event.getEntityType() == EntityType.WITHER && prot.getSettingBool(ProtectConfig.prevent_wither_blockreplace))
 		{
 			event.setCancelled(true);
-			return;
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onPaintingBreak(HangingBreakByEntityEvent event)
+	{
+		if ((event.getCause() == HangingBreakEvent.RemoveCause.ENTITY)
+			&& ((event.getRemover() instanceof Creeper) && prot.getSettingBool(ProtectConfig.prevent_creeper_explosion)
+				|| (((event.getRemover() instanceof Fireball) || (event.getRemover() instanceof SmallFireball)) && prot.getSettingBool(ProtectConfig.prevent_fireball_explosion))
+				|| ((event.getRemover() instanceof TNTPrimed) && prot.getSettingBool(ProtectConfig.prevent_tnt_explosion))
+				|| ((event.getRemover() instanceof WitherSkull) && prot.getSettingBool(ProtectConfig.prevent_witherskull_explosion))))
+		{
+			event.setCancelled(true);
 		}
 	}
 }

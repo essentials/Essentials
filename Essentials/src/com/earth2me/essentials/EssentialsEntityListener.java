@@ -1,9 +1,11 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import net.ess3.api.IEssentials;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -16,7 +18,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class EssentialsEntityListener implements Listener
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
+	private static final Logger LOGGER = Logger.getLogger("Essentials");
+	private static final transient Pattern powertoolPlayer = Pattern.compile("\\{player\\}");
 	private final IEssentials ess;
 
 	public EssentialsEntityListener(IEssentials ess)
@@ -32,31 +35,33 @@ public class EssentialsEntityListener implements Listener
 		final Entity eDefend = event.getEntity();
 		if (eAttack instanceof Player)
 		{
-			final User attacker = ess.getUser(eAttack);
+			final User attacker = ess.getUser((Player)eAttack);
 			if (eDefend instanceof Player)
 			{
 				onPlayerVsPlayerDamage(event, (Player)eDefend, attacker);
 			}
 			else if (eDefend instanceof Ageable)
 			{
-				final ItemStack hand = attacker.getItemInHand();
+				final ItemStack hand = attacker.getBase().getItemInHand();
 				if (hand != null && hand.getType() == Material.MILK_BUCKET)
 				{
 					((Ageable)eDefend).setBaby();
 					hand.setType(Material.BUCKET);
-					attacker.setItemInHand(hand);
-					attacker.updateInventory();
+					attacker.getBase().setItemInHand(hand);
+					attacker.getBase().updateInventory();
 					event.setCancelled(true);
 				}
 			}
 			attacker.updateActivity(true);
 		}
 		else if (eAttack instanceof Projectile && eDefend instanceof Player)
-		{
-			Entity shooter = ((Projectile)event.getDamager()).getShooter();
+		{			
+			final Projectile projectile = (Projectile)event.getDamager();
+			//This should return a ProjectileSource on 1.7.3 beta +
+			final Object shooter = projectile.getShooter();
 			if (shooter instanceof Player)
 			{
-				final User attacker = ess.getUser(shooter);
+				final User attacker = ess.getUser((Player)shooter);
 				onPlayerVsPlayerDamage(event, (Player)eDefend, attacker);
 				attacker.updateActivity(true);
 			}
@@ -65,8 +70,9 @@ public class EssentialsEntityListener implements Listener
 
 	private void onPlayerVsPlayerDamage(final EntityDamageByEntityEvent event, final Player defender, final User attacker)
 	{
-		if (ess.getSettings().getLoginAttackDelay() > 0 && !attacker.isAuthorized("essentials.pvpdelay.exempt")
-			&& (System.currentTimeMillis() < (attacker.getLastLogin() + ess.getSettings().getLoginAttackDelay())))
+		if (ess.getSettings().getLoginAttackDelay() > 0
+			&& (System.currentTimeMillis() < (attacker.getLastLogin() + ess.getSettings().getLoginAttackDelay()))
+			&& !attacker.isAuthorized("essentials.pvpdelay.exempt"))
 		{
 			event.setCancelled(true);
 		}
@@ -91,24 +97,24 @@ public class EssentialsEntityListener implements Listener
 
 	private void onPlayerVsPlayerPowertool(final EntityDamageByEntityEvent event, final Player defender, final User attacker)
 	{
-		final List<String> commandList = attacker.getPowertool(attacker.getItemInHand());
+		final List<String> commandList = attacker.getPowertool(attacker.getBase().getItemInHand());
 		if (commandList != null && !commandList.isEmpty())
 		{
 			for (final String tempCommand : commandList)
 			{
-				final String command = tempCommand.replaceAll("\\{player\\}", defender.getName());
+				final String command = powertoolPlayer.matcher(tempCommand).replaceAll(defender.getName());
 				if (command != null && !command.isEmpty() && !command.equals(tempCommand))
 				{
 					ess.scheduleSyncDelayedTask(
 							new Runnable()
-							{
-								@Override
-								public void run()
-								{
-									attacker.getServer().dispatchCommand(attacker.getBase(), command);
-									LOGGER.log(Level.INFO, String.format("[PT] %s issued server command: /%s", attacker.getName(), command));
-								}
-							});
+					{
+						@Override
+						public void run()
+						{
+							attacker.getServer().dispatchCommand(attacker.getBase(), command);
+							LOGGER.log(Level.INFO, String.format("[PT] %s issued server command: /%s", attacker.getName(), command));
+						}
+					});
 
 					event.setCancelled(true);
 					return;
@@ -120,7 +126,7 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onEntityDamage(final EntityDamageEvent event)
 	{
-		if (event.getEntity() instanceof Player && ess.getUser(event.getEntity()).isGodModeEnabled())
+		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isGodModeEnabled())
 		{
 			final Player player = (Player)event.getEntity();
 			player.setFireTicks(0);
@@ -132,7 +138,7 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onEntityCombust(final EntityCombustEvent event)
 	{
-		if (event.getEntity() instanceof Player && ess.getUser(event.getEntity()).isGodModeEnabled())
+		if (event.getEntity() instanceof Player && ess.getUser((Player)event.getEntity()).isGodModeEnabled())
 		{
 			event.setCancelled(true);
 		}
@@ -145,7 +151,7 @@ public class EssentialsEntityListener implements Listener
 		if (user.isAuthorized("essentials.back.ondeath") && !ess.getSettings().isCommandDisabled("back"))
 		{
 			user.setLastLocation();
-			user.sendMessage(_("backAfterDeath"));
+			user.sendMessage(tl("backAfterDeath"));
 		}
 		if (!ess.getSettings().areDeathMessagesEnabled())
 		{
@@ -167,9 +173,18 @@ public class EssentialsEntityListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onFoodLevelChange(final FoodLevelChangeEvent event)
 	{
-		if (event.getEntity() instanceof Player && ess.getUser(event.getEntity()).isGodModeEnabled())
+		if (event.getEntity() instanceof Player)
 		{
-			event.setCancelled(true);
+			final User user = ess.getUser((Player)event.getEntity());
+			if (user.isGodModeEnabled())
+			{
+				if (user.isGodModeEnabledRaw())
+				{
+					user.getBase().setFoodLevel(20);
+					user.getBase().setSaturation(10);
+				}
+				event.setCancelled(true);
+			}
 		}
 	}
 
@@ -177,7 +192,7 @@ public class EssentialsEntityListener implements Listener
 	public void onEntityRegainHealth(final EntityRegainHealthEvent event)
 	{
 		if (event.getRegainReason() == RegainReason.SATIATED && event.getEntity() instanceof Player
-			&& ess.getUser(event.getEntity()).isAfk() && ess.getSettings().getFreezeAfkPlayers())
+			&& ess.getUser((Player)event.getEntity()).isAfk() && ess.getSettings().getFreezeAfkPlayers())
 		{
 			event.setCancelled(true);
 		}
@@ -188,9 +203,22 @@ public class EssentialsEntityListener implements Listener
 	{
 		for (LivingEntity entity : event.getAffectedEntities())
 		{
-			if (entity instanceof Player && ess.getUser(entity).isGodModeEnabled())
+			if (entity instanceof Player && ess.getUser((Player)entity).isGodModeEnabled())
 			{
 				event.setIntensity(entity, 0d);
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	public void onEntityShootBow(EntityShootBowEvent event)
+	{
+		if (event.getEntity() instanceof Player)
+		{
+			final User user = ess.getUser((Player)event.getEntity());
+			if (user.isAfk())
+			{
+				user.updateActivity(true);
 			}
 		}
 	}

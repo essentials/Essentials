@@ -1,18 +1,19 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.IEssentials;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 
 public class Backup implements Runnable
 {
-	private static final Logger LOGGER = Logger.getLogger("Minecraft");
+	private static final Logger LOGGER = Logger.getLogger("Essentials");
 	private transient final Server server;
 	private transient final IEssentials ess;
 	private transient boolean running = false;
@@ -25,16 +26,33 @@ public class Backup implements Runnable
 		server = ess.getServer();
 		if (server.getOnlinePlayers().length > 0)
 		{
-			startTask();
+			ess.runTaskAsynchronously(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					startTask();
+				}
+			});
 		}
 	}
 
-	void onPlayerJoin()
+	public void onPlayerJoin()
 	{
 		startTask();
 	}
 
-	private void startTask()
+	public synchronized void stopTask()
+	{
+		running = false;
+		if (taskId != -1)
+		{
+			server.getScheduler().cancelTask(taskId);
+		}
+		taskId = -1;
+	}
+
+	private synchronized void startTask()
 	{
 		if (!running)
 		{
@@ -61,80 +79,89 @@ public class Backup implements Runnable
 		{
 			return;
 		}
-		if ("save-all".equalsIgnoreCase(command)) {
+		if ("save-all".equalsIgnoreCase(command))
+		{
 			final CommandSender cs = server.getConsoleSender();
 			server.dispatchCommand(cs, "save-all");
 			active = false;
 			return;
 		}
-		LOGGER.log(Level.INFO, _("backupStarted"));
+		LOGGER.log(Level.INFO, tl("backupStarted"));
 		final CommandSender cs = server.getConsoleSender();
 		server.dispatchCommand(cs, "save-all");
 		server.dispatchCommand(cs, "save-off");
 
-		ess.runTaskAsynchronously(
-				new Runnable()
+		ess.runTaskAsynchronously(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				try
 				{
-					@Override
-					public void run()
+					final ProcessBuilder childBuilder = new ProcessBuilder(command);
+					childBuilder.redirectErrorStream(true);
+					childBuilder.directory(ess.getDataFolder().getParentFile().getParentFile());
+					final Process child = childBuilder.start();
+					ess.runTaskAsynchronously(new Runnable()
 					{
-						try
+						@Override
+						public void run()
 						{
-							final ProcessBuilder childBuilder = new ProcessBuilder(command);
-							childBuilder.redirectErrorStream(true);
-							childBuilder.directory(ess.getDataFolder().getParentFile().getParentFile());
-							final Process child = childBuilder.start();
-							final BufferedReader reader = new BufferedReader(new InputStreamReader(child.getInputStream()));
 							try
 							{
-								child.waitFor();
-								String line;
-								do
+								final BufferedReader reader = new BufferedReader(new InputStreamReader(child.getInputStream()));
+								try
 								{
-									line = reader.readLine();
-									if (line != null)
+									String line;
+									do
 									{
-										LOGGER.log(Level.INFO, line);
-									}
-								}
-								while (line != null);
-							}
-							finally
-							{
-								reader.close();
-							}
-						}
-						catch (InterruptedException ex)
-						{
-							LOGGER.log(Level.SEVERE, null, ex);
-						}
-						catch (IOException ex)
-						{
-							LOGGER.log(Level.SEVERE, null, ex);
-						}
-						finally
-						{
-							ess.scheduleSyncDelayedTask(
-									new Runnable()
-									{
-										@Override
-										public void run()
+										line = reader.readLine();
+										if (line != null)
 										{
-											server.dispatchCommand(cs, "save-on");
-											if (server.getOnlinePlayers().length == 0)
-											{
-												running = false;
-												if (taskId != -1)
-												{
-													server.getScheduler().cancelTask(taskId);
-												}
-											}
-											active = false;
-											LOGGER.log(Level.INFO, _("backupFinished"));
+											LOGGER.log(Level.INFO, line);
 										}
-									});
+									}
+									while (line != null);
+								}
+								finally
+								{
+									reader.close();
+								}
+							}
+							catch (IOException ex)
+							{
+								LOGGER.log(Level.SEVERE, null, ex);
+							}
 						}
-					}
-				});
+					});
+					child.waitFor();
+				}
+				catch (InterruptedException ex)
+				{
+					LOGGER.log(Level.SEVERE, null, ex);
+				}
+				catch (IOException ex)
+				{
+					LOGGER.log(Level.SEVERE, null, ex);
+				}
+				finally
+				{
+					ess.scheduleSyncDelayedTask(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							server.dispatchCommand(cs, "save-on");
+							if (server.getOnlinePlayers().length == 0)
+							{
+								stopTask();
+							}
+							active = false;
+							LOGGER.log(Level.INFO, tl("backupFinished"));
+						}
+					});
+				}
+			}
+		});
 	}
 }

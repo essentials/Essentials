@@ -1,13 +1,13 @@
 package com.earth2me.essentials.spawn;
 
-import static com.earth2me.essentials.I18n._;
-import com.earth2me.essentials.IEssentials;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Kit;
 import com.earth2me.essentials.OfflinePlayer;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.SimpleTextPager;
+import net.ess3.api.IEssentials;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -25,9 +24,9 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class EssentialsSpawnPlayerListener implements Listener
 {
+	private static final Logger LOGGER = Bukkit.getLogger();
 	private final transient IEssentials ess;
 	private final transient SpawnStorage spawns;
-	private static final Logger LOGGER = Bukkit.getLogger();
 
 	public EssentialsSpawnPlayerListener(final IEssentials ess, final SpawnStorage spawns)
 	{
@@ -48,7 +47,7 @@ public class EssentialsSpawnPlayerListener implements Listener
 		if (ess.getSettings().getRespawnAtHome())
 		{
 			Location home;
-			final Location bed = user.getBedSpawnLocation();
+			final Location bed = user.getBase().getBedSpawnLocation();
 			if (bed != null)
 			{
 				home = bed;
@@ -97,34 +96,45 @@ public class EssentialsSpawnPlayerListener implements Listener
 			ess.scheduleSyncDelayedTask(new NewPlayerTeleport(user), 1L);
 		}
 
-		//This method allows for multiple line player announce messages using multiline yaml syntax #EasterEgg
-		if (ess.getSettings().getAnnounceNewPlayers())
+		ess.scheduleSyncDelayedTask(new Runnable()
 		{
-			final IText output = new KeywordReplacer(ess.getSettings().getAnnounceNewPlayerFormat(), user, ess);
-			final SimpleTextPager pager = new SimpleTextPager(output);
-
-			for (String line : pager.getLines())
+			@Override
+			public void run()
 			{
-				ess.broadcastMessage(user, line);
-			}
-		}
+				if (!user.getBase().isOnline()) {
+					return;
+				}
 
-		final String kitName = ess.getSettings().getNewPlayerKit();
-		if (!kitName.isEmpty())
-		{
-			try
-			{
-				final Map<String, Object> kit = ess.getSettings().getKit(kitName.toLowerCase(Locale.ENGLISH));
-				final List<String> items = Kit.getItems(user, kit);
-				Kit.expandItems(ess, user, items);
-			}
-			catch (Exception ex)
-			{
-				LOGGER.log(Level.WARNING, ex.getMessage());
-			}
-		}
+				//This method allows for multiple line player announce messages using multiline yaml syntax #EasterEgg
+				if (ess.getSettings().getAnnounceNewPlayers())
+				{
+					final IText output = new KeywordReplacer(ess.getSettings().getAnnounceNewPlayerFormat(), user.getSource(), ess);
+					final SimpleTextPager pager = new SimpleTextPager(output);
 
-		LOGGER.log(Level.FINE, "New player join");
+					for (String line : pager.getLines())
+					{
+						ess.broadcastMessage(user, line);
+					}
+				}
+
+				final String kitName = ess.getSettings().getNewPlayerKit();
+				if (!kitName.isEmpty())
+				{
+					try
+					{
+						final Map<String, Object> kit = ess.getSettings().getKit(kitName.toLowerCase(Locale.ENGLISH));
+						final List<String> items = Kit.getItems(ess, user, kitName, kit);
+						Kit.expandItems(ess, user, items);
+					}
+					catch (Exception ex)
+					{
+						LOGGER.log(Level.WARNING, ex.getMessage());
+					}
+				}
+
+				LOGGER.log(Level.FINE, "New player join");
+			}
+		});
 	}
 
 
@@ -155,7 +165,7 @@ public class EssentialsSpawnPlayerListener implements Listener
 			}
 			catch (Exception ex)
 			{
-				Bukkit.getLogger().log(Level.WARNING, _("teleportNewPlayerError"), ex);
+				Bukkit.getLogger().log(Level.WARNING, tl("teleportNewPlayerError"), ex);
 			}
 		}
 	}

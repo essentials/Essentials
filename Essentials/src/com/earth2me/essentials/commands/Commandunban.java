@@ -1,10 +1,12 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import com.earth2me.essentials.Console;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
+import java.util.logging.Level;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandunban extends EssentialsCommand
@@ -15,31 +17,34 @@ public class Commandunban extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
-
+		String name;
 		try
 		{
-			final User user = getPlayer(server, args, 0, true);
-			user.setBanned(false);
+			final User user = getPlayer(server, args, 0, true, true);
+			name = user.getName();
+			user.getBase().setBanned(false);
 			user.setBanTimeout(0);
-			sender.sendMessage(_("unbannedPlayer"));
 		}
 		catch (NoSuchFieldException e)
 		{
 			final OfflinePlayer player = server.getOfflinePlayer(args[0]);
-			if (player.isBanned()) 
+			name = player.getName();
+			if (!player.isBanned())
 			{
-				player.setBanned(false);
-				sender.sendMessage(_("unbannedPlayer"));
-				return;
-			}			
-			
-			throw new Exception(_("playerNotFound"), e);
+				throw new Exception(tl("playerNotFound"), e);
+			}
+			player.setBanned(false);
 		}
+
+		final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
+		server.getLogger().log(Level.INFO, tl("playerUnbanned", senderName, name));
+		
+		ess.broadcastMessage("essentials.ban.notify", tl("playerUnbanned", senderName, name));
 	}
 }

@@ -1,9 +1,12 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import com.earth2me.essentials.Console;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
+import com.earth2me.essentials.utils.FormatUtil;
+import java.util.logging.Level;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandbanip extends EssentialsCommand
@@ -14,29 +17,41 @@ public class Commandbanip extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User player = ess.getUser(args[0]);
+		final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
 
-		if (player == null)
+		String ipAddress;
+		if (FormatUtil.validIP(args[0]))
 		{
-			ess.getServer().banIP(args[0]);
-			sender.sendMessage(_("banIpAddress"));
+			ipAddress = args[0];
 		}
 		else
 		{
-			final String ipAddress = player.getLastLoginAddress();
-			if (ipAddress.length() == 0)
+			try
 			{
-				throw new Exception(_("playerNotFound"));
+				User player = getPlayer(server, args, 0, true, true);
+				ipAddress = player.getLastLoginAddress();
 			}
-			ess.getServer().banIP(player.getLastLoginAddress());
-			sender.sendMessage(_("banIpAddress"));
+			catch (PlayerNotFoundException ex)
+			{
+				ipAddress = args[0];
+			}
 		}
+
+		if (ipAddress.isEmpty())
+		{
+			throw new PlayerNotFoundException();
+		}
+
+		ess.getServer().banIP(ipAddress);
+		server.getLogger().log(Level.INFO, tl("playerBanIpAddress", senderName, ipAddress));
+
+		ess.broadcastMessage("essentials.ban.notify", tl("playerBanIpAddress", senderName, ipAddress));
 	}
 }

@@ -1,9 +1,9 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -27,7 +27,7 @@ public class Commandsetworth extends EssentialsCommand
 
 		if (args.length == 1)
 		{
-			stack = user.getInventory().getItemInHand();
+			stack = user.getBase().getInventory().getItemInHand();
 			price = args[0];
 		}
 		else
@@ -37,11 +37,11 @@ public class Commandsetworth extends EssentialsCommand
 		}
 
 		ess.getWorth().setPrice(stack, Double.parseDouble(price));
-		user.sendMessage(_("worthSet"));
+		user.sendMessage(tl("worthSet"));
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
@@ -50,6 +50,6 @@ public class Commandsetworth extends EssentialsCommand
 
 		ItemStack stack = ess.getItemDb().get(args[0]);
 		ess.getWorth().setPrice(stack, Double.parseDouble(args[1]));
-		sender.sendMessage(_("worthSet"));
+		sender.sendMessage(tl("worthSet"));
 	}
 }

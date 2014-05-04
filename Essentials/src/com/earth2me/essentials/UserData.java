@@ -1,8 +1,14 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
+import com.earth2me.essentials.utils.NumberUtil;
+import com.earth2me.essentials.utils.StringUtil;
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.*;
+import net.ess3.api.IEssentials;
+import net.ess3.api.InvalidWorldException;
+import net.ess3.api.MaxMoneyException;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -12,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 public abstract class UserData extends PlayerExtension implements IConf
 {
 	protected final transient IEssentials ess;
-	private EssentialsConf config;
+	private final EssentialsUserConf config;
 	private final File folder;
 
 	protected UserData(Player base, IEssentials ess)
@@ -24,15 +30,27 @@ public abstract class UserData extends PlayerExtension implements IConf
 		{
 			folder.mkdirs();
 		}
-		config = new EssentialsConf(new File(folder, Util.sanitizeFileName(base.getName()) + ".yml"));
+
+		String filename;
+		try
+		{
+			filename = base.getUniqueId().toString();
+		}
+		catch (Throwable ex)
+		{
+			ess.getLogger().warning("Falling back to old username system for " + base.getName());
+			filename = base.getName();
+		}
+
+		config = new EssentialsUserConf(base.getName(), base.getUniqueId(), new File(folder, filename + ".yml"));
 		reloadConfig();
 	}
 
 	public final void reset()
 	{
+		config.forceSave();
 		config.getFile().delete();
-		config = new EssentialsConf(new File(folder, Util.sanitizeFileName(base.getName()) + ".yml"));
-		reloadConfig();
+		ess.getUserMap().removeUser(this.getBase().getName());
 	}
 
 	@Override
@@ -64,37 +82,56 @@ public abstract class UserData extends PlayerExtension implements IConf
 		arePowerToolsEnabled = _arePowerToolsEnabled();
 		kitTimestamps = _getKitTimestamps();
 		nickname = _getNickname();
-		setIgnoredPlayers(_getIgnoredPlayers());
+		ignoredPlayers = _getIgnoredPlayers();
+		logoutLocation = _getLogoutLocation();
+		lastAccountName = _getLastAccountName();
 	}
-	private double money;
+	private BigDecimal money;
 
-	private double _getMoney()
+	private BigDecimal _getMoney()
 	{
-		double money = ess.getSettings().getStartingBalance();
+		BigDecimal result = ess.getSettings().getStartingBalance();
+		BigDecimal maxMoney = ess.getSettings().getMaxMoney();
+		BigDecimal minMoney = ess.getSettings().getMinMoney();
+
 		if (config.hasProperty("money"))
 		{
-			money = config.getDouble("money", money);
+			result = config.getBigDecimal("money", result);
 		}
-		if (Math.abs(money) > ess.getSettings().getMaxMoney())
+		if (result.compareTo(maxMoney) > 0)
 		{
-			money = money < 0 ? -ess.getSettings().getMaxMoney() : ess.getSettings().getMaxMoney();
+			result = maxMoney;
 		}
-		return money;
+		if (result.compareTo(minMoney) < 0)
+		{
+			result = minMoney;
+		}
+		return result;
 	}
 
-	public double getMoney()
+	public BigDecimal getMoney()
 	{
 		return money;
 	}
 
-	public void setMoney(double value)
+	public void setMoney(BigDecimal value, boolean throwError) throws MaxMoneyException
 	{
 		money = value;
-		if (Math.abs(money) > ess.getSettings().getMaxMoney())
+		BigDecimal maxMoney = ess.getSettings().getMaxMoney();
+		BigDecimal minMoney = ess.getSettings().getMinMoney();
+		if (money.compareTo(maxMoney) > 0)
 		{
-			money = money < 0 ? -ess.getSettings().getMaxMoney() : ess.getSettings().getMaxMoney();
+			money = maxMoney;
+			if (throwError)
+			{
+				throw new MaxMoneyException();
+			}
 		}
-		config.setProperty("money", value);
+		if (money.compareTo(minMoney) < 0)
+		{
+			money = minMoney;
+		}
+		config.setProperty("money", money);
 		config.save();
 	}
 	private Map<String, Object> homes;
@@ -110,43 +147,50 @@ public abstract class UserData extends PlayerExtension implements IConf
 
 	private String getHomeName(String search)
 	{
-		if (Util.isInt(search))
+		if (NumberUtil.isInt(search))
 		{
 			try
 			{
 				search = getHomes().get(Integer.parseInt(search) - 1);
 			}
-			catch (Exception e)
+			catch (NumberFormatException e)
+			{
+			}
+			catch (IndexOutOfBoundsException e)
 			{
 			}
 		}
 		return search;
 	}
-		
+
 	public Location getHome(String name) throws Exception
 	{
 		String search = getHomeName(name);
-		return config.getLocation("homes." + search, getServer());	
+		return config.getLocation("homes." + search, this.getBase().getServer());
 	}
 
 	public Location getHome(final Location world)
 	{
 		try
 		{
+			if (getHomes().isEmpty())
+			{
+				return null;
+			}
 			Location loc;
 			for (String home : getHomes())
 			{
-				loc = config.getLocation("homes." + home, getServer());
+				loc = config.getLocation("homes." + home, this.getBase().getServer());
 				if (world.getWorld() == loc.getWorld())
 				{
 					return loc;
 				}
 
 			}
-			loc = config.getLocation("homes." + getHomes().get(0), getServer());
+			loc = config.getLocation("homes." + getHomes().get(0), this.getBase().getServer());
 			return loc;
 		}
-		catch (Exception ex)
+		catch (InvalidWorldException ex)
 		{
 			return null;
 		}
@@ -160,7 +204,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 	public void setHome(String name, Location loc)
 	{
 		//Invalid names will corrupt the yaml
-		name = Util.safeString(name);
+		name = StringUtil.safeString(name);
 		homes.put(name, loc);
 		config.setProperty("homes." + name, loc);
 		config.save();
@@ -171,7 +215,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		String search = getHomeName(name);
 		if (!homes.containsKey(search))
 		{
-			search = Util.safeString(search);
+			search = StringUtil.safeString(search);
 		}
 		if (homes.containsKey(search))
 		{
@@ -181,7 +225,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		}
 		else
 		{
-			throw new Exception(_("invalidHome", search));
+			throw new Exception(tl("invalidHome", search));
 		}
 	}
 
@@ -295,9 +339,9 @@ public abstract class UserData extends PlayerExtension implements IConf
 	{
 		try
 		{
-			return config.getLocation("lastlocation", getServer());
+			return config.getLocation("lastlocation", this.getBase().getServer());
 		}
-		catch (Exception e)
+		catch (InvalidWorldException e)
 		{
 			return null;
 		}
@@ -316,6 +360,35 @@ public abstract class UserData extends PlayerExtension implements IConf
 		}
 		lastLocation = loc;
 		config.setProperty("lastlocation", loc);
+		config.save();
+	}
+	private Location logoutLocation;
+
+	private Location _getLogoutLocation()
+	{
+		try
+		{
+			return config.getLocation("logoutlocation", this.getBase().getServer());
+		}
+		catch (InvalidWorldException e)
+		{
+			return null;
+		}
+	}
+
+	public Location getLogoutLocation()
+	{
+		return logoutLocation;
+	}
+
+	public void setLogoutLocation(Location loc)
+	{
+		if (loc == null || loc.getWorld() == null)
+		{
+			return;
+		}
+		logoutLocation = loc;
+		config.setProperty("logoutlocation", loc);
 		config.save();
 	}
 	private long lastTeleportTimestamp;
@@ -430,20 +503,6 @@ public abstract class UserData extends PlayerExtension implements IConf
 		config.setProperty("teleportenabled", set);
 		config.save();
 	}
-
-	public boolean toggleTeleportEnabled()
-	{
-		boolean ret = !isTeleportEnabled();
-		setTeleportEnabled(ret);
-		return ret;
-	}
-
-	public boolean toggleSocialSpy()
-	{
-		boolean ret = !isSocialSpyEnabled();
-		setSocialSpyEnabled(ret);
-		return ret;
-	}
 	private List<String> ignoredPlayers;
 
 	public List<String> _getIgnoredPlayers()
@@ -470,7 +529,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 	public boolean isIgnoredPlayer(final String userName)
 	{
 		final IUser user = ess.getUser(userName);
-		if (user == null || !user.isOnline())
+		if (user == null || !user.getBase().isOnline())
 		{
 			return false;
 		}
@@ -518,7 +577,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 	{
 		return config.getBoolean("muted", false);
 	}
-	
+
 	public boolean getMuted()
 	{
 		return muted;
@@ -599,12 +658,12 @@ public abstract class UserData extends PlayerExtension implements IConf
 
 	public String getBanReason()
 	{
-		return config.getString("ban.reason");
+		return config.getString("ban.reason", "");
 	}
 
 	public void setBanReason(String reason)
 	{
-		config.setProperty("ban.reason", Util.sanitizeString(reason));
+		config.setProperty("ban.reason", StringUtil.sanitizeString(reason));
 		config.save();
 	}
 
@@ -692,18 +751,11 @@ public abstract class UserData extends PlayerExtension implements IConf
 		return afk;
 	}
 
-	public void setAfk(boolean set)
+	public void _setAfk(boolean set)
 	{
 		afk = set;
 		config.setProperty("afk", set);
 		config.save();
-	}
-
-	public boolean toggleAfk()
-	{
-		boolean ret = !isAfk();
-		setAfk(ret);
-		return ret;
 	}
 	private boolean newplayer;
 	private String geolocation;
@@ -761,6 +813,25 @@ public abstract class UserData extends PlayerExtension implements IConf
 	{
 		return isNPC;
 	}
+	private String lastAccountName = null;
+
+	public String getLastAccountName()
+	{
+		return lastAccountName;
+	}
+
+	public String _getLastAccountName()
+	{
+		return config.getString("lastAccountName", null);
+	}
+
+	public void setLastAccountName(String lastAccountName)
+	{
+		this.lastAccountName = lastAccountName;
+		config.setProperty("lastAccountName", lastAccountName);
+		config.save();
+		ess.getUserMap().trackUUID(base.getUniqueId(), lastAccountName);
+	}
 
 	public void setNPC(boolean set)
 	{
@@ -794,10 +865,10 @@ public abstract class UserData extends PlayerExtension implements IConf
 		return config.getBoolean("powertoolsenabled", true);
 	}
 	private Map<String, Long> kitTimestamps;
-	
+
 	private Map<String, Long> _getKitTimestamps()
 	{
-		
+
 		if (config.isConfigurationSection("timestamps.kits"))
 		{
 			final ConfigurationSection section = config.getConfigurationSection("timestamps.kits");
@@ -817,7 +888,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		}
 		return new HashMap<String, Long>();
 	}
-	
+
 	public long getKitTimestamp(String name)
 	{
 		name = name.replace('.', '_').replace('/', '_');
@@ -833,6 +904,60 @@ public abstract class UserData extends PlayerExtension implements IConf
 		kitTimestamps.put(name.toLowerCase(Locale.ENGLISH), time);
 		config.setProperty("timestamps.kits", kitTimestamps);
 		config.save();
+	}
+
+	public void setConfigProperty(String node, Object object)
+	{
+		final String prefix = "info.";
+		node = prefix + node;
+		if (object instanceof Map)
+		{
+			config.setProperty(node, (Map)object);
+		}
+		else if (object instanceof List)
+		{
+			config.setProperty(node, (List<String>)object);
+		}
+		else if (object instanceof Location)
+		{
+			config.setProperty(node, (Location)object);
+		}
+		else if (object instanceof ItemStack)
+		{
+			config.setProperty(node, (ItemStack)object);
+		}
+		else
+		{
+			config.setProperty(node, object);
+		}
+		config.save();
+	}
+
+	public Set<String> getConfigKeys()
+	{
+		if (config.isConfigurationSection("info"))
+		{
+			return config.getConfigurationSection("info").getKeys(true);
+		}
+		return new HashSet<String>();
+	}
+
+	public Map<String, Object> getConfigMap()
+	{
+		if (config.isConfigurationSection("info"))
+		{
+			return config.getConfigurationSection("info").getValues(true);
+		}
+		return new HashMap<String, Object>();
+	}
+
+	public Map<String, Object> getConfigMap(String node)
+	{
+		if (config.isConfigurationSection("info." + node))
+		{
+			return config.getConfigurationSection("info." + node).getValues(true);
+		}
+		return new HashMap<String, Object>();
 	}
 
 	public void save()

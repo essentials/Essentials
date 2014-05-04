@@ -1,15 +1,16 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.FormatUtil;
 import java.util.Locale;
+import net.ess3.api.events.NickChangeEvent;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
-public class Commandnick extends EssentialsCommand
+public class Commandnick extends EssentialsLoopCommand
 {
 	public Commandnick()
 	{
@@ -25,23 +26,24 @@ public class Commandnick extends EssentialsCommand
 		}
 		if (!ess.getSettings().changeDisplayName())
 		{
-			throw new Exception(_("nickDisplayName"));
+			throw new Exception(tl("nickDisplayName"));
 		}
-		if (args.length > 1)
+
+		if (args.length > 1 && user.isAuthorized("essentials.nick.others"))
 		{
-			if (!user.isAuthorized("essentials.nick.others"))
-			{
-				throw new Exception(_("nickOthersPermission"));
-			}
-			setNickname(server, getPlayer(server, args, 0), formatNickname(user, args[1]));
-			user.sendMessage(_("nickChanged"));
-			return;
+			final String[] nickname = formatNickname(user, args[1]).split(" ");
+			loopOfflinePlayers(server, user.getSource(), false, true, args[0], nickname);
+			user.sendMessage(tl("nickChanged"));
 		}
-		setNickname(server, user, formatNickname(user, args[0]));
+		else
+		{
+			final String[] nickname = formatNickname(user, args[0]).split(" ");
+			updatePlayer(server, user.getSource(), user, nickname);
+		}
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
@@ -49,77 +51,87 @@ public class Commandnick extends EssentialsCommand
 		}
 		if (!ess.getSettings().changeDisplayName())
 		{
-			throw new Exception(_("nickDisplayName"));
+			throw new Exception(tl("nickDisplayName"));
 		}
-		if ((args[0].equalsIgnoreCase("*") || args[0].equalsIgnoreCase("all")) && args[1].equalsIgnoreCase("off"))
+		final String[] nickname = formatNickname(null, args[1]).split(" ");
+		loopOfflinePlayers(server, sender, false, true, args[0], nickname);
+		sender.sendMessage(tl("nickChanged"));
+	}
+
+	@Override
+	protected void updatePlayer(final Server server, final CommandSource sender, final User target, final String[] args) throws NotEnoughArgumentsException
+	{
+		final String nick = args[0];
+		if (target.getName().equalsIgnoreCase(nick))
 		{
-			resetAllNicknames(server);
+			setNickname(server, sender, target, nick);
+			target.sendMessage(tl("nickNoMore"));
+		}
+		else if ("off".equalsIgnoreCase(nick))
+		{
+			setNickname(server, sender, target, null);
+			target.sendMessage(tl("nickNoMore"));
+		}
+		else if (nickInUse(server, target, nick))
+		{
+			throw new NotEnoughArgumentsException(tl("nickInUse"));
 		}
 		else
 		{
-			setNickname(server, getPlayer(server, args, 0), formatNickname(null, args[1]));
-		}
-		sender.sendMessage(_("nickChanged"));
-	}
-
-	private String formatNickname(final User user, final String nick)
-	{
-		if (user == null)
-		{
-			return Util.replaceFormat(nick);
-		}
-		else
-		{
-			return Util.formatString(user, "essentials.nick", nick);
+			setNickname(server, sender, target, nick);
+			target.sendMessage(tl("nickSet", target.getDisplayName()));
 		}
 	}
 
-	private void resetAllNicknames(final Server server)
+	private String formatNickname(final User user, final String nick) throws Exception
 	{
-		for (Player player : server.getOnlinePlayers())
+		String newNick = user == null ? FormatUtil.replaceFormat(nick) : FormatUtil.formatString(user, "essentials.nick", nick);
+		if (!newNick.matches("^[a-zA-Z_0-9\u00a7]+$"))
 		{
-			try
+			throw new Exception(tl("nickNamesAlpha"));
+		}
+		else if (newNick.length() > ess.getSettings().getMaxNickLength())
+		{
+			throw new Exception(tl("nickTooLong"));
+		}
+		else if (FormatUtil.stripFormat(newNick).length() < 1)
+		{
+			throw new Exception(tl("nickNamesAlpha"));
+		}
+		return newNick;
+	}
+
+	private boolean nickInUse(final Server server, final User target, String nick)
+	{
+		final String lowerNick = FormatUtil.stripFormat(nick.toLowerCase(Locale.ENGLISH));
+		for (final Player onlinePlayer : server.getOnlinePlayers())
+		{
+			if (target.getBase().getName().equals(onlinePlayer.getName()))
 			{
-				setNickname(server, ess.getUser(player), "off");
+				continue;
 			}
-			catch (Exception ex)
+			final String matchNick = FormatUtil.stripFormat(onlinePlayer.getDisplayName().replace(ess.getSettings().getNicknamePrefix(), ""));
+			if (lowerNick.equals(matchNick.toLowerCase(Locale.ENGLISH))
+				|| lowerNick.equals(onlinePlayer.getName().toLowerCase(Locale.ENGLISH)))
 			{
+				return true;
 			}
 		}
+		if (ess.getUser(lowerNick) != null && ess.getUser(lowerNick) != target) {
+				return true;
+		}
+		return false;
 	}
 
-	private void setNickname(final Server server, final User target, final String nick) throws Exception
+	private void setNickname(final Server server, final CommandSource sender, final User target, final String nickname)
 	{
-		if (!nick.matches("^[a-zA-Z_0-9\u00a7]+$"))
+		final User controller = sender.isPlayer() ? ess.getUser(sender.getPlayer()) : null;
+		final NickChangeEvent nickEvent = new NickChangeEvent(controller, target, nickname);
+		server.getPluginManager().callEvent(nickEvent);
+		if (!nickEvent.isCancelled())
 		{
-			throw new Exception(_("nickNamesAlpha"));
-		}
-		else if ("off".equalsIgnoreCase(nick) || target.getName().equalsIgnoreCase(nick))
-		{
-			target.setNickname(null);
+			target.setNickname(nickname);
 			target.setDisplayNick();
-			target.sendMessage(_("nickNoMore"));
-		}
-		else
-		{
-			for (Player p : server.getOnlinePlayers())
-			{
-				if (target.getBase() == p)
-				{
-					continue;
-				}
-				String dn = p.getDisplayName().toLowerCase(Locale.ENGLISH);
-				String n = p.getName().toLowerCase(Locale.ENGLISH);
-				String nk = nick.toLowerCase(Locale.ENGLISH);
-				if (nk.equals(dn) || nk.equals(n))
-				{
-					throw new Exception(_("nickInUse"));
-				}
-			}
-
-			target.setNickname(nick);
-			target.setDisplayNick();
-			target.sendMessage(_("nickSet", target.getDisplayName() + "§7."));
 		}
 	}
 }

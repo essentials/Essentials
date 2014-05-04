@@ -1,11 +1,11 @@
 package com.earth2me.essentials.textreader;
 
+import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.I18n;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import org.bukkit.command.CommandSender;
 
 
 public class TextPager
@@ -24,7 +24,7 @@ public class TextPager
 		this.onePage = onePage;
 	}
 
-	public void showPage(final String pageStr, final String chapterPageStr, final String commandName, final CommandSender sender)
+	public void showPage(final String pageStr, final String chapterPageStr, final String commandName, final CommandSource sender)
 	{
 		List<String> lines = text.getLines();
 		List<String> chapters = text.getChapters();
@@ -42,7 +42,7 @@ public class TextPager
 				{
 					return;
 				}
-				sender.sendMessage(_("infoChapter"));
+				sender.sendMessage(tl("infoChapter"));
 				final StringBuilder sb = new StringBuilder();
 				boolean first = true;
 				for (String string : chapters)
@@ -64,7 +64,7 @@ public class TextPager
 				{
 					page = Integer.parseInt(pageStr);
 				}
-				catch (Exception ex)
+				catch (NumberFormatException ex)
 				{
 					page = 1;
 				}
@@ -95,16 +95,11 @@ public class TextPager
 						content.append(I18n.capitalCase(title[0])).append(": ");
 						content.append(title[1]);
 					}
-					else if (chapterPageStr != null)
-					{
-						content.append(I18n.capitalCase(commandName)).append(": ");
-						content.append(chapterPageStr);
-					}
 					else
 					{
 						content.append(I18n.capitalCase(commandName));
 					}
-					sender.sendMessage(_("infoPages", page, pages, content));
+					sender.sendMessage(tl("infoPages", page, pages, content));
 				}
 				for (int i = start; i < end && i < start + (onePage ? 20 : 9); i++)
 				{
@@ -112,7 +107,7 @@ public class TextPager
 				}
 				if (!onePage && page < pages && commandName != null)
 				{
-					sender.sendMessage(_("readNextPage", commandName, page + 1));
+					sender.sendMessage(tl("readNextPage", commandName, page + 1));
 				}
 				return;
 			}
@@ -126,7 +121,7 @@ public class TextPager
 			{
 				chapterpage = Integer.parseInt(chapterPageStr) - 1;
 			}
-			catch (Exception ex)
+			catch (NumberFormatException ex)
 			{
 				chapterpage = 0;
 			}
@@ -139,10 +134,10 @@ public class TextPager
 		//This checks to see if we have the chapter in the index
 		if (!bookmarks.containsKey(pageStr.toLowerCase(Locale.ENGLISH)))
 		{
-			sender.sendMessage(_("infoUnknownChapter"));
+			sender.sendMessage(tl("infoUnknownChapter"));
 			return;
 		}
-		
+
 		//Since we have a valid chapter, count the number of lines in the chapter
 		final int chapterstart = bookmarks.get(pageStr.toLowerCase(Locale.ENGLISH)) + 1;
 		int chapterend;
@@ -154,14 +149,17 @@ public class TextPager
 				break;
 			}
 		}
-		
+
 		//Display the chapter from the starting position
 		final int start = chapterstart + (onePage ? 0 : chapterpage * 9);
 		final int page = chapterpage + 1;
 		final int pages = (chapterend - chapterstart) / 9 + ((chapterend - chapterstart) % 9 > 0 ? 1 : 0);
 		if (!onePage && commandName != null)
 		{
-			sender.sendMessage(_("infoChapterPages", pageStr, page, pages));
+			StringBuilder content = new StringBuilder();
+			content.append(I18n.capitalCase(commandName)).append(": ");
+			content.append(pageStr);
+			sender.sendMessage(tl("infoChapterPages", content, page, pages));
 		}
 		for (int i = start; i < chapterend && i < start + (onePage ? 20 : 9); i++)
 		{
@@ -169,7 +167,7 @@ public class TextPager
 		}
 		if (!onePage && page < pages && commandName != null)
 		{
-			sender.sendMessage(_("readNextPage", commandName, pageStr + " " + (page + 1)));
+			sender.sendMessage(tl("readNextPage", commandName, pageStr + " " + (page + 1)));
 		}
 	}
 }

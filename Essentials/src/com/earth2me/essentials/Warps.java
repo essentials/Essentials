@@ -1,19 +1,22 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.commands.WarpNotFoundException;
+import com.earth2me.essentials.utils.StringUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ess3.api.InvalidNameException;
+import net.ess3.api.InvalidWorldException;
 import org.bukkit.Location;
 import org.bukkit.Server;
 
 
-public class Warps implements IConf
+public class Warps implements IConf, net.ess3.api.IWarps
 {
-	private static final Logger logger = Logger.getLogger("Minecraft");
+	private static final Logger logger = Logger.getLogger("Essentials");
 	private final Map<StringIgnoreCase, EssentialsConf> warpPoints = new HashMap<StringIgnoreCase, EssentialsConf>();
 	private final File warpsFolder;
 	private final Server server;
@@ -29,12 +32,14 @@ public class Warps implements IConf
 		reloadConfig();
 	}
 
+	@Override
 	public boolean isEmpty()
 	{
 		return warpPoints.isEmpty();
 	}
 
-	public Collection<String> getWarpNames()
+	@Override
+	public Collection<String> getList()
 	{
 		final List<String> keys = new ArrayList<String>();
 		for (StringIgnoreCase stringIgnoreCase : warpPoints.keySet())
@@ -45,7 +50,8 @@ public class Warps implements IConf
 		return keys;
 	}
 
-	public Location getWarp(String warp) throws Exception
+	@Override
+	public Location getWarp(String warp) throws WarpNotFoundException, InvalidWorldException
 	{
 		EssentialsConf conf = warpPoints.get(new StringIgnoreCase(warp));
 		if (conf == null)
@@ -55,16 +61,17 @@ public class Warps implements IConf
 		return conf.getLocation(null, server);
 	}
 
+	@Override
 	public void setWarp(String name, Location loc) throws Exception
 	{
-		String filename = Util.sanitizeFileName(name);
+		String filename = StringUtil.sanitizeFileName(name);
 		EssentialsConf conf = warpPoints.get(new StringIgnoreCase(name));
 		if (conf == null)
 		{
 			File confFile = new File(warpsFolder, filename + ".yml");
 			if (confFile.exists())
 			{
-				throw new Exception(_("similarWarpExist"));
+				throw new Exception(tl("similarWarpExist"));
 			}
 			conf = new EssentialsConf(confFile);
 			warpPoints.put(new StringIgnoreCase(name), conf);
@@ -77,20 +84,21 @@ public class Warps implements IConf
 		}
 		catch (IOException ex)
 		{
-			throw new IOException(_("invalidWarpName"));
+			throw new IOException(tl("invalidWarpName"));
 		}
 	}
 
-	public void delWarp(String name) throws Exception
+	@Override
+	public void removeWarp(String name) throws Exception
 	{
 		EssentialsConf conf = warpPoints.get(new StringIgnoreCase(name));
 		if (conf == null)
 		{
-			throw new Exception(_("warpNotExist"));
+			throw new Exception(tl("warpNotExist"));
 		}
 		if (!conf.getFile().delete())
 		{
-			throw new Exception(_("warpDeleteError"));
+			throw new Exception(tl("warpDeleteError"));
 		}
 		warpPoints.remove(new StringIgnoreCase(name));
 	}
@@ -119,13 +127,25 @@ public class Warps implements IConf
 					}
 					catch (Exception ex)
 					{
-						logger.log(Level.WARNING, _("loadWarpError", filename), ex);
+						logger.log(Level.WARNING, tl("loadWarpError", filename), ex);
 					}
 				}
 			}
 		}
 	}
 
+	//This is here for future 3.x api support. Not implemented here becasue storage is handled differently
+	@Override
+	public File getWarpFile(String name) throws InvalidNameException
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public int getCount()
+	{
+		return getList().size();
+	}
 
 	private static class StringIgnoreCase
 	{

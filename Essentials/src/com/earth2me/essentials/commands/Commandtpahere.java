@@ -1,6 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
 
@@ -20,24 +20,31 @@ public class Commandtpahere extends EssentialsCommand
 			throw new NotEnoughArgumentsException();
 		}
 
-		final User player = getPlayer(server, args, 0);
+		final User player = getPlayer(server, user, args, 0);
+		if (user.getName().equalsIgnoreCase(player.getName()))
+		{
+			throw new NotEnoughArgumentsException();
+		}
 		if (!player.isTeleportEnabled())
 		{
-			throw new Exception(_("teleportDisabled", player.getDisplayName()));
+			throw new Exception(tl("teleportDisabled", player.getDisplayName()));
 		}
 		if (user.getWorld() != player.getWorld() && ess.getSettings().isWorldTeleportPermissions()
 			&& !user.isAuthorized("essentials.worlds." + user.getWorld().getName()))
 		{
-			throw new Exception(_("noPerm", "essentials.worlds." + user.getWorld().getName()));
+			throw new Exception(tl("noPerm", "essentials.worlds." + user.getWorld().getName()));
 		}
-		player.requestTeleport(user, true);
-		player.sendMessage(_("teleportHereRequest", user.getDisplayName()));
-		player.sendMessage(_("typeTpaccept"));
-		player.sendMessage(_("typeTpdeny"));
-		if (ess.getSettings().getTpaAcceptCancellation() != 0)
+		if (!player.isIgnoredPlayer(user))
 		{
-			player.sendMessage(_("teleportRequestTimeoutInfo", ess.getSettings().getTpaAcceptCancellation()));
+			player.requestTeleport(user, true);
+			player.sendMessage(tl("teleportHereRequest", user.getDisplayName()));
+			player.sendMessage(tl("typeTpaccept"));
+			player.sendMessage(tl("typeTpdeny"));
+			if (ess.getSettings().getTpaAcceptCancellation() != 0)
+			{
+				player.sendMessage(tl("teleportRequestTimeoutInfo", ess.getSettings().getTpaAcceptCancellation()));
+			}
 		}
-		user.sendMessage(_("requestSent", player.getDisplayName()));
+		user.sendMessage(tl("requestSent", player.getDisplayName()));
 	}
 }

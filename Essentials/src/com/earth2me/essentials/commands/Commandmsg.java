@@ -1,104 +1,86 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.Console;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.IReplyTo;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
-import java.util.List;
+import static com.earth2me.essentials.commands.EssentialsCommand.getFinalArg;
+import com.earth2me.essentials.utils.FormatUtil;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
-public class Commandmsg extends EssentialsCommand
+public class Commandmsg extends EssentialsLoopCommand
 {
+	final String translatedMe = tl("me");
+
 	public Commandmsg()
 	{
 		super("msg");
 	}
-	
+
 	@Override
-	public void run(Server server, CommandSender sender, String commandLabel, String[] args) throws Exception
+	public void run(Server server, CommandSource sender, String commandLabel, String[] args) throws Exception
 	{
 		if (args.length < 2 || args[0].trim().length() < 2 || args[1].trim().isEmpty())
 		{
 			throw new NotEnoughArgumentsException();
 		}
-		
+
 		String message = getFinalArg(args, 1);
-		if (sender instanceof Player)
+		boolean canWildcard;
+		if (sender.isPlayer())
 		{
-			User user = ess.getUser(sender);
+			User user = ess.getUser(sender.getPlayer());
 			if (user.isMuted())
 			{
-				throw new Exception(_("voiceSilenced"));
+				throw new Exception(tl("voiceSilenced"));
 			}
-			message = Util.formatMessage(user, "essentials.msg", message);
+			message = FormatUtil.formatMessage(user, "essentials.msg", message);
+			canWildcard = user.isAuthorized("essentials.msg.multiple");
 		}
 		else
 		{
-			message = Util.replaceFormat(message);
+			message = FormatUtil.replaceFormat(message);
+			canWildcard = true;
 		}
-		
-		final String translatedMe = _("me");
-		
-		final IReplyTo replyTo = sender instanceof Player ? ess.getUser((Player)sender) : Console.getConsoleReplyTo();
-		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
-		
+
 		if (args[0].equalsIgnoreCase(Console.NAME))
 		{
-			sender.sendMessage(_("msgFormat", translatedMe, Console.NAME, message));
+			final IReplyTo replyTo = sender.isPlayer() ? ess.getUser(sender.getPlayer()) : Console.getConsoleReplyTo();
+			final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
+			
+			sender.sendMessage(tl("msgFormat", translatedMe, Console.NAME, message));
 			CommandSender cs = Console.getCommandSender(server);
-			cs.sendMessage(_("msgFormat", senderName, translatedMe, message));
-			replyTo.setReplyTo(cs);
+			cs.sendMessage(tl("msgFormat", senderName, translatedMe, message));
+			replyTo.setReplyTo(new CommandSource(cs));
 			Console.getConsoleReplyTo().setReplyTo(sender);
 			return;
 		}
-		
-		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
-		
-		if (matchedPlayers.isEmpty())
-		{
-			throw new Exception(_("playerNotFound"));
-		}
-		
-		int i = 0;
-		for (Player matchedPlayer : matchedPlayers)
-		{
-			final User u = ess.getUser(matchedPlayer);
-			if (u.isHidden())
-			{
-				i++;
-			}
-		}
-		if (i == matchedPlayers.size())
-		{
-			throw new Exception(_("playerNotFound"));
-		}
-		
-		for (Player matchedPlayer : matchedPlayers)
-		{			
-			final User matchedUser = ess.getUser(matchedPlayer);
-			
-			if (sender instanceof Player && matchedUser.isHidden())
-			{
-				continue;
-			}		
-			if (matchedUser.isAfk())
-			{
-				sender.sendMessage(_("userAFK", matchedPlayer.getDisplayName()));
-			}			
 
-			sender.sendMessage(_("msgFormat", translatedMe, matchedPlayer.getDisplayName(), message));			
-			if (sender instanceof Player && matchedUser.isIgnoredPlayer(ess.getUser(sender)))
-			{
-				continue;
-			}
-			
-			matchedPlayer.sendMessage(_("msgFormat", senderName, translatedMe, message));
-			replyTo.setReplyTo(matchedUser);
-			ess.getUser(matchedPlayer).setReplyTo(sender);
+		loopOnlinePlayers(server, sender, canWildcard, canWildcard, args[0], new String[]{message});
+	}
+
+	@Override
+	protected void updatePlayer(final Server server, final CommandSource sender, final User matchedUser, final String[] args)
+	{		
+		final IReplyTo replyTo = sender.isPlayer() ? ess.getUser(sender.getPlayer()) : Console.getConsoleReplyTo();
+		final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
+
+		if (matchedUser.isAfk())
+		{
+			sender.sendMessage(tl("userAFK", matchedUser.getDisplayName()));
 		}
+
+		sender.sendMessage(tl("msgFormat", translatedMe, matchedUser.getDisplayName(), args[0]));
+		if (sender.isPlayer() && matchedUser.isIgnoredPlayer(ess.getUser(sender.getPlayer())))
+		{
+			return;
+		}
+
+		matchedUser.sendMessage(tl("msgFormat", senderName, translatedMe, args[0]));
+		replyTo.setReplyTo(matchedUser.getSource());
+		matchedUser.setReplyTo(sender);
 	}
 }

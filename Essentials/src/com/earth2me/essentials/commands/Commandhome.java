@@ -1,13 +1,12 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.StringUtil;
 import java.util.List;
 import java.util.Locale;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
@@ -19,6 +18,7 @@ public class Commandhome extends EssentialsCommand
 		super("home");
 	}
 
+	// This method contains an undocumented translation parameters #EasterEgg
 	@Override
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
@@ -35,7 +35,7 @@ public class Commandhome extends EssentialsCommand
 			}
 			else
 			{
-				player = getPlayer(server, nameParts, 0, true);
+				player = getPlayer(server, nameParts, 0, true, true);
 				if (nameParts.length > 1)
 				{
 					homeName = nameParts[1];
@@ -46,22 +46,22 @@ public class Commandhome extends EssentialsCommand
 		{
 			if ("bed".equalsIgnoreCase(homeName) && user.isAuthorized("essentials.home.bed"))
 			{
-				final Location bed = player.getBedSpawnLocation();
+				final Location bed = player.getBase().getBedSpawnLocation();
 				if (bed != null)
 				{
 					user.getTeleport().teleport(bed, charge, TeleportCause.COMMAND);
 					throw new NoChargeException();
+				}
+				else
+				{
+					throw new Exception(tl("bedMissing"));
 				}
 			}
 			goHome(user, player, homeName.toLowerCase(Locale.ENGLISH), charge);
 		}
 		catch (NotEnoughArgumentsException e)
 		{
-			Location bed = player.getBedSpawnLocation();
-			if (bed != null && bed.getBlock().getType() != Material.BED_BLOCK)
-			{
-				bed = null;
-			}
+			Location bed = player.getBase().getBedSpawnLocation();
 			final List<String> homes = player.getHomes();
 			if (homes.isEmpty() && player.equals(user))
 			{
@@ -69,7 +69,7 @@ public class Commandhome extends EssentialsCommand
 			}
 			else if (homes.isEmpty())
 			{
-				throw new Exception(_("noHomeSetPlayer"));
+				throw new Exception(tl("noHomeSetPlayer"));
 			}
 			else if (homes.size() == 1 && player.equals(user))
 			{
@@ -77,18 +77,43 @@ public class Commandhome extends EssentialsCommand
 			}
 			else
 			{
-				if (bed != null  && user.isAuthorized("essentials.home.bed"))
+				final int count = homes.size();
+				if (user.isAuthorized("essentials.home.bed"))
 				{
-					homes.add("bed");
+					if (bed != null)
+					{
+						homes.add(tl("bed"));
+					}
+					else
+					{
+						homes.add(tl("bedNull"));
+					}
 				}
-				user.sendMessage(_("homes", Util.joinList(homes)));
+				user.sendMessage(tl("homes", StringUtil.joinList(homes), count, getHomeLimit(player)));
 			}
 		}
 		throw new NoChargeException();
 	}
 
-	private void goHome(final User user, final User player, final String home, final Trade charge) throws Exception
+	private String getHomeLimit(final User player)
 	{
+		if (!player.getBase().isOnline())
+		{
+			return "?";
+		}
+		if (player.isAuthorized("essentials.sethome.multiple.unlimited"))
+		{
+			return "*";
+		}
+		return Integer.toString(ess.getSettings().getHomeLimit(player));
+	}
+
+	private void goHome(final User user, final User player, final String home, final Trade charge) throws Exception
+	{		
+		if (home.length() < 1)
+		{
+			throw new NotEnoughArgumentsException();
+		}
 		final Location loc = player.getHome(home);
 		if (loc == null)
 		{
@@ -97,8 +122,8 @@ public class Commandhome extends EssentialsCommand
 		if (user.getWorld() != loc.getWorld() && ess.getSettings().isWorldHomePermissions()
 			&& !user.isAuthorized("essentials.worlds." + loc.getWorld().getName()))
 		{
-			throw new Exception(_("noPerm", "essentials.worlds." + loc.getWorld().getName()));
+			throw new Exception(tl("noPerm", "essentials.worlds." + loc.getWorld().getName()));
 		}
-		user.getTeleport().home(loc, charge);
+		user.getTeleport().teleport(loc, charge, TeleportCause.COMMAND);
 	}
 }

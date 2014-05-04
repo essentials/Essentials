@@ -1,41 +1,35 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LightningStrike;
-import org.bukkit.entity.Player;
 
 
-public class Commandlightning extends EssentialsCommand
+public class Commandlightning extends EssentialsLoopCommand
 {
+	int power = 5;
+
 	public Commandlightning()
 	{
 		super("lightning");
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
-
-		User user = null;
-		if (sender instanceof Player)
+		User user;
+		if (sender.isPlayer())
 		{
-			user = ess.getUser(((Player)sender));
+			user = ess.getUser(sender.getPlayer());
 			if ((args.length < 1 || user != null && !user.isAuthorized("essentials.lightning.others")))
 			{
-				user.getWorld().strikeLightning(user.getTargetBlock(null, 600).getLocation());
+				user.getWorld().strikeLightning(user.getBase().getTargetBlock(null, 600).getLocation());
 				return;
 			}
 		}
 
-		if (server.matchPlayer(args[0]).isEmpty())
-		{
-			throw new Exception(_("playerNotFound"));
-		}
-
-		int power = 5;
 		if (args.length > 1)
 		{
 			try
@@ -46,21 +40,22 @@ public class Commandlightning extends EssentialsCommand
 			{
 			}
 		}
+		loopOnlinePlayers(server, sender, true, true, args[0], null);
+	}
 
-		for (Player matchPlayer : server.matchPlayer(args[0]))
+	@Override
+	protected void updatePlayer(final Server server, final CommandSource sender, final User matchUser, final String[] args)
+	{
+		sender.sendMessage(tl("lightningUse", matchUser.getDisplayName()));
+		final LightningStrike strike = matchUser.getBase().getWorld().strikeLightningEffect(matchUser.getBase().getLocation());
+
+		if (!matchUser.isGodModeEnabled())
 		{
-			sender.sendMessage(_("lightningUse", matchPlayer.getDisplayName()));
-
-			final LightningStrike strike = matchPlayer.getWorld().strikeLightningEffect(matchPlayer.getLocation());
-			
-			if (!ess.getUser(matchPlayer).isGodModeEnabled())
-			{
-				matchPlayer.damage(power, strike);
-			}
-			if (ess.getSettings().warnOnSmite())
-			{
-				matchPlayer.sendMessage(_("lightningSmited"));
-			}
+			matchUser.getBase().damage(power, strike);
+		}
+		if (ess.getSettings().warnOnSmite())
+		{
+			matchUser.sendMessage(tl("lightningSmited"));
 		}
 	}
 }

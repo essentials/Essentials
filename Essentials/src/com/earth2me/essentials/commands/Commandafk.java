@@ -1,6 +1,7 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
 
@@ -17,15 +18,26 @@ public class Commandafk extends EssentialsCommand
 	{
 		if (args.length > 0 && user.isAuthorized("essentials.afk.others"))
 		{
-			User afkUser = ess.getUser(ess.getServer().matchPlayer(args[0]));
-			if (afkUser != null)
-			{
-				toggleAfk(afkUser);
-			}
+			User afkUser = getPlayer(server, user, args, 0);
+			toggleAfk(afkUser);
 		}
 		else
 		{
 			toggleAfk(user);
+		}
+	}
+	
+	@Override
+	public void run(Server server, CommandSource sender, String commandLabel, String[] args) throws Exception
+	{
+		if (args.length > 0)
+		{
+			User afkUser = getPlayer(server, args, 0, true, false);
+			toggleAfk(afkUser);
+		}
+		else
+		{
+			throw new NotEnoughArgumentsException();
 		}
 	}
 
@@ -38,7 +50,7 @@ public class Commandafk extends EssentialsCommand
 			//user.sendMessage(_("markedAsNotAway"));
 			if (!user.isHidden())
 			{
-				msg = _("userIsNotAway", user.getDisplayName());
+				msg = tl("userIsNotAway", user.getDisplayName());
 			}
 			user.updateActivity(false);
 		}
@@ -47,7 +59,7 @@ public class Commandafk extends EssentialsCommand
 			//user.sendMessage(_("markedAsAway"));
 			if (!user.isHidden())
 			{
-				msg = _("userIsAway", user.getDisplayName());
+				msg = tl("userIsAway", user.getDisplayName());
 			}
 		}
 		if (!msg.isEmpty())
@@ -56,3 +68,4 @@ public class Commandafk extends EssentialsCommand
 		}
 	}
 }
+

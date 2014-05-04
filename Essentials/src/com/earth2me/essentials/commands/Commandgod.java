@@ -1,76 +1,76 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
+import net.ess3.api.events.GodStatusChangeEvent;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
-public class Commandgod extends EssentialsCommand
+public class Commandgod extends EssentialsToggleCommand
 {
 	public Commandgod()
 	{
-		super("god");
+		super("god", "essentials.god.others");
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length < 1)
-		{
-			throw new NotEnoughArgumentsException();
-		}
-
-		godOtherPlayers(server, sender, args);
+		toggleOtherPlayers(server, sender, args);
 	}
 
 	@Override
 	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
-		if (args.length > 0 && args[0].trim().length() > 2 && user.isAuthorized("essentials.god.others"))
+		if (args.length == 1)
 		{
-			godOtherPlayers(server, user, args);
-			return;
-		}
-		user.setGodModeEnabled(!user.isGodModeEnabled());
-		user.sendMessage(_("godMode", (user.isGodModeEnabled() ? _("enabled") : _("disabled"))));
-	}
-
-	private void godOtherPlayers(final Server server, final CommandSender sender, final String[] args)
-	{
-		for (Player matchPlayer : server.matchPlayer(args[0]))
-		{
-			final User player = ess.getUser(matchPlayer);
-			if (player.isHidden())
+			Boolean toggle = matchToggleArgument(args[0]);
+			if (toggle == null && user.isAuthorized(othersPermission))
 			{
-				continue;
-			}
-
-			if (args.length > 1)
-			{
-				if (args[1].contains("on") || args[1].contains("ena") || args[1].equalsIgnoreCase("1"))
-				{
-					player.setGodModeEnabled(true);
-				}
-				else
-				{
-					player.setGodModeEnabled(false);
-				}
+				toggleOtherPlayers(server, user.getSource(), args);
 			}
 			else
 			{
-				player.setGodModeEnabled(!player.isGodModeEnabled());
+				togglePlayer(user.getSource(), user, toggle);
 			}
+		}
+		else if (args.length == 2 && user.isAuthorized(othersPermission))
+		{
+			toggleOtherPlayers(server, user.getSource(), args);
+		}
+		else
+		{
+			togglePlayer(user.getSource(), user, null);
+		}
+	}
 
-			final boolean enabled = player.isGodModeEnabled();
-			if (enabled)
+	@Override
+	void togglePlayer(CommandSource sender, User user, Boolean enabled)
+	{
+		if (enabled == null)
+		{
+			enabled = !user.isGodModeEnabled();
+		}
+
+		final User controller = sender.isPlayer() ? ess.getUser(sender.getPlayer()) : null;
+		final GodStatusChangeEvent godEvent = new GodStatusChangeEvent(controller, user, enabled);
+		ess.getServer().getPluginManager().callEvent(godEvent);
+		if (!godEvent.isCancelled())
+		{
+			user.setGodModeEnabled(enabled);
+
+			if (enabled && user.getBase().getHealth() != 0)
 			{
-				player.setFoodLevel(20);
+				user.getBase().setHealth(user.getBase().getMaxHealth());
+				user.getBase().setFoodLevel(20);
 			}
 
-			player.sendMessage(_("godMode", (enabled ? _("enabled") : _("disabled"))));
-			sender.sendMessage(_("godMode", _(enabled ? "godEnabledFor" : "godDisabledFor", matchPlayer.getDisplayName())));
+			user.sendMessage(tl("godMode", enabled ? tl("enabled") : tl("disabled")));
+			if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+			{
+				sender.sendMessage(tl("godMode", tl(enabled ? "godEnabledFor" : "godDisabledFor", user.getDisplayName())));
+			}
 		}
 	}
 }

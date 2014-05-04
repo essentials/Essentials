@@ -1,6 +1,6 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import org.bukkit.Server;
 
@@ -17,30 +17,42 @@ public class Commandignore extends EssentialsCommand
 	{
 		if (args.length < 1)
 		{
-			throw new NotEnoughArgumentsException();
-		}
-		User player;
-		try
-		{
-			player = getPlayer(server, args, 0);
-		}
-		catch (NoSuchFieldException ex)
-		{
-			player = ess.getOfflineUser(args[0]);
-		}
-		if (player == null)
-		{
-			throw new Exception(_("playerNotFound"));
-		}
-		if (user.isIgnoredPlayer(player))
-		{
-			user.setIgnoredPlayer(player, false);
-			user.sendMessage(_("unignorePlayer", player.getName()));
+			StringBuilder sb = new StringBuilder();
+			for (String s : user._getIgnoredPlayers())
+			{
+				sb.append(s).append(" ");
+			}
+			String ignoredList = sb.toString().trim();
+			user.sendMessage(ignoredList.length() > 0 ? tl("ignoredList", ignoredList) : tl("noIgnored"));
 		}
 		else
 		{
-			user.setIgnoredPlayer(player, true);
-			user.sendMessage(_("ignorePlayer", player.getName()));
+			User player;
+			try
+			{
+				player = getPlayer(server, args, 0, true, true);
+			}
+			catch (PlayerNotFoundException ex)
+			{
+				player = ess.getOfflineUser(args[0]);
+			}
+			if (player == null)
+			{
+				throw new PlayerNotFoundException();
+			}
+			if (player.isIgnoreExempt()) {
+				user.sendMessage(tl("ignoreExempt"));
+			}
+			else if (user.isIgnoredPlayer(player))
+			{
+				user.setIgnoredPlayer(player, false);
+				user.sendMessage(tl("unignorePlayer", player.getName()));
+			}
+			else
+			{
+				user.setIgnoredPlayer(player, true);
+				user.sendMessage(tl("ignorePlayer", player.getName()));
+			}
 		}
 	}
 }

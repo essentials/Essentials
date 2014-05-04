@@ -1,13 +1,12 @@
 package com.earth2me.essentials.commands;
 
+import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.Console;
-import static com.earth2me.essentials.I18n._;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.IReplyTo;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.FormatUtil;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class Commandr extends EssentialsCommand
@@ -18,7 +17,7 @@ public class Commandr extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -29,44 +28,45 @@ public class Commandr extends EssentialsCommand
 		IReplyTo replyTo;
 		String senderName;
 
-		if (sender instanceof Player)
+		if (sender.isPlayer())
 		{
-			User user = ess.getUser(sender);
-			message = Util.formatMessage(user, "essentials.msg", message);			
+			User user = ess.getUser(sender.getPlayer());
+			message = FormatUtil.formatMessage(user, "essentials.msg", message);
 			replyTo = user;
 			senderName = user.getDisplayName();
 		}
 		else
 		{
-			message = Util.replaceFormat(message);
+			message = FormatUtil.replaceFormat(message);
 			replyTo = Console.getConsoleReplyTo();
 			senderName = Console.NAME;
 		}
 
-		final CommandSender target = replyTo.getReplyTo();
-		final String targetName = target instanceof Player ? ((Player)target).getDisplayName() : Console.NAME;
+		final CommandSource target = replyTo.getReplyTo();
 
-		if (target == null || ((target instanceof Player) && !((Player)target).isOnline()))
+		if (target == null || (target.isPlayer() && !target.getPlayer().isOnline()))
 		{
-			throw new Exception(_("foreverAlone"));
+			throw new Exception(tl("foreverAlone"));
 		}
 
-		sender.sendMessage(_("msgFormat", _("me"), targetName, message));
-		if (target instanceof Player)
+		final String targetName = target.isPlayer() ? target.getPlayer().getDisplayName() : Console.NAME;
+
+		sender.sendMessage(tl("msgFormat", tl("me"), targetName, message));
+		if (target.isPlayer())
 		{
-			User player = ess.getUser(target);
-			if (sender instanceof Player && player.isIgnoredPlayer(ess.getUser(sender)))
+			User player = ess.getUser(target.getPlayer());
+			if (sender.isPlayer() && player.isIgnoredPlayer(ess.getUser(sender.getPlayer())))
 			{
 				return;
 			}
 		}
-		target.sendMessage(_("msgFormat", senderName, _("me"), message));
+		target.sendMessage(tl("msgFormat", senderName, tl("me"), message));
 		replyTo.setReplyTo(target);
 		if (target != sender)
 		{
-			if (target instanceof Player)
+			if (target.isPlayer())
 			{
-				ess.getUser((Player)target).setReplyTo(sender);
+				ess.getUser(target.getPlayer()).setReplyTo(sender);
 			}
 			else
 			{

@@ -1,18 +1,18 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.DescParseTickFormat;
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
+import com.earth2me.essentials.utils.DescParseTickFormat;
 import java.util.*;
 import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Commandptime extends EssentialsCommand
 {
-	public static final Set<String> getAliases = new HashSet<String>();
+	private static final Set<String> getAliases = new HashSet<String>();
 
 	static
 	{
@@ -28,7 +28,7 @@ public class Commandptime extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		// Which Players(s) / Users(s) are we interested in?
 		String userSelector = null;
@@ -45,11 +45,14 @@ public class Commandptime extends EssentialsCommand
 			return;
 		}
 
-		User user = ess.getUser(sender);
-		if ((!users.contains(user) || users.size() > 1) && user != null && !user.isAuthorized("essentials.ptime.others"))
+		if (sender.isPlayer())
 		{
-			user.sendMessage(_("pTimeOthersPermission"));
-			return;
+			User user = ess.getUser(sender.getPlayer());
+			if (user != null && (!users.contains(user) || users.size() > 1) && !user.isAuthorized("essentials.ptime.others"))
+			{
+				user.sendMessage(tl("pTimeOthersPermission"));
+				return;
+			}
 		}
 
 		Long ticks;
@@ -89,29 +92,29 @@ public class Commandptime extends EssentialsCommand
 	/**
 	 * Used to get the time and inform
 	 */
-	private void getUsersTime(final CommandSender sender, final Collection<User> users)
+	private void getUsersTime(final CommandSource sender, final Collection<User> users)
 	{
 		if (users.size() > 1)
 		{
-			sender.sendMessage(_("pTimePlayers"));
+			sender.sendMessage(tl("pTimePlayers"));
 		}
 
 		for (User user : users)
 		{
-			if (user.getPlayerTimeOffset() == 0)
+			if (user.getBase().getPlayerTimeOffset() == 0)
 			{
-				sender.sendMessage(_("pTimeNormal", user.getName()));
+				sender.sendMessage(tl("pTimeNormal", user.getName()));
 			}
 			else
 			{
-				String time = DescParseTickFormat.format(user.getPlayerTime());
-				if (!user.isPlayerTimeRelative())
+				String time = DescParseTickFormat.format(user.getBase().getPlayerTime());
+				if (!user.getBase().isPlayerTimeRelative())
 				{
-					sender.sendMessage(_("pTimeCurrentFixed", user.getName(), time));
+					sender.sendMessage(tl("pTimeCurrentFixed", user.getName(), time));
 				}
 				else
 				{
-					sender.sendMessage(_("pTimeCurrent", user.getName(), time));
+					sender.sendMessage(tl("pTimeCurrent", user.getName(), time));
 				}
 			}
 		}
@@ -120,7 +123,7 @@ public class Commandptime extends EssentialsCommand
 	/**
 	 * Used to set the time and inform of the change
 	 */
-	private void setUsersTime(final CommandSender sender, final Collection<User> users, final Long ticks, Boolean relative)
+	private void setUsersTime(final CommandSource sender, final Collection<User> users, final Long ticks, Boolean relative)
 	{
 		// Update the time
 		if (ticks == null)
@@ -128,7 +131,7 @@ public class Commandptime extends EssentialsCommand
 			// Reset
 			for (User user : users)
 			{
-				user.resetPlayerTime();
+				user.getBase().resetPlayerTime();
 			}
 		}
 		else
@@ -137,14 +140,14 @@ public class Commandptime extends EssentialsCommand
 			for (User user : users)
 			{
 				final World world = user.getWorld();
-				long time = user.getPlayerTime();
+				long time = user.getBase().getPlayerTime();
 				time -= time % 24000;
 				time += 24000 + ticks;
 				if (relative)
 				{
 					time -= world.getTime();
 				}
-				user.setPlayerTime(time, relative);
+				user.getBase().setPlayerTime(time, relative);
 			}
 		}
 
@@ -162,18 +165,18 @@ public class Commandptime extends EssentialsCommand
 		// Inform the sender of the change
 		if (ticks == null)
 		{
-			sender.sendMessage(_("pTimeReset", msg.toString()));
+			sender.sendMessage(tl("pTimeReset", msg.toString()));
 		}
 		else
 		{
 			String time = DescParseTickFormat.format(ticks);
 			if (!relative)
 			{
-				sender.sendMessage(_("pTimeSetFixed", time, msg.toString()));
+				sender.sendMessage(tl("pTimeSetFixed", time, msg.toString()));
 			}
 			else
 			{
-				sender.sendMessage(_("pTimeSet", time, msg.toString()));
+				sender.sendMessage(tl("pTimeSet", time, msg.toString()));
 			}
 		}
 	}
@@ -181,23 +184,23 @@ public class Commandptime extends EssentialsCommand
 	/**
 	 * Used to parse an argument of the type "users(s) selector"
 	 */
-	private Set<User> getUsers(final Server server, final CommandSender sender, final String selector) throws Exception
+	private Set<User> getUsers(final Server server, final CommandSource sender, final String selector) throws Exception
 	{
 		final Set<User> users = new TreeSet<User>(new UserNameComparator());
 		// If there is no selector we want the sender itself. Or all users if sender isn't a user.
 		if (selector == null)
 		{
-			final User user = ess.getUser(sender);
-			if (user == null)
+			if (sender.isPlayer())
+			{
+				final User user = ess.getUser(sender.getPlayer());
+				users.add(user);
+			}
+			else
 			{
 				for (Player player : server.getOnlinePlayers())
 				{
 					users.add(ess.getUser(player));
 				}
-			}
-			else
-			{
-				users.add(user);
 			}
 			return users;
 		}
@@ -225,7 +228,7 @@ public class Commandptime extends EssentialsCommand
 		// We failed to understand the world target...
 		else
 		{
-			throw new Exception(_("playerNotFound"));
+			throw new PlayerNotFoundException();
 		}
 
 		return users;

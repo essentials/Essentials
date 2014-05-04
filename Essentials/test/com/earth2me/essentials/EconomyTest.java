@@ -1,10 +1,12 @@
 package com.earth2me.essentials;
 
-import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
 import java.io.IOException;
 import junit.framework.TestCase;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.fail;
+import net.ess3.api.Economy;
 import org.bukkit.World.Environment;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.junit.Test;
@@ -13,15 +15,15 @@ import org.junit.Test;
 public class EconomyTest extends TestCase
 {
 	private final transient Essentials ess;
-	private final static String NPCNAME = "npc1";
-	private final static String PLAYERNAME = "TestPlayer1";
+	private static final String NPCNAME = "npc1";
+	private static final String PLAYERNAME = "testPlayer1";
 
 	public EconomyTest(final String testName)
 	{
 		super(testName);
-		ess = new Essentials();
 		final FakeServer server = new FakeServer();
 		server.createWorld("testWorld", Environment.NORMAL);
+		ess = new Essentials(server);
 		try
 		{
 			ess.setupForTesting(server);
@@ -34,7 +36,7 @@ public class EconomyTest extends TestCase
 		{
 			fail("IOException");
 		}
-		server.addPlayer(new OfflinePlayer(PLAYERNAME, ess));
+		server.addPlayer(new OfflinePlayer(PLAYERNAME, ess.getServer()));
 	}
 
 	// only one big test, since we use static instances
@@ -87,8 +89,8 @@ public class EconomyTest extends TestCase
 		assertEquals("Format $1000", "$1000", Economy.format(1000.0));
 		assertEquals("Format $10", "$10", Economy.format(10.0));
 		assertEquals("Format $10.10", "$10.10", Economy.format(10.10));
-		assertEquals("Format $10.10", "$10.10", Economy.format(10.102));
-		assertEquals("Format $10.11", "$10.11", Economy.format(10.109));
+		assertEquals("Format $10.10", "$10.10", Economy.format(10.1000001));
+		assertEquals("Format $10.10", "$10.10", Economy.format(10.1099999));
 
 
 		//test Exceptions

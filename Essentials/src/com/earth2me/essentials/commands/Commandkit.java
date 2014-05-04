@@ -1,15 +1,15 @@
 package com.earth2me.essentials.commands;
 
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.CommandSource;
+import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Kit;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
-import com.earth2me.essentials.Util;
+import com.earth2me.essentials.utils.StringUtil;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 
 
 public class Commandkit extends EssentialsCommand
@@ -25,41 +25,42 @@ public class Commandkit extends EssentialsCommand
 		if (args.length < 1)
 		{
 			final String kitList = Kit.listKits(ess, user);
-			user.sendMessage(kitList.length() > 0 ? _("kits", kitList) : _("noKits"));
+			user.sendMessage(kitList.length() > 0 ? tl("kits", kitList) : tl("noKits"));
 			throw new NoChargeException();
 		}
 		else if (args.length > 1 && user.isAuthorized("essentials.kit.others"))
 		{
-			final User userTo = getPlayer(server, args, 1, true);
-			final String kitName = Util.sanitizeString(args[0].toLowerCase(Locale.ENGLISH)).trim();
+			final User userTo = getPlayer(server, user, args, 1);
+			final String kitName = StringUtil.sanitizeString(args[0].toLowerCase(Locale.ENGLISH)).trim();
 			giveKit(userTo, user, kitName);
 		}
 		else
 		{
-			final String kitName = Util.sanitizeString(args[0].toLowerCase(Locale.ENGLISH)).trim();
+			final String kitName = StringUtil.sanitizeString(args[0].toLowerCase(Locale.ENGLISH)).trim();
 			giveKit(user, user, kitName);
 		}
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
 			final String kitList = Kit.listKits(ess, null);
-			sender.sendMessage(kitList.length() > 0 ? _("kits", kitList) : _("noKits"));
+			sender.sendMessage(kitList.length() > 0 ? tl("kits", kitList) : tl("noKits"));
 			throw new NoChargeException();
 		}
 		else
 		{
-			final User userTo = getPlayer(server, args, 1, true);
+			final User userTo = getPlayer(server, args, 1, true, false);
 			final String kitName = args[0].toLowerCase(Locale.ENGLISH);
 
 			final Map<String, Object> kit = ess.getSettings().getKit(kitName);
-			final List<String> items = Kit.getItems(userTo, kit);
+			final List<String> items = Kit.getItems(ess, userTo, kitName, kit);
 			Kit.expandItems(ess, userTo, items);
 
-			sender.sendMessage(_("kitGive", kitName));
+			sender.sendMessage(tl("kitGiveTo", kitName, userTo.getDisplayName()));
+			userTo.sendMessage(tl("kitReceive", kitName));
 		}
 	}
 
@@ -67,26 +68,26 @@ public class Commandkit extends EssentialsCommand
 	{		
 		if (kitName.isEmpty())
 		{
-			throw new Exception(_("kitError2"));
+			throw new Exception(tl("kitError2"));
 		}
 		
 		final Map<String, Object> kit = ess.getSettings().getKit(kitName);
 
 		if (!userFrom.isAuthorized("essentials.kits." + kitName))
 		{
-			throw new Exception(_("noKitPermission", "essentials.kits." + kitName));
+			throw new Exception(tl("noKitPermission", "essentials.kits." + kitName));
 		}
 
-		final List<String> items = Kit.getItems(userTo, kit);
-
-		Kit.checkTime(userFrom, kitName, kit);
+		final List<String> items = Kit.getItems(ess, userTo, kitName, kit);
 
 		final Trade charge = new Trade("kit-" + kitName, ess);
 		charge.isAffordableFor(userFrom);
 
+		Kit.checkTime(userFrom, kitName, kit);
 		Kit.expandItems(ess, userTo, items);
 
 		charge.charge(userFrom);
-		userTo.sendMessage(_("kitGive", kitName));
+		userFrom.sendMessage(tl("kitGiveTo", kitName, userTo.getDisplayName()));
+		userTo.sendMessage(tl("kitReceive", kitName));
 	}
 }
