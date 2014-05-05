@@ -5,7 +5,6 @@ import com.earth2me.essentials.textreader.IText;
 import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.TextInput;
 import com.earth2me.essentials.textreader.TextPager;
-import com.earth2me.essentials.utils.DateUtil;
 import com.earth2me.essentials.utils.LocationUtil;
 import java.io.IOException;
 import java.util.Iterator;
@@ -14,9 +13,6 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.ess3.api.IEssentials;
-import org.bukkit.BanEntry;
-import org.bukkit.BanList;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -337,22 +333,7 @@ public class EssentialsPlayerListener implements Listener
 			user.getBase().setCompassTarget(updateLoc);
 		}
 	}
-	
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onPlayerLogin2(final PlayerLoginEvent event)
-	{
-		switch (event.getResult())
-		{
-		case KICK_BANNED:
-			break;
-		default:
-			return;
-		}
-		
-		final String banReason = Bukkit.getBanList(BanList.Type.NAME).getBanEntry(event.getPlayer().toString()).getReason();
-		event.disallow(Result.KICK_BANNED, banReason);
-	}
-	
+
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerLogin(final PlayerLoginEvent event)
 	{
