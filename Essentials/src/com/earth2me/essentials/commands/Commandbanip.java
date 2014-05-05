@@ -6,6 +6,8 @@ import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.FormatUtil;
 import java.util.logging.Level;
+import org.bukkit.BanList;
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 
 
@@ -48,8 +50,18 @@ public class Commandbanip extends EssentialsCommand
 		{
 			throw new PlayerNotFoundException();
 		}
+		
+		String banReason;
+		if (args.length > 1)
+		{
+			banReason = FormatUtil.replaceFormat(getFinalArg(args, 1).replace("\\n", "\n").replace("|", "\n"));
+		}
+		else
+		{
+			banReason = tl("defaultBanReason");
+		}
 
-		ess.getServer().banIP(ipAddress);
+		Bukkit.getBanList(BanList.Type.IP).addBan(ipAddress, banReason, null, senderName);
 		server.getLogger().log(Level.INFO, tl("playerBanIpAddress", senderName, ipAddress));
 
 		ess.broadcastMessage("essentials.ban.notify", tl("playerBanIpAddress", senderName, ipAddress));
