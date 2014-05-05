@@ -16,8 +16,6 @@ import net.ess3.api.IEssentials;
 import net.ess3.api.MaxMoneyException;
 import net.ess3.api.events.AfkStatusChangeEvent;
 import net.ess3.api.events.UserBalanceUpdateEvent;
-import org.bukkit.BanList;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -578,18 +576,6 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 			setMuteTimeout(0);
 			sendMessage(tl("canTalkAgain"));
 			setMuted(false);
-			return true;
-		}
-		return false;
-	}
-
-	//Returns true if status expired during this check
-	public boolean checkBanTimeout(final long currentTime)
-	{
-		if (getBanTimeout() > 0 && getBanTimeout() < currentTime && this.getBase().isBanned())
-		{
-			setBanTimeout(0);
-			Bukkit.getBanList(BanList.Type.NAME).pardon(this.getBase().getName());
 			return true;
 		}
 		return false;

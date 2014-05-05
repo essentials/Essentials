@@ -367,26 +367,6 @@ public class EssentialsPlayerListener implements Listener
 		
 		final User user = ess.getUser(event.getPlayer());
 		
-		if (event.getResult() == Result.KICK_BANNED || user.getBase().isBanned())
-		{
-			final boolean banExpired = user.checkBanTimeout(System.currentTimeMillis());
-			if (!banExpired)
-			{
-				String banReason = user.getBanReason();
-				if (banReason == null || banReason.isEmpty() || banReason.equalsIgnoreCase("ban"))
-				{
-					banReason = event.getKickMessage();
-				}
-				if (user.getBanTimeout() > 0)
-				{
-					//TODO: TL This
-					banReason += "\n\n" + "Expires in " + DateUtil.formatDateDiff(user.getBanTimeout());
-				}
-				event.disallow(Result.KICK_BANNED, banReason);
-				return;
-			}
-		}
-		
 		if (event.getResult() == Result.KICK_FULL && !user.isAuthorized("essentials.joinfullserver"))
 		{
 			event.disallow(Result.KICK_FULL, tl("serverFull"));

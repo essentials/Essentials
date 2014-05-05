@@ -31,8 +31,6 @@ public class Commandunban extends EssentialsCommand
 			final User user = getPlayer(server, args, 0, true, true);
 			name = user.getName();
 			Bukkit.getBanList(BanList.Type.NAME).pardon(name);
-			user.setBanTimeout(0);
-			user.setBanReason("");
 		}
 		catch (NoSuchFieldException e)
 		{

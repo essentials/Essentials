@@ -59,8 +59,6 @@ public class Commandtempban extends EssentialsCommand
 		final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
 		final String banReason = tl("tempBanned", DateUtil.formatDateDiff(banTimestamp), senderName);
 
-		user.setBanReason(banReason);
-		user.setBanTimeout(banTimestamp);
 		Bukkit.getBanList(BanList.Type.NAME).addBan(user.getName(), banReason, new Date(banTimestamp), senderName);
 		user.getBase().kickPlayer(banReason);
 
