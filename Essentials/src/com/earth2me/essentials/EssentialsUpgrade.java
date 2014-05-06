@@ -700,7 +700,11 @@ public class EssentialsUpgrade
 					//No ban timeout set, or malformed timeout.
 					banTimeout = 0L;
 				}
-				updateBan(playerName, banReason, banTimeout);
+				org.bukkit.OfflinePlayer player = ess.getServer().getOfflinePlayer(playerName);
+				if (player.isBanned())
+				{
+					updateBan(playerName, banReason, banTimeout);
+				}
 			}
 			conf.removeProperty("ban");
 			conf.save();
