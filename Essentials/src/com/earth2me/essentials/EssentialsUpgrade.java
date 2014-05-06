@@ -26,6 +26,7 @@ public class EssentialsUpgrade
 	private final transient IEssentials ess;
 	private final transient EssentialsConf doneFile;
 	private String banReason;
+	private Long banTimeout;
 
 	EssentialsUpgrade(final IEssentials essentials)
 	{
@@ -502,13 +503,13 @@ public class EssentialsUpgrade
 		{
 			return;
 		}
-		
+
 		final File userdir = new File(ess.getDataFolder(), "userdata");
 		if (!userdir.exists())
 		{
 			return;
 		}
-		
+
 		int countFiles = 0;
 		int countReqFiles = 0;
 		for (String string : userdir.list())
@@ -517,12 +518,12 @@ public class EssentialsUpgrade
 			{
 				continue;
 			}
-			
+
 			countFiles++;
-			
+
 			final String name = string.substring(0, string.length() - 4);
 			UUID uuid = null;
-			
+
 			try
 			{
 				uuid = UUID.fromString(name);
@@ -531,21 +532,21 @@ public class EssentialsUpgrade
 			{
 				countReqFiles++;
 			}
-			
+
 			if (countFiles > 100)
 			{
 				break;
-			}			
+			}
 		}
-		
+
 		if (countReqFiles < 1)
 		{
 			return;
 		}
-				
+
 		ess.getLogger().info("#### Starting Essentials UUID userdata conversion in a few seconds. ####");
 		ess.getLogger().info("We recommend you take a backup of your server before upgrading from the old username system.");
-		
+
 		try
 		{
 			Thread.sleep(10000);
@@ -627,7 +628,7 @@ public class EssentialsUpgrade
 							uuid = UUID.nameUUIDFromBytes(("NPC:" + name).getBytes(Charsets.UTF_8));
 							break;
 						}
-						
+
 						org.bukkit.OfflinePlayer player = ess.getServer().getOfflinePlayer(name);
 						uuid = player.getUniqueId();
 					}
@@ -636,7 +637,7 @@ public class EssentialsUpgrade
 					{
 						countBukkit++;
 						break;
-					}					
+					}
 				}
 
 				if (uuid != null)
@@ -651,19 +652,19 @@ public class EssentialsUpgrade
 			}
 		}
 		ess.getUserMap().getUUIDMap().forceWriteUUIDMap();
-        
+
 		ess.getLogger().info("Converted " + countFiles + "/" + countFiles + ".  Conversion complete.");
 		ess.getLogger().info("Converted via cache: " + countEssCache + " :: Converted via lookup: " + countBukkit + " :: Failed to convert: " + countFails);
 		ess.getLogger().info("To rerun the conversion type /essentials uuidconvert");
 	}
-	
+
 	public void banFormatChange()
 	{
 		if (doneFile.getBoolean("banFormatChange", false))
 		{
 			return;
 		}
-		
+
 		ess.getLogger().info("Starting Essentials ban format conversion");
 
 		final File userdir = new File(ess.getDataFolder(), "userdata");
@@ -672,6 +673,7 @@ public class EssentialsUpgrade
 			return;
 		}
 		File[] playerFiles = userdir.listFiles();
+
 		for (File pFile : playerFiles)
 		{
 			EssentialsConf conf = new EssentialsConf(pFile);
@@ -689,14 +691,24 @@ public class EssentialsUpgrade
 			String playerName = conf.getString("lastAccountName");
 			if (!banReason.equals(""))
 			{
-				Long banTimeout = Long.parseLong(conf.getConfigurationSection("ban").getString("timeout"));
+				try
+				{
+					banTimeout = Long.parseLong(conf.getConfigurationSection("ban").getString("timeout"));
+				}
+				catch (NumberFormatException n)
+				{
+					//No ban timeout set, or malformed timeout.
+					banTimeout = 0L;
+				}
 				updateBan(playerName, banReason, banTimeout);
 			}
 			conf.removeProperty("ban");
 			conf.save();
 		}
+
 		doneFile.setProperty("banFormatChange", true);
 		doneFile.save();
+		ess.getLogger().info("Ban format update complete.");
 	}
 
 	private void updateBan(String playerName, String banReason, Long banTimeout)
@@ -710,7 +722,7 @@ public class EssentialsUpgrade
 			Bukkit.getBanList(BanList.Type.NAME).addBan(playerName, banReason, new Date(banTimeout), Console.NAME);
 		}
 	}
-		
+
 	public void beforeSettings()
 	{
 		if (!ess.getDataFolder().exists())
