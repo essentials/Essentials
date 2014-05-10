@@ -47,6 +47,10 @@ public interface ISettings extends IConf
 	double getHealCooldown();
 
 	Set<String> getSocialSpyCommands();
+        
+	Object getWorldPriceMultiplier(String name);
+
+	ConfigurationSection getWorldPriceMultipliers();        
 
 	Map<String, Object> getKit(String name);
 
