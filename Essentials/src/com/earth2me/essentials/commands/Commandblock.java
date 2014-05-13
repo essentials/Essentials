@@ -77,12 +77,12 @@ public class Commandblock extends EssentialsCommand {
 				for (ItemStack itemStack : player.getInventory().getContents()) {
 					if (itemStack != null) {
 						Material itemType = itemStack.getType();
-						int blockAmount = (int) (itemStack.getAmount() / 9);
-						int leftOver = itemStack.getAmount() % 9;
-						short oldData = itemStack.getDurability();
 						if (this.blockMaterials.containsKey(itemType) && this.blockData.containsKey(itemType)) {
 							Material newType = this.blockMaterials.get(itemType);
 							if (newType != null) {
+								int blockAmount = (int) (itemStack.getAmount() / 9);
+								int leftOver = itemStack.getAmount() % 9;
+								short oldData = itemStack.getDurability();
 								if (this.blockOldData.containsKey(itemType)) {
 									if (oldData != this.blockOldData.get(itemType)) continue;
 								}
@@ -109,7 +109,7 @@ public class Commandblock extends EssentialsCommand {
 				} else {
 					user.sendMessage(tl("itemsNotConverted"));
 				}
-				// Update user inventory if necessary?
+				user.getBase().updateInventory()
 			} else {
 				throw new Exception(tl("noPerm", "essentials.block"));
 			}
