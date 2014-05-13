@@ -1,15 +1,16 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.User;
+import static com.earth2me.essentials.I18n.tl;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.earth2me.essentials.I18n._;
+import com.earth2me.essentials.User;
 
 public class Commandblock extends EssentialsCommand {
     protected Commandblock() {
@@ -61,16 +62,16 @@ public class Commandblock extends EssentialsCommand {
                     }
                 }
                 if (!spareItems.isEmpty()) {
-                    user.sendMessage(_("itemsInventoryFull"));
+                    user.sendMessage(tl("itemsInventoryFull"));
                 }
                 if (converted) {
-                    user.sendMessage(_("itemsConverted"));
+                    user.sendMessage(tl("itemsConverted"));
                 } else {
-                    user.sendMessage(_("itemsNotConverted"));
+                    user.sendMessage(tl("itemsNotConverted"));
                 }
-				// Update user inventory if necessary?
+		// Update user inventory if necessary?
             } else {
-                throw new Exception(_("noPerm", "essentials.block"));
+                throw new Exception(tl("noPerm", "essentials.block"));
             }
         } else {
             throw new NotEnoughArgumentsException();
