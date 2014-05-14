@@ -109,7 +109,7 @@ public class Commandblock extends EssentialsCommand {
 				} else {
 					user.sendMessage(tl("itemsNotConverted"));
 				}
-				user.getBase().updateInventory()
+				user.getBase().updateInventory();
 			} else {
 				throw new Exception(tl("noPerm", "essentials.block"));
 			}
