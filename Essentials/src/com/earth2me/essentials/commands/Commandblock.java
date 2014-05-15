@@ -33,9 +33,9 @@ public class Commandblock extends EssentialsCommand {
 		for (Recipe recipe : recipeList) {
 			if (recipe instanceof ShapedRecipe) {
 				ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
-				if (shapedRecipe.getResult() != null && shapedRecipe.getResult().getType().isBlock()) {
+				if (shapedRecipe.getResult() != null && shapedRecipe.getResult().getType() != Material.AIR && shapedRecipe.getResult().getType().isBlock()) {
 					Map<Character, ItemStack> ingredientMap = shapedRecipe.getIngredientMap();
-					if (ingredientMap != null && ingredientMap.size() == 9) {
+					if (ingredientMap != null) {
 						Material firstMaterial = Material.AIR;
 						short firstData = 0;
 						boolean isFirst = true;
@@ -56,9 +56,9 @@ public class Commandblock extends EssentialsCommand {
 						}
 						if (sameSize == 8) {
 							if (firstMaterial != Material.AIR) {
-								this.blockMaterials.put(firstMaterial, shapedRecipe.getResult().getType());
-								this.blockData.put(firstMaterial, shapedRecipe.getResult().getDurability());
-								if (firstData != 0) this.blockOldData.put(firstMaterial, firstData);
+								blockMaterials.put(firstMaterial, shapedRecipe.getResult().getType());
+								blockData.put(firstMaterial, shapedRecipe.getResult().getDurability());
+								if (firstData != 0) blockOldData.put(firstMaterial, firstData);
 							}
 						}
 					}
@@ -73,6 +73,7 @@ public class Commandblock extends EssentialsCommand {
 		if (args.length == 0) {
 			Player player = user.getBase();
 			boolean converted = false;
+			List<ItemStack> unconvertedItems = new ArrayList<ItemStack>();
 			Map<Integer, ItemStack> spareItems = new HashMap<Integer, ItemStack>();
 			for (ItemStack itemStack : player.getInventory().getContents()) {
 				if (itemStack != null) {
@@ -88,12 +89,18 @@ public class Commandblock extends EssentialsCommand {
 							}
 							if (blockAmount > 0) {
 								player.getInventory().remove(itemStack);
-								player.getInventory().addItem(new ItemStack(newType, blockAmount, this.blockData.get(itemType)));
+								short blockData = this.blockData.get(itemType);
+								spareItems.putAll(player.getInventory().addItem(new ItemStack(newType, blockAmount, blockData)));
 								if (!converted) converted = true;
-								spareItems.putAll(player.getInventory().addItem(new ItemStack(itemType, leftOver, oldData)));
+								if (leftOver > 0) unconvertedItems.add(new ItemStack(itemType, leftOver, oldData));
 							}
 						}
 					}
+				}
+			}
+			for (ItemStack itemStack : unconvertedItems) {
+				if (itemStack != null) {
+					spareItems.putAll(player.getInventory().addItem(itemStack));
 				}
 			}
 			for (ItemStack itemStack : spareItems.values()) {
@@ -102,12 +109,12 @@ public class Commandblock extends EssentialsCommand {
 				}
 			}
 			if (!spareItems.isEmpty()) {
-				user.sendMessage(tl("itemsInventoryFull"));
+				player.sendMessage(tl("itemsInventoryFull"));
 			}
 			if (converted) {
-				user.sendMessage(tl("itemsConverted"));
+				player.sendMessage(tl("itemsConverted"));
 			} else {
-				user.sendMessage(tl("itemsNotConverted"));
+				player.sendMessage(tl("itemsNotConverted"));
 			}
 			player.updateInventory();
 		} else {
