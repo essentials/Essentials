@@ -25,7 +25,7 @@ public class Commandblock extends EssentialsCommand {
 
 	protected Commandblock() {
 		super("block");
-		
+
 		Iterator<Recipe> recipeIter = Bukkit.getServer().recipeIterator();
 		List<Recipe> recipeList = new ArrayList<Recipe>();
 		while (recipeIter.hasNext())
@@ -67,52 +67,49 @@ public class Commandblock extends EssentialsCommand {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception {
 		if (args.length == 0) {
-			if (user.isAuthorized("essentials.block")) {
-				Player player = user.getBase();
-				boolean converted = false;
-				Map<Integer, ItemStack> spareItems = new HashMap<Integer, ItemStack>();
-				for (ItemStack itemStack : player.getInventory().getContents()) {
-					if (itemStack != null) {
-						Material itemType = itemStack.getType();
-						if (this.blockMaterials.containsKey(itemType) && this.blockData.containsKey(itemType)) {
-							Material newType = this.blockMaterials.get(itemType);
-							if (newType != null) {
-								int blockAmount = (int) (itemStack.getAmount() / 9);
-								int leftOver = itemStack.getAmount() % 9;
-								short oldData = itemStack.getDurability();
-								if (this.blockOldData.containsKey(itemType)) {
-									if (oldData != this.blockOldData.get(itemType)) continue;
-								}
-								if (blockAmount > 0) {
-									player.getInventory().remove(itemStack);
-									player.getInventory().addItem(new ItemStack(newType, blockAmount, this.blockData.get(itemType)));
-									if (!converted) converted = true;
-									spareItems.putAll(player.getInventory().addItem(new ItemStack(itemType, leftOver, oldData)));
-								}
+			Player player = user.getBase();
+			boolean converted = false;
+			Map<Integer, ItemStack> spareItems = new HashMap<Integer, ItemStack>();
+			for (ItemStack itemStack : player.getInventory().getContents()) {
+				if (itemStack != null) {
+					Material itemType = itemStack.getType();
+					int blockAmount = (int) (itemStack.getAmount() / 9);
+					int leftOver = itemStack.getAmount() % 9;
+					short oldData = itemStack.getDurability();
+					if (this.blockMaterials.containsKey(itemType) && this.blockData.containsKey(itemType)) {
+						Material newType = this.blockMaterials.get(itemType);
+						if (newType != null) {
+							if (this.blockOldData.containsKey(itemType)) {
+								if (oldData != this.blockOldData.get(itemType)) continue;
+							}
+							if (blockAmount > 0) {
+								player.getInventory().remove(itemStack);
+								player.getInventory().addItem(new ItemStack(newType, blockAmount, this.blockData.get(itemType)));
+								if (!converted) converted = true;
+								spareItems.putAll(player.getInventory().addItem(new ItemStack(itemType, leftOver, oldData)));
 							}
 						}
 					}
 				}
-				for (ItemStack itemStack : spareItems.values()) {
-					if (itemStack != null) {
-						player.getWorld().dropItem(player.getLocation(), itemStack);
-					}
-				}
-				if (!spareItems.isEmpty()) {
-					user.sendMessage(tl("itemsInventoryFull"));
-				}
-				if (converted) {
-					user.sendMessage(tl("itemsConverted"));
-				} else {
-					user.sendMessage(tl("itemsNotConverted"));
-				}
-				user.getBase().updateInventory();
-			} else {
-				throw new Exception(tl("noPerm", "essentials.block"));
 			}
+			for (ItemStack itemStack : spareItems.values()) {
+				if (itemStack != null) {
+					player.getWorld().dropItem(player.getLocation(), itemStack);
+				}
+			}
+			if (!spareItems.isEmpty()) {
+				user.sendMessage(tl("itemsInventoryFull"));
+			}
+			if (converted) {
+				user.sendMessage(tl("itemsConverted"));
+			} else {
+				user.sendMessage(tl("itemsNotConverted"));
+			}
+			player.updateInventory();
 		} else {
 			throw new NotEnoughArgumentsException();
 		}
