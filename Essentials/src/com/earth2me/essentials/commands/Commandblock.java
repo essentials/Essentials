@@ -109,12 +109,12 @@ public class Commandblock extends EssentialsCommand {
 				}
 			}
 			if (!spareItems.isEmpty()) {
-				player.sendMessage(tl("itemsInventoryFull"));
+				user.sendMessage(tl("itemsInventoryFull"));
 			}
 			if (converted) {
-				player.sendMessage(tl("itemsConverted"));
+				user.sendMessage(tl("itemsConverted"));
 			} else {
-				player.sendMessage(tl("itemsNotConverted"));
+				user.sendMessage(tl("itemsNotConverted"));
 			}
 			player.updateInventory();
 		} else {
