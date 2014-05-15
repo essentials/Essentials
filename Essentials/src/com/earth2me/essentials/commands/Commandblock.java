@@ -56,9 +56,9 @@ public class Commandblock extends EssentialsCommand {
 						}
 						if (sameSize == 8) {
 							if (firstMaterial != Material.AIR) {
-								blockMaterials.put(firstMaterial, shapedRecipe.getResult().getType());
-								blockData.put(firstMaterial, shapedRecipe.getResult().getDurability());
-								if (firstData != 0) blockOldData.put(firstMaterial, firstData);
+								this.blockMaterials.put(firstMaterial, shapedRecipe.getResult().getType());
+								this.blockData.put(firstMaterial, shapedRecipe.getResult().getDurability());
+								if (firstData != 0) this.blockOldData.put(firstMaterial, firstData);
 							}
 						}
 					}
