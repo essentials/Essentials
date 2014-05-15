@@ -38,7 +38,7 @@ public class Commandblock extends EssentialsCommand {
 					if (ingredientMap != null && ingredientMap.size() == 9) {
 						Material firstMaterial = Material.AIR;
 						short firstData = 0;
-						boolean isFirst = false;
+						boolean isFirst = true;
 						int sameSize = 0;
 						for (Map.Entry<Character, ItemStack> ingredientEntry : ingredientMap.entrySet()) {
 							if (ingredientEntry.getValue() != null && ingredientEntry.getValue().getType() != Material.AIR) {
