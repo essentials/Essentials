@@ -39,9 +39,6 @@ commands:
     description: Bans an IP address.
     usage: /<command> <address>
     aliases: [ebanip]
-  block:
-    description: Convert all items into block forms.
-    usage: /<command>
   book:
     description: Allows reopening and editing of sealed books.
     usage: /<command> [title|author [name]]
@@ -70,6 +67,9 @@ commands:
     description: Describes your current bearing.
     usage: /<command>
     aliases: [ecompass,direction,edirection]
+  condense:
+    description: Condense items into block forms.
+    usage: /<command> [items]
   customtext:
     description: Allows you to create custom text commands.
     usage: /<alias> - Define in bukkit.yml
