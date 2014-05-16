@@ -30,6 +30,7 @@ public class Commandcondense extends EssentialsCommand {
 
 	private Map<ItemStack, SimpleRecipe> condenseList = new HashMap<ItemStack, SimpleRecipe>();
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception {
 		Player player = user.getBase();
@@ -48,13 +49,17 @@ public class Commandcondense extends EssentialsCommand {
 			validateReverse = true;
 		}
 
+		boolean didConvert = false;
 		for (final ItemStack itemStack : is) {
-			condenseStack(user, itemStack, validateReverse);
+			if (condenseStack(user, itemStack, validateReverse)) didConvert = true;
 		}
 		player.updateInventory();
+
+		if (didConvert) player.sendMessage(tl("itemsConverted"));
+		else player.sendMessage(tl("itemsNotConverted"));
 	}
 
-	private void condenseStack(final User user, final ItemStack stack, final boolean validateReverse) throws ChargeException, MaxMoneyException {
+	private boolean condenseStack(final User user, final ItemStack stack, final boolean validateReverse) throws ChargeException, MaxMoneyException {
 		final SimpleRecipe condenseType = getCondenseType(stack);
 		if (condenseType != null) {
 			final ItemStack input = condenseType.getInput();
@@ -68,7 +73,7 @@ public class Commandcondense extends EssentialsCommand {
 						break;
 					}
 				}
-				if (!pass) return;
+				if (!pass) return false;
 			}
 
 			int amount = 0;
@@ -87,8 +92,10 @@ public class Commandcondense extends EssentialsCommand {
 				result.setAmount(output);
 				new Trade(input, this.ess).charge(user);
 				new Trade(result, this.ess).pay(user, OverflowType.DROP);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	private SimpleRecipe getCondenseType(final ItemStack stack) {
