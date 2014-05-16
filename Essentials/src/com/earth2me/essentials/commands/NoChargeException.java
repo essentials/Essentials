@@ -7,4 +7,9 @@ public class NoChargeException extends Exception
 	{
 		super("Will charge later");
 	}
+
+	public NoChargeException(String message)
+	{
+		super(message);
+	}
 }

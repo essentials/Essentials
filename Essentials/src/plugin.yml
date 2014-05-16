@@ -67,6 +67,9 @@ commands:
     description: Describes your current bearing.
     usage: /<command>
     aliases: [ecompass,direction,edirection]
+  condense:
+    description: Condense items into block forms.
+    usage: /<command> [items]
   customtext:
     description: Allows you to create custom text commands.
     usage: /<alias> - Define in bukkit.yml
