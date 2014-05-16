@@ -1,34 +1,35 @@
 package com.earth2me.essentials.commands;
 
-import com.earth2me.essentials.ChargeException;
-import com.earth2me.essentials.Trade;
-import com.earth2me.essentials.Trade.OverflowType;
-import com.earth2me.essentials.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import net.ess3.api.MaxMoneyException;
-import org.bukkit.Bukkit;
+
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
+import com.earth2me.essentials.ChargeException;
+import com.earth2me.essentials.Trade;
+import com.earth2me.essentials.Trade.OverflowType;
+import com.earth2me.essentials.User;
 
 public class Commandcondense extends EssentialsCommand {
 	
 	public Commandcondense() {
 		super("condense");
 	}
-	
+
 	private Map<ItemStack, SimpleRecipe> condenseList = new HashMap<ItemStack, SimpleRecipe>();
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception {
 		Player player = user.getBase();
@@ -165,3 +166,4 @@ public class Commandcondense extends EssentialsCommand {
 		}
 	}
 }
+
