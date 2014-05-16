@@ -30,7 +30,6 @@ public class Commandcondense extends EssentialsCommand {
 
 	private Map<ItemStack, SimpleRecipe> condenseList = new HashMap<ItemStack, SimpleRecipe>();
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception {
 		Player player = user.getBase();
@@ -56,7 +55,7 @@ public class Commandcondense extends EssentialsCommand {
 		player.updateInventory();
 
 		if (didConvert) player.sendMessage(tl("itemsConverted"));
-		else player.sendMessage(tl("itemsNotConverted"));
+		else throw new NoChargeException(tl("itemsNotConverted"));
 	}
 
 	private boolean condenseStack(final User user, final ItemStack stack, final boolean validateReverse) throws ChargeException, MaxMoneyException {
