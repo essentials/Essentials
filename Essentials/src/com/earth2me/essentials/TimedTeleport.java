@@ -50,7 +50,7 @@ public class TimedTeleport implements Runnable
 		this.timer_respawn = respawn;
 		this.timer_canMove = user.isAuthorized("essentials.teleport.timer.move");
 
-		timer_task = ess.scheduleSyncRepeatingTask(this, 20, 20);
+		timer_task = ess.getServer().getScheduler().runTaskTimerAsynchronously(ess, this, 20, 20).getTaskId();
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class TimedTeleport implements Runnable
 			return;
 		}
 
-		IUser teleportUser = ess.getUser(this.timer_teleportee);
+		final IUser teleportUser = ess.getUser(this.timer_teleportee);
 
 		if (teleportUser == null || !teleportUser.getBase().isOnline())
 		{
@@ -109,22 +109,35 @@ public class TimedTeleport implements Runnable
 			{
 				cancelTimer(false);
 				teleportUser.sendMessage(tl("teleportationCommencing"));
-				if (timer_chargeFor != null)
+                ess.scheduleSyncDelayedTask(new Runnable()
 				{
-					timer_chargeFor.isAffordableFor(teleportOwner);
-				}
-				if (timer_respawn)
-				{
-					teleport.respawnNow(teleportUser, timer_cause);
-				}
-				else
-				{
-					teleport.now(teleportUser, timer_teleportTarget, timer_cause);
-				}
-				if (timer_chargeFor != null)
-				{
-					timer_chargeFor.charge(teleportOwner);
-				}
+					@Override
+					public void run()
+					{
+						try
+						{
+							if (timer_chargeFor != null)
+							{
+								timer_chargeFor.isAffordableFor(teleportOwner);
+							}
+							if (timer_respawn)
+							{
+								teleport.respawnNow(teleportUser, timer_cause);
+							}
+							else
+							{
+								teleport.now(teleportUser, timer_teleportTarget, timer_cause);
+							}
+							if (timer_chargeFor != null)
+							{
+								timer_chargeFor.charge(teleportOwner);
+							}
+						}
+						catch (Exception ex)
+						{
+						}
+					}
+				});
 			}
 			catch (Exception ex)
 			{
