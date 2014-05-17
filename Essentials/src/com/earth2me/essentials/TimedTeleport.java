@@ -93,27 +93,29 @@ public class TimedTeleport implements Runnable
 		final long now = System.currentTimeMillis();
 		if (now > timer_started + timer_delay)
 		{
-			try
+			ess.scheduleSyncDelayedTask(new Runnable()
 			{
-				teleport.cooldown(false);
-			}
-			catch (Exception ex)
-			{
-				teleportOwner.sendMessage(tl("cooldownWithMessage", ex.getMessage()));
-				if (teleportOwner != teleportUser)
+				@Override
+				public void run()
 				{
-					teleportUser.sendMessage(tl("cooldownWithMessage", ex.getMessage()));
-				}
-			}
-			try
-			{
-				cancelTimer(false);
-				teleportUser.sendMessage(tl("teleportationCommencing"));
-                ess.scheduleSyncDelayedTask(new Runnable()
-				{
-					@Override
-					public void run()
+					try
 					{
+						teleport.cooldown(false);
+					}
+					catch (Exception ex)
+					{
+						teleportOwner.sendMessage(tl("cooldownWithMessage", ex.getMessage()));
+						if (teleportOwner != teleportUser)
+						{
+							teleportUser.sendMessage(tl("cooldownWithMessage", ex.getMessage()));
+						}
+					}
+
+					try
+					{
+						cancelTimer(false);
+						teleportUser.sendMessage(tl("teleportationCommencing"));
+
 						try
 						{
 							if (timer_chargeFor != null)
@@ -137,13 +139,14 @@ public class TimedTeleport implements Runnable
 						{
 						}
 					}
-				});
-			}
-			catch (Exception ex)
-			{
-				ess.showError(teleportOwner.getSource(), ex, "\\ teleport");
-			}
 
+					catch (Exception ex)
+					{
+						ess.showError(teleportOwner.getSource(), ex, "\\ teleport");
+					}
+
+				}
+			});
 		}
 	}
 
