@@ -94,7 +94,7 @@ public class EssentialsPlayerListener implements Listener
 		user.setDisplayNick();
 	}
 
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerMove(final PlayerMoveEvent event)
 	{
 		if (event.getFrom().getBlockX() == event.getTo().getBlockX()
