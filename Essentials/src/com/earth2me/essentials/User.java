@@ -1,18 +1,11 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.commands.IEssentialsCommand;
 import com.earth2me.essentials.register.payment.Method;
 import com.earth2me.essentials.register.payment.Methods;
 import com.earth2me.essentials.utils.DateUtil;
 import com.earth2me.essentials.utils.FormatUtil;
 import com.earth2me.essentials.utils.NumberUtil;
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.ess3.api.IEssentials;
 import net.ess3.api.MaxMoneyException;
 import net.ess3.api.events.AfkStatusChangeEvent;
@@ -23,6 +16,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static com.earth2me.essentials.I18n.tl;
 
 
 public class User extends UserData implements Comparable<User>, IReplyTo, net.ess3.api.IUser
@@ -306,7 +308,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 		else
 		{
 			nickname = ess.getSettings().getNicknamePrefix() + nick;
-			suffix = "§r";
+			suffix = ChatColor.RESET.toString();
 		}
 
 		if (this.getBase().isOp())
@@ -317,7 +319,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 				if (opPrefix != null && opPrefix.toString().length() > 0)
 				{
 					prefix.insert(0, opPrefix.toString());
-					suffix = "§r";
+					suffix = ChatColor.RESET.toString();
 				}
 			}
 			catch (Exception e)
@@ -330,15 +332,15 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 			//These two extra toggles are not documented, because they are mostly redundant #EasterEgg
 			if (!ess.getSettings().disablePrefix())
 			{
-				final String ptext = ess.getPermissionsHandler().getPrefix(base).replace('&', '§');
+				final String ptext = ess.getPermissionsHandler().getPrefix(base).replace('&', ChatColor.COLOR_CHAR);
 				prefix.insert(0, ptext);
-				suffix = "§r";
+				suffix = ChatColor.RESET.toString();
 			}
 			if (!ess.getSettings().disableSuffix())
 			{
-				final String stext = ess.getPermissionsHandler().getSuffix(base).replace('&', '§');
-				suffix = stext + "§r";
-				suffix = suffix.replace("§f§f", "§f").replace("§f§r", "§r").replace("§r§r", "§r");
+				final String stext = ess.getPermissionsHandler().getSuffix(base).replace('&', ChatColor.COLOR_CHAR);
+				suffix = stext + ChatColor.RESET;
+				suffix = suffix.replace(ChatColor.WHITE.toString() + ChatColor.WHITE.toString(), ChatColor.WHITE.toString()).replace(ChatColor.WHITE.toString() + ChatColor.RESET.toString(), ChatColor.RESET.toString()).replace(ChatColor.RESET.toString() + ChatColor.RESET.toString(), ChatColor.RESET.toString());
 			}
 		}
 		final String strPrefix = prefix.toString();
@@ -355,7 +357,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 		{
 			output = FormatUtil.lastCode(strPrefix) + nickname.substring(0, 14);
 		}
-		if (output.charAt(output.length() - 1) == '§')
+		if (output.charAt(output.length() - 1) == ChatColor.COLOR_CHAR)
 		{
 			output = output.substring(0, output.length() - 1);
 		}
