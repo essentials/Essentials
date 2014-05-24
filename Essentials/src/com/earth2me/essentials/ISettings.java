@@ -197,6 +197,8 @@ public interface ISettings extends IConf
 	void setEssentialsChatActive(boolean b);
 
 	long getMaxTempban();
+	
+	int getMaxHealth();
 
 	Map<String, Object> getListGroupConfig();
 
