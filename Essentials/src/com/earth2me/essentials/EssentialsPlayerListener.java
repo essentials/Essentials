@@ -220,20 +220,21 @@ public class EssentialsPlayerListener implements Listener
 		dUser.checkMuteTimeout(currentTime);
 		dUser.updateActivity(false);
 
+		final User user = ess.getUser(player);
+
+		if (!user.getBase().isOnline())
+		{
+			return;
+		}
+
+		user.setLastAccountName(user.getBase().getName());
+		user.setLastLogin(currentTime);
+
 		class DelayJoinTask implements Runnable
 		{
 			@Override
 			public void run()
 			{
-				final User user = ess.getUser(player);
-
-				if (!user.getBase().isOnline())
-				{
-					return;
-				}
-
-				user.setLastAccountName(user.getBase().getName());
-				user.setLastLogin(currentTime);
 				user.setDisplayNick();
 				updateCompass(user);
 
