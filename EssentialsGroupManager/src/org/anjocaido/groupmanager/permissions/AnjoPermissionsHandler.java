@@ -1072,9 +1072,11 @@ public class AnjoPermissionsHandler extends PermissionsReaderInterface {
 					return resultNow;
 				}
 				
-				// Negation found so store for later
-				// as we need to continue looking for an Exception.
-				result = resultNow;
+				if (!result.resultType.equals(PermissionCheckResult.Type.NEGATION)) {
+					// No Negation found so store for later
+					// as we need to continue looking for an Exception.
+					result = resultNow;
+				}
 			}
 			
 			for (String sonName : now.getInherits()) {
