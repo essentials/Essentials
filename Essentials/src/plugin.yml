@@ -230,6 +230,10 @@ commands:
     description: Manages inter-player, intra-server mail.
     usage: /<command> [read|clear|send [to] [message]|sendall [message]]
     aliases: [email,eemail]
+  maxhealth:
+    description: Set yours/another player's max health.
+    usage: /<command> [health] [player]
+    aliases: [mhealth]
   me:
     description: Describes an action in the context of the player.
     usage: /<command> <description>

@@ -1146,6 +1146,11 @@ public class Settings implements net.ess3.api.ISettings
 	{
 		return economyLagWarning;
 	}
+	
+	@Override
+	public int getMaxHealth() {
+		return config.getInt("max-maxhealth", 100);
+	}
 
 	@Override
 	public long getMaxTempban()

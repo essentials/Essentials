@@ -419,6 +419,9 @@ mails-per-minute: 1000
 # Set to -1 to disable, and essentials.tempban.unlimited can be used to override.
 max-tempban-time: -1
 
+# Set the maximum max health a player can have.
+max-maxhealth: 100
+
 ############################################################
 # +------------------------------------------------------+ #
 # |                   EssentialsHome                     | #
