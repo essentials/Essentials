@@ -110,7 +110,7 @@ public class Commandnick extends EssentialsLoopCommand
 			{
 				continue;
 			}
-			final String matchNick = FormatUtil.stripFormat(onlinePlayer.getDisplayName().replace(ess.getSettings().getNicknamePrefix(), ""));
+			final String matchNick = FormatUtil.stripFormat(ess.getUser(onlinePlayer).getNickname());
 			if (lowerNick.equals(matchNick.toLowerCase(Locale.ENGLISH))
 				|| lowerNick.equals(onlinePlayer.getName().toLowerCase(Locale.ENGLISH)))
 			{
