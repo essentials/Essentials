@@ -51,9 +51,9 @@ public class PermissionsBukkitHandler extends SuperpermsHandler
 		PermissionInfo tempInfo = null;
 		if(Bukkit.getPluginManager().getPlugin("PermissionsBukkit") != null){
 			if(Bukkit.getPluginManager().getPlugin("PermissionsBukkit").getDescription().getVersion().matches("1\\.[256]|2\\.[012]")){
-				PermissionInfo tempInfo = plugin.getPlayerInfo(base.getName());
+				tempInfo = plugin.getPlayerInfo(base.getName());
 			}else{
-				PermissionInfo tempInfo = plugin.getPlayerInfo(base.getUniqueId());
+				tempInfo = plugin.getPlayerInfo(base.getUniqueId());
 			}
 		}
 		final PermissionInfo info = tempInfo;
