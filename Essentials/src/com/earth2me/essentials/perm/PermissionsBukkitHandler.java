@@ -49,10 +49,12 @@ public class PermissionsBukkitHandler extends SuperpermsHandler
 	private List<Group> getPBGroups(final Player base)
 	{
 		PermissionInfo tempInfo = null;
-		if(plugin.getDescription().getVersion().matches("1\\.[256]|2\\.[012]")){
-			PermissionInfo tempInfo = plugin.getPlayerInfo(base.getName());
-		}else{
-			PermissionInfo tempInfo = plugin.getPlayerInfo(base.getUniqueId().toString());
+		if(Bukkit.getPluginManager().getPlugin("PermissionsBukkit") != null){
+			if(Bukkit.getPluginManager().getPlugin("PermissionsBukkit").getDescription().getVersion().matches("1\\.[256]|2\\.[012]")){
+				PermissionInfo tempInfo = plugin.getPlayerInfo(base.getName());
+			}else{
+				PermissionInfo tempInfo = plugin.getPlayerInfo(base.getUniqueId());
+			}
 		}
 		final PermissionInfo info = tempInfo;
 		if (info == null)
