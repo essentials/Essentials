@@ -53,7 +53,7 @@ public class PermissionsBukkitHandler extends SuperpermsHandler
 			if(Bukkit.getPluginManager().getPlugin("PermissionsBukkit").getDescription().getVersion().matches("1\\.[256]|2\\.[012]")){
 				tempInfo = this.plugin.getPlayerInfo(base.getName());
 			}else{
-				tempInfo = this.plugin.getPlayerInfo(base.getUniqueId().toString();
+				tempInfo = this.plugin.getPlayerInfo(base.getUniqueId().toString());
 			}
 		}
 		final PermissionInfo info = tempInfo;
