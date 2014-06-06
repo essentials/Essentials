@@ -48,7 +48,7 @@ public class PermissionsBukkitHandler extends SuperpermsHandler
 
 	private List<Group> getPBGroups(final Player base)
 	{
-		final PermissionInfo info = plugin.getPlayerInfo(base.getUniqueId());
+		final PermissionInfo info = plugin.getPlayerInfo(base.getUniqueId().toString());
 		if (info == null)
 		{
 			return Collections.emptyList();
