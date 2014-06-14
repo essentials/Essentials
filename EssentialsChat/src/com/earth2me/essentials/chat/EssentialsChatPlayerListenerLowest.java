@@ -50,7 +50,7 @@ public class EssentialsChatPlayerListenerLowest extends EssentialsChatPlayer
 		Team team = user.getBase().getScoreboard().getPlayerTeam(user.getBase());
 
 		String format = ess.getSettings().getChatFormat(group);
-		format = format.replace("{0}", group);
+		format = format.replace("{0}", group == null ? "" : group);
 		format = format.replace("{1}", world);
 		format = format.replace("{2}", world.substring(0, 1).toUpperCase(Locale.ENGLISH));
 		format = format.replace("{3}", team == null ? "" : team.getPrefix());

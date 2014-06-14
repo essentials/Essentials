@@ -79,7 +79,15 @@ public class PlayerList
 			{
 				continue;
 			}
-			final String group = FormatUtil.stripFormat(FormatUtil.stripEssentialsFormat(onlineUser.getGroup().toLowerCase()));
+			String group = onlineUser.getGroup();
+			if (group == null)
+			{
+				group = "";
+			}
+			else
+			{
+				group = FormatUtil.stripFormat(FormatUtil.stripEssentialsFormat(group.toLowerCase()));
+			}
 			List<User> list = playerList.get(group);
 			if (list == null)
 			{
