@@ -233,3 +233,4 @@ v2.1:
 	- Prevent players who have never logged in before from taking over existing accounts.
 	- Added metrics.
 	- Prevent GM's own permission tests from allowing inherited permissions to override inherited negations (caused when we added the exception override for sub groups).
+	- Add internal name to UUID resolution to speed data lookups.

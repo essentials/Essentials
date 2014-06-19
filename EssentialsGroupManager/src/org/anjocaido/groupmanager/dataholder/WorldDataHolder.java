@@ -18,6 +18,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,6 +60,11 @@ public class WorldDataHolder {
 	 * The actual users holder
 	 */
 	protected UsersDataHolder users = new UsersDataHolder();
+	
+	/**
+	 * List of UUID's associated with this user name.
+	 */
+	protected static Map<String, Set<String>> nameToUUIDLookup = new TreeMap<String, Set<String>>();
 	/**
      *
      */
@@ -116,8 +123,10 @@ public class WorldDataHolder {
 		// Legacy name matching
 		if (userId.length() < 36) {
 
-			// Search for a LastName match
-			for (User user : getUserList()) {
+			// Search for a name to UUID match
+			for (String uid : getUUIDLookup(userId)) {
+				
+				User user = getUsers().get(uid);
 				
 				if (user.getLastName().equalsIgnoreCase(userId)) {
 					return user;
@@ -153,7 +162,9 @@ public class WorldDataHolder {
 		}
 		
 		// Search for a LastName match
-		for (User usr : getUserList()) {
+		for (String uid : getUUIDLookup(currentName)) {
+			
+			User usr = getUsers().get(uid);
 			
 			if (usr.getLastName().equalsIgnoreCase(currentName) && usr.getUUID().equalsIgnoreCase(usr.getLastName())) {
 				
@@ -195,6 +206,10 @@ public class WorldDataHolder {
 		}
 		removeUser(theUser.getUUID());
 		getUsers().put(theUser.getUUID().toLowerCase(), theUser);
+		
+		// Store for name to UUID lookups.
+		putUUIDLookup(theUser.getLastName(), theUser.getUUID().toLowerCase());
+		
 		setUsersChanged(true);
 		if (GroupManager.isLoaded())
 			GroupManager.getGMEventHandler().callEvent(theUser, Action.USER_ADDED);
@@ -209,10 +224,19 @@ public class WorldDataHolder {
 	public boolean removeUser(String userId) {
 
 		if (getUsers().containsKey(userId.toLowerCase())) {
+			
+			User user = getUser(userId.toLowerCase());
+			
+			// Remove the name to UUID lookup for this user object.
+			removeUUIDLookup(user.getLastName(), user.getUUID());
+			
 			getUsers().remove(userId.toLowerCase());
+			
 			setUsersChanged(true);
+			
 			if (GroupManager.isLoaded())
 				GroupManager.getGMEventHandler().callEvent(userId, GMUserEvent.Action.USER_REMOVED);
+			
 			return true;
 		}
 		return false;
@@ -1351,6 +1375,7 @@ public class WorldDataHolder {
 	public void resetUsers() {
 
 		users.resetUsers();
+		this.clearUUIDLookup();
 	}
 
 	/**
@@ -1443,6 +1468,70 @@ public class WorldDataHolder {
 			setTimeStampGroups(getGroupsFile().lastModified());
 		if (getUsersFile() != null)
 			setTimeStampUsers(getUsersFile().lastModified());
+	}
+	
+	/** Name to UUID lookups **/
+	
+	/**
+	 * Add a new name to UUID lookup.
+	 * 
+	 * @param name the User name key to index on.
+	 * @param UUID the User object UUID (same as name if there is no UUID).
+	 */
+	public void putUUIDLookup(String name, String UUID) {
+		
+		Set<String> lookup = getUUIDLookup(name);
+		
+		if (lookup == null)
+			lookup = new TreeSet<String>();
+		
+		lookup.add(UUID);
+		
+		nameToUUIDLookup.put(name, lookup);
+	}
+	
+	/**
+	 * Delete a name lookup.
+	 * Allows for multiple UUID's assigned to a single name (offline/online)
+	 * 
+	 * @param name
+	 * @param UUID 
+	 */
+	public void removeUUIDLookup(String name, String UUID) {
+		
+		if (nameToUUIDLookup.containsKey(name)) {
+			
+			Set<String> lookup = getUUIDLookup(name);
+			
+			lookup.remove(UUID);
+			
+			if (lookup.isEmpty()) {
+				nameToUUIDLookup.remove(name);
+				return;				
+			}
+				
+			nameToUUIDLookup.put(name, lookup);
+			
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return a Set of strings containing the User objects UUID (or name if they don't have a UUID)
+	 */
+	public Set<String> getUUIDLookup(String name) {
+		
+		return nameToUUIDLookup.get(name);
+	}
+	
+	/**
+	 * Reset the UUID Lookup cache
+	 */
+	protected void clearUUIDLookup() {
+		
+		nameToUUIDLookup.clear();
 	}
 
 }
