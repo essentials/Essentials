@@ -121,7 +121,7 @@ public class WorldDataHolder {
 		}
 		
 		// Legacy name matching
-		if (userId.length() < 36) {
+		if ((userId.length() < 36) && nameToUUIDLookup.containsKey(userId)) {
 
 			// Search for a name to UUID match
 			for (String uid : getUUIDLookup(userId)) {
