@@ -208,7 +208,7 @@ public class WorldDataHolder {
 		getUsers().put(theUser.getUUID().toLowerCase(), theUser);
 		
 		// Store for name to UUID lookups.
-		putUUIDLookup(theUser.getLastName(), theUser.getUUID().toLowerCase());
+		//putUUIDLookup(theUser.getLastName(), theUser.getUUID().toLowerCase());
 		
 		setUsersChanged(true);
 		if (GroupManager.isLoaded())

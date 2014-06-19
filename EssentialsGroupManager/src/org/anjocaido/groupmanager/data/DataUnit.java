@@ -110,6 +110,8 @@ public abstract class DataUnit {
 		if (!lastName.equals(this.lastName)) {
 			
 			this.lastName = lastName;
+			dataSource.putUUIDLookup(lastName, uUID);
+			
 			changed = true;
 			
 		}
