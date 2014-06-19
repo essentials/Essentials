@@ -26,7 +26,7 @@ public class TextInput implements IText
 		{
 			final User user = ess.getUser(sender.getPlayer());
 			file = new File(ess.getDataFolder(), filename + "_" + StringUtil.sanitizeFileName(user.getName()) + ".txt");
-			if (!file.exists())
+			if (!file.exists() && user.getGroup() != null)
 			{
 				file = new File(ess.getDataFolder(), filename + "_" + StringUtil.sanitizeFileName(user.getGroup()) + ".txt");
 			}
