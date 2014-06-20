@@ -108,8 +108,10 @@ public class WorldDataHolder {
 	}
 
 	/**
-	 * Search for a user. If it doesn't exist, create a new one with default
-	 * group.
+	 * Search for a user. If it doesn't exist, create a new one with default group.
+	 * 
+	 * If this is called passing a player name with mantogglevalidate off
+	 * it can return the wrong user object (offline/online UUID match).
 	 * 
 	 * @param userId the UUID String or name of the user
 	 * @return class that manage that user permission
@@ -162,28 +164,19 @@ public class WorldDataHolder {
 		}
 		
 		// Search for a LastName match
+		user = getUsers().get(currentName.toLowerCase());
 		
-		if (nameToUUIDLookup.containsKey(currentName)) {
+		if ((user != null) && user.getLastName().equalsIgnoreCase(currentName) && user.getUUID().equalsIgnoreCase(user.getLastName())) {
 			
-			for (String uid : getUUIDLookup(currentName)) {
-				
-				User usr = getUsers().get(uid);
-				
-				if (usr.getLastName().equalsIgnoreCase(currentName) && usr.getUUID().equalsIgnoreCase(usr.getLastName())) {
-					
-					// Clone this user so we can set it's uUID
-					user = usr.clone(uUID, currentName);
-					
-					// Delete it and replace with the new clone.
-					this.removeUser(usr.getUUID());
-					this.addUser(user);
-					
-					return getUsers().get(uUID.toLowerCase());
-				}
-				
-			}
+			// Clone this user so we can set it's uUID
+			User usr = user.clone(uUID, currentName);
+			
+			// Delete it and replace with the new clone.
+			this.removeUser(user.getUUID());
+			this.addUser(usr);
+			
+			return getUsers().get(uUID.toLowerCase());
 		}
-			
 		
 		// No user account found so create a new one.
 		User newUser = createUser(uUID);

@@ -147,21 +147,21 @@ public class BukkitPermissions {
 			return;
 		}
 
-		String name = player.getName();
+		String uuid = player.getUniqueId().toString();
 
 		// Reset the User objects player reference.
-		User user = plugin.getWorldsHolder().getWorldData(player.getWorld().getName()).getUser(name);
+		User user = plugin.getWorldsHolder().getWorldData(player.getWorld().getName()).getUser(uuid);
 		if (user != null)
 			user.updatePlayer(player);
 
 		PermissionAttachment attachment;
 
 		// Find the players current attachment, or add a new one.
-		if (this.attachments.containsKey(name)) {
-			attachment = this.attachments.get(name);
+		if (this.attachments.containsKey(uuid)) {
+			attachment = this.attachments.get(uuid);
 		} else {
 			attachment = player.addAttachment(plugin);
-			this.attachments.put(name, attachment);
+			this.attachments.put(uuid, attachment);
 		}
 
 		if (world == null) {
@@ -170,7 +170,7 @@ public class BukkitPermissions {
 
 		// Add all permissions for this player (GM only)
 		// child nodes will be calculated by Bukkit.
-		List<String> playerPermArray = new ArrayList<String>(plugin.getWorldsHolder().getWorldData(world).getPermissionsHandler().getAllPlayersPermissions(name, false));
+		List<String> playerPermArray = new ArrayList<String>(plugin.getWorldsHolder().getWorldData(world).getPermissionsHandler().getAllPlayersPermissions(uuid, false));
 		LinkedHashMap<String, Boolean> newPerms = new LinkedHashMap<String, Boolean>();
 
 		// Sort the perm list by parent/child, so it will push to superperms
@@ -190,7 +190,7 @@ public class BukkitPermissions {
 		 */
 		if (!Bukkit.getServer().getOnlineMode()
 				&& (newPerms.containsKey("groupmanager.noofflineperms") && (newPerms.get("groupmanager.noofflineperms") == true))) {
-			removeAttachment(name);
+			removeAttachment(uuid);
 			return;
 		}
 
@@ -219,7 +219,7 @@ public class BukkitPermissions {
 			e.printStackTrace();
 		}
 
-		GroupManager.logger.finest("Attachment updated for: " + name);
+		GroupManager.logger.finest("Attachment updated for: " + player.getName());
 	}
 
 	/**
