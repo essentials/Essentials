@@ -150,7 +150,8 @@ public class BukkitPermissions {
 		String uuid = player.getUniqueId().toString();
 
 		// Reset the User objects player reference.
-		User user = plugin.getWorldsHolder().getWorldData(player.getWorld().getName()).getUser(uuid);
+		User user = plugin.getWorldsHolder().getWorldData(player.getWorld().getName()).getUser(player.getUniqueId().toString(), player.getName());
+		
 		if (user != null)
 			user.updatePlayer(player);
 
@@ -399,11 +400,11 @@ public class BukkitPermissions {
 	 * 
 	 * @param player
 	 */
-	private void removeAttachment(String playerName) {
+	private void removeAttachment(String uuid) {
 
-		if (attachments.containsKey(playerName)) {
-			attachments.get(playerName).remove();
-			attachments.remove(playerName);
+		if (attachments.containsKey(uuid)) {
+			attachments.get(uuid).remove();
+			attachments.remove(uuid);
 		}
 	}
 
@@ -442,7 +443,7 @@ public class BukkitPermissions {
 			/*
 			 * Tidy up any lose ends
 			 */
-			removeAttachment(player.getName());
+			removeAttachment(player.getUniqueId().toString());
 
 			// force GM to create the player if they are not already listed.
 			plugin.getWorldsHolder().getWorldData(player.getWorld().getName()).getUser(player.getUniqueId().toString(), player.getName());
@@ -473,7 +474,7 @@ public class BukkitPermissions {
 			/*
 			 * force remove any attachments as bukkit may not
 			 */
-			removeAttachment(player.getName());
+			removeAttachment(player.getUniqueId().toString());
 		}
 	}
 

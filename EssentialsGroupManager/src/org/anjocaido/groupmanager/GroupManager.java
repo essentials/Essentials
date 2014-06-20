@@ -2208,18 +2208,18 @@ public class GroupManager extends JavaPlugin {
 		if (players.isEmpty()) {
 			// Check for an offline player (exact match).
 			if (Arrays.asList(this.getServer().getOfflinePlayers()).contains(Bukkit.getOfflinePlayer(playerName))) {
-				match.add(Bukkit.getOfflinePlayer(playerName).getUniqueId().toString());
+				match.add(Bukkit.getOfflinePlayer(playerName).getName()); //.getUniqueId().toString());
 			} else {
 				// look for partial matches
 				for (OfflinePlayer offline : this.getServer().getOfflinePlayers()) {
 					if (offline.getName().toLowerCase().startsWith(playerName.toLowerCase()))
-						match.add(offline.getUniqueId().toString());
+						match.add(offline.getName()); //.getUniqueId().toString());
 				}
 			}
 
 		} else {
 			for (Player player : players) {
-				match.add(player.getUniqueId().toString());
+				match.add(player.getName()); //.getUniqueId().toString());
 			}
 		}
 

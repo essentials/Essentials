@@ -139,7 +139,6 @@ public class WorldDataHolder {
 		
 		// No user account found so create a new one.
 		User newUser = createUser(userId);
-		
 		return newUser;
 	}
 	
