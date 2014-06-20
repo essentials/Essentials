@@ -162,22 +162,26 @@ public class WorldDataHolder {
 		}
 		
 		// Search for a LastName match
-		for (String uid : getUUIDLookup(currentName)) {
+		
+		if (nameToUUIDLookup.containsKey(currentName)) {
 			
-			User usr = getUsers().get(uid);
-			
-			if (usr.getLastName().equalsIgnoreCase(currentName) && usr.getUUID().equalsIgnoreCase(usr.getLastName())) {
+			for (String uid : getUUIDLookup(currentName)) {
 				
-				// Clone this user so we can set it's uUID
-				user = usr.clone(uUID, currentName);
+				User usr = getUsers().get(uid);
 				
-				// Delete it and replace with the new clone.
-				this.removeUser(usr.getUUID());
-				this.addUser(user);
+				if (usr.getLastName().equalsIgnoreCase(currentName) && usr.getUUID().equalsIgnoreCase(usr.getLastName())) {
+					
+					// Clone this user so we can set it's uUID
+					user = usr.clone(uUID, currentName);
+					
+					// Delete it and replace with the new clone.
+					this.removeUser(usr.getUUID());
+					this.addUser(user);
+					
+					return getUsers().get(uUID.toLowerCase());
+				}
 				
-				return getUsers().get(uUID.toLowerCase());
 			}
-			
 		}
 			
 		
