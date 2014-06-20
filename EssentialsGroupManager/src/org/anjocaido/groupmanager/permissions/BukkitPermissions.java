@@ -150,7 +150,7 @@ public class BukkitPermissions {
 		String uuid = player.getUniqueId().toString();
 
 		// Reset the User objects player reference.
-		User user = plugin.getWorldsHolder().getWorldData(player.getWorld().getName()).getUser(player.getUniqueId().toString(), player.getName());
+		User user = plugin.getWorldsHolder().getWorldData(player.getWorld().getName()).getUser(uuid, player.getName());
 		
 		if (user != null)
 			user.updatePlayer(player);

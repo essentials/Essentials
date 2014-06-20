@@ -2219,7 +2219,7 @@ public class GroupManager extends JavaPlugin {
 
 		} else {
 			for (Player player : players) {
-				match.add(player.getName()); //.getUniqueId().toString());
+				match.add(player.getUniqueId().toString());
 			}
 		}
 
