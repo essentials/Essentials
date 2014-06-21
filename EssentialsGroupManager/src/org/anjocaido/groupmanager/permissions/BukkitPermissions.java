@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.data.User;
@@ -54,7 +53,7 @@ import org.bukkit.plugin.PluginManager;
  */
 public class BukkitPermissions {
 
-	protected WeakHashMap<String, PermissionAttachment> attachments = new WeakHashMap<String, PermissionAttachment>();
+	protected LinkedHashMap<String, PermissionAttachment> attachments = new LinkedHashMap<String, PermissionAttachment>();
 	protected LinkedHashMap<String, Permission> registeredPermissions = new LinkedHashMap<String, Permission>();
 	protected GroupManager plugin;
 	protected boolean dumpAllPermissions = true;

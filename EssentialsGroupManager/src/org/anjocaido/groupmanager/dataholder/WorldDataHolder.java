@@ -156,8 +156,7 @@ public class WorldDataHolder {
 		User user = getUsers().get(uUID.toLowerCase());
 		
 		if (user != null) {
-			System.out.println("Matched: " + uUID);
-			System.out.println("In World: " + this.getName());
+
 			user.setLastName(currentName);
 			return user;
 			
@@ -177,9 +176,6 @@ public class WorldDataHolder {
 			
 			return getUsers().get(uUID.toLowerCase());
 		}
-		
-		System.out.println("New user: " + uUID);
-		System.out.println("In World: " + this.getName());
 		
 		// No user account found so create a new one.
 		User newUser = createUser(uUID);
