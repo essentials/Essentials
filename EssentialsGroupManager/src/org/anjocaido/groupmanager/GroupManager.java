@@ -1338,7 +1338,7 @@ public class GroupManager extends JavaPlugin {
 					}
 				}
 				auxString = auxString.replace("'", "");
-				auxUser.getVariables().addVar(args[1], Variables.parseVariableValue(auxString));
+				auxUser.getVariables().addVar(args[1].toLowerCase(), Variables.parseVariableValue(auxString));
 				sender.sendMessage(ChatColor.YELLOW + "Variable " + ChatColor.GOLD + args[1] + ChatColor.YELLOW + ":'" + ChatColor.GREEN + auxString + ChatColor.YELLOW + "' added to the user " + auxUser.getLastName());
 
 				return true;
@@ -1364,12 +1364,12 @@ public class GroupManager extends JavaPlugin {
 					auxUser = dataHolder.getUser(args[0]);
 				}
 				// Validating permission
-				if (!auxUser.getVariables().hasVar(args[1])) {
+				if (!auxUser.getVariables().hasVar(args[1].toLowerCase())) {
 					sender.sendMessage(ChatColor.RED + "The user doesn't have directly that variable!");
 					return true;
 				}
 				// Seems OK
-				auxUser.getVariables().removeVar(args[1]);
+				auxUser.getVariables().removeVar(args[1].toLowerCase());
 				sender.sendMessage(ChatColor.YELLOW + "Variable " + ChatColor.GOLD + args[1] + ChatColor.YELLOW + " removed from the user " + ChatColor.GREEN + auxUser.getLastName());
 
 				return true;
@@ -1432,11 +1432,11 @@ public class GroupManager extends JavaPlugin {
 				auxGroup = auxUser.getGroup();
 				auxGroup2 = permissionHandler.nextGroupWithVariable(auxGroup, args[1]);
 
-				if (!auxUser.getVariables().hasVar(args[1])) {
+				if (!auxUser.getVariables().hasVar(args[1].toLowerCase())) {
 					// Check sub groups
 					if (!auxUser.isSubGroupsEmpty() && auxGroup2 == null)
 						for (Group subGroup : auxUser.subGroupListCopy()) {
-							auxGroup2 = permissionHandler.nextGroupWithVariable(subGroup, args[1]);
+							auxGroup2 = permissionHandler.nextGroupWithVariable(subGroup, args[1].toLowerCase());
 							if (auxGroup2 != null)
 								continue;
 						}
@@ -1447,10 +1447,10 @@ public class GroupManager extends JavaPlugin {
 				}
 				// Seems OK
 				if (auxUser.getVariables().hasVar(auxString)) {
-					sender.sendMessage(ChatColor.YELLOW + "The value of variable '" + ChatColor.GOLD + args[1] + ChatColor.YELLOW + "' is: '" + ChatColor.GREEN + auxUser.getVariables().getVarObject(args[1]).toString() + ChatColor.WHITE + "'");
-					sender.sendMessage(ChatColor.YELLOW + "This user own directly the variable");
+					sender.sendMessage(ChatColor.YELLOW + "The value of variable '" + ChatColor.GOLD + args[1].toLowerCase() + ChatColor.YELLOW + "' is: '" + ChatColor.GREEN + auxUser.getVariables().getVarObject(args[1]).toString() + ChatColor.WHITE + "'");
+					sender.sendMessage(ChatColor.YELLOW + "This user directly has this variable.");
 				}
-				sender.sendMessage(ChatColor.YELLOW + "The value of variable '" + ChatColor.GOLD + args[1] + ChatColor.YELLOW + "' is: '" + ChatColor.GREEN + auxGroup2.getVariables().getVarObject(args[1]).toString() + ChatColor.WHITE + "'");
+				sender.sendMessage(ChatColor.YELLOW + "The value of variable '" + ChatColor.GOLD + args[1].toLowerCase() + ChatColor.YELLOW + "' is: '" + ChatColor.GREEN + auxGroup2.getVariables().getVarObject(args[1].toLowerCase()).toString() + ChatColor.WHITE + "'");
 				if (!auxGroup.equals(auxGroup2)) {
 					sender.sendMessage(ChatColor.YELLOW + "And the value was inherited from group: " + ChatColor.GREEN + auxGroup2.getName());
 				}
@@ -1488,7 +1488,7 @@ public class GroupManager extends JavaPlugin {
 				}
 				
 				auxString = auxString.replace("'", "");
-				auxGroup.getVariables().addVar(args[1], Variables.parseVariableValue(auxString));
+				auxGroup.getVariables().addVar(args[1].toLowerCase(), Variables.parseVariableValue(auxString));
 				sender.sendMessage(ChatColor.YELLOW + "Variable " + ChatColor.GOLD + args[1] + ChatColor.YELLOW + ":'" + ChatColor.GREEN + auxString + ChatColor.YELLOW + "' added to the group " + auxGroup.getName());
 
 				return true;
@@ -1514,12 +1514,12 @@ public class GroupManager extends JavaPlugin {
 					return true;
 				}
 				// Validating permission
-				if (!auxGroup.getVariables().hasVar(args[1])) {
+				if (!auxGroup.getVariables().hasVar(args[1].toLowerCase())) {
 					sender.sendMessage(ChatColor.RED + "The group doesn't have directly that variable!");
 					return true;
 				}
 				// Seems OK
-				auxGroup.getVariables().removeVar(args[1]);
+				auxGroup.getVariables().removeVar(args[1].toLowerCase());
 				sender.sendMessage(ChatColor.YELLOW + "Variable " + ChatColor.GOLD + args[1] + ChatColor.YELLOW + " removed from the group " + ChatColor.GREEN + auxGroup.getName());
 
 				return true;
@@ -1588,12 +1588,12 @@ public class GroupManager extends JavaPlugin {
 					return true;
 				}
 				// Validating permission
-				auxGroup2 = permissionHandler.nextGroupWithVariable(auxGroup, args[1]);
+				auxGroup2 = permissionHandler.nextGroupWithVariable(auxGroup, args[1].toLowerCase());
 				if (auxGroup2 == null) {
 					sender.sendMessage(ChatColor.RED + "The group doesn't have access to that variable!");
 				}
 				// Seems OK
-				sender.sendMessage(ChatColor.YELLOW + "The value of variable '" + ChatColor.GOLD + args[1] + ChatColor.YELLOW + "' is: '" + ChatColor.GREEN + auxGroup2.getVariables().getVarObject(args[1]).toString() + ChatColor.WHITE + "'");
+				sender.sendMessage(ChatColor.YELLOW + "The value of variable '" + ChatColor.GOLD + args[1].toLowerCase() + ChatColor.YELLOW + "' is: '" + ChatColor.GREEN + auxGroup2.getVariables().getVarObject(args[1].toLowerCase()).toString() + ChatColor.WHITE + "'");
 				if (!auxGroup.equals(auxGroup2)) {
 					sender.sendMessage(ChatColor.YELLOW + "And the value was inherited from group: " + ChatColor.GREEN + auxGroup2.getName());
 				}
