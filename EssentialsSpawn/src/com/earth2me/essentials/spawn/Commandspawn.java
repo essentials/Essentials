@@ -58,7 +58,6 @@ public class Commandspawn extends EssentialsCommand
 	{
 		final SpawnStorage spawns = (SpawnStorage)this.module;
 		final Location spawn = spawns.getSpawn(teleportee.getGroup());
-		sender.sendMessage(tl("teleporting", spawn.getWorld().getName(), spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ()));
 		if (teleportOwner == null)
 		{
 			teleportee.getTeleport().now(spawn, false, TeleportCause.COMMAND);
