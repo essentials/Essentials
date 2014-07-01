@@ -220,6 +220,7 @@ player-commands:
   - xmpp
 
 # Note: All items MUST be followed by a quantity!
+# Note: All underscores (_) will be replaced with spaces in kit name's and lore's.
 # All kit names should be lower case, and will be treated as lower in permissions/costs.
 # Syntax: - itemID[:DataValue/Durability] Amount [Enchantment:Level].. [itemmeta:value]...
 # For Item Meta information visit http://wiki.ess3.net/wiki/Item_Meta
