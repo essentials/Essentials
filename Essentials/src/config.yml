@@ -496,7 +496,7 @@ economy-log-enabled: false
 # +------------------------------------------------------+ #
 ############################################################
 
-# Show other plugins commands in help.
+# Should other plugins commands be shown in '/help'?
 non-ess-in-help: true
 
 # Hide plugins which do not give a permission.
@@ -519,7 +519,7 @@ chat:
   # Note that users with the "essentials.chat.spy" permission will hear everything, regardless of this setting.
   # Users with essentials.chat.shout can override this by prefixing text with an exclamation mark (!)
   # Users with essentials.chat.question can override this by prefixing text with a question mark (?)
-  # You can add command costs for shout/question by adding chat-shout and chat-question to the command costs section."
+  # You can add command costs for shout/question by adding chat-shout and chat-question to the "command costs section".
   radius: 0
 
   # Chat formatting can be done in two ways, you can either define a standard format for all chat.
@@ -573,7 +573,7 @@ protect:
     enderman-pickup: false
     villager-death: false
     # Monsters won't follow players.
-    # permission essentials.protect.entitytarget.bypass disables this.
+    # Permission essentials.protect.entitytarget.bypass disables this.
     entitytarget: false
     # Prevent the spawning of creatures.
     spawn:
@@ -608,7 +608,7 @@ protect:
       horse: false
 
   # Maximum height the creeper should explode. -1 allows them to explode everywhere.
-  # Set prevent.creeper-explosion to true, if you want to disable creeper explosions.
+  # Set creeper-explosion in the above section to true, if you want to disable creeper explosions.
   creeper:
     max-height: -1
 
@@ -621,27 +621,27 @@ protect:
     # They will be unable to attack users without that same permission node.
     pvp: false
 
-    # Should drowning damage be disabled?
+    # Gargle, gargle! Should drowning damage be disabled?
     # (Split into two behaviors; generally, you want both set to the same value.)
     drown: false
     suffocate: false
 
-    # Should damage via lava be disabled?  Items that fall into lava will still burn to a crisp. ;)
+    # Should damage via lava be disabled?  Items that fall into lava will still burn to a crisp. :)
     lavadmg: false
 
     # Should arrow damage be disabled?
     projectiles: false
 
-    # This will disable damage from touching cacti.
+    # Poke, poke! Should Cacti damage be disabled?
     contactdmg: false
 
-    # Burn, baby, burn!  Should fire damage be disabled?
+    # Burn, baby, burn! Should fire damage be disabled?
     firedmg: false
 
-    # Should the damage after hit by a lightning be disabled?
+    # Should the damage after being hit by lightning be disabled?
     lightning: false
 
-    # Should Wither damage be disabled?
+    # Boom, boom! Should Wither damage be disabled?
     wither: false
 
     # Disable weather options?
@@ -696,7 +696,7 @@ protect:
     # Which blocks should not be pushed by pistons?
     piston:
 
-    # Which blocks should not be dispensed by dispensers
+    # Which blocks should not be dispensed by dispensers?
     dispenser:
 
 ############################################################
@@ -705,11 +705,11 @@ protect:
 # +------------------------------------------------------+ #
 ############################################################
 
-# This section requires essentialsspawn.jar to work.
+# This section requires EssentialsSpawn.jar to work.
 
 newbies:
   # Should we announce to the server when someone logs in for the first time?
-  # If so, use this format, replacing {DISPLAYNAME} with the player name.
+  # If so, use this format, {DISPLAYNAME} will be replaced with the player name.
   # If not, set to ''
   #announce-format: ''
   announce-format: '&dWelcome {DISPLAYNAME}&d to the server!'
