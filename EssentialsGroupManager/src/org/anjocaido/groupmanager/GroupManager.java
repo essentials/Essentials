@@ -1632,8 +1632,8 @@ public class GroupManager extends JavaPlugin {
 					sender.sendMessage(ChatColor.YELLOW + "subgroups: " + auxString);
 				}
 
-				sender.sendMessage(ChatColor.YELLOW + "Overloaded: " + ChatColor.GREEN + dataHolder.isOverloaded(auxUser.getLastName()));
-				auxGroup = dataHolder.surpassOverload(auxUser.getLastName()).getGroup();
+				sender.sendMessage(ChatColor.YELLOW + "Overloaded: " + ChatColor.GREEN + dataHolder.isOverloaded(auxUser.getUUID()));
+				auxGroup = dataHolder.surpassOverload(auxUser.getUUID()).getGroup();
 				if (!auxGroup.equals(auxUser.getGroup())) {
 					sender.sendMessage(ChatColor.YELLOW + "Original Group: " + ChatColor.GREEN + auxGroup.getName());
 				}
@@ -1668,7 +1668,7 @@ public class GroupManager extends JavaPlugin {
 				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null) {
 					overloadedUsers.put(dataHolder.getName().toLowerCase(), new ArrayList<User>());
 				}
-				dataHolder.overloadUser(auxUser.getLastName());
+				dataHolder.overloadUser(auxUser.getUUID());
 				overloadedUsers.get(dataHolder.getName().toLowerCase()).add(dataHolder.getUser(auxUser.getUUID()));
 				sender.sendMessage(ChatColor.YELLOW + "Player set to overload mode!");
 
@@ -1702,7 +1702,7 @@ public class GroupManager extends JavaPlugin {
 				if (overloadedUsers.get(dataHolder.getName().toLowerCase()) == null) {
 					overloadedUsers.put(dataHolder.getName().toLowerCase(), new ArrayList<User>());
 				}
-				dataHolder.removeOverload(auxUser.getLastName());
+				dataHolder.removeOverload(auxUser.getUUID());
 				if (overloadedUsers.get(dataHolder.getName().toLowerCase()).contains(auxUser)) {
 					overloadedUsers.get(dataHolder.getName().toLowerCase()).remove(auxUser);
 				}
@@ -1721,7 +1721,7 @@ public class GroupManager extends JavaPlugin {
 				removeList = new ArrayList<User>();
 				count = 0;
 				for (User u : overloadedUsers.get(dataHolder.getName().toLowerCase())) {
-					if (!dataHolder.isOverloaded(u.getLastName())) {
+					if (!dataHolder.isOverloaded(u.getUUID())) {
 						removeList.add(u);
 					} else {
 						auxString += u.getLastName() + ", ";
@@ -1751,8 +1751,8 @@ public class GroupManager extends JavaPlugin {
 				removeList = new ArrayList<User>();
 				count = 0;
 				for (User u : overloadedUsers.get(dataHolder.getName().toLowerCase())) {
-					if (dataHolder.isOverloaded(u.getLastName())) {
-						dataHolder.removeOverload(u.getLastName());
+					if (dataHolder.isOverloaded(u.getUUID())) {
+						dataHolder.removeOverload(u.getUUID());
 						count++;
 					}
 				}

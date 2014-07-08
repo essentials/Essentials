@@ -41,16 +41,16 @@ public class OverloadedWorldHolder extends WorldDataHolder {
 	 * @return user object or a new user if none exists.
 	 */
 	@Override
-	public User getUser(String userName) {
+	public User getUser(String userId) {
 
 		//OVERLOADED CODE
-		String userNameLowered = userName.toLowerCase();
+		String userNameLowered = userId.toLowerCase();
 		if (overloadedUsers.containsKey(userNameLowered)) {
 			return overloadedUsers.get(userNameLowered);
 		}
 		//END CODE
 
-		return super.getUser(userName);
+		return super.getUser(userId);
 	}
 
 	/**
