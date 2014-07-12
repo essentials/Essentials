@@ -287,9 +287,6 @@ public class SpawnMob
 			final EntityEquipment invent = ((LivingEntity)spawned).getEquipment();
 			invent.setItemInHand(new ItemStack(Material.BOW, 1));
 			invent.setItemInHandDropChance(0.1f);
-
-			invent.setBoots(new ItemStack(Material.GOLD_BOOTS, 1));
-			invent.setBootsDropChance(0.0f);
 		}
 
 		if (type == EntityType.PIG_ZOMBIE)
@@ -300,9 +297,6 @@ public class SpawnMob
 			final EntityEquipment invent = zombie.getEquipment();	
 			invent.setItemInHand(new ItemStack(Material.GOLD_SWORD, 1));
 			invent.setItemInHandDropChance(0.1f);
-
-			invent.setBoots(new ItemStack(Material.GOLD_BOOTS, 1));
-			invent.setBootsDropChance(0.0f);
 		}
 
 		if (type == EntityType.ZOMBIE)
