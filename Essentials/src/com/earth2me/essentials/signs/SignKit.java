@@ -25,7 +25,7 @@ public class SignKit extends EssentialsSign
 
 		if (kitName.isEmpty())
 		{
-			sign.setLine(1, "§dKit name!");
+			sign.setLine(1, ChatColor.LIGHT_PURPLE + "Kit name!");
 			return false;
 		}
 		else
@@ -41,7 +41,7 @@ public class SignKit extends EssentialsSign
 			final String group = sign.getLine(2);
 			if ("Everyone".equalsIgnoreCase(group) || "Everybody".equalsIgnoreCase(group))
 			{
-				sign.setLine(2, "§2Everyone");
+				sign.setLine(2, ChatColor.DARK_GREEN + "Everyone");
 			}
 			return true;
 		}
@@ -52,7 +52,7 @@ public class SignKit extends EssentialsSign
 	{
 		final String kitName = sign.getLine(1).toLowerCase(Locale.ENGLISH).trim();
 		final String group = sign.getLine(2).trim();
-		if ((!group.isEmpty() && ("§2Everyone".equals(group) || player.inGroup(group)))
+		if ((!group.isEmpty() && (ChatColor.DARK_GREEN + "Everyone".equals(group) || player.inGroup(group)))
 			|| (group.isEmpty() && (player.isAuthorized("essentials.kits." + kitName))))
 		{
 			final Trade charge = getTrade(sign, 3, ess);
