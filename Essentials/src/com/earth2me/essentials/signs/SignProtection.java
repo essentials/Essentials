@@ -7,6 +7,7 @@ import com.earth2me.essentials.utils.FormatUtil;
 import java.util.*;
 import net.ess3.api.IEssentials;
 import net.ess3.api.MaxMoneyException;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -32,14 +33,14 @@ public class SignProtection extends EssentialsSign
 	@Override
 	protected boolean onSignCreate(final ISign sign, final User player, final String username, final IEssentials ess) throws SignException, ChargeException
 	{
-		sign.setLine(3, "§4" + username);
+		sign.setLine(3, ChatColor.DARK_RED + username);
 		if (hasAdjacentBlock(sign.getBlock()))
 		{
 			final SignProtectionState state = isBlockProtected(sign.getBlock(), player, username, true);
 			if (state == SignProtectionState.NOSIGN || state == SignProtectionState.OWNER
 				|| player.isAuthorized("essentials.signs.protection.override"))
 			{
-				sign.setLine(3, "§1" + username);
+				sign.setLine(3, ChatColor.DARK_BLUE + username);
 				return true;
 			}
 		}
@@ -210,7 +211,7 @@ public class SignProtection extends EssentialsSign
 			if (b.getType() == Material.SIGN_POST || b.getType() == Material.WALL_SIGN)
 			{
 				final Sign sign = (Sign)b.getState();
-				if (sign.getLine(0).equalsIgnoreCase("§1[Protection]"))
+				if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_BLUE + "[Protection]"))
 				{
 					return true;
 				}
@@ -224,7 +225,7 @@ public class SignProtection extends EssentialsSign
 					if (a.getType() == Material.SIGN_POST || a.getType() == Material.WALL_SIGN)
 					{
 						final Sign sign = (Sign)a.getState();
-						if (sign.getLine(0).equalsIgnoreCase("§1[Protection]"))
+						if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_BLUE + "[Protection]"))
 						{
 							return true;
 						}

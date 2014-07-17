@@ -5,6 +5,7 @@ import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import net.ess3.api.IEssentials;
+import org.bukkit.ChatColor;
 
 
 public class SignTime extends EssentialsSign
@@ -21,12 +22,12 @@ public class SignTime extends EssentialsSign
 		final String timeString = sign.getLine(1);
 		if ("Day".equalsIgnoreCase(timeString))
 		{
-			sign.setLine(1, "§2Day");
+			sign.setLine(1, ChatColor.DARK_GREEN + "Day");
 			return true;
 		}
 		if ("Night".equalsIgnoreCase(timeString))
 		{
-			sign.setLine(1, "§2Night");
+			sign.setLine(1, ChatColor.DARK_GREEN + "Night");
 			return true;
 		}
 		throw new SignException(tl("onlyDayNight"));

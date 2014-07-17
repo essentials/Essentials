@@ -7,6 +7,7 @@ import com.earth2me.essentials.User;
 import com.earth2me.essentials.commands.Commandrepair;
 import com.earth2me.essentials.commands.NotEnoughArgumentsException;
 import net.ess3.api.IEssentials;
+import org.bukkit.ChatColor;
 
 
 public class SignRepair extends EssentialsSign
@@ -26,7 +27,7 @@ public class SignRepair extends EssentialsSign
 		}
 		else if (!repairTarget.equalsIgnoreCase("all") && !repairTarget.equalsIgnoreCase("hand"))
 		{
-			sign.setLine(1, "§c<hand|all>");
+			sign.setLine(1, ChatColor.RED + "<hand|all>");
 			throw new SignException(tl("invalidSignLine", 2));
 		}
 		validateTrade(sign, 2, ess);

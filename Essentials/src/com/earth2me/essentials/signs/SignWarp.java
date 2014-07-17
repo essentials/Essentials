@@ -6,6 +6,7 @@ import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import net.ess3.api.IEssentials;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.ChatColor;
 
 
 public class SignWarp extends EssentialsSign
@@ -23,7 +24,7 @@ public class SignWarp extends EssentialsSign
 
 		if (warpName.isEmpty())
 		{
-			sign.setLine(1, "§c<Warp name>");
+			sign.setLine(1, ChatColor.RED + "<Warp name>");
 			throw new SignException(tl("invalidSignLine", 1));
 		}
 		else
@@ -39,7 +40,7 @@ public class SignWarp extends EssentialsSign
 			final String group = sign.getLine(2);
 			if ("Everyone".equalsIgnoreCase(group) || "Everybody".equalsIgnoreCase(group))
 			{
-				sign.setLine(2, "§2Everyone");
+				sign.setLine(2, ChatColor.DARK_BLUE + "Everyone");
 			}
 			return true;
 		}
