@@ -237,3 +237,4 @@ v2.1:
 	- Convert all User lookups and commands to use UUIDs where possible.
 	- Fix Overloaded and non-overloaded users to report correctly for group tests.
 	- Prevent inherited group permission negations overriding higher level group perms.
+	- Fix 'manudel' so it correctly deletes the user.

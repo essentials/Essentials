@@ -580,7 +580,7 @@ public class GroupManager extends JavaPlugin {
 					return true;
 				}
 				// Seems OK
-				dataHolder.removeUser(auxUser.getLastName());
+				dataHolder.removeUser(auxUser.getUUID());
 				sender.sendMessage(ChatColor.YELLOW + "You changed player '" + auxUser.getLastName() + "' to default settings.");
 
 				// If the player is online, this will create new data for the user.
