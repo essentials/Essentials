@@ -1069,12 +1069,18 @@ public class AnjoPermissionsHandler extends PermissionsReaderInterface {
 				
 				if (resultNow.resultType.equals(PermissionCheckResult.Type.EXCEPTION)) {
 					resultNow.accessLevel = targetPermission;
+					GroupManager.logger.fine("Found an " + resultNow.resultType + " for " + targetPermission + " in group " + resultNow.owner.getLastName());
 					return resultNow;
 				}
 				
-				if (!result.resultType.equals(PermissionCheckResult.Type.NEGATION)) {
+				/*
+				 * Store the first found permission only.
+				 * This will prevent inherited permission negations overriding higher level perms.
+				 */
+				if (result.resultType.equals(PermissionCheckResult.Type.NOTFOUND)) {
 					// No Negation found so store for later
 					// as we need to continue looking for an Exception.
+					GroupManager.logger.fine("Found an " + resultNow.resultType + " for " + targetPermission + " in group " + resultNow.owner.getLastName());
 					result = resultNow;
 				}
 			}

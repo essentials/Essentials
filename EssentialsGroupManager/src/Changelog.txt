@@ -236,3 +236,4 @@ v2.1:
 	- Add internal name to UUID resolution to speed data lookups.
 	- Convert all User lookups and commands to use UUIDs where possible.
 	- Fix Overloaded and non-overloaded users to report correctly for group tests.
+	- Prevent inherited group permission negations overriding higher level group perms.
