@@ -21,12 +21,12 @@ public class SignTime extends EssentialsSign
 		final String timeString = sign.getLine(1);
 		if ("Day".equalsIgnoreCase(timeString))
 		{
-			sign.setLine(1, "§2Day");
+			sign.setLine(1, ChatColor.DARK_GREEN + "Day");
 			return true;
 		}
 		if ("Night".equalsIgnoreCase(timeString))
 		{
-			sign.setLine(1, "§2Night");
+			sign.setLine(1, ChatColor.DARK_GREEN + "Night");
 			return true;
 		}
 		throw new SignException(tl("onlyDayNight"));
