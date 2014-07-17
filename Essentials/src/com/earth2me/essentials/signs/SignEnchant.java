@@ -4,6 +4,7 @@ import com.earth2me.essentials.*;
 import static com.earth2me.essentials.I18n.tl;
 import java.util.Locale;
 import net.ess3.api.IEssentials;
+import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,19 +26,19 @@ public class SignEnchant extends EssentialsSign
 		}
 		catch (SignException e)
 		{
-			sign.setLine(1, "§c<item|any>");
+			sign.setLine(1, ChatColor.RED + "<item|any>");
 			throw e;
 		}
 		final String[] enchantLevel = sign.getLine(2).split(":");
 		if (enchantLevel.length != 2)
 		{
-			sign.setLine(2, "§c<enchant>");
+			sign.setLine(2, ChatColor.RED + "<enchant>");
 			throw new SignException(tl("invalidSignLine", 3));
 		}
 		final Enchantment enchantment = Enchantments.getByName(enchantLevel[0]);
 		if (enchantment == null)
 		{
-			sign.setLine(2, "§c<enchant>");
+			sign.setLine(2, ChatColor.RED + "<enchant>");
 			throw new SignException(tl("enchantmentNotFound"));
 		}
 		int level;
@@ -47,7 +48,7 @@ public class SignEnchant extends EssentialsSign
 		}
 		catch (NumberFormatException ex)
 		{
-			sign.setLine(2, "§c<enchant>");
+			sign.setLine(2, ChatColor.RED + "<enchant>");
 			throw new SignException(ex.getMessage(), ex);
 		}
 		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() 
