@@ -5,6 +5,7 @@ import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import net.ess3.api.IEssentials;
+import org.bukkit.ChatColor;
 
 
 public class SignWeather extends EssentialsSign
@@ -21,15 +22,15 @@ public class SignWeather extends EssentialsSign
 		final String timeString = sign.getLine(1);
 		if ("Sun".equalsIgnoreCase(timeString))
 		{
-			sign.setLine(1, "§2Sun");
+			sign.setLine(1, ChatColor.DARK_BLUE + "Sun");
 			return true;
 		}
 		if ("Storm".equalsIgnoreCase(timeString))
 		{
-			sign.setLine(1, "§2Storm");
+			sign.setLine(1,  ChatColor.DARK_BLUE + "Storm");
 			return true;
 		}
-		sign.setLine(1, "§c<sun|storm>");
+		sign.setLine(1,  ChatColor.RED + "<sun|storm>");
 		throw new SignException(tl("onlySunStorm"));
 	}
 
