@@ -65,7 +65,7 @@ groups:
     default: false
     permissions:
     - '*'
-    - -vanish.*
+    - -vanish.effects.*
     inheritance:
     - admin
     info:
