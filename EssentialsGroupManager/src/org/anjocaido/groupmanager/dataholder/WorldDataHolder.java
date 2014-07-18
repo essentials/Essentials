@@ -156,7 +156,8 @@ public class WorldDataHolder {
 		User user = getUsers().get(uUID.toLowerCase());
 		
 		if (user != null) {
-
+			
+			GroupManager.logger.fine("User record found for UUID: " + uUID + ":" + currentName);
 			user.setLastName(currentName);
 			return user;
 			
@@ -174,12 +175,20 @@ public class WorldDataHolder {
 			this.removeUser(user.getUUID());
 			this.addUser(usr);
 			
+			GroupManager.logger.fine("Updating User record for UUID: " + uUID + ":" + currentName);
+			
 			return getUsers().get(uUID.toLowerCase());
+		}
+		
+		if (user != null) {
+			GroupManager.logger.fine("User record found but UUID mismatch for: " + currentName);
 		}
 		
 		// No user account found so create a new one.
 		User newUser = createUser(uUID);
 		newUser.setLastName(currentName);
+		
+		GroupManager.logger.fine("New User record created: " + uUID + ":" + currentName);
 		
 		return newUser;
 	}
