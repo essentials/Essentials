@@ -313,7 +313,6 @@ groups:
 
   g:vanish_moderator:
     permissions:
-    - -vanish.*
     - vanish.vanish
     - vanish.smokin
     - vanish.nofollow
