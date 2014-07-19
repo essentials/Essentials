@@ -137,6 +137,10 @@ public class WorldDataHolder {
 			
 		}
 		
+		if (!nameToUUIDLookup.containsKey(userId)) {
+			GroupManager.logger.fine("ERROR: No lookup for: " + userId);
+		}
+		
 		// No user account found so create a new one.
 		User newUser = createUser(userId);
 		return newUser;
