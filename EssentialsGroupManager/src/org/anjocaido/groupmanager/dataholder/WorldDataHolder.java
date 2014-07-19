@@ -118,8 +118,8 @@ public class WorldDataHolder {
 	 */
 	public User getUser(String userId) {
 		
-		if (getUsers().containsKey(userId.toLowerCase())) {
-			return getUsers().get(userId.toLowerCase());
+		if (getUsers().containsKey(userId)) {
+			return getUsers().get(userId);
 		}
 		
 		// Legacy name matching
@@ -157,7 +157,7 @@ public class WorldDataHolder {
 	public User getUser(String uUID, String currentName) {
 		
 		// Check for a UUID account
-		User user = getUsers().get(uUID.toLowerCase());
+		User user = getUsers().get(uUID);
 		
 		if (user != null) {
 			
@@ -168,9 +168,9 @@ public class WorldDataHolder {
 		}
 		
 		// Search for a LastName match
-		user = getUsers().get(currentName.toLowerCase());
+		user = getUsers().get(currentName);
 		
-		if ((user != null) && user.getLastName().equalsIgnoreCase(currentName) && user.getUUID().equalsIgnoreCase(user.getLastName())) {
+		if ((user != null) && user.getLastName().equals(currentName) && user.getUUID().equals(user.getLastName())) {
 			
 			// Clone this user so we can set it's uUID
 			User usr = user.clone(uUID, currentName);
@@ -181,7 +181,7 @@ public class WorldDataHolder {
 			
 			GroupManager.logger.fine("Updating User record for UUID: " + uUID + ":" + currentName);
 			
-			return getUsers().get(uUID.toLowerCase());
+			return getUsers().get(uUID);
 		}
 		
 		if (user != null) {
@@ -214,7 +214,7 @@ public class WorldDataHolder {
 			theUser.setGroup(groups.getDefaultGroup());
 		}
 		removeUser(theUser.getUUID());
-		getUsers().put(theUser.getUUID().toLowerCase(), theUser);
+		getUsers().put(theUser.getUUID(), theUser);
 		
 		// Store for name to UUID lookups.
 		//putUUIDLookup(theUser.getLastName(), theUser.getUUID().toLowerCase());
@@ -232,14 +232,14 @@ public class WorldDataHolder {
 	 */
 	public boolean removeUser(String userId) {
 
-		if (getUsers().containsKey(userId.toLowerCase())) {
+		if (getUsers().containsKey(userId)) {
 			
-			User user = getUser(userId.toLowerCase());
+			User user = getUser(userId);
 			
 			// Remove the name to UUID lookup for this user object.
 			removeUUIDLookup(user.getLastName(), user.getUUID());
 			
-			getUsers().remove(userId.toLowerCase());
+			getUsers().remove(userId);
 			
 			setUsersChanged(true);
 			
@@ -258,7 +258,7 @@ public class WorldDataHolder {
 	 */
 	public boolean isUserDeclared(String userId) {
 
-		return getUsers().containsKey(userId.toLowerCase());
+		return getUsers().containsKey(userId);
 	}
 
 	/**
@@ -374,7 +374,7 @@ public class WorldDataHolder {
 	 */
 	public User createUser(String userId) {
 
-		if (getUsers().containsKey(userId.toLowerCase())) {
+		if (getUsers().containsKey(userId)) {
 			return null;
 		}
 		User newUser = new User(this, userId);
