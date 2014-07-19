@@ -130,7 +130,7 @@ public class WorldDataHolder {
 				
 				User user = getUsers().get(uid);
 				
-				if ((user != null) && user.getLastName().equalsIgnoreCase(userId)) {
+				if ((user != null) && user.getLastName().equals(userId)) {
 					return user;
 				}
 			}
