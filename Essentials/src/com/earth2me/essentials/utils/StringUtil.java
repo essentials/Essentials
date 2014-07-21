@@ -95,6 +95,40 @@ public class StringUtil
 		return buf.toString();
 	}
 	
+	public static String joinListGrammatically(Object... list)
+	{
+		StringBuilder buf = new StringBuilder();
+		int count = 0;
+		for (Object each : list)
+		{
+			if (buf.length() > 0)
+			{
+				if (list.length == 2)
+				{
+					buf.append(" and ");
+				}
+				else if ((count + 1) == list.length)
+				{
+					buf.append(", and ");
+				}
+				else
+				{
+					buf.append(", ");
+				}
+			}
+			try
+			{
+				buf.append(each.toString());
+			}
+			catch (Exception e)
+			{
+				buf.append(each.toString());
+			}
+			count++;
+		}
+		return buf.toString();
+	}
+	
 	private StringUtil()
 	{
 	}
