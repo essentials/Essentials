@@ -2223,7 +2223,7 @@ public class GroupManager extends JavaPlugin {
 			}
 		}
 
-		if (match.isEmpty() || match == null) {
+		if (match.isEmpty()) {
 			sender.sendMessage(ChatColor.RED + "Player not found!");
 			return null;
 		} else if (match.size() > 1) {
