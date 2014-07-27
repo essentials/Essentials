@@ -19,10 +19,6 @@ public class VaultEco implements Method
 	{
 		return this.vault;
 	}
-	
-	private UUID getUUID(String name) {
-		return Bukkit.getServer().getPlayer(name).getUniqueId();
-	}
 
 	@Override
 	public boolean createAccount(String name, Double amount)
@@ -85,25 +81,25 @@ public class VaultEco implements Method
 	@Override
 	public boolean hasAccount(String name)
 	{
-		return this.economy.hasAccount(Bukkit.getServer().getOfflinePlayer(this.getUUID(name)));
+		return this.economy.hasAccount(Bukkit.getServer().getOfflinePlayer(name));
 	}
 
 	@Override
 	public boolean hasBankAccount(String bank, String name)
 	{
-		return this.economy.isBankOwner(bank, Bukkit.getServer().getOfflinePlayer(this.getUUID(name))).transactionSuccess()
-			   || this.economy.isBankMember(bank, Bukkit.getServer().getOfflinePlayer(this.getUUID(name))).transactionSuccess();
+		return this.economy.isBankOwner(bank, Bukkit.getServer().getOfflinePlayer(name)).transactionSuccess()
+			   || this.economy.isBankMember(bank, Bukkit.getServer().getOfflinePlayer(name)).transactionSuccess();
 	}
 
 	@Override
 	public boolean createAccount(String name)
 	{
-		return this.economy.createBank(name, Bukkit.getServer().getOfflinePlayer(this.getUUID(name))).transactionSuccess();
+		return this.economy.createBank(name, Bukkit.getServer().getOfflinePlayer(name)).transactionSuccess();
 	}
 
 	public boolean createAccount(String name, double balance)
 	{
-		if (!this.economy.createBank(name, Bukkit.getServer().getOfflinePlayer(this.getUUID(name))).transactionSuccess())
+		if (!this.economy.createBank(name, Bukkit.getServer().getOfflinePlayer(name)).transactionSuccess())
 		{
 			return false;
 		}
@@ -173,20 +169,16 @@ public class VaultEco implements Method
 			this.economy = economy;
 		}
 
-		public UUID getUUID(String name) {
-		return Bukkit.getServer().getPlayer(name).getUniqueId();
-		}
-
 		@Override
 		public double balance()
 		{
-			return this.economy.getBalance(Bukkit.getServer().getOfflinePlayer(this.getUUID(this.name)));
+			return this.economy.getBalance(Bukkit.getServer().getOfflinePlayer(this.name));
 		}
 
 		@Override
 		public boolean set(double amount)
 		{
-			if (!this.economy.withdrawPlayer(Bukkit.getServer().getOfflinePlayer(this.getUUID(this.name)), this.balance()).transactionSuccess())
+			if (!this.economy.withdrawPlayer(Bukkit.getServer().getOfflinePlayer(this.name), this.balance()).transactionSuccess())
 			{
 				return false;
 			}
@@ -194,19 +186,19 @@ public class VaultEco implements Method
 			{
 				return true;
 			}
-			return this.economy.depositPlayer(Bukkit.getServer().getOfflinePlayer(this.getUUID(this.name)), amount).transactionSuccess();
+			return this.economy.depositPlayer(Bukkit.getServer().getOfflinePlayer(this.name), amount).transactionSuccess();
 		}
 
 		@Override
 		public boolean add(double amount)
 		{
-			return this.economy.depositPlayer(Bukkit.getServer().getOfflinePlayer(this.getUUID(this.name)), amount).transactionSuccess();
+			return this.economy.depositPlayer(Bukkit.getServer().getOfflinePlayer(this.name), amount).transactionSuccess();
 		}
 
 		@Override
 		public boolean subtract(double amount)
 		{
-			return this.economy.withdrawPlayer(Bukkit.getServer().getOfflinePlayer(this.getUUID(this.name)), amount).transactionSuccess();
+			return this.economy.withdrawPlayer(Bukkit.getServer().getOfflinePlayer(this.name), amount).transactionSuccess();
 		}
 
 		@Override
