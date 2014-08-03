@@ -523,7 +523,6 @@ public class Settings implements net.ess3.api.ISettings
 	public void reloadConfig()
 	{
 		config.load();
-		noGodWorlds = new HashSet<String>(config.getStringList("no-god-in-worlds"));
 		enabledSigns = _getEnabledSigns();
 		teleportSafety = _isTeleportSafetyEnabled();
 		teleportInvulnerabilityTime = _getTeleportInvulnerability();
@@ -951,13 +950,6 @@ public class Settings implements net.ess3.api.ISettings
 	public boolean areDeathMessagesEnabled()
 	{
 		return config.getBoolean("death-messages", true);
-	}
-	private Set<String> noGodWorlds = new HashSet<String>();
-
-	@Override
-	public Set<String> getNoGodWorlds()
-	{
-		return noGodWorlds;
 	}
 
 	@Override
