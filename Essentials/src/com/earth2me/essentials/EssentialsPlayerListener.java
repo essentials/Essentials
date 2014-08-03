@@ -497,6 +497,7 @@ public class EssentialsPlayerListener implements Listener
 		if (!user.isAuthorized("essentials.god") && user.isGodModeEnabledRaw())
 		{
 			user.sendMessage(tl("noGodWorldWarning"));
+			user.setGodModeEnabled(false);
 		}
 
 		if (!user.getWorld().getName().equals(newWorld))
