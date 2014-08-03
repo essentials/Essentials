@@ -358,8 +358,9 @@ cancel-afk-on-move: true
 # You can disable the death messages of Minecraft here.
 death-messages: true
 
-# Should operators be able to join and part silently?
-# You can control this with permissions if it is enabled.
+# Should players with permissions be able to join and part silently?
+# You can control this with essentials.silentjoin and essentials.silentquit permissions if it is enabled.
+# In addition, people with essentials.silentjoin.vanish will be vanished on join.
 allow-silent-join-quit: false
 
 # You can set a custom join message here, set to "none" to disable.
