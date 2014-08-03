@@ -494,9 +494,10 @@ public class EssentialsPlayerListener implements Listener
 		final String newWorld = event.getPlayer().getLocation().getWorld().getName();
 		user.setDisplayNick();
 		updateCompass(user);
-		if (ess.getSettings().getNoGodWorlds().contains(newWorld) && user.isGodModeEnabledRaw())
+		if (!user.isAuthorized("essentials.god") && user.isGodModeEnabledRaw())
 		{
 			user.sendMessage(tl("noGodWorldWarning"));
+			user.setGodModeEnabled(false);
 		}
 
 		if (!user.getWorld().getName().equals(newWorld))
