@@ -154,8 +154,6 @@ public interface ISettings extends IConf
 
 	void setDebug(boolean debug);
 
-	Set<String> getNoGodWorlds();
-
 	boolean getUpdateBedAtDaytime();
 
 	boolean allowUnsafeEnchantments();
