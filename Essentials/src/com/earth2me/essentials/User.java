@@ -655,7 +655,7 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 	@Override
 	public boolean isGodModeEnabled()
 	{
-		return (super.isGodModeEnabled() && !ess.getSettings().getNoGodWorlds().contains(this.getLocation().getWorld().getName()))
+		return (super.isGodModeEnabled() && isAuthorized("essentials.god"))
 			   || (isAfk() && ess.getSettings().getFreezeAfkPlayers());
 	}
 
