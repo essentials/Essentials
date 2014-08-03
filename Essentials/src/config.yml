@@ -370,10 +370,6 @@ custom-join-message: "none"
 # You may use color codes, use {USERNAME} the player's name or {PLAYER} for the player's displayname.
 custom-quit-message: "none"
 
-# Add worlds to this list, if you want to automatically disable god mode there.
-no-god-in-worlds:
-#  - world_nether
-
 # Set to true to enable per-world permissions for teleporting between worlds with essentials commands.
 # This applies to /world, /back, /tp[a|o][here|all], but not warps.
 # Give someone permission to teleport to a world with essentials.worlds.<worldname>
