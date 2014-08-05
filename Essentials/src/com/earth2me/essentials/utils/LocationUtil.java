@@ -228,12 +228,12 @@ public class LocationUtil
 			is.setType(Material.WOODEN_STEP);
 			break;
 		case ANVIL:
-			is.setDurability((short)is.getDurability / 4)
+			is.setDurability((short)is.getDurability / 4);
 		case TORCH:
 		case RAILS:
 		case POWERED_RAILS:
 		case DETECTOR_RAILS:
-		case ACTIVATOR_RAIL
+		case ACTIVATOR_RAIL:
 		case LADDER:
 		case WOOD_STAIRS:
 		case SPURCE_WOOD_STAIRS:
@@ -396,7 +396,7 @@ public class LocationUtil
 		{
 			return true;
 		}
-		if ((!HOLLOW_MATERIALS.contains(world.getBlockAt(x, y, z).getType())) || (!HOLLOW_MATERIALS.contains(world.getBlockAt(x, y + 1, z).getType()))
+		if (!HOLLOW_MATERIALS.contains(world.getBlockAt(x, y, z).getType()) || !HOLLOW_MATERIALS.contains(world.getBlockAt(x, y + 1, z).getType()))
 		{
 			return true;
 		}
