@@ -55,8 +55,8 @@ public class LocationUtil
 		HOLLOW_MATERIALS.add(Material.SUGAR_CANE_BLOCK);
 		HOLLOW_MATERIALS.add(Material.DIODE_BLOCK_OFF);
 		HOLLOW_MATERIALS.add(Material.DIODE_BLOCK_ON);
-		HOLLOW_MATERIALS.add(Material.COMPARATOR_OFF);
-		HOLLOW_MATERIALS.add(Material.COMPARATOR_ON);
+		HOLLOW_MATERIALS.add(Material.REDSTONE_COMPARATOR_OFF);
+		HOLLOW_MATERIALS.add(Material.REDSTONE_COMPARATOR_ON);
 		HOLLOW_MATERIALS.add(Material.PUMPKIN_STEM);
 		HOLLOW_MATERIALS.add(Material.MELON_STEM);
 		HOLLOW_MATERIALS.add(Material.VINE);
@@ -67,9 +67,9 @@ public class LocationUtil
 		HOLLOW_MATERIALS.add(Material.IRON_PLATE);
 		HOLLOW_MATERIALS.add(Material.GOLD_PLATE);
 
-		for (Integer integer : HOLLOW_MATERIALS)
+		for (Material mat : HOLLOW_MATERIALS)
 		{
-			TRANSPARENT_MATERIALS.add(integer.byteValue());
+			TRANSPARENT_MATERIALS.add(Byte.parseByte(mat.getTypeId()));
 		}
 		TRANSPARENT_MATERIALS.add((byte)Material.WATER.getId());
 		TRANSPARENT_MATERIALS.add((byte)Material.STATIONARY_WATER.getId());
@@ -90,10 +90,10 @@ public class LocationUtil
 			case 3:
 			case 2:
 				is.setType(Material.SMOOTH_BRICK);
-				is.setDurability(is.getDurability() - 2);
+				is.setDurability((short)(is.getDurability() - 2));
 				break;
 			case 1:
-				is.setType(Material.COBBLE_STONE);
+				is.setType(Material.COBBLESTONE);
 				is.setDurability((short)0);
 				break;
 			default:
@@ -208,9 +208,9 @@ public class LocationUtil
 			is.setType(Material.DIODE);
 			is.setDurability((short)0);
 			break;
-		case COMPARATOR_OFF:
-		case COMPARATOR_ON:
-			is.setType(Material.COMPARATOR);
+		case REDSTONE_COMPARATOR_OFF:
+		case REDSTONE_COMPARATOR_ON:
+			is.setType(Material.REDSTONE_COMPARATOR);
 			is.setDurability((short)0);
 			break;
 		case PUMPKIN_STEM:
@@ -224,24 +224,23 @@ public class LocationUtil
 		case DOUBLE_STEP:
 			is.setType(Material.STEP);
 			break;
-		case WOODEN_DOUBLE_STEP:
-			is.setType(Material.WOODEN_STEP);
+		case WOOD_DOUBLE_STEP:
+			is.setType(Material.WOOD_STEP);
 			break;
 		case ANVIL:
-			is.setDurability((short)is.getDurability / 4);
+			is.setDurability((short)(is.getDurability / 4));
 		case TORCH:
 		case RAILS:
-		case POWERED_RAILS:
-		case DETECTOR_RAILS:
+		case POWERED_RAIL:
+		case DETECTOR_RAIL:
 		case ACTIVATOR_RAIL:
 		case LADDER:
 		case WOOD_STAIRS:
-		case SPURCE_WOOD_STAIRS:
+		case SPRUCE_WOOD_STAIRS:
 		case BIRCH_WOOD_STAIRS:
 		case JUNGLE_WOOD_STAIRS:
 		case COBBLESTONE_STAIRS:
 		case QUARTZ_STAIRS:
-		case COBBLESTONE_STAIRS:
 		case BRICK_STAIRS:
 		case SMOOTH_STAIRS:
 		case NETHER_BRICK_STAIRS:
@@ -277,8 +276,8 @@ public class LocationUtil
 			break;
 		case FIRE:
 		case PORTAL:
-		case END_PORTAL:
-		case END_PORTAL_FRAME:
+		case ENDER_PORTAL:
+		case ENDER_PORTAL_FRAME:
 		case WATER:
 		case STATIONARY_WATER:
 		case LAVA:
@@ -290,7 +289,6 @@ public class LocationUtil
 		case VINE:
 		case COMMAND:
 		case TRAPPED_CHEST:
-		case DAYLIGHT_DETECTOR:
 		case DOUBLE_PLANT:
 			return null;
 		}
