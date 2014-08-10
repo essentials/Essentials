@@ -62,10 +62,14 @@ public class EssentialsSpawnPlayerListener implements Listener
 				return;
 			}
 		}
-		final Location spawn = spawns.getSpawn(user.getGroup());
-		if (spawn != null)
+
+		if (spawns.getData().getSpawns() != null && user.getGroup() != null)
 		{
-			event.setRespawnLocation(spawn);
+			final Location spawn = spawns.getSpawn(user.getGroup());
+			if (spawn != null)
+			{
+				event.setRespawnLocation(spawn);
+			}
 		}
 	}
 
