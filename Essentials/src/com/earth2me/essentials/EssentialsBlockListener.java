@@ -27,22 +27,18 @@ public class EssentialsBlockListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event)
 	{
-		// Do not rely on getItemInHand();
-		// http://leaky.bukkit.org/issues/663
-		final ItemStack is = LocationUtil.convertBlockToItem(event.getBlockPlaced());
+		final ItemStack is = event.getPlayer().getItemInHand();
 		if (is == null)
 		{
 			return;
 		}
 
-		if (is.getType() == Material.MOB_SPAWNER && event.getItemInHand() != null && event.getPlayer() != null
-			&& event.getItemInHand().getType() == Material.MOB_SPAWNER)
+		if (is.getType() == Material.MOB_SPAWNER)
 		{
 			final BlockState blockState = event.getBlockPlaced().getState();
-			if (blockState instanceof CreatureSpawner)
-			{
-				final CreatureSpawner spawner = (CreatureSpawner)blockState;
-				final EntityType type = EntityType.fromId(event.getItemInHand().getData().getData());
+			if (blockState instanceof CreatureSpawner) {
+				final CreatureSpawner spawner = (CreatureSpawner) blockState;
+				final EntityType type = EntityType.fromId(is.getDurability());
 				if (type != null && Mob.fromBukkitType(type) != null)
 				{
 					if (ess.getUser(event.getPlayer()).isAuthorized("essentials.spawnerconvert." + Mob.fromBukkitType(type).name().toLowerCase(Locale.ENGLISH)))
@@ -54,14 +50,18 @@ public class EssentialsBlockListener implements Listener
 		}
 
 		final User user = ess.getUser(event.getPlayer());
-		if (user.hasUnlimited(is) && user.getBase().getGameMode() == GameMode.SURVIVAL)
+		//Tools can trigger BlockPlaceEvent - only trigger unlimited if we are placing a block or item.
+		if (user.hasUnlimited(is) && is.getType().getMaxDurability() == 0 && user.getBase().getGameMode() == GameMode.SURVIVAL)
 		{
+			final ItemStack amt = is.clone();
+			amt.setAmount(1);
+
 			class UnlimitedItemSpawnTask implements Runnable
 			{
 				@Override
 				public void run()
 				{
-					user.getBase().getInventory().addItem(is);
+					user.getBase().getInventory().addItem(amt);
 					user.getBase().updateInventory();
 				}
 			}
