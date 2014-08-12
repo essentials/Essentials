@@ -105,14 +105,14 @@ public class LocationUtil
 			}
 		}
 		Collections.sort(
-				pos, new Comparator<Vector3D>()
+			pos, new Comparator<Vector3D>()
+			{
+				@Override
+				public int compare(Vector3D a, Vector3D b)
 				{
-					@Override
-					public int compare(Vector3D a, Vector3D b)
-					{
-						return (a.x * a.x + a.y * a.y + a.z * a.z) - (b.x * b.x + b.y * b.y + b.z * b.z);
-					}
-				});
+					return (a.x * a.x + a.y * a.y + a.z * a.z) - (b.x * b.x + b.y * b.y + b.z * b.z);
+				}
+			});
 		VOLUME = pos.toArray(new Vector3D[0]);
 	}
 
@@ -138,8 +138,8 @@ public class LocationUtil
 	public static boolean isBlockUnsafeForUser(final IUser user, final World world, final int x, final int y, final int z)
 	{
 		if (user.getBase().isOnline() && world.equals(user.getBase().getWorld())
-				&& (user.getBase().getGameMode() == GameMode.CREATIVE || user.isGodModeEnabled())
-				&& user.getBase().getAllowFlight())
+			&& (user.getBase().getGameMode() == GameMode.CREATIVE || user.isGodModeEnabled())
+			&& user.getBase().getAllowFlight())
 		{
 			return false;
 		}
