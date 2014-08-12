@@ -19,15 +19,19 @@ public class Commandbigtree extends EssentialsCommand
 	public void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
 		TreeType tree;
-		if (args.length > 0 && args[0].equalsIgnoreCase("redwood"))
+		if (args.length < 1)
+		{
+			throw new NotEnoughArgumentsException();	
+		}
+		else if (args[0].equalsIgnoreCase("redwood"))
 		{
 			tree = TreeType.TALL_REDWOOD;
 		}
-		else if (args.length > 0 && args[0].equalsIgnoreCase("tree"))
+		else if (args[0].equalsIgnoreCase("tree"))
 		{
 			tree = TreeType.BIG_TREE;
 		}
-		else if (args.length > 0 && args[0].equalsIgnoreCase("jungle"))
+		else if (args[0].equalsIgnoreCase("jungle"))
 		{
 			tree = TreeType.JUNGLE;
 		}
