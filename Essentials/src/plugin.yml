@@ -472,7 +472,7 @@ commands:
     aliases: [craft,ecraft,wb,ewb,wbench,ewbench,eworkbench]
   world:
     description: Switch between worlds.
-    usage: /<command> [world]
+    usage: /<command> [world] [spawn]
     aliases: [eworld]
   worth:
     description: Calculates the worth of items in hand or as specified.
