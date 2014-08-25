@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MapValueType
-{
-	Class value() default String.class;
+public @interface MapValueType {
+    Class value() default String.class;
 }
