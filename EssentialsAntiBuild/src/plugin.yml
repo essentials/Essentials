@@ -1,9 +1,0 @@
-# This determines the command prefix when there are conflicts (/name:home, /name:help, etc.)
-name: EssentialsAntiBuild
-main: com.earth2me.essentials.antibuild.EssentialsAntiBuild
-# Note to developers: This next line cannot change, or the automatic versioning system will break.
-version: TeamCity
-website: http://tiny.cc/EssentialsCommands
-description: Provides build protection.
-authors: [Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans, Xeology, KHobbits, Iaccidentally]
-depend: [Essentials]
