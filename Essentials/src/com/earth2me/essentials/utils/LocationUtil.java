@@ -21,140 +21,61 @@ import org.bukkit.inventory.ItemStack;
 public class LocationUtil
 {
 	// The player can stand inside these materials
-	public static final Set<Integer> HOLLOW_MATERIALS = new HashSet<Integer>();
+	public static final Set<Material> HOLLOW_MATERIALS = new HashSet<Material>();
 	private static final HashSet<Byte> TRANSPARENT_MATERIALS = new HashSet<Byte>();
 
 	static
 	{
-		HOLLOW_MATERIALS.add(Material.AIR.getId());
-		HOLLOW_MATERIALS.add(Material.SAPLING.getId());
-		HOLLOW_MATERIALS.add(Material.POWERED_RAIL.getId());
-		HOLLOW_MATERIALS.add(Material.DETECTOR_RAIL.getId());
-		HOLLOW_MATERIALS.add(Material.LONG_GRASS.getId());
-		HOLLOW_MATERIALS.add(Material.DEAD_BUSH.getId());
-		HOLLOW_MATERIALS.add(Material.YELLOW_FLOWER.getId());
-		HOLLOW_MATERIALS.add(Material.RED_ROSE.getId());
-		HOLLOW_MATERIALS.add(Material.BROWN_MUSHROOM.getId());
-		HOLLOW_MATERIALS.add(Material.RED_MUSHROOM.getId());
-		HOLLOW_MATERIALS.add(Material.TORCH.getId());
-		HOLLOW_MATERIALS.add(Material.REDSTONE_WIRE.getId());
-		HOLLOW_MATERIALS.add(Material.SEEDS.getId());
-		HOLLOW_MATERIALS.add(Material.SIGN_POST.getId());
-		HOLLOW_MATERIALS.add(Material.WOODEN_DOOR.getId());
-		HOLLOW_MATERIALS.add(Material.LADDER.getId());
-		HOLLOW_MATERIALS.add(Material.RAILS.getId());
-		HOLLOW_MATERIALS.add(Material.WALL_SIGN.getId());
-		HOLLOW_MATERIALS.add(Material.LEVER.getId());
-		HOLLOW_MATERIALS.add(Material.STONE_PLATE.getId());
-		HOLLOW_MATERIALS.add(Material.IRON_DOOR_BLOCK.getId());
-		HOLLOW_MATERIALS.add(Material.WOOD_PLATE.getId());
-		HOLLOW_MATERIALS.add(Material.REDSTONE_TORCH_OFF.getId());
-		HOLLOW_MATERIALS.add(Material.REDSTONE_TORCH_ON.getId());
-		HOLLOW_MATERIALS.add(Material.STONE_BUTTON.getId());
-		HOLLOW_MATERIALS.add(Material.SNOW.getId());
-		HOLLOW_MATERIALS.add(Material.SUGAR_CANE_BLOCK.getId());
-		HOLLOW_MATERIALS.add(Material.DIODE_BLOCK_OFF.getId());
-		HOLLOW_MATERIALS.add(Material.DIODE_BLOCK_ON.getId());
-		HOLLOW_MATERIALS.add(Material.PUMPKIN_STEM.getId());
-		HOLLOW_MATERIALS.add(Material.MELON_STEM.getId());
-		HOLLOW_MATERIALS.add(Material.VINE.getId());
-		HOLLOW_MATERIALS.add(Material.FENCE_GATE.getId());
-		HOLLOW_MATERIALS.add(Material.WATER_LILY.getId());
-		HOLLOW_MATERIALS.add(Material.NETHER_WARTS.getId());
-		HOLLOW_MATERIALS.add(Material.CARPET.getId());
+		HOLLOW_MATERIALS.add(Material.AIR);
+		HOLLOW_MATERIALS.add(Material.SAPLING);
+		HOLLOW_MATERIALS.add(Material.POWERED_RAIL);
+		HOLLOW_MATERIALS.add(Material.DETECTOR_RAIL);
+		HOLLOW_MATERIALS.add(Material.LONG_GRASS);
+		HOLLOW_MATERIALS.add(Material.DEAD_BUSH);
+		HOLLOW_MATERIALS.add(Material.YELLOW_FLOWER);
+		HOLLOW_MATERIALS.add(Material.RED_ROSE);
+		HOLLOW_MATERIALS.add(Material.BROWN_MUSHROOM);
+		HOLLOW_MATERIALS.add(Material.RED_MUSHROOM);
+		HOLLOW_MATERIALS.add(Material.TORCH);
+		HOLLOW_MATERIALS.add(Material.REDSTONE_WIRE);
+		HOLLOW_MATERIALS.add(Material.SEEDS);
+		HOLLOW_MATERIALS.add(Material.SIGN_POST);
+		HOLLOW_MATERIALS.add(Material.WOODEN_DOOR);
+		HOLLOW_MATERIALS.add(Material.LADDER);
+		HOLLOW_MATERIALS.add(Material.RAILS);
+		HOLLOW_MATERIALS.add(Material.WALL_SIGN);
+		HOLLOW_MATERIALS.add(Material.LEVER);
+		HOLLOW_MATERIALS.add(Material.STONE_PLATE);
+		HOLLOW_MATERIALS.add(Material.IRON_DOOR_BLOCK);
+		HOLLOW_MATERIALS.add(Material.WOOD_PLATE);
+		HOLLOW_MATERIALS.add(Material.REDSTONE_TORCH_OFF);
+		HOLLOW_MATERIALS.add(Material.REDSTONE_TORCH_ON);
+		HOLLOW_MATERIALS.add(Material.STONE_BUTTON);
+		HOLLOW_MATERIALS.add(Material.SNOW);
+		HOLLOW_MATERIALS.add(Material.SUGAR_CANE_BLOCK);
+		HOLLOW_MATERIALS.add(Material.DIODE_BLOCK_OFF);
+		HOLLOW_MATERIALS.add(Material.DIODE_BLOCK_ON);
+		HOLLOW_MATERIALS.add(Material.REDSTONE_COMPARATOR_OFF);
+		HOLLOW_MATERIALS.add(Material.REDSTONE_COMPARATOR_ON);
+		HOLLOW_MATERIALS.add(Material.PUMPKIN_STEM);
+		HOLLOW_MATERIALS.add(Material.MELON_STEM);
+		HOLLOW_MATERIALS.add(Material.VINE);
+		HOLLOW_MATERIALS.add(Material.FENCE_GATE);
+		HOLLOW_MATERIALS.add(Material.NETHER_WARTS);
+		HOLLOW_MATERIALS.add(Material.CARPET);
+		HOLLOW_MATERIALS.add(Material.DOUBLE_PLANT);
+		HOLLOW_MATERIALS.add(Material.IRON_PLATE);
+		HOLLOW_MATERIALS.add(Material.GOLD_PLATE);
 
-		for (Integer integer : HOLLOW_MATERIALS)
+		for (Material mat : HOLLOW_MATERIALS)
 		{
-			TRANSPARENT_MATERIALS.add(integer.byteValue());
+			TRANSPARENT_MATERIALS.add((byte)mat.getId());
 		}
 		TRANSPARENT_MATERIALS.add((byte)Material.WATER.getId());
 		TRANSPARENT_MATERIALS.add((byte)Material.STATIONARY_WATER.getId());
 	}
 	public static final int RADIUS = 3;
 	public static final Vector3D[] VOLUME;
-
-	public static ItemStack convertBlockToItem(final Block block)
-	{
-		final ItemStack is = new ItemStack(block.getType(), 1, (short)0, block.getData());
-		switch (is.getType())
-		{
-		case WOODEN_DOOR:
-			is.setType(Material.WOOD_DOOR);
-			is.setDurability((short)0);
-			break;
-		case IRON_DOOR_BLOCK:
-			is.setType(Material.IRON_DOOR);
-			is.setDurability((short)0);
-			break;
-		case SIGN_POST:
-		case WALL_SIGN:
-			is.setType(Material.SIGN);
-			is.setDurability((short)0);
-			break;
-		case CROPS:
-			is.setType(Material.SEEDS);
-			is.setDurability((short)0);
-			break;
-		case CAKE_BLOCK:
-			is.setType(Material.CAKE);
-			is.setDurability((short)0);
-			break;
-		case BED_BLOCK:
-			is.setType(Material.BED);
-			is.setDurability((short)0);
-			break;
-		case REDSTONE_WIRE:
-			is.setType(Material.REDSTONE);
-			is.setDurability((short)0);
-			break;
-		case REDSTONE_TORCH_OFF:
-		case REDSTONE_TORCH_ON:
-			is.setType(Material.REDSTONE_TORCH_ON);
-			is.setDurability((short)0);
-			break;
-		case DIODE_BLOCK_OFF:
-		case DIODE_BLOCK_ON:
-			is.setType(Material.DIODE);
-			is.setDurability((short)0);
-			break;
-		case DOUBLE_STEP:
-			is.setType(Material.STEP);
-			break;
-		case TORCH:
-		case RAILS:
-		case LADDER:
-		case WOOD_STAIRS:
-		case COBBLESTONE_STAIRS:
-		case LEVER:
-		case STONE_BUTTON:
-		case FURNACE:
-		case DISPENSER:
-		case PUMPKIN:
-		case JACK_O_LANTERN:
-		case WOOD_PLATE:
-		case STONE_PLATE:
-		case PISTON_STICKY_BASE:
-		case PISTON_BASE:
-		case IRON_FENCE:
-		case THIN_GLASS:
-		case TRAP_DOOR:
-		case FENCE:
-		case FENCE_GATE:
-		case NETHER_FENCE:
-			is.setDurability((short)0);
-			break;
-		case FIRE:
-			return null;
-		case PUMPKIN_STEM:
-			is.setType(Material.PUMPKIN_SEEDS);
-			break;
-		case MELON_STEM:
-			is.setType(Material.MELON_SEEDS);
-			break;
-		}
-		return is;
-	}
-
 
 	public static class Vector3D
 	{
@@ -184,14 +105,15 @@ public class LocationUtil
 			}
 		}
 		Collections.sort(
-				pos, new Comparator<Vector3D>()
-		{
-			@Override
-			public int compare(Vector3D a, Vector3D b)
+			pos, new Comparator<Vector3D>()
 			{
-				return (a.x * a.x + a.y * a.y + a.z * a.z) - (b.x * b.x + b.y * b.y + b.z * b.z);
+				@Override
+				public int compare(Vector3D a, Vector3D b)
+				{
+					return (a.x * a.x + a.y * a.y + a.z * a.z) - (b.x * b.x + b.y * b.y + b.z * b.z);
+				}
 			}
-		});
+        );
 		VOLUME = pos.toArray(new Vector3D[0]);
 	}
 
@@ -211,7 +133,7 @@ public class LocationUtil
 		{
 			return true;
 		}
-		return HOLLOW_MATERIALS.contains(world.getBlockAt(x, y - 1, z).getType().getId());
+		return HOLLOW_MATERIALS.contains(world.getBlockAt(x, y - 1, z).getType());
 	}
 
 	public static boolean isBlockUnsafeForUser(final IUser user, final World world, final int x, final int y, final int z)
@@ -254,7 +176,7 @@ public class LocationUtil
 		{
 			return true;
 		}
-		if ((!HOLLOW_MATERIALS.contains(world.getBlockAt(x, y, z).getType().getId())) || (!HOLLOW_MATERIALS.contains(world.getBlockAt(x, y + 1, z).getType().getId())))
+		if (!HOLLOW_MATERIALS.contains(world.getBlockAt(x, y, z).getType()) || !HOLLOW_MATERIALS.contains(world.getBlockAt(x, y + 1, z).getType()))
 		{
 			return true;
 		}
@@ -274,8 +196,8 @@ public class LocationUtil
 	public static Location getSafeDestination(final IUser user, final Location loc) throws Exception
 	{
 		if (user.getBase().isOnline() && loc.getWorld().equals(user.getBase().getWorld())
-			&& (user.getBase().getGameMode() == GameMode.CREATIVE || user.isGodModeEnabled())
-			&& user.getBase().getAllowFlight())
+				&& (user.getBase().getGameMode() == GameMode.CREATIVE || user.isGodModeEnabled())
+				&& user.getBase().getAllowFlight())
 		{
 			if (shouldFly(loc))
 			{
@@ -370,6 +292,6 @@ public class LocationUtil
 			}
 		}
 
-		return y < 0 ? true : false;
+		return y < 0;
 	}
 }
