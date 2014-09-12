@@ -19,40 +19,40 @@ public class Commandcompass extends EssentialsCommand
 		String dir;
 		if (bearing < 23)
 		{
-			dir = "N";
+			dir = "north";
 		}
 		else if (bearing < 68)
 		{
-			dir = "NE";
+			dir = "northeast";
 		}
 		else if (bearing < 113)
 		{
-			dir = "E";
+			dir = "east";
 		}
 		else if (bearing < 158)
 		{
-			dir = "SE";
+			dir = "southeast";
 		}
 		else if (bearing < 203)
 		{
-			dir = "S";
+			dir = "south";
 		}
 		else if (bearing < 248)
 		{
-			dir = "SW";
+			dir = "southwest";
 		}
 		else if (bearing < 293)
 		{
-			dir = "W";
+			dir = "west";
 		}
 		else if (bearing < 338)
 		{
-			dir = "NW";
+			dir = "northwest";
 		}
 		else
 		{
-			dir = "N";
+			dir = "north";
 		}
-		user.sendMessage(tl("compassBearing", dir, bearing));
+		user.sendMessage(tl("compassBearing", tl(dir), bearing));
 	}
 }
