@@ -6,6 +6,7 @@ import com.platymuus.bukkit.permissions.PermissionsPlugin;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -48,7 +49,15 @@ public class PermissionsBukkitHandler extends SuperpermsHandler
 
 	private List<Group> getPBGroups(final Player base)
 	{
-		final PermissionInfo info = plugin.getPlayerInfo(base.getName());
+		PermissionInfo tempInfo = null;
+		if(Bukkit.getPluginManager().getPlugin("PermissionsBukkit") != null){
+			if(Bukkit.getPluginManager().getPlugin("PermissionsBukkit").getDescription().getVersion().matches("1\\.[256]|2\\.[012]")){
+				tempInfo = this.plugin.getPlayerInfo(base.getName());
+			}else{
+				tempInfo = this.plugin.getPlayerInfo(base.getUniqueId().toString());
+			}
+		}
+		final PermissionInfo info = tempInfo;
 		if (info == null)
 		{
 			return Collections.emptyList();
