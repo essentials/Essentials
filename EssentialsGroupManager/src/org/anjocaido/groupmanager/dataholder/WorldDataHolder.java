@@ -910,7 +910,7 @@ public class WorldDataHolder {
 					nodeData = thisUserNode.get("lastname");
 					
 				} catch (Exception ex) {
-					throw new IllegalArgumentException("Bad format found in 'subgroups' for user: " + usersKey + " in file: " + usersFile.getPath());
+					throw new IllegalArgumentException("Bad format found in 'lastname' for user: " + usersKey + " in file: " + usersFile.getPath());
 				}
 				
 				if ((nodeData != null) && (nodeData instanceof String)) {
