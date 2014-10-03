@@ -959,42 +959,6 @@ public class WorldDataHolder {
 					}
 					thisUser.sortPermissions();
 				}
-				
-
-				// SUBGROUPS NODES
-
-				nodeData = null;
-				try {
-					nodeData = thisUserNode.get("subgroups");
-				} catch (Exception ex) {
-					throw new IllegalArgumentException("Bad format found in 'subgroups' for user: " + usersKey + " in file: " + usersFile.getPath());
-				}
-
-				if (nodeData == null) {
-					/*
-					 * If no subgroups node is found, or it's empty do nothing.
-					 */
-				} else if (nodeData instanceof List) {
-					for (Object o : ((List) nodeData)) {
-						if (o == null) {
-							GroupManager.logger.warning("Invalid Subgroup data for user: " + thisUser.getLastName() + ". Ignoring entry in file: " + usersFile.getPath());
-						} else {
-							Group subGrp = ph.getGroup(o.toString());
-							if (subGrp != null) {
-								thisUser.addSubGroup(subGrp);
-							} else {
-								GroupManager.logger.warning("Subgroup '" + o.toString() + "' not found for user: " + thisUser.getLastName() + ". Ignoring entry in file: " + usersFile.getPath());
-							}
-						}
-					}
-				} else if (nodeData instanceof String) {
-					Group subGrp = ph.getGroup(nodeData.toString());
-					if (subGrp != null) {
-						thisUser.addSubGroup(subGrp);
-					} else {
-						GroupManager.logger.warning("Subgroup '" + nodeData.toString() + "' not found for user: " + thisUser.getLastName() + ". Ignoring entry in file: " + usersFile.getPath());
-					}
-				}
 
 				// USER INFO NODE
 
@@ -1035,6 +999,41 @@ public class WorldDataHolder {
 					thisUser.setGroup(hisGroup);
 				} else {
 					thisUser.setGroup(ph.getDefaultGroup());
+				}
+				
+				// SUBGROUPS NODES
+
+				nodeData = null;
+				try {
+					nodeData = thisUserNode.get("subgroups");
+				} catch (Exception ex) {
+					throw new IllegalArgumentException("Bad format found in 'subgroups' for user: " + usersKey + " in file: " + usersFile.getPath());
+				}
+
+				if (nodeData == null) {
+					/*
+					 * If no subgroups node is found, or it's empty do nothing.
+					 */
+				} else if (nodeData instanceof List) {
+					for (Object o : ((List) nodeData)) {
+						if (o == null) {
+							GroupManager.logger.warning("Invalid Subgroup data for user: " + thisUser.getLastName() + ". Ignoring entry in file: " + usersFile.getPath());
+						} else {
+							Group subGrp = ph.getGroup(o.toString());
+							if (subGrp != null) {
+								thisUser.addSubGroup(subGrp);
+							} else {
+								GroupManager.logger.warning("Subgroup '" + o.toString() + "' not found for user: " + thisUser.getLastName() + ". Ignoring entry in file: " + usersFile.getPath());
+							}
+						}
+					}
+				} else if (nodeData instanceof String) {
+					Group subGrp = ph.getGroup(nodeData.toString());
+					if (subGrp != null) {
+						thisUser.addSubGroup(subGrp);
+					} else {
+						GroupManager.logger.warning("Subgroup '" + nodeData.toString() + "' not found for user: " + thisUser.getLastName() + ". Ignoring entry in file: " + usersFile.getPath());
+					}
 				}
 			}
 		}
