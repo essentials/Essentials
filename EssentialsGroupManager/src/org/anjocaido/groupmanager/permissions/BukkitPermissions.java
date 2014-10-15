@@ -469,11 +469,17 @@ public class BukkitPermissions {
 				return;
 
 			Player player = event.getPlayer();
+			String uuid = player.getUniqueId().toString();
+			
+			// Reset the User objects player reference.
+			User user = plugin.getWorldsHolder().getWorldData(player.getWorld().getName()).getUser(uuid, player.getName());
+			
+			user.updatePlayer(null);
 
 			/*
 			 * force remove any attachments as bukkit may not
 			 */
-			removeAttachment(player.getUniqueId().toString());
+			removeAttachment(uuid);
 		}
 	}
 
