@@ -468,7 +468,8 @@ public class EssentialsPlayerListener implements Listener
 	public void onPlayerChangedWorldFlyReset(final PlayerChangedWorldEvent event)
 	{
 		final User user = ess.getUser(event.getPlayer());
-		if (user.getBase().getGameMode() != GameMode.CREATIVE && !user.isAuthorized("essentials.fly"))
+		if ((user.getBase().getGameMode() != GameMode.CREATIVE && user.getBase().getGameMode() != GameMode.SPECTATOR)
+				&& !user.isAuthorized("essentials.fly"))
 		{
 			user.getBase().setFallDistance(0f);
 			user.getBase().setAllowFlight(false);
