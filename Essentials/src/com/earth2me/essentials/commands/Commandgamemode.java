@@ -122,6 +122,11 @@ public class Commandgamemode extends EssentialsCommand
 		{
 			mode = GameMode.ADVENTURE;
 		}
+		else if (modeString.equalsIgnoreCase("gmsp") || modeString.equalsIgnoreCase("egmsp")
+			|| modeString.contains("spect") || modeString.equalsIgnoreCase("3") || modeString.equalsIgnoreCase("sp"))
+		{
+			mode = GameMode.SPECTATOR;
+		}
 		else if (modeString.equalsIgnoreCase("gmt") || modeString.equalsIgnoreCase("egmt")
 				 || modeString.contains("toggle") || modeString.contains("cycle") || modeString.equalsIgnoreCase("t"))
 		{

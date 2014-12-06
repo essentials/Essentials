@@ -1,12 +1,7 @@
 package com.earth2me.essentials;
 
 import com.earth2me.essentials.utils.StringUtil;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.RemovalCause;
-import com.google.common.cache.RemovalListener;
-import com.google.common.cache.RemovalNotification;
+import com.google.common.cache.*;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import java.io.File;
 import java.util.ArrayList;
@@ -24,7 +19,7 @@ import org.bukkit.entity.Player;
 public class UserMap extends CacheLoader<String, User> implements IConf
 {
 	private final transient IEssentials ess;
-	private final transient Cache<String, User> users;
+	private final transient LoadingCache<String, User> users;
 	private final transient ConcurrentSkipListSet<UUID> keys = new ConcurrentSkipListSet<UUID>();
 	private final transient ConcurrentSkipListMap<String, UUID> names = new ConcurrentSkipListMap<String, UUID>();
 	private final transient ConcurrentSkipListMap<UUID, ArrayList<String>> history = new ConcurrentSkipListMap<UUID, ArrayList<String>>();
