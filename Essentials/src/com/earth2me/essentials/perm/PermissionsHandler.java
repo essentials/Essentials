@@ -1,13 +1,20 @@
 package com.earth2me.essentials.perm;
 
-import com.earth2me.essentials.Essentials;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.ServicesManager;
+
+import com.earth2me.essentials.Essentials;
 
 
 public class PermissionsHandler implements IPermissionsHandler
@@ -187,6 +194,33 @@ public class PermissionsHandler implements IPermissionsHandler
 				handler = new ZPermissionsHandler(ess);
 			}
 			return;
+		}
+
+		final Plugin vaultPlugin = pluginManager.getPlugin("Vault");
+		if (vaultPlugin != null && vaultPlugin.isEnabled())
+		{
+			// Attempt to use vault
+			final ServicesManager sm = ess.getServer().getServicesManager();
+
+			Permission perm = null;
+			RegisteredServiceProvider<Permission> permProvider = sm.getRegistration(Permission.class);
+			if (permProvider != null)
+				perm = permProvider.getProvider();
+
+			Chat chat = null;
+			RegisteredServiceProvider<Chat> chatProvider = sm.getRegistration(Chat.class);
+			if (chatProvider != null)
+				chat = chatProvider.getProvider();
+
+			if (perm != null)
+			{
+				if (!(handler instanceof VaultPermissionsHandler))
+				{
+					LOGGER.log(Level.INFO, "[Essentials] Using Vault based permissions.");
+					handler = new VaultPermissionsHandler(perm, chat);
+				}
+				return;
+			}
 		}
 
 		if (useSuperperms)

@@ -71,9 +71,8 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.7.2-R0.3-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${user.dir}/lib/bukkit.jar</systemPath>
+			<version>1.8-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
