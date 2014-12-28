@@ -74,7 +74,7 @@ public class Commandmail extends EssentialsCommand
 			}
 			else
 			{
-				final String mail = tl("mailFormat", user.getName(), StringUtil.sanitizeString(FormatUtil.replaceFormat(getFinalArg(args, 2))));
+				final String mail = tl("mailFormat", user.getName(), FormatUtil.replaceFormat(getFinalArg(args, 2)));
 				if (mail.length() > 1000)
 				{
 					throw new Exception(tl("mailTooLong"));
