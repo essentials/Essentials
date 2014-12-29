@@ -106,7 +106,7 @@ public class Commandmail extends EssentialsCommand
 			{
 				throw new Exception(tl("noPerm", "essentials.mail.sendall"));
 			}
-			ess.runTaskAsynchronously(new SendAll(tl("mailFormat", user.getName(), FormatUtil.replaceFormat(getFinalArg(args, 1)))));
+			ess.runTaskAsynchronously(new SendAll(tl("mailFormat", user.getName(), FormatUtil.replaceFormat(getFinalArg(args, 2)))));
 			user.sendMessage(tl("mailSent"));
 			return;
 		}
