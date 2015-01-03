@@ -159,8 +159,9 @@ public class User extends UserData implements Comparable<User>, IReplyTo, net.es
 	@Override
 	public void payUser(final User reciever, final BigDecimal value) throws ChargeException, MaxMoneyException
 	{
-		if (value.signum() == 0)
+		if (value.signum() <= 0)
 		{
+			sendMessage(tl("noNegativePay"));
 			return;
 		}
 		if (canAfford(value))
