@@ -1,24 +1,34 @@
 package com.earth2me.essentials;
 
-import static com.earth2me.essentials.I18n.tl;
 import com.earth2me.essentials.craftbukkit.BanLookup;
 import com.earth2me.essentials.craftbukkit.FakeWorld;
 import com.earth2me.essentials.settings.Spawns;
 import com.earth2me.essentials.storage.YamlStorageWriter;
 import com.earth2me.essentials.utils.StringUtil;
 import com.google.common.base.Charsets;
-import java.io.*;
-import java.math.BigInteger;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.ess3.api.IEssentials;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
+import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.earth2me.essentials.I18n.tl;
 
 
 public class EssentialsUpgrade
@@ -505,47 +515,7 @@ public class EssentialsUpgrade
 
 		Boolean ignoreUFCache = doneFile.getBoolean("ignore-userfiles-cache", false);
 
-		final File userdir = new File(ess.getDataFolder(), "userdata");
-		if (!userdir.exists())
-		{
-			return;
-		}
-
-		int countFiles = 0;
-		int countReqFiles = 0;
-		for (String string : userdir.list())
-		{
-			if (!string.endsWith(".yml") || string.length() < 5)
-			{
-				continue;
-			}
-
-			countFiles++;
-
-			final String name = string.substring(0, string.length() - 4);
-			UUID uuid = null;
-
-			try
-			{
-				uuid = UUID.fromString(name);
-			}
-			catch (IllegalArgumentException ex)
-			{
-				countReqFiles++;
-			}
-
-			if (countFiles > 100)
-			{
-				break;
-			}
-		}
-
-		if (countReqFiles < 1)
-		{
-			return;
-		}
-
-		ess.getLogger().info("#### Starting Essentials UUID userdata conversion in a few seconds. ####");
+		ess.getLogger().info("#### Starting Essentials UUID userdata conversion in a few seconds. ####"); // TODO TL
 		ess.getLogger().info("We recommend you take a backup of your server before upgrading from the old username system.");
 
 		try
@@ -565,21 +535,14 @@ public class EssentialsUpgrade
 
 	public static void uuidFileConvert(IEssentials ess, Boolean ignoreUFCache)
 	{
-		ess.getLogger().info("Starting Essentials UUID userdata conversion");
-
+		ess.getLogger().info("Starting Essentials UUID userdata conversion"); // TODO TL
 		final File userdir = new File(ess.getDataFolder(), "userdata");
 		if (!userdir.exists())
 		{
 			return;
 		}
 
-		int countFiles = 0;
-		int countFails = 0;
-		int countEssCache = 0;
-		int countBukkit = 0;
-
-		ess.getLogger().info("Found " + userdir.list().length + " files to convert...");
-
+		List<String> toConvert = new ArrayList<String>();
 		for (String string : userdir.list())
 		{
 			if (!string.endsWith(".yml") || string.length() < 5)
@@ -587,77 +550,180 @@ public class EssentialsUpgrade
 				continue;
 			}
 
-			final int showProgress = countFiles % 250;
+			final String name = string.substring(0, string.length() - 4);
 
-			if (showProgress == 0)
-			{
-				ess.getUserMap().getUUIDMap().forceWriteUUIDMap();
-				ess.getLogger().info("Converted " + countFiles + "/" + userdir.list().length);
-			}
-
-			countFiles++;
-
-			String name = string.substring(0, string.length() - 4);
-			EssentialsUserConf config;
-			UUID uuid = null;
 			try
 			{
-				uuid = UUID.fromString(name);
+				UUID.fromString(name);
 			}
 			catch (IllegalArgumentException ex)
 			{
-				File file = new File(userdir, string);
-				EssentialsConf conf = new EssentialsConf(file);
-				conf.load();
-				conf.setProperty("lastAccountName", name);
-				conf.save();
-
-				String uuidConf = ignoreUFCache ? "force-uuid" : "uuid";
-
-				String uuidString = conf.getString(uuidConf, null);
-
-				for (int i = 0; i < 4; i++)
-				{
-					try
-					{
-						uuid = UUID.fromString(uuidString);
-						countEssCache++;
-						break;
-					}
-					catch (Exception ex2)
-					{
-						if (conf.getBoolean("npc", false))
-						{
-							uuid = UUID.nameUUIDFromBytes(("NPC:" + name).getBytes(Charsets.UTF_8));
-							break;
-						}
-
-						org.bukkit.OfflinePlayer player = ess.getServer().getOfflinePlayer(name);
-						uuid = player.getUniqueId();
-					}
-
-					if (uuid != null)
-					{
-						countBukkit++;
-						break;
-					}
-				}
-
-				if (uuid != null)
-				{
-					conf.forceSave();
-					config = new EssentialsUserConf(name, uuid, new File(userdir, uuid + ".yml"));
-					config.convertLegacyFile();
-					ess.getUserMap().trackUUID(uuid, name, false);
-					continue;
-				}
-				countFails++;
+				toConvert.add(name);
 			}
 		}
+
+		int countFiles = 0;
+		int countFails = 0;
+		int countEssCache = 0;
+		int countMojang = 0;
+
+		int countTotal = toConvert.size();
+		if (countTotal == 0)
+		{
+			ess.getLogger().info("Nothing to do!");
+			return;
+		}
+
+		List<String> converted = new ArrayList<String>();
+		// Attempt as many from cache as possible first
+		for (int i = 0; i < countTotal; i++)
+		{
+			final String name = toConvert.get(i);
+			EssentialsConf conf = new EssentialsConf(new File(userdir, name + ".yml"));
+			conf.load();
+			conf.setProperty("lastAccountName", name);
+
+			String uuidstr = conf.getString(ignoreUFCache ? "force-uuid" : "uuid");
+
+			UUID uuid = null;
+			try
+			{
+				uuid = UUID.fromString(uuidstr);
+				countEssCache++;
+			}
+			catch (Exception e)
+			{
+				if (conf.getBoolean("npc", false))
+				{
+					uuid = UUID.nameUUIDFromBytes(("NPC:" + name).getBytes(Charsets.UTF_8));
+					countEssCache++;
+				}
+			}
+
+			conf.forceSave();
+			if (uuid != null)
+			{
+				EssentialsUserConf config = new EssentialsUserConf(name, uuid, new File(uuid + ".yml"));
+				config.convertLegacyFile();
+				ess.getUserMap().trackUUID(uuid, name, false);
+
+				converted.add(name);
+			}
+		}
+
+		for (String s : converted)
+		{
+			toConvert.remove(s);
+		}
+
+		converted.clear();
+
+		ess.getLogger().info("Converted " + countEssCache + " files from cache. Now converting " + toConvert.size() + " files using Mojang API"); // TODO TL
+
+		Matcher matcher = Pattern.compile("([0-9a-f]{8})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]+)").matcher("");
+
+		ess.getLogger().info("We estimate that this operation will take " + Math.ceil((toConvert.size() / 60000) * 15) + "minutes due to API restrictions."); // TODO TL
+
+		for (int i = 0; i < toConvert.size(); i += 100)
+		{
+			final int end = Math.min(i + 99, countTotal);
+			List<String> toQuery = toConvert.subList(i, end);
+			ess.getLogger().info(String.format("Converting files %d to %d (%d files)", i + 1, end, toQuery.size())); // TODO TL
+
+			JSONArray payload = new JSONArray();
+			for (String name : toQuery)
+			{
+				payload.add(name);
+			}
+
+			try
+			{
+				HttpsURLConnection connection = (HttpsURLConnection) new URL("https://api.mojang.com/profiles/minecraft").openConnection();
+				connection.setRequestMethod("POST");
+				connection.addRequestProperty("Content-Type", "application/json");
+				connection.setDoOutput(true);
+
+				PrintWriter writer = new PrintWriter(connection.getOutputStream());
+				writer.print(payload);
+				writer.flush();
+				writer.close();
+
+				int response = connection.getResponseCode();
+				if (response != 200)
+				{
+					ess.getLogger().severe("Got error " + response + " - " + connection.getResponseMessage() + " from API"); // TODO better handling
+					if (response == 429)
+					{
+						ess.getLogger().severe("Too many requests sent to Mojang Server. Waiting 1 minute then trying again.");
+						i -= 100;
+						try
+						{
+							Thread.sleep(60000);
+						}
+						catch (InterruptedException e)
+						{
+
+						}
+						continue;
+					}
+					return;
+				}
+
+				JSONArray obj = (JSONArray) JSONValue.parse(new InputStreamReader(connection.getInputStream()));
+
+				for (Object object : obj)
+				{
+					JSONObject jsonObject = (JSONObject) object;
+
+					String name = ((String)jsonObject.get("name")).toLowerCase();
+					String id = (String)jsonObject.get("id");
+
+					id = matcher.reset(id).replaceAll("$1-$2-$3-$4-$5");
+
+					UUID uuid = UUID.fromString(id);
+
+
+					EssentialsUserConf conf = new EssentialsUserConf(name, uuid, new File(userdir, StringUtil.sanitizeFileName(name) + ".yml"));
+					conf.convertLegacyFile();
+					ess.getUserMap().trackUUID(uuid, name, false);
+					converted.add(name);
+					countMojang++;
+				}
+
+				System.out.println(obj);
+			}
+			catch (MalformedURLException e)
+			{
+				e.printStackTrace();
+				return;
+			}
+			catch (IOException e)
+			{ // TODO Better handling
+				e.printStackTrace();
+				return;
+			}
+
+			try
+			{
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e)
+			{
+
+			}
+		}
+
+		for (String s : converted)
+		{
+			toConvert.remove(s);
+		}
+
+		converted.clear();
+
 		ess.getUserMap().getUUIDMap().forceWriteUUIDMap();
 
-		ess.getLogger().info("Converted " + countFiles + "/" + countFiles + ".  Conversion complete.");
-		ess.getLogger().info("Converted via cache: " + countEssCache + " :: Converted via lookup: " + countBukkit + " :: Failed to convert: " + countFails);
+		ess.getLogger().info("Converted " + (countTotal - toConvert.size()) + "/" + countTotal + ".  Conversion complete.");
+		ess.getLogger().info("Converted via cache: " + countEssCache + " :: Converted via lookup: " + countMojang + " :: Failed to convert: " + toConvert.size());
 		ess.getLogger().info("To rerun the conversion type /essentials uuidconvert");
 	}
 
