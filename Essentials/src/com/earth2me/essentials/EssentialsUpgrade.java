@@ -622,12 +622,7 @@ public class EssentialsUpgrade
 
 		Matcher matcher = Pattern.compile("([0-9a-f]{8})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]+)").matcher("");
 
-		final boolean needswait = toConvert.size() >= 60000; // If there are more than 60000 names, Mojang will throttle requests. Workaround is wait a second between requests. (600 requests, 100 names each)
-
-		if (needswait)
-		{
-			ess.getLogger().info("As you have a large number of users, we estimate that this operation will take " + ((toConvert.size() / 60000) * 15) + "minutes, due to API restrictions."); // TODO TL
-		}
+		ess.getLogger().info("We estimate that this operation will take " + Math.ceil((toConvert.size() / 60000) * 15) + "minutes due to API restrictions."); // TODO TL
 
 		for (int i = 0; i < toConvert.size(); i += 100)
 		{
@@ -657,6 +652,20 @@ public class EssentialsUpgrade
 				if (response != 200)
 				{
 					ess.getLogger().severe("Got error " + response + " - " + connection.getResponseMessage() + " from API"); // TODO better handling
+					if (response == 429)
+					{
+						ess.getLogger().severe("Too many requests sent to Mojang Server. Waiting 1 minute then trying again.");
+						i -= 100;
+						try
+						{
+							Thread.sleep(60000);
+						}
+						catch (InterruptedException e)
+						{
+
+						}
+						continue;
+					}
 					return;
 				}
 
@@ -684,26 +693,23 @@ public class EssentialsUpgrade
 				System.out.println(obj);
 			}
 			catch (MalformedURLException e)
-			{ // TODO Better handling
+			{
 				e.printStackTrace();
 				return;
 			}
 			catch (IOException e)
-			{
+			{ // TODO Better handling
 				e.printStackTrace();
 				return;
 			}
 
-			if (needswait)
+			try
 			{
-				try
-				{
-					Thread.sleep(1000);
-				}
-				catch (InterruptedException e)
-				{
-					e.printStackTrace();
-				}
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e)
+			{
+
 			}
 		}
 
