@@ -41,6 +41,10 @@
 		<url>http://ci.ess3.net/</url>
 	</ciManagement>
 
+	<properties>
+	  <smack.version>4.1.0-beta1</smack.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>net.ess3</groupId>
@@ -49,8 +53,18 @@
 		</dependency>
 		<dependency>
 			<groupId>org.igniterealtime.smack</groupId>
-			<artifactId>smack</artifactId>
-			<version>3.2.1</version>
+			<artifactId>smack-java7</artifactId>
+			<version>${smack.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.igniterealtime.smack</groupId>
+			<artifactId>smack-tcp</artifactId>
+			<version>${smack.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.igniterealtime.smack</groupId>
+			<artifactId>smack-extensions</artifactId>
+			<version>${smack.version}</version>
 		</dependency>
 	</dependencies>
 

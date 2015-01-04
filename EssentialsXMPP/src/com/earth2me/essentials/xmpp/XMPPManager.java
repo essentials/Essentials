@@ -3,29 +3,38 @@ package com.earth2me.essentials.xmpp;
 import com.earth2me.essentials.Console;
 import com.earth2me.essentials.EssentialsConf;
 import com.earth2me.essentials.IConf;
+
 import net.ess3.api.IUser;
+
 import com.earth2me.essentials.utils.FormatUtil;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+
 import org.bukkit.entity.Player;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.Roster.SubscriptionMode;
+import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.util.StringUtils;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
+import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
+
+import org.jxmpp.util.XmppStringUtils;
 
 
-public class XMPPManager extends Handler implements MessageListener, ChatManagerListener, IConf
+public class XMPPManager extends Handler implements ChatManagerListener, ChatMessageListener, IConf
 {
 	private static final Logger LOGGER = Logger.getLogger("Minecraft");
 	private static final SimpleFormatter formatter = new SimpleFormatter();
 	private final transient EssentialsConf config;
-	private transient XMPPConnection connection;
+	private transient XMPPTCPConnection connection;
 	private transient ChatManager chatManager;
 	private final transient Map<String, Chat> chats = Collections.synchronizedMap(new HashMap<String, Chat>());
 	private final transient Set<LogRecord> logrecords = Collections.synchronizedSet(new HashSet<LogRecord>());
@@ -35,6 +44,10 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 	private transient boolean ignoreLagMessages = true;
 	private transient Thread loggerThread;
 	private transient boolean threadrunning = true;
+
+	static {
+		ReconnectionManager.setEnabledPerDefault(true);
+	}
 
 	public XMPPManager(final IEssentialsXMPP parent)
 	{
@@ -68,7 +81,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 					return true;
 				}
 			}
-			catch (XMPPException ex)
+			catch (XMPPException | NotConnectedException ex)
 			{
 				disableChat(address);
 			}
@@ -93,49 +106,57 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 				sendCommand(chat, message);
 				break;
 			default:
-				final IUser sender = parent.getUserByAddress(StringUtils.parseBareAddress(chat.getParticipant()));
-				parent.broadcastMessage(sender, "=" + sender.getBase().getDisplayName() + ": " + message, StringUtils.parseBareAddress(chat.getParticipant()));
+				final IUser sender = parent.getUserByAddress(XmppStringUtils.parseBareJid(chat.getParticipant()));
+				parent.broadcastMessage(sender, "=" + sender.getBase().getDisplayName() + ": " + message, XmppStringUtils.parseBareJid(chat.getParticipant()));
 			}
 		}
 	}
 
 	private boolean connect()
 	{
-		final String server = config.getString("xmpp.server");
-		if (server == null || server.equals("example.com"))
+		final String serviceName = config.getString("xmpp.servicename");
+		if (serviceName == null|| serviceName.equals("example.com"))
 		{
-			LOGGER.log(Level.WARNING, "config broken for xmpp");
+			LOGGER.log(Level.WARNING, "config broken for xmpp, must set serviceName");
 			return false;
 		}
+		final String host = config.getString("xmpp.host");
 		final int port = config.getInt("xmpp.port", 5222);
-		final String serviceName = config.getString("xmpp.servicename", server);
 		final String xmppuser = config.getString("xmpp.user");
 		final String password = config.getString("xmpp.password");
-		final ConnectionConfiguration connConf = new ConnectionConfiguration(server, port, serviceName);
+		final XMPPTCPConnectionConfiguration.Builder connConf = XMPPTCPConnectionConfiguration.builder();
+		connConf.setServiceName(serviceName);
+		if (host != null) {
+			connConf.setHost(host);
+		}
+		if (port != 0) {
+			connConf.setPort(port);
+		}
 		final StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Connecting to xmpp server ").append(server).append(":").append(port);
+		stringBuilder.append("Connecting to xmpp server ").append(serviceName);
 		stringBuilder.append(" as user ").append(xmppuser).append(".");
 		LOGGER.log(Level.INFO, stringBuilder.toString());
-		connConf.setSASLAuthenticationEnabled(config.getBoolean("xmpp.sasl-enabled", false));
+		connConf.setUsernameAndPassword(xmppuser, password);
+		connConf.setResource("Essentials-XMPP");
+		// TODO Add setting for "accept all certificates"
 		connConf.setSendPresence(true);
-		connConf.setReconnectionAllowed(true);
 		connConf.setDebuggerEnabled(config.getBoolean("debug", false));
-		connection = new XMPPConnection(connConf);
+		connection = new XMPPTCPConnection(connConf.build());
+
 		try
 		{
 			connection.connect();
-
-			connection.login(xmppuser, password, "Essentials-XMPP");
+			connection.login();
 			connection.sendPacket(new Presence(Presence.Type.available, "No one online.", 2, Presence.Mode.available));
 
 			connection.getRoster().setSubscriptionMode(SubscriptionMode.accept_all);
-			chatManager = connection.getChatManager();
+			chatManager = ChatManager.getInstanceFor(connection);
 			chatManager.addChatListener(this);
 			return true;
 		}
-		catch (XMPPException ex)
+		catch (XMPPException | SmackException | IOException ex)
 		{
-			LOGGER.log(Level.WARNING, "Failed to connect to server: " + server, ex);
+			LOGGER.log(Level.WARNING, "Failed to connect to server: " + serviceName, ex);
 			return false;
 		}
 	}
@@ -153,12 +174,12 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 		}
 		if (connection != null)
 		{
-			connection.disconnect(new Presence(Presence.Type.unavailable));
+			connection.disconnect();
 		}
 
 	}
 
-	public final void updatePresence()
+	public final void updatePresence() throws NotConnectedException
 	{
 		final int usercount;
 		final StringBuilder stringBuilder = new StringBuilder();
@@ -188,7 +209,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 		if (!createdLocally)
 		{
 			chat.addMessageListener(this);
-			final Chat old = chats.put(StringUtils.parseBareAddress(chat.getParticipant()), chat);
+			final Chat old = chats.put(XmppStringUtils.parseBareJid(chat.getParticipant()), chat);
 			if (old != null)
 			{
 				old.removeMessageListener(this);
@@ -287,25 +308,15 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 					{
 						for (String user : logUsers)
 						{
-							try
+							XMPPManager.this.startChat(user);
+							for (LogRecord logRecord : copy)
 							{
-								XMPPManager.this.startChat(user);
-								for (LogRecord logRecord : copy)
+								final String message = formatter.format(logRecord);
+								if (!XMPPManager.this.sendMessage(user, FormatUtil.stripLogColorFormat(message)))
 								{
-									final String message = formatter.format(logRecord);
-									if (!XMPPManager.this.sendMessage(user, FormatUtil.stripLogColorFormat(message)))
-									{
-										failedUsers.add(user);
-										break;
-									}
-
+									failedUsers.add(user);
+									break;
 								}
-							}
-							catch (XMPPException ex)
-							{
-								failedUsers.add(user);
-								LOGGER.removeHandler(XMPPManager.this);
-								LOGGER.log(Level.SEVERE, "Failed to deliver log message! Disabling logging to XMPP.", ex);
 							}
 						}
 						logUsers.removeAll(failedUsers);
@@ -331,7 +342,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 		loggerThread.start();
 	}
 
-	private void startChat(final String address) throws XMPPException
+	private void startChat(final String address)
 	{
 		if (chatManager == null)
 		{
@@ -342,10 +353,6 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 			if (!chats.containsKey(address))
 			{
 				final Chat chat = chatManager.createChat(address, this);
-				if (chat == null)
-				{
-					throw new XMPPException("Could not start Chat with " + address);
-				}
 				chats.put(address, chat);
 			}
 		}
@@ -364,14 +371,14 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 				{
 					chat.sendMessage("User " + parts[0] + " not found");
 				}
-				catch (XMPPException ex)
+				catch (XMPPException | NotConnectedException ex)
 				{
 					LOGGER.log(Level.WARNING, "Failed to send xmpp message.", ex);
 				}
 			}
 			else
 			{
-				final String from = "[" + parent.getUserByAddress(StringUtils.parseBareAddress(chat.getParticipant())) + ">";
+				final String from = "[" + parent.getUserByAddress(XmppStringUtils.parseBareJid(chat.getParticipant())) + ">";
 				for (Player p : matches)
 				{
 					p.sendMessage(from + p.getDisplayName() + "]  " + message);
@@ -382,7 +389,7 @@ public class XMPPManager extends Handler implements MessageListener, ChatManager
 
 	private void sendCommand(final Chat chat, final String message)
 	{
-		if (config.getStringList("op-users").contains(StringUtils.parseBareAddress(chat.getParticipant())))
+		if (config.getStringList("op-users").contains(XmppStringUtils.parseBareJid(chat.getParticipant())))
 		{
 			try
 			{
