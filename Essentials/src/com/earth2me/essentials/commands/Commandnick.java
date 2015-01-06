@@ -148,7 +148,8 @@ public class Commandnick extends EssentialsLoopCommand
 			target.setNickname(nickname);
 			target.setDisplayNick();
 			return true;
-		} else
+		} 
+		else
 		{
 			return false;
 		}
