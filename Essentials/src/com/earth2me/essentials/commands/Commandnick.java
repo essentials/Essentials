@@ -65,7 +65,10 @@ public class Commandnick extends EssentialsLoopCommand
 		if (target.getName().equalsIgnoreCase(nick))
 		{
 			String oldName = target.getDisplayName();
-			setNickname(server, sender, target, nick);
+			if (!setNickname(server, sender, target, nick))
+			{
+				return;
+			}
 			if (!target.getDisplayName().equalsIgnoreCase(oldName))
 			{
 				target.sendMessage(tl("nickNoMore"));
@@ -74,7 +77,10 @@ public class Commandnick extends EssentialsLoopCommand
 		}
 		else if ("off".equalsIgnoreCase(nick))
 		{
-			setNickname(server, sender, target, null);
+			if (!setNickname(server, sender, target, null)) 
+			{
+				return;
+			}
 			target.sendMessage(tl("nickNoMore"));
 		}
 		else if (nickInUse(server, target, nick))
@@ -83,7 +89,10 @@ public class Commandnick extends EssentialsLoopCommand
 		}
 		else
 		{
-			setNickname(server, sender, target, nick);
+			if (!setNickname(server, sender, target, nick))
+			{
+				return;
+			}
 			target.sendMessage(tl("nickSet", target.getDisplayName()));
 		}
 	}
@@ -129,7 +138,7 @@ public class Commandnick extends EssentialsLoopCommand
 		return false;
 	}
 
-	private void setNickname(final Server server, final CommandSource sender, final User target, final String nickname)
+	private boolean setNickname(final Server server, final CommandSource sender, final User target, final String nickname)
 	{
 		final User controller = sender.isPlayer() ? ess.getUser(sender.getPlayer()) : null;
 		final NickChangeEvent nickEvent = new NickChangeEvent(controller, target, nickname);
@@ -138,6 +147,11 @@ public class Commandnick extends EssentialsLoopCommand
 		{
 			target.setNickname(nickname);
 			target.setDisplayNick();
+			return true;
+		} 
+		else
+		{
+			return false;
 		}
 	}
 }
