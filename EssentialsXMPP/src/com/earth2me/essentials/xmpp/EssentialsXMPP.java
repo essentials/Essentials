@@ -1,17 +1,22 @@
 package com.earth2me.essentials.xmpp;
 
 import static com.earth2me.essentials.I18n.tl;
+
 import com.earth2me.essentials.IEssentials;
+
 import net.ess3.api.IUser;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jivesoftware.smack.SmackException.NotConnectedException;
 
 
 public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
@@ -120,7 +125,11 @@ public class EssentialsXMPP extends JavaPlugin implements IEssentialsXMPP
 	// @Override
 	public static boolean updatePresence()
 	{
-		instance.xmpp.updatePresence();
+		try {
+			instance.xmpp.updatePresence();
+		} catch (NotConnectedException e) {
+			return false;
+		}
 		return true;
 	}
 

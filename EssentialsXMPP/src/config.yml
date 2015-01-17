@@ -1,10 +1,9 @@
 xmpp:
-  server: 'example.com'
-  user: 'name@example.com'
+  servicename: 'example.com'
+  user: 'name'
   password: 'password'
-#  servicename: 'example.com'
+#  host: 'xmpp.example.com'
 #  port: 5222
-#  sasl-enabled: false
 
 debug: false
 
