@@ -47,10 +47,6 @@ commands:
     description: Broadcasts a message to the entire server.
     usage: /<command> <msg>
     aliases: [bc,ebc,bcast,ebcast,ebroadcast,shout,eshout]
-  bigtree:
-    description: Spawn a big tree where you are looking.
-    usage: /<command> <tree|redwood|jungle>
-    aliases: [ebigtree,largetree,elargetree]
   burn:
     description: Set a player on fire.
     usage: /<command> <player> <seconds>
@@ -430,10 +426,6 @@ commands:
     description: Blocks all forms of teleportation.
     usage: /<command> [player] [on|off]
     aliases: [etptoggle]
-  tree:
-    description: Spawn a tree where you are looking.
-    usage: /<command> <tree|birch|redwood|redmushroom|brownmushroom|jungle|junglebush|swamp>
-    aliases: [etree]
   unban:
     description: Unbans the specified player.
     usage: /<command> <player>
