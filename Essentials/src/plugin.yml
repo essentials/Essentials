@@ -19,10 +19,6 @@ commands:
     description: Teleports you to your location prior to tp/spawn/warp.
     usage: /<command>
     aliases: [eback,return,ereturn]
-  backup:
-    description: Runs the backup if configured.
-    usage: /<command>
-    aliases: [ebackup]
   balance:
     description: States the current balance of a player.
     usage: /<command> [player]

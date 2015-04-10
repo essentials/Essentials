@@ -288,14 +288,6 @@ enabledSigns:
 # Lower numbers will reduce the possibility of lag, but may annoy players.
 sign-use-per-second: 4
 
-# Backup runs a batch/bash command while saving is disabled.
-backup:
-  # Interval in minutes.
-  interval: 30
-  # Unless you add a valid backup command or script here, this feature will be useless.
-  # Use 'save-all' to simply force regular world saving without backup.
-  #command: 'rdiff-backup World1 backups/World1'
-
 # Set this true to enable permission per warp.
 per-warp-permission: false
 

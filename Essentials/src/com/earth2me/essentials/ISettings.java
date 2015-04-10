@@ -22,10 +22,6 @@ public interface ISettings extends IConf
 
 	String getNewPlayerKit();
 
-	String getBackupCommand();
-
-	long getBackupInterval();
-
 	String getChatFormat(String group);
 
 	int getChatRadius();

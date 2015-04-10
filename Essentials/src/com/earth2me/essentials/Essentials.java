@@ -96,7 +96,6 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 	private transient Warps warps;
 	private transient Worth worth;
 	private transient List<IConf> confList;
-	private transient Backup backup;
 	private transient ItemDb itemDb;
 	private transient final Methods paymentMethod = new Methods();
 	private transient PermissionsHandler permissionsHandler;
@@ -239,7 +238,6 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 				handleCrash(exception);
 				return;
 			}
-			backup = new Backup(this);
 			permissionsHandler = new PermissionsHandler(this, settings.useBukkitPermissions());
 			alternativeCommandsHandler = new AlternativeCommandsHandler(this);
 
@@ -338,10 +336,6 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 		if (i18n != null)
 		{
 			i18n.onDisable();
-		}
-		if (backup != null)
-		{
-			backup.stopTask();
 		}
 		Economy.setEss(null);
 		Trade.closeLog();
@@ -615,16 +609,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 	}
 
 	@Override
-	public Worth getWorth()
-	{
-		return worth;
-	}
-
-	@Override
-	public Backup getBackup()
-	{
-		return backup;
-	}
+	public Worth getWorth() { return worth; }
 
 	@Override
 	public Metrics getMetrics()

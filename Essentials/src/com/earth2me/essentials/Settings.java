@@ -424,22 +424,8 @@ public class Settings implements net.ess3.api.ISettings
 	}
 
 	@Override
-	public boolean areSignsDisabled()
-	{
-		return !signsEnabled;
-	}
+	public boolean areSignsDisabled() { return !signsEnabled; }
 
-	@Override
-	public long getBackupInterval()
-	{
-		return config.getInt("backup.interval", 1440); // 1440 = 24 * 60
-	}
-
-	@Override
-	public String getBackupCommand()
-	{
-		return config.getString("backup.command", null);
-	}
 	private final Map<String, String> chatFormats = Collections.synchronizedMap(new HashMap<String, String>());
 
 	@Override

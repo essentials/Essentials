@@ -218,8 +218,6 @@ public class EssentialsPlayerListener implements Listener
 		{
 			return;
 		}
-
-		ess.getBackup().onPlayerJoin();
 		final User dUser = ess.getUser(player);
 
 

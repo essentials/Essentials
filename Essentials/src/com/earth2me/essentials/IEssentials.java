@@ -57,8 +57,6 @@ public interface IEssentials extends Plugin
 
 	Worth getWorth();
 
-	Backup getBackup();
-
 	Methods getPaymentMethod();
 
 	BukkitTask runTaskAsynchronously(Runnable run);

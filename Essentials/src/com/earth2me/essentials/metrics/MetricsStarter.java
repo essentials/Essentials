@@ -121,11 +121,6 @@ public class MetricsStarter implements Runnable
 
 			final Graph enabledGraph = metrics.createGraph("EnabledFeatures");
 			enabledGraph.addPlotter(new SimplePlotter("Total"));
-			final String BKcommand = ess.getSettings().getBackupCommand();
-			if (BKcommand != null && !"".equals(BKcommand))
-			{
-				enabledGraph.addPlotter(new SimplePlotter("Backup"));
-			}
 			if (ess.getJails().getCount() > 0)
 			{
 				enabledGraph.addPlotter(new SimplePlotter("Jails"));
