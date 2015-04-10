@@ -206,10 +206,6 @@ commands:
     description: Obtains the specified kit or views all available kits.
     usage: /<command> [kit] [player]
     aliases: [ekit,kits,ekits]
-  kittycannon:
-    description: Throw an exploding kitten at your opponent.
-    usage: /<command>
-    aliases: [ekittycannon]
   lightning:
     description: The power of Thor. Strike at cursor or player.
     usage: /<command> [player] [power]
