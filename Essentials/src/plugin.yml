@@ -434,10 +434,6 @@ commands:
     description: Unbans the specified IP address.
     usage: /<command> <address>
     aliases: [eunbanip,pardonip,epardonip]
-  unlimited:
-    description: Allows the unlimited placing of items.
-    usage: /<command> <list|item|clear> [player]
-    aliases: [eunlimited,ul,unl,eul,eunl]
   vanish:
     description: Hide yourself from other players.
     usage: /<command> [player] [on|off]

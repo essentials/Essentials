@@ -66,7 +66,6 @@ public abstract class UserData extends PlayerExtension implements IConf
 	{
 		config.load();
 		money = _getMoney();
-		unlimited = _getUnlimited();
 		powertools = _getPowertools();
 		homes = _getHomes();
 		lastLocation = _getLastLocation();
@@ -266,36 +265,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		config.setProperty("nickname", nick);
 		config.save();
 	}
-	private List<Integer> unlimited;
 
-	private List<Integer> _getUnlimited()
-	{
-		return config.getIntegerList("unlimited");
-	}
-
-	public List<Integer> getUnlimited()
-	{
-		return unlimited;
-	}
-
-	public boolean hasUnlimited(ItemStack stack)
-	{
-		return unlimited.contains(stack.getTypeId());
-	}
-
-	public void setUnlimited(ItemStack stack, boolean state)
-	{
-		if (unlimited.contains(stack.getTypeId()))
-		{
-			unlimited.remove(Integer.valueOf(stack.getTypeId()));
-		}
-		if (state)
-		{
-			unlimited.add(stack.getTypeId());
-		}
-		config.setProperty("unlimited", unlimited);
-		config.save();
-	}
 	private Map<String, Object> powertools;
 
 	private Map<String, Object> _getPowertools()

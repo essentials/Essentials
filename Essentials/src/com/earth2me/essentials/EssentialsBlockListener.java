@@ -52,20 +52,5 @@ public class EssentialsBlockListener implements Listener
 				}
 			}
 		}
-
-		final User user = ess.getUser(event.getPlayer());
-		if (user.hasUnlimited(is) && user.getBase().getGameMode() == GameMode.SURVIVAL)
-		{
-			class UnlimitedItemSpawnTask implements Runnable
-			{
-				@Override
-				public void run()
-				{
-					user.getBase().getInventory().addItem(is);
-					user.getBase().updateInventory();
-				}
-			}
-			ess.scheduleSyncDelayedTask(new UnlimitedItemSpawnTask());
-		}
 	}
 }

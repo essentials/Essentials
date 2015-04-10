@@ -410,36 +410,6 @@ public class EssentialsPlayerListener implements Listener
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-	public void onPlayerEggThrow(final PlayerEggThrowEvent event)
-	{
-		final User user = ess.getUser(event.getPlayer());
-		final ItemStack stack = new ItemStack(Material.EGG, 1);
-		if (user.hasUnlimited(stack))
-		{
-			user.getBase().getInventory().addItem(stack);
-			user.getBase().updateInventory();
-		}
-	}
-
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-	public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event)
-	{
-		final User user = ess.getUser(event.getPlayer());
-		if (user.hasUnlimited(new ItemStack(event.getBucket())))
-		{
-			event.getItemStack().setType(event.getBucket());
-			ess.scheduleSyncDelayedTask(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					user.getBase().updateInventory();
-				}
-			});
-		}
-	}
-
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event)
 	{
