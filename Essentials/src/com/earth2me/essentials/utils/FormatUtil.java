@@ -18,7 +18,6 @@ public class FormatUtil
 	static final transient Pattern REPLACE_FORMAT_PATTERN = Pattern.compile("(?<!&)&([l-orL-OR])");
 	static final transient Pattern REPLACE_PATTERN = Pattern.compile("&&(?=[0-9a-fk-orA-FK-OR])");
 	//Used to prepare xmpp output
-	static final transient Pattern LOGCOLOR_PATTERN = Pattern.compile("\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]");
 	static final transient Pattern URL_PATTERN = Pattern.compile("((?:(?:https?)://)?[\\w-_\\.]{2,})\\.([a-zA-Z]{2,3}(?:/\\S+)?)");
 	public static final Pattern IPPATTERN = Pattern.compile("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
@@ -105,15 +104,6 @@ public class FormatUtil
 			message = stripColor(message, VANILLA_FORMAT_PATTERN);
 		}
 		return message;
-	}
-
-	public static String stripLogColorFormat(final String input)
-	{
-		if (input == null)
-		{
-			return null;
-		}
-		return stripColor(input, LOGCOLOR_PATTERN);
 	}
 
 	static String stripColor(final String input, final Pattern pattern)

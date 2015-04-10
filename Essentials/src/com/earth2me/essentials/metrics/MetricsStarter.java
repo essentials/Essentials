@@ -25,8 +25,7 @@ public class MetricsStarter implements Runnable
 		EssentialsChat,
 		EssentialsSpawn,
 		EssentialsProtect,
-		EssentialsGeoIP,
-		EssentialsXMPP
+		EssentialsGeoIP
 	};
 
 	public MetricsStarter(final IEssentials plugin)

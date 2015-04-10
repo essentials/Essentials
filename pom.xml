@@ -64,7 +64,6 @@
 		<module>EssentialsGeoIP</module>
 		<module>EssentialsProtect</module>
 		<module>EssentialsSpawn</module>
-		<module>EssentialsXMPP</module>
 	</modules>
 
 	<dependencies>
@@ -161,11 +160,6 @@
 						<artifactItem>
 							<groupId>${project.groupId}</groupId>
 							<artifactId>EssentialsSpawn</artifactId>
-							<version>${project.version}</version>
-						</artifactItem>
-						<artifactItem>
-							<groupId>${project.groupId}</groupId>
-							<artifactId>EssentialsXMPP</artifactId>
 							<version>${project.version}</version>
 						</artifactItem>
 					</artifactItems>

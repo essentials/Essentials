@@ -181,7 +181,6 @@ player-commands:
   - seen
   - sell
   - sethome
-  - setxmpp
   - signs.create.protection
   - signs.create.trade
   - signs.break.protection
@@ -214,7 +213,6 @@ player-commands:
   - warp.list
   - world
   - worth
-  - xmpp
 
 # Note: All items MUST be followed by a quantity!
 # All kit names should be lower case, and will be treated as lower in permissions/costs.
