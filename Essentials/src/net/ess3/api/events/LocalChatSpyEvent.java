@@ -1,6 +1,6 @@
 package net.ess3.api.events;
 
-import static com.earth2me.essentials.I18n.tl;
+import static org.mcess.essentials.I18n.tl;
 import java.util.IllegalFormatException;
 import java.util.Set;
 import org.bukkit.entity.Player;

@@ -1,7 +1,7 @@
 package net.ess3.api;
 
 
-public interface IItemDb extends com.earth2me.essentials.api.IItemDb
+public interface IItemDb extends org.mcess.essentials.api.IItemDb
 {
 
 }
