@@ -399,22 +399,7 @@ public class Settings implements net.ess3.api.ISettings
 	}
 
 	@Override
-	public int getSpawnMobLimit()
-	{
-		return config.getInt("spawnmob-limit", 10);
-	}
-
-	@Override
-	public boolean showNonEssCommandsInHelp()
-	{
-		return config.getBoolean("non-ess-in-help", true);
-	}
-
-	@Override
-	public boolean hidePermissionlessHelp()
-	{
-		return config.getBoolean("hide-permissionless-help", true);
-	}
+	public int getSpawnMobLimit() { return config.getInt("spawnmob-limit", 10); }
 
 	@Override
 	public int getProtectCreeperMaxHeight()

@@ -19,7 +19,7 @@ To add /vote, add this to commands.yml:
   - customtext vote $1-
 
 &6The following commands can also be customized:
-&c/rules /motd /news /help
+&c/rules /motd /news
 
 &6These support chapter customization such as:&c /rules grief
 &6You can use custom aliases with these commands too.

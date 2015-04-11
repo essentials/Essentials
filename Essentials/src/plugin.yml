@@ -150,10 +150,6 @@ commands:
     description: Heals you or the given player.
     usage: /<command> [player]
     aliases: [eheal]
-  help:
-    description: Views a list of available commands.
-    usage: /<command> [search term] [page]
-    aliases: [ehelp]
   helpop:
     description: Message online admins.
     usage: /<command> <message>

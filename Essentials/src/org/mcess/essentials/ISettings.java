@@ -86,8 +86,6 @@ public interface ISettings extends IConf
 
 	double getTeleportDelay();
 
-	boolean hidePermissionlessHelp();
-
 	boolean isCommandDisabled(final IEssentialsCommand cmd);
 
 	boolean isCommandDisabled(String label);
@@ -105,8 +103,6 @@ public interface ISettings extends IConf
 	List<EssentialsSign> enabledSigns();
 
 	boolean permissionBasedItemSpawn();
-
-	boolean showNonEssCommandsInHelp();
 
 	boolean warnOnBuildDisallow();
 

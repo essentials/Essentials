@@ -154,7 +154,6 @@ player-commands:
   - delhome
   - getpos
   - geoip.show
-  - help
   - helpop
   - home
   - home.others
@@ -478,21 +477,6 @@ min-money: -10000
 
 # Enable this to log all interactions with trade/buy/sell signs and sell command.
 economy-log-enabled: false
-
-############################################################
-# +------------------------------------------------------+ #
-# |                   EssentialsHelp                     | #
-# +------------------------------------------------------+ #
-############################################################
-
-# Show other plugins commands in help.
-non-ess-in-help: true
-
-# Hide plugins which do not give a permission.
-# You can override a true value here for a single plugin by adding a permission to a user/group.
-# The individual permission is: essentials.help.<plugin>, anyone with essentials.* or '*' will see all help regardless.
-# You can use negative permissions to remove access to just a single plugins help if the following is enabled.
-hide-permissionless-help: true
 
 ############################################################
 # +------------------------------------------------------+ #
