@@ -16,3 +16,5 @@ notifications:
       - "khobbits@ess3.net"
     on_success: change
     on_failure: always
+  slack:
+    secure: Au+u0l79voEjTbkxpak2RMIBmVQqp0lJLOFje2wyYYlBOjbbuL71hduuvo0aayQ95IJZkt2Sz33m0ZxdVRhZaMaJ5/miVkqbRnWR6hJ/EeAnFFpTeEjQd8nSrxucJlfd0iXgDoVe76d2MzakLfGReluHLP3TgiAapZF+rH4NCIw=
