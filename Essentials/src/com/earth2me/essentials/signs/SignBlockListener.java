@@ -140,6 +140,12 @@ public class SignBlockListener implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onSignBlockPlace(final BlockPlaceEvent event)
 	{
+		if (!(user.isAuthorized("essentials.signs." + signName.toLowerCase(Locale.ENGLISH) + ".create")
+			  || !user.isAuthorized("essentials.signs.create." + signName.toLowerCase(Locale.ENGLISH))))
+			  {
+			  	return;
+			  	//Sanity-permission check
+			  }
 		if (ess.getSettings().areSignsDisabled())
 		{
 			event.getHandlers().unregister(this);
