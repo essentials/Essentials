@@ -1,0 +1,75 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.2'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+//apply plugin: 'checkstyle'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+
+group 'org.mcess'
+version '4.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spongepowered.org/maven/" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://dl.bintray.com/me4502/maven' }
+}
+
+dependencies {
+    compile 'org.spongepowered:spongeapi:2.1-SNAPSHOT'
+    compile 'com.google.guava:guava:18.0'
+    compile 'com.google.code.findbugs:jsr305:1.3.9'
+    compile 'com.me4502:ModularFramework:1.1.5'
+    testCompile 'org.mockito:mockito-core:2.+'
+    testCompile 'junit:junit:4.+'
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+    // Java 8 turns on doclint which we fail
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+//build.dependsOn(checkstyleMain)
+//build.dependsOn(checkstyleTest)
+build.dependsOn(sourcesJar)
+build.dependsOn(javadocJar)
+
+shadowJar {
+    classifier 'dist'
+    dependencies {
+        relocate ("com.me4502.modularframework", "org.mcess.essentials.util.modularframework") {
+            include(dependency("com.me4502:ModularFramework"))
+            exclude "com.me4502.modularframework.ModularFramework"
+        }
+    }
+    exclude 'GradleStart**'
+    exclude '.cache'
+    exclude 'LICENSE*'
+    exclude "com/me4502/modularframework/ModularFramework.class" //Don't copy across the file that was left out of ModularFramework.
+}
