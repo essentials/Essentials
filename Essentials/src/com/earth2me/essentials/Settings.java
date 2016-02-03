@@ -37,60 +37,6 @@ public class Settings implements net.ess3.api.ISettings
 	}
 
 	@Override
-	public boolean getRespawnAtHome()
-	{
-		return config.getBoolean("respawn-at-home", false);
-	}
-
-	@Override
-	public boolean getUpdateBedAtDaytime()
-	{
-		return config.getBoolean("update-bed-at-daytime", true);
-	}
-
-	@Override
-	public Set<String> getMultipleHomes()
-	{
-		final ConfigurationSection section = config.getConfigurationSection("sethome-multiple");
-		return section == null ? null : section.getKeys(false);
-	}
-
-	@Override
-	public int getHomeLimit(final User user)
-	{
-		int limit = 1;
-		if (user.isAuthorized("essentials.sethome.multiple"))
-		{
-			limit = getHomeLimit("default");
-		}
-
-		final Set<String> homeList = getMultipleHomes();
-		if (homeList != null)
-		{
-			for (String set : homeList)
-			{
-				if (user.isAuthorized("essentials.sethome.multiple." + set) && (limit < getHomeLimit(set)))
-				{
-					limit = getHomeLimit(set);
-				}
-			}
-		}
-		return limit;
-	}
-
-	@Override
-	public int getHomeLimit(final String set)
-	{
-		return config.getInt("sethome-multiple." + set, config.getInt("sethome-multiple.default", 3));
-	}
-	private int chatRadius = 0;
-
-	private int _getChatRadius()
-	{
-		return config.getInt("chat.radius", config.getInt("chat-radius", 0));
-	}
-
-	@Override
 	public int getChatRadius()
 	{
 		return chatRadius;
@@ -150,12 +96,6 @@ public class Settings implements net.ess3.api.ISettings
 	public int getDefaultStackSize()
 	{
 		return config.getInt("default-stack-size", -1);
-	}
-
-	@Override
-	public BigDecimal getStartingBalance()
-	{
-		return config.getBigDecimal("starting-balance", BigDecimal.ZERO);
 	}
 
 	@Override
@@ -685,32 +625,11 @@ public class Settings implements net.ess3.api.ISettings
 		return config.getString("locale", "");
 	}
 
-	//This method should always only return one character due to the implementation of the calling methods
-	//If you need to use a string currency, for example "coins", use the translation key 'currency'.
-	@Override
-	public String getCurrencySymbol()
-	{
-		return config.getString("currency-symbol", "$").concat("$").substring(0, 1).replaceAll("[0-9]", "$");
-	}
-
 	// #easteregg
 	@Override
 	public boolean isTradeInStacks(int id)
 	{
 		return config.getBoolean("trade-in-stacks-" + id, false);
-	}
-	// #easteregg
-	private boolean economyDisabled = false;
-
-	public boolean _isEcoDisabled()
-	{
-		return config.getBoolean("disable-eco", false);
-	}
-
-	@Override
-	public boolean isEcoDisabled()
-	{
-		return economyDisabled;
 	}
 
 	@Override
@@ -754,62 +673,6 @@ public class Settings implements net.ess3.api.ISettings
 	public boolean getProtectBoolean(final String configName, boolean def)
 	{
 		return config.getBoolean(configName, def);
-	}
-	private static final BigDecimal MAXMONEY = new BigDecimal("10000000000000");
-	private BigDecimal maxMoney = MAXMONEY;
-
-	private BigDecimal _getMaxMoney()
-	{
-		return config.getBigDecimal("max-money", MAXMONEY);
-	}
-
-	@Override
-	public BigDecimal getMaxMoney()
-	{
-		return maxMoney;
-	}
-	private static final BigDecimal MINMONEY = new BigDecimal("-10000000000000");
-	private BigDecimal minMoney = MINMONEY;
-
-	private BigDecimal _getMinMoney()
-	{
-		BigDecimal min = config.getBigDecimal("min-money", MINMONEY);
-		if (min.signum() > 0)
-		{
-			min = min.negate();
-		}
-		return min;
-	}
-
-	@Override
-	public BigDecimal getMinMoney()
-	{
-		return minMoney;
-	}
-	private boolean economyLog = false;
-
-	@Override
-	public boolean isEcoLogEnabled()
-	{
-		return economyLog;
-	}
-
-	public boolean _isEcoLogEnabled()
-	{
-		return config.getBoolean("economy-log-enabled", false);
-	}
-	// #easteregg
-	private boolean economyLogUpdate = false;
-
-	@Override
-	public boolean isEcoLogUpdateEnabled()
-	{
-		return economyLogUpdate;
-	}
-
-	public boolean _isEcoLogUpdateEnabled()
-	{
-		return config.getBoolean("economy-log-update-enabled", false);
 	}
 
 	@Override
@@ -984,11 +847,6 @@ public class Settings implements net.ess3.api.ISettings
 		return config.getBoolean("world-teleport-permissions", false);
 	}
 
-	@Override
-	public boolean isWorldHomePermissions()
-	{
-		return config.getBoolean("world-home-permissions", false);
-	}
 	private boolean registerBackInListener;
 
 	@Override
@@ -1133,22 +991,7 @@ public class Settings implements net.ess3.api.ISettings
 	{
 		return mailsPerMinute;
 	}
-	// #easteregg
-	private long economyLagWarning;
 
-	private long _getEconomyLagWarning()
-	{
-		// Default to 25ms
-		final long value = (long)(config.getDouble("economy-lag-warning", 25.0) * 1000000);
-		return value;
-	}
-
-	@Override
-	public long getEconomyLagWarning()
-	{
-		return economyLagWarning;
-	}
-	
 	// #easteregg
 	private long permissionsLagWarning;
 
@@ -1163,12 +1006,6 @@ public class Settings implements net.ess3.api.ISettings
 	public long getPermissionsLagWarning()
 	{
 		return permissionsLagWarning;
-	}
-
-	@Override
-	public long getMaxTempban()
-	{
-		return config.getLong("max-tempban-time", -1);
 	}
 
 	@Override
