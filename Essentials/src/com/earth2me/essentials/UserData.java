@@ -65,10 +65,8 @@ public abstract class UserData extends PlayerExtension implements IConf
 	public final void reloadConfig()
 	{
 		config.load();
-		money = _getMoney();
 		unlimited = _getUnlimited();
 		powertools = _getPowertools();
-		homes = _getHomes();
 		lastLocation = _getLastLocation();
 		lastTeleportTimestamp = _getLastTeleportTimestamp();
 		lastHealTimestamp = _getLastHealTimestamp();
@@ -76,8 +74,6 @@ public abstract class UserData extends PlayerExtension implements IConf
 		mails = _getMails();
 		teleportEnabled = _getTeleportEnabled();
 		godmode = _getGodModeEnabled();
-		muted = _getMuted();
-		muteTimeout = _getMuteTimeout();
 		jailed = _getJailed();
 		jailTimeout = _getJailTimeout();
 		lastLogin = _getLastLogin();
@@ -94,160 +90,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		logoutLocation = _getLogoutLocation();
 		lastAccountName = _getLastAccountName();
 	}
-	private BigDecimal money;
 
-	private BigDecimal _getMoney()
-	{
-		BigDecimal result = ess.getSettings().getStartingBalance();
-		BigDecimal maxMoney = ess.getSettings().getMaxMoney();
-		BigDecimal minMoney = ess.getSettings().getMinMoney();
-
-		if (config.hasProperty("money"))
-		{
-			result = config.getBigDecimal("money", result);
-		}
-		if (result.compareTo(maxMoney) > 0)
-		{
-			result = maxMoney;
-		}
-		if (result.compareTo(minMoney) < 0)
-		{
-			result = minMoney;
-		}
-		return result;
-	}
-
-	public BigDecimal getMoney()
-	{
-		return money;
-	}
-
-	public void setMoney(BigDecimal value, boolean throwError) throws MaxMoneyException
-	{
-		BigDecimal maxMoney = ess.getSettings().getMaxMoney();
-		BigDecimal minMoney = ess.getSettings().getMinMoney();
-		if (value.compareTo(maxMoney) > 0)
-		{
-			if (throwError)
-			{
-				throw new MaxMoneyException();
-			}
-			money = maxMoney;
-		}
-		else
-		{
-			money = value;
-		}
-		if (money.compareTo(minMoney) < 0)
-		{
-			money = minMoney;
-		}
-		config.setProperty("money", money);
-		stopTransaction();
-	}
-	private Map<String, Object> homes;
-
-	private Map<String, Object> _getHomes()
-	{
-		if (config.isConfigurationSection("homes"))
-		{
-			return config.getConfigurationSection("homes").getValues(false);
-		}
-		return new HashMap<String, Object>();
-	}
-
-	private String getHomeName(String search)
-	{
-		if (NumberUtil.isInt(search))
-		{
-			try
-			{
-				search = getHomes().get(Integer.parseInt(search) - 1);
-			}
-			catch (NumberFormatException e)
-			{
-			}
-			catch (IndexOutOfBoundsException e)
-			{
-			}
-		}
-		return search;
-	}
-
-	public Location getHome(String name) throws Exception
-	{
-		String search = getHomeName(name);
-		return config.getLocation("homes." + search, this.getBase().getServer());
-	}
-
-	public Location getHome(final Location world)
-	{
-		try
-		{
-			if (getHomes().isEmpty())
-			{
-				return null;
-			}
-			Location loc;
-			for (String home : getHomes())
-			{
-				loc = config.getLocation("homes." + home, this.getBase().getServer());
-				if (world.getWorld() == loc.getWorld())
-				{
-					return loc;
-				}
-
-			}
-			loc = config.getLocation("homes." + getHomes().get(0), this.getBase().getServer());
-			return loc;
-		}
-		catch (InvalidWorldException ex)
-		{
-			return null;
-		}
-	}
-
-	public List<String> getHomes()
-	{
-		return new ArrayList<String>(homes.keySet());
-	}
-
-	public void setHome(String name, Location loc)
-	{
-		//Invalid names will corrupt the yaml
-		name = StringUtil.safeString(name);
-		homes.put(name, loc);
-		config.setProperty("homes." + name, loc);
-		config.save();
-	}
-
-	public void delHome(String name) throws Exception
-	{
-		String search = getHomeName(name);
-		if (!homes.containsKey(search))
-		{
-			search = StringUtil.safeString(search);
-		}
-		if (homes.containsKey(search))
-		{
-			homes.remove(search);
-			config.removeProperty("homes." + search);
-			config.save();
-		}
-		else
-		{
-			throw new Exception(tl("invalidHome", search));
-		}
-	}
-
-	public boolean hasHome()
-	{
-		if (config.hasProperty("home"))
-		{
-			return true;
-		}
-		return false;
-	}
 	private String nickname;
 
 	public String _getNickname()
@@ -582,47 +425,7 @@ public abstract class UserData extends PlayerExtension implements IConf
 		config.setProperty("godmode", set);
 		config.save();
 	}
-	private boolean muted;
 
-	public boolean _getMuted()
-	{
-		return config.getBoolean("muted", false);
-	}
-
-	public boolean getMuted()
-	{
-		return muted;
-	}
-
-	public boolean isMuted()
-	{
-		return muted;
-	}
-
-	public void setMuted(boolean set)
-	{
-		muted = set;
-		config.setProperty("muted", set);
-		config.save();
-	}
-	private long muteTimeout;
-
-	private long _getMuteTimeout()
-	{
-		return config.getLong("timestamps.mute", 0);
-	}
-
-	public long getMuteTimeout()
-	{
-		return muteTimeout;
-	}
-
-	public void setMuteTimeout(long time)
-	{
-		muteTimeout = time;
-		config.setProperty("timestamps.mute", time);
-		config.save();
-	}
 	private boolean jailed;
 
 	private boolean _getJailed()
