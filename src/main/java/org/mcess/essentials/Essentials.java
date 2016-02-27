@@ -3,10 +3,11 @@ package org.mcess.essentials;
 import com.google.inject.Inject;
 import com.me4502.modularframework.ModuleController;
 import com.me4502.modularframework.ShadedModularFramework;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Plugin;
-import org.spongepowered.api.service.config.DefaultConfig;
 
 import java.io.File;
 
@@ -19,14 +20,12 @@ public class Essentials {
     @DefaultConfig(sharedRoot = false)
     private File mainConfig;
 
-    private File configurationDirectory;
-
     @Listener
     public void onInitialize(GameStartedServerEvent event) {
 
-        moduleController = ShadedModularFramework.registerModuleController(this, event.getGame());
+        moduleController = ShadedModularFramework.registerModuleController(this, Sponge.getGame());
 
-        configurationDirectory = new File(mainConfig.getParent(), "modules");
+        File configurationDirectory = new File(mainConfig.getParent(), "modules");
         configurationDirectory.mkdir();
         moduleController.setConfigurationDirectory(configurationDirectory);
 
