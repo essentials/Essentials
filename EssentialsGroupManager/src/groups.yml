@@ -12,6 +12,7 @@ groups:
   Default:
     default: true
     permissions:
+    - PermissionsRanks.Player
     - -bukkit.command.kill
     inheritance:
     - g:groupmanager_default
@@ -24,7 +25,8 @@ groups:
       suffix: ''
   Builder:
     default: false
-    permissions: []
+    permissions:
+    - PermissionsRanks.Creative
     inheritance:
     - default
     - g:essentials_builder
@@ -35,7 +37,8 @@ groups:
       suffix: ''
   Moderator:
     default: false
-    permissions: []
+    permissions:
+    - PermissionsRanks.Mod
     inheritance:
     - builder
     - g:groupmanager_moderator
@@ -49,7 +52,8 @@ groups:
       suffix: ''
   Admin:
     default: false
-    permissions: []
+    permissions:
+    - PermissionsRanks.Admin
     inheritance:
     - moderator
     - g:groupmanager_admin
@@ -66,6 +70,7 @@ groups:
     permissions:
     - '*'
     - -vanish.*
+    - PermissionsRanks.Operator
     inheritance:
     - admin
     info:
