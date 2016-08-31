@@ -23,8 +23,8 @@ groups:
       build: false
       suffix: ''
   Builder:
-    default: false
-    permissions: []
+    default: true
+    permissions: [./gamemode 1]
     inheritance:
     - default
     - g:essentials_builder
@@ -34,8 +34,8 @@ groups:
       build: true
       suffix: ''
   Moderator:
-    default: false
-    permissions: []
+    default: true
+    permissions: [./gamemode 1 ./nick ./kick]
     inheritance:
     - builder
     - g:groupmanager_moderator
@@ -48,8 +48,8 @@ groups:
       build: true
       suffix: ''
   Admin:
-    default: false
-    permissions: []
+    default: true
+    permissions: [./gamemode 1 ./nick ./ban ./pl]
     inheritance:
     - moderator
     - g:groupmanager_admin
@@ -62,7 +62,7 @@ groups:
       build: true
       suffix: ''
   Owner:
-    default: false
+    default: true
     permissions:
     - '*'
     - -vanish.*
