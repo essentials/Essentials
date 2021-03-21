@@ -11,6 +11,7 @@ Recommended NetBeans plugins:
 * Git
 * PMD & FindBugs ( http://kenai.com/projects/sqe/pages/Home )
 
+
 Building
 --------
 To build with Maven, use the command
@@ -32,9 +33,9 @@ Commits should fall into one of 3 areas:
 
 - Commits which fix bugs caused by previous commits (since last release), or otherwise make no functionality changes, should have no prefix.  These will not be added to the project change log.
 
+
 Coding Guidelines
 -----------------
-
 
 Please follow the format guidelines that are saved in the project properties.
 
