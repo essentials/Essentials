@@ -16,3 +16,6 @@ notifications:
       - "khobbits@ess3.net"
     on_success: change
     on_failure: always
+cache:
+  directories:
+  - $HOME/.m2
