@@ -127,14 +127,8 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 	public void setupForTesting(final Server server) throws IOException, InvalidDescriptionException
 	{
 		final File dataFolder = File.createTempFile("essentialstest", "");
-		if (!dataFolder.delete())
-		{
-			throw new IOException();
-		}
-		if (!dataFolder.mkdir())
-		{
-			throw new IOException();
-		}
+		if (!dataFolder.delete()) throw new IOException();
+		if (!dataFolder.mkdir()) throw new IOException()
 		i18n = new I18n(this);
 		i18n.onEnable();
 		i18n.updateLocale("en");
@@ -164,12 +158,8 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			final PluginManager pm = getServer().getPluginManager();
 			for (Plugin plugin : pm.getPlugins())
 			{
-				if (plugin.getDescription().getName().startsWith("Essentials")
-					&& !plugin.getDescription().getVersion().equals(this.getDescription().getVersion())
-					&& !plugin.getDescription().getName().equals("EssentialsAntiCheat"))
-				{
-					LOGGER.log(Level.WARNING, tl("versionMismatch", plugin.getDescription().getName()));
-				}
+				if (plugin.getDescription().getName().startsWith("Essentials") && !plugin.getDescription().getVersion().equals(this.getDescription().getVersion()) && !plugin.getDescription().getName().equals("EssentialsAntiCheat"))
+				LOGGER.log(Level.WARNING, tl("versionMismatch", plugin.getDescription().getName()));
 			}
 			final Matcher versionMatch = Pattern.compile("git-Bukkit-(?:(?:[0-9]+)\\.)+[0-9]+-R[\\.0-9]+-(?:[0-9]+-g[0-9a-f]+-)?b([0-9]+)jnks.*").matcher(getServer().getVersion());
 			if (versionMatch.matches())
@@ -228,14 +218,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			}
 			catch (YAMLException exception)
 			{
-				if (pm.getPlugin("EssentialsUpdate") != null)
-				{
-					LOGGER.log(Level.SEVERE, tl("essentialsHelp2"));
-				}
-				else
-				{
-					LOGGER.log(Level.SEVERE, tl("essentialsHelp1"));
-				}
+				if (pm.getPlugin("EssentialsUpdate") != null) LOGGER.log(Level.SEVERE, tl("essentialsHelp2")); else LOGGER.log(Level.SEVERE, tl("essentialsHelp1"));
 				handleCrash(exception);
 				return;
 			}
@@ -250,21 +233,11 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			execTimer.mark("RegHandler");
 
 			final MetricsStarter metricsStarter = new MetricsStarter(this);
-			if (metricsStarter.getStart() != null && metricsStarter.getStart() == true)
-			{
-				runTaskLaterAsynchronously(metricsStarter, 1);
-			}
-			else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false)
-			{
-				final MetricsListener metricsListener = new MetricsListener(this, metricsStarter);
-				pm.registerEvents(metricsListener, this);
-			}
+			if (metricsStarter.getStart() != null && metricsStarter.getStart() == true) runTaskLaterAsynchronously(metricsStarter, 1);
+			else if (metricsStarter.getStart() != null && metricsStarter.getStart() == false) pm.registerEvents(new MetricsListener(this, metricsStarter), this);
 
 			final String timeroutput = execTimer.end();
-			if (getSettings().isDebug())
-			{
-				LOGGER.log(Level.INFO, "Essentials load {0}", timeroutput);
-			}
+			if (getSettings().isDebug()) LOGGER.log(Level.INFO, "Essentials load {0}", timeroutput);
 		}
 		catch (NumberFormatException ex)
 		{
@@ -287,10 +260,7 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 	{
 		HandlerList.unregisterAll(this);
 
-		if (getSettings().isDebug())
-		{
-			LOGGER.log(Level.INFO, "Registering Listeners");
-		}
+		if (getSettings().isDebug()) LOGGER.log(Level.INFO, "Registering Listeners");
 
 		final EssentialsPluginListener serverListener = new EssentialsPluginListener(this);
 		pm.registerEvents(serverListener, this);
@@ -335,14 +305,8 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 			user.stopTransaction();
 		}
 		cleanupOpenInventories();
-		if (i18n != null)
-		{
-			i18n.onDisable();
-		}
-		if (backup != null)
-		{
-			backup.stopTask();
-		}
+		if (i18n != null) i18n.onDisable();
+		if (backup != null) backup.stopTask();
 		Economy.setEss(null);
 		Trade.closeLog();
 		getUserMap().getUUIDMap().forceWriteUUIDMap();
@@ -382,12 +346,9 @@ public class Essentials extends JavaPlugin implements net.ess3.api.IEssentials
 				try
 				{
 					TabCompleter completer = pc.getTabCompleter();
-					if (completer != null)
-					{
-						return completer.onTabComplete(sender, command, commandLabel, args);
-					}
+					if (completer != null) return completer.onTabComplete(sender, command, commandLabel, args);
 				}
-				catch (final Exception ex)
+				catch (final Exception ex) 
 				{
 					Bukkit.getLogger().log(Level.SEVERE, ex.getMessage(), ex);
 				}
