@@ -12,7 +12,7 @@ groups:
   Default:
     default: true
     permissions:
-    - -bukkit.command.kill
+    - bukkit.command.kill
     inheritance:
     - g:groupmanager_default
     - g:bukkit_default
